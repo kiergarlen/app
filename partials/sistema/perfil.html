@@ -1,0 +1,36 @@
+      <div class="row">
+        <div class="col-xs-12">
+          <h2 class="page-header">Perfil de Usuario</h2>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12">
+          <h3 class="sub-header">{{currentUser.nombreUsuario}}</h3>
+          <p>{{currentUser.puestoUsuario}}</p>
+          <ul class="list-unstyled">
+            <li><strong>Rol:</strong> {{currentUser.rolUsuario}}</li>
+            <li><strong>Permisos:</strong> {{currentUser.permisosUsuario}}</li>
+          </ul>
+        </div>
+      </div>
+      <form class="form" role="form" action="#">
+        <div class="row">
+          <div class="col-xs-12">
+            <h4>Cambiar contraseña</h4>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12">
+            <label for="oldPassword">Contraseña actual</label>
+            <input type="text" class="form-control" placeholder="Contraseña actual" id="oldPassword">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12">
+            <label for="newPassword">Nueva contraseña</label>
+            <input type="text" class="form-control" placeholder="Nueva contraseña" id="newPassword">
+          </div>
+        </div>
+        <br class="clear">
+        <button class="btn btn-primary" type="submit">{{currentUser.buttonSubmitLabel}}</button>
+      </form>

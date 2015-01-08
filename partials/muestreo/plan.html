@@ -1,0 +1,530 @@
+<div class="row">
+  <div class="col-xs-12">
+    <h2 class="page-header">Plan de muestreo</h2>
+  </div>
+</div>
+<form class="form" role="form"
+  name="orderForm"
+  data-ng-submit="plan.submitOrderForm()"
+  novalidate
+  >
+  <div class="row">
+    <div class="col-xs-12">
+      <h4>Datos de Referencia</h4>
+      <div class="well well-sm">
+        <ul class="list-inline">
+          <li>
+            Folio:
+            {{plan.folio}}
+            /
+            {{plan.ejercicio}}</li>
+          <li data-ng-show="plan.fecha_plan.length > 0">
+            Fecha actual:
+            {{plan.fecha_plan}}</li>
+          <li data-ng-show="plan.fecha_orden.length > 0">
+            Fecha orden:
+            {{plan.fecha_orden}}</li>
+          <li data-ng-show="plan.solicitud.length > 0">
+            Fecha solicitud:
+            {{plan.solicitud.fecha_solicitud}}</li>
+          <li data-ng-show="plan.fecha_captura.length > 0">
+            Fecha captura:
+            {{plan.fecha_captura}}</li>
+          <li data-ng-show="plan.fecha_valida.length > 0">
+            Fecha validación:
+            {{plan.fecha_valida}}</li>
+          <li data-ng-show="plan.fecha_acepta.length > 0">
+            Fecha aceptación:
+            {{plan.fecha_acepta}}</li>
+          <li data-ng-show="plan.fecha_actualizacion.length > 0">
+            Fecha actualización:
+            {{plan.fecha_actualizacion}}</li>
+        </ul>
+        <span class="text-info"
+          data-ng-show="plan.validado > 0">Validada</span>
+        <h5>Orden de muestreo</h5>
+        Folio:
+        {{plan.orden.folio}}
+        /
+        {{plan.orden.ejercicio}}
+        <br>Fecha:
+        {{plan.orden.fecha_captura}}
+        <h5>Matriz</h5>
+        {{plan.matriz.matriz}}
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12">
+      <h4>Objetivo</h4>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12 col-sm-6 col-md-5 col-lg-5">
+      <label for="objectiveSelect" class="sr-only">
+        Objetivo de muestreo
+      </label>
+      <select class="form-control"
+        id="objectiveSelect"
+        name="objectiveSelect"
+        required
+        data-ng-model="plan.id_objetivo_plan"
+        data-ng-change="plan.selectObjective()"
+        >
+        <option value="">
+          Seleccione una opción
+        </option>
+        <option data-ng-repeat="objective in plan.objectives"
+          value="{{objective.id_origen_orden}}">
+          {{objective.origen_orden}}
+        </option>
+      </select>
+    </div>
+    <div class="col-xs-12 col-sm-6 col-md-7 col-lg-7">
+      <label class="sr-only" for="objectiveText">
+        En caso de otro, especificar
+      </label>
+      <input type="text" class="form-control"
+        id="objectiveText"
+        name="objectiveText"
+        placeholder="En caso de otro, especificar"
+        data-ng-model="plan.objetivo_otro"
+        >
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12">
+      <h4>Ubicación</h4>
+      <div class="well well-sm">
+        <h5>
+          {{plan.cliente.cliente}}
+          {{plan.cliente.area}}
+        </h5>
+        <ul class="list-unstyled">
+          <li>Domicilio <strong>{{plan.cliente.calle}}
+            {{plan.cliente.numero}}<br>
+            {{plan.cliente.colonia}}</strong></li>
+          <li><strong>{{plan.cliente.municipio}}
+            {{plan.cliente.localidad}}<br>
+            {{plan.cliente.estado}}</strong></li>
+          <li>Contacto <strong>{{plan.cliente.contacto}}</strong></li>
+          <li>Tel. <strong>{{plan.cliente.tel}}</strong></li>
+          <li>Email <strong>{{plan.cliente.email}}</strong></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12">
+      <h4>Puntos de muestreo</h4>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12">
+      <button class="btn btn-default" type="button"
+        id="addPointsButton"
+        name="addPointsButton"
+        data-mg-click="plan.addPoints()"
+        >
+        Agregar puntos de muestreo</button>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12 col-sm-6 col-md-5 col-lg-5">
+      <label for="pointTypeSelect">
+        Tipo de puntos de muestreo
+      </label>
+      <select class="form-control"
+        id="pointTypeSelect"
+        name="pointTypeSelect"
+        required
+        data-ng-model="plan.id_reconocimiento_punto"
+        data-ng-change="plan.selectPointType()"
+        >
+        <option value="">
+          Seleccione una opción
+        </option>
+        <option
+          data-ng-repeat="pointType in plan.pointTypes"
+          value="{{pointType.id_origen_orden}}">
+          {{pointType.origen_orden}}
+        </option>
+      </select>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12 col-sm-4">
+      <label for="pointsQuantity">Cantidad de puntos</label>
+      <input type="text"
+        class="form-control"
+        placeholder="Cantidad de puntos"
+        id="pointsQuantity"
+        name="pointsQuantity"
+        data-ng-model="plan.cantidad_puntos"
+        >
+    </div>
+    <div class="col-xs-12 col-sm-4">
+      <label>Tipo de muestreo</label>
+      <div class="radio">
+        <label>
+          <input type="radio" name="samplingTypeRadios"
+            id="samplingTypeRadios1"
+            name="samplingTypeRadios1"
+            value="1"
+            >
+            Simple
+        </label>
+        <label>
+          <input type="radio" name="samplingTypeRadios"
+            id="samplingTypeRadios2"
+            name="samplingTypeRadios2"
+            value="2"
+            >
+            Compuesto
+        </label>
+      </div>
+    </div>
+    <div class="col-xs-12 col-sm-4">
+      <label for="sampleFrequency">Frecuencia</label>
+      <input type="text"
+        class="form-control"
+        placeholder="Frecuencia"
+        id="sampleFrequency"
+        name="sampleFrequency"
+        data-ng-model="plan.frecuencia_muestreo"
+        >
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12">
+      <h4>Inicio / Término de muestreo</h4>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12 col-sm-6 col-md-3">
+      <label for="samplingStartDate">Fecha Inicio</label>
+      <input type="date"
+        class="form-control"
+        placeholder="aaaa-mm-dd"
+        id="samplingStartDate"
+        name="samplingStartDate"
+        required
+        data-ng-model="plan.fecha_inicio"
+        >
+    </div>
+    <div class="col-xs-12 col-sm-6 col-md-3">
+      <label for="samplingStartTime">Hora Inicio</label>
+      <input type="time"
+        class="form-control"
+        placeholder="HH:mm:ss"
+        id="samplingStartTime"
+        name="samplingStartTime"
+        required
+        data-ng-model="plan.hora_inicio"
+        >
+    </div>
+    <div class="col-xs-12 col-sm-6 col-md-3">
+      <label for="samplingEndDate">Fecha Término</label>
+      <input type="date"
+        class="form-control"
+        placeholder="aaaa-mm-dd"
+        id="samplingEndDate"
+        name="samplingEndDate"
+        required
+        data-ng-model="plan_fecha_fin"
+        >
+    </div>
+    <div class="col-xs-12 col-sm-6 col-md-3">
+      <label for="samplingEndTime">Hora Término</label>
+      <input type="time"
+        class="form-control"
+        placeholder="HH:mm:ss"
+        id="samplingEndTime"
+        name="samplingEndTime"
+        required
+        data-ng-model="plan.hora_fin"
+        >
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12">
+      <h4>Responsables</h4>
+    </div>
+  </div>
+  <div class="row"
+    data-ng-show="plan.order.responsable_muestreo.responsable"
+    >
+    <div class="col-xs-12">
+      <h5>Responsable muestreo <small>(Orden de muestreo)</small></h5>
+      {{plan.order.responsable_muestreo.responsable}}
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12">
+      <h5>Muestreo y entrega</h5>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12 col-sm-6 col-md-7 col-lg-7">
+      <label for="samplingSupervisorSelect" class="sr-only">
+        Responsable de muestreo y entrega
+      </label>
+      <select class="form-control"
+        id="samplingSupervisorSelect"
+        name="samplingSupervisorSelect"
+        required
+        data-ng-model="plan.id_responsable_muestreo"
+        data-ng-change="plan.selectSamplingSupervisor()"
+        >
+        <option value="">
+          Seleccione una opción
+        </option>
+        <option
+          data-ng-repeat="samplingSupervisor in plan.samplingSupervisors"
+          value="{{samplingSupervisor.id_responsable_muestreo}}">
+          {{samplingSupervisor.responsable_muestreo}}
+        </option>
+      </select>
+    </div>
+    <div class="col-xs-12 col-sm-6 col-md-5 col-lg-5">
+      <label for="samplingSupervisorCompanion" class="sr-only">
+        Acompañante muestreo y entrega
+      </label>
+      <input type="text" class="form-control"
+        id="samplingSupervisorCompanion"
+        name="samplingSupervisorCompanion"
+        placeholder="Acompañante muestreo y entrega"
+        data-ng-model="plan.samplingSupervisorCompanion"
+        >
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12">
+      <h5>Recolección</h5>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12 col-sm-6 col-md-7 col-lg-7">
+      <label for="collectingSupervisorSelect" class="sr-only">
+        Responsable de recolección
+      </label>
+      <select class="form-control"
+        id="collectingSupervisorSelect"
+        name="collectingSupervisorSelect"
+        required
+        data-ng-model="plan.id_responsable_recoleccion"
+        data-ng-change="plan.selectCollectingSupervisor()"
+        >
+        <option value="">
+          Seleccione una opción
+        </option>
+        <option
+          data-ng-repeat="collectingSupervisor in plan.collectingSupervisors"
+          value="{{collectingSupervisor.id_responsable_recoleccion}}">
+          {{collectingSupervisor.responsable_recoleccion}}
+        </option>
+      </select>
+    </div>
+    <div class="col-xs-12 col-sm-6 col-md-5 col-lg-5">
+      <label for="collectingSupervisorCompanion" class="sr-only">
+        Acompañante recolección
+      </label>
+      <input type="text" class="form-control"
+        id="collectingSupervisorCompanion"
+        name="collectingSupervisorCompanion"
+        placeholder="Acompañante recolección"
+        data-ng-model="plan.collectingSupervisorCompanion"
+        >
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12">
+      <h5>Registro resultados</h5>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12 col-sm-6 col-md-7 col-lg-7">
+      <label for="loggingSupervisorSelect" class="sr-only">
+        Responsable de registro
+      </label>
+      <select class="form-control"
+        id="loggingSupervisorSelect"
+        name="loggingSupervisorSelect"
+        required
+        data-ng-model="plan.id_responsable_registro"
+        data-ng-change="plan.selectCollectingSupervisor()"
+        >
+        <option value="">
+          Seleccione una opción
+        </option>
+        <option
+          data-ng-repeat="loggingSupervisor in plan.loggingSupervisors"
+          value="{{loggingSupervisor.id_responsable_registro}}">
+          {{loggingSupervisor.responsable_registro}}
+        </option>
+      </select>
+    </div>
+    <div class="col-xs-12 col-sm-6 col-md-5 col-lg-5">
+      <label for="loggingSupervisorCompanion" class="sr-only">
+        Acompañante registro
+      </label>
+      <input type="text" class="form-control"
+        id="loggingSupervisorCompanion"
+        name="loggingSupervisorCompanion"
+        placeholder="Acompañante registro"
+        data-ng-model="plan.loggingSupervisorCompanion"
+        >
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12">
+      <h4>Asignación de Actividades</h4>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12">
+      <h5>Calibración y verificación de equipo</h5>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12 col-sm-6 col-md-7 col-lg-7">
+      <label for="calibratorSelect" class="sr-only">
+        Encargado de calibración
+      </label>
+      <select class="form-control"
+        id="calibratorSelect"
+        name="calibratorSelect"
+        required
+        data-ng-model="plan.id_encargado_calibracion"
+        data-ng-change="plan.selectCalibrator()"
+        >
+        <option value="">
+          Seleccione una opción
+        </option>
+        <option
+          data-ng-repeat="calibrator in plan.calibrators"
+          value="{{calibrator.id_encargado_calibracion}}">
+          {{calibrator.encargado_calibracion}}
+        </option>
+      </select>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12">
+      <h5>Preparación de recipientes</h5>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12 col-sm-6 col-md-7 col-lg-7">
+      <label for="preparatorSelect" class="sr-only">
+        Encargado de preparación
+      </label>
+      <select class="form-control"
+        id="preparatorSelect"
+        name="preparatorSelect"
+        required
+        data-ng-model="plan.id_encargado_recipientes"
+        data-ng-change="plan.selectPreparator()"
+        >
+        <option value="">
+          Seleccione una opción
+        </option>
+        <option
+          data-ng-repeat="preparator in plan.preparators"
+          value="{{preparator.id_encargado_recipientes}}">
+          {{preparator.encargado_recipientes}}
+        </option>
+      </select>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12">
+      <h5>Reactivos y soluciones</h5>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12 col-sm-6 col-md-7 col-lg-7">
+      <label for="chemistSelect" class="sr-only">
+        Encargado de reactivos
+      </label>
+      <select class="form-control"
+        id="chemistSelect"
+        name="chemistSelect"
+        required
+        data-ng-model="plan.id_encargado_reactivos"
+        data-ng-change="plan.selectChemist()"
+        >
+        <option value="">
+          Seleccione una opción
+        </option>
+        <option
+          data-ng-repeat="chemist in plan.chemists"
+          value="{{chemist.id_encargado_reactivos}}">
+          {{chemist.encargado_reactivos}}
+        </option>
+      </select>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12">
+      <h5>Preparación de material y equipo</h5>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12 col-sm-6 col-md-7 col-lg-7">
+      <label for="materialistSelect" class="sr-only">
+        Encargado de preparación
+      </label>
+      <select class="form-control"
+        id="materialistSelect"
+        name="materialistSelect"
+        required
+        data-ng-model="plan.id_encargado_materiales"
+        data-ng-change="plan.selectMaterialist()"
+        >
+        <option value="">
+          Seleccione una opción
+        </option>
+        <option
+          data-ng-repeat="materialist in plan.materialists"
+          value="{{materialist.id_encargado_materiales}}">
+          {{materialist.encargado_materiales}}
+        </option>
+      </select>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12">
+      <h5>Hieleras</h5>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12 col-sm-6 col-md-7 col-lg-7">
+      <label for="preservatorSelect" class="sr-only">
+        Encargado de hieleras
+      </label>
+      <select class="form-control"
+        id="preservatorSelect"
+        name="preservatorSelect"
+        required
+        data-ng-model="plan.id_encargado_hieleras"
+        data-ng-change="plan.selectPreservator()"
+        >
+        <option value="">
+          Seleccione una opción
+        </option>
+        <option
+          data-ng-repeat="preservator in plan.preservators"
+          value="{{preservator.id_encargado_hieleras}}">
+          {{preservator.encargado_hieleras}}
+        </option>
+      </select>
+    </div>
+  </div>
+  <br>
+  <button type="submit" class="btn btn-primary"
+    value="Guardar" title="Guardar"
+    data-ng-click="plan.validatePlanForm()"
+    >
+    Guardar</button>
+</form>

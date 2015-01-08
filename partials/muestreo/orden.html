@@ -15,30 +15,30 @@
         <ul class="list-inline">
           <li>
             Folio:
-            {{order.folio}}
+            {{order.order.folio}}
             /
-            {{order.ejercicio}}</li>
-          <li data-ng-show="order.fecha_orden.length > 0">
+            {{order.order.ejercicio}}</li>
+          <li data-ng-show="order.order.fecha_orden.length > 0">
             Fecha actual:
-            {{order.fecha_orden}}</li>
-          <li data-ng-show="order.solicitud.length > 0">
+            {{order.order.fecha_orden}}</li>
+          <li data-ng-show="order.order.solicitud.length > 0">
             Fecha solicitud:
-            {{order.solicitud.fecha_solicitud}}</li>
-          <li data-ng-show="order.fecha_captura.length > 0">
+            {{order.order.solicitud.fecha_solicitud}}</li>
+          <li data-ng-show="order.order.fecha_captura.length > 0">
             Fecha captura:
-            {{order.fecha_captura}}</li>
-          <li data-ng-show="order.fecha_valida.length > 0">
+            {{order.order.fecha_captura}}</li>
+          <li data-ng-show="order.order.fecha_valida.length > 0">
             Fecha validación:
-            {{order.fecha_valida}}</li>
-          <li data-ng-show="order.fecha_acepta.length > 0">
+            {{order.order.fecha_valida}}</li>
+          <li data-ng-show="order.order.fecha_acepta.length > 0">
             Fecha aceptación:
-            {{order.fecha_acepta}}</li>
-          <li data-ng-show="order.fecha_actualizacion.length > 0">
+            {{order.order.fecha_acepta}}</li>
+          <li data-ng-show="order.order.fecha_actualizacion.length > 0">
             Fecha actualización:
-            {{order.fecha_actualizacion}}</li>
+            {{order.order.fecha_actualizacion}}</li>
         </ul>
         <span class="text-info"
-          data-ng-show="order.validado > 0">Validada</span>
+          data-ng-show="order.order.validado > 0">Validada</span>
       </div>
     </div>
   </div>
@@ -46,23 +46,23 @@
     <div class="col-xs-12 col-sm-6">
       <h4>Cliente</h4>
       <div class="well well-sm">
-        Cliente: {{order.cliente.cliente}}
-        {{order.cliente.area.length > 0 &&
-        ' - ' + order.cliente.area ||
+        Cliente: {{order.order.cliente.cliente}}
+        {{order.order.cliente.area.length > 0 &&
+        ' - ' + order.order.cliente.area ||
         ''}}
         <br>
-        Contacto: {{order.cliente.contacto}}
+        Contacto: {{order.order.cliente.contacto}}
       </div>
     </div>
     <div class="col-xs-12 col-sm-6">
       <h4>Solicitud / Cotización</h4>
       <div class="well well-sm">
         Folio:
-        {{order.solicitud.folio_solicitud}}
+        {{order.order.solicitud.folio_solicitud}}
         /
-        {{order.solicitud.ejercicio}}
+        {{order.order.solicitud.ejercicio}}
         <br>Fecha:
-        {{order.solicitud.fecha_captura}}
+        {{order.order.solicitud.fecha_captura}}
       </div>
     </div>
   </div>
@@ -74,13 +74,13 @@
   <div class="row">
     <div class="col-xs-12 col-sm-6 col-md-5 col-lg-5">
       <label for="orderSourceSelect" class="sr-only">
-        Seleccione un Medio de Solicitud
+        Medio de Solicitud
       </label>
       <select class="form-control"
         id="orderSourceSelect"
         name="orderSourceSelect"
         required
-        data-ng-model="order.id_origen_orden"
+        data-ng-model="order.order.id_origen_orden"
         data-ng-change="order.selectOrderSource()"
         >
         <option value="">
@@ -100,7 +100,7 @@
         id="emergencyText"
         name="emergencyText"
         placeholder="En caso de emergencia, especificar"
-        data-ng-model="order.origen_otro"
+        data-ng-model="order.order.origen_otro"
         >
     </div>
   </div>
@@ -112,13 +112,13 @@
   <div class="row">
     <div class="col-xs-12 col-sm-6 col-md-5 col-lg-5">
       <label for="matrixSelect" class="sr-only">
-        Seleccione un Tipo de Matriz
+        Tipo de Matriz
       </label>
       <select class="form-control"
         id="matrixSelect"
         name="matrixSelect"
         required
-        data-ng-model="order.id_matriz"
+        data-ng-model="order.order.id_matriz"
         data-ng-change="order.selectMatrix()"
         >
         <option value="">
@@ -138,7 +138,7 @@
         id="matrixText"
         name="matrixText"
         placeholder="En caso de otra, especificar"
-        data-ng-model="order.matriz_otra"
+        data-ng-model="order.order.matriz_otra"
         >
     </div>
   </div>
@@ -153,7 +153,7 @@
         <div class="row">
           <div class="col-xs-12 col-sm-6 col-md-4"
             data-ng-repeat="parameter in order.parameters"
-            data-ng-show="!parameter.selected"
+            data-ng-show="parameter.selected"
             >
             {{parameter.parametro}}
           </div>
@@ -169,7 +169,7 @@
   <div class="row">
     <div class="col-xs-12 col-sm-6 col-md-5 col-lg-5">
       <label for="supervisorSelect" class="sr-only">
-        Seleccione un Responsable de muestreo
+        Responsable de muestreo
       </label>
       <select class="form-control"
         id="supervisorSelect"

@@ -95,13 +95,13 @@ siclabApp.config(['$routeProvider',
       }).
       when('/muestreo/orden', {
           templateUrl: 'partials/muestreo/orden.html',
-          controller: 'SamplingOrderController'//,
-          //controllerAs: 'samplingOrder'
+          controller: 'SamplingOrderController',
+          controllerAs: 'samplingOrder'
       }).
       when('/muestreo/plan', {
           templateUrl: 'partials/muestreo/plan.html',
-          controller: 'SamplingPlanController'//,
-          //controllerAs: 'samplingPlan'
+          controller: 'SamplingPlanController',
+          controllerAs: 'samplingPlan'
       }).
       when('/muestreo/plan/hieleras', {
           templateUrl: 'partials/muestreo/plan/hieleras.html',

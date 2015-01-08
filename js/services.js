@@ -4,91 +4,97 @@
 
 var siclabServices = angular.module('siclabServices', ['ngResource']);
 
-siclabServices.factory('Login', ['$resource', function($resource){
+siclabServices.factory('TaskService', ['$resource', function($resource){
+	return $resource('models/tasks.json', {}, {
+		query: {method:'GET', params:{}, isArray:false}
+	});
+}]);
+
+siclabServices.factory('LoginService', ['$resource', function($resource){
 	return $resource('models/login.json', {}, {
 		query: {method:'GET', params:{}, isArray:false}
 	});
 }]);
 
-siclabServices.factory('Menu', ['$resource', function($resource){
+siclabServices.factory('MenuService', ['$resource', function($resource){
 	return $resource('models/menu.json', {}, {
 		query: {method:'GET', params:{}, isArray:true}
 	});
 }]);
 
-siclabServices.factory('ClientDetail', ['$resource', function($resource){
+siclabServices.factory('ClientDetailService', ['$resource', function($resource){
 	return $resource('models/clients/:clientId.json', {}, {
 		query: {method:'GET', params:{clientId:'id_cliente'}, isArray:true}
 	});
 }]);
 
-siclabServices.factory('Client', ['$resource', function($resource){
+siclabServices.factory('ClientService', ['$resource', function($resource){
 	return $resource('models/clients.json', {}, {
 		query: {method:'GET', params:{}, isArray:true}
 	});
 }]);
 
-siclabServices.factory('Department', ['$resource', function($resource){
+siclabServices.factory('DepartmentService', ['$resource', function($resource){
 	return $resource('models/areas.json', {}, {
 		query: {method:'GET', params:{}, isArray:true}
 	});
 }]);
 
-siclabServices.factory('Employee', ['$resource', function($resource){
+siclabServices.factory('EmployeeService', ['$resource', function($resource){
 	return $resource('models/empleados.json', {}, {
 		query: {method:'GET', params:{}, isArray:true}
 	});
 }]);
 
-siclabServices.factory('User', ['$resource', function($resource){
+siclabServices.factory('UserService', ['$resource', function($resource){
 	return $resource('models/usuarios.json', {}, {
 		query: {method:'GET', params:{}, isArray:true}
 	});
 }]);
 
-siclabServices.factory('Parameter', ['$resource', function($resource){
+siclabServices.factory('ParameterService', ['$resource', function($resource){
 	return $resource('models/parametros.json', {}, {
 		query: {method:'GET', params:{}, isArray:true}
 	});
 }]);
 
-siclabServices.factory('Norm', ['$resource', function($resource){
+siclabServices.factory('NormService', ['$resource', function($resource){
 	return $resource('models/normas.json', {}, {
 		query: {method:'GET', params:{}, isArray:true}
 	});
 }]);
 
-siclabServices.factory('SamplingType', ['$resource', function($resource){
+siclabServices.factory('SamplingTypeService', ['$resource', function($resource){
 	return $resource('models/tipos_muestreo.json', {}, {
 		query: {method:'GET', params:{}, isArray:true}
 	});
 }]);
 
-siclabServices.factory('Quote', ['$resource', function($resource){
+siclabServices.factory('QuoteService', ['$resource', function($resource){
 	return $resource('models/quotes/1.json', {}, {
 		query: {method:'GET', params:{}, isArray:false}
 	});
 }]);
 
-siclabServices.factory('OrderSource', ['$resource', function($resource){
+siclabServices.factory('OrderSourceService', ['$resource', function($resource){
 	return $resource('models/order_sources.json', {}, {
 		query: {method:'GET', params:{}, isArray:true}
 	});
 }]);
 
-siclabServices.factory('Matrix', ['$resource', function($resource){
+siclabServices.factory('MatrixService', ['$resource', function($resource){
 	return $resource('models/matrices.json', {}, {
 		query: {method:'GET', params:{}, isArray:true}
 	});
 }]);
 
-siclabServices.factory('SamplingSupervisor', ['$resource', function($resource){
+siclabServices.factory('SamplingSupervisorService', ['$resource', function($resource){
 	return $resource('models/sampling_supervisors.json', {}, {
 		query: {method:'GET', params:{}, isArray:true}
 	});
 }]);
 
-siclabServices.factory('SamplingOrder', ['$resource', function($resource){
+siclabServices.factory('SamplingOrderService', ['$resource', function($resource){
 	return $resource('models/sampling/orders/1.json', {}, {
 		query: {method:'GET', params:{}, isArray:false}
 	});

@@ -4,191 +4,236 @@
 
 var siclabControllers = angular.module('siclabControllers', []);
 
-siclabControllers.controller('LoginController',
-  ['$scope', 'Login', function($scope, Login) {
-  //$scope.user = Login.query();
-  $scope.login = {};
-  $scope.login.message = '';
-  $scope.login.user = {
+function LoginController($scope, Loginservice) {
+  this.message = '';
+  this.user = {
     username: '',
     password: ''
   };
-  $scope.login.login = function() {
-    $scope.login.message = 'Working...';
+
+  this.submit = function(form) {
+    this.message += ' USR ' + form.username.$modelValue;
+    this.message += ' PSW ' + form.password.$modelValue;
+  };
+
+  this.login = function() {
+    this.message = '...';
     if ($scope.loginForm.$valid)
     {
-      if ($scope.login.user.username == 'rgarcia' &&
-        $scope.login.user.password == '123'
+      if (this.user.username == 'rgarcia' &&
+        this.user.password == '123'
       )
       {
-        $scope.login.message = 'Enviando...';
-
+        this.message = 'Enviando credenciales secretas...';
+        this.submit($scope.loginForm);
       }
       else
       {
-        $scope.login.message = 'Usuario o contraseña incorrectos';
+        this.message = 'Usuario o contraseña incorrectos';
       }
     }
     else
     {
-      $scope.login.message = 'Debe ingresar usuario y/o contraseña';
+      this.message = 'Debe ingresar usuario y/o contraseña';
     }
   };
-}]);
+}
+
+siclabControllers.controller('LoginController',
+  ['$scope', 'LoginService',
+  LoginController
+]);
+
+function NavController($scope, MenuService) {
+  $scope.menu = MenuService.query();
+}
 
 siclabControllers.controller('NavController',
-  ['$scope', 'Menu', function($scope, Menu) {
-  $scope.menu = Menu.query();
-}]);
+  ['$scope', 'MenuService',
+  NavController
+]);
+
+function TasksController(TaskService) {
+  this.welcome = TaskService.query();
+}
 
 siclabControllers.controller('TasksController',
-  ['$scope', function() {
-  $scope.tasks.title = 'Bienvenido';
-  $scope.tasks.subtitle = 'Sistema de Control y Administración de Laboratorio';
-}]);
+  ['TaskService', TasksController]);
+
+function ClientsListController($scope, ClientService) {
+  $scope.clients = ClientService.query();
+}
 
 siclabControllers.controller('ClientsListController',
-  ['$scope', 'Client', function($scope, Client) {
-  $scope.clients = Client.query();
-}]);
+  ['$scope', 'ClientService',
+  ClientsListController
+]);
+
+function ClientDetailController($scope, ClientDetailService) {
+  $scope.clientDetail = ClientDetailService.query();
+}
 
 siclabControllers.controller('ClientDetailController',
-  ['$scope', 'ClientDetail', function($scope, ClientDetail) {
-  $scope.clientDetail = ClientDetail.query();
-}]);
+  ['$scope', 'ClientDetailService',
+  ClientsListController
+]);
+
+function DepartmentsListController($scope, DepartmentService) {
+  $scope.departments = DepartmentService.query();
+}
 
 siclabControllers.controller('DepartmentsListController',
-  ['$scope', 'Department', function($scope, Department) {
-  $scope.departments = Department.query();
-}]);
+  ['$scope', 'DepartmentService',
+  DepartmentsListController
+]);
+
+function EmployeesListController($scope, EmployeeService) {
+  $scope.employees = EmployeeService.query();
+}
 
 siclabControllers.controller('EmployeesListController',
-  ['$scope', 'Employee', function($scope, Employee) {
-  $scope.employees = Employee.query();
-}]);
+  ['$scope', 'EmployeeService',
+  EmployeesListController
+]);
+
+function UsersListController ($scope, UserService) {
+  $scope.users = UserService.query();
+}
 
 siclabControllers.controller('UsersListController',
-  ['$scope', 'User', function($scope, User) {
-  $scope.users = User.query();
-}]);
+  ['$scope', 'UserService',
+  UsersListController
+]);
+
+function NormsListController($scope, NormService) {
+  $scope.norms = NormService.query();
+}
 
 siclabControllers.controller('NormsListController',
-  ['$scope', 'Norm', function($scope, Norm) {
-  $scope.norms = Norm.query();
-}]);
+  ['$scope', 'NormService',
+  NormsListController
+]);
 
-siclabControllers.controller('QuoteController',
- ['$scope', 'Client', 'Parameter', 'Norm', 'SamplingType', 'Quote',
-  function($scope, Client, Parameter, Norm, SamplingType, Quote) {
-    $scope.quote = {};
-    $scope.quote.clients = Client.query();
-    $scope.quote.parameters = Parameter.query();
-    $scope.quote.norms = Norm.query();
-    $scope.quote.samplingTypes = SamplingType.query();
-    $scope.quote.quote = Quote.query();
-    $scope.quote.clientDetailsIsShown = false;
-    $scope.quote.totalCost = 0;
+function QuoteController(ClientService, ParameterService, NormService,
+  SamplingTypeService, QuoteService) {
+  this.clients = ClientService.query();
+  this.parameters = ParameterService.query();
+  this.norms = NormService.query();
+  this.samplingTypes = SamplingTypeService.query();
+  this.quote = QuoteService.query();
+  this.clientDetailsIsShown = false;
+  this.totalCost = 0;
 
-    $scope.quote.toggleClientInfo = function($event) {
-      var id = $scope.quote.quote.id_cliente;
-      $event.stopPropagation();
-      $scope.quote.clientDetailsIsShown = (
-        $scope.quote.quote.id_cliente > 0 &&
-        $scope.quote.selectClient(id).cliente &&
-        !$scope.quote.clientDetailsIsShown
-      );
-    };
+  this.toggleClientInfo = function() {
+    var id = this.quote.id_cliente;
+    this.clientDetailsIsShown = (
+      this.quote.id_cliente > 0 &&
+      this.selectClient(id).cliente &&
+      !this.clientDetailsIsShown
+    );
+  };
 
-    $scope.quote.selectClient = function(idClient) {
-      var i = 0,l = $scope.quote.clients.length;
-      $scope.quote.quote.cliente = {};
-      for (i; i < l; i += 1) {
-        if ($scope.quote.clients[i].id_cliente == idClient) {
-          $scope.quote.quote.cliente = $scope.quote.clients[i];
-          break;
-        }
+  this.selectClient = function(idClient) {
+    var i = 0,l = this.clients.length;
+    this.quote.cliente = {};
+    for (i; i < l; i += 1) {
+      if (this.clients[i].id_cliente == idClient) {
+        this.quote.cliente = this.clients[i];
+        break;
       }
-      return $scope.quote.quote.cliente;
-    };
+    }
+    return this.quote.cliente;
+  };
 
-    $scope.quote.totalParameter = function(){
-      var t = 0;
-      angular.forEach($scope.quote.parameters, function(s){
-        if(s.selected) {
-          t += parseFloat(s.precio);
-        }
-      });
-      t = t * $scope.quote.quote.cliente.tasa;
-      $scope.quote.totalCost = (Math.round(t * 100) / 100);
-      return $scope.quote.totalCost;
-    };
-
-    $scope.quote.toggleParamSel = function(s){
-      s.selected = !s.selected;
-    };
-
-    $scope.quote.selectNorm = function(idNorm) {
-      var i, l, j, m, params;
-      l = $scope.quote.norms.length;
-      $scope.quote.quote.norma = {};
-      $scope.quote.quote.parametros_seleccionados = [];
-      for (i = 0; i < l; i += 1) {
-        if ($scope.quote.norms[i].id_norma == idNorm) {
-          $scope.quote.quote.norma = $scope.quote.norms[i];
-          break;
-        }
+  this.totalParameter = function(){
+    var t = 0;
+    angular.forEach(this.parameters, function(s){
+      if(s.selected) {
+        t += parseFloat(s.precio);
       }
-      l = $scope.quote.parameters.length;
-      params = $scope.quote.quote.norma.parametros;
-      for(i = 0; i < l; i += 1) {
-        $scope.quote.parameters[i].selected = false;
-        if (params !== undefined) {
-          m = params.length;
-          for (j = 0; j < m; j += 1) {
-            if ($scope.quote.parameters[i].id_parametro == params[j].id_parametro) {
-              $scope.quote.parameters[i].selected = true;
-            }
+    });
+    t = t * this.quote.cliente.tasa;
+    this.totalCost = (Math.round(t * 100) / 100);
+    this.quote.total = this.totalCost;
+    return this.totalCost;
+  };
+
+  this.selectNorm = function(idNorm) {
+    var i, l, j, m, params;
+    l = this.norms.length;
+    this.quote.norma = {};
+    this.quote.parametros_seleccionados = [];
+    for (i = 0; i < l; i += 1) {
+      if (this.norms[i].id_norma == idNorm) {
+        this.quote.norma = this.norms[i];
+        break;
+      }
+    }
+    l = this.parameters.length;
+    params = this.quote.norma.parametros;
+    for(i = 0; i < l; i += 1) {
+      this.parameters[i].selected = false;
+      if (params !== undefined) {
+        m = params.length;
+        for (j = 0; j < m; j += 1) {
+          if (this.parameters[i].id_parametro == params[j].id_parametro) {
+            this.parameters[i].selected = true;
           }
         }
       }
-      return '';
-    };
+    }
+    return '';
+  };
 
-    $scope.quote.submitQuoteForm = function () {
+  this.submitQuoteForm = function () {
 
-    };
-  }
+  };
+}
+
+siclabControllers.controller('QuoteController',
+ ['ClientService', 'ParameterService', 'NormService',
+ 'SamplingTypeService', 'QuoteService',
+  QuoteController
 ]);
+
+function SamplingOrderController($scope, QuoteService, OrderSourceService,
+  MatrixService, ParameterService, SamplingSupervisorService,
+  SamplingOrderService) {
+  $scope.order = {};
+  $scope.order.order = SamplingOrderService.query();
+  $scope.order.quote = QuoteService.query();
+  $scope.order.orderSources = OrderSourceService.query();
+  $scope.order.matrices = MatrixService.query();
+  $scope.order.supervisors = SamplingSupervisorService.query();
+  $scope.order.parameters = ParameterService.query();
+  $scope.order.selectOrderSource = function() {
+
+  };
+  $scope.order.selectMatrix = function() {
+
+  };
+  $scope.order.selectSupervisor = function() {
+
+  };
+  $scope.order.validateOrderForm = function() {
+
+  };
+  $scope.order.submitOrderForm = function() {
+
+  };
+}
 
 siclabControllers.controller('SamplingOrderController',
-  ['$scope', 'Quote', 'OrderSource', 'Matrix', 'SamplingSupervisor', 'SamplingOrder',
-  function($scope, Quote, OrderSource, Matrix, SamplingSupervisor, SamplingOrder) {
-    $scope.order.order = SamplingOrder.query();
-    $scope.order.quote = Quote.query();
-    $scope.order.orderSources = OrderSource.query();
-    $scope.order.matrices = Matrix.query();
-    $scope.order.supervisors = SamplingSupervisor.query();
-    $scope.order.selectOrderSource = function() {
-
-    };
-    $scope.order.selectMatrix = function() {
-
-    };
-    $scope.order.selectSupervisor = function() {
-
-    };
-    $scope.order.validateOrderForm = function() {
-
-    };
-    $scope.order.submitOrderForm = function() {
-
-    };
-  }
+  ['$scope', 'QuoteService', 'OrderSourceService', 'MatrixService',
+  'ParameterService', 'SamplingSupervisorService', 'SamplingOrderService',
+  SamplingOrderController
 ]);
+
+function SamplingPlanController() {
+
+}
 
 siclabControllers.controller('SamplingPlanController',
   ['$scope',
-  function() {
-
-  }
+  SamplingPlanController
 ]);

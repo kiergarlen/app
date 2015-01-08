@@ -85,7 +85,7 @@
       "id_usuario_valida":3,
       "id_norma":1,
       "id_tipo_muestreo":1,
-      "precio_total":0,
+      "total":0,
       "cliente":
       {
         "id_cliente":1,

@@ -15,8 +15,8 @@ siclabApp.config(['$routeProvider',
     $routeProvider.
       when('/main', {
           templateUrl: 'partials/sistema/main.html',
-          controller: 'TasksController'//,
-          //controllerAs: 'tasks'
+          controller: 'TasksController',
+          controllerAs: 'tasks'
       }).
       when('/analisis/captura', {
           templateUrl: 'partials/analisis/captura.html',
@@ -130,8 +130,8 @@ siclabApp.config(['$routeProvider',
       }).
       when('/muestreo/solicitud', {
           templateUrl: 'partials/muestreo/solicitud.html',
-          controller: 'QuoteController'//,
-          //controllerAs: 'quote'
+          controller: 'QuoteController',
+          controllerAs: 'quote'
       }).
       when('/recepcion/custodia', {
           templateUrl: 'partials/recepcion/custodia.html',
@@ -165,8 +165,8 @@ siclabApp.config(['$routeProvider',
       }).
       when('/sistema/login', {
           templateUrl: 'partials/sistema/login.html',
-          controller: 'LoginController'//,
-          //controllerAs: 'login'
+          controller: 'LoginController',
+          controllerAs: 'login'
       }).
       when('/sistema/logout', {
           templateUrl: 'partials/sistema/logout.html',

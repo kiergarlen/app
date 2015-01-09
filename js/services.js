@@ -1,101 +1,161 @@
-'use strict';
+//SERVICES
 
-/* Services */
+function TaskService($resource){
+  return $resource('models/tasks.json', {}, {
+    query: {method:'GET', params:{}, isArray:false}
+  });
+}
 
-var siclabServices = angular.module('siclabServices', ['ngResource']);
+angular
+  .module('siclabApp')
+  .factory('TaskService', ['$resource', TaskService]);
 
-siclabServices.factory('TaskService', ['$resource', function($resource){
-	return $resource('models/tasks.json', {}, {
-		query: {method:'GET', params:{}, isArray:false}
-	});
-}]);
+function LoginService($resource) {
+  return $resource('models/login.json', {}, {
+    query: {method:'GET', params:{}, isArray:false}
+  });
+}
 
-siclabServices.factory('LoginService', ['$resource', function($resource){
-	return $resource('models/login.json', {}, {
-		query: {method:'GET', params:{}, isArray:false}
-	});
-}]);
+angular
+  .module('siclabApp')
+  .factory('LoginService', ['$resource', LoginService]);
 
-siclabServices.factory('MenuService', ['$resource', function($resource){
-	return $resource('models/menu.json', {}, {
-		query: {method:'GET', params:{}, isArray:true}
-	});
-}]);
+function MenuService($resource) {
+  return $resource('models/menu.json', {}, {
+    query: {method:'GET', params:{}, isArray:true}
+  });
+}
 
-siclabServices.factory('ClientDetailService', ['$resource', function($resource){
-	return $resource('models/clients/:clientId.json', {}, {
-		query: {method:'GET', params:{clientId:'id_cliente'}, isArray:true}
-	});
-}]);
+angular
+  .module('siclabApp')
+  .factory('MenuService', ['$resource', MenuService]);
 
-siclabServices.factory('ClientService', ['$resource', function($resource){
-	return $resource('models/clients.json', {}, {
-		query: {method:'GET', params:{}, isArray:true}
-	});
-}]);
+function ClientDetailService($resource) {
+  return $resource('models/clients/:clientId.json', {}, {
+    query: {method:'GET', params:{clientId:'id_cliente'}, isArray:true}
+  });
+}
 
-siclabServices.factory('DepartmentService', ['$resource', function($resource){
-	return $resource('models/areas.json', {}, {
-		query: {method:'GET', params:{}, isArray:true}
-	});
-}]);
+angular
+  .module('siclabApp')
+  .factory('ClientDetailService', ['$resource',  ClientDetailService]);
 
-siclabServices.factory('EmployeeService', ['$resource', function($resource){
-	return $resource('models/empleados.json', {}, {
-		query: {method:'GET', params:{}, isArray:true}
-	});
-}]);
+function ClientService($resource) {
+  return $resource('models/clients.json', {}, {
+    query: {method:'GET', params:{}, isArray:true}
+  });
+}
 
-siclabServices.factory('UserService', ['$resource', function($resource){
-	return $resource('models/usuarios.json', {}, {
-		query: {method:'GET', params:{}, isArray:true}
-	});
-}]);
+angular
+  .module('siclabApp')
+  .factory('ClientService', ['$resource', ClientService]);
 
-siclabServices.factory('ParameterService', ['$resource', function($resource){
-	return $resource('models/parametros.json', {}, {
-		query: {method:'GET', params:{}, isArray:true}
-	});
-}]);
+function DepartmentService($resource) {
+  return $resource('models/areas.json', {}, {
+    query: {method:'GET', params:{}, isArray:true}
+  });
+}
 
-siclabServices.factory('NormService', ['$resource', function($resource){
-	return $resource('models/normas.json', {}, {
-		query: {method:'GET', params:{}, isArray:true}
-	});
-}]);
+angular
+  .module('siclabApp')
+  .factory('DepartmentService', ['$resource', DepartmentService]);
 
-siclabServices.factory('SamplingTypeService', ['$resource', function($resource){
-	return $resource('models/tipos_muestreo.json', {}, {
-		query: {method:'GET', params:{}, isArray:true}
-	});
-}]);
+function EmployeeService($resource) {
+  return $resource('models/empleados.json', {}, {
+    query: {method:'GET', params:{}, isArray:true}
+  });
+}
 
-siclabServices.factory('QuoteService', ['$resource', function($resource){
-	return $resource('models/quotes/1.json', {}, {
-		query: {method:'GET', params:{}, isArray:false}
-	});
-}]);
+angular
+  .module('siclabApp')
+  .factory('EmployeeService', ['$resource', EmployeeService]);
 
-siclabServices.factory('OrderSourceService', ['$resource', function($resource){
-	return $resource('models/order_sources.json', {}, {
-		query: {method:'GET', params:{}, isArray:true}
-	});
-}]);
+function UserService($resource) {
+  return $resource('models/usuarios.json', {}, {
+    query: {method:'GET', params:{}, isArray:true}
+  });
+}
 
-siclabServices.factory('MatrixService', ['$resource', function($resource){
-	return $resource('models/matrices.json', {}, {
-		query: {method:'GET', params:{}, isArray:true}
-	});
-}]);
+angular
+  .module('siclabApp')
+  .factory('UserService', ['$resource', UserService]);
 
-siclabServices.factory('SamplingSupervisorService', ['$resource', function($resource){
-	return $resource('models/sampling_supervisors.json', {}, {
-		query: {method:'GET', params:{}, isArray:true}
-	});
-}]);
+function ParameterService($resource) {
+  return $resource('models/parametros.json', {}, {
+    query: {method:'GET', params:{}, isArray:true}
+  });
+}
 
-siclabServices.factory('SamplingOrderService', ['$resource', function($resource){
-	return $resource('models/sampling/orders/1.json', {}, {
-		query: {method:'GET', params:{}, isArray:false}
-	});
-}]);
+angular
+  .module('siclabApp')
+  .factory('ParameterService', ['$resource', ParameterService]);
+
+function NormService($resource) {
+  return $resource('models/normas.json', {}, {
+    query: {method:'GET', params:{}, isArray:true}
+  });
+}
+
+angular
+  .module('siclabApp')
+  .factory('NormService', ['$resource', NormService]);
+
+function SamplingTypeService($resource) {
+  return $resource('models/tipos_muestreo.json', {}, {
+    query: {method:'GET', params:{}, isArray:true}
+  });
+}
+
+angular
+  .module('siclabApp')
+  .factory('SamplingTypeService', ['$resource', SamplingTypeService]);
+
+function QuoteService($resource) {
+  return $resource('models/quotes/1.json', {}, {
+    query: {method:'GET', params:{}, isArray:false}
+  });
+}
+
+angular
+  .module('siclabApp')
+  .factory('QuoteService', ['$resource', QuoteService]);
+
+function OrderSourceService($resource) {
+  return $resource('models/order_sources.json', {}, {
+    query: {method:'GET', params:{}, isArray:true}
+  });
+}
+
+angular
+  .module('siclabApp')
+  .factory('OrderSourceService', ['$resource', OrderSourceService]);
+
+function MatrixService($resource) {
+  return $resource('models/matrices.json', {}, {
+    query: {method:'GET', params:{}, isArray:true}
+  });
+}
+
+angular
+  .module('siclabApp')
+  .factory('MatrixService', ['$resource', MatrixService]);
+
+function SamplingSupervisorService($resource) {
+  return $resource('models/sampling_supervisors.json', {}, {
+    query: {method:'GET', params:{}, isArray:true}
+  });
+}
+
+angular
+  .module('siclabApp')
+  .factory('SamplingSupervisorService', ['$resource', SamplingSupervisorService]);
+
+function SamplingOrderService($resource) {
+  return $resource('models/sampling/orders/1.json', {}, {
+    query: {method:'GET', params:{}, isArray:false}
+  });
+}
+
+angular
+  .module('siclabApp')
+  .factory('SamplingOrderService', ['$resource', SamplingOrderService]);

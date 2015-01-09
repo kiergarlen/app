@@ -1,8 +1,4 @@
-'use strict';
-
-/* Directives */
-
-var siclabDirectives = angular.module('siclabDirectives', []);
+//DIRECTIVES
 
 function mainNav() {
   return {
@@ -12,4 +8,6 @@ function mainNav() {
   };
 }
 
-siclabDirectives.directive('mainNav', mainNav);
+angular
+  .module('siclabApp')
+  .directive('mainNav', mainNav);

@@ -1,8 +1,4 @@
-'use strict';
-
-/* Controllers */
-
-var siclabControllers = angular.module('siclabControllers', []);
+//CONTROLLERS
 
 function LoginController($scope, Loginservice) {
   this.message = '';
@@ -39,7 +35,9 @@ function LoginController($scope, Loginservice) {
   };
 }
 
-siclabControllers.controller('LoginController',
+angular
+  .module('siclabApp')
+  .controller('LoginController',
   ['$scope', 'LoginService',
   LoginController
 ]);
@@ -48,7 +46,9 @@ function NavController($scope, MenuService) {
   $scope.menu = MenuService.query();
 }
 
-siclabControllers.controller('NavController',
+angular
+  .module('siclabApp')
+  .controller('NavController',
   ['$scope', 'MenuService',
   NavController
 ]);
@@ -57,14 +57,18 @@ function TasksController(TaskService) {
   this.welcome = TaskService.query();
 }
 
-siclabControllers.controller('TasksController',
+angular
+  .module('siclabApp')
+  .controller('TasksController',
   ['TaskService', TasksController]);
 
 function ClientsListController($scope, ClientService) {
   $scope.clients = ClientService.query();
 }
 
-siclabControllers.controller('ClientsListController',
+angular
+  .module('siclabApp')
+  .controller('ClientsListController',
   ['$scope', 'ClientService',
   ClientsListController
 ]);
@@ -73,7 +77,9 @@ function ClientDetailController($scope, ClientDetailService) {
   $scope.clientDetail = ClientDetailService.query();
 }
 
-siclabControllers.controller('ClientDetailController',
+angular
+  .module('siclabApp')
+  .controller('ClientDetailController',
   ['$scope', 'ClientDetailService',
   ClientsListController
 ]);
@@ -82,7 +88,9 @@ function DepartmentsListController($scope, DepartmentService) {
   $scope.departments = DepartmentService.query();
 }
 
-siclabControllers.controller('DepartmentsListController',
+angular
+  .module('siclabApp')
+  .controller('DepartmentsListController',
   ['$scope', 'DepartmentService',
   DepartmentsListController
 ]);
@@ -91,7 +99,9 @@ function EmployeesListController($scope, EmployeeService) {
   $scope.employees = EmployeeService.query();
 }
 
-siclabControllers.controller('EmployeesListController',
+angular
+  .module('siclabApp')
+  .controller('EmployeesListController',
   ['$scope', 'EmployeeService',
   EmployeesListController
 ]);
@@ -100,7 +110,9 @@ function UsersListController ($scope, UserService) {
   $scope.users = UserService.query();
 }
 
-siclabControllers.controller('UsersListController',
+angular
+  .module('siclabApp')
+  .controller('UsersListController',
   ['$scope', 'UserService',
   UsersListController
 ]);
@@ -109,7 +121,9 @@ function NormsListController($scope, NormService) {
   $scope.norms = NormService.query();
 }
 
-siclabControllers.controller('NormsListController',
+angular
+  .module('siclabApp')
+  .controller('NormsListController',
   ['$scope', 'NormService',
   NormsListController
 ]);
@@ -190,7 +204,9 @@ function QuoteController(ClientService, ParameterService, NormService,
   };
 }
 
-siclabControllers.controller('QuoteController',
+angular
+  .module('siclabApp')
+  .controller('QuoteController',
  ['ClientService', 'ParameterService', 'NormService',
  'SamplingTypeService', 'QuoteService',
   QuoteController
@@ -223,7 +239,9 @@ function SamplingOrderController($scope, QuoteService, OrderSourceService,
   };
 }
 
-siclabControllers.controller('SamplingOrderController',
+angular
+  .module('siclabApp')
+  .controller('SamplingOrderController',
   ['$scope', 'QuoteService', 'OrderSourceService', 'MatrixService',
   'ParameterService', 'SamplingSupervisorService', 'SamplingOrderService',
   SamplingOrderController
@@ -233,7 +251,9 @@ function SamplingPlanController() {
 
 }
 
-siclabControllers.controller('SamplingPlanController',
+angular
+  .module('siclabApp')
+  .controller('SamplingPlanController',
   ['$scope',
   SamplingPlanController
 ]);

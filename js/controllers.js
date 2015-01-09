@@ -270,31 +270,20 @@ function SamplingOrderController(QuoteService, OrderSourceService,
   };
 }
 
-<<<<<<< HEAD
 angular
   .module('siclabApp')
   .controller('SamplingOrderController',
   ['$scope', 'QuoteService', 'OrderSourceService', 'MatrixService',
-=======
-siclabControllers.controller('SamplingOrderController',
-  ['QuoteService', 'OrderSourceService', 'MatrixService',
->>>>>>> FETCH_HEAD
-  'ParameterService', 'SamplingSupervisorService', 'SamplingOrderService',
-  SamplingOrderController
+  SamplingPlanController
 ]);
-
+  
 function SamplingPlanController() {
   //
 }
 
-<<<<<<< HEAD
 angular
   .module('siclabApp')
   .controller('SamplingPlanController',
   ['$scope',
-=======
-siclabControllers.controller('SamplingPlanController',
-  [
->>>>>>> FETCH_HEAD
   SamplingPlanController
 ]);

@@ -1,13 +1,13 @@
 //DIRECTIVES
 
-function mainNav() {
+function mainMenu() {
   return {
     restrict: 'EA',
     require: '^ngModel',
-    templateUrl: 'partials/sistema/nav.html'
+    templateUrl: 'partials/sistema/menu.html'
   };
 }
 
 angular
   .module('siclabApp')
-  .directive('mainNav', mainNav);
+  .directive('mainMenu', mainMenu);

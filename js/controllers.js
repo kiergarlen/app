@@ -42,15 +42,15 @@ angular
   LoginController
 ]);
 
-function NavController($scope, MenuService) {
+function MenuController($scope, MenuService) {
   $scope.menu = MenuService.query();
 }
 
 angular
   .module('siclabApp')
-  .controller('NavController',
+  .controller('MenuController',
   ['$scope', 'MenuService',
-  NavController
+  MenuController
 ]);
 
 function TasksController(TaskService) {
@@ -276,7 +276,7 @@ angular
   ['$scope', 'QuoteService', 'OrderSourceService', 'MatrixService',
   SamplingPlanController
 ]);
-  
+
 function SamplingPlanController() {
   //
 }

@@ -1,36 +1,54 @@
 //CONTROLLERS
 
-function LoginController($scope, Loginservice) {
-  this.message = '';
-  this.user = {
+
+/**
+ * @name LoginController
+ * @desc Controla la vista para Login
+ * @param {Object} $scope - Contenedor para el modelo [AngularJS]
+ * @param {Object} $http - Manejo de peticiones HTTP [AngularJS]
+ * @param {Function} LoginService - Proveedor de datos, Login
+ */
+function LoginController($scope, $http, Loginservice) {
+  var vm = this;
+  vm.message = '';
+  vm.user = {
     username: '',
     password: ''
   };
 
-  this.submit = function(form) {
-    this.message += ' USR ' + form.username.$modelValue;
-    this.message += ' PSW ' + form.password.$modelValue;
+  vm.submit = function(msg, usr, pwd) {
+    msg = [
+      msg,
+      ', USER: ',
+      usr,
+      ' PASSWORD: ',
+      pwd
+    ].join('');
+    return msg;
   };
 
-  this.login = function() {
-    this.message = '...';
-    if ($scope.loginForm.$valid)
+  vm.login = function() {
+    if (vm.loginForm.$valid)
     {
-      if (this.user.username == 'rgarcia' &&
-        this.user.password == '123'
+      if (vm.user.username == 'rgarcia' &&
+        vm.user.password == '123'
       )
       {
-        this.message = 'Enviando credenciales secretas...';
-        this.submit($scope.loginForm);
+        vm.message = 'Enviando datos secretos...';
+        vm.submit(
+          vm.message,
+          vm.user.username,
+          vm.user.password
+        );
       }
       else
       {
-        this.message = 'Usuario o contraseña incorrectos';
+        vm.message = 'Usuario o contraseña incorrectos';
       }
     }
     else
     {
-      this.message = 'Debe ingresar usuario y/o contraseña';
+      vm.message = 'Debe ingresar usuario y/o contraseña';
     }
   };
 }
@@ -38,10 +56,19 @@ function LoginController($scope, Loginservice) {
 angular
   .module('siclabApp')
   .controller('LoginController',
-  ['$scope', 'LoginService',
-  LoginController
-]);
+    [
+      '$scope', '$http',
+      'LoginService',
+      LoginController
+    ]
+  );
 
+/**
+ * @name MenuController
+ * @desc Controla la vista para el Menú principal
+ * @param {Object} $scope - Contenedor para el modelo [AngularJS]
+ * @param {Function} MenuService - Proveedor de datos, Menú
+ */
 function MenuController($scope, MenuService) {
   $scope.menu = MenuService.query();
 }
@@ -49,19 +76,39 @@ function MenuController($scope, MenuService) {
 angular
   .module('siclabApp')
   .controller('MenuController',
-  ['$scope', 'MenuService',
-  MenuController
-]);
+    [
+      '$scope',
+      'MenuService',
+      MenuController
+    ]
+  );
 
+/**
+ * @name TasksController
+ * @desc Controla la vista para Bienvenida (Tablero de Tareas)
+ * @param {Function} TaskService - Proveedor de datos, Tareas
+ */
 function TasksController(TaskService) {
-  this.welcome = TaskService.query();
+  //TODO: construir Tablero de Tareas del usuario
+  var vm = this;
+  vm.welcome = TaskService.query();
 }
 
 angular
   .module('siclabApp')
   .controller('TasksController',
-  ['TaskService', TasksController]);
+    [
+      'TaskService',
+      TasksController
+    ]
+  );
 
+/**
+ * @name ClientsListController
+ * @desc Controla la vista para el listado de Clientes
+ * @param {Object} $scope - Contenedor para el modelo [AngularJS]
+ * @param {Function} ClientService - Proveedor de datos, Cliente
+ */
 function ClientsListController($scope, ClientService) {
   $scope.clients = ClientService.query();
 }
@@ -69,10 +116,19 @@ function ClientsListController($scope, ClientService) {
 angular
   .module('siclabApp')
   .controller('ClientsListController',
-  ['$scope', 'ClientService',
-  ClientsListController
-]);
+    [
+      '$scope',
+      'ClientService',
+      ClientsListController
+    ]
+  );
 
+/**
+ * @name ClientDetailController
+ * @desc Controla la vista para con el detalle de un Cliente
+ * @param {Object} $scope - Contenedor para el modelo [AngularJS]
+ * @param {Function} ClientDetailService - Proveedor de datos, Detalle Cliente
+ */
 function ClientDetailController($scope, ClientDetailService) {
   $scope.clientDetail = ClientDetailService.query();
 }
@@ -80,10 +136,19 @@ function ClientDetailController($scope, ClientDetailService) {
 angular
   .module('siclabApp')
   .controller('ClientDetailController',
-  ['$scope', 'ClientDetailService',
-  ClientsListController
-]);
+    [
+      '$scope',
+      'ClientDetailService',
+      ClientsListController
+    ]
+  );
 
+/**
+ * @name DepartmentsListController
+ * @desc Controla la vista para el listado de Áreas
+ * @param {Object} $scope - Contenedor para el modelo [AngularJS]
+ * @param {Function} DepartmentService - Proveedor de datos, Áreas
+ */
 function DepartmentsListController($scope, DepartmentService) {
   $scope.departments = DepartmentService.query();
 }
@@ -91,10 +156,19 @@ function DepartmentsListController($scope, DepartmentService) {
 angular
   .module('siclabApp')
   .controller('DepartmentsListController',
-  ['$scope', 'DepartmentService',
-  DepartmentsListController
-]);
+    [
+      '$scope',
+      'DepartmentService',
+      DepartmentsListController
+    ]
+  );
 
+/**
+ * @name EmployeesListController
+ * @desc Controla la vista para el listado de Empleados
+ * @param {Object} $scope - Contenedor para el modelo [AngularJS]
+ * @param {Function} EmployeeService - Proveedor de datos, Empleados
+ */
 function EmployeesListController($scope, EmployeeService) {
   $scope.employees = EmployeeService.query();
 }
@@ -102,10 +176,19 @@ function EmployeesListController($scope, EmployeeService) {
 angular
   .module('siclabApp')
   .controller('EmployeesListController',
-  ['$scope', 'EmployeeService',
-  EmployeesListController
-]);
+    [
+      '$scope',
+      'EmployeeService',
+      EmployeesListController
+    ]
+  );
 
+/**
+ * @name UsersListController
+ * @desc Controla la vista para el listado de Usuarios
+ * @param {Object} $scope - Contenedor para el modelo [AngularJS]
+ * @param {Function} UserService - Proveedor de datos, Usuarios
+ */
 function UsersListController ($scope, UserService) {
   $scope.users = UserService.query();
 }
@@ -113,10 +196,19 @@ function UsersListController ($scope, UserService) {
 angular
   .module('siclabApp')
   .controller('UsersListController',
-  ['$scope', 'UserService',
-  UsersListController
-]);
+    [
+      '$scope',
+      'UserService',
+      UsersListController
+    ]
+  );
 
+/**
+ * @name NormsListController
+ * @desc Controla la vista para el listado de Normas
+ * @param {Object} $scope - Contenedor para el modelo [AngularJS]
+ * @param {Function} NormService - Proveedor de datos, Normas
+ */
 function NormsListController($scope, NormService) {
   $scope.norms = NormService.query();
 }
@@ -124,82 +216,105 @@ function NormsListController($scope, NormService) {
 angular
   .module('siclabApp')
   .controller('NormsListController',
-  ['$scope', 'NormService',
-  NormsListController
-]);
+  [
+    '$scope',
+    'NormService',
+    NormsListController
+  ]
+  );
 
+/**
+ * @name QuoteController
+ * @desc Controla la vista para capturar una Solicitud/Cotización
+ * @param {Function} ClientService - Proveedor de datos, Clientes
+ * @param {Function} ParameterService - Proveedor de datos, Parámetros
+ * @param {Function} NormService - Proveedor de datos, Normas
+ * @param {Function} SamplingTypeService - Proveedor de datos, Tipos muestreo
+ * @param {Function} QuoteService - Proveedor de datos, Cotizaciones
+ */
 function QuoteController(ClientService, ParameterService, NormService,
   SamplingTypeService, QuoteService) {
-  this.clients = ClientService.query();
-  this.parameters = ParameterService.query();
-  this.norms = NormService.query();
-  this.samplingTypes = SamplingTypeService.query();
-  this.quote = QuoteService.query();
-  this.clientDetailsIsShown = false;
-  this.totalCost = 0;
+  var vm = this;
+  vm.clients = ClientService.query();
+  vm.parameters = ParameterService.query();
+  vm.norms = NormService.query();
+  vm.samplingTypes = SamplingTypeService.query();
+  vm.quote = QuoteService.query();
+  vm.clientDetailsIsShown = false;
+  vm.totalCost = 0;
 
-  this.toggleClientInfo = function() {
-    var id = this.quote.id_cliente;
-    this.clientDetailsIsShown = (
-      this.quote.id_cliente > 0 &&
-      this.selectClient(id).cliente &&
-      !this.clientDetailsIsShown
+  vm.toggleClientInfo = function() {
+    var id = vm.quote.id_cliente;
+    vm.clientDetailsIsShown = (
+      vm.quote.id_cliente > 0 &&
+      vm.selectClient(id).cliente &&
+      !vm.clientDetailsIsShown
     );
   };
 
-  this.selectClient = function(idClient) {
-    var i = 0, l = this.clients.length;
-    this.quote.cliente = {};
+  vm.selectClient = function(idClient) {
+    var i = 0, l = vm.clients.length;
+    vm.quote.cliente = {};
     for (i; i < l; i += 1) {
-      if (this.clients[i].id_cliente == idClient) {
-        this.quote.cliente = this.clients[i];
+      if (vm.clients[i].id_cliente == idClient)
+      {
+        vm.quote.cliente = vm.clients[i];
         break;
       }
     }
-    return this.quote.cliente;
+    return vm.quote.cliente;
   };
 
-  this.totalParameter = function(){
+  vm.totalParameter = function(){
     var t = 0;
-    angular.forEach(this.parameters, function(s){
-      if(s.selected) {
+    angular.forEach(vm.parameters, function(s){
+      if(s.selected)
+      {
         t += parseFloat(s.precio);
       }
     });
-    t = t * this.quote.cliente.tasa;
-    this.totalCost = (Math.round(t * 100) / 100);
-    this.quote.total = this.totalCost;
-    return this.totalCost;
+    t = t * vm.quote.cliente.tasa;
+    vm.totalCost = (Math.round(t * 100) / 100);
+    vm.quote.total = vm.totalCost;
+    return vm.totalCost;
   };
 
-  this.selectNorm = function(idNorm) {
-    var i, l, j, m, params;
-    l = this.norms.length;
-    this.quote.norma = {};
-    this.quote.parametros_seleccionados = [];
+  vm.selectNorm = function(idNorm) {
+    var i, l, j, m;
+    l = vm.norms.length;
+    vm.quote.norma = {};
+    vm.quote.parametros_seleccionados = [];
     for (i = 0; i < l; i += 1) {
-      if (this.norms[i].id_norma == idNorm) {
-        this.quote.norma = this.norms[i];
+      if (vm.norms[i].id_norma == idNorm)
+      {
+        vm.quote.norma = vm.norms[i];
         break;
       }
     }
-    l = this.parameters.length;
-    params = this.quote.norma.parametros;
+    vm.selectNormParameters();
+    return '';
+  };
+
+  vm.selectNormParameters = function() {
+    var i, l, j, m;
+    l = vm.parameters.length;
     for(i = 0; i < l; i += 1) {
-      this.parameters[i].selected = false;
-      if (params !== undefined) {
-        m = params.length;
+      vm.parameters[i].selected = false;
+      if (vm.quote.norma.parametros !== undefined)
+      {
+        m = vm.quote.norma.parametros.length;
         for (j = 0; j < m; j += 1) {
-          if (this.parameters[i].id_parametro == params[j].id_parametro) {
-            this.parameters[i].selected = true;
+          if (vm.parameters[i].id_parametro ==
+            vm.quote.norma.parametros[j].id_parametro)
+          {
+            vm.parameters[i].selected = true;
           }
         }
       }
     }
-    return '';
   };
 
-  this.submitQuoteForm = function () {
+  vm.submitQuoteForm = function () {
 
   };
 }
@@ -207,65 +322,78 @@ function QuoteController(ClientService, ParameterService, NormService,
 angular
   .module('siclabApp')
   .controller('QuoteController',
- ['ClientService', 'ParameterService', 'NormService',
- 'SamplingTypeService', 'QuoteService',
-  QuoteController
-]);
+    [
+      'ClientService', 'ParameterService', 'NormService',
+      'SamplingTypeService', 'QuoteService',
+      QuoteController
+    ]
+  );
 
+/**
+ * @name SamplingOrderController
+ * @desc Controla la vista para capturar una Orden de muestreo
+ * @param {Function} QuoteService - Proveedor de datos, Cotizaciones
+ * @param {Function} OrderSourceService - Proveedor de datos, Orígenes orden
+ * @param {Function} MatrixService - Proveedor de datos, Tipos matriz
+ * @param {Function} ParameterService - Proveedor de datos, Parámetros
+ * @param {Function} SamplingSupervisorService - Proveedor de datos, Supervisores
+ * @param {Function} SamplingOrderService - Proveedor de datos, Orden muestreo
+ */
 function SamplingOrderController(QuoteService, OrderSourceService,
   MatrixService, ParameterService, SamplingSupervisorService,
   SamplingOrderService) {
-  this.order = SamplingOrderService.query();
-  this.quote = QuoteService.query();
-  this.orderSources = OrderSourceService.query();
-  this.matrices = MatrixService.query();
-  this.supervisors = SamplingSupervisorService.query();
-  this.parameters = ParameterService.query();
+  var m = this;
+  vm.order = SamplingOrderService.query();
+  vm.quote = QuoteService.query();
+  vm.orderSources = OrderSourceService.query();
+  vm.matrices = MatrixService.query();
+  vm.supervisors = SamplingSupervisorService.query();
+  vm.parameters = ParameterService.query();
 
-  this.selectOrderSource = function(idSource) {
-  var i = 0, l = this.orderSources.length;
-    this.order.origen_orden = {};
+  vm.selectOrderSource = function(idSource) {
+  var i = 0, l = vm.orderSources.length;
+    vm.order.origen_orden = {};
     for (i; i < l; i += 1) {
-      if (this.orderSources[i].id_origen_orden == idSource)
+      if (vm.orderSources[i].id_origen_orden == idSource)
       {
-        this.order.origen_orden = this.orderSources[i];
+        vm.order.origen_orden = vm.orderSources[i];
         break;
       }
     }
-    return this.order.origen_orden;
+    return vm.order.origen_orden;
   };
 
-  this.selectMatrix = function(idMatrix) {
-  var i = 0, l = this.matrices.length;
-    this.order.matriz = {};
+  vm.selectMatrix = function(idMatrix) {
+  var i = 0, l = vm.matrices.length;
+    vm.order.matriz = {};
     for (i; i < l; i += 1) {
-      if (this.matrices[i].id_matriz == idMatrix)
+      if (vm.matrices[i].id_matriz == idMatrix)
       {
-        this.order.matriz = this.matrices[i];
+        vm.order.matriz = vm.matrices[i];
         break;
       }
     }
-    return this.order.matriz;
+    return vm.order.matriz;
   };
 
-  this.selectSupervisor = function(idSupervisor) {
-  var i = 0, l = this.supervisors.length;
-    this.order.id_responsable_muestreo = {};
+  vm.selectSupervisor = function(idSupervisor) {
+  var i = 0, l = vm.supervisors.length;
+    vm.order.id_responsable_muestreo = {};
     for (i; i < l; i += 1) {
-      if (this.supervisors[i].id_id_responsable_muestreo == idSupervisor)
+      if (vm.supervisors[i].id_id_responsable_muestreo == idSupervisor)
       {
-        this.order.id_responsable_muestreo = this.supervisors[i];
+        vm.order.id_responsable_muestreo = vm.supervisors[i];
         break;
       }
     }
-    return this.order.id_responsable_muestreo;
+    return vm.order.id_responsable_muestreo;
   };
 
-  this.validateOrderForm = function() {
+  vm.validateOrderForm = function() {
 
   };
 
-  this.submitOrderForm = function() {
+  vm.submitOrderForm = function() {
 
   };
 }
@@ -273,17 +401,27 @@ function SamplingOrderController(QuoteService, OrderSourceService,
 angular
   .module('siclabApp')
   .controller('SamplingOrderController',
-  ['$scope', 'QuoteService', 'OrderSourceService', 'MatrixService',
-  SamplingPlanController
-]);
+    [
+      'QuoteService','OrderSourceService','MatrixService',
+      'ParameterService','SamplingSupervisorService','SamplingOrderService',
+      SamplingPlanController
+    ]
+  );
 
-function SamplingPlanController() {
+/**
+ * @name SamplingPlanController
+ * @desc Controla la vista para capturar un Plan de muestreo
+ * @param {Object} $scope - Contenedor para el modelo [AngularJS]
+ */
+function SamplingPlanController($scope) {
   //
 }
 
 angular
   .module('siclabApp')
   .controller('SamplingPlanController',
-  ['$scope',
-  SamplingPlanController
-]);
+    [
+      '$scope',
+      SamplingPlanController
+    ]
+  );

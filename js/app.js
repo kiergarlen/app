@@ -10,6 +10,11 @@ angular
 
 //CONFIG
 function config($routeProvider) {
+  $routeProvider
+    .otherwise({
+     redirectTo: '/sistema/login'
+    });
+
   $routeProvider.
     when('/main', {
       templateUrl: 'partials/sistema/main.html',
@@ -180,9 +185,6 @@ function config($routeProvider) {
       templateUrl: 'partials/sistema/usuarios.html',
       controller: 'UsersListController'//,
       //controllerAs: 'usersList'
-    })
-    .otherwise({
-     redirectTo: '/sistema/login'
     })
   ;
 }

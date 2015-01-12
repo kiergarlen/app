@@ -1,0 +1,18 @@
+[
+  {
+    "id_tipo_recipiente":1,
+    "tipo_recipiente":"Vidrio"
+  },
+  {
+    "id_tipo_recipiente":2,
+    "tipo_recipiente":"Plástico"
+  },
+  {
+    "id_tipo_recipiente":3,
+    "tipo_recipiente":"Estéril"
+  },
+  {
+    "id_tipo_recipiente":4,
+    "tipo_recipiente":"Otro"
+  }
+]

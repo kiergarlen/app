@@ -101,7 +101,7 @@ angular
   .factory('NormService', ['$resource', NormService]);
 
 function SamplingTypeService($resource) {
-  return $resource('models/tipos_muestreo.json', {}, {
+  return $resource('models/sampling/types.json', {}, {
     query: {method:'GET', params:{}, isArray:true}
   });
 }

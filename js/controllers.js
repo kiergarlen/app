@@ -11,31 +11,30 @@
 function LoginController($scope, $http, Loginservice) {
   var vm = this;
   vm.message = '';
-  vm.user = {
-    username: '',
-    password: ''
-  };
+  vm.user = {username: '', password: ''};
+  vm.submit = submit;
+  vm.login = login;
 
-  vm.submit = function(msg, usr, pwd) {
+  function submitMessage(msg, usr, pwd) {
     msg = [
       msg,
-      ', USER: ',
+      ' USER: ',
       usr,
       ' PASSWORD: ',
       pwd
     ].join('');
     return msg;
-  };
+  }
 
-  vm.login = function() {
-    if (vm.loginForm.$valid)
+  function login() {
+    if ($scope.loginForm.$valid)
     {
       if (vm.user.username == 'rgarcia' &&
         vm.user.password == '123'
       )
       {
         vm.message = 'Enviando datos secretos...';
-        vm.submit(
+        vm.message = vm.submitMessage(
           vm.message,
           vm.user.username,
           vm.user.password
@@ -50,7 +49,7 @@ function LoginController($scope, $http, Loginservice) {
     {
       vm.message = 'Debe ingresar usuario y/o contraseña';
     }
-  };
+  }
 }
 
 angular
@@ -311,6 +310,16 @@ function QuoteController(ClientService, ParameterService, NormService,
           }
         }
       }
+    }
+  };
+
+  vm.selectSamplingType = function() {
+    var i, l;
+    l = vm.samplingTypes.length;
+    for (i = 0; i < l; i += 1) {
+      vn.samplingTypes[i].selected =
+      (vm.samplingTypes[i].id_tipo_muestreo ==
+        vm.quote.id_tipo_muestreo);
     }
   };
 

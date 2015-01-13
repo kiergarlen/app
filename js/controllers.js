@@ -12,7 +12,7 @@ function LoginController($scope, $http, Loginservice) {
   var vm = this;
   vm.message = '';
   vm.user = {username: '', password: ''};
-  vm.submit = submit;
+  vm.submit = submitMessage;
   vm.login = login;
 
   function submitMessage(msg, usr, pwd) {
@@ -34,7 +34,7 @@ function LoginController($scope, $http, Loginservice) {
       )
       {
         vm.message = 'Enviando datos secretos...';
-        vm.message = vm.submitMessage(
+        vm.message = vm.submit(
           vm.message,
           vm.user.username,
           vm.user.password

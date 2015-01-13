@@ -242,7 +242,15 @@ function QuoteController(ClientService, ParameterService, NormService,
   vm.clientDetailsIsShown = false;
   vm.totalCost = 0;
 
-  vm.toggleClientInfo = function() {
+  vm.toggleClientInfo = toggleClientInfo;
+  vm.selectClient = selectClient;
+  vm.totalParameter = totalParameter;
+  vm.selectNorm = selectNorm;
+  vm.selectNormParameters = selectNormParameters;
+  vm.selectSamplingType = selectSamplingType;
+  vm.submitQuoteForm = submitQuoteForm;
+
+  function toggleClientInfo() {
     var id = vm.quote.id_cliente;
     vm.clientDetailsIsShown = (
       vm.quote.id_cliente > 0 &&
@@ -251,7 +259,7 @@ function QuoteController(ClientService, ParameterService, NormService,
     );
   };
 
-  vm.selectClient = function(idClient) {
+  function selectClient(idClient) {
     var i = 0, l = vm.clients.length;
     vm.quote.cliente = {};
     for (i; i < l; i += 1) {
@@ -264,7 +272,7 @@ function QuoteController(ClientService, ParameterService, NormService,
     return vm.quote.cliente;
   };
 
-  vm.totalParameter = function(){
+  function totalParameter(){
     var t = 0;
     angular.forEach(vm.parameters, function(s){
       if(s.selected)
@@ -278,7 +286,7 @@ function QuoteController(ClientService, ParameterService, NormService,
     return vm.totalCost;
   };
 
-  vm.selectNorm = function(idNorm) {
+  function selectNorm(idNorm) {
     var i, l, j, m;
     l = vm.norms.length;
     vm.quote.norma = {};
@@ -294,7 +302,7 @@ function QuoteController(ClientService, ParameterService, NormService,
     return '';
   };
 
-  vm.selectNormParameters = function() {
+  function selectNormParameters() {
     var i, l, j, m;
     l = vm.parameters.length;
     for(i = 0; i < l; i += 1) {
@@ -313,7 +321,7 @@ function QuoteController(ClientService, ParameterService, NormService,
     }
   };
 
-  vm.selectSamplingType = function() {
+  function selectSamplingType() {
     var i, l;
     l = vm.samplingTypes.length;
     for (i = 0; i < l; i += 1) {
@@ -323,7 +331,7 @@ function QuoteController(ClientService, ParameterService, NormService,
     }
   };
 
-  vm.submitQuoteForm = function () {
+  function submitQuoteForm() {
 
   };
 }
@@ -359,8 +367,14 @@ function SamplingOrderController(QuoteService, OrderSourceService,
   vm.supervisors = SamplingSupervisorService.query();
   vm.parameters = ParameterService.query();
 
-  vm.selectOrderSource = function(idSource) {
-  var i = 0, l = vm.orderSources.length;
+  vm.selectOrderSource = selectOrderSource;
+  vm.selectMatrix = selectMatrix;
+  vm.selectSupervisor = selectSupervisor;
+  vm.validateOrderForm = validateOrderForm;
+  vm.submitOrderForm = submitOrderForm;
+
+  function selectOrderSource(idSource) {
+    var i = 0, l = vm.orderSources.length;
     vm.order.origen_orden = {};
     for (i; i < l; i += 1) {
       if (vm.orderSources[i].id_origen_orden == idSource)
@@ -372,8 +386,8 @@ function SamplingOrderController(QuoteService, OrderSourceService,
     return vm.order.origen_orden;
   };
 
-  vm.selectMatrix = function(idMatrix) {
-  var i = 0, l = vm.matrices.length;
+  function selectMatrix(idMatrix) {
+    var i = 0, l = vm.matrices.length;
     vm.order.matriz = {};
     for (i; i < l; i += 1) {
       if (vm.matrices[i].id_matriz == idMatrix)
@@ -385,8 +399,8 @@ function SamplingOrderController(QuoteService, OrderSourceService,
     return vm.order.matriz;
   };
 
-  vm.selectSupervisor = function(idSupervisor) {
-  var i = 0, l = vm.supervisors.length;
+  function selectSupervisor(idSupervisor) {
+    var i = 0, l = vm.supervisors.length;
     vm.order.id_responsable_muestreo = {};
     for (i; i < l; i += 1) {
       if (vm.supervisors[i].id_id_responsable_muestreo == idSupervisor)
@@ -398,11 +412,11 @@ function SamplingOrderController(QuoteService, OrderSourceService,
     return vm.order.id_responsable_muestreo;
   };
 
-  vm.validateOrderForm = function() {
+  function validateOrderForm() {
 
   };
 
-  vm.submitOrderForm = function() {
+  function submitOrderForm() {
 
   };
 }

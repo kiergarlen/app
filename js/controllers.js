@@ -257,7 +257,7 @@ function QuoteController(ClientService, ParameterService, NormService,
       vm.selectClient(id).cliente &&
       !vm.clientDetailsIsShown
     );
-  };
+  }
 
   function selectClient(idClient) {
     var i = 0, l = vm.clients.length;
@@ -270,7 +270,7 @@ function QuoteController(ClientService, ParameterService, NormService,
       }
     }
     return vm.quote.cliente;
-  };
+  }
 
   function totalParameter(){
     var t = 0;
@@ -284,7 +284,7 @@ function QuoteController(ClientService, ParameterService, NormService,
     vm.totalCost = (Math.round(t * 100) / 100);
     vm.quote.total = vm.totalCost;
     return vm.totalCost;
-  };
+  }
 
   function selectNorm(idNorm) {
     var i, l, j, m;
@@ -300,7 +300,7 @@ function QuoteController(ClientService, ParameterService, NormService,
     }
     vm.selectNormParameters();
     return '';
-  };
+  }
 
   function selectNormParameters() {
     var i, l, j, m;
@@ -319,7 +319,7 @@ function QuoteController(ClientService, ParameterService, NormService,
         }
       }
     }
-  };
+  }
 
   function selectSamplingType() {
     var i, l;
@@ -329,11 +329,11 @@ function QuoteController(ClientService, ParameterService, NormService,
       (vm.samplingTypes[i].id_tipo_muestreo ==
         vm.quote.id_tipo_muestreo);
     }
-  };
+  }
 
   function submitQuoteForm() {
 
-  };
+  }
 }
 
 angular
@@ -347,7 +347,7 @@ angular
   );
 
 /**
- * @name SamplingOrderController
+ * @name OrderController
  * @desc Controla la vista para capturar una Orden de muestreo
  * @param {Function} QuoteService - Proveedor de datos, Cotizaciones
  * @param {Function} OrderSourceService - Proveedor de datos, Orígenes orden
@@ -356,10 +356,10 @@ angular
  * @param {Function} SamplingSupervisorService - Proveedor de datos, Supervisores
  * @param {Function} SamplingOrderService - Proveedor de datos, Orden muestreo
  */
-function SamplingOrderController(QuoteService, OrderSourceService,
+function OrderController(QuoteService, OrderSourceService,
   MatrixService, ParameterService, SamplingSupervisorService,
   SamplingOrderService) {
-  var m = this;
+  var vm = this;
   vm.order = SamplingOrderService.query();
   vm.quote = QuoteService.query();
   vm.orderSources = OrderSourceService.query();
@@ -384,7 +384,7 @@ function SamplingOrderController(QuoteService, OrderSourceService,
       }
     }
     return vm.order.origen_orden;
-  };
+  }
 
   function selectMatrix(idMatrix) {
     var i = 0, l = vm.matrices.length;
@@ -397,7 +397,7 @@ function SamplingOrderController(QuoteService, OrderSourceService,
       }
     }
     return vm.order.matriz;
-  };
+  }
 
   function selectSupervisor(idSupervisor) {
     var i = 0, l = vm.supervisors.length;
@@ -410,41 +410,217 @@ function SamplingOrderController(QuoteService, OrderSourceService,
       }
     }
     return vm.order.id_responsable_muestreo;
-  };
+  }
 
   function validateOrderForm() {
 
-  };
+  }
 
   function submitOrderForm() {
 
-  };
+  }
 }
 
 angular
   .module('siclabApp')
-  .controller('SamplingOrderController',
+  .controller('OrderController',
     [
       'QuoteService','OrderSourceService','MatrixService',
       'ParameterService','SamplingSupervisorService','SamplingOrderService',
-      SamplingPlanController
+      OrderController
     ]
   );
 
 /**
- * @name SamplingPlanController
+ * @name PlanController
  * @desc Controla la vista para capturar un Plan de muestreo
  * @param {Object} $scope - Contenedor para el modelo [AngularJS]
  */
-function SamplingPlanController($scope) {
+function PlanController($scope) {
   //
 }
 
 angular
   .module('siclabApp')
-  .controller('SamplingPlanController',
+  .controller('PlanController',
     [
       '$scope',
-      SamplingPlanController
+      PlanController
+    ]
+  );
+
+/**
+ * @name PlanVerificationController
+ * @desc Controla la vista para capturar la verificación de un Plan de muestreo
+ * @param {Object} $scope - Contenedor para el modelo [AngularJS]
+ */
+function PlanVerificationController($scope) {
+  //
+}
+
+angular
+  .module('siclabApp')
+  .controller('PlanVerificationController',
+    [
+      '$scope',
+      PlanVerificationController
+    ]
+  );
+
+/**
+ * @name PlanContainersController
+ * @desc Controla la vista para capturar los recipientes de un Plan de muestreo
+ * @param {Object} $scope - Contenedor para el modelo [AngularJS]
+ */
+function PlanContainersController($scope) {
+  //
+}
+
+angular
+  .module('siclabApp')
+  .controller('PlanContainersController',
+    [
+      '$scope',
+      PlanContainersController
+    ]
+  );
+
+/**
+ * @name PlanSubstancesController
+ * @desc Controla la vista para capturar los reactivos de un Plan de muestreo
+ * @param {Object} $scope - Contenedor para el modelo [AngularJS]
+ */
+function PlanSubstancesController($scope) {
+  //
+}
+
+angular
+  .module('siclabApp')
+  .controller('PlanSubstancesController',
+    [
+      '$scope',
+      PlanSubstancesController
+    ]
+  );
+
+/**
+ * @name PlanMaterialsController
+ * @desc Controla la vista para capturar los materiales de un Plan de muestreo
+ * @param {Object} $scope - Contenedor para el modelo [AngularJS]
+ */
+function PlanMaterialsController($scope) {
+  //
+}
+
+angular
+  .module('siclabApp')
+  .controller('PlanMaterialsController',
+    [
+      '$scope',
+      PlanMaterialsController
+    ]
+  );
+
+/**
+ * @name PlanCoolersController
+ * @desc Controla la vista para capturar las hieleras de un Plan de muestreo
+ * @param {Object} $scope - Contenedor para el modelo [AngularJS]
+ */
+function PlanCoolersController($scope) {
+  //
+}
+
+angular
+  .module('siclabApp')
+  .controller('PlanCoolersController',
+    [
+      '$scope',
+      PlanCoolersController
+    ]
+  );
+
+
+/**
+ * @name ReceptionController
+ * @desc Controla la vista para capturar la recepción de muestras
+ * @param {Function} QuoteService - Proveedor de datos, Cotizaciones
+ * @param {Function} OrderSourceService - Proveedor de datos, Orígenes orden
+ * @param {Function} MatrixService - Proveedor de datos, Tipos matriz
+ * @param {Function} ParameterService - Proveedor de datos, Parámetros
+ * @param {Function} SamplingSupervisorService - Proveedor de datos, Supervisores
+ * @param {Function} SamplingOrderService - Proveedor de datos, Orden muestreo
+ */
+function ReceptionController(QuoteService, OrderSourceService,
+  MatrixService, ParameterService, SamplingSupervisorService,
+  SamplingOrderService) {
+  var vm = this;
+  vm.order = SamplingOrderService.query();
+  vm.quote = QuoteService.query();
+  vm.orderSources = OrderSourceService.query();
+  vm.matrices = MatrixService.query();
+  vm.supervisors = SamplingSupervisorService.query();
+  vm.parameters = ParameterService.query();
+
+  vm.selectOrderSource = selectOrderSource;
+  vm.selectMatrix = selectMatrix;
+  vm.selectSupervisor = selectSupervisor;
+  vm.validateOrderForm = validateOrderForm;
+  vm.submitOrderForm = submitOrderForm;
+
+
+  function selectOrderSource(idSource) {
+    var i = 0, l = vm.orderSources.length;
+    vm.order.origen_orden = {};
+    for (i; i < l; i += 1) {
+      if (vm.orderSources[i].id_origen_orden == idSource)
+      {
+        vm.order.origen_orden = vm.orderSources[i];
+        break;
+      }
+    }
+    return vm.order.origen_orden;
+  }
+
+  function selectMatrix(idMatrix) {
+    var i = 0, l = vm.matrices.length;
+    vm.order.matriz = {};
+    for (i; i < l; i += 1) {
+      if (vm.matrices[i].id_matriz == idMatrix)
+      {
+        vm.order.matriz = vm.matrices[i];
+        break;
+      }
+    }
+    return vm.order.matriz;
+  }
+
+  function selectSupervisor(idSupervisor) {
+    var i = 0, l = vm.supervisors.length;
+    vm.order.id_responsable_muestreo = {};
+    for (i; i < l; i += 1) {
+      if (vm.supervisors[i].id_id_responsable_muestreo == idSupervisor)
+      {
+        vm.order.id_responsable_muestreo = vm.supervisors[i];
+        break;
+      }
+    }
+    return vm.order.id_responsable_muestreo;
+  }
+
+  function validateOrderForm() {
+
+  }
+
+  function submitOrderForm() {
+
+  }
+}
+
+angular
+  .module('siclabApp')
+  .controller('ReceptionController',
+    [
+      '$scope',
+      ReceptionController
     ]
   );

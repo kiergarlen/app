@@ -98,38 +98,38 @@ function config($routeProvider) {
     }).
     when('/muestreo/orden', {
       templateUrl: 'partials/muestreo/orden.html',
-      controller: 'SamplingOrderController'//,
-      //controllerAs: 'samplingOrder'
+      controller: 'OrderController',
+      controllerAs: 'order'
     }).
     when('/muestreo/plan', {
       templateUrl: 'partials/muestreo/plan.html',
-      controller: 'SamplingPlanController'//,
-      //controllerAs: 'samplingPlan'
+      controller: 'PlanController',
+      controllerAs: 'plan'
     }).
     when('/muestreo/plan/hieleras', {
       templateUrl: 'partials/muestreo/plan/hieleras.html',
-      controller: 'SamplingPlanPreservatorController'//,
-      //controllerAs: 'samplingPlanPreservator'
+      controller: 'PlanCoolersController',
+      controllerAs: 'planCoolers'
     }).
     when('/muestreo/plan/materiales', {
       templateUrl: 'partials/muestreo/plan/materiales.html',
-      controller: 'SamplingPlanMaterialistController'//,
-      //controllerAs: 'samplingPlanMaterialist'
+      controller: 'PlanMaterialsController',
+      controllerAs: 'planMaterials'
     }).
     when('/muestreo/plan/reactivos', {
       templateUrl: 'partials/muestreo/plan/reactivos.html',
-      controller: 'SamplingPlanChemistController'//,
-      //controllerAs: 'samplingPlanChemist'
+      controller: 'PlanSubstancesController',
+      controllerAs: 'planSubstances'
     }).
     when('/muestreo/plan/recipientes', {
       templateUrl: 'partials/muestreo/plan/recipientes.html',
-      controller: 'SamplingPlanPreparatorController'//,
-      //controllerAs: 'samplingPlanPreparator'
+      controller: 'PlanContainersController',
+      controllerAs: 'planContainers'
     }).
     when('/muestreo/plan/verificacion', {
       templateUrl: 'partials/muestreo/plan/verificacion.html',
-      controller: 'SamplingPlanCalibratorController'//,
-      //controllerAs: 'samplingPlanCalibrator'
+      controller: 'PlanVerificationController',
+      controllerAs: 'planVerification'
     }).
     when('/muestreo/solicitud', {
       templateUrl: 'partials/muestreo/solicitud.html',
@@ -148,8 +148,8 @@ function config($routeProvider) {
     }).
     when('/recepcion/muestra', {
       templateUrl: 'partials/recepcion/muestra.html',
-      controller: 'SampleReceptionController'//,
-      //controllerAs: 'sampleReception'
+      controller: 'ReceptionController',
+      controllerAs: 'reception'
     }).
     when('/recepcion/trabajo', {
       templateUrl: 'partials/recepcion/trabajo.html',

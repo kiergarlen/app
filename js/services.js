@@ -150,7 +150,7 @@ angular
   .module('siclabApp')
   .factory('SamplingSupervisorService', ['$resource', SamplingSupervisorService]);
 
-function SamplingOrderService($resource) {
+function OrderService($resource) {
   return $resource('models/sampling/orders/1.json', {}, {
     query: {method:'GET', params:{}, isArray:false}
   });
@@ -158,4 +158,24 @@ function SamplingOrderService($resource) {
 
 angular
   .module('siclabApp')
-  .factory('SamplingOrderService', ['$resource', SamplingOrderService]);
+  .factory('OrderService', ['$resource', OrderService]);
+
+function ReceptionService($resource) {
+  return $resource('models/reception/1.json', {}, {
+    query: {method:'GET', params:{}, isArray:true}
+  });
+}
+
+angular
+  .module('siclabApp')
+  .factory('ReceptionService', ['$resource', ReceptionService]);
+
+function RecepcionistService($resource) {
+  return $resource('models/rcepcionists.json', {}, {
+    query: {method:'GET', params:{}, isArray:true}
+  });
+}
+
+angular
+  .module('siclabApp')
+  .factory('RecepcionistService', ['$resource', RecepcionistService]);

@@ -8,7 +8,7 @@
   "id_matriz":3,
   "id_punto_muestreo":1,
   "id_recepcionista":15,
-  "id_responsable_recepcion":15,
+  "id_supervisor":1,
   "fecha_muestreo":"2014-12-19",
   "hora_muestreo":"9:08",
   "fecha_recepcion":"2014-12-19",
@@ -40,16 +40,34 @@
     "fecha_actualizacion":"2014-11-30",
     "activo":1
   },
-  "areas":
+  "areas_seleccionadas":
   [
     {
-      "id_area":1
+      "id_area":1,
+      "area":"Fisicoquímico",
+      "siglas":"FQ",
+      "fecha_act":"2014-11-30",
+      "receptora":1,
+      "selected":true,
+      "activo":1
     },
     {
-      "id_area":2
+      "id_area":2,
+      "area":"Metales Pesados",
+      "siglas":"MP",
+      "fecha_act":"2014-11-30",
+      "receptora":1,
+      "selected":true,
+      "activo":1
     },
     {
-      "id_area":3
+      "id_area":3,
+      "area":"Microbiología",
+      "siglas":"MB",
+      "fecha_act":"2014-11-30",
+      "receptora":1,
+      "selected":true,
+      "activo":1
     }
   ],
   "recipientes":
@@ -142,7 +160,7 @@
     "cert":1,
     "activo":1
   },
-  "responsable_validacion":
+  "supervisor":
   {
     "id_empleado":1,
     "id_nivel":1,

@@ -28,7 +28,7 @@
             Fecha actualización:
             {{reception.reception.fecha_actualizacion}}</li>
         </ul>
-        <span class="label label-success"
+        <span class="label label-success
           data-ng-show="reception.reception.validado > 0">Validado</span>
       </div>
     </div>
@@ -37,23 +37,23 @@
     <div class="col-xs-12 col-sm-6">
       <h4>Cliente</h4>
       <div class="well well-sm">
-        Cliente: {{reception.order.cliente.cliente}}
-        {{reception.order.cliente.area.length > 0 &&
-        ' - ' + reception.order.cliente.area ||
+        Cliente: {{reception.reception.cliente.cliente}}
+        {{reception.reception.cliente.area.length > 0 &&
+        ' - ' + reception.reception.cliente.area ||
         ''}}
         <br>
-        Contacto: {{reception.order.cliente.contacto}}
+        Contacto: {{reception.reception.cliente.contacto}}
       </div>
     </div>
     <div class="col-xs-12 col-sm-6">
       <h4>Orden de muestreo</h4>
       <div class="well well-sm">
         Folio:
-        {{reception.order.folio_solicitud}}
+        {{reception.reception.orden_muestreo.folio_solicitud}}
         /
-        {{reception.order.ejercicio}}
+        {{reception.reception.orden_muestreo.ejercicio}}
         <br>Fecha:
-        {{reception.order.fecha_plan}}
+        {{reception.reception.orden_muestreo.fecha_orden}}
       </div>
     </div>
   </div>
@@ -62,13 +62,13 @@
     <div class="col-xs-12">
       <h4>Punto de muestreo</h4>
       <div class="well well-sm">
-        Punto: {{reception.point.punto_muestreo}}
+        Punto: {{reception.punto_muestreo.punto_muestreo}}
         <br>
-        Localidad: {{reception.point.localidad}}
-        Municipio: {{reception.point.municpio}}
+        Localidad: {{reception.punto_muestreo.localidad}}
+        Municipio: {{reception.punto_muestreo.municpio}}
         <br>
-        Latitud: {{reception.point.lat}}
-        Longitud: {{reception.point.lng}}
+        Latitud: {{reception.punto_muestreo.lat}}
+        Longitud: {{reception.punto_muestreo.lng}}
       </div>
     </div>
   </div>
@@ -150,7 +150,9 @@
         <option
           data-ng-repeat="receptionist in reception.receptionists"
           value="{{receptionist.id_recepcionista}}">
-          {{receptionist.nombre}}
+          {{receptionist.nombres}}
+          {{receptionist.ap}}
+          {{receptionist.am}}
         </option>
       </select>
     </div>
@@ -158,14 +160,27 @@
 
 
   <div class="row">
-    <div class="col-xs-12 col-sm-6 col-md-7 col-lg-7">
-      <label for="sampleKeyText">
+    <div class="col-xs-12 col-sm-8 col-lg-6">
+      <label for="sampleDescriptionText">
         Descripción de la muestra
       </label>
       <textarea rows="3" class="form-control"
-        id="sampleKeyText"
-        name="sampleKeyText"
+        id="sampleDescriptionText"
+        name="sampleDescriptionText"
         data-ng-model="reception.reception.descripcion"
+        >
+      </textarea>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12 col-sm-8 col-lg-6">
+      <label for="sampleCommentsText">
+        Comentarios
+      </label>
+      <textarea rows="3" class="form-control"
+        id="sampleCommentsText"
+        name="sampleCommentsText"
+        data-ng-model="reception.reception.comentarios"
         >
       </textarea>
     </div>
@@ -179,7 +194,7 @@
   </div>
   <div class="row">
     <div class="col-xs-12"
-      data-ng-repeat="area in reception.areas">
+      data-ng-repeat="area in reception.receptio.areas_seleccionadas">
       <label>
         <input type="checkbox"
           value="{{area.selected}}">

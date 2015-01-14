@@ -3,8 +3,9 @@
 
 /**
  * @name LoginController
+ * @constructor
  * @desc Controla la vista para Login
- * @param {Object} $scope - Contenedor para el modelo [AngularJS]
+ * @this {Object} $scope - Contenedor para el modelo, AngularJS
  * @param {Object} $http - Manejo de peticiones HTTP [AngularJS]
  * @param {Function} LoginService - Proveedor de datos, Login
  */
@@ -64,8 +65,9 @@ angular
 
 /**
  * @name MenuController
+ * @constructor
  * @desc Controla la vista para el Menú principal
- * @param {Object} $scope - Contenedor para el modelo [AngularJS]
+ * @this {Object} $scope - Contenedor para el modelo, AngularJS
  * @param {Function} MenuService - Proveedor de datos, Menú
  */
 function MenuController($scope, MenuService) {
@@ -84,7 +86,9 @@ angular
 
 /**
  * @name TasksController
+ * @constructor
  * @desc Controla la vista para Bienvenida (Tablero de Tareas)
+ * @this {Object} $scope - Contenedor para el modelo, AngularJS
  * @param {Function} TaskService - Proveedor de datos, Tareas
  */
 function TasksController(TaskService) {
@@ -104,8 +108,9 @@ angular
 
 /**
  * @name ClientsListController
+ * @constructor
  * @desc Controla la vista para el listado de Clientes
- * @param {Object} $scope - Contenedor para el modelo [AngularJS]
+ * @this {Object} $scope - Contenedor para el modelo, AngularJS
  * @param {Function} ClientService - Proveedor de datos, Cliente
  */
 function ClientsListController($scope, ClientService) {
@@ -124,8 +129,9 @@ angular
 
 /**
  * @name ClientDetailController
+ * @constructor
  * @desc Controla la vista para con el detalle de un Cliente
- * @param {Object} $scope - Contenedor para el modelo [AngularJS]
+ * @this {Object} $scope - Contenedor para el modelo, AngularJS
  * @param {Function} ClientDetailService - Proveedor de datos, Detalle Cliente
  */
 function ClientDetailController($scope, ClientDetailService) {
@@ -144,8 +150,9 @@ angular
 
 /**
  * @name DepartmentsListController
+ * @constructor
  * @desc Controla la vista para el listado de Áreas
- * @param {Object} $scope - Contenedor para el modelo [AngularJS]
+ * @this {Object} $scope - Contenedor para el modelo, AngularJS
  * @param {Function} DepartmentService - Proveedor de datos, Áreas
  */
 function DepartmentsListController($scope, DepartmentService) {
@@ -164,8 +171,9 @@ angular
 
 /**
  * @name EmployeesListController
+ * @constructor
  * @desc Controla la vista para el listado de Empleados
- * @param {Object} $scope - Contenedor para el modelo [AngularJS]
+ * @this {Object} $scope - Contenedor para el modelo, AngularJS
  * @param {Function} EmployeeService - Proveedor de datos, Empleados
  */
 function EmployeesListController($scope, EmployeeService) {
@@ -184,8 +192,9 @@ angular
 
 /**
  * @name UsersListController
+ * @constructor
  * @desc Controla la vista para el listado de Usuarios
- * @param {Object} $scope - Contenedor para el modelo [AngularJS]
+ * @this {Object} $scope - Contenedor para el modelo, AngularJS
  * @param {Function} UserService - Proveedor de datos, Usuarios
  */
 function UsersListController ($scope, UserService) {
@@ -204,8 +213,9 @@ angular
 
 /**
  * @name NormsListController
+ * @constructor
  * @desc Controla la vista para el listado de Normas
- * @param {Object} $scope - Contenedor para el modelo [AngularJS]
+ * @this {Object} $scope - Contenedor para el modelo, AngularJS
  * @param {Function} NormService - Proveedor de datos, Normas
  */
 function NormsListController($scope, NormService) {
@@ -224,7 +234,9 @@ angular
 
 /**
  * @name QuoteController
+ * @constructor
  * @desc Controla la vista para capturar una Solicitud/Cotización
+ * @this {Object} $scope - Contenedor para el modelo, AngularJS
  * @param {Function} ClientService - Proveedor de datos, Clientes
  * @param {Function} ParameterService - Proveedor de datos, Parámetros
  * @param {Function} NormService - Proveedor de datos, Normas
@@ -348,19 +360,21 @@ angular
 
 /**
  * @name OrderController
+ * @constructor
  * @desc Controla la vista para capturar una Orden de muestreo
+ * @this {Object} $scope - Contenedor para el modelo, AngularJS
  * @param {Function} QuoteService - Proveedor de datos, Cotizaciones
  * @param {Function} OrderSourceService - Proveedor de datos, Orígenes orden
  * @param {Function} MatrixService - Proveedor de datos, Tipos matriz
  * @param {Function} ParameterService - Proveedor de datos, Parámetros
  * @param {Function} SamplingSupervisorService - Proveedor de datos, Supervisores
- * @param {Function} SamplingOrderService - Proveedor de datos, Orden muestreo
+ * @param {Function} OrderService - Proveedor de datos, Orden muestreo
  */
 function OrderController(QuoteService, OrderSourceService,
   MatrixService, ParameterService, SamplingSupervisorService,
-  SamplingOrderService) {
+  OrderService) {
   var vm = this;
-  vm.order = SamplingOrderService.query();
+  vm.order = OrderService.query();
   vm.quote = QuoteService.query();
   vm.orderSources = OrderSourceService.query();
   vm.matrices = MatrixService.query();
@@ -426,15 +440,16 @@ angular
   .controller('OrderController',
     [
       'QuoteService','OrderSourceService','MatrixService',
-      'ParameterService','SamplingSupervisorService','SamplingOrderService',
+      'ParameterService','SamplingSupervisorService','OrderService',
       OrderController
     ]
   );
 
 /**
  * @name PlanController
+ * @constructor
  * @desc Controla la vista para capturar un Plan de muestreo
- * @param {Object} $scope - Contenedor para el modelo [AngularJS]
+ * @this {Object} $scope - Contenedor para el modelo, AngularJS
  */
 function PlanController($scope) {
   //
@@ -451,8 +466,9 @@ angular
 
 /**
  * @name PlanVerificationController
+ * @constructor
  * @desc Controla la vista para capturar la verificación de un Plan de muestreo
- * @param {Object} $scope - Contenedor para el modelo [AngularJS]
+ * @this {Object} $scope - Contenedor para el modelo, AngularJS
  */
 function PlanVerificationController($scope) {
   //
@@ -469,8 +485,9 @@ angular
 
 /**
  * @name PlanContainersController
+ * @constructor
  * @desc Controla la vista para capturar los recipientes de un Plan de muestreo
- * @param {Object} $scope - Contenedor para el modelo [AngularJS]
+ * @this {Object} $scope - Contenedor para el modelo, AngularJS
  */
 function PlanContainersController($scope) {
   //
@@ -487,8 +504,9 @@ angular
 
 /**
  * @name PlanSubstancesController
+ * @constructor
  * @desc Controla la vista para capturar los reactivos de un Plan de muestreo
- * @param {Object} $scope - Contenedor para el modelo [AngularJS]
+ * @this {Object} $scope - Contenedor para el modelo, AngularJS
  */
 function PlanSubstancesController($scope) {
   //
@@ -505,8 +523,9 @@ angular
 
 /**
  * @name PlanMaterialsController
+ * @constructor
  * @desc Controla la vista para capturar los materiales de un Plan de muestreo
- * @param {Object} $scope - Contenedor para el modelo [AngularJS]
+ * @this {Object} $scope - Contenedor para el modelo, AngularJS
  */
 function PlanMaterialsController($scope) {
   //
@@ -523,8 +542,9 @@ angular
 
 /**
  * @name PlanCoolersController
+ * @constructor
  * @desc Controla la vista para capturar las hieleras de un Plan de muestreo
- * @param {Object} $scope - Contenedor para el modelo [AngularJS]
+ * @this {Object} $scope - Contenedor para el modelo, AngularJS
  */
 function PlanCoolersController($scope) {
   //
@@ -542,76 +562,39 @@ angular
 
 /**
  * @name ReceptionController
+ * @constructor
  * @desc Controla la vista para capturar la recepción de muestras
- * @param {Function} QuoteService - Proveedor de datos, Cotizaciones
- * @param {Function} OrderSourceService - Proveedor de datos, Orígenes orden
- * @param {Function} MatrixService - Proveedor de datos, Tipos matriz
- * @param {Function} ParameterService - Proveedor de datos, Parámetros
- * @param {Function} SamplingSupervisorService - Proveedor de datos, Supervisores
- * @param {Function} SamplingOrderService - Proveedor de datos, Orden muestreo
+ * @this {Object} $scope - Contenedor para el modelo, AngularJS
+ * @param {Function} ReceptionistService - Proveedor de datos, Recepcionistas
+ * @param {Function} ReceptionService - Proveedor de datos, Recepción muestras
  */
-function ReceptionController(QuoteService, OrderSourceService,
-  MatrixService, ParameterService, SamplingSupervisorService,
-  SamplingOrderService) {
+function ReceptionController(ReceptionistService, ReceptionService) {
   var vm = this;
-  vm.order = SamplingOrderService.query();
-  vm.quote = QuoteService.query();
-  vm.orderSources = OrderSourceService.query();
-  vm.matrices = MatrixService.query();
-  vm.supervisors = SamplingSupervisorService.query();
-  vm.parameters = ParameterService.query();
+  vm.recepcionists = ReceptionistService.query();
+  vm.reception = ReceptionService.query();
 
-  vm.selectOrderSource = selectOrderSource;
-  vm.selectMatrix = selectMatrix;
-  vm.selectSupervisor = selectSupervisor;
+  vm.selectReceptionist = selectReceptionist;
   vm.validateOrderForm = validateOrderForm;
   vm.submitOrderForm = submitOrderForm;
 
-
-  function selectOrderSource(idSource) {
-    var i = 0, l = vm.orderSources.length;
-    vm.order.origen_orden = {};
+  function selectReceptionist(idRecepcionist) {
+    var i = 0, l = vm.recepcionists.length;
+    vm.reception.recepcionista = {};
     for (i; i < l; i += 1) {
-      if (vm.orderSources[i].id_origen_orden == idSource)
+      if (vm.recepcionists[i].id_origen_orden == idRecepcionist)
       {
-        vm.order.origen_orden = vm.orderSources[i];
+        vm.reception.recepcionista = vm.recepcionists[i];
         break;
       }
     }
-    return vm.order.origen_orden;
+    return vm.reception.recepcionista;
   }
 
-  function selectMatrix(idMatrix) {
-    var i = 0, l = vm.matrices.length;
-    vm.order.matriz = {};
-    for (i; i < l; i += 1) {
-      if (vm.matrices[i].id_matriz == idMatrix)
-      {
-        vm.order.matriz = vm.matrices[i];
-        break;
-      }
-    }
-    return vm.order.matriz;
-  }
-
-  function selectSupervisor(idSupervisor) {
-    var i = 0, l = vm.supervisors.length;
-    vm.order.id_responsable_muestreo = {};
-    for (i; i < l; i += 1) {
-      if (vm.supervisors[i].id_id_responsable_muestreo == idSupervisor)
-      {
-        vm.order.id_responsable_muestreo = vm.supervisors[i];
-        break;
-      }
-    }
-    return vm.order.id_responsable_muestreo;
-  }
-
-  function validateOrderForm() {
+  function validateReceptionForm() {
 
   }
 
-  function submitOrderForm() {
+  function submitReceptionForm() {
 
   }
 }
@@ -620,7 +603,7 @@ angular
   .module('siclabApp')
   .controller('ReceptionController',
     [
-      '$scope',
+      'ReceptionistService', 'ReceptionService',
       ReceptionController
     ]
   );

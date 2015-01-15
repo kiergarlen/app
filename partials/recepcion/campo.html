@@ -1,41 +1,153 @@
-      <div class="row">
-        <div class="col-xs-12">
-          <h2 class="page-header">Hoja de Campo</h2>
-        </div>
+<div class="row">
+  <div class="col-xs-12">
+    <h2 class="page-header">Hoja de campo</h2>
+  </div>
+</div>
+<form class="form" role="form"
+  name="receptionForm"
+  data-ng-submit="fieldSheet.submitReceptionForm()"
+  novalidate
+  >
+  <div class="row">
+    <div class="col-xs-12">
+      <h4>Datos de Referencia</h4>
+      <div class="well well-sm">
+        <ul class="list-inline">
+          <li>
+            Folio:
+            {{fieldSheet.fieldSheet.folio}}
+            /
+            {{fieldSheet.fieldSheet.ejercicio}}</li>
+          <li data-ng-show="fieldSheet.fieldSheet.fecha_captura.length > 0">
+            Fecha captura:
+            {{fieldSheet.fieldSheet.fecha_captura}}</li>
+          <li data-ng-show="fieldSheet.fieldSheet.fecha_valida.length > 0">
+            Fecha validación:
+            {{fieldSheet.fieldSheet.fecha_valida}}</li>
+          <li data-ng-show="fieldSheet.fieldSheet.fecha_actualizacion.length > 0">
+            Fecha actualización:
+            {{fieldSheet.fieldSheet.fecha_actualizacion}}</li>
+        </ul>
+        <span class="label label-success"
+          data-ng-show="fieldSheet.fieldSheet.validado > 0">Validado</span>
       </div>
-      <form class="form" role="form" action="#">
-        <div class="row">
-          <div class="col-xs-12">
-            <h4>Datos de Referencia</h4>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-xs-6">
-            <label for="orderKey">Folio</label>
-            <input type="text" class="form-control" placeholder="Folio" id="orderKey">
-          </div>
-          <div class="col-xs-6">
-            <label for="generationDate">Fecha</label>
-            <input type="text" class="form-control" placeholder="Fecha" id="generationDate">
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-xs-12">
-            <h4>Datos Cliente</h4>
-            <p>Referencia a Cliente</p>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-xs-12">
-            <h4>Punto muestreo</h4>
-            <p>Referencia a punto de muestreo</p>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-xs-12">
-            <h4>Parámetros</h4>
-            <p>Ir a Captura de resultados de análisis</p>
-          </div>
-        </div>
-        <button class="btn btn-primary" type="submit">Guarder</button>
-      </form>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12 col-sm-6">
+      <h4>Cliente</h4>
+      <div class="well well-sm">
+        Cliente: {{fieldSheet.fieldSheet.cliente.cliente}}
+        {{fieldSheet.fieldSheet.cliente.area.length > 0 &&
+        ' - ' + fieldSheet.fieldSheet.cliente.area ||
+        ''}}
+        <br>
+        Contacto: {{fieldSheet.fieldSheet.cliente.contacto}}
+      </div>
+    </div>
+    <div class="col-xs-12 col-sm-6">
+      <h4>Orden de muestreo</h4>
+      <div class="well well-sm">
+        Folio:
+        {{fieldSheet.fieldSheet.orden_muestreo.folio}}
+        /
+        {{fieldSheet.fieldSheet.orden_muestreo.ejercicio}}
+        <br>Fecha:
+        {{fieldSheet.fieldSheet.orden_muestreo.fecha_orden}}
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12">
+      <h4>Punto de muestreo</h4>
+      <div class="well well-sm">
+        Punto: {{fieldSheet.fieldSheet.punto_muestreo.punto_muestreo}}
+        <br>
+        Localidad: {{fieldSheet.fieldSheet.punto_muestreo.localidad}}
+        Municipio: {{fieldSheet.fieldSheet.punto_muestreo.municipio}}
+        <br>
+        Latitud: {{fieldSheet.fieldSheet.punto_muestreo.lat}}
+        Longitud: {{fieldSheet.fieldSheet.punto_muestreo.lng}}
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12">
+      <h4>Resultados Campo</h4>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12 col-sm-6 col-md-3">
+      <label for="param1">Conductividad</label>
+      <input type="text"
+        class="form-control"
+        placeholder="conductividad"
+        id="param1"
+        name="param1"
+        required
+        data-ng-model="fieldSheet.fieldSheet.parametros_campo.conductividad"
+        >
+    </div>
+    <div class="col-xs-12 col-sm-6 col-md-3">
+      <label for="param2">Potencial de hidrógeno</label>
+      <input type="text"
+        class="form-control"
+        placeholder="ph"
+        id="param2"
+        name="param2"
+        required
+        data-ng-model="fieldSheet.fieldSheet.parametros_campo.ph"
+        >
+    </div>
+    <div class="col-xs-12 col-sm-6 col-md-3">
+      <label for="param3">Temperatura</label>
+      <input type="text"
+        class="form-control"
+        placeholder="temp"
+        id="param3"
+        name="param3"
+        required
+        data-ng-model="fieldSheet.fieldSheet.parametros_campo.temperatura"
+        >
+    </div>
+    <div class="col-xs-12 col-sm-6 col-md-3">
+      <label for="param4">Oxígeno disuelto</label>
+      <input type="text"
+        class="form-control"
+        placeholder="O2 disuelto"
+        id="param4"
+        name="param4"
+        required
+        data-ng-model="fieldSheet.fieldSheet.parametros_campo.oxigeno_disuelto"
+        >
+    </div>
+    <div class="col-xs-12 col-sm-6 col-md-3">
+      <label for="param5">Cloro residual</label>
+      <input type="text"
+        class="form-control"
+        placeholder="Cl residual"
+        id="param5"
+        name="param5"
+        required
+        data-ng-model="fieldSheet.fieldSheet.parametros_campo.cloro_residual"
+        >
+    </div>
+    <div class="col-xs-12 col-sm-6 col-md-3">
+      <label for="param6">Materia flotante</label>
+      <input type="text"
+        class="form-control"
+        placeholder="Materia flotante"
+        id="param6"
+        name="param6"
+        required
+        data-ng-model="fieldSheet.fieldSheet.parametros_campo.materia_flotante"
+        >
+    </div>
+  </div>
+  <br>
+  <button type="submit" class="btn btn-primary"
+    value="Guardar" title="Guardar"
+    data-ng-click="fieldSheet.validateReceptionForm()"
+    >
+    Guardar</button>
+</form>

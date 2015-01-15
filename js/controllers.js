@@ -559,7 +559,6 @@ angular
     ]
   );
 
-
 /**
  * @name ReceptionController
  * @constructor
@@ -570,20 +569,20 @@ angular
  */
 function ReceptionController(ReceptionistService, ReceptionService) {
   var vm = this;
-  vm.recepcionists = ReceptionistService.query();
+  vm.receptionists = ReceptionistService.query();
   vm.reception = ReceptionService.query();
 
   vm.selectReceptionist = selectReceptionist;
-  vm.validateOrderForm = validateOrderForm;
-  vm.submitOrderForm = submitOrderForm;
+  vm.validateReceptionForm = validateReceptionForm;
+  vm.submitReceptionForm = submitReceptionForm;
 
   function selectReceptionist(idRecepcionist) {
-    var i = 0, l = vm.recepcionists.length;
+    var i = 0, l = vm.receptionists.length;
     vm.reception.recepcionista = {};
     for (i; i < l; i += 1) {
-      if (vm.recepcionists[i].id_origen_orden == idRecepcionist)
+      if (vm.receptionists[i].id_empleado == idRecepcionist)
       {
-        vm.reception.recepcionista = vm.recepcionists[i];
+        vm.reception.recepcionista = vm.receptionists[i];
         break;
       }
     }
@@ -605,5 +604,37 @@ angular
     [
       'ReceptionistService', 'ReceptionService',
       ReceptionController
+    ]
+  );
+
+/**
+ * @name FieldSheetController
+ * @constructor
+ * @desc Controla la vista para capturar la hoja de campo
+ * @this {Object} $scope - Contenedor para el modelo, AngularJS
+ * @param {Function} FieldSheetService - Proveedor de datos, Hojas de campo
+ */
+function FieldSheetController(FieldSheetService) {
+  var vm = this;
+  vm.fieldSheet = FieldSheetService.query();
+
+  vm.validateFieldSheetForm = validateFieldSheetForm;
+  vm.submitFieldSheetForm = submitFieldSheetForm;
+
+  function validateFieldSheetForm() {
+
+  }
+
+  function submitFieldSheetForm() {
+
+  }
+}
+
+angular
+  .module('siclabApp')
+  .controller('FieldSheetController',
+    [
+      'ReceptionistService', 'FieldSheetService',
+      FieldSheetController
     ]
   );

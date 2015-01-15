@@ -20,8 +20,8 @@
   "recibe_fisicoquimico":1,
   "recibe_metales":1,
   "recibe_biologico":1,
-  "descripcion":"Descripción de la muestra",
-  "comentarios":"Comentarios...",
+  "descripcion":"texto de la Descripción de la muestra",
+  "comentarios":"Sin Comentarios...",
   "punto_muestreo":
   {
     "id_punto_muestreo":1,

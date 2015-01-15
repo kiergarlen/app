@@ -28,7 +28,7 @@
             Fecha actualización:
             {{reception.reception.fecha_actualizacion}}</li>
         </ul>
-        <span class="label label-success
+        <span class="label label-success"
           data-ng-show="reception.reception.validado > 0">Validado</span>
       </div>
     </div>
@@ -49,7 +49,7 @@
       <h4>Orden de muestreo</h4>
       <div class="well well-sm">
         Folio:
-        {{reception.reception.orden_muestreo.folio_solicitud}}
+        {{reception.reception.orden_muestreo.folio}}
         /
         {{reception.reception.orden_muestreo.ejercicio}}
         <br>Fecha:
@@ -57,23 +57,20 @@
       </div>
     </div>
   </div>
-
   <div class="row">
     <div class="col-xs-12">
       <h4>Punto de muestreo</h4>
       <div class="well well-sm">
-        Punto: {{reception.punto_muestreo.punto_muestreo}}
+        Punto: {{reception.reception.punto_muestreo.punto_muestreo}}
         <br>
-        Localidad: {{reception.punto_muestreo.localidad}}
-        Municipio: {{reception.punto_muestreo.municpio}}
+        Localidad: {{reception.reception.punto_muestreo.localidad}}
+        Municipio: {{reception.reception.punto_muestreo.municipio}}
         <br>
-        Latitud: {{reception.punto_muestreo.lat}}
-        Longitud: {{reception.punto_muestreo.lng}}
+        Latitud: {{reception.reception.punto_muestreo.lat}}
+        Longitud: {{reception.reception.punto_muestreo.lng}}
       </div>
     </div>
   </div>
-
-
   <div class="row">
     <div class="col-xs-12">
       <h4>Muestreo</h4>
@@ -82,7 +79,7 @@
   <div class="row">
     <div class="col-xs-12 col-sm-6 col-md-3">
       <label for="samplingDate">Fecha muestreo</label>
-      <input type="date"
+      <input type="text"
         class="form-control"
         placeholder="aaaa-mm-dd"
         id="samplingDate"
@@ -93,7 +90,7 @@
     </div>
     <div class="col-xs-12 col-sm-6 col-md-3">
       <label for="samplingTime">Hora muestreo</label>
-      <input type="time"
+      <input type="text"
         class="form-control"
         placeholder="HH:mm:ss"
         id="samplingTime"
@@ -111,7 +108,7 @@
   <div class="row">
     <div class="col-xs-12 col-sm-6 col-md-3">
       <label for="receptionDate">Fecha recepción</label>
-      <input type="date"
+      <input type="text"
         class="form-control"
         placeholder="aaaa-mm-dd"
         id="receptionDate"
@@ -122,7 +119,7 @@
     </div>
     <div class="col-xs-12 col-sm-6 col-md-3">
       <label for="receptionTime">Hora recepción</label>
-      <input type="time"
+      <input type="text"
         class="form-control"
         placeholder="HH:mm:ss"
         id="receptionTime"
@@ -142,14 +139,14 @@
         name="receptionistSelect"
         required
         data-ng-model="reception.reception.id_recepcionista"
-        data-ng-change="reception.selectRecepcionist()"
+        data-ng-change="reception.selectReceptionist()"
         >
         <option value="">
           Seleccione una opción
         </option>
         <option
           data-ng-repeat="receptionist in reception.receptionists"
-          value="{{receptionist.id_recepcionista}}">
+          value="{{receptionist.id_empleado}}">
           {{receptionist.nombres}}
           {{receptionist.ap}}
           {{receptionist.am}}
@@ -157,8 +154,6 @@
       </select>
     </div>
   </div>
-
-
   <div class="row">
     <div class="col-xs-12 col-sm-8 col-lg-6">
       <label for="sampleDescriptionText">
@@ -185,8 +180,6 @@
       </textarea>
     </div>
   </div>
-
-
   <div class="row">
     <div class="col-xs-12">
       <h4>Áreas receptoras</h4>
@@ -194,16 +187,15 @@
   </div>
   <div class="row">
     <div class="col-xs-12"
-      data-ng-repeat="area in reception.receptio.areas_seleccionadas">
+      data-ng-repeat="area in reception.reception.areas_seleccionadas">
       <label>
         <input type="checkbox"
-          value="{{area.selected}}">
-          {area.area}
+          data-ng-model="area.selected"
+          name="{{area.area}}" />
+        {{area.area}}
       </label>
     </div>
   </div>
-
-
   <br>
   <button type="submit" class="btn btn-primary"
     value="Guardar" title="Guardar"

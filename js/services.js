@@ -161,8 +161,8 @@ angular
   .factory('OrderService', ['$resource', OrderService]);
 
 function ReceptionService($resource) {
-  return $resource('models/reception/1.json', {}, {
-    query: {method:'GET', params:{}, isArray:true}
+  return $resource('models/sampling/samples/1.json', {}, {
+    query: {method:'GET', params:{}, isArray:false}
   });
 }
 
@@ -170,12 +170,22 @@ angular
   .module('siclabApp')
   .factory('ReceptionService', ['$resource', ReceptionService]);
 
-function RecepcionistService($resource) {
-  return $resource('models/rcepcionists.json', {}, {
+function ReceptionistService($resource) {
+  return $resource('models/receptionists.json', {}, {
     query: {method:'GET', params:{}, isArray:true}
   });
 }
 
 angular
   .module('siclabApp')
-  .factory('RecepcionistService', ['$resource', RecepcionistService]);
+  .factory('ReceptionistService', ['$resource', ReceptionistService]);
+
+function FieldSheetService($resource) {
+  return $resource('models/field_sheets.json', {}, {
+    query: {method:'GET', params:{}, isArray:true}
+  });
+}
+
+angular
+  .module('siclabApp')
+  .factory('FieldSheetService', ['$resource', FieldSheetService]);

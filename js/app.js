@@ -143,8 +143,8 @@ function config($routeProvider) {
     }).
     when('/recepcion/campo', {
       templateUrl: 'partials/recepcion/campo.html',
-      controller: 'FieldDataSheetController'//,
-      //controllerAs: 'fieldDataSheet'
+      controller: 'FieldSheetController',
+      controllerAs: 'fieldSheet'
     }).
     when('/recepcion/muestra', {
       templateUrl: 'partials/recepcion/muestra.html',

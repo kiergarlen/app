@@ -54,6 +54,10 @@
         {{fieldSheet.fieldSheet.orden_muestreo.ejercicio}}
         <br>Fecha:
         {{fieldSheet.fieldSheet.orden_muestreo.fecha_orden}}
+        <br>Responsable muestreo:
+        {{fieldSheet.fieldSheet.orden_muestreo.responsable_muestreo.nombres}}
+        {{fieldSheet.fieldSheet.orden_muestreo.responsable_muestreo.ap}}
+        {{fieldSheet.fieldSheet.orden_muestreo.responsable_muestreo.am}}
       </div>
     </div>
   </div>
@@ -73,19 +77,201 @@
   </div>
   <div class="row">
     <div class="col-xs-12">
+      <h4>Condiciones ambientales</h4>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12 col-sm-6 col-md-5 col-lg-5">
+      <label for="cloudCoverSelect">
+        Cobertura de nubes
+      </label>
+      <select class="form-control"
+        id="cloudCoverSelect"
+        name="cloudCoverSelect"
+        required
+        data-ng-model="fieldSheet.fieldSheet.id_cobertura_nubes"
+        data-ng-change="fieldSheet.selectCloudCover()"
+        >
+        <option value="">
+          Seleccione una opción
+        </option>
+        <option data-ng-repeat="cloudCover in fieldSheet.cloudCovers"
+          value="{{cloudCover.id_cobertura_nubes}}">
+          {{cloudCover.cobertura_nubes}}
+        </option>
+      </select>
+    </div>
+    <div class="col-xs-12 col-sm-6 col-md-7 col-lg-7">
+      <label class="sr-only" for="cloudCoverText">
+        En caso de otra, especificar
+      </label>
+      <input type="text" class="form-control"
+        id="cloudCoverText"
+        name="cloudCoverText"
+        placeholder="En caso de otra, especificar"
+        data-ng-model="fieldSheet.fieldSheet.cobertura_nubes_otra"
+        >
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12 col-sm-6 col-md-5 col-lg-5">
+      <label for="windDirectionSelect">
+        Dirección del viento
+      </label>
+      <select class="form-control"
+        id="windDirectionSelect"
+        name="windDirectionSelect"
+        required
+        data-ng-model="fieldSheet.fieldSheet.id_direccion_viento"
+        data-ng-change="fieldSheet.selectWindDirection()"
+        >
+        <option value="">
+          Seleccione una opción
+        </option>
+        <option data-ng-repeat="windDirection in fieldSheet.windDirections"
+          value="{{windDirection.id_direccion_viento}}">
+          {{windDirection.direccion_viento}}
+        </option>
+      </select>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12 col-sm-6 col-md-5 col-lg-5">
+      <label for="waveIntensitySelect">
+        Intensidad del oleaje
+      </label>
+      <select class="form-control"
+        id="waveIntensitySelect"
+        name="waveIntensitySelect"
+        required
+        data-ng-model="fieldSheet.fieldSheet.id_oleaje"
+        data-ng-change="fieldSheet.selectWaveIntensity()"
+        >
+        <option value="">
+          Seleccione una opción
+        </option>
+        <option data-ng-repeat="waveIntensity in fieldSheet.waveIntensities"
+          value="{{waveIntensity.id_direccion_viento}}">
+          {{waveIntensity.direccion_viento}}
+        </option>
+      </select>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12">
+      <h4>Referencia del muestreo</h4>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12 col-sm-6 col-md-5 col-lg-5">
+      <label for="samplingNormSelect">
+        Norma referencia muestreo
+      </label>
+      <select class="form-control"
+        id="samplingNormSelect"
+        name="samplingNormSelect"
+        required
+        data-ng-model="fieldSheet.fieldSheet.id_norma_muestreo"
+        data-ng-change="fieldSheet.selectSamplingNorm()"
+        >
+        <option value="">
+          Seleccione una opción
+        </option>
+        <option data-ng-repeat="samplingNorm in fieldSheet.normas_muestreo"
+          value="{{samplingNorm.id_norma_muestreo}}">
+          {{samplingNorm.norma_muestreo}}
+        </option>
+      </select>
+    </div>
+  </div>
+
+
+
+
+
+
+  <div class="row">
+    <div class="col-xs-12">
       <h4>Resultados Campo</h4>
     </div>
   </div>
   <div class="row">
     <div class="col-xs-12 col-sm-6 col-md-3">
-      <label for="param1">Conductividad</label>
+      <label for="param1">Color</label>
       <input type="text"
         class="form-control"
-        placeholder="conductividad"
+        placeholder="color"
         id="param1"
         name="param1"
         required
-        data-ng-model="fieldSheet.fieldSheet.parametros_campo.conductividad"
+        data-ng-model="fieldSheet.fieldSheet.parametros_campo.color"
+        >
+    </div>
+    <div class="col-xs-12 col-sm-6 col-md-3">
+      <label for="param1">Olor</label>
+      <input type="text"
+        class="form-control"
+        placeholder="olor"
+        id="param1"
+        name="param1"
+        required
+        data-ng-model="fieldSheet.fieldSheet.parametros_campo.olor"
+        >
+    </div>
+    <div class="col-xs-12 col-sm-6 col-md-3">
+      <label for="param1">Gasto</label>
+      <input type="text"
+        class="form-control"
+        placeholder="0.0"
+        id="param1"
+        name="param1"
+        required
+        data-ng-model="fieldSheet.fieldSheet.parametros_campo.gasto"
+        >
+    </div>
+    <div class="col-xs-12 col-sm-6 col-md-3">
+      <label for="param1">Profundidad</label>
+      <input type="text"
+        class="form-control"
+        placeholder="0.0"
+        id="param1"
+        name="param1"
+        required
+        data-ng-model="fieldSheet.fieldSheet.parametros_campo.profundidad"
+        >
+    </div>
+    <div class="col-xs-12 col-sm-6 col-md-3">
+      <label for="param1">Olor</label>
+      <input type="text"
+        class="form-control"
+        placeholder="olor"
+        id="param1"
+        name="param1"
+        required
+        data-ng-model="fieldSheet.fieldSheet.parametros_campo.olor"
+        >
+    </div>
+    <div class="row">
+    <div class="col-xs-12 col-sm-6 col-md-3">
+      <label for="param1">Temperatura ambiente</label>
+      <input type="text"
+        class="form-control"
+        placeholder="0.0"
+        id="param1"
+        name="param1"
+        required
+        data-ng-model="fieldSheet.fieldSheet.parametros_campo.temp_ambiente"
+        >
+    </div>
+    <div class="col-xs-12 col-sm-6 col-md-3">
+      <label for="param3">Temperatura</label>
+      <input type="text"
+        class="form-control"
+        placeholder="0.0"
+        id="param3"
+        name="param3"
+        required
+        data-ng-model="fieldSheet.fieldSheet.parametros_campo.temperatura"
         >
     </div>
     <div class="col-xs-12 col-sm-6 col-md-3">
@@ -100,21 +286,21 @@
         >
     </div>
     <div class="col-xs-12 col-sm-6 col-md-3">
-      <label for="param3">Temperatura</label>
+      <label for="param2">Conductividad</label>
       <input type="text"
         class="form-control"
-        placeholder="temp"
-        id="param3"
-        name="param3"
+        placeholder="0.0"
+        id="param2"
+        name="param2"
         required
-        data-ng-model="fieldSheet.fieldSheet.parametros_campo.temperatura"
+        data-ng-model="fieldSheet.fieldSheet.parametros_campo.conductividad"
         >
     </div>
     <div class="col-xs-12 col-sm-6 col-md-3">
       <label for="param4">Oxígeno disuelto</label>
       <input type="text"
         class="form-control"
-        placeholder="O2 disuelto"
+        placeholder="0.0"
         id="param4"
         name="param4"
         required
@@ -122,10 +308,21 @@
         >
     </div>
     <div class="col-xs-12 col-sm-6 col-md-3">
+      <label for="param5">Transparencia</label>
+      <input type="text"
+        class="form-control"
+        placeholder="0.0"
+        id="param5"
+        name="param5"
+        required
+        data-ng-model="fieldSheet.fieldSheet.parametros_campo.transparencia"
+        >
+    </div>
+    <div class="col-xs-12 col-sm-6 col-md-3">
       <label for="param5">Cloro residual</label>
       <input type="text"
         class="form-control"
-        placeholder="Cl residual"
+        placeholder="0.0"
         id="param5"
         name="param5"
         required

@@ -181,8 +181,8 @@ angular
   .factory('ReceptionistService', ['$resource', ReceptionistService]);
 
 function FieldSheetService($resource) {
-  return $resource('models/field_sheets.json', {}, {
-    query: {method:'GET', params:{}, isArray:true}
+  return $resource('models/field_sheets/1.json', {}, {
+    query: {method:'GET', params:{}, isArray:false}
   });
 }
 

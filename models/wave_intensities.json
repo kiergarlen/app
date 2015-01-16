@@ -1,0 +1,18 @@
+[
+	{
+		"id_oleaje":1,
+		"oleaje":"Nulo"
+	},
+	{
+		"id_oleaje":2,
+		"oleaje":"Lento"
+	},
+	{
+		"id_oleaje":3,
+		"oleaje":"Medio"
+	},
+	{
+		"id_oleaje":4,
+		"oleaje":"Fuerte"
+	}
+]

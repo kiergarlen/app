@@ -36,25 +36,97 @@
       "id_muestra":1,
       "muestra":"",
       "fecha_muestra":"2014-12-10",
-      "hora_muestra":"12:45"
+      "hora_muestra":"12:45",
+      "parametros_campo":
+      [
+        {
+          "id_parametro":1000,
+          "parametro":"parametro campo",
+          "param":"p. cpo.",
+          "id_tipo_parametro":1,
+          "id_unidad":1,
+          "id_preservacion":2,
+          "valor":"8216.832457",
+          "componentes":
+          [
+            "8216.832457",
+            "8216.832457",
+            "8216.832457"
+          ]
+        }
+      ]
     },
     {
       "id_muestra":2,
       "muestra":"",
       "fecha_muestra":"2014-12-10",
-      "hora_muestra":"12:45"
+      "hora_muestra":"12:45",
+      "parametros_campo":
+      [
+        {
+          "id_parametro":1000,
+          "parametro":"parametro campo",
+          "param":"p. cpo.",
+          "id_tipo_parametro":1,
+          "id_unidad":1,
+          "id_preservacion":2,
+          "valor":"8216.832457",
+          "componentes":
+          [
+            "8216.832457",
+            "8216.832457",
+            "8216.832457"
+          ]
+        }
+      ]
     },
     {
       "id_muestra":3,
       "muestra":"",
       "fecha_muestra":"2014-12-10",
-      "hora_muestra":"12:45"
+      "hora_muestra":"12:45",
+      "parametros_campo":
+      [
+        {
+          "id_parametro":1000,
+          "parametro":"parametro campo",
+          "param":"p. cpo.",
+          "id_tipo_parametro":1,
+          "id_unidad":1,
+          "id_preservacion":2,
+          "valor":"8216.832457",
+          "componentes":
+          [
+            "8216.832457",
+            "8216.832457",
+            "8216.832457"
+          ]
+        }
+      ]
     },
     {
       "id_muestra":4,
       "muestra":"",
       "fecha_muestra":"2014-12-10",
-      "hora_muestra":"12:45"
+      "hora_muestra":"12:45",
+      "parametros_campo":
+      [
+        {
+          "id_parametro":1000,
+          "parametro":"parametro campo",
+          "param":"p. cpo.",
+          "id_tipo_parametro":1,
+          "id_unidad":1,
+          "id_preservacion":2,
+          "valor":"8216.832457",
+          "componentes":
+          [
+            "8216.832457",
+            "8216.832457",
+            "8216.832457"
+          ]
+        }
+      ]
     }
   ],
 
@@ -222,7 +294,9 @@
           "hora_ingreso":"16:32:59.001",
           "fecha_caducidad":"2014-11-22",
           "hora_caducidad":"12:32:59.001",
-          "vigencia":"segun parametro - ver horas vigencia en tabla",
+          "vigencia":48,
+          "vigencia_restante":35,
+          "caducada":false,
           "cantidad":1
         },
         {
@@ -246,7 +320,9 @@
           "hora_ingreso":"16:32:59.001",
           "fecha_caducidad":"2014-11-22",
           "hora_caducidad":"12:32:59.001",
-          "vigencia":"segun parametro - ver horas vigencia en tabla",
+          "vigencia":48,
+          "vigencia_restante":35,
+          "caducada":false,
           "cantidad":1
         },
         {
@@ -270,7 +346,9 @@
           "hora_ingreso":"16:32:59.001",
           "fecha_caducidad":"2014-11-22",
           "hora_caducidad":"12:32:59.001",
-          "vigencia":"segun parametro - ver horas vigencia en tabla",
+          "vigencia":48,
+          "vigencia_restante":35,
+          "caducada":false,
           "cantidad":1
         },
         {
@@ -294,7 +372,9 @@
           "hora_ingreso":"16:32:59.001",
           "fecha_caducidad":"2014-11-22",
           "hora_caducidad":"12:32:59.001",
-          "vigencia":"segun parametro - ver horas vigencia en tabla",
+          "vigencia":48,
+          "vigencia_restante":35,
+          "caducada":false,
           "cantidad":1
         },
         {
@@ -318,7 +398,9 @@
           "hora_ingreso":"16:32:59.001",
           "fecha_caducidad":"2014-11-22",
           "hora_caducidad":"12:32:59.001",
-          "vigencia":"segun parametro - ver horas vigencia en tabla",
+          "vigencia":48,
+          "vigencia_restante":35,
+          "caducada":false,
           "cantidad":1
         },
         {
@@ -342,7 +424,9 @@
           "hora_ingreso":"16:32:59.001",
           "fecha_caducidad":"2014-11-22",
           "hora_caducidad":"12:32:59.001",
-          "vigencia":"segun parametro - ver horas vigencia en tabla",
+          "vigencia":48,
+          "vigencia_restante":35,
+          "caducada":false,
           "cantidad":1
         },
         {
@@ -366,7 +450,9 @@
           "hora_ingreso":"16:32:59.001",
           "fecha_caducidad":"2014-11-22",
           "hora_caducidad":"12:32:59.001",
-          "vigencia":"segun parametro - ver horas vigencia en tabla",
+          "vigencia":48,
+          "vigencia_restante":35,
+          "caducada":false,
           "cantidad":1
         },
         {
@@ -390,7 +476,9 @@
           "hora_ingreso":"16:32:59.001",
           "fecha_caducidad":"2014-11-22",
           "hora_caducidad":"12:32:59.001",
-          "vigencia":"segun parametro - ver horas vigencia en tabla",
+          "vigencia":48,
+          "vigencia_restante":35,
+          "caducada":false,
           "cantidad":1
         },
         {
@@ -414,7 +502,9 @@
           "hora_ingreso":"16:32:59.001",
           "fecha_caducidad":"2014-11-22",
           "hora_caducidad":"12:32:59.001",
-          "vigencia":"segun parametro - ver horas vigencia en tabla",
+          "vigencia":48,
+          "vigencia_restante":35,
+          "caducada":false,
           "cantidad":1
         },
         {
@@ -438,7 +528,9 @@
           "hora_ingreso":"16:32:59.001",
           "fecha_caducidad":"2014-11-22",
           "hora_caducidad":"12:32:59.001",
-          "vigencia":"segun parametro - ver horas vigencia en tabla",
+          "vigencia":48,
+          "vigencia_restante":35,
+          "caducada":false,
           "cantidad":1
         },
         {
@@ -462,14 +554,16 @@
           "hora_ingreso":"16:32:59.001",
           "fecha_caducidad":"2014-11-22",
           "hora_caducidad":"12:32:59.001",
-          "vigencia":"segun parametro - ver horas vigencia en tabla",
+          "vigencia":48,
+          "vigencia_restante":35,
+          "caducada":false,
           "cantidad":1
         },
       ]
     },
     "fecha_muestreo":"2014-11-30",
     "hora_muestreo":"14:43:04.001",
-    "observaciones":"texto de observaciones y comentarios",
+    "comentarios":"texto de observaciones y comentarios",
     "calculos":"",
     "imagen_croquis":"url/imagen/croquis_172446543.jpg",
     "id_punto_muestreo":1,

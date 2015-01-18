@@ -1,0 +1,47 @@
+[
+	{
+		"id_preservacion":1,
+		"preservacion":"FQ 1 Hielo ",
+		"selected":false
+	},
+	{
+		"id_preservacion":2,
+		"preservacion":"Dza pH &lt;2",
+		"selected":false
+	},
+	{
+		"id_preservacion":3,
+		"preservacion":"FQ 2  pH &lt;2",
+		"selected":false
+	},
+	{
+		"id_preservacion":4,
+		"preservacion":"SAAM pH &lt;2",
+		"selected":false
+	},
+	{
+		"id_preservacion":5,
+		"preservacion":"GyA pH &lt;2",
+		"selected":false
+	},
+	{
+		"id_preservacion":6,
+		"preservacion":"Nitrógeno pH &lt;2",
+		"selected":false
+	},
+	{
+		"id_preservacion":7,
+		"preservacion":"MP pH &lt;2",
+		"selected":false
+	},
+	{
+		"id_preservacion":8,
+		"preservacion":"Sulfuros > 9",
+		"selected":false
+	},
+	{
+		"id_preservacion":9,
+		"preservacion":"Fenoles pH &lt;2 y CuSO4",
+		"selected":false
+	}
+]

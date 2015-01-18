@@ -1,6 +1,5 @@
 'use strict';
 
-//APP MAIN MODULE
 angular
   .module('siclabApp', [
     'ngRoute',

@@ -1,37 +1,321 @@
-      <div class="row">
-        <div class="col-xs-12">
-          <h2 class="page-header">Cadena de custodia</h2>
-        </div>
+<div class="row">
+  <div class="col-xs-12">
+    <h2 class="page-header">Cadena de custodia</h2>
+  </div>
+</div>
+<form class="form" role="form"
+  name="custodyForm"
+  data-ng-submit="custody.submitCustodyForm()"
+  novalidate
+  >
+  <div class="row">
+    <div class="col-xs-12">
+      <h4>Datos de Referencia</h4>
+      <div class="well well-sm">
+        <ul class="list-inline">
+          <li>
+            Folio:
+            {{custody.custody.folio}}
+            /
+            {{custody.custody.ejercicio}}</li>
+          <li data-ng-show="custody.custody.fecha_captura.length > 0">
+            Fecha captura:
+            {{custody.custody.fecha_captura}}</li>
+          <li data-ng-show="custody.custody.fecha_valida.length > 0">
+            Fecha validación:
+            {{custody.custody.fecha_valida}}</li>
+          <li data-ng-show="custody.custody.fecha_entrega.length > 0">
+            Fecha entrega:
+            {{custody.custody.fecha_entrega}}</li>
+          <li data-ng-show="custody.custody.fecha_actualizacion.length > 0">
+            Fecha actualización:
+            {{custody.custody.fecha_actualizacion}}</li>
+        </ul>
+        <span class="label label-success"
+          data-ng-show="custody.custody.validado > 0">Validado</span>
       </div>
-      <div class="row">
-        <div class="col-xs-12">
-          <h4>{{custodia.referenceData1Title}}</h4>
-          <ul class="list-inline">
-            <li>{{custodia.referenceData1Item1}}</li>
-            <li>{{custodia.referenceData1Item2}}</li>
-          </ul>
-        </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12 col-sm-6">
+      <h4>Cliente</h4>
+      <div class="well well-sm">
+        Cliente: {{custody.custody.cliente.cliente}}
+        {{custody.custody.cliente.area.length > 0 &&
+        ' - ' + custody.custody.cliente.area ||
+        ''}}
+        <br>
+        Contacto: {{custody.custody.cliente.contacto}}
       </div>
-      <form class="form" role="form" action="#">
-        <div class="row">
-          <div class="col-xs-12">
-            <h4>{{custodia.formMainHeader}}</h4>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-xs-12">
-            <label for="select{{custodia.selectInputId}}">{{custodia.selectInputLabel}}</label>
-            <select class="form-control" id="select{{custodia.selectInputId}}">
-              <option value="0" selected>Select option</option>
-              <option value="1">Item 1</option>
-              <option value="2">Item 2</option>
-              <option value="3">Item 3</option>
-            </select>
-            <label class="sr-only" for="{{custodia.inputTextId}}">{{custodia.inputTextLabel}}</label>
-            <input type="text" class="form-control" id="{{custodia.inputTextId}}" placeholder="{{custodia.inputTextLabel}}">
-            <label class="sr-only" for="{{custodia.inputTextDisabledId}}">{{custodia.inputTextDisabledLabel}}</label>
-            <input type="text" class="form-control" id="{{custodia.inputTextDisabledId}}" placeholder="{{custodia.inputTextDisabledLabel}}" disabled>
-          </div>
-        </div>
-        <button class="btn btn-primary" type="submit">{{custodia.buttonSubmitLabel}}</button>
-      </form>
+    </div>
+    <div class="col-xs-12 col-sm-6">
+      <h4>Plan de muestreo</h4>
+      <div class="well well-sm">
+        Folio:
+        {{custody.custody.plan_muestreo.folio}}
+        /
+        {{custody.custody.plan_muestreo.ejercicio}}
+        <br>Fecha:
+        {{custody.custody.plan_muestreo.fecha_orden}}
+        <br>Responsable muestreo:
+        {{custody.custody.plan_muestreo.responsable_muestreo.nombres}}
+        {{custody.custody.plan_muestreo.responsable_muestreo.ap}}
+        {{custody.custody.plan_muestreo.responsable_muestreo.am}}
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12">
+      <h4>Datos del muestreo</h4>
+      <div class="well well-sm">
+        Municipio:
+        {{custody.custody.recepcion.municipio}}<br>
+        Localidad:
+        {{custody.custody.recepcion.localidad}}<br>
+        Fecha muestreo:
+        {{custody.custody.recepcion.fecha_muestreo}}
+        Tipo muestreo:
+        {{custody.custody.recepcion.tipo_muestreo}}<br>
+        Matriz:
+        {{custody.custody.recepcion.matriz}}
+        Norma:
+        {{custody.custody.recepcion.norma}}<br>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12">
+      <h4>Verificación</h4>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12">
+      <h4>Preservación</h4>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-6 col-sm-4 col-md-3"
+      data-ng-repeat="preservation in custody.preservations">
+      <label>
+        <input type="checkbox"
+          value="{{preservation.selected}}">
+          {{preservation.preservacion}}
+      </label>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12">
+      <h4>Muestras vigentes</h4>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-6 col-sm-4 col-md-3"
+      data-ng-repeat="validity in custody.validities">
+      <label>
+        <input type="checkbox"
+          value="{{validity.selected}}">
+          {{validity.tipo_parametro}}
+      </label>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12">
+      <h4>Volúmenes requeridos</h4>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-6 col-sm-4 col-md-3"
+      data-ng-repeat="volume in custody.volumes">
+      <label>
+        <input type="checkbox"
+          value="{{volume.selected}}">
+          {{volume.tipo_parametro}}
+      </label>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12">
+      <h4>Recipientes adecuados</h4>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-6 col-sm-4 col-md-3"
+      data-ng-repeat="container in custody.containers">
+      <label>
+        <input type="checkbox"
+          value="{{container.selected}}">
+          {{container.tipo_parametro}}
+      </label>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12 col-sm-6 col-md-5 col-lg-5">
+      <label for="verifierSelect">
+        Responsable verificación
+      </label>
+      <select class="form-control"
+        id="verifierSelect"
+        name="verifierSelect"
+        required
+        data-ng-model="custody.custody.id_cobertura_nubes"
+        data-ng-change="custody.selectVerifier()"
+        >
+        <option value="">
+          Seleccione una opción
+        </option>
+        <option data-ng-repeat="verifier in custody.verifiers"
+          value="{{verifier.id_cobertura_nubes}}">
+          {{verifier.cobertura_nubes}}
+        </option>
+      </select>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12 col-sm-6 col-md-3">
+      <label for="verifyDate">Fecha verificación</label>
+      <input type="text"
+        class="form-control"
+        placeholder="aaaa-mm-dd"
+        id="verifyDate"
+        name="verifyDate"
+        required
+        data-ng-model="custody.custody.fecha_verificacion"
+        >
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12 col-sm-8 col-lg-6">
+      <label for="commentsText">
+        Comentarios
+      </label>
+      <textarea rows="3" class="form-control"
+        id="commentsText"
+        name="commentsText"
+        data-ng-model="custody.custody.comentarios"
+        ></textarea>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12">
+      <h4>Custodia muestras</h4>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12">
+      <h5>Responsable muestreo</h5>
+      <div class="well well-sm">
+        Nombre:
+        {{custody.plan.responsable_muestreo.nombres}}
+        {{custody.plan.responsable_muestreo.ap}}
+        {{custody.plan.responsable_muestreo.am}}
+        <br>
+        {{custody.plan.responsable_muestreo.puesto}}
+      </div>
+    </div>
+    <div class="col-xs-12 col-sm-6 col-md-3">
+      <label for="sampleDeliverDate">Fecha entrega</label>
+      <input type="text"
+        class="form-control"
+        placeholder="aaaa-mm-dd"
+        id="sampleDeliverDate"
+        name="sampleDeliverDate"
+        required
+        data-ng-model="custody.custody.fecha_entrega"
+        >
+    </div>
+    <div class="col-xs-12 col-sm-6 col-md-3">
+      <label for="sampleDeliverTime">Hora entrega</label>
+      <input type="text"
+        class="form-control"
+        placeholder="HH:mm:ss"
+        id="sampleDeliverTime"
+        name="sampleDeliverTime"
+        required
+        data-ng-model="custody.custody.hora_entrega"
+        >
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12">
+      <h5>Recepción muestras</h5>
+      <div class="well well-sm">
+        Nombre:
+        {{custody.custody.responsable_recepcion.nombres}}
+        {{custody.custody.responsable_recepcion.ap}}
+        {{custody.custody.responsable_recepcion.am}}
+        <br>
+        {{custody.custody.responsable_recepcion.puesto}}
+      </div>
+    </div>
+    <div class="col-xs-12 col-sm-6 col-md-3">
+      <label for="sampleReceiptDate">Fecha recepción</label>
+      <input type="date"
+        class="form-control"
+        placeholder="aaaa-mm-dd"
+        id="sampleReceiptDate"
+        name="sampleReceiptDate"
+        required
+        data-ng-model="custody.custody.fecha_recepcion"
+        >
+    </div>
+    <div class="col-xs-12 col-sm-6 col-md-3">
+      <label for="sampleReceiptTime">Hora recepción</label>
+      <input type="time"
+        class="form-control"
+        placeholder="HH:mm:ss"
+        id="sampleReceiptTime"
+        name="sampleReceiptTime"
+        required
+        data-ng-model="custody.custody.hora_recepcion"
+        >
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12">
+      <h5>Subcontratación</h5>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12 col-sm-6 col-md-7 col-lg-7">
+      <label class="sr-only" for="subContractorText">
+        Nombre subcontratista
+      </label>
+      <input type="text" class="form-control"
+        id="subContractorText"
+        name="subContractorText"
+        placeholder="Nombre subcontratista"
+        data-ng-model="custody.custody.subcontratista"
+        >
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12 col-sm-6 col-md-3">
+      <label for="sampleReceiptDate">Fecha recepción</label>
+      <input type="text"
+        class="form-control"
+        placeholder="aaaa-mm-dd"
+        id="sampleReceiptDate"
+        name="sampleReceiptDate"
+        required
+        data-ng-model="custody.custody.fecha_recepcion"
+        >
+    </div>
+    <div class="col-xs-12 col-sm-6 col-md-3">
+      <label for="sampleReceiptTime">Hora recepción</label>
+      <input type="text"
+        class="form-control"
+        placeholder="HH:mm:ss"
+        id="sampleReceiptTime"
+        name="sampleReceiptTime"
+        required
+        data-ng-model="custody.custody.hora_recepcion"
+        >
+    </div>
+  </div>
+  <br>
+  <button type="submit" class="btn btn-primary"
+    value="Guardar" title="Guardar"
+    data-ng-click="custody.validateCustodyForm()"
+    >
+    Guardar</button>
+</form>

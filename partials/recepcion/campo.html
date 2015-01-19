@@ -4,8 +4,8 @@
   </div>
 </div>
 <form class="form" role="form"
-  name="receptionForm"
-  data-ng-submit="fieldSheet.submitReceptionForm()"
+  name="fieldSheetForm"
+  data-ng-submit="fieldSheet.submitfieldSheetForm()"
   novalidate
   >
   <div class="row">
@@ -24,9 +24,9 @@
           <li data-ng-show="fieldSheet.fieldSheet.fecha_valida.length > 0">
             Fecha validación:
             {{fieldSheet.fieldSheet.fecha_valida}}</li>
-          <li data-ng-show="fieldSheet.fieldSheet.fecha_acep.length > 0">
+          <li data-ng-show="fieldSheet.fieldSheet.fecha_acepta.length > 0">
             Fecha aceptacion cliente:
-            {{fieldSheet.fieldSheet.fecha_acep}}</li>
+            {{fieldSheet.fieldSheet.fecha_acepta}}</li>
           <li data-ng-show="fieldSheet.fieldSheet.fecha_actualizacion.length > 0">
             Fecha actualización:
             {{fieldSheet.fieldSheet.fecha_actualizacion}}</li>
@@ -91,13 +91,13 @@
       </select>
     </div>
     <div class="col-xs-12 col-sm-6 col-md-7 col-lg-7">
-      <label class="sr-only" for="cloudCoverText">
+      <label for="cloudCoverText">
         En caso de otra, especificar
       </label>
       <input type="text" class="form-control"
         id="cloudCoverText"
         name="cloudCoverText"
-        placeholder="En caso de otra, especificar"
+        placeholder="Cobertura nubes"
         data-ng-model="fieldSheet.fieldSheet.cobertura_nubes_otra"
         >
     </div>
@@ -140,8 +140,8 @@
           Seleccione una opción
         </option>
         <option data-ng-repeat="waveIntensity in fieldSheet.waveIntensities"
-          value="{{waveIntensity.id_direccion_viento}}">
-          {{waveIntensity.direccion_viento}}
+          value="{{waveIntensity.id_oleaje}}">
+          {{waveIntensity.oleaje}}
         </option>
       </select>
     </div>
@@ -187,7 +187,7 @@
         id="sampleNumber"
         name="sampleNumber"
         required
-        data-ng-model="fieldSheet.fieldSheet.folio_muestra"
+        data-ng-model="fieldSheet.muestra.folio"
         >
     </div>
   </div>
@@ -365,7 +365,7 @@
       <label for="param2">Potencial de hidrógeno</label>
       <input type="text"
         class="form-control"
-        placeholder="ph"
+        placeholder="0.0"
         id="param2"
         name="param2"
         required
@@ -441,7 +441,7 @@
         placeholder="0.0"
         id="temp1"
         name="temp1"
-        data-ng-model="fieldSheet.fieldSheet.parametros_campo.temp_1"
+        data-ng-model="fieldSheet.fieldSheet.componentes_parametro.temp_1"
         >
     </div>
     <div class="col-xs-6 col-sm-6 col-md-3">
@@ -451,7 +451,7 @@
         placeholder="0.0"
         id="temp2"
         name="temp2"
-        data-ng-model="fieldSheet.fieldSheet.parametros_campo.temp_2"
+        data-ng-model="fieldSheet.fieldSheet.componentes_parametro.temp_2"
         >
     </div>
     <div class="col-xs-6 col-sm-6 col-md-3">
@@ -461,7 +461,7 @@
         placeholder="0.0"
         id="temp3"
         name="temp3"
-        data-ng-model="fieldSheet.fieldSheet.parametros_campo.temp_3"
+        data-ng-model="fieldSheet.fieldSheet.componentes_parametro.temp_3"
         >
     </div>
     <div class="col-xs-6 col-sm-6 col-md-3">
@@ -472,7 +472,7 @@
         id="temp"
         name="temp"
         readonly="readonly"
-        data-ng-model="fieldSheet.fieldSheet.parametros_campo.temp"
+        data-ng-model="fieldSheet.fieldSheet.componentes_parametro.temp"
         >
     </div>
   </div>
@@ -489,7 +489,7 @@
         placeholder="0.0"
         id="ph1"
         name="ph1"
-        data-ng-model="fieldSheet.fieldSheet.parametros_campo.ph_1"
+        data-ng-model="fieldSheet.fieldSheet.componentes_parametro.ph_1"
         >
     </div>
     <div class="col-xs-6 col-sm-6 col-md-3">
@@ -499,7 +499,7 @@
         placeholder="0.0"
         id="ph2"
         name="ph2"
-        data-ng-model="fieldSheet.fieldSheet.parametros_campo.ph_2"
+        data-ng-model="fieldSheet.fieldSheet.componentes_parametro.ph_2"
         >
     </div>
     <div class="col-xs-6 col-sm-6 col-md-3">
@@ -509,7 +509,7 @@
         placeholder="0.0"
         id="ph3"
         name="ph3"
-        data-ng-model="fieldSheet.fieldSheet.parametros_campo.ph_3"
+        data-ng-model="fieldSheet.fieldSheet.componentes_parametro.ph_3"
         >
     </div>
     <div class="col-xs-6 col-sm-6 col-md-3">
@@ -520,7 +520,7 @@
         id="ph"
         name="ph"
         readonly="readonly"
-        data-ng-model="fieldSheet.fieldSheet.parametros_campo.ph"
+        data-ng-model="fieldSheet.fieldSheet.componentes_parametro.ph"
         >
     </div>
   </div>
@@ -537,7 +537,7 @@
         placeholder="0.0"
         id="cond1"
         name="cond1"
-        data-ng-model="fieldSheet.fieldSheet.parametros_campo.cond_1"
+        data-ng-model="fieldSheet.fieldSheet.componentes_parametro.cond_1"
         >
     </div>
     <div class="col-xs-6 col-sm-6 col-md-3">
@@ -547,7 +547,7 @@
         placeholder="0.0"
         id="cond2"
         name="cond2"
-        data-ng-model="fieldSheet.fieldSheet.parametros_campo.cond_2"
+        data-ng-model="fieldSheet.fieldSheet.componentes_parametro.cond_2"
         >
     </div>
     <div class="col-xs-6 col-sm-6 col-md-3">
@@ -557,7 +557,7 @@
         placeholder="0.0"
         id="cond3"
         name="cond3"
-        data-ng-model="fieldSheet.fieldSheet.parametros_campo.cond_3"
+        data-ng-model="fieldSheet.fieldSheet.componentes_parametro.cond_3"
         >
     </div>
     <div class="col-xs-6 col-sm-6 col-md-3">
@@ -568,7 +568,7 @@
         id="cond"
         name="cond"
         readonly="readonly"
-        data-ng-model="fieldSheet.fieldSheet.parametros_campo.cond"
+        data-ng-model="fieldSheet.fieldSheet.componentes_parametro.cond"
         >
     </div>
   </div>
@@ -585,7 +585,7 @@
         placeholder="0.0"
         id="od1"
         name="od1"
-        data-ng-model="fieldSheet.fieldSheet.parametros_campo.od_1"
+        data-ng-model="fieldSheet.fieldSheet.componentes_parametro.od_1"
         >
     </div>
     <div class="col-xs-6 col-sm-6 col-md-3">
@@ -595,7 +595,7 @@
         placeholder="0.0"
         id="od2"
         name="od2"
-        data-ng-model="fieldSheet.fieldSheet.parametros_campo.od_2"
+        data-ng-model="fieldSheet.fieldSheet.componentes_parametro.od_2"
         >
     </div>
     <div class="col-xs-6 col-sm-6 col-md-3">
@@ -605,7 +605,7 @@
         placeholder="0.0"
         id="od3"
         name="od3"
-        data-ng-model="fieldSheet.fieldSheet.parametros_campo.od_3"
+        data-ng-model="fieldSheet.fieldSheet.componentes_parametro.od_3"
         >
     </div>
     <div class="col-xs-6 col-sm-6 col-md-3">
@@ -616,7 +616,7 @@
         id="od"
         name="od"
         readonly="readonly"
-        data-ng-model="fieldSheet.fieldSheet.parametros_campo.od"
+        data-ng-model="fieldSheet.fieldSheet.componentes_parametro.od"
         >
     </div>
   </div>
@@ -669,11 +669,10 @@
       </div>
     </div>
   </div>
-
   <br>
   <button type="submit" class="btn btn-primary"
     value="Guardar" title="Guardar"
-    data-ng-click="fieldSheet.validateReceptionForm()"
+    data-ng-click="fieldSheet.validateFieldSheetForm()"
     >
     Guardar</button>
 </form>

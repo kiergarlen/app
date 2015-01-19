@@ -4,7 +4,7 @@
 	"id_orden_muestreo":1,
 	"id_plan_muestreo":1,
 	"id_recepcion":1,
-	"folio_custodia":154,
+	"folio":154,
 	"ejercicio":2014,
 	"fecha_captura":"2014-07-01",
 	"fecha_entrega":"2014-07-03",
@@ -50,6 +50,15 @@
 		"cea":1,
 		"tasa":0,
 		"activo":1
+	},
+	"recepcion":
+	{
+		"municipio":"Zapotlanejo",
+		"localidad":"Zapotlanejo",
+		"fecha_muestreo":"",
+		"tipo_muestreo":"Simple",
+		"matriz":"Agua residual",
+		"norma":"NOM-001-SEMARNAT-1996"
 	},
 	"orden_muestreo":
 	{

@@ -34,9 +34,9 @@ function LoginController($scope, $http, Loginservice) {
         vm.user.password == '123'
       )
       {
-        vm.message = 'Enviando datos secretos...';
-        vm.message = vm.submit(
-          vm.message,
+        vm.message = 'Enviando...';
+        vm.submit(
+          '',
           vm.user.username,
           vm.user.password
         );
@@ -299,7 +299,7 @@ function QuoteController(ClientService, ParameterService, NormService,
   }
 
   function selectNorm(idNorm) {
-    var i, l, j, m;
+    var i, l;
     l = vm.norms.length;
     vm.quote.norma = {};
     vm.quote.parametros_seleccionados = [];
@@ -612,14 +612,89 @@ angular
  * @constructor
  * @desc Controla la vista para capturar la hoja de campo
  * @this {Object} $scope - Contenedor para el modelo, AngularJS
+ * @param {Function} CloudService - Proveedor de datos, cobertura nubes
+ * @param {Function} WindService - Proveedor de datos, dirección viento
+ * @param {Function} WaveService - Proveedor de datos, intensidad oleaje
+ * @param {Function} SamplingNormService - Proveedor de datos, Normas muestreo
+ * @param {Function} PointService - Proveedor de datos, Puntos muestreo
+ * @param {Function} FieldParameterService - Proveedor de datos, Parámetros campo
+ * @param {Function} PreservationService - Proveedor de datos, Preservaciones
  * @param {Function} FieldSheetService - Proveedor de datos, Hojas de campo
  */
-function FieldSheetController(FieldSheetService) {
+function FieldSheetController(CloudService, WindService, WaveService,
+  SamplingNormService, PointService, FieldParameterService,
+  PreservationService, FieldSheetService) {
   var vm = this;
   vm.fieldSheet = FieldSheetService.query();
+  vm.cloudCovers = CloudService.query();
+  vm.windDirections = WindService.query();
+  vm.waveIntensities = WaveService.query();
+  vm.samplingNorms = SamplingNormService.query();
+  vm.points = PointService.query();
+  vm.fieldParameters = FieldParameterService.query();
+  vm.preservations = PreservationService.query();
+
+  vm.selectCloudCover = selectCloudCover;
+  vm.selectWindDirection = selectWindDirection;
+  vm.selectWaveIntensity = selectWaveIntensity;
+  vm.selectSamplingNorm = selectSamplingNorm;
+  vm.selectPoint = selectPoint;
 
   vm.validateFieldSheetForm = validateFieldSheetForm;
   vm.submitFieldSheetForm = submitFieldSheetForm;
+
+  function selectItemFromCollection(id, field, collection) {
+    var item = {}, i, l;
+    l = collection.length;
+    for (i = 0; i < l; i += 1) {
+      if (collection[i][field] == id)
+      {
+        item = collection[i][field];
+        break;
+      }
+    }
+    return item;
+  }
+
+  function selectCloudCover(idCloud) {
+    /*
+    var item = selectItemFromCollection(idCloud, 'id_cobertura_nubes',
+    vm.cloudCovers);
+    vm.fieldSheet['id_cobertura_nubes'] = item['id_cobertura_nubes'];
+    */
+  }
+
+  function selectWindDirection(idWind) {
+    /*
+    var item = selectItemFromCollection(idWind, 'id_direccion_viento',
+    vm.windDirections);
+    vm.fieldSheet['id_direccion_viento'] = item['id_direccion_viento'];
+    */
+  }
+
+  function selectWaveIntensity(idWave) {
+    /*
+    var item = selectItemFromCollection(idWave, 'id_oleaje',
+    vm.waveIntensities);
+    vm.fieldSheet['id_oleaje'] = item['id_oleaje'];
+    */
+  }
+
+  function selectSamplingNorm(idNorm) {
+    /*
+    var item = selectItemFromCollection(idNorm, 'id_metodo_muestreo',
+    vm.samplingNorms);
+    vm.fieldSheet['id_metodo_muestreo'] = item['id_metodo_muestreo'];
+    */
+  }
+
+  function selectPoint(idPoint) {
+    /*
+    var item = selectItemFromCollection(idPoint, 'id_punto_muestreo',
+    vm.points);
+    vm.fieldSheet['id_punto_muestreo'] = item['id_punto_muestreo'];
+    */
+  }
 
   function validateFieldSheetForm() {
 
@@ -634,7 +709,28 @@ angular
   .module('siclabApp')
   .controller('FieldSheetController',
     [
-      'ReceptionistService', 'FieldSheetService',
+      'CloudService', 'WindService', 'WaveService',
+      'SamplingNormService', 'PointService', 'FieldParameterService',
+      'PreservationService', 'FieldSheetService',
       FieldSheetController
+    ]
+  );
+
+/**
+ * @name CustodyController
+ * @constructor
+ * @desc Controla la vista para capturar las Hojas de custodia
+ * @this {Object} $scope - Contenedor para el modelo, AngularJS
+ */
+function CustodyController() {
+  var vm = this;
+  //
+}
+
+angular
+  .module('siclabApp')
+  .controller('CustodyController',
+    [
+      CustodyController
     ]
   );

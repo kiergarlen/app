@@ -1,0 +1,46 @@
+[
+  {
+    "id_punto_muestreo":1,
+    "punto_muestreo":"Punto muestreo Prueba",
+    "descripcion":"Descripción detallada del Punto de muestreo de Prueba",
+    "id_municipio":14124,
+    "municipio":"Zapotlanejo",
+    "id_localidad":141240001,
+    "localidad":"Zapotlanejo",
+    "lat":23.123456,
+    "lng":-103.654321
+  },
+  {
+    "id_punto_muestreo":1,
+    "punto_muestreo":"Punto muestreo Prueba",
+    "descripcion":"Descripción detallada del Punto de muestreo de Prueba",
+    "id_municipio":14124,
+    "municipio":"Zapotlanejo",
+    "id_localidad":141240001,
+    "localidad":"Zapotlanejo",
+    "lat":23.123456,
+    "lng":-103.654321
+  },
+  {
+    "id_punto_muestreo":1,
+    "punto_muestreo":"Punto muestreo Prueba",
+    "descripcion":"Descripción detallada del Punto de muestreo de Prueba",
+    "id_municipio":14124,
+    "municipio":"Zapotlanejo",
+    "id_localidad":141240001,
+    "localidad":"Zapotlanejo",
+    "lat":23.123456,
+    "lng":-103.654321
+  },
+  {
+    "id_punto_muestreo":1,
+    "punto_muestreo":"Punto muestreo Prueba",
+    "descripcion":"Descripción detallada del Punto de muestreo de Prueba",
+    "id_municipio":14124,
+    "municipio":"Zapotlanejo",
+    "id_localidad":141240001,
+    "localidad":"Zapotlanejo",
+    "lat":23.123456,
+    "lng":-103.654321
+  }
+]

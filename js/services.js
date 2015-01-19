@@ -180,6 +180,82 @@ angular
   .module('siclabApp')
   .factory('ReceptionistService', ['$resource', ReceptionistService]);
 
+function CloudService($resource) {
+  return $resource('models/clouds.json', {}, {
+    query: {method:'GET', params:{}, isArray:true}
+  });
+}
+
+angular
+  .module('siclabApp')
+  .factory('CloudService', ['$resource', CloudService]);
+
+
+function WindService($resource) {
+  return $resource('models/winds.json', {}, {
+    query: {method:'GET', params:{}, isArray:true}
+  });
+}
+
+angular
+  .module('siclabApp')
+  .factory('WindService', ['$resource', WindService]);
+
+
+function WaveService($resource) {
+  return $resource('models/waves.json', {}, {
+    query: {method:'GET', params:{}, isArray:true}
+  });
+}
+
+angular
+  .module('siclabApp')
+  .factory('WaveService', ['$resource', WaveService]);
+
+
+function SamplingNormService($resource) {
+  return $resource('models/sampling_norms.json', {}, {
+    query: {method:'GET', params:{}, isArray:true}
+  });
+}
+
+angular
+  .module('siclabApp')
+  .factory('SamplingNormService', ['$resource', SamplingNormService]);
+
+
+function PointService($resource) {
+  return $resource('models/points.json', {}, {
+    query: {method:'GET', params:{}, isArray:true}
+  });
+}
+
+angular
+  .module('siclabApp')
+  .factory('PointService', ['$resource', PointService]);
+
+
+function FieldParameterService($resource) {
+  return $resource('models/field_parameters.json', {}, {
+    query: {method:'GET', params:{}, isArray:true}
+  });
+}
+
+angular
+  .module('siclabApp')
+  .factory('FieldParameterService', ['$resource', FieldParameterService]);
+
+
+function PreservationService($resource) {
+  return $resource('models/preservations.json', {}, {
+    query: {method:'GET', params:{}, isArray:true}
+  });
+}
+
+angular
+  .module('siclabApp')
+  .factory('PreservationService', ['$resource', PreservationService]);
+
 function FieldSheetService($resource) {
   return $resource('models/field_sheets/1.json', {}, {
     query: {method:'GET', params:{}, isArray:false}
@@ -189,3 +265,13 @@ function FieldSheetService($resource) {
 angular
   .module('siclabApp')
   .factory('FieldSheetService', ['$resource', FieldSheetService]);
+
+function CustodyController($resource) {
+  return $resource('models/custodies/1.json', {}, {
+    query: {method:'GET', params:{}, isArray:false}
+  });
+}
+
+angular
+  .module('siclabApp')
+  .factory('CustodyController', ['$resource', CustodyController]);

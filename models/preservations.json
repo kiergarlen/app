@@ -1,47 +1,72 @@
 [
 	{
 		"id_preservacion":1,
-		"preservacion":"FQ 1 Hielo ",
-		"selected":false
+		"tipo_param":"FQ",
+		"preservacion":"Sin preservar, a 4°C",
+		"selected":false,
+		"activo":1
 	},
 	{
 		"id_preservacion":2,
-		"preservacion":"Dza pH &lt;2",
-		"selected":false
+		"tipo_param":"OD",
+		"preservacion":"2 ml MnSo4 + 2 ml Álcali Ioduro + 2 ml H2So4",
+		"selected":false,
+		"activo":1
 	},
 	{
 		"id_preservacion":3,
-		"preservacion":"FQ 2  pH &lt;2",
-		"selected":false
+		"tipo_param":"SAAM",
+		"preservacion":"H2SO4, 4°C, pH<2",
+		"selected":false,
+		"activo":1
 	},
 	{
 		"id_preservacion":4,
-		"preservacion":"SAAM pH &lt;2",
-		"selected":false
+		"tipo_param":"FEN",
+		"preservacion":"H2SO4 + CuSO4, 4°C, pH<2",
+		"selected":false,
+		"activo":1
 	},
 	{
 		"id_preservacion":5,
-		"preservacion":"GyA pH &lt;2",
-		"selected":false
+		"tipo_param":"DZA",
+		"preservacion":"HNO3, pH<2",
+		"selected":false,
+		"activo":1
 	},
 	{
 		"id_preservacion":6,
-		"preservacion":"Nitrógeno pH &lt;2",
-		"selected":false
+		"tipo_param":"Sulfuros",
+		"preservacion":"6.5 ml de Acetato de Zn 2N, NaOH 6N pH≥9, 4°C",
+		"selected":false,
+		"activo":1
 	},
 	{
 		"id_preservacion":7,
-		"preservacion":"MP pH &lt;2",
-		"selected":false
+		"tipo_param":"FQ-2",
+		"preservacion":"H2SO4, 4°C, pH<2",
+		"selected":false,
+		"activo":1
 	},
 	{
 		"id_preservacion":8,
-		"preservacion":"Sulfuros > 9",
-		"selected":false
+		"tipo_param":"GyA",
+		"preservacion":"HCL1:1, 4°C, pH<2",
+		"selected":false,
+		"activo":1
 	},
 	{
 		"id_preservacion":9,
-		"preservacion":"Fenoles pH &lt;2 y CuSO4",
-		"selected":false
+		"tipo_param":"MP",
+		"preservacion":"HNO3, pH<2",
+		"selected":false,
+		"activo":1
+	},
+	{
+		"id_preservacion":10,
+		"tipo_param":"Fenoles",
+		"preservacion":"CuSO4, pH<2 ",
+		"selected":false,
+		"activo":1
 	}
 ]

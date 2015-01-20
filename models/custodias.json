@@ -5,7 +5,7 @@
 		"id_orden_muestreo":1,
 		"id_plan_muestreo":1,
 		"id_recepcion":1,
-		"folio_custodia":154,
+		"folio":154,
 		"ejercicio":2014,
 		"fecha_captura":"2014-07-01",
 		"fecha_entrega":"2014-07-03",
@@ -23,7 +23,7 @@
 
 		"recibido":1,
 		"verificado":1,
-		"validado":1,
+		"validado":0,
 		"subcontratado":0,
 		"cliente":
 		{

@@ -27,6 +27,9 @@
           <li data-ng-show="custody.custody.fecha_entrega.length > 0">
             Fecha entrega:
             {{custody.custody.fecha_entrega}}</li>
+          <li data-ng-show="custody.custody.fecha_recibe.length > 0">
+            Fecha recibe:
+            {{custody.custody.fecha_recibe}}</li>
           <li data-ng-show="custody.custody.fecha_actualizacion.length > 0">
             Fecha actualización:
             {{custody.custody.fecha_actualizacion}}</li>
@@ -56,7 +59,7 @@
         /
         {{custody.custody.plan_muestreo.ejercicio}}
         <br>Fecha:
-        {{custody.custody.plan_muestreo.fecha_orden}}
+        {{custody.custody.plan_muestreo.fecha_muestreo}}
         <br>Responsable muestreo:
         {{custody.custody.plan_muestreo.responsable_muestreo.nombres}}
         {{custody.custody.plan_muestreo.responsable_muestreo.ap}}
@@ -110,11 +113,11 @@
   </div>
   <div class="row">
     <div class="col-xs-6 col-sm-4 col-md-3"
-      data-ng-repeat="validity in custody.validities">
+      data-ng-repeat="expiration in custody.expirations">
       <label>
         <input type="checkbox"
-          value="{{validity.selected}}">
-          {{validity.tipo_parametro}}
+          value="{{expiration.selected}}">
+          {{expiration.tipo_parametro}}
       </label>
     </div>
   </div>
@@ -157,15 +160,15 @@
         id="verifierSelect"
         name="verifierSelect"
         required
-        data-ng-model="custody.custody.id_cobertura_nubes"
+        data-ng-model="custody.custody.id_responsable_verificacion"
         data-ng-change="custody.selectVerifier()"
         >
         <option value="">
           Seleccione una opción
         </option>
         <option data-ng-repeat="verifier in custody.verifiers"
-          value="{{verifier.id_cobertura_nubes}}">
-          {{verifier.cobertura_nubes}}
+          value="{{verifier.id_responsable_verificacion}}">
+          {{verifier.responsable_verificacion}}
         </option>
       </select>
     </div>

@@ -784,9 +784,17 @@ angular
  * @constructor
  * @desc Controla la vista para capturar las Hojas de custodia
  * @this {Object} $scope - Contenedor para el modelo, AngularJS
+ * @param {Function} PreservationService - Proveedor de datos, Preservaciones
+ * @param {Function} ExpirationService - Proveedor de datos, Vigencias
+ * @param {Function} RequiredVolumeService - Proveedor de datos, Volúmenes requeridos
+ * @param {Function} ContainerService - Proveedor de datos, Recipientes
  */
 function CustodyController() {
   var vm = this;
+  vm.preservations = PreservationService.query();
+  vm.expirations = ExpirationService.query();
+  vm.volumes = RequiredVolumeService.query();
+  vm.containers = ContainerService.query();
   //
 }
 
@@ -794,6 +802,10 @@ angular
   .module('siclabApp')
   .controller('CustodyController',
     [
+      'PreservationService',
+      'ExpirationService',
+      'RequiredVolumeService',
+      'ContainerService',
       CustodyController
     ]
   );

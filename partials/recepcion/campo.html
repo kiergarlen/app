@@ -284,165 +284,19 @@
     </div>
   </div>
   <div class="row">
-    <div class="col-xs-12 col-sm-6 col-md-4"
+    <div class="col-xs-12 col-sm-6 col-lg-4"
       data-ng-repeat="fieldParameter in fieldSheet.fieldParameters">
       <label for="{{fieldParameter.param}}Text">
         {{fieldParameter.parametro}}
       </label>
       <input type="text"
         class="form-control"
-        placeholder=""
+        placeholder="Escriba un valor"
         id="{{fieldParameter.param}}Text"
         name="{{fieldParameter.param}}Text"
         data-ng-model="fieldParameter.valor"
         >
     </div>
-
-    <!--
-    <div class="col-xs-12 col-sm-6 col-md-3">
-      <label for="param1">Color</label>
-      <input type="text"
-        class="form-control"
-        placeholder="color"
-        id="param1"
-        name="param1"
-        required
-        data-ng-model="fieldSheet.fieldSheet.muestra.parametros_campo.color"
-        >
-    </div>
-    <div class="col-xs-12 col-sm-6 col-md-3">
-      <label for="param1">Olor</label>
-      <input type="text"
-        class="form-control"
-        placeholder="olor"
-        id="param1"
-        name="param1"
-        required
-        data-ng-model="fieldSheet.fieldSheet.muestra.parametros_campo.olor"
-        >
-    </div>
-    <div class="col-xs-12 col-sm-6 col-md-3">
-      <label for="param1">Gasto</label>
-      <input type="text"
-        class="form-control"
-        placeholder="0.0"
-        id="param1"
-        name="param1"
-        required
-        data-ng-model="fieldSheet.fieldSheet.muestra.parametros_campo.gasto"
-        >
-    </div>
-    <div class="col-xs-12 col-sm-6 col-md-3">
-      <label for="param1">Profundidad</label>
-      <input type="text"
-        class="form-control"
-        placeholder="0.0"
-        id="param1"
-        name="param1"
-        required
-        data-ng-model="fieldSheet.fieldSheet.muestra.parametros_campo.profundidad"
-        >
-    </div>
-    <div class="col-xs-12 col-sm-6 col-md-3">
-      <label for="param1">Olor</label>
-      <input type="text"
-        class="form-control"
-        placeholder="olor"
-        id="param1"
-        name="param1"
-        required
-        data-ng-model="fieldSheet.fieldSheet.muestra.parametros_campo.olor"
-        >
-    </div>
-    <div class="col-xs-12 col-sm-6 col-md-3">
-      <label for="param1">Temperatura ambiente</label>
-      <input type="text"
-        class="form-control"
-        placeholder="0.0"
-        id="param1"
-        name="param1"
-        required
-        data-ng-model="fieldSheet.fieldSheet.muestra.parametros_campo.temp_ambiente"
-        >
-    </div>
-    <div class="col-xs-12 col-sm-6 col-md-3">
-      <label for="param3">Temperatura</label>
-      <input type="text"
-        class="form-control"
-        placeholder="0.0"
-        id="param3"
-        name="param3"
-        required
-        data-ng-model="fieldSheet.fieldSheet.muestra.parametros_campo.temperatura"
-        >
-    </div>
-    <div class="col-xs-12 col-sm-6 col-md-3">
-      <label for="param2">Potencial de hidrógeno</label>
-      <input type="text"
-        class="form-control"
-        placeholder="0.0"
-        id="param2"
-        name="param2"
-        required
-        data-ng-model="fieldSheet.fieldSheet.muestra.parametros_campo.ph"
-        >
-    </div>
-    <div class="col-xs-12 col-sm-6 col-md-3">
-      <label for="param2">Conductividad</label>
-      <input type="text"
-        class="form-control"
-        placeholder="0.0"
-        id="param2"
-        name="param2"
-        required
-        data-ng-model="fieldSheet.fieldSheet.muestra.parametros_campo.conductividad"
-        >
-    </div>
-    <div class="col-xs-12 col-sm-6 col-md-3">
-      <label for="param4">Oxígeno disuelto</label>
-      <input type="text"
-        class="form-control"
-        placeholder="0.0"
-        id="param4"
-        name="param4"
-        required
-        data-ng-model="fieldSheet.fieldSheet.muestra.parametros_campo.oxigeno_disuelto"
-        >
-    </div>
-    <div class="col-xs-12 col-sm-6 col-md-3">
-      <label for="param5">Transparencia</label>
-      <input type="text"
-        class="form-control"
-        placeholder="0.0"
-        id="param5"
-        name="param5"
-        required
-        data-ng-model="fieldSheet.fieldSheet.muestra.parametros_campo.transparencia"
-        >
-    </div>
-    <div class="col-xs-12 col-sm-6 col-md-3">
-      <label for="param5">Cloro residual</label>
-      <input type="text"
-        class="form-control"
-        placeholder="0.0"
-        id="param5"
-        name="param5"
-        required
-        data-ng-model="fieldSheet.fieldSheet.muestra.parametros_campo.cloro_residual"
-        >
-    </div>
-    <div class="col-xs-12 col-sm-6 col-md-3">
-      <label for="param6">Materia flotante</label>
-      <input type="text"
-        class="form-control"
-        placeholder="Materia flotante"
-        id="param6"
-        name="param6"
-        required
-        data-ng-model="fieldSheet.fieldSheet.muestra.parametros_campo.materia_flotante"
-        >
-    </div>
-    -->
   </div>
   <div class="row">
     <div class="col-xs-12">
@@ -457,7 +311,7 @@
         placeholder="0.0"
         id="temp1"
         name="temp1"
-        data-ng-model="fieldSheet.fieldSheet.componentes.temp_1"
+        data-ng-model="fieldSheet.temp_1"
         >
     </div>
     <div class="col-xs-6 col-sm-6 col-md-3">
@@ -467,7 +321,7 @@
         placeholder="0.0"
         id="temp2"
         name="temp2"
-        data-ng-model="fieldSheet.fieldSheet.componentes.temp_2"
+        data-ng-model="fieldSheet.temp_2"
         >
     </div>
     <div class="col-xs-6 col-sm-6 col-md-3">
@@ -477,18 +331,17 @@
         placeholder="0.0"
         id="temp3"
         name="temp3"
-        data-ng-model="fieldSheet.fieldSheet.componentes.temp_3"
+        data-ng-model="fieldSheet.temp_3"
         >
     </div>
     <div class="col-xs-6 col-sm-6 col-md-3">
       <label for="param6">Temp. promedio</label>
       <input type="text"
         class="form-control"
-        placeholder="0.0"
+        placeholder="{{fieldSheet.tempAvg()}}"
         id="temp"
         name="temp"
         readonly="readonly"
-        data-ng-model="fieldSheet.fieldSheet.componentes.temp"
         >
     </div>
   </div>
@@ -505,7 +358,7 @@
         placeholder="0.0"
         id="ph1"
         name="ph1"
-        data-ng-model="fieldSheet.fieldSheet.componentes.ph_1"
+        data-ng-model="fieldSheet.ph_1"
         >
     </div>
     <div class="col-xs-6 col-sm-6 col-md-3">
@@ -515,7 +368,7 @@
         placeholder="0.0"
         id="ph2"
         name="ph2"
-        data-ng-model="fieldSheet.fieldSheet.componentes.ph_2"
+        data-ng-model="fieldSheet.ph_2"
         >
     </div>
     <div class="col-xs-6 col-sm-6 col-md-3">
@@ -525,18 +378,17 @@
         placeholder="0.0"
         id="ph3"
         name="ph3"
-        data-ng-model="fieldSheet.fieldSheet.componentes.ph_3"
+        data-ng-model="fieldSheet.ph_3"
         >
     </div>
     <div class="col-xs-6 col-sm-6 col-md-3">
       <label for="param6">pH promedio</label>
       <input type="text"
         class="form-control"
-        placeholder="0.0"
+        placeholder="{{fieldSheet.phAvg()}}"
         id="ph"
         name="ph"
         readonly="readonly"
-        data-ng-model="fieldSheet.fieldSheet.componentes.ph"
         >
     </div>
   </div>
@@ -553,7 +405,7 @@
         placeholder="0.0"
         id="cond1"
         name="cond1"
-        data-ng-model="fieldSheet.fieldSheet.componentes.cond_1"
+        data-ng-model="fieldSheet.cond_1"
         >
     </div>
     <div class="col-xs-6 col-sm-6 col-md-3">
@@ -563,7 +415,7 @@
         placeholder="0.0"
         id="cond2"
         name="cond2"
-        data-ng-model="fieldSheet.fieldSheet.componentes.cond_2"
+        data-ng-model="fieldSheet.cond_2"
         >
     </div>
     <div class="col-xs-6 col-sm-6 col-md-3">
@@ -573,18 +425,17 @@
         placeholder="0.0"
         id="cond3"
         name="cond3"
-        data-ng-model="fieldSheet.fieldSheet.componentes.cond_3"
+        data-ng-model="fieldSheet.cond_3"
         >
     </div>
     <div class="col-xs-6 col-sm-6 col-md-3">
       <label for="param6">Cond. promedio</label>
       <input type="text"
         class="form-control"
-        placeholder="0.0"
+        placeholder="{{fieldSheet.condAvg()}}"
         id="cond"
         name="cond"
         readonly="readonly"
-        data-ng-model="fieldSheet.fieldSheet.componentes.cond"
         >
     </div>
   </div>
@@ -601,7 +452,7 @@
         placeholder="0.0"
         id="od1"
         name="od1"
-        data-ng-model="fieldSheet.fieldSheet.componentes.od_1"
+        data-ng-model="fieldSheet.od_1"
         >
     </div>
     <div class="col-xs-6 col-sm-6 col-md-3">
@@ -611,7 +462,7 @@
         placeholder="0.0"
         id="od2"
         name="od2"
-        data-ng-model="fieldSheet.fieldSheet.componentes.od_2"
+        data-ng-model="fieldSheet.od_2"
         >
     </div>
     <div class="col-xs-6 col-sm-6 col-md-3">
@@ -621,18 +472,17 @@
         placeholder="0.0"
         id="od3"
         name="od3"
-        data-ng-model="fieldSheet.fieldSheet.componentes.od_3"
+        data-ng-model="fieldSheet.od_3"
         >
     </div>
     <div class="col-xs-6 col-sm-6 col-md-3">
       <label for="param6">O.D. promedio</label>
       <input type="text"
         class="form-control"
-        placeholder="0.0"
+        placeholder="{{fieldSheet.odAvg()}}"
         id="od"
         name="od"
         readonly="readonly"
-        data-ng-model="fieldSheet.fieldSheet.componentes.od"
         >
     </div>
   </div>
@@ -642,7 +492,7 @@
     </div>
   </div>
   <div class="row">
-    <div class="col-xs-6 col-sm-4 col-md-3"
+    <div class="col-xs-12 col-sm-6"
       data-ng-repeat="preservation in fieldSheet.preservations">
       <label>
         <input type="checkbox"
@@ -652,7 +502,7 @@
     </div>
   </div>
   <div class="row">
-    <div class="col-xs-12 col-sm-8 col-lg-6">
+    <div class="col-xs-12 col-sm-8 col-lg-8">
       <label for="fieldSheetCommentsText">
         Comentarios
       </label>

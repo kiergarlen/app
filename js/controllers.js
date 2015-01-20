@@ -634,6 +634,28 @@ function FieldSheetController(CloudService, WindService, WaveService,
   vm.fieldParameters = FieldParameterService.query();
   vm.preservations = PreservationService.query();
 
+  vm.temp_1 = 0;
+  vm.temp_2 = 0;
+  vm.temp_3 = 0;
+  vm.temp = 0;
+  vm.ph_1 = 0;
+  vm.ph_2 = 0;
+  vm.ph_3 = 0;
+  vm.ph = 0;
+  vm.cond_1 = 0;
+  vm.cond_2 = 0;
+  vm.cond_3 = 0;
+  vm.cond = 0;
+  vm.od_1 = 0;
+  vm.od_2 = 0;
+  vm.od_3 = 0;
+  vm.od = 0;
+
+  vm.tempAvg = tempAvg;
+  vm.phAvg = phAvg;
+  vm.condAvg = condAvg;
+  vm.odAvg = odAvg;
+
   vm.selectCloudCover = selectCloudCover;
   vm.selectWindDirection = selectWindDirection;
   vm.selectWaveIntensity = selectWaveIntensity;
@@ -643,57 +665,98 @@ function FieldSheetController(CloudService, WindService, WaveService,
   vm.validateFieldSheetForm = validateFieldSheetForm;
   vm.submitFieldSheetForm = submitFieldSheetForm;
 
-  function selectItemFromCollection(id, field, collection) {
-    var item = {}, i, l;
-    l = collection.length;
-    for (i = 0; i < l; i += 1) {
+
+  function selectItemFromCollection(id, collection, field) {
+    var i = 0, l = collection.length,
+    item = {};
+    for (i; i < l; i += 1) {
       if (collection[i][field] == id)
       {
-        item = collection[i][field];
+        item = collection[i];
         break;
       }
     }
     return item;
   }
 
+  function averageFromArray(arr) {
+    var i = 0,
+    l = arr.length,
+    sum = 0;
+    if (l < 1)
+    {
+      return 0;
+    }
+    for (i; i < l; i++) {
+      sum += parseFloat(arr[i]);
+    }
+    return Math.round((sum / l)*1000*1000) / (1000 * 1000);
+  }
+
+  function tempAvg(){
+    vm.temp = averageFromArray([
+      vm.temp_1,
+      vm.temp_2,
+      vm.temp_3
+    ]);
+    return vm.temp;
+  }
+
+  function phAvg() {
+    vm.ph = averageFromArray([
+      vm.ph_1,
+      vm.ph_2,
+      vm.ph_3
+    ]);
+    return vm.ph;
+  }
+
+  function condAvg() {
+    vm.cond = averageFromArray([
+      vm.cond_1,
+      vm.cond_2,
+      vm.cond_3
+    ]);
+    return vm.cond;
+  }
+
+  function odAvg() {
+    vm.od = averageFromArray([
+      vm.od_1,
+      vm.od_2,
+      vm.od_3
+    ]);
+    return vm.od;
+  }
+
   function selectCloudCover(idCloud) {
-    /*
-    var item = selectItemFromCollection(idCloud, 'id_cobertura_nubes',
-    vm.cloudCovers);
-    vm.fieldSheet['id_cobertura_nubes'] = item['id_cobertura_nubes'];
-    */
+    selectItemFromCollection(
+      idCloud,'id_cobertura_nubes', vm.cloudCovers
+    );
   }
 
   function selectWindDirection(idWind) {
-    /*
-    var item = selectItemFromCollection(idWind, 'id_direccion_viento',
-    vm.windDirections);
-    vm.fieldSheet['id_direccion_viento'] = item['id_direccion_viento'];
-    */
+    selectItemFromCollection(
+      idWind,'id_direccion_viento', vm.windDirections
+    );
   }
 
   function selectWaveIntensity(idWave) {
-    /*
-    var item = selectItemFromCollection(idWave, 'id_oleaje',
-    vm.waveIntensities);
-    vm.fieldSheet['id_oleaje'] = item['id_oleaje'];
-    */
+    selectItemFromCollection(
+      idWave,'id_oleaje', vm.waveIntensities
+    );
   }
 
   function selectSamplingNorm(idNorm) {
-    /*
-    var item = selectItemFromCollection(idNorm, 'id_metodo_muestreo',
-    vm.samplingNorms);
-    vm.fieldSheet['id_metodo_muestreo'] = item['id_metodo_muestreo'];
-    */
+    selectItemFromCollection(
+      idNorm,'id_metodo_muestreo', vm.samplingNorms
+    );
   }
 
   function selectPoint(idPoint) {
-    /*
-    var item = selectItemFromCollection(idPoint, 'id_punto_muestreo',
-    vm.points);
-    vm.fieldSheet['id_punto_muestreo'] = item['id_punto_muestreo'];
-    */
+    selectItemFromCollection(
+      idPoint,'id_punto_muestreo', vm.points
+    );
   }
 
   function validateFieldSheetForm() {

@@ -1183,22 +1183,22 @@
   ],
   "componentes":
   {
-    "temp_1":null,
-    "temp_2":null,
-    "temp_3":null,
-    "temp":null,
-    "ph_1":null,
-    "ph_2":null,
-    "ph_3":null,
-    "ph":null,
-    "cond_1":null,
-    "cond_2":null,
-    "cond_3":null,
-    "cond":null,
-    "od_1":null,
-    "od_2":null,
-    "od_3":null,
-    "od":null
+    "temp_1":0,
+    "temp_2":0,
+    "temp_3":0,
+    "temp":0,
+    "ph_1":0,
+    "ph_2":0,
+    "ph_3":0,
+    "ph":0,
+    "cond_1":0,
+    "cond_2":0,
+    "cond_3":0,
+    "cond":0,
+    "od_1":0,
+    "od_2":0,
+    "od_3":0,
+    "od":0
   },
   "preservaciones":
   [

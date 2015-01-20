@@ -93,7 +93,7 @@
   </div>
   <div class="row">
     <div class="col-xs-12">
-      <h4>Preservación</h4>
+      <h5>Preservación</h5>
     </div>
   </div>
   <div class="row">
@@ -102,13 +102,13 @@
       <label>
         <input type="checkbox"
           value="{{preservation.selected}}">
-          {{preservation.preservacion}}
+          {{preservation.clase_parametro}}
       </label>
     </div>
   </div>
   <div class="row">
     <div class="col-xs-12">
-      <h4>Muestras vigentes</h4>
+      <h5>Muestras vigentes</h5>
     </div>
   </div>
   <div class="row">
@@ -117,13 +117,13 @@
       <label>
         <input type="checkbox"
           value="{{expiration.selected}}">
-          {{expiration.tipo_parametro}}
+          {{expiration.clase_parametro}}
       </label>
     </div>
   </div>
   <div class="row">
     <div class="col-xs-12">
-      <h4>Volúmenes requeridos</h4>
+      <h5>Volúmenes requeridos</h5>
     </div>
   </div>
   <div class="row">
@@ -132,13 +132,13 @@
       <label>
         <input type="checkbox"
           value="{{volume.selected}}">
-          {{volume.tipo_parametro}}
+          {{volume.clase_parametro}}
       </label>
     </div>
   </div>
   <div class="row">
     <div class="col-xs-12">
-      <h4>Recipientes adecuados</h4>
+      <h5>Recipientes adecuados</h5>
     </div>
   </div>
   <div class="row">
@@ -147,7 +147,7 @@
       <label>
         <input type="checkbox"
           value="{{container.selected}}">
-          {{container.tipo_parametro}}
+          {{container.clase_parametro}}
       </label>
     </div>
   </div>
@@ -293,25 +293,25 @@
   </div>
   <div class="row">
     <div class="col-xs-12 col-sm-6 col-md-3">
-      <label for="sampleReceiptDate">Fecha recepción</label>
+      <label for="sampleReceiptDateSub">Fecha recepción</label>
       <input type="text"
         class="form-control"
         placeholder="aaaa-mm-dd"
-        id="sampleReceiptDate"
-        name="sampleReceiptDate"
+        id="sampleReceiptDateSub"
+        name="sampleReceiptDateSub"
         required
-        data-ng-model="custody.custody.fecha_recepcion"
+        data-ng-model="custody.custody.fecha_recepcion_sub"
         >
     </div>
     <div class="col-xs-12 col-sm-6 col-md-3">
-      <label for="sampleReceiptTime">Hora recepción</label>
+      <label for="sampleReceiptTimeSub">Hora recepción</label>
       <input type="text"
         class="form-control"
         placeholder="HH:mm:ss"
-        id="sampleReceiptTime"
-        name="sampleReceiptTime"
+        id="sampleReceiptTimeSub"
+        name="sampleReceiptTimeSub"
         required
-        data-ng-model="custody.custody.hora_recepcion"
+        data-ng-model="custody.custody.hora_recepcion_sub"
         >
     </div>
   </div>

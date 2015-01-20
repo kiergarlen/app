@@ -1,0 +1,82 @@
+[
+	{
+		"id_recipiente_clase":1,
+		"id_clase_parametro":1,
+		"clase_parametro":"Físicoquimico",
+		"adecuado":0,
+		"selected":false,
+		"activo":1
+	},
+	{
+		"id_recipiente_clase":2,
+		"id_clase_parametro":2,
+		"clase_parametro":"Oxígeno disuelto",
+		"adecuado":0,
+		"selected":false,
+		"activo":1
+	},
+	{
+		"id_recipiente_clase":3,
+		"id_clase_parametro":3,
+		"clase_parametro":"Sustancias activas al azul de metileno",
+		"adecuado":0,
+		"selected":false,
+		"activo":1
+	},
+	{
+		"id_recipiente_clase":4,
+		"id_clase_parametro":4,
+		"clase_parametro":"Fenoles",
+		"adecuado":0,
+		"selected":false,
+		"activo":1
+	},
+	{
+		"id_recipiente_clase":5,
+		"id_clase_parametro":5,
+		"clase_parametro":"Dureza",
+		"adecuado":0,
+		"selected":false,
+		"activo":1
+	},
+	{
+		"id_recipiente_clase":6,
+		"id_clase_parametro":6,
+		"clase_parametro":"Sulfuros",
+		"adecuado":0,
+		"selected":false,
+		"activo":1
+	},
+	{
+		"id_recipiente_clase":7,
+		"id_clase_parametro":7,
+		"clase_parametro":"Físicoquimico 2",
+		"adecuado":0,
+		"selected":false,
+		"activo":1
+	},
+	{
+		"id_recipiente_clase":8,
+		"id_clase_parametro":8,
+		"clase_parametro":"Grasas y aceites",
+		"adecuado":0,
+		"selected":false,
+		"activo":1
+	},
+	{
+		"id_recipiente_clase":9,
+		"id_clase_parametro":9,
+		"clase_parametro":"Metales pesados",
+		"adecuado":0,
+		"selected":false,
+		"activo":1
+	},
+	{
+		"id_recipiente_clase":10,
+		"id_clase_parametro":10,
+		"clase_parametro":"Fenoles",
+		"adecuado":0,
+		"selected":false,
+		"activo":1
+	}
+]

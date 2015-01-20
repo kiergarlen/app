@@ -690,7 +690,7 @@ function FieldSheetController(CloudService, WindService, WaveService,
     for (i; i < l; i++) {
       sum += parseFloat(arr[i]);
     }
-    return Math.round((sum / l)*1000*1000) / (1000 * 1000);
+    return Math.round((sum / l) * 1000 * 1000) / (1000 * 1000);
   }
 
   function tempAvg(){
@@ -788,6 +788,7 @@ angular
  * @param {Function} ExpirationService - Proveedor de datos, Vigencias
  * @param {Function} RequiredVolumeService - Proveedor de datos, Volúmenes requeridos
  * @param {Function} ContainerService - Proveedor de datos, Recipientes
+ * @param {Function} CustodyService - Proveedor de datos, Hojas custodia
  */
 function CustodyController() {
   var vm = this;
@@ -795,8 +796,9 @@ function CustodyController() {
   vm.expirations = ExpirationService.query();
   vm.volumes = RequiredVolumeService.query();
   vm.containers = ContainerService.query();
-  //
+  vm.custody = CustodyService.query();
 }
+
 
 angular
   .module('siclabApp')

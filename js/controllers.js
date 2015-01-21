@@ -1,13 +1,12 @@
 //CONTROLLERS
 
-
 /**
  * @name LoginController
  * @constructor
  * @desc Controla la vista para Login
  * @this {Object} $scope - Contenedor para el modelo, AngularJS
  * @param {Object} $http - Manejo de peticiones HTTP [AngularJS]
- * @param {Function} LoginService - Proveedor de datos, Login
+ * @param {Object} LoginService - Proveedor de datos, Login
  */
 function LoginController($scope, $http, Loginservice) {
   var vm = this;
@@ -68,7 +67,7 @@ angular
  * @constructor
  * @desc Controla la vista para el Menú principal
  * @this {Object} $scope - Contenedor para el modelo, AngularJS
- * @param {Function} MenuService - Proveedor de datos, Menú
+ * @param {Object} MenuService - Proveedor de datos, Menú
  */
 function MenuController($scope, MenuService) {
   $scope.menu = MenuService.query();
@@ -87,12 +86,11 @@ angular
 /**
  * @name TasksController
  * @constructor
- * @desc Controla la vista para Bienvenida (Tablero de Tareas)
+ * @desc Controla la vista para Bienvenida
  * @this {Object} $scope - Contenedor para el modelo, AngularJS
- * @param {Function} TaskService - Proveedor de datos, Tareas
+ * @param {Object} TaskService - Proveedor de datos, Bienvenida
  */
 function TasksController(TaskService) {
-  //TODO: construir Tablero de Tareas del usuario
   var vm = this;
   vm.welcome = TaskService.query();
 }
@@ -111,17 +109,17 @@ angular
  * @constructor
  * @desc Controla la vista para el listado de Clientes
  * @this {Object} $scope - Contenedor para el modelo, AngularJS
- * @param {Function} ClientService - Proveedor de datos, Cliente
+ * @param {Object} ClientService - Proveedor de datos, Cliente
  */
-function ClientsListController($scope, ClientService) {
-  $scope.clients = ClientService.query();
+function ClientsListController(ClientService) {
+  var vm = this;
+  vm.clients = ClientService.query();
 }
 
 angular
   .module('siclabApp')
   .controller('ClientsListController',
     [
-      '$scope',
       'ClientService',
       ClientsListController
     ]
@@ -132,7 +130,7 @@ angular
  * @constructor
  * @desc Controla la vista para con el detalle de un Cliente
  * @this {Object} $scope - Contenedor para el modelo, AngularJS
- * @param {Function} ClientDetailService - Proveedor de datos, Detalle Cliente
+ * @param {Object} ClientDetailService - Proveedor de datos, Detalle cliente
  */
 function ClientDetailController($scope, ClientDetailService) {
   $scope.clientDetail = ClientDetailService.query();
@@ -153,7 +151,7 @@ angular
  * @constructor
  * @desc Controla la vista para el listado de Áreas
  * @this {Object} $scope - Contenedor para el modelo, AngularJS
- * @param {Function} DepartmentService - Proveedor de datos, Áreas
+ * @param {Object} DepartmentService - Proveedor de datos, Áreas
  */
 function DepartmentsListController($scope, DepartmentService) {
   $scope.departments = DepartmentService.query();
@@ -174,7 +172,7 @@ angular
  * @constructor
  * @desc Controla la vista para el listado de Empleados
  * @this {Object} $scope - Contenedor para el modelo, AngularJS
- * @param {Function} EmployeeService - Proveedor de datos, Empleados
+ * @param {Object} EmployeeService - Proveedor de datos, Empleados
  */
 function EmployeesListController($scope, EmployeeService) {
   $scope.employees = EmployeeService.query();
@@ -195,7 +193,7 @@ angular
  * @constructor
  * @desc Controla la vista para el listado de Usuarios
  * @this {Object} $scope - Contenedor para el modelo, AngularJS
- * @param {Function} UserService - Proveedor de datos, Usuarios
+ * @param {Object} UserService - Proveedor de datos, Usuarios
  */
 function UsersListController ($scope, UserService) {
   $scope.users = UserService.query();
@@ -216,7 +214,7 @@ angular
  * @constructor
  * @desc Controla la vista para el listado de Normas
  * @this {Object} $scope - Contenedor para el modelo, AngularJS
- * @param {Function} NormService - Proveedor de datos, Normas
+ * @param {Object} NormService - Proveedor de datos, Normas
  */
 function NormsListController($scope, NormService) {
   $scope.norms = NormService.query();
@@ -237,11 +235,11 @@ angular
  * @constructor
  * @desc Controla la vista para capturar una Solicitud/Cotización
  * @this {Object} $scope - Contenedor para el modelo, AngularJS
- * @param {Function} ClientService - Proveedor de datos, Clientes
- * @param {Function} ParameterService - Proveedor de datos, Parámetros
- * @param {Function} NormService - Proveedor de datos, Normas
- * @param {Function} SamplingTypeService - Proveedor de datos, Tipos muestreo
- * @param {Function} QuoteService - Proveedor de datos, Cotizaciones
+ * @param {Object} ClientService - Proveedor de datos, Clientes
+ * @param {Object} ParameterService - Proveedor de datos, Parámetros
+ * @param {Object} NormService - Proveedor de datos, Normas
+ * @param {Object} SamplingTypeService - Proveedor de datos, Tipos muestreo
+ * @param {Object} QuoteService - Proveedor de datos, Cotizaciones
  */
 function QuoteController(ClientService, ParameterService, NormService,
   SamplingTypeService, QuoteService) {
@@ -363,12 +361,12 @@ angular
  * @constructor
  * @desc Controla la vista para capturar una Orden de muestreo
  * @this {Object} $scope - Contenedor para el modelo, AngularJS
- * @param {Function} QuoteService - Proveedor de datos, Cotizaciones
- * @param {Function} OrderSourceService - Proveedor de datos, Orígenes orden
- * @param {Function} MatrixService - Proveedor de datos, Tipos matriz
- * @param {Function} ParameterService - Proveedor de datos, Parámetros
- * @param {Function} SamplingSupervisorService - Proveedor de datos, Supervisores
- * @param {Function} OrderService - Proveedor de datos, Orden muestreo
+ * @param {Object} QuoteService - Proveedor de datos, Cotizaciones
+ * @param {Object} OrderSourceService - Proveedor de datos, Orígenes orden
+ * @param {Object} MatrixService - Proveedor de datos, Tipos matriz
+ * @param {Object} ParameterService - Proveedor de datos, Parámetros
+ * @param {Object} SamplingSupervisorService - Proveedor de datos, Supervisores muestreo
+ * @param {Object} OrderService - Proveedor de datos, Orden muestreo
  */
 function OrderController(QuoteService, OrderSourceService,
   MatrixService, ParameterService, SamplingSupervisorService,
@@ -564,8 +562,8 @@ angular
  * @constructor
  * @desc Controla la vista para capturar la recepción de muestras
  * @this {Object} $scope - Contenedor para el modelo, AngularJS
- * @param {Function} ReceptionistService - Proveedor de datos, Recepcionistas
- * @param {Function} ReceptionService - Proveedor de datos, Recepción muestras
+ * @param {Object} ReceptionistService - Proveedor de datos, Recepcionistas
+ * @param {Object} ReceptionService - Proveedor de datos, Recepción muestras
  */
 function ReceptionController(ReceptionistService, ReceptionService) {
   var vm = this;
@@ -612,14 +610,14 @@ angular
  * @constructor
  * @desc Controla la vista para capturar la hoja de campo
  * @this {Object} $scope - Contenedor para el modelo, AngularJS
- * @param {Function} CloudService - Proveedor de datos, cobertura nubes
- * @param {Function} WindService - Proveedor de datos, dirección viento
- * @param {Function} WaveService - Proveedor de datos, intensidad oleaje
- * @param {Function} SamplingNormService - Proveedor de datos, Normas muestreo
- * @param {Function} PointService - Proveedor de datos, Puntos muestreo
- * @param {Function} FieldParameterService - Proveedor de datos, Parámetros campo
- * @param {Function} PreservationService - Proveedor de datos, Preservaciones
- * @param {Function} FieldSheetService - Proveedor de datos, Hojas de campo
+ * @param {Object} CloudService - Proveedor de datos, Coberturas nubes
+ * @param {Object} WindService - Proveedor de datos, Direcciones viento
+ * @param {Object} WaveService - Proveedor de datos, Intensidades oleaje
+ * @param {Object} SamplingNormService - Proveedor de datos, Normas muestreo
+ * @param {Object} PointService - Proveedor de datos, Puntos muestreo
+ * @param {Object} FieldParameterService - Proveedor de datos, Parámetros campo
+ * @param {Object} PreservationService - Proveedor de datos, Preservaciones
+ * @param {Object} FieldSheetService - Proveedor de datos, Hojas de campo
  */
 function FieldSheetController(CloudService, WindService, WaveService,
   SamplingNormService, PointService, FieldParameterService,
@@ -783,12 +781,12 @@ angular
  * @constructor
  * @desc Controla la vista para capturar las Hojas de custodia
  * @this {Object} $scope - Contenedor para el modelo, AngularJS
- * @param {Function} PreservationService - Proveedor de datos, Preservaciones
- * @param {Function} ExpirationService - Proveedor de datos, Vigencias
- * @param {Function} RequiredVolumeService - Proveedor de datos, Volúmenes requeridos
- * @param {Function} ContainerService - Proveedor de datos, Recipientes
- * @param {Function} CheckerService - Proveedor de datos, Responsables verificación
- * @param {Function} CustodyService - Proveedor de datos, Hojas custodia
+ * @param {Object} PreservationService - Proveedor de datos, Preservaciones
+ * @param {Object} ExpirationService - Proveedor de datos, Vigencias
+ * @param {Object} RequiredVolumeService - Proveedor de datos, Volúmenes requeridos
+ * @param {Object} ContainerService - Proveedor de datos, Recipientes
+ * @param {Object} CheckerService - Proveedor de datos, Responsables verificación
+ * @param {Object} CustodyService - Proveedor de datos, Cadenas custodia
  */
 function CustodyController(PreservationService, ExpirationService,
   RequiredVolumeService, ContainerService, CheckerService,
@@ -818,7 +816,6 @@ function CustodyController(PreservationService, ExpirationService,
     }
     return item;
   }
-
 
   function selectChecker(idChecker) {
     selectItemFromCollection(
@@ -850,10 +847,10 @@ angular
  * @constructor
  * @desc Controla la vista para capturar las Órdenes de trabajo
  * @this {Object} $scope - Contenedor para el modelo, AngularJS
- * @param {Function} ChemicalSupervisorService - Proveedor de datos, Supervisores físicoquimico
- * @param {Function} MetalSupervisorService - Proveedor de datos, Supervisores metales pesados
- * @param {Function} BioSupervisorService - Proveedor de datos, Supervisores microbiológico
- * @param {Function} TaskAssignService - Proveedor de datos, Órdenes trabajo
+ * @param {Object} ChemicalSupervisorService - Proveedor de datos, Supervisores físicoquimico
+ * @param {Object} MetalSupervisorService - Proveedor de datos, Supervisores metales pesados
+ * @param {Object} BioSupervisorService - Proveedor de datos, Supervisores microbiológico
+ * @param {Object} TaskAssignService - Proveedor de datos, Órdenes trabajo
  */
 function TaskAssignController(ChemicalSupervisorService,
   MetalSupervisorService, BioSupervisorService, TaskAssignService) {

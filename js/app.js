@@ -42,8 +42,8 @@ function config($routeProvider) {
     }).
     when('/catalogo/clientes', {
       templateUrl: 'partials/catalogo/clientes.html',
-      controller: 'ClientsListController'//,
-      //controllerAs: 'clientsList'
+      controller: 'ClientsListController',
+      controllerAs: 'clients'
     }).
     when('/catalogo/clientes/:clientId', {
       templateUrl: 'partials/catalogo/cliente.html',

@@ -319,3 +319,47 @@ function CustodyService($resource) {
 angular
   .module('siclabApp')
   .factory('CustodyService', ['$resource', CustodyService]);
+
+
+function ChemicalSupervisorService($resource) {
+  return $resource('models/chemical_supervisors.json', {}, {
+    query: {method:'GET', params:{}, isArray:true}
+  });
+}
+
+angular
+  .module('siclabApp')
+  .factory('ChemicalSupervisorService', ['$resource', ChemicalSupervisorService]);
+
+
+function MetalSupervisorService($resource) {
+  return $resource('models/metal_supervisors.json', {}, {
+    query: {method:'GET', params:{}, isArray:true}
+  });
+}
+
+angular
+  .module('siclabApp')
+  .factory('MetalSupervisorService', ['$resource', MetalSupervisorService]);
+
+
+function BioSupervisorService($resource) {
+  return $resource('models/bio_supervisors.json', {}, {
+    query: {method:'GET', params:{}, isArray:true}
+  });
+}
+
+angular
+  .module('siclabApp')
+  .factory('BioSupervisorService', ['$resource', BioSupervisorService]);
+
+
+function TaskAssignService($resource) {
+  return $resource('models/taskAssignments/1.json', {}, {
+    query: {method:'GET', params:{}, isArray:false}
+  });
+}
+
+angular
+  .module('siclabApp')
+  .factory('TaskAssignService', ['$resource', TaskAssignService]);

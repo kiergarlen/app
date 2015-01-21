@@ -886,19 +886,19 @@ function TaskAssignController(ChemicalSupervisorService,
 
   function selectChemicalSupervisor(idSup) {
     selectItemFromCollection(
-      idSup,'id_responsable_fq', vm.chemicalSupervisors
+      idSup,'id_empleado', vm.chemicalSupervisors
     );
   }
 
   function selectMetalSupervisor(idSup) {
     selectItemFromCollection(
-      idSup,'id_responsable_mp', vm.metalSupervisors
+      idSup,'id_empleado', vm.metalSupervisors
     );
   }
 
   function selectSupervisorBio(idSup) {
     selectItemFromCollection(
-      idSup,'id_responsable_mb', vm.bioSupervisors
+      idSup,'id_empleado', vm.bioSupervisors
     );
   }
 
@@ -917,7 +917,6 @@ angular
     [
       'ChemicalSupervisorService', 'MetalSupervisorService',
       'BioSupervisorService', 'TaskAssignService',
-      'TaskAssignController',
       TaskAssignController
     ]
   );

@@ -1,0 +1,20 @@
+[
+  {
+    "id_empleado":3,
+    "id_nivel":3,
+    "id_area":2,
+    "area":"Metales Pesados",
+    "id_puesto":4,
+    "puesto":"Supervisor (MP)",
+    "nombres":"Marín",
+    "ap":"Gomar",
+    "am":"Sosa",
+    "fecha_act":"2014-11-30",
+    "calidad":0,
+    "supervisa":1,
+    "analiza":1,
+    "muestrea":1,
+    "cert":1,
+    "activo":1
+  }
+]

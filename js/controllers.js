@@ -883,7 +883,6 @@ function TaskAssignController(ChemicalSupervisorService,
     return item;
   }
 
-
   function selectChemicalSupervisor(idSup) {
     selectItemFromCollection(
       idSup,'id_empleado', vm.chemicalSupervisors

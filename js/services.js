@@ -245,7 +245,6 @@ angular
   .module('siclabApp')
   .factory('FieldParameterService', ['$resource', FieldParameterService]);
 
-
 function PreservationService($resource) {
   return $resource('models/preservations.json', {}, {
     query: {method:'GET', params:{}, isArray:true}
@@ -255,6 +254,51 @@ function PreservationService($resource) {
 angular
   .module('siclabApp')
   .factory('PreservationService', ['$resource', PreservationService]);
+
+
+function ExpirationService($resource) {
+  return $resource('models/expirations.json', {}, {
+    query: {method:'GET', params:{}, isArray:true}
+  });
+}
+
+angular
+  .module('siclabApp')
+  .factory('ExpirationService', ['$resource', ExpirationService]);
+
+
+function RequiredVolumeService($resource) {
+  return $resource('models/volumes.json', {}, {
+    query: {method:'GET', params:{}, isArray:true}
+  });
+}
+
+angular
+  .module('siclabApp')
+  .factory('RequiredVolumeService', ['$resource', RequiredVolumeService]);
+
+
+function ContainerService($resource) {
+  return $resource('models/containers.json', {}, {
+    query: {method:'GET', params:{}, isArray:true}
+  });
+}
+
+angular
+  .module('siclabApp')
+  .factory('ContainerService', ['$resource', ContainerService]);
+
+
+function CheckerService($resource) {
+  return $resource('models/checkers.json', {}, {
+    query: {method:'GET', params:{}, isArray:true}
+  });
+}
+
+angular
+  .module('siclabApp')
+  .factory('CheckerService', ['$resource', CheckerService]);
+
 
 function FieldSheetService($resource) {
   return $resource('models/field_sheets/1.json', {}, {
@@ -266,12 +310,12 @@ angular
   .module('siclabApp')
   .factory('FieldSheetService', ['$resource', FieldSheetService]);
 
-function CustodyController($resource) {
-  return $resource('models/custodies/1.json', {}, {
+function CustodyService($resource) {
+  return $resource('models/custodies/100.json', {}, {
     query: {method:'GET', params:{}, isArray:false}
   });
 }
 
 angular
   .module('siclabApp')
-  .factory('CustodyController', ['$resource', CustodyController]);
+  .factory('CustodyService', ['$resource', CustodyService]);

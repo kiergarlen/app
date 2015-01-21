@@ -1,118 +1,168 @@
-      <div class="row">
-        <div class="col-xs-12">
-          <h2 class="page-header">Orden de trabajo</h2>
-        </div>
+<div class="row">
+  <div class="col-xs-12">
+    <h2 class="page-header">Orden de trabajo</h2>
+  </div>
+</div>
+<form class="form" role="form"
+  name="orderForm"
+  data-ng-submit="taskAssign.submitTaskAssignForm()"
+  novalidate
+  >
+  <div class="row">
+    <div class="col-xs-12">
+      <h4>Datos de Referencia</h4>
+      <div class="well well-sm">
+        <ul class="list-inline">
+          <li>
+            Folio:
+            {{taskAssign.taskAssign.folio}}
+            /
+            {{taskAssign.taskAssign.ejercicio}}</li>
+          <li data-ng-show="taskAssign.taskAssign.fecha_captura.length > 0">
+            Fecha captura:
+            {{taskAssign.taskAssign.fecha_captura}}</li>
+          <li data-ng-show="taskAssign.taskAssign.fecha_valida.length > 0">
+            Fecha validación:
+            {{taskAssign.taskAssign.fecha_valida}}</li>
+          <li data-ng-show="taskAssign.taskAssign.fecha_actualizacion.length > 0">
+            Fecha actualización:
+            {{taskAssign.taskAssign.fecha_actualizacion}}</li>
+        </ul>
       </div>
-      <div class="row">
-        <div class="col-xs-12">
-          <h6>Datos Cliente</h6>
-        </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12 col-sm-6">
+      <h4>Plan de muestreo</h4>
+      <div class="well well-sm">
+        Folio:
+        {{taskAssign.taskAssign.plan_muestreo.folio}}
+        /
+        {{taskAssign.taskAssign.plan_muestreo.ejercicio}}
+        <br>Fecha:
+        {{taskAssign.taskAssign.plan_muestreo.fecha_muestreo}}
+        <br>Responsable muestreo:
+        {{taskAssign.taskAssign.plan_muestreo.responsable_muestreo.nombres}}
+        {{taskAssign.taskAssign.plan_muestreo.responsable_muestreo.ap}}
+        {{taskAssign.taskAssign.plan_muestreo.responsable_muestreo.am}}
       </div>
-      <form class="form" role="form" action="">
-        <div class="row">
-          <div class="col-xs-12">
-            <h4>Datos de Referencia</h4>
-            <div class="well well-sm">
-              <ul class="list-inline">
-                <li>Folio: {{currentServiceRequest.folio}}/{{currentServiceRequest.ejercicio}}</li>
-                <li>Fecha actual: {{currentDatetime}}</li>
-                <li>Fecha Solicitud: {{serviceOrder.fecha_solicitud}}</li>
-                <li>Fecha Captura: {{serviceOrder.fecha_captura}}</li>
-                <li>Fecha Validación Gerente: {{serviceOrder.fecha_valida}}</li>
-                <li>Fecha Aceptación Cliente: {{serviceOrder.fecha_acepta}}</li>
-                <li>Fecha Última modificación: {{serviceOrder.fecha_actualizacion}}</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-xs-12 col-sm-6">
-            <h4>Cliente</h4>
-            <div class="well well-sm">
-              <ul class="list-inline">
-                <li>Cliente: {{currentOrder.client.cliente}}</li>
-                <li>Contacto: {{currentOrder.client.contacto}}</li>
-              </ul>
-            </div>
-          </div>
-          <div class="col-xs-12 col-sm-6">
-            <h4>Solicitud / Cotización</h4>
-            <div class="well well-sm">
-              <ul class="list-inline">
-                <li>Solicitud: {{currentOrder.serviceRequest.folio}}</li>
-                <li>FEcha: {{currentOrder.serviceRequest.fecha}}</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-xs-12">
-            <h4>Medio de Solicitud de Muestreo</h4>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-xs-12 col-sm-8 col-md-6">
-            <label for="selectObjective" class="sr-only">Medio de Solicitud</label>
-            <select class="form-control" id="selectObjective">
-              <option value="0">Seleccione una opción</option>
-              <option value="1">Oficio</option>
-              <option value="2">Cotización</option>
-              <option value="3">Programa</option>
-              <option value="4">Emergencia</option>
-            </select>
-          </div>
-          <div class="col-xs-12 col-sm-8 col-md-6">
-            <label class="sr-only" for="emergencyReason">En caso de emergencia, especificar</label>
-            <input type="text" class="form-control" id="emergencyReason" placeholder="En caso de emergencia, especificar">
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-xs-12">
-            <h4>Matriz</h4>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-xs-12 col-sm-8 col-md-6">
-            <label for="selectPointsType">Tipo de matriz</label>
-            <select class="form-control" id="selectPointsType">
-              <option value="0">Seleccione una opción</option>
-              <option value="1">Agua Residual</option>
-              <option value="2">Agua Residual Tratada</option>
-              <option value="3">Agua Potable</option>
-              <option value="4">Agua Superficial</option>
-              <option value="5">Agua Subterránea</option>
-              <option value="6">Agua Residual Municipal</option>
-              <option value="7">Agua Residual Industrial</option>
-              <option value="8">Sedimentos</option>
-              <option value="9">Planta Potabilizadora</option>
-              <option value="10">Otra</option>
-            </select>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-xs-12">
-            <h4>Normas y Parámetros</h4>
-            <p>lista de parámetros solicitados, de acuerdo a Norma o personalizados</p>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-xs-12">
-            <h4>Asignar Responsable de Muestreo</h4>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-xs-12 col-sm-8 col-md-6">
-            <label for="selectTakeSupervisor">Responsable de muestreo</label>
-            <select class="form-control" id="selectTakeSupervisot">
-              <option value="0">Seleccione una opción</option>
-              <option value="3">Marín Gomar Sosa</option>
-              <option value="12">José Adalberto Olivarez Cornejo</option>
-              <option value="13">Luis Fabián Mercado del Ángel</option>
-              <option value="14">Octavio Elizalde Ulloa</option>
-              <option value="15">Mitzi Acahualxóchitl Rodríguez García</option>
-            </select>
-            <br>
-          </div>
-        </div>
-        <button class="btn btn-primary" type="submit">Generar Orden Muestreo</button>
-      </form>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12">
+      <h4>Datos del muestreo</h4>
+      <div class="well well-sm">
+        Municipio:
+        {{taskAssign.taskAssign.recepcion.municipio}}<br>
+        Localidad:
+        {{taskAssign.taskAssign.recepcion.localidad}}<br>
+        Fecha muestreo:
+        {{taskAssign.taskAssign.recepcion.fecha_muestreo}}
+        Tipo muestreo:
+        {{taskAssign.taskAssign.recepcion.tipo_muestreo}}<br>
+        Matriz:
+        {{taskAssign.taskAssign.recepcion.matriz}}
+        Norma:
+        {{taskAssign.taskAssign.recepcion.norma}}<br>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12">
+      <h4>Asignar responsables análisis</h4>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12">
+      <h5>Físicoquimico</h5>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12 col-sm-6 col-md-5 col-lg-5">
+      <label for="chemicalSupervisorSelect">
+        Responsable físicoquimico
+      </label>
+      <select class="form-control"
+        id="chemicalSupervisorSelect"
+        name="chemicalSupervisorSelect"
+        required
+        data-ng-model="taskAssign.taskAssign.id_responsable_fq"
+        data-ng-change="taskAssign.selectChemicalSupervisor()"
+        >
+        <option value="">
+          Seleccione una opción
+        </option>
+        <option data-ng-repeat="chemicalSupervisor in taskAssign.chemicalSupervisors"
+          value="{{chemicalSupervisor.id_empledo}}">
+          {{chemicalSupervisor.nombres}}
+          {{chemicalSupervisor.ap}}
+          {{chemicalSupervisor.am}}
+        </option>
+      </select>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12">
+      <h5>Metales pesados</h5>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12 col-sm-6 col-md-5 col-lg-5">
+      <label for="metalSupervisorSelect">
+        Responsable metales pesados
+      </label>
+      <select class="form-control"
+        id="metalSupervisorSelect"
+        name="metalSupervisorSelect"
+        required
+        data-ng-model="taskAssign.taskAssign.id_responsable_mp"
+        data-ng-change="taskAssign.selectMetalSupervisor()"
+        >
+        <option value="">
+          Seleccione una opción
+        </option>
+        <option data-ng-repeat="metalSupervisor in taskAssign.metalSupervisors"
+          value="{{metalSupervisor.id_empledo}}">
+          {{metalSupervisor.nombres}}
+          {{metalSupervisor.ap}}
+          {{metalSupervisor.am}}
+        </option>
+      </select>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12">
+      <h5>Microbiológicos</h5>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12 col-sm-6 col-md-5 col-lg-5">
+      <label for="supervisorBioSelect">
+        Responsable microbiológicos
+      </label>
+      <select class="form-control"
+        id="supervisorBioSelect"
+        name="supervisorBioSelect"
+        required
+        data-ng-model="taskAssign.taskAssign.id_responsable_mb"
+        data-ng-change="taskAssign.selectSupervisorBio()"
+        >
+        <option value="">
+          Seleccione una opción
+        </option>
+        <option data-ng-repeat="supervisorBio in taskAssign.supervisorBios"
+          value="{{supervisorBio.id_empledo}}">
+          {{supervisorBio.nombres}}
+          {{supervisorBio.ap}}
+          {{supervisorBio.am}}
+        </option>
+      </select>
+    </div>
+  </div>
+  <br>
+  <button type="submit" class="btn btn-primary"
+    value="Guardar" title="Guardar"
+    data-ng-click="taskAssign.validateTaskAssignForm()"
+    >
+    Guardar</button>
+</form>

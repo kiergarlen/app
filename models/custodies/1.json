@@ -18,7 +18,7 @@
 	"id_responsable_muestreo":1,
 	"id_receptor_muestreo":1,
 	"id_verificador":1,
-	"id_subcontratista":1,
+	"subcontratista":"",
 
 	"recibido":1,
 	"verificado":1,
@@ -1124,12 +1124,6 @@
 		"id_receptor_muestreo":1,
 		"receptor_muestreo":"Receptor muestreo",
 		"puesto_receptor":"Puesto del Receptor"
-	},
-	"subcontratista":
-	{
-		"id_subcontratista":1,
-		"subcontratista":"Subcontractor muestreo",
-		"puesto_subcontratista":"Puesto del Subcontractor"
 	},
 	"muestras": [
 		{

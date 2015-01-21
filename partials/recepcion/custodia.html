@@ -97,7 +97,7 @@
     </div>
   </div>
   <div class="row">
-    <div class="col-xs-6 col-sm-4 col-md-3"
+    <div class="col-xs-12 col-sm-6 col-md-4"
       data-ng-repeat="preservation in custody.preservations">
       <label>
         <input type="checkbox"
@@ -112,7 +112,7 @@
     </div>
   </div>
   <div class="row">
-    <div class="col-xs-6 col-sm-4 col-md-3"
+    <div class="col-xs-12 col-sm-6 col-md-4"
       data-ng-repeat="expiration in custody.expirations">
       <label>
         <input type="checkbox"
@@ -127,7 +127,7 @@
     </div>
   </div>
   <div class="row">
-    <div class="col-xs-6 col-sm-4 col-md-3"
+    <div class="col-xs-12 col-sm-6 col-md-4"
       data-ng-repeat="volume in custody.volumes">
       <label>
         <input type="checkbox"
@@ -142,7 +142,7 @@
     </div>
   </div>
   <div class="row">
-    <div class="col-xs-6 col-sm-4 col-md-3"
+    <div class="col-xs-12 col-sm-6 col-md-4"
       data-ng-repeat="container in custody.containers">
       <label>
         <input type="checkbox"
@@ -153,22 +153,24 @@
   </div>
   <div class="row">
     <div class="col-xs-12 col-sm-6 col-md-5 col-lg-5">
-      <label for="verifierSelect">
+      <label for="checkerSelect">
         Responsable verificación
       </label>
       <select class="form-control"
-        id="verifierSelect"
-        name="verifierSelect"
+        id="checkerSelect"
+        name="checkerSelect"
         required
         data-ng-model="custody.custody.id_responsable_verificacion"
-        data-ng-change="custody.selectVerifier()"
+        data-ng-change="custody.selectChecker()"
         >
         <option value="">
           Seleccione una opción
         </option>
-        <option data-ng-repeat="verifier in custody.verifiers"
-          value="{{verifier.id_responsable_verificacion}}">
-          {{verifier.responsable_verificacion}}
+        <option data-ng-repeat="checker in custody.checkers"
+          value="{{checker.id_empledo}}">
+          {{checker.nombres}}
+          {{checker.ap}}
+          {{checker.am}}
         </option>
       </select>
     </div>
@@ -208,11 +210,11 @@
       <h5>Responsable muestreo</h5>
       <div class="well well-sm">
         Nombre:
-        {{custody.plan.responsable_muestreo.nombres}}
-        {{custody.plan.responsable_muestreo.ap}}
-        {{custody.plan.responsable_muestreo.am}}
+        {{custody.custody.plan_muestreo.responsable_muestreo.nombres}}
+        {{custody.custody.plan_muestreo.responsable_muestreo.ap}}
+        {{custody.custody.plan_muestreo.responsable_muestreo.am}}
         <br>
-        {{custody.plan.responsable_muestreo.puesto}}
+        {{custody.custody.plan_muestreo.responsable_muestreo.puesto}}
       </div>
     </div>
     <div class="col-xs-12 col-sm-6 col-md-3">

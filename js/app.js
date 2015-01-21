@@ -127,8 +127,8 @@ function config($routeProvider) {
     }).
     when('/muestreo/plan/verificacion', {
       templateUrl: 'partials/muestreo/plan/verificacion.html',
-      controller: 'PlanVerificationController',
-      controllerAs: 'planVerification'
+      controller: 'PlanCheckController',
+      controllerAs: 'planCheck'
     }).
     when('/muestreo/solicitud', {
       templateUrl: 'partials/muestreo/solicitud.html',
@@ -137,8 +137,8 @@ function config($routeProvider) {
     }).
     when('/recepcion/custodia', {
       templateUrl: 'partials/recepcion/custodia.html',
-      controller: 'CustodyController'//,
-      //controllerAs: 'custody'
+      controller: 'CustodyController',
+      controllerAs: 'custody'
     }).
     when('/recepcion/campo', {
       templateUrl: 'partials/recepcion/campo.html',
@@ -152,8 +152,8 @@ function config($routeProvider) {
     }).
     when('/recepcion/trabajo', {
       templateUrl: 'partials/recepcion/trabajo.html',
-      controller: 'TaskAssignmentController'//,
-      //controllerAs: 'taskAssignment'
+      controller: 'TaskAssignController',
+      controllerAs: 'taskAssign'
     }).
     when('/reporte/consulta', {
       templateUrl: 'partials/reporte/consulta.html',

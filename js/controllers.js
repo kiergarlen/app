@@ -465,21 +465,21 @@ angular
   );
 
 /**
- * @name PlanVerificationController
+ * @name PlanCheckController
  * @constructor
  * @desc Controla la vista para capturar la verificación de un Plan de muestreo
  * @this {Object} $scope - Contenedor para el modelo, AngularJS
  */
-function PlanVerificationController($scope) {
+function PlanCheckController($scope) {
   //
 }
 
 angular
   .module('siclabApp')
-  .controller('PlanVerificationController',
+  .controller('PlanCheckController',
     [
       '$scope',
-      PlanVerificationController
+      PlanCheckController
     ]
   );
 
@@ -665,7 +665,6 @@ function FieldSheetController(CloudService, WindService, WaveService,
   vm.validateFieldSheetForm = validateFieldSheetForm;
   vm.submitFieldSheetForm = submitFieldSheetForm;
 
-
   function selectItemFromCollection(id, collection, field) {
     var i = 0, l = collection.length,
     item = {};
@@ -788,26 +787,137 @@ angular
  * @param {Function} ExpirationService - Proveedor de datos, Vigencias
  * @param {Function} RequiredVolumeService - Proveedor de datos, Volúmenes requeridos
  * @param {Function} ContainerService - Proveedor de datos, Recipientes
+ * @param {Function} CheckerService - Proveedor de datos, Responsables verificación
  * @param {Function} CustodyService - Proveedor de datos, Hojas custodia
  */
-function CustodyController() {
+function CustodyController(PreservationService, ExpirationService,
+  RequiredVolumeService, ContainerService, CheckerService,
+  CustodyService) {
   var vm = this;
   vm.preservations = PreservationService.query();
   vm.expirations = ExpirationService.query();
   vm.volumes = RequiredVolumeService.query();
   vm.containers = ContainerService.query();
+  vm.checkers = CheckerService.query();
   vm.custody = CustodyService.query();
-}
 
+  vm.selectChecker = selectChecker;
+
+  vm.validateCustodyForm = validateCustodyForm;
+  vm.submitCustodyForm = submitCustodyForm;
+
+  function selectItemFromCollection(id, collection, field) {
+    var i = 0, l = collection.length,
+    item = {};
+    for (i; i < l; i += 1) {
+      if (collection[i][field] == id)
+      {
+        item = collection[i];
+        break;
+      }
+    }
+    return item;
+  }
+
+
+  function selectChecker(idChecker) {
+    selectItemFromCollection(
+      idChecker,'id_responsable_verificacion', vm.checkers
+    );
+  }
+
+  function validateCustodyForm() {
+
+  }
+
+  function submitCustodyForm () {
+
+  }
+}
 
 angular
   .module('siclabApp')
   .controller('CustodyController',
     [
-      'PreservationService',
-      'ExpirationService',
-      'RequiredVolumeService',
-      'ContainerService',
+      'PreservationService', 'ExpirationService', 'RequiredVolumeService',
+      'ContainerService', 'CheckerService', 'CustodyService',
       CustodyController
+    ]
+  );
+
+/**
+ * @name TaskAssignController
+ * @constructor
+ * @desc Controla la vista para capturar las Órdenes de trabajo
+ * @this {Object} $scope - Contenedor para el modelo, AngularJS
+ * @param {Function} ChemicalSupervisorService - Proveedor de datos, Supervisores físicoquimico
+ * @param {Function} MetalSupervisorService - Proveedor de datos, Supervisores metales pesados
+ * @param {Function} BioSupervisorService - Proveedor de datos, Supervisores microbiológico
+ * @param {Function} TaskAssignService - Proveedor de datos, Órdenes trabajo
+ */
+function TaskAssignController(ChemicalSupervisorService,
+  MetalSupervisorService, BioSupervisorService, TaskAssignService) {
+  var vm = this;
+  vm.chemicalSupervisors = ChemicalSupervisorService.query();
+  vm.metalSupervisors = MetalSupervisorService.query();
+  vm.bioSupervisors = BioSupervisorService.query();
+  vm.taskAssign = TaskAssignService.query();
+
+  vm.selectChemicalSupervisor = selectChemicalSupervisor;
+  vm.selectMetalSupervisor = selectMetalSupervisor;
+  vm.selectSupervisorBio = selectSupervisorBio;
+
+  vm.validateTaskAssignForm = validateTaskAssignForm;
+  vm.submitTaskAssignForm = submitTaskAssignForm;
+
+  function selectItemFromCollection(id, collection, field) {
+    var i = 0, l = collection.length,
+    item = {};
+    for (i; i < l; i += 1) {
+      if (collection[i][field] == id)
+      {
+        item = collection[i];
+        break;
+      }
+    }
+    return item;
+  }
+
+
+  function selectChemicalSupervisor(idSup) {
+    selectItemFromCollection(
+      idSup,'id_responsable_fq', vm.chemicalSupervisors
+    );
+  }
+
+  function selectMetalSupervisor(idSup) {
+    selectItemFromCollection(
+      idSup,'id_responsable_mp', vm.metalSupervisors
+    );
+  }
+
+  function selectSupervisorBio(idSup) {
+    selectItemFromCollection(
+      idSup,'id_responsable_mb', vm.bioSupervisors
+    );
+  }
+
+  function validateTaskAssignForm() {
+
+  }
+
+  function submitTaskAssignForm () {
+
+  }
+}
+
+angular
+  .module('siclabApp')
+  .controller('TaskAssignController',
+    [
+      'ChemicalSupervisorService', 'MetalSupervisorService',
+      'BioSupervisorService', 'TaskAssignService',
+      'TaskAssignController',
+      TaskAssignController
     ]
   );

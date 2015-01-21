@@ -916,3 +916,49 @@ angular
       TaskAssignController
     ]
   );
+
+
+/*
+function Controller(jwtHelper) {
+  var aToken = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJuYW1lIjoiQXV0aDAiLCJleHAiOjE0MTIyMzQ3MzB9.ZJzxkw4DNohrdk209erOGyVhfZiAQTRLHMR0BuNUuBA';
+  var tokenPayload = jwtHelper.decodeToken(aToken);
+
+  // check token expiration date
+  var expireDate = jwtHelper.getTokenExpirationDate(aToken);
+  // check if token is expired
+  var isExpired = jwtHeler.isTokenExpipred(aToken);
+}
+
+
+angular
+  .module('app', ['angular-jwt'])
+  .controller('Controller',
+    Controller
+  );
+
+angular
+  .module('app', ['angular-jwt'])
+  .config(
+    function Config($httpProvider, jwtInterceptorProvider) {
+      jwtInterceptorProvider.tokenGetter = function (jwtHelper, $http) {
+        //get Token from localStorage
+        var jwt = localStorage.getItem('JWT');
+        //get refresh_token flag from localStorage
+        var refreshToken = localStorage.getItem('refresh_token');
+        return localStorage.getItem('JWT');
+      };
+      $httpProvider.interceptors.push('JWT');
+    }
+  )
+  .controller('Controller',
+    function Controller($http) {
+      //if localStorage contains the id_token it will be sent in
+      //the request
+      //Authorization: Bearer [yourToken] will be sent
+      $http({
+        url: '/hi',
+        method:'GET'
+      });
+    }
+  );
+*/

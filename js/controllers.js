@@ -920,7 +920,11 @@ angular
 
 /*
 function Controller(jwtHelper) {
-  var aToken = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJuYW1lIjoiQXV0aDAiLCJleHAiOjE0MTIyMzQ3MzB9.ZJzxkw4DNohrdk209erOGyVhfZiAQTRLHMR0BuNUuBA';
+  var aToken = [
+    'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9',
+    '.eyJuYW1lIjoiQXV0aDAiLCJleHAiOjE0MTIyMzQ3MzB9'.
+    '.ZJzxkw4DNohrdk209erOGyVhfZiAQTRLHMR0BuNUuBA'
+  ].join('');
   var tokenPayload = jwtHelper.decodeToken(aToken);
 
   // check token expiration date

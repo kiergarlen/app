@@ -941,10 +941,33 @@ angular
   .config(
     function Config($httpProvider, jwtInterceptorProvider) {
       jwtInterceptorProvider.tokenGetter = function (jwtHelper, $http) {
-        //get Token from localStorage
+        //get token from localStorage
         var jwt = localStorage.getItem('JWT');
-        //get refresh_token flag from localStorage
+        //get refresh_token from localStorage
         var refreshToken = localStorage.getItem('refresh_token');
+        if (jwtHelper.isTokenExpired(jwt))
+        {
+          //This is a promise of a JWT id_token
+          return $http({
+            url: '/delegation',
+            //This will not sen the JWT for this call
+            skipAuthorization: true,
+            //Set POST method
+            method: 'POST',
+            //refresh refresh_token
+            refresh_token: refreshToken
+          }).then(function(response) {
+            //At the promise store token in localStorage
+            localStorage.setItem('JWT', response.data.jwt);
+            return jwt;
+          });
+        }
+        else
+        {
+          //return token that is still valid
+          return jwt;
+        }
+        //return token form localStorage
         return localStorage.getItem('JWT');
       };
       $httpProvider.interceptors.push('JWT');
@@ -955,6 +978,7 @@ angular
       //if localStorage contains the id_token it will be sent in
       //the request
       //Authorization: Bearer [yourToken] will be sent
+      //That token might be a new one which was got from the refresh_token
       $http({
         url: '/hi',
         method:'GET'

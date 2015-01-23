@@ -41,7 +41,7 @@
           </thead>
           <tbody>
             <tr
-              data-ng-repeat="item in clients.clients"
+              data-ng-repeat="item in clients.clients | filter:clients.filter.$"
               id="clientId{{item.id_cliente}}"
               data-ng-click="">
               <td>

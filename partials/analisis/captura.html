@@ -1,38 +1,66 @@
-      <div class="row">
-        <div class="col-xs-12">
-          <h2 class="page-header">Registro de resultados de Análisis</h2>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-xs-12">
-          <h4>Referencia</h4>
-          <ul class="list-inline">
-            <li>Fecha: 2014-11-30</li>
-            <li>Folio: 054/2014</li>
-          </ul>
-        </div>
-      </div>
-      <form class="form" role="form" action="#">
-        <div class="row">
-          <div class="col-xs-12">
-            <h4>Registro de resultados</h4>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-xs-12">
-            <label for="selectArea">Seleccione Área</label>
-            <select class="form-control" id="selectArea">
-              <option value="0" selected>Select option</option>
-            </select>
-          </div>
-          <div class="col-xs-12">
-            <label for="selectParameter">Seleccione Parámetro</label>
-            <select class="form-control" id="selectParameter">
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-xs-12">
-            <button class="btn btn-primary" type="submit">Ir a Formato de Registro</button>
-          </div>
-        </div>
-      </form>
+<div class="row">
+  <div class="col-xs-12">
+    <h2 class="page-header">Registro de resultados de análisis</h2>
+  </div>
+</div>
+<form class="form" role="form"
+  name="analysisForm"
+  data-ng-submit="analysis.submitAnalysisForm()"
+  novalidate
+  >
+  <div class="row">
+    <div class="col-xs-12">
+      <h4>Registro de resultados</h4>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12 col-sm-6 col-md-5 col-lg-5">
+      <label for="areaSelect">
+        Área
+      </label>
+      <select class="form-control"
+        id="areaSelect"
+        name="areaSelect"
+        required
+        data-ng-model="analysis.analysis.id_area"
+        data-ng-change="analysis.selectArea()"
+        >
+        <option value="">
+          Seleccione una opción
+        </option>
+        <option data-ng-repeat="checker in analysis.areas"
+          value="{{checker.id_area}}">
+          {{checker.area}}
+        </option>
+      </select>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12 col-sm-6 col-md-5 col-lg-5">
+      <label for="parameterSelect">
+        Parámetro
+      </label>
+      <select class="form-control"
+        id="parameterSelect"
+        name="parameterSelect"
+        required
+        data-ng-model="analysis.analysis.id_parametro"
+        data-ng-change="analysis.selectParameter()"
+        >
+        <option value="">
+          Seleccione una opción
+        </option>
+        <option data-ng-repeat="parameter in analysis.parameters"
+          value="{{parameter.id_parametro}}">
+          {{parameter.parametro}}
+        </option>
+      </select>
+    </div>
+  </div>
+  <br>
+  <button type="submit" class="btn btn-primary"
+    value="Guardar" title="Guardar"
+    data-ng-click="custody.validateAnalysisForm()"
+    >
+    Guardar</button>
+</form>

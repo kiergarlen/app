@@ -1,36 +1,66 @@
-      <div class="row">
-        <div class="col-xs-12">
-          <h2 class="page-header">Perfil de Usuario</h2>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-xs-12">
-          <h3 class="sub-header">{{currentUser.nombreUsuario}}</h3>
-          <p>{{currentUser.puestoUsuario}}</p>
-          <ul class="list-unstyled">
-            <li><strong>Rol:</strong> {{currentUser.rolUsuario}}</li>
-            <li><strong>Permisos:</strong> {{currentUser.permisosUsuario}}</li>
-          </ul>
-        </div>
-      </div>
-      <form class="form" role="form" action="#">
-        <div class="row">
-          <div class="col-xs-12">
-            <h4>Cambiar contraseña</h4>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-xs-12">
-            <label for="oldPassword">Contraseña actual</label>
-            <input type="text" class="form-control" placeholder="Contraseña actual" id="oldPassword">
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-xs-12">
-            <label for="newPassword">Nueva contraseña</label>
-            <input type="text" class="form-control" placeholder="Nueva contraseña" id="newPassword">
-          </div>
-        </div>
-        <br class="clear">
-        <button class="btn btn-primary" type="submit">{{currentUser.buttonSubmitLabel}}</button>
-      </form>
+<div class="row">
+  <div class="col-xs-12">
+    <h2 class="page-header">Perfil de usuario</h2>
+  </div>
+</div>
+<div class="row">
+  <div class="col-xs-12">
+    <h4>
+      {{profile.profile.nombres}}
+      {{profile.profile.ap}}
+      {{profile.profile.am}}
+      <br>
+      <small>
+        {{profile.profile.usuario}}
+      </small>
+    </h4>
+    <ul class="list-unstyled">
+      <li>Rol:<strong>
+        {{profile.profile.rol}}
+        </strong>
+      </li>
+      <li>Ultimo acceso:<strong>
+        {{profile.profile.fecha_acceso}}
+        </strong>
+      </li>
+  </div>
+</div>
+<form class="form" role="form"
+  name="profileForm"
+  data-ng-submit="profile.submitProfileForm()"
+  novalidate
+  >
+  <div class="row">
+    <div class="col-xs-12">
+      <h4>Cambiar contraseña</h4>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12 col-sm-6 col-md-3">
+      <label for="oldPassword">Actual</label>
+      <input type="text"
+        class="form-control"
+        id="oldPassword"
+        name="oldPassword"
+        data-ng-model="profile.profile.password_actual"
+        >
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12 col-sm-6 col-md-3">
+      <label for="newPassword">Nueva</label>
+      <input type="text"
+        class="form-control"
+        id="newPassword"
+        name="newPassword"
+        data-ng-model="profile.profile.password"
+        >
+    </div>
+  </div>
+  <br>
+  <button type="submit" class="btn btn-primary"
+    value="Guardar" title="Guardar"
+    data-ng-click="profile.validateProfileForm()"
+    >
+    Guardar</button>
+</form>

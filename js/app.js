@@ -22,8 +22,8 @@ function config($routeProvider) {
     }).
     when('/analisis/captura', {
       templateUrl: 'partials/analisis/captura.html',
-      controller: 'AnalysisController'//,
-      //controllerAs: 'analysis'
+      controller: 'AnalysisController',
+      controllerAs: 'analysis'
     }).
     when('/analisis/consulta', {
       templateUrl: 'partials/analisis/consulta.html',
@@ -176,7 +176,7 @@ function config($routeProvider) {
       //controllerAs: 'logout'
     }).
     when('/sistema/perfil', {
-      templateUrl: 'par tials/sistema/perfil.html',
+      templateUrl: 'partials/sistema/perfil.html',
       controller: 'ProfileController'//,
       //controllerAs: 'profile'
     }).

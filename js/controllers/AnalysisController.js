@@ -1,11 +1,11 @@
 /**
  * @name AnalysisController
  * @constructor
- * @desc Controla la vista para el Menú principal
+ * @desc Controla la vista para seleccionar formato de captura de Análisis
  * @this {Object} $scope - Contenedor para el modelo, AngularJS
  * @param {Object} AreaService - Proveedor de datos, Áreas
  * @param {Object} ParameterService - Proveedor de datos, Parámetros
- * @param {Object} AnalysisService - Proveedor de datos, Análisis
+ * @param {Object} AnalysisService - Proveedor de datos, selección de formato de captura de Análisis
  */
 function AnalysisController(AreaService, ParameterService, AnalysisService) {
   var vm = this;

@@ -27,8 +27,8 @@ function config($routeProvider) {
     }).
     when('/analisis/consulta', {
       templateUrl: 'partials/analisis/consulta.html',
-      controller: 'AnalysisListController'//,
-      //controllerAs: 'analysisList'
+      controller: 'AnalysisListController',
+      controllerAs: 'analysisList'
     }).
     when('/catalogo/metodos', {
       templateUrl: 'partials/catalogo/metodos.html',

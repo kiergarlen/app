@@ -1,54 +1,71 @@
-      <div class="row">
-        <div class="col-xs-12">
-          <h2 class="page-header">Consultar Análisis</h2>
-        </div>
+<div class="row">
+  <div class="col-xs-12">
+    <h2 class="page-header">Consulta análisis</h2>
+  </div>
+</div>
+<form class="form" role="form"
+  name="custodyForm"
+  novalidate
+  >
+  <div class="row">
+    <div class="col-xs-12">
+      <h4>Búsqueda</h4>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12 col-sm-8">
+      <label for="clientName" class="sr-only">
+        Ingrese una búsqueda (Fecha, Norma, Cliente, etc.)
+      </label>
+      <input type="text" class="form-control"
+        placeholder="Ingrese una búsqueda (Fecha, Norma, Cliente, etc.)"
+        data-ng-model="analysisList.filter.$">
+      <br>
+    </div>
+  </div>
+</form>
+<div class="row">
+  <div class="col-xs-12">
+    <div class="panel">
+      <div class="panel-heading">
+        <h3 class="panel-title">Análisis</h3>
       </div>
-      <div class="row">
+      <div class="table-responsive">
+        <table class="table table-hover table-condensed" id="analysisList">
+          <thead>
+            <tr>
+              <th>Id</th>
+              <th>No. muestra</th>
+              <th>Parámetro</th>
+              <th>Norma</th>
+              <th>Fecha</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              data-ng-repeat="item in analysisList.analysis | filter:analysisList.filter.$"
+              id="analysisId{{item.id_analisis}}"
+              data-ng-click="analysisList.selectRow()">
+              <td>
+                {{item.id_analisis}}
+              </td>
+              <td>
+                {{item.muestra.folio}}
+              </td>
+              <td>
+                {{item.norma.norma}}
+              </td>
+              <td>
+                {{item.cliente.cliente}}
+                <span class="text-muted"
+                  data-ng-show="item.cliente.area > 0">
+                  {{item.cliente.area}}
+                </span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
-      <form class="form" role="form" action="#">
-        <div class="row">
-          <div class="col-xs-12">
-            <h4>Criterios de Búsqueda</h4>
-            <ul class="list-unstyled">
-              <li>Fecha</li>
-              <li>Norma</li>
-              <li>Cliente</li>
-            </ul>
-          </div>
-        </div>
-        <button class="btn btn-primary" type="submit">Buscar</button>
-      </form>
-      <div class="row">
-        <div class="col-xs-12">
-          <div class="table-responsive">
-            <table class="table table-hover table-striped" id="clientsList">
-              <thead>
-                <tr>
-                  <th>Cliente</th>
-                  <th>Contacto</th>
-                  <th>Domicilio</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr id="clientId{{item.id_analisis}}">
-                  <td>
-                    <h6>{{item.organismo}}</h6>
-                    <span class="text-muted">{{item.area}}</span>
-                    <span class="label label-default">Externo</span>
-                  </td>
-                  <td>
-                    {{item.contacto}}<br>
-                    <a href="mailto:{{item.email}}">{{item.email}}</a><br>
-                    {{item.tel}}
-                  </td>
-                  <td>
-                    {{item.calle}}, {{item.numero}}<br>
-                    {{item.colonia}}<br>
-                    {{item.localidad}}
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
+    </div>
+  </div>
+</div>

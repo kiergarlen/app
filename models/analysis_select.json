@@ -1,0 +1,11 @@
+[
+
+	{
+		"id_analisis_seleccion":1,
+		"id_area":1,
+		"id_muestra":1,
+		"area":"Físicoquimico",
+		"id_parameter":1,
+		"parametro":"Parametro"
+	}
+]

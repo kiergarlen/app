@@ -32,8 +32,8 @@ function config($routeProvider) {
     }).
     when('/catalogo/metodos', {
       templateUrl: 'partials/catalogo/metodos.html',
-      controller: 'MethodsListController'//,
-      //controllerAs: 'methodsList'
+      controller: 'MethodsListController',
+      controllerAs: 'methodsList'
     }).
     when('/catalogo/areas', {
       templateUrl: 'partials/catalogo/areas.html',

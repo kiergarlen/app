@@ -8,7 +8,13 @@ angular
 );
 
 //CONFIG
-function config($routeProvider) {
+function config($routeProvider, $httpProvider, jwtInterceptorProvider) {
+  //jwtInterceptorProvider.tokenGetter = ['myService', function(myService) {
+  //  myService.doSomething();
+  //  return localStorage.getItem('id_token');
+  //}];
+  //$httpProvider.interceptors.push('jwtInterceptor');
+
   $routeProvider
     .otherwise({
      redirectTo: '/sistema/login'
@@ -190,4 +196,10 @@ function config($routeProvider) {
 
 angular
   .module('siclabApp')
-  .config(['$routeProvider', config]);
+  .config(
+    [
+      //'$routeProvider', '$httpProvider', 'jwtInterceptorProvider',
+      '$routeProvider',
+      config
+    ]
+  );

@@ -9,11 +9,11 @@ function MethodsListController(MethodsListService) {
   var vm = this;
   vm.methodsList = MethodsListService.query();
 
-  vm.selectRow = selectRow;
-  function select($event) {
-    //TODO send to details view
-    console.log('clicked in row');
-  }
+  //vm.selectRow = selectRow;
+  //function select($event) {
+  //  //TODO send to details view
+  //  console.log('clicked in row');
+  //}
 }
 
 angular

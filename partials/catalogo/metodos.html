@@ -1,37 +1,60 @@
-      <div class="row">
-        <div class="col-xs-12">
-          <h2 class="page-header">Métodos de análisis</h2>
-        </div>
+<div class="row">
+  <div class="col-xs-12">
+    <h2 class="page-header">Métodos de análisis</h2>
+  </div>
+</div>
+<form class="form" role="form"
+  name="methodsListForm"
+  novalidate
+  >
+  <div class="row">
+    <div class="col-xs-12">
+      <h4>Búsqueda</h4>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12 col-sm-8">
+      <label for="clientName" class="sr-only">
+        Ingrese una búsqueda (Siglas Método)
+      </label>
+      <input type="text" class="form-control"
+        placeholder="Ingrese una búsqueda (Siglas Método)"
+        data-ng-model="methodsList.filter.$">
+      <br>
+    </div>
+  </div>
+</form>
+<div class="row">
+  <div class="col-xs-12">
+    <div class="panel">
+      <div class="panel-heading">
+        <h3 class="panel-title">Métodos</h3>
       </div>
-      <div class="row">
-        <div class="col-xs-12">
-          <div class="panel">
-            <div class="panel-heading">
-              <h3 class="panel-title">Métodos de análisis</h3>
-              <!--
-              <h3 class="sub-header">Métodos de análisis</h3>
-              -->
-            </div>
-            <div class="table-responsive">
-              <table class="table table-hover table-striped" id="employeesList">
-                <thead>
-                  <tr>
-                    <th>Valor</th>
-                    <th>Norma</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr data-ng-repeat="item in normas" id="normId{{item.id_norma}}">
-                    <td>
-                      <h4>{{item.siglas}}</h4>
-                    </td>
-                    <td>
-                      {{item.descipcion}}
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
+      <div class="table-responsive">
+        <table class="table table-hover table-condensed"
+          id="methodsListTable">
+          <thead>
+            <tr>
+              <th>Id</th>
+              <th>Método</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              data-ng-repeat="item in methodsList.methodsList |
+              filter:methodsList.filter.$"
+              id="itemId{{item.id_metodo}}"
+              >
+              <td>
+                <h6>{{item.id_metodo}}</h6>
+              </td>
+              <td>
+                {{item.metodo}}
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
+    </div>
+  </div>
+</div>

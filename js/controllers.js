@@ -30,7 +30,7 @@ function LoginController($scope, $http, Loginservice) {
     if ($scope.loginForm.$valid)
     {
       if (vm.user.username == 'rgarcia' &&
-        vm.user.password == '123'
+        vm.user.password == 'rgarcia'
       )
       {
         vm.message = 'Enviando...';

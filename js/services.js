@@ -144,7 +144,7 @@ angular
  * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
  */
 function ParameterService($resource) {
-  return $resource('models/parametros.json', {}, {
+  return $resource('models/parameters.json', {}, {
     query: {method:'GET', params:{}, isArray:true}
   });
 }

@@ -4,7 +4,7 @@
   </div>
 </div>
 <form class="form" role="form"
-  name="custodyForm"
+  name="clientsForm"
   novalidate
   >
   <div class="row">
@@ -31,7 +31,8 @@
         <h3 class="panel-title">Clientes</h3>
       </div>
       <div class="table-responsive">
-        <table class="table table-hover table-condensed" id="clientsList">
+        <table class="table table-hover table-condensed"
+          id="clients">
           <thead>
             <tr>
               <th>Cliente</th>
@@ -41,7 +42,8 @@
           </thead>
           <tbody>
             <tr
-              data-ng-repeat="item in clients.clients | filter:clients.filter.$"
+              data-ng-repeat="item in clients.clients |
+              filter:clients.filter.$"
               id="clientId{{item.id_cliente}}"
               data-ng-click="">
               <td>

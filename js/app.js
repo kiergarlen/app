@@ -44,8 +44,8 @@ function config($routeProvider) {
     }).
     when('/catalogo/areas', {
       templateUrl: 'partials/catalogo/areas.html',
-      controller: 'DepartmentsListController'//,
-      //controllerAs: 'departmentsList'
+      controller: 'DepartmentsListController',
+      controllerAs: 'departmentsList'
     }).
     when('/catalogo/clientes', {
       templateUrl: 'partials/catalogo/clientes.html',

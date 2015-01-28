@@ -1,0 +1,26 @@
+[
+	{
+		"id_analisis":1,
+		"id_muestra":1,
+		"id_norma":1,
+		"id_cliente":1,
+		"muestra":
+		{
+			"id_muestra":1,
+			"muestra":"",
+			"folio":1,
+			"ejercicio":2014
+		},
+		"norma":
+		{
+			"id_norma":1,
+			"norma":"NMX-AA-BBCC-00-0000"
+		},
+		"cliente":
+		{
+			"id_cliente":1,
+			"cliente":"",
+			"area":""
+		}
+	}
+]

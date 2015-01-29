@@ -300,6 +300,53 @@
   </div>
   <div class="row">
     <div class="col-xs-12">
+      <h5>Temperatura ambiente</h5>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-6 col-sm-6 col-md-3">
+      <label for="param4">Temp. ambiente 1</label>
+      <input type="text"
+        class="form-control"
+        placeholder="0.0"
+        id="tempAmb1"
+        name="tempAmb1"
+        data-ng-model="fieldSheet.tempAmb1"
+        >
+    </div>
+    <div class="col-xs-6 col-sm-6 col-md-3">
+      <label for="param5">Temp. ambiente 2</label>
+      <input type="text"
+        class="form-control"
+        placeholder="0.0"
+        id="tempAmb2"
+        name="tempAmb2"
+        data-ng-model="fieldSheet.tempAmb2"
+        >
+    </div>
+    <div class="col-xs-6 col-sm-6 col-md-3">
+      <label for="param5">Temp. ambiente 3</label>
+      <input type="text"
+        class="form-control"
+        placeholder="0.0"
+        id="tempAmb3"
+        name="tempAmb3"
+        data-ng-model="fieldSheet.tempAmb3"
+        >
+    </div>
+    <div class="col-xs-6 col-sm-6 col-md-3">
+      <label for="param6">Temp. ambiente</label>
+      <input type="text"
+        class="form-control"
+        placeholder="{{fieldSheet.tempAmbAvg()}}"
+        id="tempAmb"
+        name="tempAmb"
+        readonly="readonly"
+        >
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12">
       <h5>Temperatura</h5>
     </div>
   </div>
@@ -311,7 +358,7 @@
         placeholder="0.0"
         id="temp1"
         name="temp1"
-        data-ng-model="fieldSheet.temp_1"
+        data-ng-model="fieldSheet.temp1"
         >
     </div>
     <div class="col-xs-6 col-sm-6 col-md-3">
@@ -321,7 +368,7 @@
         placeholder="0.0"
         id="temp2"
         name="temp2"
-        data-ng-model="fieldSheet.temp_2"
+        data-ng-model="fieldSheet.temp2"
         >
     </div>
     <div class="col-xs-6 col-sm-6 col-md-3">
@@ -331,7 +378,7 @@
         placeholder="0.0"
         id="temp3"
         name="temp3"
-        data-ng-model="fieldSheet.temp_3"
+        data-ng-model="fieldSheet.temp3"
         >
     </div>
     <div class="col-xs-6 col-sm-6 col-md-3">
@@ -482,6 +529,53 @@
         placeholder="{{fieldSheet.odAvg()}}"
         id="od"
         name="od"
+        readonly="readonly"
+        >
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12">
+      <h5>Cloro residual</h5>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-6 col-sm-6 col-md-3">
+      <label for="param4">Cl residual 1</label>
+      <input type="text"
+        class="form-control"
+        placeholder="0.0"
+        id="cr1"
+        name="cr1"
+        data-ng-model="fieldSheet.cr1"
+        >
+    </div>
+    <div class="col-xs-6 col-sm-6 col-md-3">
+      <label for="param5">Cl residual 2</label>
+      <input type="text"
+        class="form-control"
+        placeholder="0.0"
+        id="cr2"
+        name="cr2"
+        data-ng-model="fieldSheet.cr2"
+        >
+    </div>
+    <div class="col-xs-6 col-sm-6 col-md-3">
+      <label for="param5">Cl residual 3</label>
+      <input type="text"
+        class="form-control"
+        placeholder="0.0"
+        id="cr3"
+        name="cr3"
+        data-ng-model="fieldSheet.cr3"
+        >
+    </div>
+    <div class="col-xs-6 col-sm-6 col-md-3">
+      <label for="param6">Cl residual</label>
+      <input type="text"
+        class="form-control"
+        placeholder="{{fieldSheet.crAvg()}}"
+        id="cr"
+        name="cr"
         readonly="readonly"
         >
     </div>

@@ -59,18 +59,18 @@ function config($routeProvider) {
     }).
     when('/catalogo/empleados', {
       templateUrl: 'partials/catalogo/empleados.html',
-      controller: 'EmployeesListController'//,
-      //controllerAs: 'employeesList'
+      controller: 'EmployeesListController',
+      controllerAs: 'employeesList'
     }).
     when('/catalogo/normas', {
       templateUrl: 'partials/catalogo/normas.html',
-      controller: 'NormsListController'//,
-      //controllerAs: 'normsList'
+      controller: 'NormsListController',
+      controllerAs: 'normsList'
     }).
     when('/catalogo/precios', {
       templateUrl: 'partials/catalogo/precios.html',
-      controller: 'PricesListController'//,
-      //controllerAs: 'pricesList'
+      controller: 'PricesListController',
+      controllerAs: 'pricesList'
     }).
     when('/catalogo/puntos', {
       templateUrl: 'partials/catalogo/puntos.html',

@@ -1,48 +1,80 @@
-      <div class="row">
-        <div class="col-xs-12">
-          <h2 class="page-header">Empleados</h2>
-        </div>
+<div class="row">
+  <div class="col-xs-12">
+    <h2 class="page-header">Empleados</h2>
+  </div>
+</div>
+<form class="form" role="form"
+  name="employeesListForm"
+  novalidate
+  >
+  <div class="row">
+    <div class="col-xs-12">
+      <h4>Búsqueda</h4>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12 col-sm-8">
+      <label for="clientName" class="sr-only">
+        Ingrese una búsqueda (Nombre, Puesto, Área, etc.)
+      </label>
+      <input type="text" class="form-control"
+        placeholder="Ingrese una búsqueda (Nombre, Puesto, Área, etc.)"
+        data-ng-model="employeesList.filter.$"
+        >
+      <br>
+    </div>
+  </div>
+</form>
+<div class="row">
+  <div class="col-xs-12">
+    <div class="panel">
+      <div class="panel-heading">
+        <h3 class="panel-title">Empleados</h3>
       </div>
-      <div class="row">
-        <div class="col-xs-12">
-          <div class="panel">
-            <div class="panel-heading">
-              <h3 class="panel-title">Empleados</h3>
-              <!--
-              <h3 class="sub-header">Empleados</h3>
-              -->
-            </div>
-            <div class="table-responsive">
-              <table class="table table-hover table-striped" id="employeesList">
-                <thead>
-                  <tr>
-                    <th>Empleado</th>
-                    <th>Puesto</th>
-                    <th>Área</th>
-                    <th>Actividades</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr data-ng-repeat="item in employees" id="empId{{item.id_empleado}}">
-                    <td>
-                      <strong>{{item.nombres}}</strong> {{item.ap}} {{item.am}}
-                    </td>
-                    <td>
-                      {{item.puesto}}
-                    </td>
-                    <td>
-                      {{item.area}}
-                    </td>
-                    <td>
-                      <span data-ng-show="item.calidad > 0" class="label label-danger">Calidad</span>
-                      <span data-ng-show="item.supervisa > 0" class="label label-warning">Supervisión</span>
-                      <span data-ng-show="item.analiza > 0" class="label label-info">Análisis</span>
-                      <span data-ng-show="item.muestrea > 0" class="label label-success">Muestreo</span>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
+      <div class="table-responsive">
+        <table class="table table-hover table-striped" id="employeesList">
+          <thead>
+            <tr>
+              <th>Empleado</th>
+              <th>Puesto</th>
+              <th>Área</th>
+              <th>Actividades</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              data-ng-repeat="item in employeesList.employees |
+              filter:employeesList.filter.$"
+              id="empId{{item.id_empleado}}"
+              data-ng-click="employeesList.selectRow()"
+              >
+              <td>
+                <strong>{{item.nombres}}</strong> {{item.ap}} {{item.am}}
+              </td>
+              <td>
+                {{item.puesto}}
+              </td>
+              <td>
+                {{item.area}}
+              </td>
+              <td>
+                <span
+                  data-ng-show="item.calidad > 0"
+                  class="label label-danger">Calidad</span>
+                <span
+                  data-ng-show="item.supervisa > 0"
+                  class="label label-warning">Supervisión</span>
+                <span
+                  data-ng-show="item.analiza > 0"
+                  class="label label-info">Análisis</span>
+                <span
+                  data-ng-show="item.muestrea > 0"
+                  class="label label-success">Muestreo</span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
+    </div>
+  </div>
+</div>

@@ -85,32 +85,32 @@
 				"id_submenu":4,
 				"id_menu":2,
 				"orden":1,
-				"url":"/recepcion/muestra",
-				"label":"Recepción Muestras",
+				"url":"/recepcion/campo",
+				"label":"Hoja Campo",
 				"activo":1
 			},
 			{
 				"id_submenu":5,
 				"id_menu":2,
-				"orden":2,
-				"url":"/recepcion/campo",
-				"label":"Hoja Campo",
+				"orden":1,
+				"url":"/recepcion/muestra",
+				"label":"Recepción Muestras",
 				"activo":1
 			},
 			{
 				"id_submenu":6,
 				"id_menu":2,
 				"orden":3,
-				"url":"/recepcion/custodia",
-				"label":"Cadena Custodia",
+				"url":"/recepcion/trabajo",
+				"label":"Orden Trabajo",
 				"activo":1
 			},
 			{
 				"id_submenu":7,
 				"id_menu":2,
 				"orden":4,
-				"url":"/recepcion/trabajo",
-				"label":"Orden Trabajo",
+				"url":"/recepcion/custodia",
+				"label":"Cadena Custodia",
 				"activo":1
 			}
 		]

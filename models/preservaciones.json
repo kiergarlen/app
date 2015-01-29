@@ -2,7 +2,7 @@
 	{
 		"id_preservacion":1,
 		"tipo_param":"FQ",
-		"preservacion":"Sin preservar, a 4°C"
+		"preservacion":"Hielo, a 4°C"
 	},
 	{
 		"id_preservacion":2,
@@ -17,7 +17,7 @@
 	{
 		"id_preservacion":4,
 		"tipo_param":"FEN",
-		"preservacion":"H2SO4 + CuSO4, 4°C, pH<2"
+		"preservacion":"H2SO4 + CuSO4, 4°C, pH<2, 5 ml"
 	},
 	{
 		"id_preservacion":5,

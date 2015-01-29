@@ -26,26 +26,16 @@
 	},
 	{
 		"id_matriz":6,
-		"matriz":"Agua Residual Municipal",
-		"clave":"ARM"
+		"matriz":"Lodos",
+		"clave":"LD"
 	},
 	{
 		"id_matriz":7,
-		"matriz":"Agua Residual Industrial",
-		"clave":"ARI"
-	},
-	{
-		"id_matriz":8,
-		"matriz":"Sedimentos",
-		"clave":"SDM"
-	},
-	{
-		"id_matriz":9,
 		"matriz":"Planta Potabilizadora",
 		"clave":"PPt"
 	},
 	{
-		"id_matriz":10,
+		"id_matriz":8,
 		"matriz":"Otra",
 		"clave":"OTR"
 	}

@@ -1,0 +1,102 @@
+[
+	{
+		"id_punto_muestreo":1,
+		"id_tipo_punto":1,
+		"id_cuerpo_agua":1,
+		"clave":"RS-1",
+		"desc":"Descripción de ubicación punto 1",
+		"lat":20.151151,
+		"lng":-103.646646,
+		"radio":6
+	},
+	{
+		"id_punto_muestreo":2,
+		"id_tipo_punto":2,
+		"id_cuerpo_agua":2,
+		"clave":"RS-2",
+		"desc":"Descripción de ubicación punto 2",
+		"lat":20.232232,
+		"lng":-103.494494,
+		"radio":4
+	},
+	{
+		"id_punto_muestreo":3,
+		"id_tipo_punto":3,
+		"id_cuerpo_agua":3,
+		"clave":"RS-3",
+		"desc":"Descripción de ubicación punto 3",
+		"lat":20.373373,
+		"lng":-103.989989,
+		"radio":9
+	},
+	{
+		"id_punto_muestreo":4,
+		"id_tipo_punto":4,
+		"id_cuerpo_agua":4,
+		"clave":"RS-4",
+		"desc":"Descripción de ubicación punto 4",
+		"lat":20.494494,
+		"lng":-103.868868,
+		"radio":8
+	},
+	{
+		"id_punto_muestreo":5,
+		"id_tipo_punto":5,
+		"id_cuerpo_agua":5,
+		"clave":"RS-5",
+		"desc":"Descripción de ubicación punto 5",
+		"lat":20.525525,
+		"lng":-103.525525,
+		"radio":5
+	},
+	{
+		"id_punto_muestreo":6,
+		"id_tipo_punto":6,
+		"id_cuerpo_agua":6,
+		"clave":"RS-6",
+		"desc":"Descripción de ubicación punto 6",
+		"lat":20.646646,
+		"lng":-103.101101,
+		"radio":1
+	},
+	{
+		"id_punto_muestreo":7,
+		"id_tipo_punto":7,
+		"id_cuerpo_agua":7,
+		"clave":"RS-7",
+		"desc":"Descripción de ubicación punto 7",
+		"lat":20.717717,
+		"lng":-103.373373,
+		"radio":3
+	},
+	{
+		"id_punto_muestreo":8,
+		"id_tipo_punto":8,
+		"id_cuerpo_agua":8,
+		"clave":"RS-8",
+		"desc":"Descripción de ubicación punto 8",
+		"lat":20.868868,
+		"lng":-103.232232,
+		"radio":2
+	},
+	{
+		"id_punto_muestreo":9,
+		"id_tipo_punto":9,
+		"id_cuerpo_agua":9,
+		"clave":"RS-9",
+		"desc":"Descripción de ubicación punto 9",
+		"lat":20.989989,
+		"lng":-103.717717,
+		"radio":7
+	},
+	{
+		"id_punto_muestreo":10,
+		"id_tipo_punto":10,
+		"id_cuerpo_agua":10,
+		"clave":"RS-10",
+		"desc":"Descripción de ubicación punto 10",
+		"lat":20.101101,
+		"lng":-103.151151,
+		"radio":1
+	}
+]

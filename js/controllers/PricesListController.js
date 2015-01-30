@@ -7,7 +7,7 @@
  */
 function PricesListController(PricesListService) {
   var vm = this;
-  vm.clients = PricesListService.query();
+  vm.pricesList = PricesListService.query();
   vm.selectRow = selectRow;
 
   function selectRow() {

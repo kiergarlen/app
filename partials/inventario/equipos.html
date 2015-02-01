@@ -1,0 +1,65 @@
+<div class="row">
+  <div class="col-xs-12">
+    <h2 class="page-header">Equipos</h2>
+  </div>
+</div>
+<form class="form" role="form"
+  name="instrumentsListForm"
+  novalidate
+  >
+  <div class="row">
+    <div class="col-xs-12">
+      <h4>Búsqueda</h4>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12 col-sm-8">
+      <label for="clientName" class="sr-only">
+        Ingrese una búsqueda (Modelo, Número, etc.)
+      </label>
+      <input type="text" class="form-control"
+        placeholder="Ingrese una búsqueda (Modelo, Número, etc.)"
+        data-ng-model="instrumentsList.filter.$"
+        >
+      <br>
+    </div>
+  </div>
+</form>
+<div class="row">
+  <div class="col-xs-12">
+    <div class="panel">
+      <div class="panel-heading">
+        <h3 class="panel-title">Equipos</h3>
+      </div>
+      <div class="table-responsive">
+        <table class="table table-hover table-striped" id="instrumentsList">
+          <thead>
+            <tr>
+              <th>Modelo</th>
+              <th>Numero</th>
+              <th>Decripción</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              data-ng-repeat="item in instrumentsList.instruments |
+              filter:instrumentsList.filter.$"
+              id="instrumentId{{item.id_equipo}}"
+              data-ng-click="instrumentsList.selectRow()"
+              >
+              <td>
+               {{item.modelo}}
+              </td>
+              <td>
+                {{item.numero}}
+              </td>
+              <td>
+                {{item.descripcion}}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

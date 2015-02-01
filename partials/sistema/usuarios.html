@@ -1,44 +1,78 @@
-      <div class="row">
-        <div class="col-xs-12">
-          <h2 class="page-header">Usuarios</h2>
-        </div>
+<div class="row">
+  <div class="col-xs-12">
+    <h2 class="page-header">Usuarios</h2>
+  </div>
+</div>
+<form class="form" role="form"
+  name="usersListForm"
+  novalidate
+  >
+  <div class="row">
+    <div class="col-xs-12">
+      <h4>Búsqueda</h4>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12 col-sm-8">
+      <label for="clientName" class="sr-only">
+        Ingrese una búsqueda (Nombre, Rol, etc.)
+      </label>
+      <input type="text" class="form-control"
+        placeholder="Ingrese una búsqueda (Nombre, Rol, etc.)"
+        data-ng-model="usersList.filter.$"
+        >
+      <br>
+    </div>
+  </div>
+</form>
+<div class="row">
+  <div class="col-xs-12">
+    <div class="panel">
+      <div class="panel-heading">
+        <h3 class="panel-title">Usuarios</h3>
       </div>
-      <div class="row">
-        <div class="col-xs-12">
-          <div class="panel">
-            <div class="panel-heading">
-              <h3 class="panel-title">Usuarios</h3>
-              <!--
-              <h3 class="sub-header">Usuarios</h3>
-              -->
-            </div>
-            <div class="table-responsive">
-              <table class="table table-hover table-striped" id="usersList">
-                <thead>
-                  <tr>
-                    <th>Usuario</th>
-                    <th>Rol</th>
-                    <th>Permisos</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr data-ng-repeat="item in users" id="userId{{item.id_usuario}}">
-                    <td>
-                      <strong>{{item.nombres}}</strong> {{item.ap}} {{item.am}}
-                    </td>
-                    <td>
-                      {{item.area}}
-                    </td>
-                    <td>
-                      <span data-ng-show="item.calidad > 0" class="label label-danger">Admin</span>
-                      <span data-ng-show="item.supervisa > 0" class="label label-warning">Edición</span>
-                      <span data-ng-show="item.muestrea > 0 || item.analiza > 0" class="label label-info">Captura</span>
-                      <span data-ng-show="!(item.muestrea > 0 || item.analiza > 0)" class="label label-default">Otro</span>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
+      <div class="table-responsive">
+        <table class="table table-hover table-striped" id="usersList">
+          <thead>
+            <tr>
+              <th>Usuario</th>
+              <th>Rol</th>
+              <th>Permisos</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              data-ng-repeat="item in usersList.users |
+              filter:usersList.filter.$"
+              id="userId{{item.id_usuario}}"
+              data-ng-click="usersList.selectRow()"
+              >
+              <td>
+                <strong>{{item.nombres}}</strong> {{item.ap}} {{item.am}}
+              </td>
+              <td>
+                {{item.area}}
+              </td>
+              <td>
+                <span
+                  data-ng-show="item.calidad > 0"
+                  class="label label-danger">Admin</span>
+                <span
+                  data-ng-show="item.supervisa > 0"
+                  class="label label-warning">Edición</span>
+                <span
+                  data-ng-show="item.muestrea > 0 ||
+                  item.analiza > 0"
+                  class="label label-info">Captura</span>
+                <span
+                  data-ng-show="!(item.muestrea > 0 ||
+                  item.analiza > 0)"
+                  class="label label-default">Otro</span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
+    </div>
+  </div>
+</div>

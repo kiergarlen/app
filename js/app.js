@@ -80,27 +80,27 @@ function config($routeProvider) {
     when('/catalogo/referencia', {
       templateUrl: 'partials/catalogo/referencia.html',
       controller: 'ReferencesListController',
-      //controllerAs: 'referencesList'
+      controllerAs: 'referencesList'
     }).
     when('/inventario/equipos', {
       templateUrl: 'partials/inventario/equipos.html',
       controller: 'InstrumentsListController',
-      //controllerAs: 'instrumentsList'
+      controllerAs: 'instrumentsList'
     }).
     when('/inventario/muestras', {
       templateUrl: 'partials/inventario/muestras.html',
       controller: 'SamplesListController',
-      //controllerAs: 'samplesList'
+      controllerAs: 'samplesList'
     }).
     when('/inventario/reactivos', {
       templateUrl: 'partials/inventario/reactivos.html',
       controller: 'ReactivesListController',
-      //controllerAs: 'reactivesList'
+      controllerAs: 'reactivesList'
     }).
     when('/inventario/recipientes', {
       templateUrl: 'partials/inventario/recipientes.html',
-      controller: 'RecipientsListController',
-      //controllerAs: 'recipientsList'
+      controller: 'ContainersListController',
+      controllerAs: 'containersList'
     }).
     when('/muestreo/orden', {
       templateUrl: 'partials/muestreo/orden.html',
@@ -163,14 +163,14 @@ function config($routeProvider) {
       controllerAs: 'taskAssign'
     }).
     when('/reporte/consulta', {
-      templateUrl: 'partials/reporte/consulta.html',
+      templateUrl: 'partials/reporte/reportes.html',
       controller: 'ReportsListController',
-      //controllerAs: 'reportsList'
+      controllerAs: 'reportsList'
     }).
     when('/reporte/validar', {
       templateUrl: 'partials/reporte/validar.html',
       controller: 'ReportApprovalController',
-      //controllerAs: 'reportApproval'
+      controllerAs: 'reportApproval'
     }).
     when('/sistema/login', {
       templateUrl: 'partials/sistema/login.html',
@@ -180,17 +180,17 @@ function config($routeProvider) {
     when('/sistema/logout', {
       templateUrl: 'partials/sistema/logout.html',
       controller: 'LogoutController',
-      //controllerAs: 'logout'
+      controllerAs: 'logout'
     }).
     when('/sistema/perfil', {
       templateUrl: 'partials/sistema/perfil.html',
       controller: 'ProfileController',
-      //controllerAs: 'profile'
+      controllerAs: 'profile'
     }).
     when('/sistema/usuarios', {
       templateUrl: 'partials/sistema/usuarios.html',
       controller: 'UsersListController',
-      //controllerAs: 'usersList'
+      controllerAs: 'usersList'
     })
   ;
 }

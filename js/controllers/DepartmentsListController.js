@@ -1,25 +1,20 @@
 /**
  * @name DepartmentsListController
  * @constructor
- * @desc Controla la vista para consulta de Áreas
+ * @desc Controla la vista para el listado de Áreas
  * @this {Object} $scope - Contenedor para el modelo, AngularJS
- * @param {Object} DepartmentsListService - Proveedor de datos, lista Áreas
+ * @param {Object} DepartmentService - Proveedor de datos, Áreas
  */
-function DepartmentsListController(DepartmentsListService) {
-  var vm = this;
-  vm.clients = DepartmentsListService.query();
-  vm.selectRow = selectRow;
-
-  function selectRow() {
-
-  }
+function DepartmentsListController($scope, DepartmentService) {
+  $scope.departments = DepartmentService.query();
 }
 
 angular
   .module('siclabApp')
   .controller('DepartmentsListController',
     [
-      'DepartmentsListService',
+      '$scope',
+      'DepartmentService',
       DepartmentsListController
     ]
   );

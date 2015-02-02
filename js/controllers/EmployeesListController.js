@@ -1,25 +1,20 @@
 /**
  * @name EmployeesListController
  * @constructor
- * @desc Controla la vista para consulta de Empleados
+ * @desc Controla la vista para el listado de Empleados
  * @this {Object} $scope - Contenedor para el modelo, AngularJS
- * @param {Object} EmployeesListService - Proveedor de datos, lista Empleados
+ * @param {Object} EmployeeService - Proveedor de datos, Empleados
  */
-function EmployeesListController(EmployeesListService) {
-  var vm = this;
-  vm.clients = EmployeesListService.query();
-  vm.selectRow = selectRow;
-
-  function selectRow() {
-
-  }
+function EmployeesListController($scope, EmployeeService) {
+  $scope.employees = EmployeeService.query();
 }
 
 angular
   .module('siclabApp')
   .controller('EmployeesListController',
     [
-      'EmployeesListService',
+      '$scope',
+      'EmployeeService',
       EmployeesListController
     ]
   );

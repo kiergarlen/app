@@ -1,42 +1,61 @@
-//LoginController
-function LoginController(Loginservice) {
-  this.message = '';
-  this.user = {
-    username: '',
-    password: ''
-  };
+/**
+ * @name LoginController
+ * @constructor
+ * @desc Controla la vista para Login
+ * @this {Object} $scope - Contenedor para el modelo, AngularJS
+ * @param {Object} $http - Manejo de peticiones HTTP [AngularJS]
+ * @param {Object} LoginService - Proveedor de datos, Login
+ */
+function LoginController($scope, $http, Loginservice) {
+  var vm = this;
+  vm.message = '';
+  vm.user = {username: '', password: ''};
+  vm.submit = submitMessage;
+  vm.login = login;
 
-  this.submit = function(form) {
-    this.message += ' USR ' + form.username.$modelValue;
-    this.message += ' PSW ' + form.password.$modelValue;
-  };
+  function submitMessage(msg, usr, pwd) {
+    msg = [
+      msg,
+      ' USER: ',
+      usr,
+      ' PASSWORD: ',
+      pwd
+    ].join('');
+    return msg;
+  }
 
-  this.login = function() {
-    this.message = '...';
-    if (this.loginForm.$valid)
+  function login() {
+    if ($scope.loginForm.$valid)
     {
-      if (this.user.username == 'rgarcia' &&
-        this.user.password == '123'
+      if (vm.user.username == 'rgarcia' &&
+        vm.user.password == 'rgarcia'
       )
       {
-        this.message = 'Enviando credenciales secretas...';
-        this.submit(this.loginForm);
+        vm.message = 'Enviando...';
+        vm.submit(
+          '',
+          vm.user.username,
+          vm.user.password
+        );
       }
       else
       {
-        this.message = 'Usuario o contraseña incorrectos';
+        vm.message = 'Usuario o contraseña incorrectos';
       }
     }
     else
     {
-      this.message = 'Debe ingresar usuario y/o contraseña';
+      vm.message = 'Debe ingresar usuario y/o contraseña';
     }
-  };
+  }
 }
 
 angular
   .module('siclabApp')
   .controller('LoginController',
-  ['LoginService',
-  LoginController
-]);
+    [
+      '$scope', '$http',
+      'LoginService',
+      LoginController
+    ]
+  );

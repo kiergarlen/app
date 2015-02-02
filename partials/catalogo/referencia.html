@@ -44,7 +44,7 @@
             <tr
               data-ng-repeat="item in referencesList.references |
               filter:referencesList.filter.$"
-              id="priceId{{item.id_referencia}}"
+              id="referenceId{{item.id_referencia}}"
               data-ng-click="referencesList.selectRow()"
               >
               <td>
@@ -54,7 +54,7 @@
                 {{item.metodo}}
               </td>
               <td>
-                {{item.descripción}}
+                {{item.descripcion}}
               </td>
             </tr>
           </tbody>

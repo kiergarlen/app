@@ -3,13 +3,13 @@
  * @constructor
  * @desc Controla la vista para seleccionar formato de captura de Análisis
  * @this {Object} $scope - Contenedor para el modelo, AngularJS
- * @param {Object} AreaService - Proveedor de datos, Áreas
+ * @param {Object} DepartmentService - Proveedor de datos, Áreas
  * @param {Object} ParameterService - Proveedor de datos, Parámetros
  * @param {Object} AnalysisService - Proveedor de datos, selección de formato de captura de Análisis
  */
-function AnalysisController(AreaService, ParameterService, AnalysisService) {
+function AnalysisController(DepartmentService, ParameterService, AnalysisService) {
   var vm = this;
-  vm.areas = AreaService.query();
+  vm.areas = DepartmentService.query();
   vm.parameters = ParameterService.query();
   vm.analysis = AnalysisService.query();
 
@@ -40,7 +40,7 @@ angular
   .module('siclabApp')
   .controller('AnalysisController',
     [
-      'AreaService', 'ParameterService',
+      'DepartmentService', 'ParameterService',
       'AnalysisService',
       AnalysisController
     ]

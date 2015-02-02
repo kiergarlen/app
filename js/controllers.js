@@ -133,7 +133,8 @@ angular
  * @param {Object} ClientDetailService - Proveedor de datos, Detalle cliente
  */
 function ClientDetailController($scope, ClientDetailService) {
-  $scope.clientDetail = ClientDetailService.query();
+  var vm = this.
+  vm.clientDetail = ClientDetailService.query();
 }
 
 angular
@@ -154,7 +155,8 @@ angular
  * @param {Object} DepartmentService - Proveedor de datos, Áreas
  */
 function DepartmentsListController($scope, DepartmentService) {
-  $scope.departments = DepartmentService.query();
+  var vm = this;
+  vm.departments = DepartmentService.query();
 }
 
 angular
@@ -175,7 +177,8 @@ angular
  * @param {Object} EmployeeService - Proveedor de datos, Empleados
  */
 function EmployeesListController($scope, EmployeeService) {
-  $scope.employees = EmployeeService.query();
+  var vm = this;
+  this.employees = EmployeeService.query();
 }
 
 angular
@@ -196,7 +199,8 @@ angular
  * @param {Object} UserService - Proveedor de datos, Usuarios
  */
 function UsersListController ($scope, UserService) {
-  $scope.users = UserService.query();
+  var vm = this;
+  this.users = UserService.query();
 }
 
 angular
@@ -217,7 +221,8 @@ angular
  * @param {Object} NormService - Proveedor de datos, Normas
  */
 function NormsListController($scope, NormService) {
-  $scope.norms = NormService.query();
+  var vm = this;
+  this.norms = NormService.query();
 }
 
 angular

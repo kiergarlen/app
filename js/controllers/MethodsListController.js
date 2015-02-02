@@ -10,7 +10,7 @@ function MethodsListController(MethodsListService) {
   vm.methodsList = MethodsListService.query();
 
   vm.selectRow = selectRow;
-  function select($event) {
+  function selectRow() {
 
   }
 }

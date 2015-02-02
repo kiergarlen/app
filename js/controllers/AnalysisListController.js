@@ -10,7 +10,7 @@ function AnalysisListController(AnalysisListService) {
   vm.analysisList = AnalysisListService.query();
 
   vm.selectRow = selectRow;
-  function select($event) {
+  function selectRow() {
     //TODO send to details view
     console.log('clicked in row');
   }

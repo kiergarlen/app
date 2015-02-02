@@ -1,83 +1,125 @@
+/**
+ * @name QuoteController
+ * @constructor
+ * @desc Controla la vista para capturar una Solicitud/Cotización
+ * @this {Object} $scope - Contenedor para el modelo, AngularJS
+ * @param {Object} ClientService - Proveedor de datos, Clientes
+ * @param {Object} ParameterService - Proveedor de datos, Parámetros
+ * @param {Object} NormService - Proveedor de datos, Normas
+ * @param {Object} SamplingTypeService - Proveedor de datos, Tipos muestreo
+ * @param {Object} QuoteService - Proveedor de datos, Cotizaciones
+ */
 function QuoteController(ClientService, ParameterService, NormService,
   SamplingTypeService, QuoteService) {
-  this.clients = ClientService.query();
-  this.parameters = ParameterService.query();
-  this.norms = NormService.query();
-  this.samplingTypes = SamplingTypeService.query();
-  this.quote = QuoteService.query();
-  this.clientDetailsIsShown = false;
-  this.totalCost = 0;
+  var vm = this;
+  vm.clients = ClientService.query();
+  vm.parameters = ParameterService.query();
+  vm.norms = NormService.query();
+  vm.samplingTypes = SamplingTypeService.query();
+  vm.quote = QuoteService.query();
+  vm.clientDetailsIsShown = false;
+  vm.totalCost = 0;
 
-  this.toggleClientInfo = function() {
-    var id = this.quote.id_cliente;
-    this.clientDetailsIsShown = (
-      this.quote.id_cliente > 0 &&
-      this.selectClient(id).cliente &&
-      !this.clientDetailsIsShown
+  vm.toggleClientInfo = toggleClientInfo;
+  vm.selectClient = selectClient;
+  vm.totalParameter = totalParameter;
+  vm.selectNorm = selectNorm;
+  vm.selectNormParameters = selectNormParameters;
+  vm.selectSamplingType = selectSamplingType;
+  vm.submitQuoteForm = submitQuoteForm;
+
+  function toggleClientInfo() {
+    var id = vm.quote.id_cliente;
+    vm.clientDetailsIsShown = (
+      vm.quote.id_cliente > 0 &&
+      vm.selectClient(id).cliente &&
+      !vm.clientDetailsIsShown
     );
-  };
+  }
 
-  this.selectClient = function(idClient) {
-    var i = 0, l = this.clients.length;
-    this.quote.cliente = {};
+  function selectClient(idClient) {
+    var i = 0, l = vm.clients.length;
+    vm.quote.cliente = {};
     for (i; i < l; i += 1) {
-      if (this.clients[i].id_cliente == idClient) {
-        this.quote.cliente = this.clients[i];
+      if (vm.clients[i].id_cliente == idClient)
+      {
+        vm.quote.cliente = vm.clients[i];
         break;
       }
     }
-    return this.quote.cliente;
-  };
+    return vm.quote.cliente;
+  }
 
-  this.totalParameter = function(){
+  function totalParameter(){
     var t = 0;
-    angular.forEach(this.parameters, function(s){
-      if(s.selected) {
+    angular.forEach(vm.parameters, function(s){
+      if(s.selected)
+      {
         t += parseFloat(s.precio);
       }
     });
-    t = t * this.quote.cliente.tasa;
-    this.totalCost = (Math.round(t * 100) / 100);
-    this.quote.total = this.totalCost;
-    return this.totalCost;
-  };
+    t = t * vm.quote.cliente.tasa;
+    vm.totalCost = (Math.round(t * 100) / 100);
+    vm.quote.total = vm.totalCost;
+    return vm.totalCost;
+  }
 
-  this.selectNorm = function(idNorm) {
-    var i, l, j, m, params;
-    l = this.norms.length;
-    this.quote.norma = {};
-    this.quote.parametros_seleccionados = [];
+  function selectNorm(idNorm) {
+    var i, l;
+    l = vm.norms.length;
+    vm.quote.norma = {};
+    vm.quote.parametros_seleccionados = [];
     for (i = 0; i < l; i += 1) {
-      if (this.norms[i].id_norma == idNorm) {
-        this.quote.norma = this.norms[i];
+      if (vm.norms[i].id_norma == idNorm)
+      {
+        vm.quote.norma = vm.norms[i];
         break;
       }
     }
-    l = this.parameters.length;
-    params = this.quote.norma.parametros;
+    vm.selectNormParameters();
+    return '';
+  }
+
+  function selectNormParameters() {
+    var i, l, j, m;
+    l = vm.parameters.length;
     for(i = 0; i < l; i += 1) {
-      this.parameters[i].selected = false;
-      if (params !== undefined) {
-        m = params.length;
+      vm.parameters[i].selected = false;
+      if (vm.quote.norma.parametros !== undefined)
+      {
+        m = vm.quote.norma.parametros.length;
         for (j = 0; j < m; j += 1) {
-          if (this.parameters[i].id_parametro == params[j].id_parametro) {
-            this.parameters[i].selected = true;
+          if (vm.parameters[i].id_parametro ==
+            vm.quote.norma.parametros[j].id_parametro)
+          {
+            vm.parameters[i].selected = true;
           }
         }
       }
     }
-    return '';
-  };
+  }
 
-  this.submitQuoteForm = function () {
+  function selectSamplingType() {
+    var i, l;
+    l = vm.samplingTypes.length;
+    for (i = 0; i < l; i += 1) {
+      vn.samplingTypes[i].selected =
+      (vm.samplingTypes[i].id_tipo_muestreo ==
+        vm.quote.id_tipo_muestreo);
+    }
+  }
 
-  };
+  function submitQuoteForm() {
+
+  }
 }
 
 angular
   .module('siclabApp')
   .controller('QuoteController',
- ['ClientService', 'ParameterService', 'NormService',
- 'SamplingTypeService', 'QuoteService',
-  QuoteController
-]);
+    [
+      'ClientService', 'ParameterService', 'NormService',
+      'SamplingTypeService', 'QuoteService',
+      QuoteController
+    ]
+  );

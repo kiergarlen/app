@@ -10,12 +10,6 @@ angular
 //CONFIG
 //function config($routeProvider, $httpProvider, jwtInterceptorProvider) {
 function config($routeProvider) {
-  //jwtInterceptorProvider.tokenGetter = ['myService', function(myService) {
-  //  myService.doSomething();
-  //  return localStorage.getItem('id_token');
-  //}];
-  //$httpProvider.interceptors.push('jwtInterceptor');
-
   $routeProvider
     .otherwise({
      redirectTo: '/sistema/login'

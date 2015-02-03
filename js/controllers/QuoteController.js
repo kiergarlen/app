@@ -51,16 +51,20 @@ function QuoteController(ClientService, ParameterService, NormService,
   }
 
   function totalParameter(){
-    var t = 0;
-    angular.forEach(vm.parameters, function(s){
-      if(s.selected)
-      {
-        t += parseFloat(s.precio);
+    var i = 0, l = 0, t = 0;
+    if (vm.parameters)
+    {
+      l = vm.parameters.length;
+      for (i; i < l; i += 1) {
+        if (vm.parameters[i].selected)
+        {
+          t = t + parseInt(vm.parameters[i].precio, 10);
+        }
       }
-    });
-    t = t * vm.quote.cliente.tasa;
-    vm.totalCost = (Math.round(t * 100) / 100);
-    vm.quote.total = vm.totalCost;
+      t = t * vm.quote.cliente.tasa;
+      vm.totalCost = (Math.round(t * 100) / 100);
+      vm.quote.total = vm.totalCost;
+    }
     return vm.totalCost;
   }
 

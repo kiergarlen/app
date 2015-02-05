@@ -3,9 +3,10 @@
  * @constructor
  * @desc Controla la vista para capturar un Plan muestreo
  * @this {Object} $scope - Contenedor para el modelo, AngularJS
+ * @param {Object} PlanObjectivesService - Proveedor de datos, Objetivos Plan muestreo
  * @param {Object} PlanService - Proveedor de datos, Plan muestreo
  */
-function PlanController() {
+function PlanController(PlanObjectivesService, PlanService) {
   var vm = this;
   vm.plan = PlanService.query();
   vm.objectives = PlanObjectivesService.query();
@@ -46,7 +47,7 @@ angular
   .module('siclabApp')
   .controller('PlanController',
     [
-      '$scope',
+      'PlanObjectivesService', 'PlanService',
       PlanController
     ]
   );

@@ -197,57 +197,6 @@
   </div>
   <div class="row">
     <div class="col-xs-12">
-      <h4>Inicio / Término de muestreo</h4>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-xs-12 col-sm-6 col-md-3">
-      <label for="samplingStartDate">Fecha Inicio</label>
-      <input type="date"
-        class="form-control"
-        placeholder="aaaa-mm-dd"
-        id="samplingStartDate"
-        name="samplingStartDate"
-        required
-        data-ng-model="plan.fecha_inicio"
-        >
-    </div>
-    <div class="col-xs-12 col-sm-6 col-md-3">
-      <label for="samplingStartTime">Hora Inicio</label>
-      <input type="time"
-        class="form-control"
-        placeholder="HH:mm:ss"
-        id="samplingStartTime"
-        name="samplingStartTime"
-        required
-        data-ng-model="plan.hora_inicio"
-        >
-    </div>
-    <div class="col-xs-12 col-sm-6 col-md-3">
-      <label for="samplingEndDate">Fecha Término</label>
-      <input type="date"
-        class="form-control"
-        placeholder="aaaa-mm-dd"
-        id="samplingEndDate"
-        name="samplingEndDate"
-        required
-        data-ng-model="plan_fecha_fin"
-        >
-    </div>
-    <div class="col-xs-12 col-sm-6 col-md-3">
-      <label for="samplingEndTime">Hora Término</label>
-      <input type="time"
-        class="form-control"
-        placeholder="HH:mm:ss"
-        id="samplingEndTime"
-        name="samplingEndTime"
-        required
-        data-ng-model="plan.hora_fin"
-        >
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-xs-12">
       <h4>Responsables</h4>
     </div>
   </div>
@@ -281,7 +230,7 @@
         </option>
         <option
           data-ng-repeat="samplingSupervisor in plan.samplingSupervisors"
-          value="{{samplingSupervisor.id_responsable_muestreo}}">
+          value="{{samplingSupervisor.id_empleado}}">
           {{samplingSupervisor.responsable_muestreo}}
         </option>
       </select>
@@ -352,7 +301,7 @@
         name="loggingSupervisorSelect"
         required
         data-ng-model="plan.id_responsable_registro"
-        data-ng-change="plan.selectCollectingSupervisor()"
+        data-ng-change="plan.selectLoggingSupervisor()"
         >
         <option value="">
           Seleccione una opción

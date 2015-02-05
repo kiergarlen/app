@@ -378,3 +378,16 @@ Firefox Fix For Freaky Fieldset
   left:10%;
   margin-left:-6px;
 }
+
+
+.details-modal {
+  background-color:#fff;
+  background-color:rgba(255,255,255,0.95);
+  z-index: 100;
+  padding: 5px;
+  width: 95%;
+  position: absolute;
+  left:5%;
+  margin-left:0;
+  top: -200%;
+}

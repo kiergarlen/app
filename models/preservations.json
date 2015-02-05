@@ -34,7 +34,7 @@
 		"id_clase_parametro":4,
 		"clase_parametro":"Fenoles",
 		"clase_param":"FEN",
-		"preservacion":"H2SO4 + CuSO4, 4°C, pH<2",
+		"preservacion":"5ml H2SO4 + CuSO4, 4°C, pH<2",
 		"preservado":0,
 		"selected":false,
 		"activo":1

@@ -18,13 +18,16 @@ function QuoteController(ClientService, ParameterService, NormService,
   vm.samplingTypes = SamplingTypeService.query();
   vm.quote = QuoteService.query();
   vm.clientDetailsIsShown = false;
+  vm.allParametersSelected = false;
   vm.totalCost = 0;
 
   vm.toggleClientInfo = toggleClientInfo;
+  vm.toggleParametersInfo = toggleParametersInfo;
   vm.selectClient = selectClient;
   vm.totalParameter = totalParameter;
   vm.selectNorm = selectNorm;
   vm.selectNormParameters = selectNormParameters;
+  vm.selectAllParameters = selectAllParameters;
   vm.selectSamplingType = selectSamplingType;
   vm.submitQuoteForm = submitQuoteForm;
 
@@ -35,6 +38,10 @@ function QuoteController(ClientService, ParameterService, NormService,
       vm.selectClient(id).cliente &&
       !vm.clientDetailsIsShown
     );
+  }
+
+  function toggleParametersInfo() {
+    vm.parametersDetailsIsShown = !vm.parametersDetailsIsShown;
   }
 
   function selectClient(idClient) {
@@ -73,6 +80,7 @@ function QuoteController(ClientService, ParameterService, NormService,
     l = vm.norms.length;
     vm.quote.norma = {};
     vm.quote.parametros_seleccionados = [];
+    vm.quote.allParametersSelected = false;
     for (i = 0; i < l; i += 1) {
       if (vm.norms[i].id_norma == idNorm)
       {
@@ -100,6 +108,15 @@ function QuoteController(ClientService, ParameterService, NormService,
           }
         }
       }
+    }
+  }
+
+  function selectAllParameters() {
+    var i, l, j, m;
+    l = vm.parameters.length;
+    vm.quote.allParametersSelected = !vm.quote.allParametersSelected;
+    for(i = 0; i < l; i += 1) {
+      vm.parameters[i].selected = vm.quote.allParametersSelected;
     }
   }
 

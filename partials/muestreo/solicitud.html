@@ -156,45 +156,62 @@
   </div>
   <div class="row">
     <div class="col-xs-12">
-      <h5>Parámetros seleccionados</h5>
       <h4>
-        <span class="text-muted">Costo Total:</span>
+        <span class="text-muted">Costo:</span>
         {{quote.totalParameter() | currency}}
       </h4>
     </div>
   </div>
+
+
   <div class="row">
     <div class="col-xs-12">
-      <table class="table table-condensed">
-        <tr data-ng-repeat="parameter in quote.parameters">
-          <td>
-            <label>
+      <div class="well well-sm item-z2 details-tooltip"
+        data-ng-show="quote.parametersDetailsIsShown"
+        data-ng-click="quote.toggleParametersInfo()">
+        <div class="pull-right">
+          <button type="button" class="close">
+            <span aria-hidden="true">&times;</span>
+            <span class="sr-only">Close</span>
+          </button>
+        </div>
+        <h4>Parámetros seleccionados</h4>
+        <div class="form-control">
+          <label>
+            <input type="checkbox"
+              data-ng-model="quote.allParametersSelected"
+              name="allParametersSelected"
+              data-ng-click="quote.selectAllParameters()"
+              />
+              Seleccionar todos
+          </label>
+        </div>
+        <table class="table table-condensed">
+          <tr data-ng-repeat="parameter in quote.parameters">
+            <td>
+              <label>
                 <input type="checkbox"
                   data-ng-model="parameter.selected"
                   name="{{parameter.parametro}}" />
-                {{parameter.parametro}}
-            </label>
-          </td>
-          <td>
-            {{parameter.metodo_ensayo}}
-          </td>
-          <td>
-            <span class="text-muted">
-              {{parameter.precio | currency}}
-            </span>
-          </td>
-        </tr>
-      </table>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-xs-6 col-sm-4 col-md-3"
-      data-ng-repeat="activity in quote.quote.actividades_adicionales">
-      <label>
-        <input type="checkbox"
-          value="activityId{{activity.id_actividad}}">
-          {{activity.actividad}}
-      </label>
+                  {{parameter.parametro}}
+              </label>
+            </td>
+            <td>
+              {{parameter.metodo_ensayo}}
+            </td>
+            <td>
+              <span class="text-muted">
+                {{parameter.precio | currency}}
+              </span>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <h4>Parámetros seleccionados</h4>
+      <button class="btn btn-default"
+        data-ng-click="quote.toggleParametersInfo()">
+        Parámetros
+      </button>
     </div>
   </div>
   <br>

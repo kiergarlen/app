@@ -63,7 +63,7 @@
         name="clientSelect"
         required
         data-ng-model="quote.quote.id_cliente"
-        data-ng-change="quote.selectClient(quote.quote.id_cliente)"
+        data-ng-change="quote.selectClient()"
         >
         <option value="">
           Seleccione una opción
@@ -78,8 +78,8 @@
       </select>
       <br>
       <div class="well well-sm item-z2 details-tooltip"
-        data-ng-show="quote.clientDetailsIsShown"
-        data-ng-click="quote.toggleClientInfo()">
+        data-ng-show="quote.clientDetailVisible"
+        data-ng-click="quote.toggleClientDetail()">
         <div class="pull-right">
           <button type="button" class="close">
             <span aria-hidden="true">&times;</span>
@@ -101,7 +101,7 @@
         </ul>
       </div>
       <button class="btn btn-default"
-        data-ng-click="quote.toggleClientInfo()">
+        data-ng-click="quote.toggleClientDetail()">
         Datos Cliente
       </button>
     </div>
@@ -164,9 +164,9 @@
   </div>
   <div class="row">
     <div class="col-xs-12">
-      <div class="well well-sm item-z2 details-tooltip"
-        data-ng-show="quote.parametersDetailsIsShown"
-        data-ng-click="quote.toggleParametersInfo()">
+      <div class="well well-sm item-z2 details-modal"
+        data-ng-show="quote.parametersDetailVisible"
+        data-ng-click="quote.toggleParametersDetail()">
         <div class="pull-right">
           <button type="button" class="close">
             <span aria-hidden="true">&times;</span>
@@ -207,7 +207,7 @@
       </div>
       <h4>Parámetros seleccionados</h4>
       <button class="btn btn-default"
-        data-ng-click="quote.toggleParametersInfo()">
+        data-ng-click="quote.toggleParametersDetail()">
         Parámetros
       </button>
     </div>

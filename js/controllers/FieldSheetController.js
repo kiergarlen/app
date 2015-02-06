@@ -57,7 +57,8 @@ function FieldSheetController(CloudService, WindService, WaveService,
   vm.submitFieldSheetForm = submitFieldSheetForm;
 
   function selectItemFromCollection(id, collection, field) {
-    var i = 0, l = collection.length,
+    var i = 0,
+    l = collection.length,
     item = {};
     for (i; i < l; i += 1) {
       if (collection[i][field] == id)

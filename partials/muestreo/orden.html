@@ -144,21 +144,64 @@
   </div>
   <div class="row">
     <div class="col-xs-12">
-      <h4>Parámetros</h4>
+      <h4>Parámetros seleccionados</h4>
     </div>
   </div>
   <div class="row">
     <div class="col-xs-12">
-      <div class="well well-sm">
+      <div class="well well-sm item-z2 details-modal"
+        data-ng-show="order.parametersDetailVisible"
+        data-ng-click="order.toggleParametersDetail()">
+        <div class="pull-right">
+          <button type="button" class="close">
+            <span aria-hidden="true">&times;</span>
+            <span class="sr-only">Close</span>
+          </button>
+        </div>
+        <h4>Parámetros seleccionados</h4>
         <div class="row">
-          <div class="col-xs-12 col-sm-6 col-md-4"
-            data-ng-repeat="parameter in order.parameters"
-            data-ng-show="parameter.selected"
-            >
-            {{parameter.parametro}}
+          <div class="col-xs-12 col-md-4 col-lg-3"
+            data-ng-repeat="parameter in order.order.parametros">
+            {{parameter.parametro}}<br>
+            <span class="text-muted">
+              {{parameter.metodo_ensayo}}
+            </span>
           </div>
         </div>
       </div>
+      <button class="btn btn-default"
+        data-ng-click="order.toggleParametersDetail()">
+        Parámetros
+      </button>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12">
+      <h4>Fecha probable de muestreo</h4>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12 col-sm-6 col-md-3">
+      <label for="samplingDate">Fecha</label>
+      <input type="text"
+        class="form-control"
+        placeholder="aaaa-mm-dd"
+        id="samplingDate"
+        name="samplingDate"
+        required
+        data-ng-model="order.order.fecha_muestreo"
+        >
+    </div>
+    <div class="col-xs-12 col-sm-6 col-md-3">
+      <label for="samplingTime">Hora</label>
+      <input type="text"
+        class="form-control"
+        placeholder="HH:mm:ss"
+        id="samplingTime"
+        name="samplingTime"
+        required
+        data-ng-model="order.order.hora_muestreo"
+        >
     </div>
   </div>
   <div class="row">

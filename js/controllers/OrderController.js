@@ -20,12 +20,18 @@ function OrderController(QuoteService, OrderSourceService,
   vm.matrices = MatrixService.query();
   vm.supervisors = SamplingSupervisorService.query();
   vm.parameters = ParameterService.query();
+  vm.parametersDetailVisible = false;
 
+  vm.toggleParametersDetail = toggleParametersDetail;
   vm.selectOrderSource = selectOrderSource;
   vm.selectMatrix = selectMatrix;
   vm.selectSupervisor = selectSupervisor;
   vm.validateOrderForm = validateOrderForm;
   vm.submitOrderForm = submitOrderForm;
+
+  function toggleParametersDetail() {
+    vm.parametersDetailVisible = !vm.parametersDetailVisible;
+  }
 
   function selectOrderSource(idSource) {
     var i = 0, l = vm.orderSources.length;

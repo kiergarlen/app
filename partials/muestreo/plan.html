@@ -21,10 +21,10 @@
           <li data-ng-show="plan.fecha_plan.length > 0">
             Fecha actual:
             {{plan.fecha_plan}}</li>
-          <li data-ng-show="plan.fecha_orden.length > 0">
+          <li data-ng-show="plan.orden.fecha_captura.length > 0">
             Fecha orden:
-            {{plan.fecha_orden}}</li>
-          <li data-ng-show="plan.solicitud.length > 0">
+            {{plan.orden.fecha_captura}}</li>
+          <li data-ng-show="plan.fecha_solicitud.length > 0">
             Fecha solicitud:
             {{plan.solicitud.fecha_solicitud}}</li>
           <li data-ng-show="plan.fecha_captura.length > 0">
@@ -33,9 +33,6 @@
           <li data-ng-show="plan.fecha_valida.length > 0">
             Fecha validación:
             {{plan.fecha_valida}}</li>
-          <li data-ng-show="plan.fecha_acepta.length > 0">
-            Fecha aceptación:
-            {{plan.fecha_acepta}}</li>
           <li data-ng-show="plan.fecha_actualizacion.length > 0">
             Fecha actualización:
             {{plan.fecha_actualizacion}}</li>
@@ -75,8 +72,8 @@
           Seleccione una opción
         </option>
         <option data-ng-repeat="objective in plan.objectives"
-          value="{{objective.id_origen_orden}}">
-          {{objective.origen_orden}}
+          value="{{objective.id_objetivo_plan}}">
+          {{objective.objetivo_plan}}
         </option>
       </select>
     </div>
@@ -101,12 +98,12 @@
           {{plan.cliente.area}}
         </h5>
         <ul class="list-unstyled">
-          <li>Domicilio <strong>{{plan.cliente.calle}}
-            {{plan.cliente.numero}}<br>
-            {{plan.cliente.colonia}}</strong></li>
-          <li><strong>{{plan.cliente.municipio}}
-            {{plan.cliente.localidad}}<br>
-            {{plan.cliente.estado}}</strong></li>
+          <li>Domicilio <strong>{{plan.ubicacion_muestreo.calle}}
+            {{plan.ubicacion_muestreo.numero}}<br>
+            {{plan.ubicacion_muestreo.colonia}}</strong></li>
+          <li><strong>{{plan.ubicacion_muestreo.municipio}}
+            {{plan.ubicacion_muestreo.localidad}}<br>
+            {{plan.ubicacion_muestreo.estado}}</strong></li>
           <li>Contacto <strong>{{plan.cliente.contacto}}</strong></li>
           <li>Tel. <strong>{{plan.cliente.tel}}</strong></li>
           <li>Email <strong>{{plan.cliente.email}}</strong></li>
@@ -129,6 +126,7 @@
         Agregar puntos de muestreo</button>
     </div>
   </div>
+  <!--
   <div class="row">
     <div class="col-xs-12 col-sm-6 col-md-5 col-lg-5">
       <label for="pointTypeSelect">
@@ -145,13 +143,15 @@
           Seleccione una opción
         </option>
         <option
-          data-ng-repeat="pointType in plan.pointTypes"
+          data-ng-repeat="pointType in plan.pointKinds"
           value="{{pointType.id_origen_orden}}">
           {{pointType.origen_orden}}
         </option>
       </select>
     </div>
   </div>
+  -->
+  <!-- repeat on points for these rows -->
   <div class="row">
     <div class="col-xs-12 col-sm-4">
       <label for="pointsQuantity">Cantidad de puntos</label>

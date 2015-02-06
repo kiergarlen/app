@@ -57,25 +57,6 @@
     "activo":1
   },
   {
-    "id_responsable_muestreo":5,
-    "id_empleado":14,
-    "id_nivel":4,
-    "id_area":4,
-    "area":"Muestreo",
-    "id_puesto":6,
-    "puesto":"Analista",
-    "nombres":"Octavio",
-    "ap":"Elizalde",
-    "am":"Ulloa",
-    "fecha_act":"2014-11-30",
-    "calidad":0,
-    "supervisa":0,
-    "analiza":1,
-    "muestrea":1,
-    "cert":1,
-    "activo":1
-  },
-  {
     "id_responsable_muestreo":6,
     "id_empleado":15,
     "id_nivel":4,

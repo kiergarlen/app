@@ -17,12 +17,13 @@ function QuoteController(ClientService, ParameterService, NormService,
   vm.norms = NormService.query();
   vm.samplingTypes = SamplingTypeService.query();
   vm.quote = QuoteService.query();
-  vm.clientDetailsIsShown = false;
+  vm.clientDetailVisible = false;
+  vm.parametersDetailVisible = false;
   vm.allParametersSelected = false;
   vm.totalCost = 0;
 
-  vm.toggleClientInfo = toggleClientInfo;
-  vm.toggleParametersInfo = toggleParametersInfo;
+  vm.toggleClientDetail = toggleClientDetail;
+  vm.toggleParametersDetail = toggleParametersDetail;
   vm.selectClient = selectClient;
   vm.totalParameter = totalParameter;
   vm.selectNorm = selectNorm;
@@ -31,29 +32,39 @@ function QuoteController(ClientService, ParameterService, NormService,
   vm.selectSamplingType = selectSamplingType;
   vm.submitQuoteForm = submitQuoteForm;
 
-  function toggleClientInfo() {
-    var id = vm.quote.id_cliente;
-    vm.clientDetailsIsShown = (
-      vm.quote.id_cliente > 0 &&
-      vm.selectClient(id).cliente &&
-      !vm.clientDetailsIsShown
-    );
-  }
-
-  function toggleParametersInfo() {
-    vm.parametersDetailsIsShown = !vm.parametersDetailsIsShown;
-  }
-
-  function selectClient(idClient) {
-    var i = 0, l = vm.clients.length;
-    vm.quote.cliente = {};
+  function selectItemFromCollection(id, collection, field) {
+    var i = 0,
+    l = collection.length,
+    item = {};
     for (i; i < l; i += 1) {
-      if (vm.clients[i].id_cliente == idClient)
+      if (collection[i][field] == id)
       {
-        vm.quote.cliente = vm.clients[i];
+        item = collection[i];
         break;
       }
     }
+    return item;
+  }
+
+  function toggleClientDetail() {
+    var id = vm.quote.id_cliente;
+    vm.clientDetailVisible = (
+      vm.quote.id_cliente > 0 &&
+      vm.selectClient(id).cliente &&
+      !vm.clientDetailVisible
+    );
+  }
+
+  function toggleParametersDetail() {
+    vm.parametersDetailVisible = !vm.parametersDetailVisible;
+  }
+
+  function selectClient() {
+    vm.quote.cliente = selectItemFromCollection(
+      vm.quote.id_cliente,
+      vm.clients,
+      'id_cliente'
+    );
     return vm.quote.cliente;
   }
 

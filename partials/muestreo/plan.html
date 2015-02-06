@@ -151,7 +151,7 @@
     </div>
   </div>
   -->
-  <!-- repeat on points for these rows -->
+  <!-- repeat # points for these rows -->
   <div class="row">
     <div class="col-xs-12 col-sm-4">
       <label for="pointsQuantity">Cantidad de puntos</label>
@@ -191,6 +191,7 @@
         placeholder="Frecuencia"
         id="sampleFrequency"
         name="sampleFrequency"
+        data-ng-disabled="plan.id_tipo_muestreo > 1"
         data-ng-model="plan.frecuencia_muestreo"
         >
     </div>

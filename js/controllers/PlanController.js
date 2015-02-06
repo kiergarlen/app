@@ -20,7 +20,6 @@ function PlanController(PlanObjectivesService, PointKindsService,
   vm.selectCollectingSupervisor = selectCollectingSupervisor;
   vm.selectLoggingSupervisor = selectLoggingSupervisor;
 
-
   function selectItemFromCollection(id, collection, field) {
     var i = 0,
     l = collection.length,

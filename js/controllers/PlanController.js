@@ -14,8 +14,10 @@ function PlanController(PlanObjectivesService, PointKindsService,
   vm.objectives = PlanObjectivesService.query();
   vm.pointKinds = PointKindsService.query();
   vm.addPoints = addPoints;
+
   vm.selectObjective = selectObjective;
   vm.selectPointType = selectPointType;
+
   vm.selectSamplingSupervisor = selectSamplingSupervisor;
   vm.selectCollectingSupervisor = selectCollectingSupervisor;
   vm.selectLoggingSupervisor = selectLoggingSupervisor;

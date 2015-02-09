@@ -96,6 +96,11 @@ function config($routeProvider) {
       controller: 'ContainersListController',
       controllerAs: 'containersList'
     }).
+    when('/muestreo/orden', {
+      templateUrl: 'partials/muestreo/orden.html',
+      controller: 'OrderController',
+      controllerAs: 'order'
+    }).
     when('/muestreo/plan', {
       templateUrl: 'partials/muestreo/plan.html',
       controller: 'PlanController',

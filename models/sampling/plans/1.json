@@ -15,7 +15,14 @@
   "id_objetivo_plan":2,
   "objetivo_otro":"",
   "id_cliente":1,
-  "id_ubicacion_muestreo":1,
+  "calle":"Av. Brasilia",
+  "numero":"2970",
+  "colonia":"Col. Colomos Providencia",
+  "id_estado":14,
+  "id_municipio":14039,
+  "municipio":"Guadalajara",
+  "id_localidad":140390001,
+  "localidad":"Guadalajara",
   "puntos_muestreo":
   [
     {
@@ -26,6 +33,10 @@
       "municipio":"Zapotlanejo",
       "id_localidad":141240001,
       "localidad":"Zapotlanejo",
+      "id_clase_punto":1,
+      "id_tipo_muestreo":1,
+      "frecuencia_muestreo":0,
+      "activo":1,
       "lat":23.123456,
       "lng":-103.654321
     },
@@ -37,6 +48,10 @@
       "municipio":"Zapotlanejo",
       "id_localidad":141240001,
       "localidad":"Zapotlanejo",
+      "id_clase_punto":1,
+      "id_tipo_muestreo":1,
+      "frecuencia_muestreo":0,
+      "activo":1,
       "lat":23.123456,
       "lng":-103.654321
     },
@@ -48,6 +63,10 @@
       "municipio":"Zapotlanejo",
       "id_localidad":141240001,
       "localidad":"Zapotlanejo",
+      "id_clase_punto":1,
+      "id_tipo_muestreo":1,
+      "frecuencia_muestreo":0,
+      "activo":1,
       "lat":23.123456,
       "lng":-103.654321
     },
@@ -59,11 +78,41 @@
       "municipio":"Zapotlanejo",
       "id_localidad":141240001,
       "localidad":"Zapotlanejo",
+      "id_clase_punto":1,
+      "id_tipo_muestreo":1,
+      "frecuencia_muestreo":0,
+      "activo":1,
       "lat":23.123456,
       "lng":-103.654321
     }
   ],
-
+  "cliente":
+  {
+    "id_cliente":1,
+    "id_organismo":1,
+    "cliente":"CEA Jalisco",
+    "area":"Dirección de Operación de PTAR'S",
+    "rfc":"Registro Federal de Contribuyentes",
+    "calle":"Av. Brasilia",
+    "numero":"2970",
+    "colonia":"Col. Colomos Providencia",
+    "cp":"44680",
+    "id_estado":14,
+    "id_municipio":14039,
+    "municipio":"Guadalajara",
+    "id_localidad":140390001,
+    "localidad":"Guadalajara",
+    "tel":"3030-9350 ext. 8370",
+    "fax":"",
+    "contacto":"Biol. Luis Aceves Martínez",
+    "puesto_contacto":"puesto contacto",
+    "email":"laceves@ceajalisco.gob.mx",
+    "fecha_act":"2014-11-23",
+    "interno":1,
+    "cea":1,
+    "tasa":0,
+    "activo":1
+  },
   "orden_muestreo":
   {
     "id_orden_muestreo":1,
@@ -905,19 +954,5 @@
     "id_objetivo_plan":2,
     "objetivo_plan":"Puntos concertados con el cliente",
     "activo":1
-  },
-  "ubicacion_muestreo":
-  {
-    "id_ubicacion_muestreo":1,
-    "id_cliente":1,
-    "calle":"Av. Brasilia",
-    "numero":"2970",
-    "colonia":"Col. Colomos Providencia",
-    "id_estado":14,
-    "id_municipio":14039,
-    "municipio":"Guadalajara",
-    "id_localidad":140390001,
-    "localidad":"Guadalajara",
-    "tel":"3030-9350 ext. 8370"
   }
 }

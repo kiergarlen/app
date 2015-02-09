@@ -8,6 +8,9 @@
     "id_localidad":141240001,
     "localidad":"Zapotlanejo",
     "id_clase_punto":1,
+    "id_tipo_muestreo":1,
+    "frecuencia_muestreo":0,
+    "activo":1,
     "lat":23.123456,
     "lng":-103.654321
   },
@@ -20,6 +23,9 @@
     "id_localidad":141240001,
     "localidad":"Zapotlanejo",
     "id_clase_punto":1,
+    "id_tipo_muestreo":1,
+    "frecuencia_muestreo":0,
+    "activo":1,
     "lat":23.123456,
     "lng":-103.654321
   },
@@ -32,6 +38,9 @@
     "id_localidad":141240001,
     "localidad":"Zapotlanejo",
     "id_clase_punto":1,
+    "id_tipo_muestreo":1,
+    "frecuencia_muestreo":0,
+    "activo":1,
     "lat":23.123456,
     "lng":-103.654321
   },
@@ -44,6 +53,9 @@
     "id_localidad":141240001,
     "localidad":"Zapotlanejo",
     "id_clase_punto":1,
+    "id_tipo_muestreo":1,
+    "frecuencia_muestreo":0,
+    "activo":1,
     "lat":23.123456,
     "lng":-103.654321
   }

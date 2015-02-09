@@ -30,46 +30,6 @@
 				"url":"/muestreo/plan",
 				"label":"Plan Muestreo",
 				"activo":1
-			},
-			{
-				"id_submenu":27,
-				"id_menu":1,
-				"orden":4,
-				"url":"/muestreo/plan/verificacion",
-				"label":"Verificación Equipos",
-				"activo":1
-			},
-			{
-				"id_submenu":28,
-				"id_menu":1,
-				"orden":5,
-				"url":"/muestreo/plan/recipientes",
-				"label":"Recipientes",
-				"activo":1
-			},
-			{
-				"id_submenu":29,
-				"id_menu":1,
-				"orden":6,
-				"url":"/muestreo/plan/reactivos",
-				"label":"Reactivos",
-				"activo":1
-			},
-			{
-				"id_submenu":30,
-				"id_menu":1,
-				"orden":6,
-				"url":"/muestreo/plan/materiales",
-				"label":"Materiales",
-				"activo":1
-			},
-			{
-				"id_submenu":31,
-				"id_menu":1,
-				"orden":6,
-				"url":"/muestreo/plan/hieleras",
-				"label":"Hieleras",
-				"activo":1
 			}
 		]
 	},
@@ -95,14 +55,6 @@
 				"orden":1,
 				"url":"/recepcion/muestra",
 				"label":"Recepción Muestras",
-				"activo":1
-			},
-			{
-				"id_submenu":6,
-				"id_menu":2,
-				"orden":3,
-				"url":"/recepcion/trabajo",
-				"label":"Orden Trabajo",
 				"activo":1
 			},
 			{

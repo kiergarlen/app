@@ -25,27 +25,37 @@ function FieldSheetController(CloudService, WindService, WaveService,
   vm.fieldParameters = FieldParameterService.query();
   vm.preservations = PreservationService.query();
 
-  vm.temp_1 = 0;
-  vm.temp_2 = 0;
-  vm.temp_3 = 0;
+  vm.temp1 = 0;
+  vm.temp2 = 0;
+  vm.temp3 = 0;
   vm.temp = 0;
-  vm.ph_1 = 0;
-  vm.ph_2 = 0;
-  vm.ph_3 = 0;
+  vm.tempAmb1 = 0;
+  vm.tempAmb2 = 0;
+  vm.tempAmb3 = 0;
+  vm.tempAmb = 0;
+  vm.ph1 = 0;
+  vm.ph2 = 0;
+  vm.ph3 = 0;
   vm.ph = 0;
-  vm.cond_1 = 0;
-  vm.cond_2 = 0;
-  vm.cond_3 = 0;
+  vm.cond1 = 0;
+  vm.cond2 = 0;
+  vm.cond3 = 0;
   vm.cond = 0;
-  vm.od_1 = 0;
-  vm.od_2 = 0;
-  vm.od_3 = 0;
+  vm.od1 = 0;
+  vm.od2 = 0;
+  vm.od3 = 0;
   vm.od = 0;
+  vm.cr1 = 0;
+  vm.cr2 = 0;
+  vm.cr3 = 0;
+  vm.cr = 0;
 
   vm.tempAvg = tempAvg;
+  vm.tempAmbAvg = tempAmbAvg;
   vm.phAvg = phAvg;
   vm.condAvg = condAvg;
   vm.odAvg = odAvg;
+  vm.crAvg = crAvg;
 
   vm.selectCloudCover = selectCloudCover;
   vm.selectWindDirection = selectWindDirection;
@@ -86,38 +96,56 @@ function FieldSheetController(CloudService, WindService, WaveService,
 
   function tempAvg(){
     vm.temp = averageFromArray([
-      vm.temp_1,
-      vm.temp_2,
-      vm.temp_3
+      vm.temp1,
+      vm.temp2,
+      vm.temp3
     ]);
     return vm.temp;
   }
 
+  function tempAmbAvg(){
+    vm.tempAmb = averageFromArray([
+      vm.tempAmb1,
+      vm.tempAmb2,
+      vm.tempAmb3
+    ]);
+    return vm.tempAmb;
+  }
+
   function phAvg() {
     vm.ph = averageFromArray([
-      vm.ph_1,
-      vm.ph_2,
-      vm.ph_3
+      vm.ph1,
+      vm.ph2,
+      vm.ph3
     ]);
     return vm.ph;
   }
 
   function condAvg() {
     vm.cond = averageFromArray([
-      vm.cond_1,
-      vm.cond_2,
-      vm.cond_3
+      vm.cond1,
+      vm.cond2,
+      vm.cond3
     ]);
     return vm.cond;
   }
 
   function odAvg() {
     vm.od = averageFromArray([
-      vm.od_1,
-      vm.od_2,
-      vm.od_3
+      vm.od1,
+      vm.od2,
+      vm.od3
     ]);
     return vm.od;
+  }
+
+  function crAvg() {
+    vm.cr = averageFromArray([
+      vm.cr1,
+      vm.cr2,
+      vm.cr3
+    ]);
+    return vm.cr;
   }
 
   function selectCloudCover(idCloud) {

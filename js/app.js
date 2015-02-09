@@ -96,40 +96,10 @@ function config($routeProvider) {
       controller: 'ContainersListController',
       controllerAs: 'containersList'
     }).
-    when('/muestreo/orden', {
-      templateUrl: 'partials/muestreo/orden.html',
-      controller: 'OrderController',
-      controllerAs: 'order'
-    }).
     when('/muestreo/plan', {
       templateUrl: 'partials/muestreo/plan.html',
       controller: 'PlanController',
       controllerAs: 'plan'
-    }).
-    when('/muestreo/plan/hieleras', {
-      templateUrl: 'partials/muestreo/plan/hieleras.html',
-      controller: 'PlanCoolersController',
-      controllerAs: 'planCoolers'
-    }).
-    when('/muestreo/plan/materiales', {
-      templateUrl: 'partials/muestreo/plan/materiales.html',
-      controller: 'PlanMaterialsController',
-      controllerAs: 'planMaterials'
-    }).
-    when('/muestreo/plan/reactivos', {
-      templateUrl: 'partials/muestreo/plan/reactivos.html',
-      controller: 'PlanSubstancesController',
-      controllerAs: 'planSubstances'
-    }).
-    when('/muestreo/plan/recipientes', {
-      templateUrl: 'partials/muestreo/plan/recipientes.html',
-      controller: 'PlanContainersController',
-      controllerAs: 'planContainers'
-    }).
-    when('/muestreo/plan/verificacion', {
-      templateUrl: 'partials/muestreo/plan/verificacion.html',
-      controller: 'PlanCheckController',
-      controllerAs: 'planCheck'
     }).
     when('/muestreo/solicitud', {
       templateUrl: 'partials/muestreo/solicitud.html',

@@ -185,6 +185,114 @@
       </textarea>
     </div>
   </div>
+
+  <div class="row">
+    <div class="col-xs-12">
+      <h4>Verificación</h4>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12">
+      <h5>Preservación</h5>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12 col-sm-6 col-md-4"
+      data-ng-repeat="preservation in custody.preservations">
+      <label>
+        <input type="checkbox"
+          value="{{preservation.selected}}">
+          {{preservation.clase_parametro}}
+      </label>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12">
+      <h5>Muestras vigentes</h5>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12 col-sm-6 col-md-4"
+      data-ng-repeat="expiration in custody.expirations">
+      <label>
+        <input type="checkbox"
+          value="{{expiration.selected}}">
+          {{expiration.clase_parametro}}
+      </label>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12">
+      <h5>Volúmenes requeridos</h5>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12 col-sm-6 col-md-4"
+      data-ng-repeat="volume in custody.volumes">
+      <label>
+        <input type="checkbox"
+          value="{{volume.selected}}">
+          {{volume.clase_parametro}}
+      </label>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12">
+      <h5>Recipientes adecuados</h5>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12 col-sm-6 col-md-4"
+      data-ng-repeat="container in custody.containers">
+      <label>
+        <input type="checkbox"
+          value="{{container.selected}}">
+          {{container.clase_parametro}}
+      </label>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12 col-sm-6 col-md-5 col-lg-5">
+      <label for="checkerSelect">
+        Responsable verificación
+      </label>
+      <select class="form-control"
+        id="checkerSelect"
+        name="checkerSelect"
+        required
+        data-ng-model="custody.custody.id_responsable_verificacion"
+        data-ng-change="custody.selectChecker()"
+        >
+        <option value="">
+          Seleccione una opción
+        </option>
+        <option data-ng-repeat="checker in custody.checkers"
+          value="{{checker.id_empleado}}">
+          {{checker.nombres}}
+          {{checker.ap}}
+          {{checker.am}}
+        </option>
+      </select>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12 col-sm-6 col-md-3">
+      <label for="verifyDate">Fecha verificación</label>
+      <input type="text"
+        class="form-control"
+        placeholder="aaaa-mm-dd"
+        id="verifyDate"
+        name="verifyDate"
+        required
+        data-ng-model="custody.custody.fecha_verificacion"
+        >
+    </div>
+  </div>
+
+
+
+
+
   <div class="row">
     <div class="col-xs-12">
       <label for="sampleCommentsText">

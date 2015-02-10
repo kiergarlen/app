@@ -2,9 +2,10 @@
 	{
 		"id_preservacion":1,
 		"id_clase_parametro":1,
-		"clase_parametro":"Físicoquimico",
+		"clase_parametro":"Fisicoquímico",
 		"clase_param":"FQ",
-		"preservacion":"Hielo, 4°C",
+		"preservacion":"Fisicoquímico",
+		"desc":"Hielo, 4°C",
 		"preservado":0,
 		"selected":false,
 		"activo":1
@@ -14,7 +15,8 @@
 		"id_clase_parametro":2,
 		"clase_parametro":"Oxígeno disuelto",
 		"clase_param":"OD",
-		"preservacion":"2 ml MnSo4 + 2 ml Álcali Ioduro + 2 ml H2So4",
+		"preservacion":"Oxígeno disuelto",
+		"desc":"2 ml MnSo4 + 2 ml Álcali Ioduro + 2 ml H2So4",
 		"preservado":0,
 		"selected":false,
 		"activo":1
@@ -24,7 +26,8 @@
 		"id_clase_parametro":3,
 		"clase_parametro":"Sustancias activas al azul de metileno",
 		"clase_param":"SAAM",
-		"preservacion":"H2SO4, 4°C, pH<2",
+		"preservacion":"Sustancias activas al azul de metileno",
+		"desc":"H2SO4, 4°C, pH<2",
 		"preservado":0,
 		"selected":false,
 		"activo":1
@@ -34,7 +37,8 @@
 		"id_clase_parametro":4,
 		"clase_parametro":"Fenoles",
 		"clase_param":"FEN",
-		"preservacion":"5ml H2SO4 + CuSO4, 4°C, pH<2",
+		"preservacion":"Fenoles",
+		"desc":"5ml H2SO4 + CuSO4, 4°C, pH<2",
 		"preservado":0,
 		"selected":false,
 		"activo":1
@@ -44,7 +48,8 @@
 		"id_clase_parametro":5,
 		"clase_parametro":"Dureza",
 		"clase_param":"DZA",
-		"preservacion":"HNO3, pH<2",
+		"preservacion":"Dureza",
+		"desc":"HNO3, pH<2",
 		"preservado":0,
 		"selected":false,
 		"activo":1
@@ -54,7 +59,8 @@
 		"id_clase_parametro":6,
 		"clase_parametro":"Sulfuros",
 		"clase_param":"Sulfuros",
-		"preservacion":"6.5 ml de Acetato de Zn 2N, NaOH 6N pH≥9, 4°C",
+		"preservacion":"Sulfuros",
+		"desc":"6.5 ml de Acetato de Zn 2N, NaOH 6N pH≥9, 4°C",
 		"preservado":0,
 		"selected":false,
 		"activo":1
@@ -62,9 +68,10 @@
 	{
 		"id_preservacion":7,
 		"id_clase_parametro":7,
-		"clase_parametro":"Físicoquimico 2",
+		"clase_parametro":"Fisicoquímico 2",
 		"clase_param":"FQ-2",
-		"preservacion":"H2SO4, 4°C, pH<2",
+		"preservacion":"Fisicoquímico 2",
+		"desc":"H2SO4, 4°C, pH<2",
 		"preservado":0,
 		"selected":false,
 		"activo":1
@@ -74,7 +81,8 @@
 		"id_clase_parametro":8,
 		"clase_parametro":"Grasas y aceites",
 		"clase_param":"GyA",
-		"preservacion":"HCL1:1, 4°C, pH<2",
+		"preservacion":"Grasas y aceites",
+		"desc":"HCL1:1, 4°C, pH<2",
 		"preservado":0,
 		"selected":false,
 		"activo":1
@@ -84,7 +92,8 @@
 		"id_clase_parametro":9,
 		"clase_parametro":"Metales pesados",
 		"clase_param":"MP",
-		"preservacion":"HNO3, pH<2",
+		"preservacion":"Metales pesados",
+		"desc":"HNO3, pH<2",
 		"preservado":0,
 		"selected":false,
 		"activo":1
@@ -94,7 +103,8 @@
 		"id_clase_parametro":10,
 		"clase_parametro":"Fenoles",
 		"clase_param":"Fenoles",
-		"preservacion":"CuSO4, pH<2 ",
+		"preservacion":"Fenoles",
+		"desc":"CuSO4, pH<2 ",
 		"preservado":0,
 		"selected":false,
 		"activo":1

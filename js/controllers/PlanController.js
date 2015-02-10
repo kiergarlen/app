@@ -5,18 +5,24 @@
  * @this {Object} $scope - Contenedor para el modelo, AngularJS
  * @param {Object} PlanObjectivesService - Proveedor de datos, Objetivos Plan muestreo
  * @param {Object} PointKindsService - Proveedor de datos, tipos Punto
+ * @param {Object} DistrictService - Proveedor de datos, Municipios
+ * @param {Object} CityService - Proveedor de datos, Localidades
  * @param {Object} PlanService - Proveedor de datos, Plan muestreo
  */
 function PlanController(PlanObjectivesService, PointKindsService,
+  DistrictService, CityService,
   PlanService) {
   var vm = this;
   vm.plan = PlanService.query();
   vm.objectives = PlanObjectivesService.query();
   vm.pointKinds = PointKindsService.query();
+  vm.districts = DistrictService.query();
+  vm.cities = CityService.query(vm.plan.id_municipio);
   vm.addPoints = addPoints;
 
   vm.selectObjective = selectObjective;
   vm.selectPointType = selectPointType;
+  vm.selectDistrict = selectDistrict;
 
   vm.selectSamplingSupervisor = selectSamplingSupervisor;
   vm.selectCollectingSupervisor = selectCollectingSupervisor;
@@ -48,6 +54,10 @@ function PlanController(PlanObjectivesService, PointKindsService,
 
   }
 
+  function selectDistrict() {
+    vm.cities = CityService.query(vm.plan.id_municipio);
+  }
+
   function selectSamplingSupervisor() {
 
   }
@@ -67,6 +77,7 @@ angular
   .controller('PlanController',
     [
       'PlanObjectivesService', 'PointKindsService',
+      'DistrictService', 'CityService',
       'PlanService',
       PlanController
     ]

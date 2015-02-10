@@ -149,27 +149,44 @@
         data-ng-model="plan.plan.colonia"
         >
     </div>
-    <div class="col-xs-12 col-sm-6">
-      <label for="municipioText">
+    <div class="col-xs-12 col-sm-8 col-md-7">
+      <label for="districtSelect">
         Municipio
       </label>
-      <input type="text" class="form-control"
-        id="municipioText"
-        name="municipioText"
-        placeholder="Municipio"
-        data-ng-model="plan.plan.municipio"
+      <select class="form-control"
+        id="districtSelect"
+        name="districtSelect"
+        required
+        data-ng-model="plan.plan.id_municipio"
+        data-ng-change="plan.plan.selectDistrict()"
         >
+        <option value="">
+          Seleccione una opción
+        </option>
+        <option data-ng-repeat="district in plan.districts"
+          value="{{district.id_municipio}}">
+          {{district.municipio}}
+        </option>
+      </select>
     </div>
-    <div class="col-xs-12 col-sm-6">
-      <label for="localidadText">
+    <div class="col-xs-12 col-sm-8 col-md-7">
+      <label for="citySelect">
         Localidad
       </label>
-      <input type="text" class="form-control"
-        id="localidadText"
-        name="localidadText"
-        placeholder="Localidad"
-        data-ng-model="plan.plan.localidad"
+      <select class="form-control"
+        id="citySelect"
+        name="citySelect"
+        required
+        data-ng-model="plan.plan.id_localidad"
         >
+        <option value="">
+          Seleccione una opción
+        </option>
+        <option data-ng-repeat="city in plan.cities"
+          value="{{city.id_localidad}}">
+          {{city.localidad}}
+        </option>
+      </select>
     </div>
   </div>
   <div class="row">
@@ -178,18 +195,6 @@
     </div>
   </div>
   <div class="row">
-    <div class="col-xs-12 col-sm-4">
-      <label for="pointsQuantity">Cantidad de puntos</label>
-      <input type="text"
-        class="form-control"
-        placeholder="Cantidad de puntos"
-        id="pointsQuantity"
-        name="pointsQuantity"
-        readonly="readonly"
-        data-ng-model="plan.plan.puntos_muestreo.length"
-        >
-        <br>
-    </div>
     <div class="col-xs-12">
       <button class="btn btn-default" type="button"
         id="addPointsButton"
@@ -199,12 +204,22 @@
         Agregar puntos de muestreo</button>
     </div>
   </div>
+  <div class="row">
+    <div class="col-xs-12">
+      Cantidad de puntos:
+      <strong>
+      {{plan.plan.puntos_muestreo.length}}
+      </strong>
+      <br>
+    </div>
+  </div>
   <div class="row"
     data-ng-repeat="point in plan.plan.puntos_muestreo">
     <div class="col-xs-12 col-sm-4">
-      <label>Tipo de muestreo
-      {{point.id_tipo_muestreo}}
-      </label>
+      <strong>{{point.punto_muestreo}}</strong>
+    </div>
+    <div class="col-xs-12 col-sm-4">
+      <label>Tipo de muestreo</label>
       <div class="radio">
         <label>
           <input type="radio"

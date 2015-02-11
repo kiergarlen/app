@@ -537,44 +537,36 @@
       </select>
     </div>
   </div>
-
-  <div class="row">
-    <div class="col-xs-12 col-sm-6 col-md-7 col-lg-7">
-      <label class="sr-only" for="objectiveText">
-        En caso de otro, especificar
-      </label>
-      <input type="text" class="form-control"
-        id="objectiveText"
-        name="objectiveText"
-        placeholder="En caso de otro, especificar"
-        data-ng-model="plan.plan.objetivo_otro"
-        >
-    </div>
-  </div>
   <div class="row">
     <div class="col-xs-12">
       <h5>Recipientes</h5>
     </div>
   </div>
-  <div class="row"
-    data-ng-repeat="preservation in custody.preservations">
-    <div class="col-xs-12 col-sm-6 col-md-3">
-      <label>
-        <input type="checkbox"
-          value="{{preservation.selected}}">
-          {{preservation.preservacion}}
-      </label>
-    </div>
-    <div class="col-xs-12 col-sm-6 col-md-3">
-      <label for="containerQuantity{{preservation.id_preservacion}}">Cantidad</label>
-      <input type="text"
-        class="form-control"
-        placeholder="0"
-        id="containerQuantity{{preservation.id_preservacion}}"
-        name="containerQuantity{{preservation.id_preservacion}}"
-        data-ng-model="preservation.cant"
-        >
-    </div>
+  <div class="row">
+    <div class="col-xs-12 col-sm-6"
+      data-ng-repeat="preservation in plan.preservations">
+      <div class="row">
+        <div class="col-xs-9">
+          <label>
+            <input type="checkbox"
+              value="{{preservation.selected}}">
+              {{preservation.preservacion}}
+          </label>
+        </div>
+        <div class="col-xs-3">
+          <label
+            for="containerQuantity{{preservation.id_preservacion}}"
+            class="sr-only"
+            >Cantidad
+          </label>
+          <input type="text"
+            class="form-control"
+            placeholder="0"
+            id="containerQuantity{{preservation.id_preservacion}}"
+            name="containerQuantity{{preservation.id_preservacion}}"
+            data-ng-model="preservation.cant"
+            >
+        </div>
     </div>
   </div>
   <div class="row">
@@ -598,9 +590,9 @@
           Seleccione una opción
         </option>
         <option
-          data-ng-repeat="chemist in plan.plan.chemists"
-          value="{{chemist.id_encargado_reactivos}}">
-          {{chemist.encargado_reactivos}}
+          data-ng-repeat="chemist in plan.plan.reactiveSupervisors"
+          value="{{reactiveSupervisor.id_encargado_reactivos}}">
+          {{reactiveSupervisor.encargado_reactivos}}
         </option>
       </select>
     </div>

@@ -7,7 +7,7 @@
  */
 function PointsListController(PointsListService) {
   var vm = this;
-  vm.clients = PointsListService.query();
+  vm.points = PointsListService.query();
   vm.selectRow = selectRow;
 
   function selectRow() {

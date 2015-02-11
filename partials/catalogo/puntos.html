@@ -44,17 +44,20 @@
             <tr
               data-ng-repeat="item in pointsList.points |
               filter:pointsList.filter.$"
-              id="priceId{{item.id_punto}}"
+              id="priceId{{item.id_punto_muestreo}}"
               data-ng-click="pointsList.selectRow()"
               >
               <td>
-               {{item.clave}}
+               {{item.punto_muestreo}}
               </td>
               <td>
                 {{item.descripcion}}
               </td>
               <td>
+                Latitud:
                 {{item.lat}}
+                <br>
+                Longitud:
                 {{item.lng}}
               </td>
             </tr>

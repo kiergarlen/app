@@ -6,7 +6,7 @@
  * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
  */
 function PointsListService($resource) {
-  return $resource('models/points_list.json', {}, {
+  return $resource('models/points.json', {}, {
     query: {method:'GET', params:{}, isArray:true}
   });
 }

@@ -5,6 +5,7 @@
     "siglas":"FQ",
     "fecha_act":"2014-11-30",
     "receptora":1,
+    "responsable":"Responsable Fisicoquímico",
     "selected":false,
     "activo":1
   },
@@ -14,6 +15,7 @@
     "siglas":"MP",
     "fecha_act":"2014-11-30",
     "receptora":1,
+    "responsable":"Responsable Metales Pesados",
     "selected":false,
     "activo":1
   },
@@ -23,6 +25,7 @@
     "siglas":"MB",
     "fecha_act":"2014-11-30",
     "receptora":1,
+    "responsable":"Responsable Microbiología",
     "selected":false,
     "activo":1
   },
@@ -32,6 +35,7 @@
     "siglas":"MU",
     "fecha_act":"2014-11-30",
     "receptora":0,
+    "responsable":"Responsable Muestreo",
     "selected":false,
     "activo":1
   },
@@ -41,6 +45,7 @@
     "siglas":"AD",
     "fecha_act":"2014-11-30",
     "receptora":0,
+    "responsable":"Responsable Administrativo",
     "selected":false,
     "activo":1
   }

@@ -8,10 +8,12 @@
  * @param {Object} DistrictService - Proveedor de datos, Municipios
  * @param {Object} CityService - Proveedor de datos, Localidades
  * @param {Object} PreservationService - Proveedor de datos, Preservaciones
+ * @param {Object} ReactivesListService - Proveedor de datos, lista Reactivos
  * @param {Object} PlanService - Proveedor de datos, Plan muestreo
  */
 function PlanController(PlanObjectivesService, PointKindsService,
   DistrictService, CityService, PreservationService,
+  ReactivesListService,
   PlanService) {
   var vm = this;
   vm.plan = PlanService.query();
@@ -20,6 +22,7 @@ function PlanController(PlanObjectivesService, PointKindsService,
   vm.districts = DistrictService.query();
   vm.cities = CityService.query(vm.plan.id_municipio);
   vm.preservations = PreservationService.query();
+  vm.reactives = ReactivesListService.query();
   vm.addPoints = addPoints;
 
   vm.selectObjective = selectObjective;
@@ -80,6 +83,7 @@ angular
     [
       'PlanObjectivesService', 'PointKindsService',
       'DistrictService', 'CityService', 'PreservationService',
+      'ReactivesListService',
       'PlanService',
       PlanController
     ]

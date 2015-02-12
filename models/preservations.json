@@ -8,7 +8,7 @@
 		"desc":"Hielo, 4°C",
 		"preservado":0,
 		"selected":false,
-		"cant":0,
+		"cantidad":0,
 		"activo":1
 	},
 	{
@@ -20,7 +20,7 @@
 		"desc":"2 ml MnSo4 + 2 ml Álcali Ioduro + 2 ml H2So4",
 		"preservado":0,
 		"selected":false,
-		"cant":0,
+		"cantidad":0,
 		"activo":1
 	},
 	{
@@ -32,7 +32,7 @@
 		"desc":"H2SO4, 4°C, pH<2",
 		"preservado":0,
 		"selected":false,
-		"cant":0,
+		"cantidad":0,
 		"activo":1
 	},
 	{
@@ -44,7 +44,7 @@
 		"desc":"5ml H2SO4 + CuSO4, 4°C, pH<2",
 		"preservado":0,
 		"selected":false,
-		"cant":0,
+		"cantidad":0,
 		"activo":1
 	},
 	{
@@ -56,7 +56,7 @@
 		"desc":"HNO3, pH<2",
 		"preservado":0,
 		"selected":false,
-		"cant":0,
+		"cantidad":0,
 		"activo":1
 	},
 	{
@@ -68,7 +68,7 @@
 		"desc":"6.5 ml de Acetato de Zn 2N, NaOH 6N pH≥9, 4°C",
 		"preservado":0,
 		"selected":false,
-		"cant":0,
+		"cantidad":0,
 		"activo":1
 	},
 	{
@@ -80,7 +80,7 @@
 		"desc":"H2SO4, 4°C, pH<2",
 		"preservado":0,
 		"selected":false,
-		"cant":0,
+		"cantidad":0,
 		"activo":1
 	},
 	{
@@ -92,7 +92,7 @@
 		"desc":"HCL1:1, 4°C, pH<2",
 		"preservado":0,
 		"selected":false,
-		"cant":0,
+		"cantidad":0,
 		"activo":1
 	},
 	{
@@ -104,7 +104,7 @@
 		"desc":"HNO3, pH<2",
 		"preservado":0,
 		"selected":false,
-		"cant":0,
+		"cantidad":0,
 		"activo":1
 	},
 	{
@@ -116,7 +116,7 @@
 		"desc":"CuSO4, pH<2 ",
 		"preservado":0,
 		"selected":false,
-		"cant":0,
+		"cantidad":0,
 		"activo":1
 	}
 ]

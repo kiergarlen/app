@@ -20,6 +20,14 @@ bgred {
   border-bottom: 1px solid #eee;
 }
 
+.framed-item {
+  position: relative;
+  display: block;
+  padding: 10px 15px;
+  margin-bottom: -1px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+}
 /*
  * Top navigation
  * Hide default border to remove 1px line.

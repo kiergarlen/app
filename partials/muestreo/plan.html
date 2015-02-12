@@ -21,12 +21,6 @@
           <li data-ng-show="plan.fecha_plan.length > 0">
             Fecha actual:
             {{plan.plan.fecha_plan}}</li>
-          <li data-ng-show="plan.orden_muestreo.fecha_captura.length > 0">
-            Fecha orden:
-            {{plan.plan.orden_muestreo.fecha_captura}}</li>
-          <li data-ng-show="plan.fecha_solicitud.length > 0">
-            Fecha solicitud:
-            {{plan.plan.solicitud.fecha_solicitud}}</li>
           <li data-ng-show="plan.fecha_captura.length > 0">
             Fecha captura:
             {{plan.plan.fecha_captura}}</li>
@@ -38,7 +32,7 @@
             {{plan.plan.fecha_actualizacion}}</li>
         </ul>
         <span class="text-info"
-          data-ng-show="plan.validado > 0">Validada</span>
+          data-ng-show="plan.plan.validado > 0">Validada</span>
       </div>
     </div>
   </div>
@@ -87,7 +81,6 @@
         name="objectiveSelect"
         required
         data-ng-model="plan.plan.id_objetivo_plan"
-        data-ng-change="plan.plan.selectObjective()"
         >
         <option value="">
           Seleccione una opción
@@ -127,7 +120,7 @@
         data-ng-model="plan.plan.calle"
         >
     </div>
-    <div class="col-xs-12 col-sm-6 col-md-4">
+    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
       <label for="numeroText">
         Número exterior
       </label>
@@ -199,7 +192,7 @@
       <button class="btn btn-default" type="button"
         id="addPointsButton"
         name="addPointsButton"
-        data-mg-click="plan.addPoints()"
+        data-ng-click="plan.addPoints()"
         >
         Agregar puntos de muestreo</button>
     </div>
@@ -210,6 +203,7 @@
       <strong>
       {{plan.plan.puntos_muestreo.length}}
       </strong>
+      <br>
       <br>
     </div>
   </div>
@@ -247,7 +241,7 @@
         id="samplingFrequency{{point.id_punto_muestreo}}"
         name="samplingFrequency{{point.id_punto_muestreo}}"
         data-ng-disabled="point.id_tipo_muestreo < 2"
-        data-ng-model="point.frecuencia_muestreo"
+        data-ng-model="point.frecuencia"
         >
         <option value="0">
           0
@@ -270,11 +264,13 @@
     </div>
   </div>
   <div class="row"
-    data-ng-show="plan.order.responsable_muestreo.responsable"
+    data-ng-show="plan.plan.orden_muestreo.supervisor_muestreo"
     >
     <div class="col-xs-12">
       <h5>Responsable muestreo <small>(Orden de muestreo)</small></h5>
-      {{plan.plan.order.responsable_muestreo.responsable}}
+      {{plan.plan.orden_muestreo.supervisor_muestreo.nombres}}
+      {{plan.plan.orden_muestreo.supervisor_muestreo.ap}}
+      {{plan.plan.orden_muestreo.supervisor_muestreo.am}}
     </div>
   </div>
   <div class="row">
@@ -291,8 +287,7 @@
         id="samplingSupervisorSelect"
         name="samplingSupervisorSelect"
         required
-        data-ng-model="plan.plan.id_responsable_muestreo"
-        data-ng-change="plan.plan.selectSamplingSupervisor()"
+        data-ng-model="plan.plan.id_supervisor_muestreo"
         >
         <option value="">
           Seleccione una opción
@@ -300,7 +295,7 @@
         <option
           data-ng-repeat="samplingSupervisor in plan.plan.samplingSupervisors"
           value="{{samplingSupervisor.id_empleado}}">
-          {{samplingSupervisor.responsable_muestreo}}
+          {{samplingSupervisor.supervisor_muestreo}}
         </option>
       </select>
     </div>
@@ -312,7 +307,7 @@
         id="samplingSupervisorCompanion"
         name="samplingSupervisorCompanion"
         placeholder="Acompañante muestreo y entrega"
-        data-ng-model="plan.plan.samplingSupervisorCompanion"
+        data-ng-model="plan.plan.asistente_muestreo"
         >
     </div>
   </div>
@@ -330,16 +325,15 @@
         id="collectingSupervisorSelect"
         name="collectingSupervisorSelect"
         required
-        data-ng-model="plan.plan.id_responsable_recoleccion"
-        data-ng-change="plan.plan.selectCollectingSupervisor()"
+        data-ng-model="plan.plan.id_supervisor_recoleccion"
         >
         <option value="">
           Seleccione una opción
         </option>
         <option
           data-ng-repeat="collectingSupervisor in plan.plan.collectingSupervisors"
-          value="{{collectingSupervisor.id_responsable_recoleccion}}">
-          {{collectingSupervisor.responsable_recoleccion}}
+          value="{{collectingSupervisor.id_empleado}}">
+          {{collectingSupervisor.supervisor_recoleccion}}
         </option>
       </select>
     </div>
@@ -351,7 +345,7 @@
         id="collectingSupervisorCompanion"
         name="collectingSupervisorCompanion"
         placeholder="Acompañante recolección"
-        data-ng-model="plan.plan.collectingSupervisorCompanion"
+        data-ng-model="plan.plan.asistente_recoleccion"
         >
     </div>
   </div>
@@ -369,16 +363,15 @@
         id="loggingSupervisorSelect"
         name="loggingSupervisorSelect"
         required
-        data-ng-model="plan.plan.id_responsable_registro"
-        data-ng-change="plan.plan.selectLoggingSupervisor()"
+        data-ng-model="plan.plan.id_supervisor_registro"
         >
         <option value="">
           Seleccione una opción
         </option>
         <option
           data-ng-repeat="loggingSupervisor in plan.plan.loggingSupervisors"
-          value="{{loggingSupervisor.id_responsable_registro}}">
-          {{loggingSupervisor.responsable_registro}}
+          value="{{loggingSupervisor.id_empleado}}">
+          {{loggingSupervisor.supervisor_registro}}
         </option>
       </select>
     </div>
@@ -390,7 +383,7 @@
         id="loggingSupervisorCompanion"
         name="loggingSupervisorCompanion"
         placeholder="Acompañante registro"
-        data-ng-model="plan.plan.loggingSupervisorCompanion"
+        data-ng-model="plan.plan.asistente_registro"
         >
     </div>
   </div>
@@ -413,25 +406,31 @@
         id="calibratorSelect"
         name="calibratorSelect"
         required
-        data-ng-model="plan.plan.id_encargado_calibracion"
-        data-ng-change="plan.plan.selectCalibrator()"
+        data-ng-model="plan.plan.id_supervisor_calibracion"
         >
         <option value="">
           Seleccione una opción
         </option>
         <option
           data-ng-repeat="calibrator in plan.plan.calibrators"
-          value="{{calibrator.id_encargado_calibracion}}">
-          {{calibrator.encargado_calibracion}}
+          value="{{calibrator.id_empleado}}">
+          {{calibrator.supervisor_calibracion}}
         </option>
       </select>
     </div>
   </div>
-
   <div class="row">
-    <div class="col-xs-12">
-      <label for="calibrationDate">Fecha de calibración</label>
-      <input type="text" placeholder="Fecha de calibración" id="calibrationDate">
+    <div class="col-xs-12 col-sm-6">
+      <label for="calibrationDate">
+        Fecha de calibración
+      </label>
+      <input type="text" class="form-control"
+        id="calibrationDate"
+        name="calibrationDate"
+        placeholder="aaaa-mm-dd"
+        data-ng-model="plan.plan.fecha_calibracion"
+        >
+      <br>
     </div>
   </div>
   <div class="row">
@@ -439,76 +438,26 @@
       <button class="btn btn-default" type="button"
         id="addEquipmentButton"
         name="addEquipmentButton"
-        data-mg-click="plan.addEquipment()"
+        data-ng-click="plan.addEquipment()"
         >
         Agregar Equipo</button>
     </div>
   </div>
-  <!--
   <div class="row">
-    <div class="col-xs-4">
-      <label for="equipmentInventory1">Inventario IE-MU </label>
-      <input type="text" placeholder="01" id="equipmentInventory1">
+    <div class="col-xs-12 col-sm-4"
+      data-ng-repeat="equipment in plan.equipments">
+      Equipo:
+      {{equipment.descripcion}}
+      <br>
+      Inventario:
+      {{equipment.inventario}}
+      Bitácora:
+      {{equipment.bitacora}}
+      Folio:
+      {{equipment.folio}}
+      <br>
     </div>
-    <div class="col-xs-4">
-      <label for="equipmentLog2">Bitácora BR-MU </label>
-      <input type="text" placeholder="01" id="equipmentLog1">
-    </div>
-    <div class="col-xs-4">
-      <label for="equipmentKey2">Folio</label>
-      <input type="text" placeholder="01" id="equipmentKey1">
-    </div>
-    <div class="col-xs-4">
-      <label for="equipmentInventory2">Inventario IE-MU </label>
-      <input type="text" placeholder="02" id="equipmentInventory2">
-    </div>
-    <div class="col-xs-4">
-      <label for="equipmentLog3">Bitácora BR-MU </label>
-      <input type="text" placeholder="02" id="equipmentLog2">
-    </div>
-    <div class="col-xs-4">
-      <label for="equipmentKey3">Folio</label>
-      <input type="text" placeholder="02" id="equipmentKey2">
-    </div>
-    <div class="col-xs-4">
-      <label for="equipmentInventory3">Inventario IE-MU </label>
-      <input type="text" placeholder="03" id="equipmentInventory3">
-    </div>
-    <div class="col-xs-4">
-      <label for="equipmentLog4">Bitácora BR-MU </label>
-      <input type="text" placeholder="03" id="equipmentLog3">
-    </div>
-    <div class="col-xs-4">
-      <label for="equipmentKey4">Folio</label>
-      <input type="text" placeholder="03" id="equipmentKey3">
-    </div>
-    <div class="col-xs-4">
-      <label for="equipmentInventory4">Inventario IE-MU </label>
-      <input type="text" placeholder="04" id="equipmentInventory4">
-    </div>
-    <div class="col-xs-4">
-      <label for="equipmentLog5">Bitácora BR-MU </label>
-      <input type="text" placeholder="04" id="equipmentLog4">
-    </div>
-    <div class="col-xs-4">
-      <label for="equipmentKey5">Folio</label>
-      <input type="text" placeholder="04" id="equipmentKey4">
-    </div>
-    <div class="col-xs-4">
-      <label for="equipmentInventory5">Inventario IE-MU </label>
-      <input type="text" placeholder="05" id="equipmentInventory5">
-    </div>
-    <div class="col-xs-4">
-      <label for="equipmentLog5">Bitácora BR-MU </label>
-      <input type="text" placeholder="05" id="equipmentLog5">
-    </div>
-    <div class="col-xs-4">
-      <label for="equipmentKey5">Folio</label>
-      <input type="text" placeholder="05" id="equipmentKey5">
-    </div>
-  </div
-  -->
-
+  </div>
   <div class="row">
     <div class="col-xs-12">
       <h5>Preparación de recipientes</h5>
@@ -523,16 +472,15 @@
         id="preparationSupervisorSelect"
         name="preparationSupervisorSelect"
         required
-        data-ng-model="plan.id_encargado_recipientes"
-        data-ng-change="plan.selectPreparationSupervisor()"
+        data-ng-model="plan.id_supervisor_recipientes"
         >
         <option value="">
           Seleccione una opción
         </option>
         <option
           data-ng-repeat="preparationSupervisor in plan.preparationSupervisors"
-          value="{{preparationSupervisor.id_encargado_recipientes}}">
-          {{preparationSupervisor.encargado_recipientes}}
+          value="{{preparationSupervisor.id_supervisor_recipientes}}">
+          {{preparationSupervisor.supervisor_recipientes}}
         </option>
       </select>
     </div>
@@ -544,29 +492,29 @@
   </div>
   <div class="row">
     <div class="col-xs-12 col-sm-6"
-      data-ng-repeat="preservation in plan.preservations">
+      data-ng-repeat="container in plan.containers">
       <div class="row">
-        <div class="col-xs-9">
+        <div class="col-xs-7">
           <label>
             <input type="checkbox"
-              value="{{preservation.selected}}">
-              {{preservation.preservacion}}
+              value="{{container.selected}}">
+              {{container.preservacion}}
           </label>
         </div>
-        <div class="col-xs-3">
+        <div class="col-xs-5">
           <label
-            for="containerQuantity{{preservation.id_preservacion}}"
-            class="sr-only"
+            for="containerQuantity{{container.id_preservacion}}"
             >Cantidad
           </label>
           <input type="text"
             class="form-control"
             placeholder="0"
-            id="containerQuantity{{preservation.id_preservacion}}"
-            name="containerQuantity{{preservation.id_preservacion}}"
-            data-ng-model="preservation.cantidad"
+            id="containerQuantity{{container.id_preservacion}}"
+            name="containerQuantity{{container.id_preservacion}}"
+            data-ng-model="container.cantidad"
             >
         </div>
+      </div>
     </div>
   </div>
   <div class="row">
@@ -583,16 +531,15 @@
         id="reactiveSupervisorSelect"
         name="reactiveSupervisorSelect"
         required
-        data-ng-model="plan.id_encargado_reactivos"
-        data-ng-change="plan.selectReactiveSupervisor()"
+        data-ng-model="plan.id_supervisor_reactivos"
         >
         <option value="">
           Seleccione una opción
         </option>
         <option
           data-ng-repeat="reactiveSupervisor in plan.reactiveSupervisors"
-          value="{{reactiveSupervisor.id_encargado_reactivos}}">
-          {{reactiveSupervisor.encargado_reactivos}}
+          value="{{reactiveSupervisor.id_supervisor_reactivos}}">
+          {{reactiveSupervisor.supervisor_reactivos}}
         </option>
       </select>
     </div>
@@ -601,18 +548,22 @@
     <div class="col-xs-12 col-sm-6"
       data-ng-repeat="reactive in plan.reactives">
       <div class="row">
-        <div class="col-xs-8">
-          <label>
+        <div class="col-xs-12 col-sm-4">
+          <label
+            for="reactiveSelect{{reactive.id_reactivo}}"
+            >
+            {{reactive.reactivo}}
             <input type="checkbox"
+              id="reactiveSelect{{reactive.id_reactivo}}"
+              name="reactiveSelect{{reactive.id_reactivo}}"
               value="{{reactive.selected}}">
-              {{reactive.reactivo}}
           </label>
         </div>
-        <div class="col-xs-2">
+        <div class="col-xs-12 col-sm-4">
           <label
             for="reactiveQuantity{{reactive.id_reactivo}}"
-            class="sr-only"
-            >Cantidad
+            >
+            Cantidad
           </label>
           <input type="text"
             class="form-control"
@@ -622,20 +573,21 @@
             data-ng-model="reactive.cantidad"
             >
         </div>
-        <div class="col-xs-2">
+        <div class="col-xs-12 col-sm-4">
           <label
             for="reactiveLot{{reactive.id_reactivo}}"
-            class="sr-only"
-            >Lote
+            >
+            Lote
           </label>
           <input type="text"
             class="form-control"
-            placeholder="0"
+            placeholder="Lote"
             id="reactiveLot{{reactive.id_reactivo}}"
             name="reactiveLot{{reactive.id_reactivo}}"
             data-ng-model="reactive.lote"
             >
         </div>
+      </div>
     </div>
   </div>
   <div class="row">
@@ -645,146 +597,147 @@
   </div>
   <div class="row">
     <div class="col-xs-12 col-sm-6 col-md-7 col-lg-7">
-      <label for="materialistSelect" class="sr-only">
+      <label for="materialsSupervisorSelect" class="sr-only">
         Encargado de preparación
       </label>
       <select class="form-control"
-        id="materialistSelect"
-        name="materialistSelect"
+        id="materialsSupervisorSelect"
+        name="materialsSupervisorSelect"
         required
-        data-ng-model="plan.plan.id_encargado_materiales"
-        data-ng-change="plan.plan.selectMaterialist()"
+        data-ng-model="plan.plan.id_supervisor_material"
         >
         <option value="">
           Seleccione una opción
         </option>
         <option
-          data-ng-repeat="materialist in plan.plan.materialists"
-          value="{{materialist.id_encargado_materiales}}">
-          {{materialist.encargado_materiales}}
+          data-ng-repeat="materialsSupervisor in plan.materialsSupervisors"
+          value="{{materialsSupervisor.id_supervisor_material}}">
+          {{materialsSupervisor.supervisor_materiales}}
         </option>
       </select>
     </div>
   </div>
   <div class="row">
-    <div class="col-xs-12 col-sm-6 col-md-3">
+    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3"
+      data-ng-repeat="material in plan.materials"
+      >
       <label>
-        <input type="checkbox" value="eq1"> Manual de Procedimientos
+        <input type="checkbox"
+          value="{{material.selected}}">
+          {{material.material}}
       </label>
     </div>
-    <div class="col-xs-12 col-sm-6 col-md-3">
-      <label>
-        <input type="checkbox" value="eq2"> Hoja de campo
+        <input type="checkbox"
+          value="{{plan.materials[2].selected}}">
+          Hoja de campo
       </label>
     </div>
-    <div class="col-xs-12 col-sm-6 col-md-3">
-      <label>
-        <input type="checkbox" value="eq3"> Bitácora
+        <input type="checkbox"
+          value="{{plan.materials[3].selected}}">
+          Bitácora
       </label>
     </div>
-    <div class="col-xs-12 col-sm-6 col-md-3">
-      <label>
-        <input type="checkbox" value="eq4"> Disco Sechi
+        <input type="checkbox"
+          value="{{plan.materials[4].selected}}">
+          Disco Sechi
       </label>
     </div>
-    <div class="col-xs-12 col-sm-6 col-md-3">
-      <label>
-        <input type="checkbox" value="eq5"> Draga
+        <input type="checkbox"
+          value="{{plan.materials[5].selected}}">
+          Draga
       </label>
     </div>
-    <div class="col-xs-12 col-sm-6 col-md-3">
-      <label>
-        <input type="checkbox" value="eq6"> Tamiz
+        <input type="checkbox"
+          value="{{plan.materials[6].selected}}">
+          Tamiz
       </label>
     </div>
-    <div class="col-xs-12 col-sm-6 col-md-3">
-      <label>
-        <input type="checkbox" value="eq7"> Medidor de temperatura
+        <input type="checkbox"
+          value="{{plan.materials[7].selected}}">
+          Termómetro
       </label>
     </div>
-    <div class="col-xs-12 col-sm-6 col-md-3">
-      <label>
-        <input type="checkbox" value="eq8"> Geoposicionador
+        <input type="checkbox"
+          value="{{plan.materials[8].selected}}">
+          Geoposicionador
       </label>
     </div>
-    <div class="col-xs-12 col-sm-6 col-md-3">
-      <label>
-        <input type="checkbox" value="eq9"> Tiras reactivas pH
+        <input type="checkbox"
+          value="{{plan.materials[9].selected}}">
+          Tiras reactivas pH
       </label>
     </div>
-    <div class="col-xs-12 col-sm-6 col-md-3">
-      <label>
-        <input type="checkbox" value="eq10"> Pipetas Pasteur
+        <input type="checkbox"
+          value="{{plan.materials[10].selected}}">
+          Pipetas Pasteur
       </label>
     </div>
-    <div class="col-xs-12 col-sm-6 col-md-3">
-      <label>
-        <input type="checkbox" value="eq11"> Termo
+        <input type="checkbox"
+          value="{{plan.materials[11].selected}}">
+          Termo
       </label>
     </div>
-    <div class="col-xs-12 col-sm-6 col-md-3">
-      <label>
-        <input type="checkbox" value="eq12"> Cubeta
+        <input type="checkbox"
+          value="{{plan.materials[12].selected}}">
+          Cubeta
       </label>
     </div>
-    <div class="col-xs-12 col-sm-6 col-md-3">
-      <label>
-        <input type="checkbox" value="eq13"> Marcadores
+        <input type="checkbox"
+          value="{{plan.materials[13].selected}}">
+          Marcadores
       </label>
     </div>
-    <div class="col-xs-12 col-sm-6 col-md-3">
-      <label>
-        <input type="checkbox" value="eq14"> Papel secante
+        <input type="checkbox"
+          value="{{plan.materials[14].selected}}">
+          Papel secante
       </label>
     </div>
-    <div class="col-xs-12 col-sm-6 col-md-3">
-      <label>
-        <input type="checkbox" value="eq15"> Pisetas
+        <input type="checkbox"
+          value="{{plan.materials[15].selected}}">
+          Pisetas
       </label>
     </div>
-    <div class="col-xs-12 col-sm-6 col-md-3">
-      <label>
-        <input type="checkbox" value="eq16"> Camara
+        <input type="checkbox"
+          value="{{plan.materials[16].selected}}">
+          Camara
       </label>
     </div>
-    <div class="col-xs-12 col-sm-6 col-md-3">
-      <label>
-        <input type="checkbox" value="eq17"> Guantes
+        <input type="checkbox"
+          value="{{plan.materials[17].selected}}">
+          Guantes
       </label>
     </div>
-    <div class="col-xs-12 col-sm-6 col-md-3">
-      <label>
-        <input type="checkbox" value="eq18"> Lentes de Protección
+        <input type="checkbox"
+          value="{{plan.materials[18].selected}}">
+          Lentes de Protección
       </label>
     </div>
-    <div class="col-xs-12 col-sm-6 col-md-3">
-      <label>
-        <input type="checkbox" value="eq19"> Chaleco salvavidas
+        <input type="checkbox"
+          value="{{plan.materials[19].selected}}">
+          Chaleco salvavidas
       </label>
     </div>
-    <div class="col-xs-12 col-sm-6 col-md-3">
-      <label>
-        <input type="checkbox" value="eq20"> Arnés
+        <input type="checkbox"
+          value="{{plan.materials[20].selected}}">
+          Arnés
       </label>
     </div>
-    <div class="col-xs-12 col-sm-6 col-md-3">
-      <label>
-        <input type="checkbox" value="eq21"> Cuerdas
+        <input type="checkbox"
+          value="{{plan.materials[21].selected}}">
+          Cuerdas
       </label>
     </div>
-    <div class="col-xs-12 col-sm-6 col-md-3">
-      <label>
-        <input type="checkbox" value="eq22"> Cubre bocas
+        <input type="checkbox"
+          value="{{plan.materials[22].selected}}">
+          Cubre bocas
       </label>
     </div>
-    <div class="col-xs-12 col-sm-6 col-md-3">
-      <label>
-        <input type="checkbox" value="eq23"> Casco
+        <input type="checkbox"
+          value="{{plan.materials[23].selected}}">
+          Casco
       </label>
     </div>
   </div>
-
-
   <div class="row">
     <div class="col-xs-12">
       <h5>Hieleras</h5>
@@ -799,124 +752,165 @@
         id="preservatorSelect"
         name="preservatorSelect"
         required
-        data-ng-model="plan.plan.id_encargado_hieleras"
-        data-ng-change="plan.plan.selectPreservator()"
+        data-ng-model="plan.plan.id_supervisor_hieleras"
         >
         <option value="">
           Seleccione una opción
         </option>
         <option
           data-ng-repeat="preservator in plan.plan.preservators"
-          value="{{preservator.id_encargado_hieleras}}">
-          {{preservator.encargado_hieleras}}
+          value="{{preservator.id_supervisor_hieleras}}">
+          {{preservator.supervisor_hieleras}}
         </option>
       </select>
     </div>
   </div>
   <div class="row">
-    <div class="col-xs-12 col-sm-6 col-md-3">
+    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
       <label>
-        <input type="checkbox" value="cooler1"> Hielera 1
+        <input type="checkbox"
+          value="{{plan.coolers[1].selected">
+          Hielera 1
       </label>
     </div>
-    <div class="col-xs-12 col-sm-6 col-md-3">
+    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
       <label>
-        <input type="checkbox" value="cooler2"> Hielera 2
+        <input type="checkbox"
+          value="{{plan.coolers[2].selected">
+          Hielera 2
       </label>
     </div>
-    <div class="col-xs-12 col-sm-6 col-md-3">
+    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
       <label>
-        <input type="checkbox" value="cooler3"> Hielera 3
+        <input type="checkbox"
+          value="{{plan.coolers[3].selected">
+          Hielera 3
       </label>
     </div>
-    <div class="col-xs-12 col-sm-6 col-md-3">
+    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
       <label>
-        <input type="checkbox" value="cooler4"> Hielera 4
+        <input type="checkbox"
+          value="{{plan.coolers[4].selected">
+          Hielera 4
       </label>
     </div>
-    <div class="col-xs-12 col-sm-6 col-md-3">
+    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
       <label>
-        <input type="checkbox" value="cooler5"> Hielera 5
+        <input type="checkbox"
+          value="{{plan.coolers[5].selected">
+          Hielera 5
       </label>
     </div>
-    <div class="col-xs-12 col-sm-6 col-md-3">
+    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
       <label>
-        <input type="checkbox" value="cooler6"> Hielera 6
+        <input type="checkbox"
+          value="{{plan.coolers[6].selected">
+          Hielera 6
       </label>
     </div>
-    <div class="col-xs-12 col-sm-6 col-md-3">
+    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
       <label>
-        <input type="checkbox" value="cooler7"> Hielera 7
+        <input type="checkbox"
+          value="{{plan.coolers[7].selected">
+          Hielera 7
       </label>
     </div>
-    <div class="col-xs-12 col-sm-6 col-md-3">
+    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
       <label>
-        <input type="checkbox" value="cooler8"> Hielera 8
+        <input type="checkbox"
+          value="{{plan.coolers[8].selected">
+          Hielera 8
       </label>
     </div>
-    <div class="col-xs-12 col-sm-6 col-md-3">
+    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
       <label>
-        <input type="checkbox" value="cooler9"> Hielera 9
+        <input type="checkbox"
+          value="{{plan.coolers[9].selected">
+          Hielera 9
       </label>
     </div>
-    <div class="col-xs-12 col-sm-6 col-md-3">
+    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
       <label>
-        <input type="checkbox" value="cooler10"> Hielera 10
+        <input type="checkbox"
+          value="{{plan.coolers[10].selected">
+          Hielera 10
       </label>
     </div>
-    <div class="col-xs-12 col-sm-6 col-md-3">
+    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
       <label>
-        <input type="checkbox" value="cooler11"> Hielera 11
+        <input type="checkbox"
+          value="{{plan.coolers[11].selected">
+          Hielera 11
       </label>
     </div>
-    <div class="col-xs-12 col-sm-6 col-md-3">
+    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
       <label>
-        <input type="checkbox" value="cooler12"> Hielera 12
+        <input type="checkbox"
+          value="{{plan.coolers[12].selected">
+          Hielera 12
       </label>
     </div>
-    <div class="col-xs-12 col-sm-6 col-md-3">
+    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
       <label>
-        <input type="checkbox" value="cooler13"> Hielera 13
+        <input type="checkbox"
+          value="{{plan.coolers[13].selected">
+          Hielera 13
       </label>
     </div>
-    <div class="col-xs-12 col-sm-6 col-md-3">
+    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
       <label>
-        <input type="checkbox" value="cooler14"> Hielera 14
+        <input type="checkbox"
+          value="{{plan.coolers[14].selected">
+          Hielera 14
       </label>
     </div>
-    <div class="col-xs-12 col-sm-6 col-md-3">
+    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
       <label>
-        <input type="checkbox" value="cooler15"> Hielera 15
+        <input type="checkbox"
+          value="{{plan.coolers[15].selected">
+          Hielera 15
       </label>
     </div>
-    <div class="col-xs-12 col-sm-6 col-md-3">
+    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
       <label>
-        <input type="checkbox" value="cooler16"> Hielera 16
+        <input type="checkbox"
+          value="{{plan.coolers[16].selected">
+          Hielera 16
       </label>
     </div>
-    <div class="col-xs-12 col-sm-6 col-md-3">
+    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
       <label>
-        <input type="checkbox" value="cooler17"> Hielera 17
+        <input type="checkbox"
+          value="{{plan.coolers[17].selected">
+          Hielera 17
       </label>
     </div>
-    <div class="col-xs-12 col-sm-6 col-md-3">
+    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
       <label>
-        <input type="checkbox" value="cooler18"> Hielera 18
+        <input type="checkbox"
+          value="{{plan.coolers[18].selected">
+          Hielera 18
       </label>
     </div>
-    <div class="col-xs-12 col-sm-6 col-md-3">
+    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
       <label>
-        <input type="checkbox" value="cooler19"> Hielera 19
+        <input type="checkbox"
+          value="{{plan.coolers[19].selected">
+          Hielera 19
       </label>
     </div>
-    <div class="col-xs-12 col-sm-6 col-md-3">
+    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
       <label>
-        <input type="checkbox" value="cooler"> Hielera 20
+        <input type="checkbox"
+          value="{{plan.coolers[">].selected H
+          elera 20
       </label>
     </div>
     <div class="col-xs-12">
-      <label for="coolerQuantity">Cantidad de hieleras</label>
-      <input type="text" id="coolerQuantity" placeholder="0">
+      Cantidad de hieleras:
+      <strong>
+      {{plan.coolers.length}}
+      </strong>
     </div>
   </div>
 

@@ -61,15 +61,15 @@ function OrderController(QuoteService, OrderSourceService,
 
   function selectSupervisor(idSupervisor) {
     var i = 0, l = vm.supervisors.length;
-    vm.order.id_responsable_muestreo = {};
+    vm.order.id_supervisor_muestreo = {};
     for (i; i < l; i += 1) {
-      if (vm.supervisors[i].id_id_responsable_muestreo == idSupervisor)
+      if (vm.supervisors[i].id_id_supervisor_muestreo == idSupervisor)
       {
-        vm.order.id_responsable_muestreo = vm.supervisors[i];
+        vm.order.id_supervisor_muestreo = vm.supervisors[i];
         break;
       }
     }
-    return vm.order.id_responsable_muestreo;
+    return vm.order.id_supervisor_muestreo;
   }
 
   function validateOrderForm() {

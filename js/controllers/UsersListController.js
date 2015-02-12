@@ -5,8 +5,9 @@
  * @this {Object} $scope - Contenedor para el modelo, AngularJS
  * @param {Object} UserService - Proveedor de datos, Usuarios
  */
-function UsersListController ($scope, UserService) {
-  $scope.users = UserService.query();
+function UsersListController (UserService) {
+  var vm = this;
+  vm.users = UserService.query();
 }
 
 angular

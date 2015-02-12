@@ -6,7 +6,8 @@
  * @param {Object} ClientDetailService - Proveedor de datos, Detalle cliente
  */
 function ClientDetailController($scope, ClientDetailService) {
-  $scope.clientDetail = ClientDetailService.query();
+  var vm = this;
+  vm.clientDetail = ClientDetailService.query();
 }
 
 angular

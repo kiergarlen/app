@@ -479,7 +479,7 @@
         </option>
         <option
           data-ng-repeat="preparationSupervisor in plan.preparationSupervisors"
-          value="{{preparationSupervisor.id_supervisor_recipientes}}">
+          value="{{preparationSupervisor.id_empleado}}">
           {{preparationSupervisor.supervisor_recipientes}}
         </option>
       </select>
@@ -538,7 +538,7 @@
         </option>
         <option
           data-ng-repeat="reactiveSupervisor in plan.reactiveSupervisors"
-          value="{{reactiveSupervisor.id_supervisor_reactivos}}">
+          value="{{reactiveSupervisor.id_empleado}}">
           {{reactiveSupervisor.supervisor_reactivos}}
         </option>
       </select>
@@ -611,7 +611,7 @@
         </option>
         <option
           data-ng-repeat="materialsSupervisor in plan.materialsSupervisors"
-          value="{{materialsSupervisor.id_supervisor_material}}">
+          value="{{materialsSupervisor.id_empleado}}">
           {{materialsSupervisor.supervisor_materiales}}
         </option>
       </select>
@@ -627,116 +627,6 @@
           {{material.material}}
       </label>
     </div>
-        <input type="checkbox"
-          value="{{plan.materials[2].selected}}">
-          Hoja de campo
-      </label>
-    </div>
-        <input type="checkbox"
-          value="{{plan.materials[3].selected}}">
-          Bitácora
-      </label>
-    </div>
-        <input type="checkbox"
-          value="{{plan.materials[4].selected}}">
-          Disco Sechi
-      </label>
-    </div>
-        <input type="checkbox"
-          value="{{plan.materials[5].selected}}">
-          Draga
-      </label>
-    </div>
-        <input type="checkbox"
-          value="{{plan.materials[6].selected}}">
-          Tamiz
-      </label>
-    </div>
-        <input type="checkbox"
-          value="{{plan.materials[7].selected}}">
-          Termómetro
-      </label>
-    </div>
-        <input type="checkbox"
-          value="{{plan.materials[8].selected}}">
-          Geoposicionador
-      </label>
-    </div>
-        <input type="checkbox"
-          value="{{plan.materials[9].selected}}">
-          Tiras reactivas pH
-      </label>
-    </div>
-        <input type="checkbox"
-          value="{{plan.materials[10].selected}}">
-          Pipetas Pasteur
-      </label>
-    </div>
-        <input type="checkbox"
-          value="{{plan.materials[11].selected}}">
-          Termo
-      </label>
-    </div>
-        <input type="checkbox"
-          value="{{plan.materials[12].selected}}">
-          Cubeta
-      </label>
-    </div>
-        <input type="checkbox"
-          value="{{plan.materials[13].selected}}">
-          Marcadores
-      </label>
-    </div>
-        <input type="checkbox"
-          value="{{plan.materials[14].selected}}">
-          Papel secante
-      </label>
-    </div>
-        <input type="checkbox"
-          value="{{plan.materials[15].selected}}">
-          Pisetas
-      </label>
-    </div>
-        <input type="checkbox"
-          value="{{plan.materials[16].selected}}">
-          Camara
-      </label>
-    </div>
-        <input type="checkbox"
-          value="{{plan.materials[17].selected}}">
-          Guantes
-      </label>
-    </div>
-        <input type="checkbox"
-          value="{{plan.materials[18].selected}}">
-          Lentes de Protección
-      </label>
-    </div>
-        <input type="checkbox"
-          value="{{plan.materials[19].selected}}">
-          Chaleco salvavidas
-      </label>
-    </div>
-        <input type="checkbox"
-          value="{{plan.materials[20].selected}}">
-          Arnés
-      </label>
-    </div>
-        <input type="checkbox"
-          value="{{plan.materials[21].selected}}">
-          Cuerdas
-      </label>
-    </div>
-        <input type="checkbox"
-          value="{{plan.materials[22].selected}}">
-          Cubre bocas
-      </label>
-    </div>
-        <input type="checkbox"
-          value="{{plan.materials[23].selected}}">
-          Casco
-      </label>
-    </div>
   </div>
   <div class="row">
     <div class="col-xs-12">
@@ -745,12 +635,12 @@
   </div>
   <div class="row">
     <div class="col-xs-12 col-sm-6 col-md-7 col-lg-7">
-      <label for="preservatorSelect" class="sr-only">
+      <label for="coolersSupervisorSelect" class="sr-only">
         Encargado de hieleras
       </label>
       <select class="form-control"
-        id="preservatorSelect"
-        name="preservatorSelect"
+        id="coolersSupervisorSelect"
+        name="coolersSupervisorSelect"
         required
         data-ng-model="plan.plan.id_supervisor_hieleras"
         >
@@ -758,163 +648,32 @@
           Seleccione una opción
         </option>
         <option
-          data-ng-repeat="preservator in plan.plan.preservators"
-          value="{{preservator.id_supervisor_hieleras}}">
-          {{preservator.supervisor_hieleras}}
+          data-ng-repeat="coolersSupervisor in plan.coolersSupervisors"
+          value="{{coolersSupervisor.id_empleado}}">
+          {{coolersSupervisor.supervisor_hieleras}}
         </option>
       </select>
     </div>
   </div>
   <div class="row">
-    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3"
+      data-ng-repeat="cooler in plan.coolers"
+      >
       <label>
         <input type="checkbox"
-          value="{{plan.coolers[1].selected">
-          Hielera 1
+          value="{{cooler.selected}}">
+          {{cooler.hielera}}
       </label>
     </div>
-    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
-      <label>
-        <input type="checkbox"
-          value="{{plan.coolers[2].selected">
-          Hielera 2
-      </label>
-    </div>
-    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
-      <label>
-        <input type="checkbox"
-          value="{{plan.coolers[3].selected">
-          Hielera 3
-      </label>
-    </div>
-    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
-      <label>
-        <input type="checkbox"
-          value="{{plan.coolers[4].selected">
-          Hielera 4
-      </label>
-    </div>
-    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
-      <label>
-        <input type="checkbox"
-          value="{{plan.coolers[5].selected">
-          Hielera 5
-      </label>
-    </div>
-    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
-      <label>
-        <input type="checkbox"
-          value="{{plan.coolers[6].selected">
-          Hielera 6
-      </label>
-    </div>
-    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
-      <label>
-        <input type="checkbox"
-          value="{{plan.coolers[7].selected">
-          Hielera 7
-      </label>
-    </div>
-    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
-      <label>
-        <input type="checkbox"
-          value="{{plan.coolers[8].selected">
-          Hielera 8
-      </label>
-    </div>
-    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
-      <label>
-        <input type="checkbox"
-          value="{{plan.coolers[9].selected">
-          Hielera 9
-      </label>
-    </div>
-    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
-      <label>
-        <input type="checkbox"
-          value="{{plan.coolers[10].selected">
-          Hielera 10
-      </label>
-    </div>
-    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
-      <label>
-        <input type="checkbox"
-          value="{{plan.coolers[11].selected">
-          Hielera 11
-      </label>
-    </div>
-    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
-      <label>
-        <input type="checkbox"
-          value="{{plan.coolers[12].selected">
-          Hielera 12
-      </label>
-    </div>
-    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
-      <label>
-        <input type="checkbox"
-          value="{{plan.coolers[13].selected">
-          Hielera 13
-      </label>
-    </div>
-    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
-      <label>
-        <input type="checkbox"
-          value="{{plan.coolers[14].selected">
-          Hielera 14
-      </label>
-    </div>
-    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
-      <label>
-        <input type="checkbox"
-          value="{{plan.coolers[15].selected">
-          Hielera 15
-      </label>
-    </div>
-    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
-      <label>
-        <input type="checkbox"
-          value="{{plan.coolers[16].selected">
-          Hielera 16
-      </label>
-    </div>
-    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
-      <label>
-        <input type="checkbox"
-          value="{{plan.coolers[17].selected">
-          Hielera 17
-      </label>
-    </div>
-    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
-      <label>
-        <input type="checkbox"
-          value="{{plan.coolers[18].selected">
-          Hielera 18
-      </label>
-    </div>
-    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
-      <label>
-        <input type="checkbox"
-          value="{{plan.coolers[19].selected">
-          Hielera 19
-      </label>
-    </div>
-    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
-      <label>
-        <input type="checkbox"
-          value="{{plan.coolers[">].selected H
-          elera 20
-      </label>
-    </div>
+  </div>
+  <div class="row">
     <div class="col-xs-12">
       Cantidad de hieleras:
       <strong>
-      {{plan.coolers.length}}
+      {{plan.plan.hieleras.length}}
       </strong>
     </div>
   </div>
-
-
   <br>
   <button type="submit" class="btn btn-primary"
     value="Guardar" title="Guardar"

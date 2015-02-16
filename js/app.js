@@ -2,6 +2,7 @@
 //changes
 angular
   .module('siclabApp', [
+    'mgcrea.ngStrap',
     'ngRoute',
     'ngResource'
   ]

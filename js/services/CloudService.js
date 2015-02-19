@@ -1,4 +1,4 @@
-/*
+/**
  * @name CloudService
  * @constructor
  * @desc Proveedor de datos, Coberturas nubes

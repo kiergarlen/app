@@ -1,4 +1,4 @@
-/*
+/**
  * @name MaterialService
  * @constructor
  * @desc Proveedor de datos, Materiales

@@ -1,4 +1,4 @@
-/*
+/**
  * @name TaskAssignService
  * @constructor
  * @desc Proveedor de datos, Órdenes trabajo

@@ -1,4 +1,4 @@
-/*
+/**
  * @name LogoutService
  * @constructor
  * @desc Proveedor de datos, Logout

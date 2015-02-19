@@ -1,4 +1,4 @@
-/*
+/**
  * @name ReceptionService
  * @constructor
  * @desc Proveedor de datos, Recepción

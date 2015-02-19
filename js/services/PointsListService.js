@@ -1,4 +1,4 @@
-/*
+/**
  * @name PointsListService
  * @constructor
  * @desc Proveedor de datos, lista Puntos

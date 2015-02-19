@@ -1,4 +1,4 @@
-/*
+/**
  * @name ReportApprovalService
  * @constructor
  * @desc Proveedor de datos, validación Reporte

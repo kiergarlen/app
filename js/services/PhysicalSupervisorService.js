@@ -1,4 +1,4 @@
-/*
+/**
  * @name ChemicalSupervisorService
  * @constructor
  * @desc Proveedor de datos, Supervisores físicoquimico

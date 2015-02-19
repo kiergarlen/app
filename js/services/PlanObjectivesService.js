@@ -1,4 +1,4 @@
-/*
+/**
  * @name PlanObjectivesService
  * @constructor
  * @desc Proveedor de datos, Objetivos plan

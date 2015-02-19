@@ -1,4 +1,4 @@
-/*
+/**
  * @name ContainersListService
  * @constructor
  * @desc Proveedor de datos, lista Recipients

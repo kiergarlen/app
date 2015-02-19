@@ -1,4 +1,4 @@
-/*
+/**
  * @name ProfileService
  * @constructor
  * @desc Proveedor de datos, Perfil

@@ -1,4 +1,4 @@
-/*
+/**
  * @name FieldParameterService
  * @constructor
  * @desc Proveedor de datos, Parámetros campo

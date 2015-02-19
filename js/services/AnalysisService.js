@@ -1,4 +1,4 @@
-/*
+/**
  * @name AnalysisService
  * @constructor
  * @desc Proveedor de datos, selección de formato de captura de Análisis

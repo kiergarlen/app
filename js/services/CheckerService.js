@@ -1,4 +1,4 @@
-/*
+/**
  * @name CheckerService
  * @constructor
  * @desc Proveedor de datos, Responsables verificación

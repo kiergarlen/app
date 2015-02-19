@@ -1,4 +1,4 @@
-/*
+/**
  * @name EmployeeService
  * @constructor
  * @desc Proveedor de datos, Empleados

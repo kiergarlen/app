@@ -1,4 +1,4 @@
-/*
+/**
  * @name WindService
  * @constructor
  * @desc Proveedor de datos, Direcciones viento

@@ -1,4 +1,4 @@
-/*
+/**
  * @name ReceptionistService
  * @constructor
  * @desc Proveedor de datos, Recepcionistas

@@ -1,4 +1,4 @@
-/*
+/**
  * @name QuoteService
  * @constructor
  * @desc Proveedor de datos, Cotizaciones

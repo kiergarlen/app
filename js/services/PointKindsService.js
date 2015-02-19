@@ -1,4 +1,4 @@
-/*
+/**
  * @name PointKindsService
  * @constructor
  * @desc Proveedor de datos, tipos Punto

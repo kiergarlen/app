@@ -1,4 +1,4 @@
-/*
+/**
  * @name CityService
  * @constructor
  * @desc Proveedor de datos, Localidades

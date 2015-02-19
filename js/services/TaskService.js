@@ -1,4 +1,4 @@
-/*
+/**
  * @name TaskService
  * @constructor
  * @desc Proveedor de datos, Bienvenida

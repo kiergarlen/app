@@ -1,4 +1,4 @@
-/*
+/**
  * @name DistrictService
  * @constructor
  * @desc Proveedor de datos, Municipios

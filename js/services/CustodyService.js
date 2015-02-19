@@ -1,4 +1,4 @@
-/*
+/**
  * @name CustodyService
  * @constructor
  * @desc Proveedor de datos, Cadenas custodia

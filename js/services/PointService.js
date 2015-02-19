@@ -1,4 +1,4 @@
-/*
+/**
  * @name PointService
  * @constructor
  * @desc Proveedor de datos, Puntos muestreo

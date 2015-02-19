@@ -1,4 +1,4 @@
-/*
+/**
  * @name CoolerService
  * @constructor
  * @desc Proveedor de datos, Hieleras

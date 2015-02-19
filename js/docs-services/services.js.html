@@ -1,4 +1,32 @@
-/*
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: services.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: services.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
  * @name AnalysisListService
  * @constructor
  * @desc Proveedor de datos, consulta de Análisis
@@ -13,8 +41,9 @@ function AnalysisListService($resource) {
 
 angular
   .module('siclabApp')
-  .factory('AnalysisListService', ['$resource', AnalysisListService]);;
-/*
+  .factory('AnalysisListService', ['$resource', AnalysisListService]);
+
+/**
  * @name AnalysisService
  * @constructor
  * @desc Proveedor de datos, selección de formato de captura de Análisis
@@ -29,8 +58,9 @@ function AnalysisService($resource) {
 
 angular
   .module('siclabApp')
-  .factory('AnalysisService', ['$resource', AnalysisService]);;
-/*
+  .factory('AnalysisService', ['$resource', AnalysisService]);
+
+/**
  * @name BioSupervisorService
  * @constructor
  * @desc Proveedor de datos, Supervisores microbiológico
@@ -45,8 +75,9 @@ function BioSupervisorService($resource) {
 
 angular
   .module('siclabApp')
-  .factory('BioSupervisorService', ['$resource', BioSupervisorService]);;
-/*
+  .factory('BioSupervisorService', ['$resource', BioSupervisorService]);
+
+/**
  * @name CheckerService
  * @constructor
  * @desc Proveedor de datos, Responsables verificación
@@ -61,8 +92,9 @@ function CheckerService($resource) {
 
 angular
   .module('siclabApp')
-  .factory('CheckerService', ['$resource', CheckerService]);;
-/*
+  .factory('CheckerService', ['$resource', CheckerService]);
+
+/**
  * @name ChemicalSupervisorService
  * @constructor
  * @desc Proveedor de datos, Supervisores físicoquimico
@@ -77,8 +109,9 @@ function ChemicalSupervisorService($resource) {
 
 angular
   .module('siclabApp')
-  .factory('ChemicalSupervisorService', ['$resource', ChemicalSupervisorService]);;
-/*
+  .factory('ChemicalSupervisorService', ['$resource', ChemicalSupervisorService]);
+
+/**
  * @name CityService
  * @constructor
  * @desc Proveedor de datos, Localidades
@@ -93,8 +126,9 @@ function CityService($resource) {
 
 angular
   .module('siclabApp')
-  .factory('CityService', ['$resource', CityService]);;
-/*
+  .factory('CityService', ['$resource', CityService]);
+
+/**
  * @name ClientDetailService
  * @constructor
  * @desc Proveedor de datos, Detalle cliente
@@ -110,8 +144,8 @@ function ClientDetailService($resource) {
 angular
   .module('siclabApp')
   .factory('ClientDetailService', ['$resource',  ClientDetailService]);
-;
-/*
+
+/**
  * @name ClientService
  * @constructor
  * @desc Proveedor de datos, Cliente
@@ -126,8 +160,9 @@ function ClientService($resource) {
 
 angular
   .module('siclabApp')
-  .factory('ClientService', ['$resource', ClientService]);;
-/*
+  .factory('ClientService', ['$resource', ClientService]);
+
+/**
  * @name CloudService
  * @constructor
  * @desc Proveedor de datos, Coberturas nubes
@@ -142,8 +177,9 @@ function CloudService($resource) {
 
 angular
   .module('siclabApp')
-  .factory('CloudService', ['$resource', CloudService]);;
-/*
+  .factory('CloudService', ['$resource', CloudService]);
+
+/**
  * @name ContainerService
  * @constructor
  * @desc Proveedor de datos, Recipientes
@@ -158,8 +194,9 @@ function ContainerService($resource) {
 
 angular
   .module('siclabApp')
-  .factory('ContainerService', ['$resource', ContainerService]);;
-/*
+  .factory('ContainerService', ['$resource', ContainerService]);
+
+/**
  * @name ContainersListService
  * @constructor
  * @desc Proveedor de datos, lista Recipients
@@ -175,8 +212,8 @@ function ContainersListService($resource) {
 angular
   .module('siclabApp')
   .factory('ContainersListService', ['$resource', ContainersListService]);
-;
-/*
+
+/**
  * @name CoolerService
  * @constructor
  * @desc Proveedor de datos, Hieleras
@@ -191,8 +228,9 @@ function CoolerService($resource) {
 
 angular
   .module('siclabApp')
-  .factory('CoolerService', ['$resource', CoolerService]);;
-/*
+  .factory('CoolerService', ['$resource', CoolerService]);
+
+/**
  * @name CustodyService
  * @constructor
  * @desc Proveedor de datos, Cadenas custodia
@@ -207,8 +245,9 @@ function CustodyService($resource) {
 
 angular
   .module('siclabApp')
-  .factory('CustodyService', ['$resource', CustodyService]);;
-/*
+  .factory('CustodyService', ['$resource', CustodyService]);
+
+/**
  * @name DepartmentService
  * @constructor
  * @desc Proveedor de datos, Áreas
@@ -223,8 +262,9 @@ function DepartmentService($resource) {
 
 angular
   .module('siclabApp')
-  .factory('DepartmentService', ['$resource', DepartmentService]);;
-/*
+  .factory('DepartmentService', ['$resource', DepartmentService]);
+
+/**
  * @name DepartmentsListService
  * @constructor
  * @desc Proveedor de datos, Áreas
@@ -240,8 +280,8 @@ function DepartmentsListService($resource) {
 angular
   .module('siclabApp')
   .factory('DepartmentsListService', ['$resource', DepartmentsListService]);
-;
-/*
+
+/**
  * @name DistrictService
  * @constructor
  * @desc Proveedor de datos, Municipios
@@ -256,8 +296,9 @@ function DistrictService($resource) {
 
 angular
   .module('siclabApp')
-  .factory('DistrictService', ['$resource', DistrictService]);;
-/*
+  .factory('DistrictService', ['$resource', DistrictService]);
+
+/**
  * @name EmployeeService
  * @constructor
  * @desc Proveedor de datos, Empleados
@@ -272,8 +313,9 @@ function EmployeeService($resource) {
 
 angular
   .module('siclabApp')
-  .factory('EmployeeService', ['$resource', EmployeeService]);;
-/*
+  .factory('EmployeeService', ['$resource', EmployeeService]);
+
+/**
  * @name EmployeesListService
  * @constructor
  * @desc Proveedor de datos, lista Empleados
@@ -289,8 +331,8 @@ function EmployeesListService($resource) {
 angular
   .module('siclabApp')
   .factory('EmployeesListService', ['$resource', EmployeesListService]);
-;
-/*
+
+/**
  * @name ExpirationService
  * @constructor
  * @desc Proveedor de datos, Vigencias
@@ -305,8 +347,9 @@ function ExpirationService($resource) {
 
 angular
   .module('siclabApp')
-  .factory('ExpirationService', ['$resource', ExpirationService]);;
-/*
+  .factory('ExpirationService', ['$resource', ExpirationService]);
+
+/**
  * @name FieldParameterService
  * @constructor
  * @desc Proveedor de datos, Parámetros campo
@@ -321,8 +364,9 @@ function FieldParameterService($resource) {
 
 angular
   .module('siclabApp')
-  .factory('FieldParameterService', ['$resource', FieldParameterService]);;
-/*
+  .factory('FieldParameterService', ['$resource', FieldParameterService]);
+
+/**
  * @name FieldSheetService
  * @constructor
  * @desc Proveedor de datos, Hojas campo
@@ -337,8 +381,9 @@ function FieldSheetService($resource) {
 
 angular
   .module('siclabApp')
-  .factory('FieldSheetService', ['$resource', FieldSheetService]);;
-/*
+  .factory('FieldSheetService', ['$resource', FieldSheetService]);
+
+/**
  * @name InstrumentsListService
  * @constructor
  * @desc Proveedor de datos, lista Equipos
@@ -354,8 +399,8 @@ function InstrumentsListService($resource) {
 angular
   .module('siclabApp')
   .factory('InstrumentsListService', ['$resource', InstrumentsListService]);
-;
-/*
+
+/**
  * @name LoginService
  * @constructor
  * @desc Proveedor de datos, Login
@@ -370,8 +415,9 @@ function LoginService($resource) {
 
 angular
   .module('siclabApp')
-  .factory('LoginService', ['$resource', LoginService]);;
-/*
+  .factory('LoginService', ['$resource', LoginService]);
+
+/**
  * @name LogoutService
  * @constructor
  * @desc Proveedor de datos, Logout
@@ -387,8 +433,8 @@ function LogoutService($resource) {
 angular
   .module('siclabApp')
   .factory('LogoutService', ['$resource', LogoutService]);
-;
-/*
+
+/**
  * @name MaterialService
  * @constructor
  * @desc Proveedor de datos, Materiales
@@ -403,8 +449,9 @@ function MaterialService($resource) {
 
 angular
   .module('siclabApp')
-  .factory('MaterialService', ['$resource', MaterialService]);;
-/*
+  .factory('MaterialService', ['$resource', MaterialService]);
+
+/**
  * @name MatrixService
  * @constructor
  * @desc Proveedor de datos, Matrices
@@ -419,8 +466,9 @@ function MatrixService($resource) {
 
 angular
   .module('siclabApp')
-  .factory('MatrixService', ['$resource', MatrixService]);;
-/*
+  .factory('MatrixService', ['$resource', MatrixService]);
+
+/**
  * @name MenuService
  * @constructor
  * @desc Proveedor de datos, Menú
@@ -435,8 +483,9 @@ function MenuService($resource) {
 
 angular
   .module('siclabApp')
-  .factory('MenuService', ['$resource', MenuService]);;
-/*
+  .factory('MenuService', ['$resource', MenuService]);
+
+/**
  * @name MetalSupervisorService
  * @constructor
  * @desc Proveedor de datos, Supervisores metales pesados
@@ -452,8 +501,8 @@ function MetalSupervisorService($resource) {
 angular
   .module('siclabApp')
   .factory('MetalSupervisorService', ['$resource', MetalSupervisorService]);
-;
-/*
+
+/**
  * @name MethodsListService
  * @constructor
  * @desc Proveedor de datos, Métodos
@@ -468,8 +517,9 @@ function MethodsListService($resource) {
 
 angular
   .module('siclabApp')
-  .factory('MethodsListService', ['$resource', MethodsListService]);;
-/*
+  .factory('MethodsListService', ['$resource', MethodsListService]);
+
+/**
  * @name MethodsService
  * @constructor
  * @desc Proveedor de datos, Métodos
@@ -484,8 +534,9 @@ function MethodsService($resource) {
 
 angular
   .module('siclabApp')
-  .factory('MethodsService', ['$resource', MethodsService]);;
-/*
+  .factory('MethodsService', ['$resource', MethodsService]);
+
+/**
  * @name NormService
  * @constructor
  * @desc Proveedor de datos, Normas referencia
@@ -500,8 +551,9 @@ function NormService($resource) {
 
 angular
   .module('siclabApp')
-  .factory('NormService', ['$resource', NormService]);;
-/*
+  .factory('NormService', ['$resource', NormService]);
+
+/**
  * @name NormsListService
  * @constructor
  * @desc Proveedor de datos, lista Normas
@@ -517,8 +569,8 @@ function NormsListService($resource) {
 angular
   .module('siclabApp')
   .factory('NormsListService', ['$resource', NormsListService]);
-;
-/*
+
+/**
  * @name OrderService
  * @constructor
  * @desc Proveedor de datos, Orden muestreo
@@ -533,8 +585,9 @@ function OrderService($resource) {
 
 angular
   .module('siclabApp')
-  .factory('OrderService', ['$resource', OrderService]);;
-/*
+  .factory('OrderService', ['$resource', OrderService]);
+
+/**
  * @name OrderSourceService
  * @constructor
  * @desc Proveedor de datos, Orígenes orden
@@ -549,8 +602,9 @@ function OrderSourceService($resource) {
 
 angular
   .module('siclabApp')
-  .factory('OrderSourceService', ['$resource', OrderSourceService]);;
-/*
+  .factory('OrderSourceService', ['$resource', OrderSourceService]);
+
+/**
  * @name ParameterService
  * @constructor
  * @desc Proveedor de datos, Parámetros análisis
@@ -565,8 +619,9 @@ function ParameterService($resource) {
 
 angular
   .module('siclabApp')
-  .factory('ParameterService', ['$resource', ParameterService]);;
-/*
+  .factory('ParameterService', ['$resource', ParameterService]);
+
+/**
  * @name ChemicalSupervisorService
  * @constructor
  * @desc Proveedor de datos, Supervisores físicoquimico
@@ -581,8 +636,9 @@ function ChemicalSupervisorService($resource) {
 
 angular
   .module('siclabApp')
-  .factory('ChemicalSupervisorService', ['$resource', ChemicalSupervisorService]);;
-/*
+  .factory('ChemicalSupervisorService', ['$resource', ChemicalSupervisorService]);
+
+/**
  * @name PlanObjectivesService
  * @constructor
  * @desc Proveedor de datos, Objetivos plan
@@ -598,8 +654,8 @@ function PlanObjectivesService($resource) {
 angular
   .module('siclabApp')
   .factory('PlanObjectivesService', ['$resource', PlanObjectivesService]);
-;
-/*
+
+/**
  * @name PlanService
  * @constructor
  * @desc Proveedor de datos, Plan muestreo
@@ -614,8 +670,9 @@ function PlanService($resource) {
 
 angular
   .module('siclabApp')
-  .factory('PlanService', ['$resource', PlanService]);;
-/*
+  .factory('PlanService', ['$resource', PlanService]);
+
+/**
  * @name PointKindsService
  * @constructor
  * @desc Proveedor de datos, tipos Punto
@@ -631,8 +688,8 @@ function PointKindsService($resource) {
 angular
   .module('siclabApp')
   .factory('PointKindsService', ['$resource', PointKindsService]);
-;
-/*
+
+/**
  * @name PointService
  * @constructor
  * @desc Proveedor de datos, Puntos muestreo
@@ -647,8 +704,9 @@ function PointService($resource) {
 
 angular
   .module('siclabApp')
-  .factory('PointService', ['$resource', PointService]);;
-/*
+  .factory('PointService', ['$resource', PointService]);
+
+/**
  * @name PointsListService
  * @constructor
  * @desc Proveedor de datos, lista Puntos
@@ -664,8 +722,8 @@ function PointsListService($resource) {
 angular
   .module('siclabApp')
   .factory('PointsListService', ['$resource', PointsListService]);
-;
-/*
+
+/**
  * @name PreservationService
  * @constructor
  * @desc Proveedor de datos, Preservaciones
@@ -680,8 +738,9 @@ function PreservationService($resource) {
 
 angular
   .module('siclabApp')
-  .factory('PreservationService', ['$resource', PreservationService]);;
-/*
+  .factory('PreservationService', ['$resource', PreservationService]);
+
+/**
  * @name PricesListService
  * @constructor
  * @desc Proveedor de datos, lista Precios
@@ -697,8 +756,8 @@ function PricesListService($resource) {
 angular
   .module('siclabApp')
   .factory('PricesListService', ['$resource', PricesListService]);
-;
-/*
+
+/**
  * @name ProfileService
  * @constructor
  * @desc Proveedor de datos, Perfil
@@ -714,8 +773,8 @@ function ProfileService($resource) {
 angular
   .module('siclabApp')
   .factory('ProfileService', ['$resource', ProfileService]);
-;
-/*
+
+/**
  * @name QuoteService
  * @constructor
  * @desc Proveedor de datos, Cotizaciones
@@ -731,8 +790,8 @@ function QuoteService($resource) {
 angular
   .module('siclabApp')
   .factory('QuoteService', ['$resource', QuoteService]);
-;
-/*
+
+/**
  * @name ReactivesListService
  * @constructor
  * @desc Proveedor de datos, lista Reactivos
@@ -748,8 +807,8 @@ function ReactivesListService($resource) {
 angular
   .module('siclabApp')
   .factory('ReactivesListService', ['$resource', ReactivesListService]);
-;
-/*
+
+/**
  * @name ReceptionService
  * @constructor
  * @desc Proveedor de datos, Recepción
@@ -764,8 +823,9 @@ function ReceptionService($resource) {
 
 angular
   .module('siclabApp')
-  .factory('ReceptionService', ['$resource', ReceptionService]);;
-/*
+  .factory('ReceptionService', ['$resource', ReceptionService]);
+
+/**
  * @name ReceptionistService
  * @constructor
  * @desc Proveedor de datos, Recepcionistas
@@ -780,8 +840,9 @@ function ReceptionistService($resource) {
 
 angular
   .module('siclabApp')
-  .factory('ReceptionistService', ['$resource', ReceptionistService]);;
-/*
+  .factory('ReceptionistService', ['$resource', ReceptionistService]);
+
+/**
  * @name ReferencesListService
  * @constructor
  * @desc Proveedor de datos, lista Referencias
@@ -797,8 +858,8 @@ function ReferencesListService($resource) {
 angular
   .module('siclabApp')
   .factory('ReferencesListService', ['$resource', ReferencesListService]);
-;
-/*
+
+/**
  * @name ReportApprovalService
  * @constructor
  * @desc Proveedor de datos, validación Reporte
@@ -814,8 +875,8 @@ function ReportApprovalService($resource) {
 angular
   .module('siclabApp')
   .factory('ReportApprovalService', ['$resource', ReportApprovalService]);
-;
-/*
+
+/**
  * @name ReportsListService
  * @constructor
  * @desc Proveedor de datos, lista Reportes
@@ -831,8 +892,8 @@ function ReportsListService($resource) {
 angular
   .module('siclabApp')
   .factory('ReportsListService', ['$resource', ReportsListService]);
-;
-/*
+
+/**
  * @name RequiredVolumeService
  * @constructor
  * @desc Proveedor de datos, Volúmenes requeridos
@@ -847,8 +908,9 @@ function RequiredVolumeService($resource) {
 
 angular
   .module('siclabApp')
-  .factory('RequiredVolumeService', ['$resource', RequiredVolumeService]);;
-/*
+  .factory('RequiredVolumeService', ['$resource', RequiredVolumeService]);
+
+/**
  * @name SamplesListService
  * @constructor
  * @desc Proveedor de datos, lista Muestras
@@ -864,8 +926,8 @@ function SamplesListService($resource) {
 angular
   .module('siclabApp')
   .factory('SamplesListService', ['$resource', SamplesListService]);
-;
-/*
+
+/**
  * @name SamplingNormService
  * @constructor
  * @desc Proveedor de datos, Normas muestreo
@@ -880,8 +942,9 @@ function SamplingNormService($resource) {
 
 angular
   .module('siclabApp')
-  .factory('SamplingNormService', ['$resource', SamplingNormService]);;
-/*
+  .factory('SamplingNormService', ['$resource', SamplingNormService]);
+
+/**
  * @name SamplingSupervisorService
  * @constructor
  * @desc Proveedor de datos, Supervisores muestreo
@@ -896,8 +959,9 @@ function SamplingSupervisorService($resource) {
 
 angular
   .module('siclabApp')
-  .factory('SamplingSupervisorService', ['$resource', SamplingSupervisorService]);;
-/*
+  .factory('SamplingSupervisorService', ['$resource', SamplingSupervisorService]);
+
+/**
  * @name SamplingTypeService
  * @constructor
  * @desc Proveedor de datos, Tipo muestreo
@@ -913,8 +977,8 @@ function SamplingTypeService($resource) {
 angular
   .module('siclabApp')
   .factory('SamplingTypeService', ['$resource', SamplingTypeService]);
-;
-/*
+
+/**
  * @name TaskAssignService
  * @constructor
  * @desc Proveedor de datos, Órdenes trabajo
@@ -929,8 +993,9 @@ function TaskAssignService($resource) {
 
 angular
   .module('siclabApp')
-  .factory('TaskAssignService', ['$resource', TaskAssignService]);;
-/*
+  .factory('TaskAssignService', ['$resource', TaskAssignService]);
+
+/**
  * @name TaskService
  * @constructor
  * @desc Proveedor de datos, Bienvenida
@@ -945,8 +1010,9 @@ function TaskService($resource){
 
 angular
   .module('siclabApp')
-  .factory('TaskService', ['$resource', TaskService]);;
-/*
+  .factory('TaskService', ['$resource', TaskService]);
+
+/**
  * @name UserService
  * @constructor
  * @desc Proveedor de datos, Usuarios
@@ -961,8 +1027,9 @@ function UserService($resource) {
 
 angular
   .module('siclabApp')
-  .factory('UserService', ['$resource', UserService]);;
-/*
+  .factory('UserService', ['$resource', UserService]);
+
+/**
  * @name WaveService
  * @constructor
  * @desc Proveedor de datos, Intensidades oleaje
@@ -977,8 +1044,9 @@ function WaveService($resource) {
 
 angular
   .module('siclabApp')
-  .factory('WaveService', ['$resource', WaveService]);;
-/*
+  .factory('WaveService', ['$resource', WaveService]);
+
+/**
  * @name WindService
  * @constructor
  * @desc Proveedor de datos, Direcciones viento
@@ -993,4 +1061,26 @@ function WindService($resource) {
 
 angular
   .module('siclabApp')
-  .factory('WindService', ['$resource', WindService]);
+  .factory('WindService', ['$resource', WindService]);</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="AnalysisListService.html">AnalysisListService</a></li><li><a href="AnalysisService.html">AnalysisService</a></li><li><a href="BioSupervisorService.html">BioSupervisorService</a></li><li><a href="CheckerService.html">CheckerService</a></li><li><a href="ChemicalSupervisorService.html">ChemicalSupervisorService</a></li><li><a href="CityService.html">CityService</a></li><li><a href="ClientDetailService.html">ClientDetailService</a></li><li><a href="ClientService.html">ClientService</a></li><li><a href="CloudService.html">CloudService</a></li><li><a href="ContainerService.html">ContainerService</a></li><li><a href="ContainersListService.html">ContainersListService</a></li><li><a href="CoolerService.html">CoolerService</a></li><li><a href="CustodyService.html">CustodyService</a></li><li><a href="DepartmentService.html">DepartmentService</a></li><li><a href="DepartmentsListService.html">DepartmentsListService</a></li><li><a href="DistrictService.html">DistrictService</a></li><li><a href="EmployeeService.html">EmployeeService</a></li><li><a href="EmployeesListService.html">EmployeesListService</a></li><li><a href="ExpirationService.html">ExpirationService</a></li><li><a href="FieldParameterService.html">FieldParameterService</a></li><li><a href="FieldSheetService.html">FieldSheetService</a></li><li><a href="InstrumentsListService.html">InstrumentsListService</a></li><li><a href="LoginService.html">LoginService</a></li><li><a href="LogoutService.html">LogoutService</a></li><li><a href="MaterialService.html">MaterialService</a></li><li><a href="MatrixService.html">MatrixService</a></li><li><a href="MenuService.html">MenuService</a></li><li><a href="MetalSupervisorService.html">MetalSupervisorService</a></li><li><a href="MethodsListService.html">MethodsListService</a></li><li><a href="MethodsService.html">MethodsService</a></li><li><a href="NormService.html">NormService</a></li><li><a href="NormsListService.html">NormsListService</a></li><li><a href="OrderService.html">OrderService</a></li><li><a href="OrderSourceService.html">OrderSourceService</a></li><li><a href="ParameterService.html">ParameterService</a></li><li><a href="PlanObjectivesService.html">PlanObjectivesService</a></li><li><a href="PlanService.html">PlanService</a></li><li><a href="PointKindsService.html">PointKindsService</a></li><li><a href="PointService.html">PointService</a></li><li><a href="PointsListService.html">PointsListService</a></li><li><a href="PreservationService.html">PreservationService</a></li><li><a href="PricesListService.html">PricesListService</a></li><li><a href="ProfileService.html">ProfileService</a></li><li><a href="QuoteService.html">QuoteService</a></li><li><a href="ReactivesListService.html">ReactivesListService</a></li><li><a href="ReceptionistService.html">ReceptionistService</a></li><li><a href="ReceptionService.html">ReceptionService</a></li><li><a href="ReferencesListService.html">ReferencesListService</a></li><li><a href="ReportApprovalService.html">ReportApprovalService</a></li><li><a href="ReportsListService.html">ReportsListService</a></li><li><a href="RequiredVolumeService.html">RequiredVolumeService</a></li><li><a href="SamplesListService.html">SamplesListService</a></li><li><a href="SamplingNormService.html">SamplingNormService</a></li><li><a href="SamplingSupervisorService.html">SamplingSupervisorService</a></li><li><a href="SamplingTypeService.html">SamplingTypeService</a></li><li><a href="TaskAssignService.html">TaskAssignService</a></li><li><a href="TaskService.html">TaskService</a></li><li><a href="UserService.html">UserService</a></li><li><a href="WaveService.html">WaveService</a></li><li><a href="WindService.html">WindService</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0-dev</a> on Thu Feb 19 2015 16:05:43 GMT-0600 (CST)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

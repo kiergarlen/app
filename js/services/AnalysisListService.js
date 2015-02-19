@@ -1,4 +1,4 @@
-/*
+/**
  * @name AnalysisListService
  * @constructor
  * @desc Proveedor de datos, consulta de Análisis

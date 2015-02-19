@@ -1,4 +1,4 @@
-/*
+/**
  * @name ReportsListService
  * @constructor
  * @desc Proveedor de datos, lista Reportes

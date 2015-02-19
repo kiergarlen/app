@@ -1,4 +1,4 @@
-/*
+/**
  * @name MetalSupervisorService
  * @constructor
  * @desc Proveedor de datos, Supervisores metales pesados

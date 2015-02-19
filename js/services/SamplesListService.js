@@ -1,4 +1,4 @@
-/*
+/**
  * @name SamplesListService
  * @constructor
  * @desc Proveedor de datos, lista Muestras

@@ -1,4 +1,4 @@
-/*
+/**
  * @name MatrixService
  * @constructor
  * @desc Proveedor de datos, Matrices

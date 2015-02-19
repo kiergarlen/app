@@ -1,4 +1,4 @@
-/*
+/**
  * @name InstrumentsListService
  * @constructor
  * @desc Proveedor de datos, lista Equipos

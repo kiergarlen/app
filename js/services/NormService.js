@@ -1,4 +1,4 @@
-/*
+/**
  * @name NormService
  * @constructor
  * @desc Proveedor de datos, Normas referencia

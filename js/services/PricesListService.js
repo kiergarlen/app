@@ -1,4 +1,4 @@
-/*
+/**
  * @name PricesListService
  * @constructor
  * @desc Proveedor de datos, lista Precios

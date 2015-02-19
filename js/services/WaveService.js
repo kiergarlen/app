@@ -1,4 +1,4 @@
-/*
+/**
  * @name WaveService
  * @constructor
  * @desc Proveedor de datos, Intensidades oleaje

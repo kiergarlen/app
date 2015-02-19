@@ -1,4 +1,4 @@
-/*
+/**
  * @name LoginService
  * @constructor
  * @desc Proveedor de datos, Login

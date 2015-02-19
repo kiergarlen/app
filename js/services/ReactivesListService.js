@@ -1,4 +1,4 @@
-/*
+/**
  * @name ReactivesListService
  * @constructor
  * @desc Proveedor de datos, lista Reactivos

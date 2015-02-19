@@ -1,4 +1,4 @@
-/*
+/**
  * @name ClientDetailService
  * @constructor
  * @desc Proveedor de datos, Detalle cliente

@@ -1,4 +1,4 @@
-/*
+/**
  * @name ParameterService
  * @constructor
  * @desc Proveedor de datos, Parámetros análisis

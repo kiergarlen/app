@@ -1,4 +1,4 @@
-/*
+/**
  * @name RequiredVolumeService
  * @constructor
  * @desc Proveedor de datos, Volúmenes requeridos

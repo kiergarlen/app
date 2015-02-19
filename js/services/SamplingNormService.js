@@ -1,4 +1,4 @@
-/*
+/**
  * @name SamplingNormService
  * @constructor
  * @desc Proveedor de datos, Normas muestreo

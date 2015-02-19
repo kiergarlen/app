@@ -1,4 +1,4 @@
-/*
+/**
  * @name MethodsService
  * @constructor
  * @desc Proveedor de datos, Métodos

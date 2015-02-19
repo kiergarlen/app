@@ -1,4 +1,4 @@
-/*
+/**
  * @name SamplingSupervisorService
  * @constructor
  * @desc Proveedor de datos, Supervisores muestreo

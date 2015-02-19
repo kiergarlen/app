@@ -1,4 +1,4 @@
-/*
+/**
  * @name DepartmentsListService
  * @constructor
  * @desc Proveedor de datos, Áreas

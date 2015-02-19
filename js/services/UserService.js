@@ -1,4 +1,4 @@
-/*
+/**
  * @name UserService
  * @constructor
  * @desc Proveedor de datos, Usuarios

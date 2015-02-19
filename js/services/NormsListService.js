@@ -1,4 +1,4 @@
-/*
+/**
  * @name NormsListService
  * @constructor
  * @desc Proveedor de datos, lista Normas

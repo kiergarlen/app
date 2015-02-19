@@ -1,4 +1,4 @@
-/*
+/**
  * @name ReferencesListService
  * @constructor
  * @desc Proveedor de datos, lista Referencias

@@ -1,4 +1,4 @@
-/*
+/**
  * @name PlanService
  * @constructor
  * @desc Proveedor de datos, Plan muestreo

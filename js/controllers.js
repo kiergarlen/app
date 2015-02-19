@@ -44,7 +44,8 @@ angular
       'AnalysisService',
       AnalysisController
     ]
-  );;
+  );
+
 /**
  * @name AnalysisListController
  * @constructor
@@ -70,7 +71,8 @@ angular
       'AnalysisListService',
       AnalysisListController
     ]
-  );;
+  );
+
 /**
  * @name ClientDetailController
  * @constructor
@@ -91,7 +93,8 @@ angular
       'ClientDetailService',
       ClientsListController
     ]
-  );;
+  );
+
 /**
  * @name ClientsListController
  * @constructor
@@ -137,7 +140,8 @@ angular
       'ContainersListService',
       ContainersListController
     ]
-  );;
+  );
+
 /**
  * @name CustodyController
  * @constructor
@@ -202,7 +206,8 @@ angular
       'ContainerService', 'CheckerService', 'CustodyService',
       CustodyController
     ]
-  );;
+  );
+
 /**
  * @name DepartmentsListController
  * @constructor
@@ -222,7 +227,8 @@ angular
       'DepartmentService',
       DepartmentsListController
     ]
-  );;
+  );
+
 /**
  * @name EmployeesListController
  * @constructor
@@ -242,7 +248,8 @@ angular
       'EmployeeService',
       EmployeesListController
     ]
-  );;
+  );
+
 /**
  * @name FieldSheetController
  * @constructor
@@ -441,7 +448,8 @@ angular
       'PreservationService', 'FieldSheetService',
       FieldSheetController
     ]
-  );;
+  );
+
 /**
  * @name InstrumentsListController
  * @constructor
@@ -466,7 +474,8 @@ angular
       'InstrumentsListService',
       InstrumentsListController
     ]
-  );;
+  );
+
 /**
  * @name LoginController
  * @constructor
@@ -548,7 +557,8 @@ angular
       'LogoutService',
       LogoutController
     ]
-  );;
+  );
+
 /**
  * @name MenuController
  * @constructor
@@ -568,7 +578,8 @@ angular
       'MenuService',
       MenuController
     ]
-  );;
+  );
+
 /**
  * @name MethodsListController
  * @constructor
@@ -593,7 +604,8 @@ angular
       'MethodsListService',
       MethodsListController
     ]
-  );;
+  );
+
 /**
  * @name NormsListController
  * @constructor
@@ -711,7 +723,8 @@ angular
       'ParameterService','SamplingSupervisorService','OrderService',
       OrderController
     ]
-  );;
+  );
+
 /**
  * @name PlanCheckController
  * @constructor
@@ -729,7 +742,8 @@ angular
       '$scope',
       PlanCheckController
     ]
-  );;
+  );
+
 /**
  * @name PlanContainersController
  * @constructor
@@ -747,7 +761,8 @@ angular
       '$scope',
       PlanContainersController
     ]
-  );;
+  );
+
 /**
  * @name PlanController
  * @constructor
@@ -845,7 +860,8 @@ angular
       'PlanService',
       PlanController
     ]
-  );;
+  );
+
 /**
  * @name PlanCoolersController
  * @constructor
@@ -863,7 +879,8 @@ angular
       '$scope',
       PlanCoolersController
     ]
-  );;
+  );
+
 /**
  * @name PlanMaterialsController
  * @constructor
@@ -881,7 +898,8 @@ angular
       '$scope',
       PlanMaterialsController
     ]
-  );;
+  );
+
 /**
  * @name PlanSubstancesController
  * @constructor
@@ -925,7 +943,8 @@ angular
       'PointsListService',
       PointsListController
     ]
-  );;
+  );
+
 /**
  * @name PricesListController
  * @constructor
@@ -950,7 +969,8 @@ angular
       'PricesListService',
       PricesListController
     ]
-  );;
+  );
+
 /**
  * @name ProfileController
  * @constructor
@@ -970,7 +990,8 @@ angular
       'ProfileService',
       ProfileController
     ]
-  );;
+  );
+
 /**
  * @name QuoteController
  * @constructor
@@ -1127,7 +1148,8 @@ angular
       'SamplingTypeService', 'QuoteService',
       QuoteController
     ]
-  );;
+  );
+
 /**
  * @name ReactivesListController
  * @constructor
@@ -1152,7 +1174,8 @@ angular
       'ReactivesListService',
       ReactivesListController
     ]
-  );;
+  );
+
 /**
  * @name ReceptionController
  * @constructor
@@ -1199,7 +1222,8 @@ angular
       'ReceptionistService', 'ReceptionService',
       ReceptionController
     ]
-  );;
+  );
+
 /**
  * @name ReferencesListController
  * @constructor
@@ -1224,7 +1248,8 @@ angular
       'ReferencesListService',
       ReferencesListController
     ]
-  );;
+  );
+
 /**
  * @name ReportApprovalController
  * @constructor
@@ -1256,7 +1281,8 @@ angular
       'ReportApprovalService',
       ReportApprovalController
     ]
-  );;
+  );
+
 /**
  * @name ReportsListController
  * @constructor
@@ -1281,7 +1307,8 @@ angular
       'ReportsListService',
       ReportsListController
     ]
-  );;
+  );
+
 /**
  * @name SamplesListController
  * @constructor
@@ -1306,7 +1333,8 @@ angular
       'SamplesListService',
       SamplesListController
     ]
-  );;
+  );
+
 /**
  * @name TaskAssignController
  * @constructor
@@ -1380,7 +1408,8 @@ angular
       'BioSupervisorService', 'TaskAssignService',
       TaskAssignController
     ]
-  );;
+  );
+
 /**
  * @name TasksController
  * @constructor
@@ -1400,7 +1429,8 @@ angular
       'TaskService',
       TasksController
     ]
-  );;
+  );
+
 /**
  * @name UsersListController
  * @constructor

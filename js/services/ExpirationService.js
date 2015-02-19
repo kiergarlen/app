@@ -1,4 +1,4 @@
-/*
+/**
  * @name ExpirationService
  * @constructor
  * @desc Proveedor de datos, Vigencias

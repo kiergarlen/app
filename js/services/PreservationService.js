@@ -1,4 +1,4 @@
-/*
+/**
  * @name PreservationService
  * @constructor
  * @desc Proveedor de datos, Preservaciones

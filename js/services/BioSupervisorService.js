@@ -1,4 +1,4 @@
-/*
+/**
  * @name BioSupervisorService
  * @constructor
  * @desc Proveedor de datos, Supervisores microbiológico

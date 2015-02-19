@@ -1,4 +1,4 @@
-/*
+/**
  * @name SamplingTypeService
  * @constructor
  * @desc Proveedor de datos, Tipo muestreo

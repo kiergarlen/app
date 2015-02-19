@@ -1,4 +1,4 @@
-/*
+/**
  * @name MenuService
  * @constructor
  * @desc Proveedor de datos, Menú

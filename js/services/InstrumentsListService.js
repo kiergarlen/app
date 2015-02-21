@@ -6,7 +6,7 @@
  * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
  */
 function InstrumentsListService($resource) {
-  return $resource('models/intruments_list.json', {}, {
+  return $resource('models/instruments_list.json', {}, {
     query: {method:'GET', params:{}, isArray:true}
   });
 }

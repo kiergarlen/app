@@ -10,7 +10,7 @@
 		"id_metodo":1,
 		"tipo_parametro":"Fisicoquímico",
 		"clase_parametro":"Campo",
-		"actvo":1,
+		"activo":1,
 		"valor":null,
 		"selected":false
 	},
@@ -25,7 +25,7 @@
 		"id_metodo":1,
 		"tipo_parametro":"Fisicoquímico",
 		"clase_parametro":"Campo",
-		"actvo":1,
+		"activo":1,
 		"valor":null,
 		"selected":false
 	},
@@ -40,7 +40,7 @@
 		"id_metodo":1,
 		"tipo_parametro":"Fisicoquímico",
 		"clase_parametro":"Campo",
-		"actvo":1,
+		"activo":1,
 		"valor":null,
 		"selected":false
 	},
@@ -55,7 +55,7 @@
 		"id_metodo":1,
 		"tipo_parametro":"Fisicoquímico",
 		"clase_parametro":"Campo",
-		"actvo":1,
+		"activo":1,
 		"valor":null,
 		"selected":false
 	},
@@ -70,7 +70,7 @@
 		"id_metodo":1,
 		"tipo_parametro":"Fisicoquímico",
 		"clase_parametro":"Campo",
-		"actvo":1,
+		"activo":1,
 		"valor":null,
 		"selected":false
 	},
@@ -85,7 +85,7 @@
 		"id_metodo":1,
 		"tipo_parametro":"Fisicoquímico",
 		"clase_parametro":"Campo",
-		"actvo":1,
+		"activo":1,
 		"valor":null,
 		"selected":false
 	}

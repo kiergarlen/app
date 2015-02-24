@@ -293,9 +293,11 @@
           Seleccione una opción
         </option>
         <option
-          data-ng-repeat="samplingSupervisor in plan.plan.samplingSupervisors"
+          data-ng-repeat="samplingSupervisor in plan.samplingSupervisors"
           value="{{samplingSupervisor.id_empleado}}">
-          {{samplingSupervisor.supervisor_muestreo}}
+          {{samplingSupervisor.nombres}}
+          {{samplingSupervisor.ap}}
+          {{samplingSupervisor.am}}
         </option>
       </select>
     </div>
@@ -331,9 +333,11 @@
           Seleccione una opción
         </option>
         <option
-          data-ng-repeat="collectingSupervisor in plan.plan.collectingSupervisors"
+          data-ng-repeat="collectingSupervisor in plan.samplingSupervisors"
           value="{{collectingSupervisor.id_empleado}}">
-          {{collectingSupervisor.supervisor_recoleccion}}
+          {{collectingSupervisor.nombres}}
+          {{collectingSupervisor.ap}}
+          {{collectingSupervisor.am}}
         </option>
       </select>
     </div>
@@ -369,9 +373,11 @@
           Seleccione una opción
         </option>
         <option
-          data-ng-repeat="loggingSupervisor in plan.plan.loggingSupervisors"
+          data-ng-repeat="loggingSupervisor in plan.samplingSupervisors"
           value="{{loggingSupervisor.id_empleado}}">
-          {{loggingSupervisor.supervisor_registro}}
+          {{loggingSupervisor.nombres}}
+          {{loggingSupervisor.ap}}
+          {{loggingSupervisor.am}}
         </option>
       </select>
     </div>
@@ -412,9 +418,11 @@
           Seleccione una opción
         </option>
         <option
-          data-ng-repeat="calibrator in plan.plan.calibrators"
-          value="{{calibrator.id_empleado}}">
-          {{calibrator.supervisor_calibracion}}
+          data-ng-repeat="calibratingSupervisor in plan.samplingSupervisors"
+          value="{{calibratingSupervisor.id_empleado}}">
+          {{calibratingSupervisor.nombres}}
+          {{calibratingSupervisor.ap}}
+          {{calibratingSupervisor.am}}
         </option>
       </select>
     </div>
@@ -478,9 +486,11 @@
           Seleccione una opción
         </option>
         <option
-          data-ng-repeat="preparationSupervisor in plan.preparationSupervisors"
+          data-ng-repeat="preparationSupervisor in plan.samplingSupervisors"
           value="{{preparationSupervisor.id_empleado}}">
-          {{preparationSupervisor.supervisor_recipientes}}
+          {{preparationSupervisor.nombres}}
+          {{preparationSupervisor.ap}}
+          {{preparationSupervisor.am}}
         </option>
       </select>
     </div>
@@ -537,9 +547,11 @@
           Seleccione una opción
         </option>
         <option
-          data-ng-repeat="reactiveSupervisor in plan.reactiveSupervisors"
+          data-ng-repeat="reactiveSupervisor in plan.samplingSupervisors"
           value="{{reactiveSupervisor.id_empleado}}">
-          {{reactiveSupervisor.supervisor_reactivos}}
+          {{reactiveSupervisor.nombres}}
+          {{reactiveSupervisor.ap}}
+          {{reactiveSupervisor.am}}
         </option>
       </select>
     </div>
@@ -611,9 +623,11 @@
           Seleccione una opción
         </option>
         <option
-          data-ng-repeat="materialsSupervisor in plan.materialsSupervisors"
+          data-ng-repeat="materialsSupervisor in plan.samplingSupervisors"
           value="{{materialsSupervisor.id_empleado}}">
-          {{materialsSupervisor.supervisor_materiales}}
+          {{materialsSupervisor.nombres}}
+          {{materialsSupervisor.ap}}
+          {{materialsSupervisor.am}}
         </option>
       </select>
     </div>
@@ -649,9 +663,13 @@
           Seleccione una opción
         </option>
         <option
-          data-ng-repeat="coolersSupervisor in plan.coolersSupervisors"
+          data-ng-repeat="coolersSupervisor in plan.samplingSupervisors"
           value="{{coolersSupervisor.id_empleado}}">
-          {{coolersSupervisor.supervisor_hieleras}}
+          {{coolersSupervisor.nombres}}
+          {{coolersSupervisor.ap}}
+          {{coolersSupervisor.am}}
+          {{coolersSupervisor.ap}}
+          {{coolersSupervisor.am}}
         </option>
       </select>
     </div>
@@ -662,7 +680,8 @@
       >
       <label>
         <input type="checkbox"
-          value="{{cooler.selected}}">
+          data-ng-model="cooler.selected"
+          name="{{cooler.selected}}">
           {{cooler.hielera}}
       </label>
     </div>
@@ -671,7 +690,7 @@
     <div class="col-xs-12">
       Cantidad de hieleras:
       <strong>
-      {{plan.plan.hieleras.length}}
+      {{plan.countSelectedItems(plan.coolers)}}
       </strong>
     </div>
   </div>

@@ -1,4 +1,4 @@
-{
+¡{
   "id_orden_muestreo":1,
   "folio":656,
   "ejercicio":2014,
@@ -567,8 +567,27 @@
   },
   "id_origen_muestreo":1,
   "origen_muestreo":"Agua",
-  "id_emite_orden":1,
-  "emite_orden":"Nombre del gerente",
+  "id_supervisor_orden":1,
+  "supervisor_orden":
+  {
+    "id_supervisor_orden":2,
+    "id_empleado":1,
+    "id_nivel":1,
+    "id_area":5,
+    "area":"Administrativo",
+    "id_puesto":1,
+    "puesto":"Gerente de Laboratorio",
+    "nombres":"Reyna",
+    "ap":"García",
+    "am":"Meneses",
+    "fecha_act":"2014-11-30",
+    "calidad":0,
+    "supervisa":1,
+    "analiza":1,
+    "muestrea":1,
+    "cert":1,
+    "activo":1
+  },
   "id_supervisor_muestreo":2,
   "supervisor_muestreo":
   {

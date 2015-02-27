@@ -2,6 +2,7 @@
   {
     "id_parametro":1,
     "id_tipo_parametro":1,
+    "id_clase_parametro":1,
     "id_area":1,
     "id_unidad":6,
     "id_metodo":1,
@@ -24,6 +25,7 @@
   {
     "id_parametro":2,
     "id_tipo_parametro":1,
+    "id_clase_parametro":1,
     "id_area":1,
     "id_unidad":6,
     "id_metodo":1,
@@ -46,6 +48,7 @@
   {
     "id_parametro":3,
     "id_tipo_parametro":1,
+    "id_clase_parametro":1,
     "id_area":1,
     "id_unidad":6,
     "id_metodo":1,
@@ -68,6 +71,7 @@
   {
     "id_parametro":4,
     "id_tipo_parametro":1,
+    "id_clase_parametro":1,
     "id_area":1,
     "id_unidad":13,
     "id_metodo":2,
@@ -90,6 +94,7 @@
   {
     "id_parametro":5,
     "id_tipo_parametro":1,
+    "id_clase_parametro":1,
     "id_area":1,
     "id_unidad":6,
     "id_metodo":3,
@@ -112,6 +117,7 @@
   {
     "id_parametro":6,
     "id_tipo_parametro":1,
+    "id_clase_parametro":1,
     "id_area":1,
     "id_unidad":6,
     "id_metodo":4,
@@ -134,6 +140,7 @@
   {
     "id_parametro":7,
     "id_tipo_parametro":1,
+    "id_clase_parametro":1,
     "id_area":1,
     "id_unidad":6,
     "id_metodo":5,
@@ -156,6 +163,7 @@
   {
     "id_parametro":8,
     "id_tipo_parametro":1,
+    "id_clase_parametro":1,
     "id_area":1,
     "id_unidad":1,
     "id_metodo":6,
@@ -178,6 +186,7 @@
   {
     "id_parametro":9,
     "id_tipo_parametro":1,
+    "id_clase_parametro":1,
     "id_area":1,
     "id_unidad":14,
     "id_metodo":7,
@@ -200,6 +209,7 @@
   {
     "id_parametro":10,
     "id_tipo_parametro":1,
+    "id_clase_parametro":1,
     "id_area":1,
     "id_unidad":1,
     "id_metodo":8,
@@ -222,6 +232,7 @@
   {
     "id_parametro":11,
     "id_tipo_parametro":1,
+    "id_clase_parametro":1,
     "id_area":1,
     "id_unidad":12,
     "id_metodo":9,
@@ -244,6 +255,7 @@
   {
     "id_parametro":12,
     "id_tipo_parametro":1,
+    "id_clase_parametro":1,
     "id_area":1,
     "id_unidad":12,
     "id_metodo":10,
@@ -266,6 +278,7 @@
   {
     "id_parametro":13,
     "id_tipo_parametro":1,
+    "id_clase_parametro":1,
     "id_area":1,
     "id_unidad":1,
     "id_metodo":11,
@@ -288,6 +301,7 @@
   {
     "id_parametro":14,
     "id_tipo_parametro":1,
+    "id_clase_parametro":1,
     "id_area":1,
     "id_unidad":1,
     "id_metodo":12,
@@ -310,6 +324,7 @@
   {
     "id_parametro":15,
     "id_tipo_parametro":1,
+    "id_clase_parametro":1,
     "id_area":1,
     "id_unidad":1,
     "id_metodo":13,
@@ -332,6 +347,7 @@
   {
     "id_parametro":16,
     "id_tipo_parametro":1,
+    "id_clase_parametro":1,
     "id_area":1,
     "id_unidad":5,
     "id_metodo":14,
@@ -354,6 +370,7 @@
   {
     "id_parametro":17,
     "id_tipo_parametro":1,
+    "id_clase_parametro":1,
     "id_area":1,
     "id_unidad":1,
     "id_metodo":15,
@@ -376,6 +393,7 @@
   {
     "id_parametro":18,
     "id_tipo_parametro":1,
+    "id_clase_parametro":1,
     "id_area":1,
     "id_unidad":15,
     "id_metodo":16,
@@ -398,6 +416,7 @@
   {
     "id_parametro":19,
     "id_tipo_parametro":1,
+    "id_clase_parametro":1,
     "id_area":1,
     "id_unidad":1,
     "id_metodo":17,
@@ -420,6 +439,7 @@
   {
     "id_parametro":20,
     "id_tipo_parametro":1,
+    "id_clase_parametro":1,
     "id_area":1,
     "id_unidad":1,
     "id_metodo":18,
@@ -442,6 +462,7 @@
   {
     "id_parametro":21,
     "id_tipo_parametro":1,
+    "id_clase_parametro":1,
     "id_area":1,
     "id_unidad":1,
     "id_metodo":19,
@@ -464,6 +485,7 @@
   {
     "id_parametro":22,
     "id_tipo_parametro":1,
+    "id_clase_parametro":1,
     "id_area":1,
     "id_unidad":1,
     "id_metodo":19,
@@ -486,6 +508,7 @@
   {
     "id_parametro":23,
     "id_tipo_parametro":1,
+    "id_clase_parametro":1,
     "id_area":1,
     "id_unidad":1,
     "id_metodo":20,
@@ -508,6 +531,7 @@
   {
     "id_parametro":24,
     "id_tipo_parametro":1,
+    "id_clase_parametro":1,
     "id_area":1,
     "id_unidad":1,
     "id_metodo":21,
@@ -530,6 +554,7 @@
   {
     "id_parametro":25,
     "id_tipo_parametro":1,
+    "id_clase_parametro":1,
     "id_area":1,
     "id_unidad":1,
     "id_metodo":22,
@@ -552,6 +577,7 @@
   {
     "id_parametro":26,
     "id_tipo_parametro":1,
+    "id_clase_parametro":1,
     "id_area":1,
     "id_unidad":14,
     "id_metodo":23,
@@ -574,6 +600,7 @@
   {
     "id_parametro":27,
     "id_tipo_parametro":1,
+    "id_clase_parametro":1,
     "id_area":1,
     "id_unidad":1,
     "id_metodo":19,
@@ -596,6 +623,7 @@
   {
     "id_parametro":28,
     "id_tipo_parametro":1,
+    "id_clase_parametro":1,
     "id_area":1,
     "id_unidad":1,
     "id_metodo":24,
@@ -618,6 +646,7 @@
   {
     "id_parametro":29,
     "id_tipo_parametro":1,
+    "id_clase_parametro":1,
     "id_area":1,
     "id_unidad":16,
     "id_metodo":25,
@@ -640,6 +669,7 @@
   {
     "id_parametro":30,
     "id_tipo_parametro":1,
+    "id_clase_parametro":1,
     "id_area":1,
     "id_unidad":1,
     "id_metodo":26,
@@ -662,12 +692,13 @@
   {
     "id_parametro":31,
     "id_tipo_parametro":1,
+    "id_clase_parametro":1,
     "id_area":1,
     "id_unidad":1,
     "id_metodo":27,
     "id_tipo_matriz":1,
     "matriz":"Agua",
-    "param":"SD Fifjos",
+    "param":"SD Fijos",
     "parametro":"Sólidos Disueltos Fijos",
     "orden_original":31,
     "es_param":1,
@@ -684,6 +715,7 @@
   {
     "id_parametro":32,
     "id_tipo_parametro":1,
+    "id_clase_parametro":1,
     "id_area":1,
     "id_unidad":1,
     "id_metodo":27,
@@ -706,6 +738,7 @@
   {
     "id_parametro":33,
     "id_tipo_parametro":1,
+    "id_clase_parametro":1,
     "id_area":1,
     "id_unidad":1,
     "id_metodo":27,
@@ -728,6 +761,7 @@
   {
     "id_parametro":34,
     "id_tipo_parametro":1,
+    "id_clase_parametro":1,
     "id_area":1,
     "id_unidad":1,
     "id_metodo":28,
@@ -750,6 +784,7 @@
   {
     "id_parametro":35,
     "id_tipo_parametro":1,
+    "id_clase_parametro":1,
     "id_area":1,
     "id_unidad":1,
     "id_metodo":27,
@@ -772,6 +807,7 @@
   {
     "id_parametro":36,
     "id_tipo_parametro":1,
+    "id_clase_parametro":1,
     "id_area":1,
     "id_unidad":1,
     "id_metodo":27,
@@ -794,6 +830,7 @@
   {
     "id_parametro":37,
     "id_tipo_parametro":1,
+    "id_clase_parametro":1,
     "id_area":1,
     "id_unidad":1,
     "id_metodo":27,
@@ -816,6 +853,7 @@
   {
     "id_parametro":38,
     "id_tipo_parametro":1,
+    "id_clase_parametro":1,
     "id_area":1,
     "id_unidad":1,
     "id_metodo":27,
@@ -838,6 +876,7 @@
   {
     "id_parametro":39,
     "id_tipo_parametro":1,
+    "id_clase_parametro":1,
     "id_area":1,
     "id_unidad":16,
     "id_metodo":25,
@@ -860,6 +899,7 @@
   {
     "id_parametro":40,
     "id_tipo_parametro":1,
+    "id_clase_parametro":1,
     "id_area":1,
     "id_unidad":1,
     "id_metodo":27,
@@ -882,6 +922,7 @@
   {
     "id_parametro":41,
     "id_tipo_parametro":1,
+    "id_clase_parametro":1,
     "id_area":1,
     "id_unidad":1,
     "id_metodo":27,
@@ -904,6 +945,7 @@
   {
     "id_parametro":42,
     "id_tipo_parametro":1,
+    "id_clase_parametro":1,
     "id_area":1,
     "id_unidad":16,
     "id_metodo":25,
@@ -926,6 +968,7 @@
   {
     "id_parametro":43,
     "id_tipo_parametro":1,
+    "id_clase_parametro":1,
     "id_area":1,
     "id_unidad":1,
     "id_metodo":30,
@@ -948,6 +991,7 @@
   {
     "id_parametro":44,
     "id_tipo_parametro":4,
+    "id_clase_parametro":4,
     "id_area":4,
     "id_unidad":2,
     "id_metodo":31,
@@ -970,6 +1014,7 @@
   {
     "id_parametro":45,
     "id_tipo_parametro":4,
+    "id_clase_parametro":4,
     "id_area":4,
     "id_unidad":3,
     "id_metodo":32,
@@ -992,6 +1037,7 @@
   {
     "id_parametro":46,
     "id_tipo_parametro":4,
+    "id_clase_parametro":4,
     "id_area":4,
     "id_unidad":17,
     "id_metodo":33,
@@ -1014,6 +1060,7 @@
   {
     "id_parametro":47,
     "id_tipo_parametro":4,
+    "id_clase_parametro":4,
     "id_area":4,
     "id_unidad":1,
     "id_metodo":34,
@@ -1036,6 +1083,7 @@
   {
     "id_parametro":48,
     "id_tipo_parametro":4,
+    "id_clase_parametro":4,
     "id_area":4,
     "id_unidad":18,
     "id_metodo":35,
@@ -1058,6 +1106,7 @@
   {
     "id_parametro":52,
     "id_tipo_parametro":2,
+    "id_clase_parametro":2,
     "id_area":2,
     "id_unidad":1,
     "id_metodo":39,
@@ -1080,6 +1129,7 @@
   {
     "id_parametro":53,
     "id_tipo_parametro":2,
+    "id_clase_parametro":2,
     "id_area":2,
     "id_unidad":1,
     "id_metodo":39,
@@ -1102,6 +1152,7 @@
   {
     "id_parametro":54,
     "id_tipo_parametro":2,
+    "id_clase_parametro":2,
     "id_area":2,
     "id_unidad":1,
     "id_metodo":39,
@@ -1124,6 +1175,7 @@
   {
     "id_parametro":55,
     "id_tipo_parametro":2,
+    "id_clase_parametro":2,
     "id_area":2,
     "id_unidad":1,
     "id_metodo":39,
@@ -1146,6 +1198,7 @@
   {
     "id_parametro":56,
     "id_tipo_parametro":2,
+    "id_clase_parametro":2,
     "id_area":2,
     "id_unidad":1,
     "id_metodo":39,
@@ -1168,6 +1221,7 @@
   {
     "id_parametro":57,
     "id_tipo_parametro":2,
+    "id_clase_parametro":2,
     "id_area":2,
     "id_unidad":1,
     "id_metodo":39,
@@ -1190,6 +1244,7 @@
   {
     "id_parametro":58,
     "id_tipo_parametro":2,
+    "id_clase_parametro":2,
     "id_area":2,
     "id_unidad":1,
     "id_metodo":39,
@@ -1212,6 +1267,7 @@
   {
     "id_parametro":59,
     "id_tipo_parametro":2,
+    "id_clase_parametro":2,
     "id_area":2,
     "id_unidad":1,
     "id_metodo":39,
@@ -1234,6 +1290,7 @@
   {
     "id_parametro":60,
     "id_tipo_parametro":2,
+    "id_clase_parametro":2,
     "id_area":2,
     "id_unidad":1,
     "id_metodo":39,
@@ -1256,6 +1313,7 @@
   {
     "id_parametro":61,
     "id_tipo_parametro":2,
+    "id_clase_parametro":2,
     "id_area":2,
     "id_unidad":1,
     "id_metodo":39,
@@ -1278,6 +1336,7 @@
   {
     "id_parametro":62,
     "id_tipo_parametro":2,
+    "id_clase_parametro":2,
     "id_area":2,
     "id_unidad":1,
     "id_metodo":39,
@@ -1300,6 +1359,7 @@
   {
     "id_parametro":63,
     "id_tipo_parametro":2,
+    "id_clase_parametro":2,
     "id_area":2,
     "id_unidad":1,
     "id_metodo":39,
@@ -1322,6 +1382,7 @@
   {
     "id_parametro":64,
     "id_tipo_parametro":2,
+    "id_clase_parametro":2,
     "id_area":2,
     "id_unidad":1,
     "id_metodo":39,
@@ -1344,6 +1405,7 @@
   {
     "id_parametro":65,
     "id_tipo_parametro":2,
+    "id_clase_parametro":2,
     "id_area":2,
     "id_unidad":1,
     "id_metodo":39,
@@ -1366,6 +1428,7 @@
   {
     "id_parametro":66,
     "id_tipo_parametro":2,
+    "id_clase_parametro":2,
     "id_area":2,
     "id_unidad":1,
     "id_metodo":39,
@@ -1388,6 +1451,7 @@
   {
     "id_parametro":67,
     "id_tipo_parametro":2,
+    "id_clase_parametro":2,
     "id_area":2,
     "id_unidad":1,
     "id_metodo":39,
@@ -1410,6 +1474,7 @@
   {
     "id_parametro":68,
     "id_tipo_parametro":2,
+    "id_clase_parametro":2,
     "id_area":2,
     "id_unidad":19,
     "id_metodo":25,
@@ -1432,6 +1497,7 @@
   {
     "id_parametro":69,
     "id_tipo_parametro":2,
+    "id_clase_parametro":2,
     "id_area":2,
     "id_unidad":19,
     "id_metodo":25,
@@ -1454,6 +1520,7 @@
   {
     "id_parametro":70,
     "id_tipo_parametro":2,
+    "id_clase_parametro":2,
     "id_area":2,
     "id_unidad":19,
     "id_metodo":25,
@@ -1476,6 +1543,7 @@
   {
     "id_parametro":71,
     "id_tipo_parametro":2,
+    "id_clase_parametro":2,
     "id_area":2,
     "id_unidad":19,
     "id_metodo":25,
@@ -1498,6 +1566,7 @@
   {
     "id_parametro":72,
     "id_tipo_parametro":2,
+    "id_clase_parametro":2,
     "id_area":2,
     "id_unidad":19,
     "id_metodo":25,
@@ -1520,6 +1589,7 @@
   {
     "id_parametro":73,
     "id_tipo_parametro":2,
+    "id_clase_parametro":2,
     "id_area":2,
     "id_unidad":19,
     "id_metodo":25,
@@ -1542,6 +1612,7 @@
   {
     "id_parametro":74,
     "id_tipo_parametro":2,
+    "id_clase_parametro":2,
     "id_area":2,
     "id_unidad":19,
     "id_metodo":25,
@@ -1564,6 +1635,7 @@
   {
     "id_parametro":75,
     "id_tipo_parametro":2,
+    "id_clase_parametro":2,
     "id_area":2,
     "id_unidad":19,
     "id_metodo":25,
@@ -1586,6 +1658,7 @@
   {
     "id_parametro":77,
     "id_tipo_parametro":3,
+    "id_clase_parametro":3,
     "id_area":3,
     "id_unidad":8,
     "id_metodo":41,
@@ -1608,6 +1681,7 @@
   {
     "id_parametro":78,
     "id_tipo_parametro":3,
+    "id_clase_parametro":3,
     "id_area":3,
     "id_unidad":8,
     "id_metodo":41,
@@ -1630,6 +1704,7 @@
   {
     "id_parametro":79,
     "id_tipo_parametro":3,
+    "id_clase_parametro":3,
     "id_area":3,
     "id_unidad":20,
     "id_metodo":42,
@@ -1652,6 +1727,7 @@
   {
     "id_parametro":80,
     "id_tipo_parametro":3,
+    "id_clase_parametro":3,
     "id_area":3,
     "id_unidad":20,
     "id_metodo":42,
@@ -1674,6 +1750,7 @@
   {
     "id_parametro":81,
     "id_tipo_parametro":3,
+    "id_clase_parametro":3,
     "id_area":3,
     "id_unidad":21,
     "id_metodo":43,
@@ -1696,6 +1773,7 @@
   {
     "id_parametro":82,
     "id_tipo_parametro":3,
+    "id_clase_parametro":3,
     "id_area":3,
     "id_unidad":22,
     "id_metodo":44,
@@ -1718,6 +1796,7 @@
   {
     "id_parametro":83,
     "id_tipo_parametro":3,
+    "id_clase_parametro":3,
     "id_area":3,
     "id_unidad":22,
     "id_metodo":45,
@@ -1740,6 +1819,7 @@
   {
     "id_parametro":84,
     "id_tipo_parametro":3,
+    "id_clase_parametro":3,
     "id_area":3,
     "id_unidad":22,
     "id_metodo":45,
@@ -1762,6 +1842,7 @@
   {
     "id_parametro":85,
     "id_tipo_parametro":3,
+    "id_clase_parametro":3,
     "id_area":3,
     "id_unidad":23,
     "id_metodo":25,
@@ -1784,6 +1865,7 @@
   {
     "id_parametro":86,
     "id_tipo_parametro":3,
+    "id_clase_parametro":3,
     "id_area":3,
     "id_unidad":24,
     "id_metodo":25,
@@ -1806,6 +1888,7 @@
   {
     "id_parametro":93,
     "id_tipo_parametro":2,
+    "id_clase_parametro":2,
     "id_area":2,
     "id_unidad":18,
     "id_metodo":38,
@@ -1828,6 +1911,7 @@
   {
     "id_parametro":94,
     "id_tipo_parametro":6,
+    "id_clase_parametro":6,
     "id_area":6,
     "id_unidad":18,
     "id_metodo":38,
@@ -1850,6 +1934,7 @@
   {
     "id_parametro":95,
     "id_tipo_parametro":6,
+    "id_clase_parametro":6,
     "id_area":6,
     "id_unidad":18,
     "id_metodo":38,
@@ -1872,6 +1957,7 @@
   {
     "id_parametro":96,
     "id_tipo_parametro":6,
+    "id_clase_parametro":6,
     "id_area":6,
     "id_unidad":18,
     "id_metodo":38,
@@ -1894,6 +1980,7 @@
   {
     "id_parametro":97,
     "id_tipo_parametro":6,
+    "id_clase_parametro":6,
     "id_area":6,
     "id_unidad":18,
     "id_metodo":38,
@@ -1916,6 +2003,7 @@
   {
     "id_parametro":98,
     "id_tipo_parametro":6,
+    "id_clase_parametro":6,
     "id_area":6,
     "id_unidad":18,
     "id_metodo":38,
@@ -1938,6 +2026,7 @@
   {
     "id_parametro":99,
     "id_tipo_parametro":6,
+    "id_clase_parametro":6,
     "id_area":6,
     "id_unidad":18,
     "id_metodo":38,
@@ -1960,6 +2049,7 @@
   {
     "id_parametro":100,
     "id_tipo_parametro":6,
+    "id_clase_parametro":6,
     "id_area":6,
     "id_unidad":18,
     "id_metodo":38,
@@ -1982,6 +2072,7 @@
   {
     "id_parametro":101,
     "id_tipo_parametro":6,
+    "id_clase_parametro":6,
     "id_area":6,
     "id_unidad":18,
     "id_metodo":38,
@@ -2004,6 +2095,7 @@
   {
     "id_parametro":102,
     "id_tipo_parametro":6,
+    "id_clase_parametro":6,
     "id_area":6,
     "id_unidad":18,
     "id_metodo":38,
@@ -2026,6 +2118,7 @@
   {
     "id_parametro":103,
     "id_tipo_parametro":6,
+    "id_clase_parametro":6,
     "id_area":6,
     "id_unidad":18,
     "id_metodo":38,
@@ -2048,6 +2141,7 @@
   {
     "id_parametro":104,
     "id_tipo_parametro":4,
+    "id_clase_parametro":4,
     "id_area":4,
     "id_unidad":18,
     "id_metodo":38,
@@ -2070,6 +2164,7 @@
   {
     "id_parametro":105,
     "id_tipo_parametro":4,
+    "id_clase_parametro":4,
     "id_area":4,
     "id_unidad":18,
     "id_metodo":38,
@@ -2092,6 +2187,7 @@
   {
     "id_parametro":106,
     "id_tipo_parametro":4,
+    "id_clase_parametro":4,
     "id_area":4,
     "id_unidad":11,
     "id_metodo":38,

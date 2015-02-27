@@ -8,6 +8,7 @@
  * @param {Object} DistrictService - Proveedor de datos, Municipios
  * @param {Object} CityService - Proveedor de datos, Localidades
  * @param {Object} SamplingSupervisorService - Proveedor de datos, Supervisores muestreo
+ * @param {Object} SamplingEmployeeService - Proveedor de datos, Empleados muestreo
  * @param {Object} PreservationService - Proveedor de datos, Preservaciones
  * @param {Object} ContainerService - Proveedor de datos, Recipientes
  * @param {Object} ReactivesListService - Proveedor de datos, lista Reactivos
@@ -17,8 +18,8 @@
  */
 function PlanController(PlanObjectivesService, PointKindsService,
   DistrictService, CityService, SamplingSupervisorService,
-  PreservationService, ContainerService, ReactivesListService,
-  MaterialService, CoolerService,
+  SamplingEmployeeService, PreservationService, ContainerService,
+  ReactivesListService, MaterialService, CoolerService,
   PlanService) {
   var vm = this;
   vm.plan = PlanService.query();
@@ -27,6 +28,7 @@ function PlanController(PlanObjectivesService, PointKindsService,
   vm.districts = DistrictService.query();
   vm.cities = CityService.query(vm.plan.id_municipio);
   vm.samplingSupervisors = SamplingSupervisorService.query();
+  vm.samplingEmployees = SamplingEmployeeService.query();
   vm.preservations = PreservationService.query();
   vm.reactives = ReactivesListService.query();
   vm.containers = ContainerService.query();
@@ -83,8 +85,8 @@ angular
     [
       'PlanObjectivesService', 'PointKindsService',
       'DistrictService', 'CityService', 'SamplingSupervisorService',
-      'PreservationService', 'ContainerService', 'ReactivesListService',
-      'MaterialService', 'CoolerService',
+      'SamplingEmployeeService', 'PreservationService', 'ContainerService',
+      'ReactivesListService', 'MaterialService', 'CoolerService',
       'PlanService',
       PlanController
     ]

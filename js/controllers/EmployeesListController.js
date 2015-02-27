@@ -6,7 +6,7 @@
  * @param {Object} EmployeeService - Proveedor de datos, Empleados
  */
 function EmployeesListController(EmployeeService) {
-	var vm = this;
+  var vm = this;
   vm.employees = EmployeeService.query();
 }
 

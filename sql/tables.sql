@@ -160,3 +160,16 @@ IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON,
 ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
+
+
+
+
+SET ANSI_PADDING OFF
+GO
+
+ALTER TABLE [dbo].[Clientes]  WITH CHECK ADD  CONSTRAINT [FK_CuerpoCalidad] FOREIGN KEY([idCuerpoCalidad])
+REFERENCES [dbo].[CuerposCalidad] ([idCuerpoCalidad])
+GO
+
+ALTER TABLE [dbo].[Clientes] CHECK CONSTRAINT [FK_CuerpoCalidad]
+GO

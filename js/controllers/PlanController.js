@@ -34,8 +34,6 @@ function PlanController(PlanObjectivesService, PointKindsService,
   vm.coolers = CoolerService.query();
   vm.addPoints = addPoints;
 
-  vm.selectObjective = selectObjective;
-  vm.selectPointType = selectPointType;
   vm.selectDistrict = selectDistrict;
 
   vm.countSelectedItems = countSelectedItems;
@@ -71,14 +69,6 @@ function PlanController(PlanObjectivesService, PointKindsService,
   }
 
   function addPoints() {
-
-  }
-
-  function selectObjective() {
-
-  }
-
-  function selectPointType() {
 
   }
 

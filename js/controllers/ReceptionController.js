@@ -33,7 +33,7 @@ function ReceptionController(ReceptionistService, ReceptionService) {
   }
 
   function submitReceptionForm() {
-
+    //send to verification service
   }
 }
 

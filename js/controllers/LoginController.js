@@ -6,7 +6,7 @@
  * @param {Object} $http - Manejo de peticiones HTTP [AngularJS]
  * @param {Object} LoginService - Proveedor de datos, Login
  */
-function LoginController($scope, $http, Loginservice) {
+function LoginController($scope, $http, $window, Loginservice) {
   var vm = this;
   vm.message = '';
   vm.user = {username: '', password: ''};
@@ -23,9 +23,11 @@ function LoginController($scope, $http, Loginservice) {
         password: password
       }
     }).then(function success(response) {
-      console.log(response);
+      //console.log(response);
       console.log(response.data);
       //AuthToken.setToken(response.data.token);
+      $window.localStorage.setItem('user-token', response.data.token);
+      console.log($window.localStorage.getItem('user-token'));
       //$scope.user = response.data.user;
       //$scope.noPicture = true;
       //$scope.alreadyLoggedIn = true;
@@ -60,7 +62,7 @@ angular
   .module('siclabApp')
   .controller('LoginController',
     [
-      '$scope', '$http',
+      '$scope', '$http', '$window',
       'LoginService',
       LoginController
     ]

@@ -14,7 +14,6 @@ $token = array(
     "iat" => 1425175454,
     "exp" => 1426175193
 );
-
 $jwt = JWT::encode($token, $key);
 
 echo $jwt;
@@ -40,9 +39,25 @@ $app->post("/login", function() use ($app) {
 	    // get and decode JSON request body
 	    $request = $app->request();
 	    $body = $request->getBody();
-	    echo $body;
+	    //echo $body;
+	    $input = json_decode($body);
 
-	    //$input = json_decode($body);
+
+	    //TODO sanitize, check versus database
+	    //$usr =
+	    //$pwd = $input->password;
+	    //$lvl = 5;
+	    //print_r();
+		$token = array(
+		    "user" => "Nombre(s) del ususario",
+		    "lvl" => 5,
+		    "iss" => "http://localhost",
+		    "aud" => "http://localhost",
+		    "iat" => time(),
+		    "exp" => 1626175193
+		);
+		$jwt = JWT::encode($token, KEY);
+
 	    //// store article record
 	    //$article = R::dispense('articles');
 	    //$article->title = (string)$input->title;
@@ -52,6 +67,8 @@ $app->post("/login", function() use ($app) {
 	    //
 	    //// return JSON-encoded response body
 	    //$app->response()->header('Content-Type', 'application/json');
+	    echo $jwt;
+	    //echo ($input->username);
 	    //echo json_encode(R::exportAll($article));
 	  } catch (Exception $e) {
 	    $app->response()->status(400);

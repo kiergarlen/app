@@ -2,15 +2,17 @@
 //changes
 angular
   .module('siclabApp', [
-    'mgcrea.ngStrap',
     'ngRoute',
-    'ngResource'
+    'ngResource',
+    'angular-jwt',
+    'angular-storage',
+    'mgcrea.ngStrap'
   ]
 );
 
 //CONFIG
-//function config($routeProvider, $httpProvider, jwtInterceptorProvider) {
-function config($routeProvider) {
+//function config($routeProvider) {
+function config($routeProvider, $httpProvider, jwtInterceptorProvider) {
   $routeProvider
     .otherwise({
      redirectTo: '/sistema/login'
@@ -169,8 +171,8 @@ angular
   .module('siclabApp')
   .config(
     [
-      //'$routeProvider', '$httpProvider', 'jwtInterceptorProvider',
-      '$routeProvider',
+      //'$routeProvider',
+      '$routeProvider', '$httpProvider', 'jwtInterceptorProvider',
       config
     ]
   );

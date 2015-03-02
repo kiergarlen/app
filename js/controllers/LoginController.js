@@ -13,40 +13,46 @@ function LoginController($scope, $http, Loginservice) {
   vm.submit = submitMessage;
   vm.login = login;
 
-  function submitMessage(msg, usr, pwd) {
-    msg = [
-      msg,
-      ' USER: ',
-      usr,
-      ' PASSWORD: ',
-      pwd
-    ].join('');
-    return msg;
+  function submitMessage(username, password) {
+    //$scope.badCreds = false;
+    $http({
+      url: 'api/login',
+      method: 'POST',
+      data: {
+        username: username,
+        password: password
+      }
+    }).then(function success(response) {
+      console.log(response);
+      console.log(response.data);
+      //AuthToken.setToken(response.data.token);
+      //$scope.user = response.data.user;
+      //$scope.noPicture = true;
+      //$scope.alreadyLoggedIn = true;
+      //showAlert('success', 'Hey there!', 'Welcome ' + $scope.user.username + '!');
+    }, function error(response) {
+      if (response.status === 404) {
+        //$scope.badCreds = true;
+        //showAlert('danger', 'Whoops...', 'Do I know you?');
+        console.log('Not found');
+      } else {
+        //showAlert('danger', 'Hmmm....', 'Problem logging in! Sorry!');
+        console.log('Problem logging in!');
+      }
+    });
   }
 
   function login() {
-    if ($scope.loginForm.$valid)
-    {
-      if (vm.user.username == 'rgarcia' &&
-        vm.user.password == 'rgarcia'
-      )
-      {
-        vm.message = 'Enviando...';
-        vm.submit(
-          '',
-          vm.user.username,
-          vm.user.password
-        );
-      }
-      else
-      {
-        vm.message = 'Usuario o contraseña incorrectos';
-      }
-    }
-    else
+    vm.message = '';
+    if (!$scope.loginForm.$valid)
     {
       vm.message = 'Debe ingresar usuario y/o contraseña';
+      return;
     }
+    vm.submit(
+      vm.user.username,
+      vm.user.password
+    );
   }
 }
 

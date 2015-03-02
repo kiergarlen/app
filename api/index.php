@@ -6,13 +6,13 @@ require 'Authentication/JWT.php';
 $key = "m0oxUT7L8Unn93hXMUGHpwq_jTSKVBjQfEVCUe8jZ38KUU4VSAfmsNk4JJYcJl7CukrY6QMlixxwat7AZSpDcSQ";
 
 $token = array(
-    "usr" => "rgarcia",
-    "pwd" => "rgarcia",
-    "lvl" => 5,
-    "iss" => "http://example.org",
-    "aud" => "http://example.com",
-    "iat" => 1425175454,
-    "exp" => 1426175193
+	"usr" => "rgarcia",
+	"pwd" => "rgarcia",
+	"lvl" => 5,
+	"iss" => "http://example.org",
+	"aud" => "http://example.com",
+	"iat" => 1425175454,
+	"exp" => 1426175193
 );
 $jwt = JWT::encode($token, $key);
 
@@ -36,43 +36,44 @@ $app = new \Slim\Slim();
 
 $app->post("/login", function() use ($app) {
 	try {
-	    // get and decode JSON request body
-	    $request = $app->request();
-	    $body = $request->getBody();
-	    //echo $body;
-	    $input = json_decode($body);
+		// get and decode JSON request body
+		$request = $app->request();
+		$body = $request->getBody();
+		//echo $body;
+		$input = json_decode($body);
 
 
-	    //TODO sanitize, check versus database
-	    //$usr =
-	    //$pwd = $input->password;
-	    //$lvl = 5;
-	    //print_r();
+		//TODO sanitize, check versus database
+		//$usr =
+		//$pwd = $input->password;
+		//$lvl = 5;
+		//print_r();
 		$token = array(
-		    "user" => "Nombre(s) del ususario",
-		    "lvl" => 5,
-		    "iss" => "http://localhost",
-		    "aud" => "http://localhost",
-		    "iat" => time(),
-		    "exp" => 1626175193
+			"user" => "Nombre(s) del ususario",
+			"lvl" => 5,
+			"iss" => "http://localhost",
+			"aud" => "http://localhost",
+			"iat" => time(),
+			"exp" => 1626175193
 		);
 		$jwt = JWT::encode($token, KEY);
 
-	    //// store article record
-	    //$article = R::dispense('articles');
-	    //$article->title = (string)$input->title;
-	    //$article->url = (string)$input->url;
-	    //$article->date = (string)$input->date;
-	    //$id = R::store($article);
-	    //
-	    //// return JSON-encoded response body
-	    //$app->response()->header('Content-Type', 'application/json');
-	    echo $jwt;
-	    //echo ($input->username);
-	    //echo json_encode(R::exportAll($article));
+		//// store article record
+		//$article = R::dispense('articles');
+		//$article->title = (string)$input->title;
+		//$article->url = (string)$input->url;
+		//$article->date = (string)$input->date;
+		//$id = R::store($article);
+		//
+		//// return JSON-encoded response body
+		$app->response()->status(200);
+		//$app->response()->header('Content-Type', 'application/json');
+		echo $jwt;
+		//echo ($input->username);
+		//echo json_encode(R::exportAll($article));
 	  } catch (Exception $e) {
-	    $app->response()->status(400);
-    	$app->response()->header('X-Status-Reason', $e->getMessage());
+		$app->response()->status(400);
+		$app->response()->header('X-Status-Reason', $e->getMessage());
 	}
 	//echo '{"userdata":';
 	//echo '"data"';
@@ -83,13 +84,13 @@ $app->post("/login", function() use ($app) {
 	//$key = "m0oxUT7L8Unn93hXMUGHpwq_jTSKVBjQfEVCUe8jZ38KUU4VSAfmsNk4JJYcJl7CukrY6QMlixxwat7AZSpDcSQ";
 
 	//$token = array(
-	//    "usr" => "rgarcia",
-	//    "pwd" => "rgarcia",
-	//    "lvl" => 5,
-	//    "iss" => "http://example.org",
-	//    "aud" => "http://example.com",
-	//    "iat" => 1425175454,
-	//    "exp" => 1426175193
+	//	 "usr" => "rgarcia",
+	//	 "pwd" => "rgarcia",
+	//	 "lvl" => 5,
+	//	 "iss" => "http://example.org",
+	//	 "aud" => "http://example.com",
+	//	 "iat" => 1425175454,
+	//	 "exp" => 1426175193
 	//);
 
 	//$jwt = JWT::encode($token, $key);
@@ -116,7 +117,7 @@ $app->get("/menu", function() {
 	//if ($decoded->pwd === "rgarcia")
 	if ("rgarcia" === "rgarcia")
 	{
-	    echo '
+		echo '
 			[
 				{
 					"id_menu":1,
@@ -401,25 +402,25 @@ $app->get("/menu", function() {
 /*
 
 $validateAccessToken= function($app) {
-    return function () use ($app) {
-       $access_token = $app->request()->get("access_token");
-       $user = \models\user::where("access_token", "=", $access_token)->first();
+	return function () use ($app) {
+		$access_token = $app->request()->get("access_token");
+		$user = \models\user::where("access_token", "=", $access_token)->first();
 
-       if($user === NULL) {
-           $app->redirect("/errorpage");
-       }
+		if($user === NULL) {
+			$app->redirect("/errorpage");
+		}
 
 
-    };
+	};
 };
 
 $app->get("/v1/emails", $validateAccessToken($app), function() use ($app) {
-    // here you have to define $user once again
-    $access_token = $app->request()->get("access_token");
-    $user = \models\user::where("access_token", "=", $access_token)->first();
+	// here you have to define $user once again
+	$access_token = $app->request()->get("access_token");
+	$user = \models\user::where("access_token", "=", $access_token)->first();
 
-    $emails = \models\emails::where("user_id", "=", $user->id)->toArray();
-    echo(json_encode($emails));
+	$emails = \models\emails::where("user_id", "=", $user->id)->toArray();
+	echo(json_encode($emails));
 });
 */
 

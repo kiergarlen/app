@@ -12,9 +12,7 @@
 //}
 function MenuService($resource, $http, $q) {
   return $resource('api/menu', {}, {
-    query: {method:'GET', params:{
-        //auth:"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c3IiOiJyZ2FyY2lhIiwicHdkIjoicmdhcmNpYSIsImx2bCI6NSwiaXNzIjoiaHR0cDpcL1wvZXhhbXBsZS5vcmciLCJhdWQiOiJodHRwOlwvXC9leGFtcGxlLmNvbSIsImlhdCI6MTQyNTE3NTQ1NCwiZXhwIjoxNDI2MTc1MTkzfQ.ZDZ1VypzLdH3uySKALamGufaJxuTQjon2ho5PecA1p4"
-    }, isArray:true}
+    query: {method:'GET', params:{}, isArray:true}
   });
 }
 

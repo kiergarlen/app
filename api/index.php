@@ -1,31 +1,4 @@
 <?php
-/*
-encoder
-require 'Authentication/JWT.php';
-
-$key = "m0oxUT7L8Unn93hXMUGHpwq_jTSKVBjQfEVCUe8jZ38KUU4VSAfmsNk4JJYcJl7CukrY6QMlixxwat7AZSpDcSQ";
-
-$token = array(
-	"usr" => "rgarcia",
-	"pwd" => "rgarcia",
-	"lvl" => 5,
-	"iss" => "http://example.org",
-	"aud" => "http://example.com",
-	"iat" => 1425175454,
-	"exp" => 1426175193
-);
-$jwt = JWT::encode($token, $key);
-
-echo $jwt;
-echo '<br><br><br>';
-
-$decoded = JWT::decode($jwt, $key);
-
-$decoded_array = (array) $decoded;
-print_r($decoded_array);
-
-*/
-
 require "./libs/Slim/Slim.php";
 require "./libs/JWT/JWT.php";
 
@@ -39,17 +12,15 @@ $app->post("/login", function() use ($app) {
 		// get and decode JSON request body
 		$request = $app->request();
 		$body = $request->getBody();
-		//echo $body;
 		$input = json_decode($body);
 
-
 		//TODO sanitize, check versus database
-		//$usr =
+		//$usr = "Nombre(s) del usuario";
 		//$pwd = $input->password;
 		//$lvl = 5;
 		//print_r();
 		$token = array(
-			"user" => "Nombre(s) del ususario",
+			"user" => "Nombre(s) del usuario",
 			"lvl" => 5,
 			"iss" => "http://localhost",
 			"aud" => "http://localhost",
@@ -58,52 +29,18 @@ $app->post("/login", function() use ($app) {
 		);
 		$jwt = JWT::encode($token, KEY);
 
-		//// store article record
-		//$article = R::dispense('articles');
-		//$article->title = (string)$input->title;
-		//$article->url = (string)$input->url;
-		//$article->date = (string)$input->date;
-		//$id = R::store($article);
-		//
 		//// return JSON-encoded response body
 		$app->response()->status(200);
-		//$app->response()->header('Content-Type', 'application/json');
-		echo $jwt;
-		//echo ($input->username);
-		//echo json_encode(R::exportAll($article));
-	  } catch (Exception $e) {
+		$app->response()->header('Content-Type', 'application/json');
+		echo json_encode($jwt);
+	} catch (Exception $e) {
 		$app->response()->status(400);
 		$app->response()->header('X-Status-Reason', $e->getMessage());
 	}
-	//echo '{"userdata":';
-	//echo '"data"';
-	//echo '}';
 
-	//require 'Authentication/JWT.php';
-
-	//$key = "m0oxUT7L8Unn93hXMUGHpwq_jTSKVBjQfEVCUe8jZ38KUU4VSAfmsNk4JJYcJl7CukrY6QMlixxwat7AZSpDcSQ";
-
-	//$token = array(
-	//	 "usr" => "rgarcia",
-	//	 "pwd" => "rgarcia",
-	//	 "lvl" => 5,
-	//	 "iss" => "http://example.org",
-	//	 "aud" => "http://example.com",
-	//	 "iat" => 1425175454,
-	//	 "exp" => 1426175193
-	//);
-
-	//$jwt = JWT::encode($token, $key);
-
-	//echo $jwt;
-	//echo '<br><br><br>';
-
-	//$decoded = JWT::decode($jwt, $key);
-
+	//$decoded = JWT::decode($jwt, KEY);
 	//$decoded_array = (array) $decoded;
 	//print_r($decoded_array);
-
-
 });
 
 $app->get("/menu", function() {

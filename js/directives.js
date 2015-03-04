@@ -1,6 +1,9 @@
-//DIRECTIVES
 
-function mainMenu() {
+/**
+ * @name siclabMenu
+ * @desc Directiva para menú principal
+ */
+function siclabMenu() {
   return {
     restrict: 'EA',
     require: '^ngModel',
@@ -10,4 +13,50 @@ function mainMenu() {
 
 angular
   .module('siclabApp')
-  .directive('mainMenu', mainMenu);
+  .directive('siclabMenu', siclabMenu);
+
+/**
+ * @name siclabBanner
+ * @desc Directiva para banner superior
+ */
+function siclabBanner() {
+  return {
+    restrict: 'EA',
+    templateUrl: 'partials/sistema/banner.html'
+  };
+}
+
+angular
+  .module('siclabApp')
+  .directive('siclabBanner', siclabBanner);
+
+/**
+ * @name siclabFooter
+ * @desc Directiva para pie de página
+ */
+function siclabFooter() {
+  return {
+    restrict: 'EA',
+    templateUrl: 'partials/sistema/footer.html'
+  };
+}
+
+angular
+  .module('siclabApp')
+  .directive('siclabFooter', siclabFooter);
+
+
+/**
+ * @name siclabBannerBottom
+ * @desc Directiva para banner inferior
+ */
+function siclabBannerBottom() {
+  return {
+    restrict: 'EA',
+    templateUrl: 'partials/sistema/banner-bottom.html'
+  };
+}
+
+angular
+  .module('siclabApp')
+  .directive('siclabBannerBottom', siclabBannerBottom);

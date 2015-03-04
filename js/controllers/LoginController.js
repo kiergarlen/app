@@ -4,18 +4,20 @@
  * @desc Controla la vista para Login
  * @this {Object} $scope - Contenedor para el modelo, AngularJS
  * @param {Object} $http - Manejo de peticiones HTTP [AngularJS]
+ * @param {Object} $location - Manejo de URL [AngularJS]
+ * @param {Object} $window - Manejo de objeto Window [AngularJS]
+ * @param {Object} jwtHelper - Utilerías para JWT [angular-jwt]
  * @param {Object} LoginService - Proveedor de datos, Login
  */
-function LoginController($scope, $http, $window, jwtHelper,
-  Loginservice) {
+function LoginController($scope, $http, $location, $window, jwtHelper) {
   var vm = this;
   vm.message = '';
   vm.user = {username: '', password: ''};
   vm.submit = submitMessage;
   vm.login = login;
+  console.log($window.localStorage.getItem('user-token'));
 
   function submitMessage(username, password) {
-    //$scope.badCreds = false;
     $http({
       url: 'api/login',
       method: 'POST',
@@ -26,21 +28,17 @@ function LoginController($scope, $http, $window, jwtHelper,
     }).then(function success(response) {
       var token = response.data || null;
       $window.localStorage.setItem('user-token', token);
-      //console.log("angular LS: " + $window.localStorage.getItem('user-token'));
 
-      $http({
-        url: '#/main',
-        method: 'GET'
-      });
+      $location.path('main');
 
     }, function error(response) {
       if (response.status === 404) {
-        //$scope.badCreds = true;
-        //console.log('Not found');
+        //not found
       } else {
-        //console.log('Problem logging in!');
+        //error
       }
     });
+    return '';
   }
 
   function login() {
@@ -61,8 +59,7 @@ angular
   .module('siclabApp')
   .controller('LoginController',
     [
-      '$scope', '$http', '$window', 'jwtHelper',
-      'LoginService',
+      '$scope', '$http', '$location', '$window', 'jwtHelper',
       LoginController
     ]
   );

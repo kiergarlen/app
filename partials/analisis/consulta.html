@@ -1,3 +1,10 @@
+    <siclab-menu></siclab-menu>
+    <siclab-banner></siclab-banner>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-xs-12 col-lg-8 col-lg-offset-2 main item-themed-z2">
+          <div class="view-container">
+
 <div class="row">
   <div class="col-xs-12">
     <h2 class="page-header">Consulta análisis</h2>
@@ -14,11 +21,13 @@
   </div>
   <div class="row">
     <div class="col-xs-12 col-sm-8">
-      <label for="clientName" class="sr-only">
+      <label for="analysisName" class="sr-only">
         Ingrese una búsqueda (Fecha, Norma, Cliente, etc.)
       </label>
       <input type="text" class="form-control"
         placeholder="Ingrese una búsqueda (Fecha, Norma, Cliente, etc.)"
+        id="analysisName"
+        name="analysisName"
         data-ng-model="analysisList.filter.$">
       <br>
     </div>
@@ -31,7 +40,8 @@
         <h3 class="panel-title">Análisis</h3>
       </div>
       <div class="table-responsive">
-        <table class="table table-hover table-condensed" id="analysisList">
+        <table class="table table-hover table-condensed"
+          id="analysisList">
           <thead>
             <tr>
               <th>Id</th>
@@ -69,3 +79,10 @@
     </div>
   </div>
 </div>
+
+          </div>
+          <siclab-footer></siclab-footer>
+        </div><!-- view-container -->
+      </div><!-- row -->
+    </div><!-- container -->
+    <siclab-banner-bottom></siclab-banner-bottom>

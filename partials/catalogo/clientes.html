@@ -1,3 +1,10 @@
+    <siclab-menu></siclab-menu>
+    <siclab-banner></siclab-banner>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-xs-12 col-lg-8 col-lg-offset-2 main item-themed-z2">
+          <div class="view-container">
+
 <div class="row">
   <div class="col-xs-12">
     <h2 class="page-header">Catálogo de clientes</h2>
@@ -17,8 +24,11 @@
       <label for="clientName" class="sr-only">
         Ingrese una búsqueda (Razon Social, Contacto, etc.)
       </label>
-      <input type="text" class="form-control"
+      <input type="text"
+        class="form-control"
         placeholder="Ingrese una búsqueda (Razon Social, Contacto, etc.)"
+        id="clientName"
+        name="clientName"
         data-ng-model="clients.filter.$">
       <br>
     </div>
@@ -32,7 +42,7 @@
       </div>
       <div class="table-responsive">
         <table class="table table-hover table-condensed"
-          id="clients">
+          id="clientsList">
           <thead>
             <tr>
               <th>Cliente</th>
@@ -76,3 +86,10 @@
     </div>
   </div>
 </div>
+
+          </div>
+          <siclab-footer></siclab-footer>
+        </div><!-- view-container -->
+      </div><!-- row -->
+    </div><!-- container -->
+    <siclab-banner-bottom></siclab-banner-bottom>

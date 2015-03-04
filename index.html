@@ -16,41 +16,9 @@
   <![endif]-->
 </head>
 <body data-ng-app="siclabApp">
-  <main-menu></main-menu>
-  <img src="img/crystal-bg-header.jpg"
-    class="img-responsive-full hidden-lg" alt="">
-  <div class="main-bg visible-lg">
-    <img src="img/crystal-bg.jpg" alt="" style="display: block;">
+  <div data-ng-view="" class="view-frame">
   </div>
-  <div class="container-fluid">
-    <div class="row">
-      <div class="col-xs-12 col-lg-8 col-lg-offset-2 main item-themed-z2">
-        <div class="view-container">
-          <div data-ng-view="" class="view-frame">
-          </div>
-        </div>
-        <footer class="common-footer">
-          <br>
-          <strong>Centro de Estudios Limnológicos</strong><br>
-          <ul class="list-inline">
-            <li>Av. Solidaridad Iberoamericana Km 11</li>
-            <li>Col. Las Pintas</li>
-            <li>El Salto</li>
-            <li>Jalisco</li>
-            <li>CP 45690</li>
-            <li>Tel. (33) 3689-1542</li>
-            <li>Fax (33) 3689-4658</li>
-          </ul>
-          <small class="text-muted">
-            2015 &ndash;
-            <strong>Comisión Estatal del Agua de Jalisco</strong>
-          </small>
-        </footer>
-      </div>
-    </div><!-- row -->
-  </div>
-  <img src="img/crystal-bg-footer.jpg"
-    class="img-responsive-full hidden-lg" alt="">
+
   <script src="js/jquery/jquery.min.js"></script>
   <script src="js/bootstrap.min.js"></script>
   <!--
@@ -164,8 +132,6 @@
   <script src="js/services/TaskAssignService.js"></script>
   <script src="js/services/ReportsListService.js"></script>
   <script src="js/services/ReportApprovalService.js"></script>
-  <script src="js/services/LoginService.js"></script>
-  <script src="js/services/LogoutService.js"></script>
   <script src="js/services/ProfileService.js"></script>
   <script src="js/services/UsersListService.js"></script>
   <script src="js/services/UserService.js"></script>

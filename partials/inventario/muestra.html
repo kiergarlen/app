@@ -1,37 +1,83 @@
+    <siclab-menu></siclab-menu>
+    <siclab-banner></siclab-banner>
+    <div class="container-fluid">
       <div class="row">
-        <div class="col-xs-12">
-          <h2 class="page-header">Alta en Inventario de muestras</h2>
-        </div>
+        <div class="col-xs-12 col-lg-8 col-lg-offset-2 main item-themed-z2">
+          <div class="view-container">
+
+<div class="row">
+  <div class="col-xs-12">
+    <h2 class="page-header">Inventario de muestras</h2>
+  </div>
+</div>
+<form class="form" role="form"
+  name="sampleInventoryForm"
+  novalidate
+  >
+  <div class="row">
+    <div class="col-xs-12">
+      <h4>Búsqueda</h4>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12 col-sm-8">
+      <label for="sampleName" class="sr-only">
+        Ingrese una búsqueda (Datos de muestra)
+      </label>
+      <input type="text"
+        class="form-control"
+        placeholder="Ingrese una búsqueda (Datos de muestra)"
+        id="sampleName"
+        name="sampleName"
+        data-ng-model="samples.filter.$">
+      <br>
+    </div>
+  </div>
+</form>
+<div class="row">
+  <div class="col-xs-12">
+    <div class="panel">
+      <div class="panel-heading">
+        <h3 class="panel-title">Muestras</h3>
       </div>
-      <div class="row">
-        <div class="col-xs-12">
-          <h4>{{samplesInv.referenceData1Title}}</h4>
-          <ul class="list-inline">
-            <li>{{samplesInv.referenceData1Item1}}</li>
-            <li>{{samplesInv.referenceData1Item2}}</li>
-          </ul>
-        </div>
+      <div class="table-responsive">
+        <table class="table table-hover table-condensed"
+          id="samplesList">
+          <thead>
+            <tr>
+              <th>Muestra</th>
+              <th>Ubicación</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              data-ng-repeat="item in samples.samples |
+              filter:samples.filter.$"
+              id="sampleId{{item.id_sample}}"
+              data-ng-click="">
+              <td>
+                <h6>
+                  {{item.folio}}
+                  /
+                  {{item.ejercicio}}
+                </h6>
+              </td>
+              <td>
+                {{item.ubicacion}}<br>
+                {{item.anaquel}}
+                {{item.repisa}}
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
-      <form class="form" role="form" action="#">
-        <div class="row">
-          <div class="col-xs-12">
-            <h4>{{samplesInv.formMainHeader}}</h4>
+    </div>
+  </div>
+</div>
+
           </div>
-        </div>
-        <div class="row">
-          <div class="col-xs-12">
-            <label for="select{{samplesInv.selectInputId}}">{{samplesInv.selectInputLabel}}</label>
-            <select class="form-control" id="select{{samplesInv.selectInputId}}">
-              <option value="0" selected>Select option</option>
-              <option value="1">Item 1</option>
-              <option value="2">Item 2</option>
-              <option value="3">Item 3</option>
-            </select>
-            <label class="sr-only" for="{{samplesInv.inputTextId}}">{{samplesInv.inputTextLabel}}</label>
-            <input type="text" class="form-control" id="{{samplesInv.inputTextId}}" placeholder="{{samplesInv.inputTextLabel}}">
-            <label class="sr-only" for="{{samplesInv.inputTextDisabledId}}">{{samplesInv.inputTextDisabledLabel}}</label>
-            <input type="text" class="form-control" id="{{samplesInv.inputTextDisabledId}}" placeholder="{{samplesInv.inputTextDisabledLabel}}" disabled>
-          </div>
-        </div>
-        <button class="btn btn-primary" type="submit">{{samplesInv.buttonSubmitLabel}}</button>
-      </form>
+          <siclab-footer></siclab-footer>
+        </div><!-- view-container -->
+      </div><!-- row -->
+    </div><!-- container -->
+    <siclab-banner-bottom></siclab-banner-bottom>

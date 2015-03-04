@@ -1,6 +1,23 @@
+    <siclab-menu></siclab-menu>
+    <siclab-banner></siclab-banner>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-xs-12 col-lg-8 col-lg-offset-2 main item-themed-z2">
+          <div class="view-container">
+
 <div class="row">
   <div class="col-xs-12">
-    <h2 class="page-header">¿Salir del Sistema?</h2>
-    <a href="index.html" class="btn btn-default">Salir</a>
+    <h2 class="page-header">¿Desea salir del Sistema?</h2>
+    <a href="index.html" class="btn btn-default"
+      data-ng-click="logout.logout()">
+      Salir
+    </a>
   </div>
 </div>
+
+          </div>
+          <siclab-footer></siclab-footer>
+        </div><!-- view-container -->
+      </div><!-- row -->
+    </div><!-- container -->
+    <siclab-banner-bottom></siclab-banner-bottom>

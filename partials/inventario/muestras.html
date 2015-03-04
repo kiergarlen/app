@@ -1,3 +1,10 @@
+    <siclab-menu></siclab-menu>
+    <siclab-banner></siclab-banner>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-xs-12 col-lg-8 col-lg-offset-2 main item-themed-z2">
+          <div class="view-container">
+
 <div class="row">
   <div class="col-xs-12">
     <h2 class="page-header">Muestras</h2>
@@ -14,11 +21,15 @@
   </div>
   <div class="row">
     <div class="col-xs-12 col-sm-8">
-      <label for="clientName" class="sr-only">
+      <label for="sampleName" class="sr-only">
         Ingrese una búsqueda (Clave, Matriz, etc.)
       </label>
-      <input type="text" class="form-control"
-        placeholder="Ingrese una búsqueda (Clave, Matriz, etc.)"
+      <input type="text"
+        class="form-control"
+        placeholder="Ingrese una búsqueda (Clave, Matriz,
+        etc.)"
+        id="sampleName"
+        name="sampleName"
         data-ng-model="samplesList.filter.$"
         >
       <br>
@@ -32,7 +43,8 @@
         <h3 class="panel-title">Muestras</h3>
       </div>
       <div class="table-responsive">
-        <table class="table table-hover table-striped" id="samplesList">
+        <table class="table table-hover table-striped"
+          id="samplesList">
           <thead>
             <tr>
               <th>Clave</th>
@@ -63,3 +75,10 @@
     </div>
   </div>
 </div>
+
+          </div>
+          <siclab-footer></siclab-footer>
+        </div><!-- view-container -->
+      </div><!-- row -->
+    </div><!-- container -->
+    <siclab-banner-bottom></siclab-banner-bottom>

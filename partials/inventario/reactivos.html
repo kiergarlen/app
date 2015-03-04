@@ -1,3 +1,10 @@
+    <siclab-menu></siclab-menu>
+    <siclab-banner></siclab-banner>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-xs-12 col-lg-8 col-lg-offset-2 main item-themed-z2">
+          <div class="view-container">
+
 <div class="row">
   <div class="col-xs-12">
     <h2 class="page-header">Reactivos</h2>
@@ -14,11 +21,14 @@
   </div>
   <div class="row">
     <div class="col-xs-12 col-sm-8">
-      <label for="clientName" class="sr-only">
+      <label for="reactiveName" class="sr-only">
         Ingrese una búsqueda (Modelo, Número, etc.)
       </label>
-      <input type="text" class="form-control"
-        placeholder="Ingrese una búsqueda (Modelo, Número, etc.)"
+      <input type="text"
+        class="form-control"
+        placeholder="Ingrese una búsqueda (Modelo, Número, Contacto, etc.)"
+        id="reactiveName"
+        name="reactiveName"
         data-ng-model="reactivesList.filter.$"
         >
       <br>
@@ -32,7 +42,8 @@
         <h3 class="panel-title">Reactivos</h3>
       </div>
       <div class="table-responsive">
-        <table class="table table-hover table-striped" id="reactivesList">
+        <table class="table table-hover table-striped"
+          id="reactivesList">
           <thead>
             <tr>
               <th>Modelo</th>
@@ -63,3 +74,10 @@
     </div>
   </div>
 </div>
+
+          </div>
+          <siclab-footer></siclab-footer>
+        </div><!-- view-container -->
+      </div><!-- row -->
+    </div><!-- container -->
+    <siclab-banner-bottom></siclab-banner-bottom>

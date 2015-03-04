@@ -1,3 +1,10 @@
+    <siclab-menu></siclab-menu>
+    <siclab-banner></siclab-banner>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-xs-12 col-lg-8 col-lg-offset-2 main item-themed-z2">
+          <div class="view-container">
+
 <div class="row">
   <div class="col-xs-12">
     <h2 class="page-header">Áreas</h2>
@@ -14,11 +21,14 @@
   </div>
   <div class="row">
     <div class="col-xs-12 col-sm-8">
-      <label for="clientName" class="sr-only">
+      <label for="areaName" class="sr-only">
         Ingrese una búsqueda (Área, Responsable, etc.)
       </label>
-      <input type="text" class="form-control"
+      <input type="text"
+        class="form-control"
         placeholder="Ingrese una búsqueda (Área, Responsable, etc.)"
+        id="areaName"
+        name="areaName"
         data-ng-model="departmentsList.filter.$">
       <br>
     </div>
@@ -62,3 +72,10 @@
     </div>
   </div>
 </div>
+
+          </div>
+          <siclab-footer></siclab-footer>
+        </div><!-- view-container -->
+      </div><!-- row -->
+    </div><!-- container -->
+    <siclab-banner-bottom></siclab-banner-bottom>

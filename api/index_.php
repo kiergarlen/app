@@ -15,32 +15,33 @@ $app->post("/login", function() use ($app) {
 		$input = json_decode($body);
 
 		//TODO sanitize, check versus database
-		//$usr = "Nombre(s) del usuario";
-		//$pwd = $input->password;
-		//$lvl = 5;
-		//print_r();
-		$token = array(
-			"user" => "Nombre(s) del usuario",
-			"lvl" => 5,
-			"iss" => "http://localhost",
-			"aud" => "http://localhost",
-			"iat" => time(),
-			"exp" => 1626175193
-		);
+		$token = array();
+		$token["usr"] = $input->username;
+		$token["pwd"] = $input->password;
+		$token["nam"] = "Reyna García Meneses";
+		$token["uid"] = "rgarcia" . "." . "1" . "." . "5";
+		$token["lvl"] = "5";
+		$token["iss"] = "http://localhost";
+		$token["aud"] = "http://localhost";
+		$token["iat"] = time();
+		$token["exp"] = time() + (5 * 60);
 		$jwt = JWT::encode($token, KEY);
+
+		////debugging only
+		//$decoded = JWT::decode($jwt, KEY);
+		//$decoded_array = (array) $decoded;
+		//print_r($decoded_array);
 
 		//// return JSON-encoded response body
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
-		echo json_encode($jwt);
+		//echo json_encode($jwt);
+		echo json_encode($token);
 	} catch (Exception $e) {
 		$app->response()->status(400);
 		$app->response()->header('X-Status-Reason', $e->getMessage());
 	}
 
-	//$decoded = JWT::decode($jwt, KEY);
-	//$decoded_array = (array) $decoded;
-	//print_r($decoded_array);
 });
 
 $app->get("/menu", function() {

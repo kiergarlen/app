@@ -366,12 +366,13 @@ Firefox Fix For Freaky Fieldset
 .details-tooltip {
   background-color:#fff;
   background-color:rgba(255,255,255,0.95);
+  position: absolute;
+  margin-left:0;
+  margin-top:-25px;
   z-index: 100;
   padding: 5px;
   width: 95%;
-  position: absolute;
   left:5%;
-  margin-left:0;
   top: -150%;
 }
 

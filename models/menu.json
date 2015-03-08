@@ -11,7 +11,7 @@
 				"id_submenu":1,
 				"id_menu":1,
 				"orden":1,
-				"url":"/muestreo/solicitud",
+				"url":"/muestreo/solicitudes",
 				"label":"Solicitud",
 				"activo":1
 			},

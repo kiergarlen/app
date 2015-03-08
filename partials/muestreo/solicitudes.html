@@ -1,48 +1,101 @@
+    <siclab-menu></siclab-menu>
+    <siclab-banner></siclab-banner>
+    <div class="container-fluid">
       <div class="row">
-        <div class="col-xs-12">
-          <h2 class="page-header">Planes de muestreo</h2>
-        </div>
+        <div class="col-xs-12 col-lg-8 col-lg-offset-2 main item-themed-z2">
+          <div class="view-container">
+
+<div class="row">
+  <div class="col-xs-12">
+    <h2 class="page-header">Solicitudes de servicio</h2>
+  </div>
+</div>
+<form class="form" role="form"
+  name="quotesForm"
+  novalidate
+  >
+  <div class="row">
+    <div class="col-xs-12">
+      <h4>Búsqueda</h4>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12 col-sm-8">
+      <label for="quoteName" class="sr-only">
+        Ingrese una búsqueda (Cliente, Contacto, etc.)
+      </label>
+      <input type="text"
+        class="form-control"
+        placeholder="Ingrese una búsqueda (Cliente, Contacto, etc.)"
+        id="quoteName"
+        name="quoteName"
+        data-ng-model="quotes.filter.$">
+      <br>
+    </div>
+  </div>
+</form>
+<div class="row">
+  <div class="col-xs-3">
+    <button type="submit" class="btn btn-primary"
+      value="Nueva" title="Nueva"
+      data-ng-click="quotes.addNewQuote()"
+      >
+      Nueva solicitud</button>
+    <br><br>
+  </div>
+</div>
+<div class="row">
+  <div class="col-xs-12">
+    <div class="panel">
+      <div class="panel-heading">
+        <h3 class="panel-title">Solicitudes</h3>
       </div>
-      <div class="row">
-        <div class="col-xs-12">
-          <div class="panel">
-            <div class="panel-heading">
-              <h3 class="panel-title">Planes de muestreo</h3>
-              <!--
-              <h3 class="sub-header">Planes de muestreo</h3>
-              -->
-            </div>
-            <div class="table-responsive">
-              <table class="table table-hover table-striped" id="clientsList" ng-controller="ClientsListCtrl">
-                <thead>
-                  <tr>
-                    <th>Cliente</th>
-                    <th>Contacto</th>
-                    <th>Domicilio</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr ng-repeat="item in clients" id="clientId{{item.id_cliente}}">
-                    <td>
-                      <h6>{{item.cliente}}</h6>
-                      <span class="text-muted" ng-show="item.area.length > 0">{{item.area}}</span>
-                      <span class="label label-default" ng-show="item.interno < 1">Externo</span>
-                    </td>
-                    <td>
-                      {{item.contacto}}<br>
-                      <a href="mailto:{{item.email}}" ng-show="item.email.length > 0">{{item.email}}</a><br>
-                      {{item.tel}}
-                    </td>
-                    <td>
-                      {{item.calle}}, {{item.numero}}<br>
-                      {{item.colonia}}<br>
-                      {{item.localidad}}, {{item.estado}}<br>
-                      CP {{item.cp}}
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
+      <div class="table-responsive">
+        <table class="table table-hover table-condensed"
+          id="quotesList">
+          <thead>
+            <tr>
+              <th>Folio</th>
+              <th>Cliente</th>
+              <th>Norma</th>
+              <th>Fecha</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              data-ng-repeat="item in quotes.quotes"
+              id="quoteId{{item.id_quotee}}"
+              data-ng-click="quotes.selectRow">
+              <td>
+                {{item.folio_solicitud}}
+                /
+                {{item.ejercicio}}
+              <td>
+                <h6>
+                  {{item.cliente.cliente}}
+                </h6>
+                <span class="text-muted"
+                  data-ng-show="item.cliente.area.length > 0">
+                  {{item.cliente.area}}
+                </span>
+              </td>
+              <td>
+                {{item.norma.norma}}
+              </td>
+              <td>
+                {{item.fecha_solicitud}}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
           </div>
-        </div>
-      </div>
+          <siclab-footer></siclab-footer>
+        </div><!-- view-container -->
+      </div><!-- row -->
+    </div><!-- container -->
+    <siclab-banner-bottom></siclab-banner-bottom>

@@ -10,8 +10,18 @@
     <h2 class="page-header">Solicitudes de servicio</h2>
   </div>
 </div>
+<div class="row">
+  <div class="col-xs-12">
+    <button type="submit" class="btn btn-primary"
+      value="Nueva" title="Nueva"
+      data-ng-click="quotes.addQuote()"
+      >
+      Nueva</button>
+      <br>
+  </div>
+</div>
 <form class="form" role="form"
-  name="quotesForm"
+  name="clientsForm"
   novalidate
   >
   <div class="row">
@@ -21,29 +31,19 @@
   </div>
   <div class="row">
     <div class="col-xs-12 col-sm-8">
-      <label for="quoteName" class="sr-only">
+      <label for="quoteSearch" class="sr-only">
         Ingrese una búsqueda (Cliente, Contacto, etc.)
       </label>
       <input type="text"
         class="form-control"
         placeholder="Ingrese una búsqueda (Cliente, Contacto, etc.)"
-        id="quoteName"
-        name="quoteName"
+        id="quoteSearch"
+        name="quoteSearch"
         data-ng-model="quotes.filter.$">
       <br>
     </div>
   </div>
 </form>
-<div class="row">
-  <div class="col-xs-3">
-    <button type="submit" class="btn btn-primary"
-      value="Nueva" title="Nueva"
-      data-ng-click="quotes.addNewQuote()"
-      >
-      Nueva solicitud</button>
-    <br><br>
-  </div>
-</div>
 <div class="row">
   <div class="col-xs-12">
     <div class="panel">
@@ -52,35 +52,38 @@
       </div>
       <div class="table-responsive">
         <table class="table table-hover table-condensed"
-          id="quotesList">
+          id="clientsList">
           <thead>
             <tr>
-              <th>Folio</th>
+              <th>Id</th>
+              <th>Status</th>
               <th>Cliente</th>
-              <th>Norma</th>
               <th>Fecha</th>
             </tr>
           </thead>
           <tbody>
             <tr
-              data-ng-repeat="item in quotes.quotes"
-              id="quoteId{{item.id_quotee}}"
-              data-ng-click="quotes.selectRow">
+              data-ng-repeat="item in quotes.quotes |
+              filter:quotes.filter.$"
+              id="quoteId{{item.id_solicitud_cotizacion}}"
+              data-ng-click="quotes.selectRow($event)">
               <td>
-                {{item.folio_solicitud}}
-                /
-                {{item.ejercicio}}
+                {{item.id_solicitud_cotizacion}}
+              </td>
               <td>
-                <h6>
-                  {{item.cliente.cliente}}
-                </h6>
+                <span class="text-info"
+                  data-ng-show="item.validado > 0">Validada</span>
+                <span class="text-default"
+                  data-ng-show="item.validado < 1">Sin Validar</span>
+              </td>
+              <td>
+                <h6>{{item.cliente.cliente}}</h6>
                 <span class="text-muted"
                   data-ng-show="item.cliente.area.length > 0">
                   {{item.cliente.area}}
                 </span>
-              </td>
-              <td>
-                {{item.norma.norma}}
+                <span class="label label-default"
+                  data-ng-show="item.cliente.interno < 1">Externo</span>
               </td>
               <td>
                 {{item.fecha_solicitud}}

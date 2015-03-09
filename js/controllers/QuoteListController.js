@@ -12,10 +12,12 @@ function QuoteListController(QuoteListService) {
   vm.addNewQuote = addNewQuote;
 
   function selectRow($event) {
+    console.log("ROW ITEM ID: " + id);
     console.log($event);
   }
 
-  function addNewQuote() {
+  function addNewQuote(id) {
+    console.log("NEW ITEM CLICK");
     $location.path('muestreo/solicitud');
   }
 }

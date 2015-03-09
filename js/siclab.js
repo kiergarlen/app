@@ -35,8 +35,8 @@
       }).
       when('/muestreo/solicitudes', {
         templateUrl: 'partials/muestreo/solicitudes.html',
-        controller: 'QuoteListController',
-        controllerAs: 'quoteList'
+        controller: 'QuotesListController',
+        controllerAs: 'quotes'
       }).
       when('/muestreo/solicitud', {
         templateUrl: 'partials/muestreo/solicitud.html',
@@ -247,7 +247,7 @@
    * @name MenuController
    * @constructor
    * @desc Controla la vista para el Menú principal
-   * @this {Object} $scope - Contenedor para el modelo, AngularJS
+   * @this {Object} $scope - Contenedor para el modelo [AngularJS]
    * @param {Object} MenuService - Proveedor de datos, Menú
    */
   function MenuController($scope, MenuService) {
@@ -268,7 +268,7 @@
    * @name LoginController
    * @constructor
    * @desc Controla la vista para Login
-   * @this {Object} $scope - Contenedor para el modelo, AngularJS
+   * @this {Object} $scope - Contenedor para el modelo [AngularJS]
    * @param {Object} $http - Manejo de peticiones HTTP [AngularJS]
    * @param {Object} $location - Manejo de URL [AngularJS]
    * @param {Object} $window - Manejo de objeto Window [AngularJS]
@@ -293,8 +293,10 @@
       }).then(function success(response) {
         var token = response.data || null;
         $window.localStorage.setItem('user-token', token);
-
-        $location.path('main');
+        var decodedJwt = token && jwtHelper.decodeToken(token);
+        console.log(token);
+        console.log(decodedJwt);
+        //$location.path('main');
 
       }, function error(response) {
         if (response.status === 404) {
@@ -333,7 +335,7 @@
    * @name TasksController
    * @constructor
    * @desc Controla la vista para Bienvenida
-   * @this {Object} $scope - Contenedor para el modelo, AngularJS
+   * @this {Object} $scope - Contenedor para el modelo [AngularJS]
    * @param {Object} TaskService - Proveedor de datos, Bienvenida
    */
   function TasksController(TaskService) {
@@ -351,33 +353,35 @@
     );
 
   /**
-   * @name QuoteListController
+   * @name QuotesListController
    * @constructor
-   * @desc Controla la vista para capturar una Solicitud/Cotización
-   * @this {Object} $scope - Contenedor para el modelo, AngularJS
-   * @param {Object} QuoteListService - Proveedor de datos, lista de Cotizaciones
+   * @desc Controla la vista para el listado de Solicitudes
+   * @this {Object} $scope - Contenedor para el modelo [AngularJS]
+   * @param {Object} $location - Manejo de URL [AngularJS]
+   * @param {Object} QuotesListService - Proveedor de datos, solicitudes
    */
-  function QuoteListController(QuoteListService) {
+  function QuotesListController($location, QuotesListService) {
     var vm = this;
-    vm.quotes = QuoteListService.query();
+    vm.quotes = QuotesListService.query();
+    vm.addQuote = addQuote;
     vm.selectRow = selectRow;
-    vm.addNewQuote = addNewQuote;
 
-    function selectRow() {
-      //console.log($event);
+    function addQuote() {
+      $location.path('/muestreo/solicitud');
     }
 
-    function addNewQuote() {
-      //$location.path('muestreo/solicitud');
+    function selectRow(e) {
+      var itemId = e.currentTarget.id.split('Id')[1];
+      console.log(itemId);
     }
   }
 
   angular
     .module('siclabApp')
-    .controller('QuoteListController',
+    .controller('QuotesListController',
       [
-        'QuoteListService',
-        QuoteListController
+        '$location', 'QuotesListService',
+        QuotesListController
       ]
     );
 
@@ -385,7 +389,7 @@
    * @name QuoteController
    * @constructor
    * @desc Controla la vista para capturar una Solicitud/Cotización
-   * @this {Object} $scope - Contenedor para el modelo, AngularJS
+   * @this {Object} $scope - Contenedor para el modelo [AngularJS]
    * @param {Object} ClientService - Proveedor de datos, Clientes
    * @param {Object} ParameterService - Proveedor de datos, Parámetros
    * @param {Object} NormService - Proveedor de datos, Normas
@@ -543,7 +547,7 @@
    * @name OrderController
    * @constructor
    * @desc Controla la vista para capturar una Orden de muestreo
-   * @this {Object} $scope - Contenedor para el modelo, AngularJS
+   * @this {Object} $scope - Contenedor para el modelo [AngularJS]
    * @param {Object} QuoteService - Proveedor de datos, Cotizaciones
    * @param {Object} OrderSourceService - Proveedor de datos, Orígenes orden
    * @param {Object} MatrixService - Proveedor de datos, Tipos matriz
@@ -636,7 +640,7 @@
    * @name PlanController
    * @constructor
    * @desc Controla la vista para capturar un Plan muestreo
-   * @this {Object} $scope - Contenedor para el modelo, AngularJS
+   * @this {Object} $scope - Contenedor para el modelo [AngularJS]
    * @param {Object} PlanObjectivesService - Proveedor de datos, Objetivos Plan muestreo
    * @param {Object} PointKindsService - Proveedor de datos, tipos Punto
    * @param {Object} DistrictService - Proveedor de datos, Municipios
@@ -730,7 +734,7 @@
    * @name FieldSheetController
    * @constructor
    * @desc Controla la vista para capturar la hoja de campo
-   * @this {Object} $scope - Contenedor para el modelo, AngularJS
+   * @this {Object} $scope - Contenedor para el modelo [AngularJS]
    * @param {Object} CloudService - Proveedor de datos, Coberturas nubes
    * @param {Object} WindService - Proveedor de datos, Direcciones viento
    * @param {Object} WaveService - Proveedor de datos, Intensidades oleaje
@@ -930,7 +934,7 @@
    * @name ReceptionController
    * @constructor
    * @desc Controla la vista para capturar la recepción de muestras
-   * @this {Object} $scope - Contenedor para el modelo, AngularJS
+   * @this {Object} $scope - Contenedor para el modelo [AngularJS]
    * @param {Object} ReceptionistService - Proveedor de datos, Recepcionistas
    * @param {Object} ReceptionService - Proveedor de datos, Recepción muestras
    */
@@ -978,7 +982,7 @@
    * @name CustodyController
    * @constructor
    * @desc Controla la vista para capturar las Hojas de custodia
-   * @this {Object} $scope - Contenedor para el modelo, AngularJS
+   * @this {Object} $scope - Contenedor para el modelo [AngularJS]
    * @param {Object} PreservationService - Proveedor de datos, Preservaciones
    * @param {Object} ExpirationService - Proveedor de datos, Vigencias
    * @param {Object} RequiredVolumeService - Proveedor de datos, Volúmenes requeridos
@@ -1044,7 +1048,7 @@
    * @name SamplesListController
    * @constructor
    * @desc Controla la vista para consulta de Muestras
-   * @this {Object} $scope - Contenedor para el modelo, AngularJS
+   * @this {Object} $scope - Contenedor para el modelo [AngularJS]
    * @param {Object} SamplesListService - Proveedor de datos, lista Muestras
    */
   function SamplesListController(SamplesListService) {
@@ -1070,7 +1074,7 @@
    * @name InstrumentsListController
    * @constructor
    * @desc Controla la vista para consulta de Equipos
-   * @this {Object} $scope - Contenedor para el modelo, AngularJS
+   * @this {Object} $scope - Contenedor para el modelo [AngularJS]
    * @param {Object} InstrumentsListService - Proveedor de datos, lista Equipos
    */
   function InstrumentsListController(InstrumentsListService) {
@@ -1096,7 +1100,7 @@
    * @name ReactivesListController
    * @constructor
    * @desc Controla la vista para consulta de Reactivos
-   * @this {Object} $scope - Contenedor para el modelo, AngularJS
+   * @this {Object} $scope - Contenedor para el modelo [AngularJS]
    * @param {Object} ReactivesListService - Proveedor de datos, lista Reactivos
    */
   function ReactivesListController(ReactivesListService) {
@@ -1122,7 +1126,7 @@
    * @name ContainersListController
    * @constructor
    * @desc Controla la vista para consulta de Recipientes
-   * @this {Object} $scope - Contenedor para el modelo, AngularJS
+   * @this {Object} $scope - Contenedor para el modelo [AngularJS]
    * @param {Object} ContainersListService - Proveedor de datos, lista Recipientes
    */
   function ContainersListController(ContainersListService) {
@@ -1148,7 +1152,7 @@
    * @name AnalysisListController
    * @constructor
    * @desc Controla la vista para la búsqueda de Análisis
-   * @this {Object} $scope - Contenedor para el modelo, AngularJS
+   * @this {Object} $scope - Contenedor para el modelo [AngularJS]
    * @param {Object} AnalysisListService - Proveedor de datos, Análisis
    */
   function AnalysisListController(AnalysisListService) {
@@ -1175,7 +1179,7 @@
    * @name AnalysisController
    * @constructor
    * @desc Controla la vista para seleccionar captura de Análisis
-   * @this {Object} $scope - Contenedor para el modelo, AngularJS
+   * @this {Object} $scope - Contenedor para el modelo [AngularJS]
    * @param {Object} DepartmentService - Proveedor de datos, Áreas
    * @param {Object} ParameterService - Proveedor de datos, Parámetros
    * @param {Object} AnalysisService - Proveedor de datos, selección de captura de Análisis
@@ -1223,7 +1227,7 @@
    * @name ReportsListController
    * @constructor
    * @desc Controla la vista para consulta de Reportes
-   * @this {Object} $scope - Contenedor para el modelo, AngularJS
+   * @this {Object} $scope - Contenedor para el modelo [AngularJS]
    * @param {Object} ReportsListService - Proveedor de datos, lista Reportes
    */
   function ReportsListController(ReportsListService) {
@@ -1249,7 +1253,7 @@
    * @name ReportApprovalController
    * @constructor
    * @desc Controla la vista para validación Reporte
-   * @this {Object} $scope - Contenedor para el modelo, AngularJS
+   * @this {Object} $scope - Contenedor para el modelo [AngularJS]
    * @param {Object} ReportApprovalService - Proveedor de datos, validación Reporte
    */
   function ReportApprovalController(ReportApprovalService) {
@@ -1282,7 +1286,7 @@
    * @name PointsListController
    * @constructor
    * @desc Controla la vista para consulta de Puntos
-   * @this {Object} $scope - Contenedor para el modelo, AngularJS
+   * @this {Object} $scope - Contenedor para el modelo [AngularJS]
    * @param {Object} PointsListService - Proveedor de datos, lista Puntos
    */
   function PointsListController(PointsListService) {
@@ -1308,12 +1312,18 @@
    * @name ClientsListController
    * @constructor
    * @desc Controla la vista para el listado de Clientes
-   * @this {Object} $scope - Contenedor para el modelo, AngularJS
+   * @this {Object} $scope - Contenedor para el modelo [AngularJS]
    * @param {Object} ClientService - Proveedor de datos, Cliente
    */
   function ClientsListController(ClientService) {
     var vm = this;
     vm.clients = ClientService.query();
+    vm.selectRow = selectRow;
+
+    function selectRow(e) {
+      var itemId = e.currentTarget.id.split('Id')[1];
+      console.log(itemId);
+    }
   }
 
   angular
@@ -1329,7 +1339,7 @@
    * @name DepartmentsListController
    * @constructor
    * @desc Controla la vista para el listado de Áreas
-   * @this {Object} $scope - Contenedor para el modelo, AngularJS
+   * @this {Object} $scope - Contenedor para el modelo [AngularJS]
    * @param {Object} DepartmentService - Proveedor de datos, Áreas
    */
   function DepartmentsListController(DepartmentService) {
@@ -1350,7 +1360,7 @@
    * @name EmployeesListController
    * @constructor
    * @desc Controla la vista para el listado de Empleados
-   * @this {Object} $scope - Contenedor para el modelo, AngularJS
+   * @this {Object} $scope - Contenedor para el modelo [AngularJS]
    * @param {Object} EmployeeService - Proveedor de datos, Empleados
    */
   function EmployeesListController(EmployeeService) {
@@ -1371,7 +1381,7 @@
    * @name NormsListController
    * @constructor
    * @desc Controla la vista para consulta de Normas
-   * @this {Object} $scope - Contenedor para el modelo, AngularJS
+   * @this {Object} $scope - Contenedor para el modelo [AngularJS]
    * @param {Object} NormsListService - Proveedor de datos, lista Normas
    */
   function NormsListController(NormsListService) {
@@ -1397,7 +1407,7 @@
    * @name ReferencesListController
    * @constructor
    * @desc Controla la vista para consulta de Referencias
-   * @this {Object} $scope - Contenedor para el modelo, AngularJS
+   * @this {Object} $scope - Contenedor para el modelo [AngularJS]
    * @param {Object} ReferencesListService - Proveedor de datos, lista Referencias
    */
   function ReferencesListController(ReferencesListService) {
@@ -1423,7 +1433,7 @@
    * @name MethodsListController
    * @constructor
    * @desc Controla la vista para la búsqueda de Métodos
-   * @this {Object} $scope - Contenedor para el modelo, AngularJS
+   * @this {Object} $scope - Contenedor para el modelo [AngularJS]
    * @param {Object} MethodsListService - Proveedor de datos, Métodos
    */
   function MethodsListController(MethodsListService) {
@@ -1449,7 +1459,7 @@
    * @name PricesListController
    * @constructor
    * @desc Controla la vista para consulta de Precios
-   * @this {Object} $scope - Contenedor para el modelo, AngularJS
+   * @this {Object} $scope - Contenedor para el modelo [AngularJS]
    * @param {Object} PricesListService - Proveedor de datos, lista Precios
    */
   function PricesListController(PricesListService) {
@@ -1475,7 +1485,7 @@
    * @name UsersListController
    * @constructor
    * @desc Controla la vista para el listado de Usuarios
-   * @this {Object} $scope - Contenedor para el modelo, AngularJS
+   * @this {Object} $scope - Contenedor para el modelo [AngularJS]
    * @param {Object} UsersListService - Proveedor de datos, Usuarios
    */
   function UsersListController (UsersListService) {
@@ -1496,7 +1506,7 @@
    * @name ProfileController
    * @constructor
    * @desc Controla la vista para Perfil
-   * @this {Object} $scope - Contenedor para el modelo, AngularJS
+   * @this {Object} $scope - Contenedor para el modelo [AngularJS]
    * @param {Object} ProfileService - Proveedor de datos, Perfil
    */
   function ProfileController(ProfileService) {
@@ -1517,7 +1527,7 @@
    * @name LogoutController
    * @constructor
    * @desc Controla la vista para Logout
-   * @this {Object} $scope - Contenedor para el modelo, AngularJS
+   * @this {Object} $scope - Contenedor para el modelo [AngularJS]
    * @param {Object} $location - Manejo de URL [AngularJS]
    * @param {Object} $window - Manejo de objeto Window [AngularJS]
    */
@@ -1544,7 +1554,7 @@
    * @name ClientDetailController
    * @constructor
    * @desc Controla la vista para con el detalle de un Cliente
-   * @this {Object} $scope - Contenedor para el modelo, AngularJS
+   * @this {Object} $scope - Contenedor para el modelo [AngularJS]
    * @param {Object} ClientDetailService - Proveedor de datos, Detalle cliente
    */
   function ClientDetailController($scope, ClientDetailService) {
@@ -2635,13 +2645,13 @@
   );
 
   /**
-   * @name QuoteListService
+   * @name QuotesListService
    * @constructor
    * @desc Proveedor de datos, lista de Cotizaciones
    * @param {Object} $resource - Acceso a recursos HTTP, AngularJS
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
    */
-  function QuoteListService($resource) {
+  function QuotesListService($resource) {
     return $resource('models/quotes/quotes.json', {}, {
       query: {method:'GET', params:{}, isArray:true}
     });
@@ -2649,9 +2659,9 @@
 
   angular
     .module('siclabApp')
-    .factory('QuoteListService', [
+    .factory('QuotesListService', [
       '$resource',
-      QuoteListService
+      QuotesListService
     ]
   );
 

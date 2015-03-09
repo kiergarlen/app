@@ -4,30 +4,66 @@ require "../libs/JWT/JWT.php";
 require "./Services/Siclab.php";
 
 define("KEY", "m0oxUT7L8Unn93hXMUGHpwq_jTSKVBjQfEVCUe8jZ38KUU4VSAfmsNk4JJYcJl7CukrY6QMlixxwat7AZSpDcSQ");
-$randomString = bin2hex(openssl_random_pseudo_bytes(16));
 
 \Slim\Slim::registerAutoloader();
 $app = new \Slim\Slim();
+
+
+
+$validateAccessToken= function($app) {
+	return function () use ($app) {
+		$tokenIsValid = false;
+		$user_token = $app->request()->get("user_token");
+		//validate token
+
+
+		if(!$tokenIsValid) {
+			$app->redirect("/errorpage");
+		}
+	};
+};
+
+$app->get("/tasks", $validateAccessToken($app), function() use ($app) {
+	// here you have to define $user once again
+	$user_token = $app->request()->get("user_token");
+	//validate token
+	//$user = \models\user::where("user_token", "=", $user_token)->first();
+	//query database service
+	//$emails = \models\emails::where("user_id", "=", $user->id)->toArray();
+	echo(json_encode($emails));
+});
+
 
 
 $app->post("/login", function() use ($app) {
 	try {
 		// get and decode JSON request body
 		$request = $app->request();
+		$headers = $request->headers();
 		$body = $request->getBody();
 		$input = json_decode($body);
+		$userId = 1;
+		//$sessionId = bin2hex(openssl_random_pseudo_bytes(16));
+		//$sessionId = bin2hex($userId);
+		$userPass = $input->username . "." . $input->password . "." . $userId;
+		$userPass = bin2hex($userPass);
+		$name = "Reyna García Meneses";
 
 		//TODO sanitize, check versus database
 		$token = array();
-		$token["usr"] = $input->username;
-		$token["pwd"] = $input->password;
-		$token["nam"] = "Reyna García Meneses";
-		$token["uid"] = "rgarcia" . "." . "1" . "." . "5";
+
+		//$token["usr"] = $input->username;
+		//$token["pwd"] = $input->password;
+		$token["nam"] = $name;
+		//$token["upt"] = "rgarcia" . "." . "1" . "." . "5";
+		$token["upt"] = $userPass;
+		$token["sid"] = $sessionId;
 		$token["lvl"] = "5";
-		$token["iss"] = "http://localhost";
-		$token["aud"] = "http://localhost";
+		$token["iss"] = $headers["Host"];
+		$token["aud"] = "siclab.ceajalisco.gob.mx";
 		$token["iat"] = time();
 		$token["exp"] = time() + (5 * 60);
+
 		$jwt = JWT::encode($token, KEY);
 
 		////debugging only
@@ -38,11 +74,11 @@ $app->post("/login", function() use ($app) {
 		//// return JSON-encoded response body
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
-		//echo json_encode($jwt);
-		echo json_encode($token);
+		echo json_encode($jwt);
+		//echo json_encode($token);
 	} catch (Exception $e) {
 		$app->response()->status(400);
-		$app->response()->header('X-Status-Reason', $e->getMessage());
+		//$app->response()->header('X-Status-Reason', $e->getMessage());
 	}
 
 });
@@ -64,10 +100,7 @@ $app->get("/menu", function() {
 					"id_menu":1,
 					"orden":1,
 					"url":"/#",
-					"label":"';
-		echo $randomString;
-		//					Muestreo
-		echo'			",
+					"label":"Muestreo",
 					"activo":1,
 					"submenu":
 					[
@@ -347,8 +380,8 @@ $app->get("/menu", function() {
 
 $validateAccessToken= function($app) {
 	return function () use ($app) {
-		$access_token = $app->request()->get("access_token");
-		$user = \models\user::where("access_token", "=", $access_token)->first();
+		$user_token = $app->request()->get("user_token");
+		$user = \models\user::where("user_token", "=", $user_token)->first();
 
 		if($user === NULL) {
 			$app->redirect("/errorpage");
@@ -360,8 +393,8 @@ $validateAccessToken= function($app) {
 
 $app->get("/v1/emails", $validateAccessToken($app), function() use ($app) {
 	// here you have to define $user once again
-	$access_token = $app->request()->get("access_token");
-	$user = \models\user::where("access_token", "=", $access_token)->first();
+	$user_token = $app->request()->get("user_token");
+	$user = \models\user::where("user_token", "=", $user_token)->first();
 
 	$emails = \models\emails::where("user_id", "=", $user->id)->toArray();
 	echo(json_encode($emails));

@@ -11,8 +11,7 @@
   );
 
   // DATA API URL
-  var API_BASE_URL = 'http://localhost:8888/siclab/api/v1/';
-  //var API_BASE_URL = 'http://sqldesarrollo/siclab/api/v1/';
+  var API_BASE_URL = 'api/v1/';
 
   // config.js
   /**
@@ -3060,7 +3059,7 @@
    * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
    */
-  function QuotesListService($resource) {
+  function QuotesListService($resource, $window) {
     //return $resource('models/quotes/quotes.json', {}, {
     return $resource(API_BASE_URL + 'quotes', {}, {
       query: {
@@ -3074,7 +3073,7 @@
   angular
     .module('siclabApp')
     .factory('QuotesListService', [
-      '$resource',
+      '$resource', '$window',
       QuotesListService
     ]
   );

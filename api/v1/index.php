@@ -254,9 +254,9 @@ $app->get("/preservations", function() use ($app) {
 	}
 });
 
-$app->get("/containers", function() use ($app) {
+$app->get("/containers/kinds", function() use ($app) {
 	try {
-		$menu = \Service\DalSiclab::getInstance()->getContainers();
+		$menu = \Service\DalSiclab::getInstance()->getContainerKinds();
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
 		echo $menu;
@@ -647,7 +647,6 @@ $app->get("/users/:userId", function() use ($app) {
 */
 $app->get("/quotes", function() use ($app) {
 	try {
-		$userId = (validateTokenUser($app)) ? validateTokenUser($app) : 0;
 		$menu = \Service\DalSiclab::getInstance()->getQuotes();
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');

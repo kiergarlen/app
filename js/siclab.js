@@ -6,13 +6,12 @@
       'ngRoute',
       'ngResource',
       'angular-jwt',
-      'angular-storage',
       'mgcrea.ngStrap'
     ]
   );
 
   // DATA API URL
-  var API_BASE_URL = 'http://localhost:8888/siclab/app/api/v1/';
+  var API_BASE_URL = 'http://localhost:8888/siclab/api/v1/';
   //var API_BASE_URL = 'http://sqldesarrollo/siclab/api/v1/';
 
   // config.js

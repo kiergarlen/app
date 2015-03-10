@@ -356,14 +356,11 @@
     token,
     decodedJwt;
     vm.userName = "";
-    vm.tasks = {};
-
     if ($window.localStorage.getItem('user-token'))
     {
       token = $window.localStorage.getItem('user-token');
       decodedJwt = token && jwtHelper.decodeToken(token);
       vm.userName = decodedJwt.nam;
-      vm.tasks = TasksListService.query(decodedJwt.uid);
     }
   }
 
@@ -1684,8 +1681,7 @@
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
    */
   function MenuService($resource, $window) {
-    //return $resource(API_BASE_URL + 'menu', {}, {
-    return $resource('api/v1/menu', {}, {
+    return $resource(API_BASE_URL + 'menu', {}, {
       query: {
         method:'GET',
         params:{},
@@ -1714,11 +1710,10 @@
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
    */
   function TasksListService($resource){
-    return $resource(API_BASE_URL + 'tasks/:userId', {}, {
-    //return $resource('models/tasks.json', {}, {
+    return $resource(API_BASE_URL + 'tasks', {}, {
       query: {
         method:'GET',
-        params:{userId: 'id_usuario'},
+        params:{},
         isArray:false
       }
     });
@@ -1741,8 +1736,7 @@
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
    */
   function ClientService($resource) {
-    //return $resource(API_BASE_URL + 'clients', {}, {
-    return $resource('models/clients.json', {}, {
+    return $resource(API_BASE_URL + 'clients', {}, {
       query: {
         method:'GET',
         params:{},
@@ -1768,8 +1762,7 @@
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
    */
   function ParameterService($resource) {
-    //return $resource(API_BASE_URL + 'parameters', {}, {
-    return $resource('models/parameters.json', {}, {
+    return $resource(API_BASE_URL + 'parameters', {}, {
       query: {
         method:'GET',
         params:{},
@@ -1795,8 +1788,7 @@
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
    */
   function NormService($resource) {
-    //return $resource(API_BASE_URL + 'norms', {}, {
-    return $resource('models/normas.json', {}, {
+    return $resource(API_BASE_URL + 'norms', {}, {
       query: {
         method:'GET',
         params:{},
@@ -1822,8 +1814,7 @@
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
    */
   function SamplingTypeService($resource) {
-    //return $resource(API_BASE_URL + 'sampling/types', {}, {
-    return $resource('models/sampling/types.json', {}, {
+    return $resource(API_BASE_URL + 'sampling/types', {}, {
       query: {
         method:'GET',
         params:{},
@@ -1849,11 +1840,10 @@
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
    */
   function QuoteService($resource) {
-    //return $resource(API_BASE_URL + 'quotes/:quoteId', {}, {
-    return $resource('models/quotes/1.json', {}, {
+    return $resource(API_BASE_URL + 'quotes/:quoteId', {}, {
       query: {
         method:'GET',
-        params:{},
+        params:{quoteId:'id_solicitud_cotizacion'},
         isArray:false
       }
     });
@@ -1877,8 +1867,7 @@
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
    */
   function OrderSourceService($resource) {
-    //return $resource(API_BASE_URL + 'order/sources', {}, {
-    return $resource('models/order_sources.json', {}, {
+    return $resource(API_BASE_URL + 'order/sources', {}, {
       query: {
         method:'GET',
         params:{},
@@ -1904,8 +1893,7 @@
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
    */
   function MatrixService($resource) {
-    //return $resource(API_BASE_URL + 'matrices', {}, {
-    return $resource('models/matrices.json', {}, {
+    return $resource(API_BASE_URL + 'matrices', {}, {
       query: {
         method:'GET',
         params:{},
@@ -1931,8 +1919,7 @@
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
    */
   function SamplingSupervisorService($resource) {
-    //return $resource(API_BASE_URL + 'sampling/supervisors', {}, {
-    return $resource('models/sampling_supervisors.json', {}, {
+    return $resource(API_BASE_URL + 'sampling/supervisors', {}, {
       query: {
         method:'GET',
         params:{},
@@ -1958,11 +1945,10 @@
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
    */
   function OrderService($resource) {
-    //return $resource(API_BASE_URL + 'sampling/orders/:orderId', {}, {
-    return $resource('models/sampling/orders/1.json', {}, {
+    return $resource(API_BASE_URL + 'sampling/orders/:orderId', {}, {
       query: {
         method:'GET',
-        params:{},
+        params:{orderId: 'id_orden_muestreo'},
         isArray:false
       }
     });
@@ -1985,8 +1971,7 @@
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
    */
   function PlanObjectivesService($resource) {
-    //return $resource(API_BASE_URL + 'plan/objectives', {}, {
-    return $resource('models/plan_objectives.json', {}, {
+    return $resource(API_BASE_URL + 'plan/objectives', {}, {
       query: {
         method:'GET',
         params:{},
@@ -2012,8 +1997,7 @@
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
    */
   function PointKindsService($resource) {
-    //return $resource(API_BASE_URL + 'point/kinds', {}, {
-    return $resource('models/point_kinds.json', {}, {
+    return $resource(API_BASE_URL + 'point/kinds', {}, {
       query: {
         method:'GET',
         params:{},
@@ -2039,8 +2023,7 @@
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
    */
   function DistrictService($resource) {
-    //return $resource(API_BASE_URL + 'districts', {}, {
-    return $resource('models/districts.json', {}, {
+    return $resource(API_BASE_URL + 'districts', {}, {
       query: {
         method:'GET',
         params:{},
@@ -2066,8 +2049,7 @@
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
    */
   function CityService($resource) {
-    //return $resource(API_BASE_URL + 'cities', {}, {
-    return $resource('models/cities.json', {}, {
+    return $resource(API_BASE_URL + 'cities', {}, {
       query: {
         method:'GET',
         params:{},
@@ -2093,8 +2075,7 @@
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
    */
   function SamplingEmployeeService($resource) {
-    //return $resource(API_BASE_URL + 'sampling/employees', {}, {
-    return $resource('models/sampling_employees.json', {}, {
+    return $resource(API_BASE_URL + 'sampling/employees', {}, {
       query: {
         method:'GET',
         params:{},
@@ -2120,8 +2101,7 @@
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
    */
   function PreservationService($resource) {
-    //return $resource(API_BASE_URL + 'preservations', {}, {
-    return $resource('models/preservations.json', {}, {
+    return $resource(API_BASE_URL + 'preservations', {}, {
       query: {
         method:'GET',
         params:{},
@@ -2147,8 +2127,7 @@
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
    */
   function ContainerService($resource) {
-    //return $resource(API_BASE_URL + 'containers', {}, {
-    return $resource('models/containers.json', {}, {
+    return $resource(API_BASE_URL + 'containers', {}, {
       query: {
         method:'GET',
         params:{},
@@ -2174,8 +2153,7 @@
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
    */
   function ReactivesListService($resource) {
-    //return $resource(API_BASE_URL + 'reactives', {}, {
-    return $resource('models/reactives_list.json', {}, {
+    return $resource(API_BASE_URL + 'reactives', {}, {
       query: {
         method:'GET',
         params:{},
@@ -2201,8 +2179,7 @@
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
    */
   function MaterialService($resource) {
-    //return $resource(API_BASE_URL + 'materials', {}, {
-    return $resource('models/materials.json', {}, {
+    return $resource(API_BASE_URL + 'materials', {}, {
       query: {
         method:'GET',
         params:{},
@@ -2228,8 +2205,7 @@
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
    */
   function CoolerService($resource) {
-    //return $resource(API_BASE_URL + 'coolers', {}, {
-    return $resource('models/coolers.json', {}, {
+    return $resource(API_BASE_URL + 'coolers', {}, {
       query: {
         method:'GET',
         params:{},
@@ -2255,11 +2231,10 @@
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
    */
   function PlanService($resource) {
-    //return $resource(API_BASE_URL + 'sampling/plans/:planId', {}, {
-    return $resource('models/sampling/plans/1.json', {}, {
+    return $resource(API_BASE_URL + 'sampling/plans/:planId', {}, {
       query: {
         method:'GET',
-        params:{},
+        params:{planId: 'id_plan_muestreo'},
         isArray:false
       }
     });
@@ -2282,8 +2257,7 @@
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
    */
   function CloudService($resource) {
-    //return $resource(API_BASE_URL + 'clouds', {}, {
-    return $resource('models/clouds.json', {}, {
+    return $resource(API_BASE_URL + 'clouds', {}, {
       query: {
         method:'GET',
         params:{},
@@ -2309,8 +2283,7 @@
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
    */
   function WindService($resource) {
-    //return $resource(API_BASE_URL + 'winds', {}, {
-    return $resource('models/winds.json', {}, {
+    return $resource(API_BASE_URL + 'winds', {}, {
       query: {
         method:'GET',
         params:{},
@@ -2336,8 +2309,7 @@
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
    */
   function WaveService($resource) {
-    //return $resource(API_BASE_URL + 'waves', {}, {
-    return $resource('models/waves.json', {}, {
+    return $resource(API_BASE_URL + 'waves', {}, {
       query: {
         method:'GET',
         params:{},
@@ -2363,8 +2335,7 @@
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
    */
   function SamplingNormService($resource) {
-    //return $resource(API_BASE_URL + 'sampling/norms', {}, {
-    return $resource('models/sampling_norms.json', {}, {
+    return $resource(API_BASE_URL + 'sampling/norms', {}, {
       query: {
         method:'GET',
         params:{},
@@ -2390,8 +2361,7 @@
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
    */
   function PointService($resource) {
-    //return $resource(API_BASE_URL + 'points', {}, {
-    return $resource('models/points.json', {}, {
+    return $resource(API_BASE_URL + 'points', {}, {
       query: {
         method:'GET',
         params:{},
@@ -2417,8 +2387,7 @@
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
    */
   function FieldParameterService($resource) {
-    //return $resource(API_BASE_URL + 'parameters/field', {}, {
-    return $resource('models/field_parameters.json', {}, {
+    return $resource(API_BASE_URL + 'parameters/field', {}, {
       query: {
         method:'GET',
         params:{},
@@ -2444,11 +2413,10 @@
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
    */
   function FieldSheetService($resource) {
-    //return $resource(API_BASE_URL + 'fieldsheets/:fieldSheetId', {}, {
-    return $resource('models/field_sheets/1.json', {}, {
+    return $resource(API_BASE_URL + 'fieldsheets/:fieldSheetId', {}, {
       query: {
         method:'GET',
-        params:{},
+        params:{fieldSheetId: 'id_hoja_campo'},
         isArray:false
       }
     });
@@ -2471,8 +2439,7 @@
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
    */
   function ReceptionistService($resource) {
-    //return $resource(API_BASE_URL + 'receptionists', {}, {
-    return $resource('models/receptionists.json', {}, {
+    return $resource(API_BASE_URL + 'receptionists', {}, {
       query: {
         method:'GET',
         params:{},
@@ -2498,11 +2465,10 @@
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
    */
   function ReceptionService($resource) {
-    //return $resource(API_BASE_URL + 'sampling/samples/:sampleId', {}, {
-    return $resource('models/sampling/samples/1.json', {}, {
+    return $resource(API_BASE_URL + 'sampling/samples/:sampleId', {}, {
       query: {
         method:'GET',
-        params:{},
+        params:{sampleId: 'id_muestra'},
         isArray:false
       }
     });
@@ -2525,8 +2491,7 @@
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
    */
   function ExpirationService($resource) {
-    //return $resource(API_BASE_URL + 'expirations', {}, {
-    return $resource('models/expirations.json', {}, {
+    return $resource(API_BASE_URL + 'expirations', {}, {
       query: {
         method:'GET',
         params:{},
@@ -2552,8 +2517,7 @@
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
    */
   function RequiredVolumeService($resource) {
-    //return $resource(API_BASE_URL + 'volumes', {}, {
-    return $resource('models/volumes.json', {}, {
+    return $resource(API_BASE_URL + 'volumes', {}, {
       query: {
         method:'GET',
         params:{},
@@ -2579,8 +2543,7 @@
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
    */
   function CheckerService($resource) {
-    //return $resource(API_BASE_URL + 'checkers', {}, {
-    return $resource('models/checkers.json', {}, {
+    return $resource(API_BASE_URL + 'checkers', {}, {
       query: {
         method:'GET',
         params:{},
@@ -2606,11 +2569,10 @@
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
    */
   function CustodyService($resource) {
-    //return $resource(API_BASE_URL + 'custodies/:custodyId', {}, {
-    return $resource('models/custodies/100.json', {}, {
+    return $resource(API_BASE_URL + 'custodies/:custodyId', {}, {
       query: {
         method:'GET',
-        params:{},
+        params:{custodyId: 'id_custodia'},
         isArray:false
       }
     });
@@ -2633,8 +2595,7 @@
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
    */
   function SamplesListService($resource) {
-    //return $resource(API_BASE_URL + 'samples', {}, {
-    return $resource('models/samples_list.json', {}, {
+    return $resource(API_BASE_URL + 'samples', {}, {
       query: {
         method:'GET',
         params:{},
@@ -2660,8 +2621,7 @@
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
    */
   function InstrumentsListService($resource) {
-    //return $resource(API_BASE_URL + 'instruments', {}, {
-    return $resource('models/instruments_list.json', {}, {
+    return $resource(API_BASE_URL + 'instruments', {}, {
       query: {
         method:'GET',
         params:{},
@@ -2687,8 +2647,7 @@
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
    */
   function ContainersListService($resource) {
-    //return $resource(API_BASE_URL + 'containers', {}, {
-    return $resource('models/containers_list.json', {}, {
+    return $resource(API_BASE_URL + 'containers', {}, {
       query: {
         method:'GET',
         params:{},
@@ -2714,8 +2673,7 @@
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
    */
   function AnalysisListService($resource) {
-    //return $resource(API_BASE_URL + 'analysis', {}, {
-    return $resource('models/analysis_list.json', {}, {
+    return $resource(API_BASE_URL + 'analysis', {}, {
       query: {
         method:'GET',
         params:{},
@@ -2741,8 +2699,7 @@
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
    */
   function DepartmentService($resource) {
-    //return $resource(API_BASE_URL + 'areas', {}, {
-    return $resource('models/areas.json', {}, {
+    return $resource(API_BASE_URL + 'areas', {}, {
       query: {
         method:'GET',
         params:{},
@@ -2768,8 +2725,7 @@
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
    */
   function AnalysisService($resource) {
-    //return $resource(API_BASE_URL + 'analysis/select', {}, {
-    return $resource('models/analysis_select.json', {}, {
+    return $resource(API_BASE_URL + 'analysis/select', {}, {
       query: {
         method:'GET',
         params:{},
@@ -2795,8 +2751,7 @@
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
    */
   function ReportsListService($resource) {
-    //return $resource(API_BASE_URL + 'reports', {}, {
-    return $resource('models/reports_list.json', {}, {
+    return $resource(API_BASE_URL + 'reports', {}, {
       query: {
         method:'GET',
         params:{},
@@ -2822,11 +2777,10 @@
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
    */
   function ReportApprovalService($resource) {
-    //return $resource(API_BASE_URL + 'reports/:reportId', {}, {
-    return $resource('models/report.json', {}, {
+    return $resource(API_BASE_URL + 'reports/:reportId', {}, {
       query: {
         method:'GET',
-        params:{},
+        params:{reportId: 'id_reporte'},
         isArray:true
       }
     });
@@ -2849,8 +2803,7 @@
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
    */
   function PointsListService($resource) {
-    //return $resource(API_BASE_URL + 'points', {}, {
-    return $resource('models/points.json', {}, {
+    return $resource(API_BASE_URL + 'points', {}, {
       query: {
         method:'GET',
         params:{},
@@ -2876,8 +2829,7 @@
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
    */
   function EmployeeService($resource) {
-    //return $resource(API_BASE_URL + 'employees', {}, {
-    return $resource('models/empleados.json', {}, {
+    return $resource(API_BASE_URL + 'employees', {}, {
       query: {
         method:'GET',
         params:{},
@@ -2903,8 +2855,7 @@
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
    */
   function NormsListService($resource) {
-    //return $resource(API_BASE_URL + 'norms', {}, {
-    return $resource('models/norms_list.json', {}, {
+    return $resource(API_BASE_URL + 'norms', {}, {
       query: {
         method:'GET',
         params:{},
@@ -2930,8 +2881,7 @@
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
    */
   function ReferencesListService($resource) {
-    //return $resource(API_BASE_URL + 'references', {}, {
-    return $resource('models/references_list.json', {}, {
+    return $resource(API_BASE_URL + 'references', {}, {
       query: {
         method:'GET',
         params:{},
@@ -2957,8 +2907,7 @@
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
    */
   function MethodsListService($resource) {
-    //return $resource(API_BASE_URL + 'methods', {}, {
-    return $resource('models/methods.json', {}, {
+    return $resource(API_BASE_URL + 'methods', {}, {
       query: {
         method:'GET',
         params:{},
@@ -2984,8 +2933,7 @@
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
    */
   function PricesListService($resource) {
-    //return $resource(API_BASE_URL + 'prices', {}, {
-    return $resource('models/prices_list.json', {}, {
+    return $resource(API_BASE_URL + 'prices', {}, {
       query: {
         method:'GET',
         params:{},
@@ -3011,8 +2959,7 @@
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
    */
   function UsersListService($resource) {
-    //return $resource(API_BASE_URL + 'users', {}, {
-    return $resource('models/users.json', {}, {
+    return $resource(API_BASE_URL + 'users', {}, {
       query: {
         method:'GET',
         params:{},
@@ -3038,11 +2985,10 @@
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
    */
   function ProfileService($resource) {
-    //return $resource(API_BASE_URL + 'profiles/:profileId', {}, {
-    return $resource('models/profile.json', {}, {
+    return $resource(API_BASE_URL + 'profiles/:profileId', {}, {
       query: {
         method:'GET',
-        params:{},
+        params:{profileId: 'id_perfil'},
         isArray:true
       }
     });
@@ -3065,8 +3011,7 @@
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
    */
   function QuotesListService($resource) {
-    //return $resource(API_BASE_URL + 'quotes', {}, {
-    return $resource('models/quotes/quotes.json', {}, {
+    return $resource(API_BASE_URL + 'quotes', {}, {
       query: {
         method:'GET',
         params:{},
@@ -3092,8 +3037,7 @@
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
    */
   function ClientDetailService($resource) {
-    //return $resource(API_BASE_URL + 'clients/:clientId', {}, {
-    return $resource('models/clients/:clientId.json', {}, {
+    return $resource(API_BASE_URL + 'clients/:clientId', {}, {
       query: {
         method:'GET',
         params:{clientId:'id_cliente'},

@@ -1,7 +1,6 @@
 (function() {
   'use strict';
   // ANGULAR MODULE SETTER
-  // app.js
   angular
     .module('siclabApp', [
       'ngRoute',
@@ -676,7 +675,7 @@
    * @param {Object} SamplingSupervisorService - Proveedor de datos, Supervisores muestreo
    * @param {Object} SamplingEmployeeService - Proveedor de datos, Empleados muestreo
    * @param {Object} PreservationService - Proveedor de datos, Preservaciones
-   * @param {Object} ContainerService - Proveedor de datos, Recipientes
+   * @param {Object} ContainerKindsService - Proveedor de datos, Clases recipientes
    * @param {Object} ReactivesListService - Proveedor de datos, lista Reactivos
    * @param {Object} MaterialService - Proveedor de datos, Material
    * @param {Object} CoolerService - Proveedor de datos, lista Hieleras
@@ -684,7 +683,7 @@
    */
   function PlanController(PlanObjectivesService, PointKindsService,
     DistrictService, CityService, SamplingSupervisorService,
-    SamplingEmployeeService, PreservationService, ContainerService,
+    SamplingEmployeeService, PreservationService, ContainerKindsService,
     ReactivesListService, MaterialService, CoolerService,
     PlanService) {
     var vm = this;
@@ -697,7 +696,7 @@
     vm.samplingEmployees = SamplingEmployeeService.query();
     vm.preservations = PreservationService.query();
     vm.reactives = ReactivesListService.query();
-    vm.containers = ContainerService.query();
+    vm.containers = ContainerKindsService.query();
     vm.materials = MaterialService.query();
     vm.coolers = CoolerService.query();
     vm.addPoints = addPoints;
@@ -751,7 +750,7 @@
       [
         'PlanObjectivesService', 'PointKindsService',
         'DistrictService', 'CityService', 'SamplingSupervisorService',
-        'SamplingEmployeeService', 'PreservationService', 'ContainerService',
+        'SamplingEmployeeService', 'PreservationService', 'ContainerKindsService',
         'ReactivesListService', 'MaterialService', 'CoolerService',
         'PlanService',
         PlanController
@@ -1017,18 +1016,18 @@
    * @param {Object} PreservationService - Proveedor de datos, Preservaciones
    * @param {Object} ExpirationService - Proveedor de datos, Vigencias
    * @param {Object} RequiredVolumeService - Proveedor de datos, Volúmenes requeridos
-   * @param {Object} ContainerService - Proveedor de datos, Recipientes
+   * @param {Object} ContainerKindsService - Proveedor de datos, Clases recipientes
    * @param {Object} CheckerService - Proveedor de datos, Responsables verificación
    * @param {Object} CustodyService - Proveedor de datos, Cadenas custodia
    */
   function CustodyController(PreservationService, ExpirationService,
-    RequiredVolumeService, ContainerService, CheckerService,
+    RequiredVolumeService, ContainerKindsService, CheckerService,
     CustodyService) {
     var vm = this;
     vm.preservations = PreservationService.query();
     vm.expirations = ExpirationService.query();
     vm.volumes = RequiredVolumeService.query();
-    vm.containers = ContainerService.query();
+    vm.containers = ContainerKindsService.query();
     vm.checkers = CheckerService.query();
     vm.custody = CustodyService.query();
 
@@ -1070,7 +1069,7 @@
     .controller('CustodyController',
       [
         'PreservationService', 'ExpirationService', 'RequiredVolumeService',
-        'ContainerService', 'CheckerService', 'CustodyService',
+        'ContainerKindsService', 'CheckerService', 'CustodyService',
         CustodyController
       ]
     );
@@ -1556,18 +1555,18 @@
    * @constructor
    * @desc Controla la vista para Perfil
    * @this {Object} $scope - Contenedor para el modelo [AngularJS]
-   * @param {Object} ProfileService - Proveedor de datos, Perfil
+   * @param {Object} UserProfileService - Proveedor de datos, Perfil de usuario
    */
-  function ProfileController(ProfileService) {
+  function ProfileController(UserProfileService) {
     var vm = this;
-    vm.profile = ProfileService.query();
+    vm.profile = UserProfileService.query();
   }
 
   angular
     .module('siclabApp')
     .controller('ProfileController',
       [
-        'ProfileService',
+        'UserProfileService',
         ProfileController
       ]
     );
@@ -1680,7 +1679,7 @@
    * @name MenuService
    * @constructor
    * @desc Proveedor de datos, Menú
-   * @param {Object} $resource - Acceso a recursos HTTP, AngularJS
+   * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
    */
   function MenuService($resource, $window) {
@@ -1738,7 +1737,7 @@
    * @name ClientService
    * @constructor
    * @desc Proveedor de datos, Cliente
-   * @param {Object} $resource - Acceso a recursos HTTP, AngularJS
+   * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
    */
   function ClientService($resource) {
@@ -1764,7 +1763,7 @@
    * @name ParameterService
    * @constructor
    * @desc Proveedor de datos, Parámetros análisis
-   * @param {Object} $resource - Acceso a recursos HTTP, AngularJS
+   * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
    */
   function ParameterService($resource) {
@@ -1790,7 +1789,7 @@
    * @name NormService
    * @constructor
    * @desc Proveedor de datos, Normas referencia
-   * @param {Object} $resource - Acceso a recursos HTTP, AngularJS
+   * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
    */
   function NormService($resource) {
@@ -1816,7 +1815,7 @@
    * @name SamplingTypeService
    * @constructor
    * @desc Proveedor de datos, Tipo muestreo
-   * @param {Object} $resource - Acceso a recursos HTTP, AngularJS
+   * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
    */
   function SamplingTypeService($resource) {
@@ -1842,7 +1841,7 @@
    * @name QuoteService
    * @constructor
    * @desc Proveedor de datos, Cotizaciones
-   * @param {Object} $resource - Acceso a recursos HTTP, AngularJS
+   * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
    */
   function QuoteService($resource) {
@@ -1870,7 +1869,7 @@
    * @name OrderSourceService
    * @constructor
    * @desc Proveedor de datos, Orígenes orden
-   * @param {Object} $resource - Acceso a recursos HTTP, AngularJS
+   * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
    */
   function OrderSourceService($resource) {
@@ -1896,7 +1895,7 @@
    * @name MatrixService
    * @constructor
    * @desc Proveedor de datos, Matrices
-   * @param {Object} $resource - Acceso a recursos HTTP, AngularJS
+   * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
    */
   function MatrixService($resource) {
@@ -1922,12 +1921,12 @@
    * @name SamplingSupervisorService
    * @constructor
    * @desc Proveedor de datos, Supervisores muestreo
-   * @param {Object} $resource - Acceso a recursos HTTP, AngularJS
+   * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
    */
   function SamplingSupervisorService($resource) {
-    //return $resource(API_BASE_URL + 'sampling/supervisors', {}, {
-    return $resource('models/sampling_supervisors.json', {}, {
+    //return $resource('models/sampling_supervisors.json', {}, {
+    return $resource(API_BASE_URL + 'sampling/supervisors', {}, {
       query: {
         method:'GET',
         params:{},
@@ -1949,7 +1948,7 @@
    * @name OrderService
    * @constructor
    * @desc Proveedor de datos, Orden muestreo
-   * @param {Object} $resource - Acceso a recursos HTTP, AngularJS
+   * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
    */
   function OrderService($resource) {
@@ -1976,12 +1975,12 @@
    * @name PlanObjectivesService
    * @constructor
    * @desc Proveedor de datos, Objetivos plan
-   * @param {Object} $resource - Acceso a recursos HTTP, AngularJS
+   * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
    */
   function PlanObjectivesService($resource) {
-    //return $resource(API_BASE_URL + 'plan/objectives', {}, {
-    return $resource('models/plan_objectives.json', {}, {
+    //return $resource('models/plan_objectives.json', {}, {
+    return $resource(API_BASE_URL + 'plan/objectives', {}, {
       query: {
         method:'GET',
         params:{},
@@ -2003,12 +2002,12 @@
    * @name PointKindsService
    * @constructor
    * @desc Proveedor de datos, tipos Punto
-   * @param {Object} $resource - Acceso a recursos HTTP, AngularJS
+   * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
    */
   function PointKindsService($resource) {
-    //return $resource(API_BASE_URL + 'point/kinds', {}, {
-    return $resource('models/point_kinds.json', {}, {
+    //return $resource('models/point_kinds.json', {}, {
+    return $resource(API_BASE_URL + 'point/kinds', {}, {
       query: {
         method:'GET',
         params:{},
@@ -2030,12 +2029,12 @@
    * @name DistrictService
    * @constructor
    * @desc Proveedor de datos, Municipios
-   * @param {Object} $resource - Acceso a recursos HTTP, AngularJS
+   * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
    */
   function DistrictService($resource) {
-    //return $resource(API_BASE_URL + 'districts', {}, {
-    return $resource('models/districts.json', {}, {
+    //return $resource('models/districts.json', {}, {
+    return $resource(API_BASE_URL + 'districts', {}, {
       query: {
         method:'GET',
         params:{},
@@ -2057,7 +2056,7 @@
    * @name CityService
    * @constructor
    * @desc Proveedor de datos, Localidades
-   * @param {Object} $resource - Acceso a recursos HTTP, AngularJS
+   * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
    */
   function CityService($resource) {
@@ -2084,12 +2083,12 @@
    * @name SamplingEmployeeService
    * @constructor
    * @desc Proveedor de datos, Empleados muestreo
-   * @param {Object} $resource - Acceso a recursos HTTP, AngularJS
+   * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
    */
   function SamplingEmployeeService($resource) {
-    //return $resource(API_BASE_URL + 'sampling/employees', {}, {
-    return $resource('models/sampling_employees.json', {}, {
+    //return $resource('models/sampling_employees.json', {}, {
+    return $resource(API_BASE_URL + 'sampling/employees', {}, {
       query: {
         method:'GET',
         params:{},
@@ -2111,12 +2110,12 @@
    * @name PreservationService
    * @constructor
    * @desc Proveedor de datos, Preservaciones
-   * @param {Object} $resource - Acceso a recursos HTTP, AngularJS
+   * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
    */
   function PreservationService($resource) {
-    //return $resource(API_BASE_URL + 'preservations', {}, {
-    return $resource('models/preservations.json', {}, {
+    //return $resource('models/preservations.json', {}, {
+    return $resource(API_BASE_URL + 'preservations', {}, {
       query: {
         method:'GET',
         params:{},
@@ -2133,17 +2132,17 @@
     ]
   );
 
-  // ContainerService.js
+  // ContainerKindsService.js
   /**
-   * @name ContainerService
+   * @name ContainerKindsService
    * @constructor
    * @desc Proveedor de datos, Recipientes
-   * @param {Object} $resource - Acceso a recursos HTTP, AngularJS
+   * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
    */
-  function ContainerService($resource) {
-    //return $resource(API_BASE_URL + 'containers', {}, {
-    return $resource('models/containers.json', {}, {
+  function ContainerKindsService($resource) {
+    //return $resource('models/containers.json', {}, {
+    return $resource(API_BASE_URL + 'containers/kinds', {}, {
       query: {
         method:'GET',
         params:{},
@@ -2154,9 +2153,9 @@
 
   angular
     .module('siclabApp')
-    .factory('ContainerService', [
+    .factory('ContainerKindsService', [
       '$resource',
-      ContainerService
+      ContainerKindsService
     ]
   );
 
@@ -2165,12 +2164,12 @@
    * @name ReactivesListService
    * @constructor
    * @desc Proveedor de datos, lista Reactivos
-   * @param {Object} $resource - Acceso a recursos HTTP, AngularJS
+   * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
    */
   function ReactivesListService($resource) {
-    //return $resource(API_BASE_URL + 'reactives', {}, {
-    return $resource('models/reactives_list.json', {}, {
+    //return $resource('models/reactives_list.json', {}, {
+    return $resource(API_BASE_URL + 'reactives', {}, {
       query: {
         method:'GET',
         params:{},
@@ -2192,12 +2191,12 @@
    * @name MaterialService
    * @constructor
    * @desc Proveedor de datos, Materiales
-   * @param {Object} $resource - Acceso a recursos HTTP, AngularJS
+   * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
    */
   function MaterialService($resource) {
-    //return $resource(API_BASE_URL + 'materials', {}, {
-    return $resource('models/materials.json', {}, {
+    //return $resource('models/materials.json', {}, {
+    return $resource(API_BASE_URL + 'materials', {}, {
       query: {
         method:'GET',
         params:{},
@@ -2219,12 +2218,12 @@
    * @name CoolerService
    * @constructor
    * @desc Proveedor de datos, Hieleras
-   * @param {Object} $resource - Acceso a recursos HTTP, AngularJS
+   * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
    */
   function CoolerService($resource) {
-    //return $resource(API_BASE_URL + 'coolers', {}, {
-    return $resource('models/coolers.json', {}, {
+    //return $resource('models/coolers.json', {}, {
+    return $resource(API_BASE_URL + 'coolers', {}, {
       query: {
         method:'GET',
         params:{},
@@ -2246,7 +2245,7 @@
    * @name PlanService
    * @constructor
    * @desc Proveedor de datos, Plan muestreo
-   * @param {Object} $resource - Acceso a recursos HTTP, AngularJS
+   * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
    */
   function PlanService($resource) {
@@ -2273,12 +2272,12 @@
    * @name CloudService
    * @constructor
    * @desc Proveedor de datos, Coberturas nubes
-   * @param {Object} $resource - Acceso a recursos HTTP, AngularJS
+   * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
    */
   function CloudService($resource) {
-    //return $resource(API_BASE_URL + 'clouds', {}, {
-    return $resource('models/clouds.json', {}, {
+    //return $resource('models/clouds.json', {}, {
+    return $resource(API_BASE_URL + 'clouds', {}, {
       query: {
         method:'GET',
         params:{},
@@ -2300,12 +2299,12 @@
    * @name WindService
    * @constructor
    * @desc Proveedor de datos, Direcciones viento
-   * @param {Object} $resource - Acceso a recursos HTTP, AngularJS
+   * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
    */
   function WindService($resource) {
-    //return $resource(API_BASE_URL + 'winds', {}, {
-    return $resource('models/winds.json', {}, {
+    //return $resource('models/winds.json', {}, {
+    return $resource(API_BASE_URL + 'winds', {}, {
       query: {
         method:'GET',
         params:{},
@@ -2327,12 +2326,12 @@
    * @name WaveService
    * @constructor
    * @desc Proveedor de datos, Intensidades oleaje
-   * @param {Object} $resource - Acceso a recursos HTTP, AngularJS
+   * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
    */
   function WaveService($resource) {
-    //return $resource(API_BASE_URL + 'waves', {}, {
-    return $resource('models/waves.json', {}, {
+    //return $resource('models/waves.json', {}, {
+    return $resource(API_BASE_URL + 'waves', {}, {
       query: {
         method:'GET',
         params:{},
@@ -2354,12 +2353,12 @@
    * @name SamplingNormService
    * @constructor
    * @desc Proveedor de datos, Normas muestreo
-   * @param {Object} $resource - Acceso a recursos HTTP, AngularJS
+   * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
    */
   function SamplingNormService($resource) {
-    //return $resource(API_BASE_URL + 'sampling/norms', {}, {
-    return $resource('models/sampling_norms.json', {}, {
+    //return $resource('models/sampling_norms.json', {}, {
+    return $resource(API_BASE_URL + 'sampling/norms', {}, {
       query: {
         method:'GET',
         params:{},
@@ -2381,12 +2380,12 @@
    * @name PointService
    * @constructor
    * @desc Proveedor de datos, Puntos muestreo
-   * @param {Object} $resource - Acceso a recursos HTTP, AngularJS
+   * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
    */
   function PointService($resource) {
-    //return $resource(API_BASE_URL + 'points', {}, {
-    return $resource('models/points.json', {}, {
+    //return $resource('models/points.json', {}, {
+    return $resource(API_BASE_URL + 'points', {}, {
       query: {
         method:'GET',
         params:{},
@@ -2408,12 +2407,12 @@
    * @name FieldParameterService
    * @constructor
    * @desc Proveedor de datos, Parámetros campo
-   * @param {Object} $resource - Acceso a recursos HTTP, AngularJS
+   * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
    */
   function FieldParameterService($resource) {
-    //return $resource(API_BASE_URL + 'parameters/field', {}, {
-    return $resource('models/field_parameters.json', {}, {
+    //return $resource('models/field_parameters.json', {}, {
+    return $resource(API_BASE_URL + 'parameters/field', {}, {
       query: {
         method:'GET',
         params:{},
@@ -2435,11 +2434,11 @@
    * @name FieldSheetService
    * @constructor
    * @desc Proveedor de datos, Hojas campo
-   * @param {Object} $resource - Acceso a recursos HTTP, AngularJS
+   * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
    */
   function FieldSheetService($resource) {
-    //return $resource(API_BASE_URL + 'fieldsheets/:fieldSheetId', {}, {
+    //return $resource(API_BASE_URL + 'fieldsheets/:fieldsheetId', {}, {
     return $resource('models/field_sheets/1.json', {}, {
       query: {
         method:'GET',
@@ -2462,12 +2461,12 @@
    * @name ReceptionistService
    * @constructor
    * @desc Proveedor de datos, Recepcionistas
-   * @param {Object} $resource - Acceso a recursos HTTP, AngularJS
+   * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
    */
   function ReceptionistService($resource) {
-    //return $resource(API_BASE_URL + 'receptionists', {}, {
-    return $resource('models/receptionists.json', {}, {
+    //return $resource('models/receptionists.json', {}, {
+    return $resource(API_BASE_URL + 'receptionists', {}, {
       query: {
         method:'GET',
         params:{},
@@ -2489,11 +2488,11 @@
    * @name ReceptionService
    * @constructor
    * @desc Proveedor de datos, Recepción
-   * @param {Object} $resource - Acceso a recursos HTTP, AngularJS
+   * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
    */
   function ReceptionService($resource) {
-    //return $resource(API_BASE_URL + 'sampling/samples/:sampleId', {}, {
+    //return $resource(API_BASE_URL + 'receptions/:receptionId', {}, {
     return $resource('models/sampling/samples/1.json', {}, {
       query: {
         method:'GET',
@@ -2516,12 +2515,12 @@
    * @name ExpirationService
    * @constructor
    * @desc Proveedor de datos, Vigencias
-   * @param {Object} $resource - Acceso a recursos HTTP, AngularJS
+   * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
    */
   function ExpirationService($resource) {
-    //return $resource(API_BASE_URL + 'expirations', {}, {
-    return $resource('models/expirations.json', {}, {
+    //return $resource('models/expirations.json', {}, {
+    return $resource(API_BASE_URL + 'expirations', {}, {
       query: {
         method:'GET',
         params:{},
@@ -2543,12 +2542,12 @@
    * @name RequiredVolumeService
    * @constructor
    * @desc Proveedor de datos, Volúmenes requeridos
-   * @param {Object} $resource - Acceso a recursos HTTP, AngularJS
+   * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
    */
   function RequiredVolumeService($resource) {
-    //return $resource(API_BASE_URL + 'volumes', {}, {
-    return $resource('models/volumes.json', {}, {
+    //return $resource('models/volumes.json', {}, {
+    return $resource(API_BASE_URL + 'volumes', {}, {
       query: {
         method:'GET',
         params:{},
@@ -2570,12 +2569,12 @@
    * @name CheckerService
    * @constructor
    * @desc Proveedor de datos, Responsables verificación
-   * @param {Object} $resource - Acceso a recursos HTTP, AngularJS
+   * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
    */
   function CheckerService($resource) {
-    //return $resource(API_BASE_URL + 'checkers', {}, {
-    return $resource('models/checkers.json', {}, {
+    //return $resource('models/checkers.json', {}, {
+    return $resource(API_BASE_URL + 'checkers', {}, {
       query: {
         method:'GET',
         params:{},
@@ -2597,7 +2596,7 @@
    * @name CustodyService
    * @constructor
    * @desc Proveedor de datos, Cadenas custodia
-   * @param {Object} $resource - Acceso a recursos HTTP, AngularJS
+   * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
    */
   function CustodyService($resource) {
@@ -2624,12 +2623,12 @@
    * @name SamplesListService
    * @constructor
    * @desc Proveedor de datos, lista Muestras
-   * @param {Object} $resource - Acceso a recursos HTTP, AngularJS
+   * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
    */
   function SamplesListService($resource) {
-    //return $resource(API_BASE_URL + 'samples', {}, {
-    return $resource('models/samples_list.json', {}, {
+    //return $resource('models/samples_list.json', {}, {
+    return $resource(API_BASE_URL + 'samples', {}, {
       query: {
         method:'GET',
         params:{},
@@ -2651,12 +2650,12 @@
    * @name InstrumentsListService
    * @constructor
    * @desc Proveedor de datos, lista Equipos
-   * @param {Object} $resource - Acceso a recursos HTTP, AngularJS
+   * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
    */
   function InstrumentsListService($resource) {
-    //return $resource(API_BASE_URL + 'instruments', {}, {
-    return $resource('models/instruments_list.json', {}, {
+    //return $resource('models/instruments_list.json', {}, {
+    return $resource(API_BASE_URL + 'instruments', {}, {
       query: {
         method:'GET',
         params:{},
@@ -2678,12 +2677,12 @@
    * @name ContainersListService
    * @constructor
    * @desc Proveedor de datos, lista Recipients
-   * @param {Object} $resource - Acceso a recursos HTTP, AngularJS
+   * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
    */
   function ContainersListService($resource) {
-    //return $resource(API_BASE_URL + 'containers', {}, {
-    return $resource('models/containers_list.json', {}, {
+    //return $resource('models/containers_list.json', {}, {
+    return $resource(API_BASE_URL + 'containers', {}, {
       query: {
         method:'GET',
         params:{},
@@ -2705,12 +2704,12 @@
    * @name AnalysisListService
    * @constructor
    * @desc Proveedor de datos, consulta de Análisis
-   * @param {Object} $resource - Acceso a recursos HTTP, AngularJS
+   * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
    */
   function AnalysisListService($resource) {
-    //return $resource(API_BASE_URL + 'analysis', {}, {
-    return $resource('models/analysis_list.json', {}, {
+    //return $resource('models/analysis_list.json', {}, {
+    return $resource(API_BASE_URL + 'analysis', {}, {
       query: {
         method:'GET',
         params:{},
@@ -2732,12 +2731,12 @@
    * @name DepartmentService
    * @constructor
    * @desc Proveedor de datos, Áreas
-   * @param {Object} $resource - Acceso a recursos HTTP, AngularJS
+   * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
    */
   function DepartmentService($resource) {
-    //return $resource(API_BASE_URL + 'areas', {}, {
-    return $resource('models/areas.json', {}, {
+    //return $resource('models/areas.json', {}, {
+    return $resource(API_BASE_URL + 'areas', {}, {
       query: {
         method:'GET',
         params:{},
@@ -2759,12 +2758,12 @@
    * @name AnalysisService
    * @constructor
    * @desc Proveedor de datos, selección de formato de captura de Análisis
-   * @param {Object} $resource - Acceso a recursos HTTP, AngularJS
+   * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
    */
   function AnalysisService($resource) {
-    //return $resource(API_BASE_URL + 'analysis/select', {}, {
-    return $resource('models/analysis_select.json', {}, {
+    //return $resource('models/analysis_select.json', {}, {
+    return $resource(API_BASE_URL + 'analysis/selections', {}, {
       query: {
         method:'GET',
         params:{},
@@ -2786,12 +2785,12 @@
    * @name ReportsListService
    * @constructor
    * @desc Proveedor de datos, lista Reportes
-   * @param {Object} $resource - Acceso a recursos HTTP, AngularJS
+   * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
    */
   function ReportsListService($resource) {
-    //return $resource(API_BASE_URL + 'reports', {}, {
-    return $resource('models/reports_list.json', {}, {
+    //return $resource('models/reports_list.json', {}, {
+    return $resource(API_BASE_URL + 'reports', {}, {
       query: {
         method:'GET',
         params:{},
@@ -2813,7 +2812,7 @@
    * @name ReportApprovalService
    * @constructor
    * @desc Proveedor de datos, validación Reporte
-   * @param {Object} $resource - Acceso a recursos HTTP, AngularJS
+   * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
    */
   function ReportApprovalService($resource) {
@@ -2840,12 +2839,12 @@
    * @name PointsListService
    * @constructor
    * @desc Proveedor de datos, lista Puntos
-   * @param {Object} $resource - Acceso a recursos HTTP, AngularJS
+   * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
    */
   function PointsListService($resource) {
-    //return $resource(API_BASE_URL + 'points', {}, {
-    return $resource('models/points.json', {}, {
+    //return $resource('models/points.json', {}, {
+    return $resource(API_BASE_URL + 'points', {}, {
       query: {
         method:'GET',
         params:{},
@@ -2867,12 +2866,12 @@
    * @name EmployeeService
    * @constructor
    * @desc Proveedor de datos, Empleados
-   * @param {Object} $resource - Acceso a recursos HTTP, AngularJS
+   * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
    */
   function EmployeeService($resource) {
-    //return $resource(API_BASE_URL + 'employees', {}, {
-    return $resource('models/empleados.json', {}, {
+    //return $resource('models/empleados.json', {}, {
+    return $resource(API_BASE_URL + 'employees', {}, {
       query: {
         method:'GET',
         params:{},
@@ -2894,12 +2893,12 @@
    * @name NormsListService
    * @constructor
    * @desc Proveedor de datos, lista Normas
-   * @param {Object} $resource - Acceso a recursos HTTP, AngularJS
+   * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
    */
   function NormsListService($resource) {
-    //return $resource(API_BASE_URL + 'norms', {}, {
-    return $resource('models/norms_list.json', {}, {
+    //return $resource('models/norms_list.json', {}, {
+    return $resource(API_BASE_URL + 'norms', {}, {
       query: {
         method:'GET',
         params:{},
@@ -2921,12 +2920,12 @@
    * @name ReferencesListService
    * @constructor
    * @desc Proveedor de datos, lista Referencias
-   * @param {Object} $resource - Acceso a recursos HTTP, AngularJS
+   * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
    */
   function ReferencesListService($resource) {
-    //return $resource(API_BASE_URL + 'references', {}, {
-    return $resource('models/references_list.json', {}, {
+    //return $resource('models/references_list.json', {}, {
+    return $resource(API_BASE_URL + 'references', {}, {
       query: {
         method:'GET',
         params:{},
@@ -2948,12 +2947,12 @@
    * @name MethodsListService
    * @constructor
    * @desc Proveedor de datos, Métodos
-   * @param {Object} $resource - Acceso a recursos HTTP, AngularJS
+   * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
    */
   function MethodsListService($resource) {
-    //return $resource(API_BASE_URL + 'methods', {}, {
-    return $resource('models/methods.json', {}, {
+    //return $resource('models/methods.json', {}, {
+    return $resource(API_BASE_URL + 'methods', {}, {
       query: {
         method:'GET',
         params:{},
@@ -2975,12 +2974,12 @@
    * @name PricesListService
    * @constructor
    * @desc Proveedor de datos, lista Precios
-   * @param {Object} $resource - Acceso a recursos HTTP, AngularJS
+   * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
    */
   function PricesListService($resource) {
-    //return $resource(API_BASE_URL + 'prices', {}, {
-    return $resource('models/prices_list.json', {}, {
+    //return $resource('models/prices_list.json', {}, {
+    return $resource(API_BASE_URL + 'prices', {}, {
       query: {
         method:'GET',
         params:{},
@@ -3002,16 +3001,19 @@
    * @name UsersListService
    * @constructor
    * @desc Proveedor de datos, Usuarios
-   * @param {Object} $resource - Acceso a recursos HTTP, AngularJS
+   * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
    */
-  function UsersListService($resource) {
-    //return $resource(API_BASE_URL + 'users', {}, {
-    return $resource('models/users.json', {}, {
+  function UsersListService($resource, $window) {
+    //return $resource('models/users.json', {}, {
+    return $resource(API_BASE_URL + 'users', {}, {
       query: {
         method:'GET',
         params:{},
-        isArray:true
+        isArray:true,
+        headers: {
+          'Auth-Token': $window.localStorage.getItem('user-token')
+        }
       }
     });
   }
@@ -3019,21 +3021,21 @@
   angular
     .module('siclabApp')
     .factory('UsersListService', [
-      '$resource',
+      '$resource', '$window',
       UsersListService
     ]
   );
 
-  // ProfileService.js
+  // UserProfileService.js
   /**
-   * @name ProfileService
+   * @name UserProfileService
    * @constructor
-   * @desc Proveedor de datos, Perfil
-   * @param {Object} $resource - Acceso a recursos HTTP, AngularJS
+   * @desc Proveedor de datos, Perfil de usuario
+   * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
    */
-  function ProfileService($resource) {
-    //return $resource(API_BASE_URL + 'profiles/:profileId', {}, {
+  function UserProfileService($resource) {
+    //return $resource(API_BASE_URL + 'users/:userId', {}, {
     return $resource('models/profile.json', {}, {
       query: {
         method:'GET',
@@ -3045,9 +3047,9 @@
 
   angular
     .module('siclabApp')
-    .factory('ProfileService', [
+    .factory('UserProfileService', [
       '$resource',
-      ProfileService
+      UserProfileService
     ]
   );
 
@@ -3056,12 +3058,12 @@
    * @name QuotesListService
    * @constructor
    * @desc Proveedor de datos, lista de Cotizaciones
-   * @param {Object} $resource - Acceso a recursos HTTP, AngularJS
+   * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
    */
   function QuotesListService($resource) {
-    //return $resource(API_BASE_URL + 'quotes', {}, {
-    return $resource('models/quotes/quotes.json', {}, {
+    //return $resource('models/quotes/quotes.json', {}, {
+    return $resource(API_BASE_URL + 'quotes', {}, {
       query: {
         method:'GET',
         params:{},
@@ -3083,7 +3085,7 @@
    * @name ClientDetailService
    * @constructor
    * @desc Proveedor de datos, Detalle cliente
-   * @param {Object} $resource - Acceso a recursos HTTP, AngularJS
+   * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
    */
   function ClientDetailService($resource) {

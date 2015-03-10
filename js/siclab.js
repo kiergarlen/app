@@ -1684,8 +1684,7 @@
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
    */
   function MenuService($resource, $window) {
-    //return $resource(API_BASE_URL + 'menu', {}, {
-    return $resource('api/v1/menu', {}, {
+    return $resource(API_BASE_URL + 'menu', {}, {
       query: {
         method:'GET',
         params:{},
@@ -1713,13 +1712,15 @@
    * @param {Object} $resource- Acceso a recursos HTTP, AngularJS
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
    */
-  function TasksListService($resource){
-    return $resource(API_BASE_URL + 'tasks/:userId', {}, {
-    //return $resource('models/tasks.json', {}, {
+  function TasksListService($resource, $window){
+    return $resource(API_BASE_URL + 'tasks', {}, {
       query: {
         method:'GET',
-        params:{userId: 'id_usuario'},
-        isArray:false
+        params:{},
+        isArray:true,
+        headers: {
+          'Auth-Token': $window.localStorage.getItem('user-token')
+        }
       }
     });
   }
@@ -1727,7 +1728,7 @@
   angular
     .module('siclabApp')
     .factory('TasksListService', [
-      '$resource',
+      '$resource', '$window',
       TasksListService
     ]
   );
@@ -1741,8 +1742,7 @@
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
    */
   function ClientService($resource) {
-    //return $resource(API_BASE_URL + 'clients', {}, {
-    return $resource('models/clients.json', {}, {
+    return $resource(API_BASE_URL + 'clients', {}, {
       query: {
         method:'GET',
         params:{},
@@ -1768,8 +1768,7 @@
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
    */
   function ParameterService($resource) {
-    //return $resource(API_BASE_URL + 'parameters', {}, {
-    return $resource('models/parameters.json', {}, {
+    return $resource(API_BASE_URL + 'parameters', {}, {
       query: {
         method:'GET',
         params:{},
@@ -1795,8 +1794,7 @@
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
    */
   function NormService($resource) {
-    //return $resource(API_BASE_URL + 'norms', {}, {
-    return $resource('models/normas.json', {}, {
+    return $resource(API_BASE_URL + 'norms', {}, {
       query: {
         method:'GET',
         params:{},
@@ -1822,8 +1820,7 @@
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
    */
   function SamplingTypeService($resource) {
-    //return $resource(API_BASE_URL + 'sampling/types', {}, {
-    return $resource('models/sampling/types.json', {}, {
+    return $resource(API_BASE_URL + 'sampling/types', {}, {
       query: {
         method:'GET',
         params:{},
@@ -1877,8 +1874,7 @@
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
    */
   function OrderSourceService($resource) {
-    //return $resource(API_BASE_URL + 'order/sources', {}, {
-    return $resource('models/order_sources.json', {}, {
+    return $resource(API_BASE_URL + 'order/sources', {}, {
       query: {
         method:'GET',
         params:{},
@@ -1904,8 +1900,7 @@
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
    */
   function MatrixService($resource) {
-    //return $resource(API_BASE_URL + 'matrices', {}, {
-    return $resource('models/matrices.json', {}, {
+    return $resource(API_BASE_URL + 'matrices', {}, {
       query: {
         method:'GET',
         params:{},

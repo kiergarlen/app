@@ -132,7 +132,7 @@ $app->get("/sampling/types", function() use ($app) {
 	}
 });
 /*
-$app->get("/quotes/:quoteId", function() use ($app) {
+$app->get("/quotes/:quoteId", function($quoteId) use ($app) {
 	try {
 		$userId = (validateTokenUser($app)) ? validateTokenUser($app) : 0;
 		$menu = \Service\DalSiclab::getInstance()->getQuote($quoteId);

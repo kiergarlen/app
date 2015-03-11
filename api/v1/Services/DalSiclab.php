@@ -1,9 +1,9 @@
 <?php
 namespace Service;
-//require_once 'MsSqlPdoAdapter.php';
+//require_once 'PDOAdapter.php';
 //require_once 'ConnectionConstantsSiclab.php';
 
-class DalSiclab
+class DALSiclab
 {
 	protected static $_instance;
 	const DB_DRIVER = "sqlsrv";
@@ -21,7 +21,7 @@ class DalSiclab
 	}
 
 	protected function __construct() {
-		//MsSqlPdoAdapter::getInstance(array(self::DB_HOST, self::DB_USER, self::DB_PASSWORD, self::DB_DATA_BASE));
+		//PDOAdapter::getInstance(array(self::DB_HOST, self::DB_USER, self::DB_PASSWORD, self::DB_DATA_BASE));
 	}
 
 	protected function __clone(){}

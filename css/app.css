@@ -400,3 +400,19 @@ Firefox Fix For Freaky Fieldset
   margin-left:0;
   top: -200%;
 }
+
+
+/* Angula-strap */
+.collapse.am-collapse {
+  animation-duration: .3s;
+  animation-timing-function: ease;
+  animation-fill-mode: backwards;
+  overflow: hidden;
+  &.in-remove {
+    animation-name: collapse;
+    display: block;
+  }
+  &.in-add {
+    animation-name: expand;
+  }
+}

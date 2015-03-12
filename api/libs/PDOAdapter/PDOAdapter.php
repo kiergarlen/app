@@ -55,9 +55,9 @@ class PDOAdapter
 	protected function __clone(){}
 
 	/**
-	 * Obtiene un solo renglón que resulte de la Sentencia SQL ($sql) ingresada
-	 * @param string $sql Sentencia SQL a procesar
-	 * @return object Resultado de la Sentencia SQL ($sql) a procesar
+	 * Obtiene un solo renglón que resulte de la sentencia $sql
+	 * @param string $sql sentencia a procesar
+	 * @return object Resultado de la sentencia $sql
 	 */
 	public function getSingleRow($sql)
 	{
@@ -65,9 +65,9 @@ class PDOAdapter
 	}
 
 	/**
-	 * Obtiene los renglones que resulten de la Sentencia SQL ($sql) ingresada
-	 * @param string $sql Sentencia SQL a procesar
-	 * @return object Resultado de la Sentencia SQL ($sql) a procesar
+	 * Obtiene los renglones que resulten de la sentencia $sql
+	 * @param string $sql sentencia a procesar
+	 * @return object Resultado de la sentencia $sql
 	 */
 	public function getAllRows($sql)
 	{
@@ -75,9 +75,9 @@ class PDOAdapter
 	}
 
 	/**
-	 * Obtiene los renglones que resulten de la Sentencia SQL ($sql) ingresada
-	 * @param string $sql Sentencia SQL a procesar
-	 * @return array Resultado de la Sentencia SQL ($sql) a procesar
+	 * Obtiene los renglones que resulten de la sentencia $sql
+	 * @param string $sql sentencia a procesar
+	 * @return array Resultado de la sentencia $sql
 	 */
 	public function getAllRowsArray($sql)
 	{
@@ -85,7 +85,7 @@ class PDOAdapter
 	}
 
 	/**
-	 * Emula el comportamiento de mysql_real_escape_string(), sin usar una conexión a MySQL
+	 * Replica el comportamiento de mysql_real_escape_string(), sin usar una conexión a MySQL
 	 * @param mixed $inp Valor a procesar
 	 * @return mixed $inp Valor procesada
 	 */

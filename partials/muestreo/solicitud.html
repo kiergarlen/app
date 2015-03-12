@@ -16,9 +16,17 @@
   novalidate
   >
   <div class="row">
-    <div class="col-xs-12">
-      <h4>Datos de Referencia</h4>
-      <div class="well well-sm">
+    <div class="col-xs-12" bs-collapse>
+      <h4 bs-collapse-toggle>
+        <a class="btn">
+          <!--
+          <span class="glyphicon glyphicon-chevron-up" aria-hidden="true"></span>
+          -->
+          <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
+        </a>
+        Datos de Referencia
+      </h4>
+      <div class="well well-sm" bs-collapse-target>
         <ul class="list-inline">
           <li>
             Folio:
@@ -45,14 +53,24 @@
   </div>
   <div class="row">
     <div class="col-xs-12 col-sm-6 col-md-3">
+      <!--
       <label for="quoteDateSub">Fecha recepción</label>
+      -->
+      <label for="quoteDateSub"><i class="glyphicon glyphicon-calendar"></i> Fecha recepción</label>
       <input type="text"
         class="form-control"
         placeholder="aaaa-mm-dd"
         id="quoteDateSub"
         name="quoteDateSub"
+        readonly
         required
         data-ng-model="quote.quote.fecha_solicitud"
+        data-date-format="yyyy-MM-dd"
+        data-date-type="number"
+        data-min-date="01/01/2000"
+        data-max-date="today"
+        data-autoclose="1"
+        bs-datepicker
         >
     </div>
   </div>

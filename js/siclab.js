@@ -5,6 +5,7 @@
     .module('siclabApp', [
       'ngRoute',
       'ngResource',
+      'ngAnimate',
       'angular-jwt',
       'mgcrea.ngStrap'
     ]
@@ -21,7 +22,8 @@
    * @param {Object} $httpProvider - Proveedor, manejo de peticiones HTTP
    * @param {Object} jwtInterceptorProvider - Proveedor, manejo de interceptor para implentación de JWT
    */
-  function config($routeProvider, $httpProvider, jwtInterceptorProvider) {
+  function config($routeProvider, $httpProvider, jwtInterceptorProvider,
+    $collapseProvider) {
     $routeProvider
       .otherwise({
        redirectTo: '/sistema/login'
@@ -172,6 +174,9 @@
         controllerAs: 'clientDetail'
       })
     ;
+    angular.extend($collapseProvider.defaults, {
+      startCollapsed: true
+    });
   }
 
   angular
@@ -179,6 +184,7 @@
     .config(
       [
         '$routeProvider', '$httpProvider', 'jwtInterceptorProvider',
+        '$collapseProvider',
         config
       ]
     );
@@ -288,10 +294,10 @@
     var vm = this;
     vm.message = '';
     vm.user = {username: '', password: ''};
-    vm.submit = submitMessage;
+    vm.submit = submit;
     vm.login = login;
 
-    function submitMessage(username, password) {
+    function submit(username, password) {
       $http({
         url: API_BASE_URL + 'login',
         method: 'POST',
@@ -302,15 +308,12 @@
       }).then(function success(response) {
         var token = response.data || null;
         $window.localStorage.setItem('user-token', token);
-        //var decodedJwt = token && jwtHelper.decodeToken(token);
-        //console.log(token);
-        //console.log(decodedJwt);
         $location.path('main');
       }, function error(response) {
         if (response.status === 404) {
-          //not found
+          vm.message = 'Sin enlace al servidor';
         } else {
-          //error
+          vm.message = 'Error no especificado';
         }
       });
       return '';
@@ -446,7 +449,7 @@
       var i = 0,
       l = collection.length,
       item = {};
-      for (i; i < l; i += 1) {
+      for (i = 0; i < l; i += 1) {
         if (collection[i][field] == id)
         {
           item = collection[i];
@@ -483,7 +486,7 @@
       if (vm.parameters)
       {
         l = vm.parameters.length;
-        for (i; i < l; i += 1) {
+        for (i = 0; i < l; i += 1) {
           if (vm.parameters[i].selected)
           {
             t = t + parseInt(vm.parameters[i].precio, 10);
@@ -605,7 +608,7 @@
     function selectOrderSource(idSource) {
       var i = 0, l = vm.orderSources.length;
       vm.order.origen_orden = {};
-      for (i; i < l; i += 1) {
+      for (i = 0; i < l; i += 1) {
         if (vm.orderSources[i].id_origen_orden == idSource)
         {
           vm.order.origen_orden = vm.orderSources[i];
@@ -618,7 +621,7 @@
     function selectMatrix(idMatrix) {
       var i = 0, l = vm.matrices.length;
       vm.order.matriz = {};
-      for (i; i < l; i += 1) {
+      for (i = 0; i < l; i += 1) {
         if (vm.matrices[i].id_matriz == idMatrix)
         {
           vm.order.matriz = vm.matrices[i];
@@ -631,7 +634,7 @@
     function selectSupervisor(idSupervisor) {
       var i = 0, l = vm.supervisors.length;
       vm.order.id_supervisor_muestreo = {};
-      for (i; i < l; i += 1) {
+      for (i = 0; i < l; i += 1) {
         if (vm.supervisors[i].id_id_supervisor_muestreo == idSupervisor)
         {
           vm.order.id_supervisor_muestreo = vm.supervisors[i];
@@ -707,7 +710,7 @@
       var i = 0,
       l = collection.length,
       item = {};
-      for (i; i < l; i += 1) {
+      for (i = 0; i < l; i += 1) {
         if (collection[i][field] == id)
         {
           item = collection[i];
@@ -828,7 +831,7 @@
       var i = 0,
       l = collection.length,
       item = {};
-      for (i; i < l; i += 1) {
+      for (i = 0; i < l; i += 1) {
         if (collection[i][field] == id)
         {
           item = collection[i];
@@ -977,7 +980,7 @@
     function selectReceptionist(idRecepcionist) {
       var i = 0, l = vm.receptionists.length;
       vm.reception.recepcionista = {};
-      for (i; i < l; i += 1) {
+      for (i = 0; i < l; i += 1) {
         if (vm.receptionists[i].id_empleado == idRecepcionist)
         {
           vm.reception.recepcionista = vm.receptionists[i];
@@ -1037,7 +1040,7 @@
     function selectItemFromCollection(id, collection, field) {
       var i = 0, l = collection.length,
       item = {};
-      for (i; i < l; i += 1) {
+      for (i = 0; i < l; i += 1) {
         if (collection[i][field] == id)
         {
           item = collection[i];

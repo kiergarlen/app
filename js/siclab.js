@@ -398,6 +398,7 @@
     function selectRow(e) {
       var itemId = e.currentTarget.id.split('Id')[1];
       console.log(itemId);
+      //$location.path('/muestreo/solicitud/' + itemId);
     }
   }
 

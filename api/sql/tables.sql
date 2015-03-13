@@ -32,8 +32,9 @@ CREATE TABLE [dbo].[Cliente](
 	[interno] [int] NULL,
 	[cea] [int] NULL,
 	[tasa] [float] NULL,
-	[fecha_actualizacion] [datetime] NULL,
-	[id_usuario_actualizacion] [int] NULL,
+	[fecha_act] [datetime] NULL,
+	[id_usuario_act] [int] NULL,
+	[host_act] [int] NULL,
 	[activo] [int] NULL,
  CONSTRAINT [PK_Cliente] PRIMARY KEY CLUSTERED
 (
@@ -46,7 +47,7 @@ GO
 
 
 CREATE TABLE [dbo].[Parametro](
-	[id_parametro] [int] NULL,
+	[id_parametro] [int] IDENTITY(1,1) NOT NULL,
 	[id_tipo_parametro] [int] NULL,
 	[id_clase_parametro] [int] NULL,
 	[id_area] [int] NULL,
@@ -59,8 +60,9 @@ CREATE TABLE [dbo].[Parametro](
 	[param] [varchar](50) NULL,
 	[parametro] [varchar](200) NULL,
 	[acreditado] [int] NULL,
-	[fecha_actualizacion] [datetime] NULL,
-	[id_usuario_actualizacion] [int] NULL,
+	[fecha_act] [datetime] NULL,
+	[id_usuario_act] [int] NULL,
+	[host_act] [int] NULL,
 	[activo] [int] NULL,
  CONSTRAINT [PK_Parametro] PRIMARY KEY CLUSTERED
 (
@@ -85,8 +87,9 @@ CREATE TABLE [dbo].[Solicitud](
 	[fecha_captura] [datetime] NULL,
 	[fecha_valida] [datetime] NULL,
 	[fecha_acepta] [datetime] NULL,
-	[fecha_actualizacion] [datetime] NULL,
-	[id_usuario_actualizacion] [int] NULL,
+	[fecha_act] [datetime] NULL,
+	[id_usuario_act] [int] NULL,
+	[host_act] [int] NULL,
 	[activo] [int] NULL,
  CONSTRAINT [PK_Solicitud] PRIMARY KEY CLUSTERED
 (
@@ -136,8 +139,9 @@ CREATE TABLE [dbo].[OrdenMuestreo](
 	[fecha_captura] [datetime] NULL,
 	[fecha_valida] [datetime] NULL,
 	[fecha_acepta] [datetime] NULL,
-	[fecha_actualizacion] [datetime] NULL,
-	[id_usuario_actualizacion] [int] NULL,
+	[fecha_act] [datetime] NULL,
+	[id_usuario_act] [int] NULL,
+	[host_act] [int] NULL,
 	[activo] [int] NULL,
  CONSTRAINT [PK_OrdenMuestreo] PRIMARY KEY CLUSTERED
 (
@@ -167,9 +171,9 @@ GO
 SET ANSI_PADDING OFF
 GO
 
-ALTER TABLE [dbo].[Clientes]  WITH CHECK ADD  CONSTRAINT [FK_CuerpoCalidad] FOREIGN KEY([idCuerpoCalidad])
+ALTER TABLE [dbo].[Cliente] WITH CHECK ADD CONSTRAINT [FK_CuerpoCalidad] FOREIGN KEY([idCuerpoCalidad])
 REFERENCES [dbo].[CuerposCalidad] ([idCuerpoCalidad])
 GO
 
-ALTER TABLE [dbo].[Clientes] CHECK CONSTRAINT [FK_CuerpoCalidad]
+ALTER TABLE [dbo].[Cliente] CHECK CONSTRAINT [FK_CuerpoCalidad]
 GO

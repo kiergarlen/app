@@ -13,8 +13,7 @@ class DALSiclab
 	const DB_DATA_BASE = "Siclab";
 
 	public static function getInstance() {
-		if (self::$_instance === null)
-		{
+		if (self::$_instance === null) {
 			self::$_instance = new self();
 		}
 		return self::$_instance;
@@ -37,8 +36,7 @@ class DALSiclab
 		//		order";
 		//return self::getAllRows($sql);
 		$result = '[]';
-		if ($userId == 1)
-		{
+		if ($userId == 1) {
 			$result = '
 				[
 					{
@@ -354,8 +352,7 @@ class DALSiclab
 		//		fecha DESC";
 		//return self::getAllRows($sql);
 		$result = '[]';
-		if ($userId == 1)
-		{
+		if ($userId == 1) {
 			$result = '
 				[
 					{

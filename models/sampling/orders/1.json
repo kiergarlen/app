@@ -67,11 +67,11 @@
     "activo":1
   },
   "id_supervisor_custodia":4,
-  "id_solicitud_cotizacion":1,
+  "id_solicitud":1,
   "solicitud":
   {
-    "id_solicitud_cotizacion":1,
-    "folio_solicitud":432,
+    "id_solicitud":1,
+    "folio":432,
     "ejercicio":2014,
     "fecha_solicitud":"2014-07-01",
     "fecha_captura":"2014-07-01",

@@ -12,19 +12,26 @@ $app->post("/login", function() use ($app) {
 	try {
 		// get and decode JSON request body
 		$request = $app->request();
-
-		$client = $request->getUrl();
-		$clientIp = $request->getIp();
-		$headers = $request->headers();
-		$body = $request->getBody();
-		$input = json_decode($body);
-		$name = "Reyna García Meneses";
+		$input = json_decode($request->getBody());
+		$name = "";
 		$userId = 1;
-		$userLv = 5;
+		$userLv = 0;
+		$usr = $input->username;
+		$pwd = $input->password;
 
-		//TODO sanitize, check versus database
-		$userPass = $input->username . ".";
-		$userPass .= $input->password . ".";
+		$userData = \Service\DALSiclab::getInstance()->getUserByCredentials(
+			$usr, $pwd
+		);
+		$userInfo = json_decode($userData);
+
+		$userId = $userInfo->id_usuario;
+		$userLv = $userInfo->id_nivel;
+		$name = $userInfo->nombres . " ";
+		$name .= $userInfo->ap . " ";
+		$name .= $userInfo->am . " ";
+
+		$userPass = $usr . ".";
+		$userPass .= $pwd . ".";
 		$userPass .= $userId . "." . $userLv;
 		$userPass = bin2hex($userPass);
 
@@ -35,8 +42,8 @@ $app->post("/login", function() use ($app) {
 		$token["upt"] = $userPass;
 		$token["uid"] = $userId;
 		$token["ulv"] = $userLv;
-		$token["cip"] = $clientIp;
-		$token["iss"] = $client;
+		$token["cip"] = $request->getIp();
+		$token["iss"] = $request->getUrl();
 		$token["aud"] = "siclab.ceajalisco.gob.mx";
 		$token["iat"] = time();
 		$token["exp"] = time() + (50 * 60);
@@ -86,6 +93,7 @@ $app->get("/tasks", function() use ($app) {
 
 $app->get("/clients", function() use ($app) {
 	try {
+		$userId = (validateTokenUser($app)) ? validateTokenUser($app) : 0;
 		$menu = \Service\DALSiclab::getInstance()->getClients();
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
@@ -98,6 +106,7 @@ $app->get("/clients", function() use ($app) {
 
 $app->get("/parameters", function() use ($app) {
 	try {
+		$userId = (validateTokenUser($app)) ? validateTokenUser($app) : 0;
 		$menu = \Service\DALSiclab::getInstance()->getParameters();
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
@@ -110,6 +119,7 @@ $app->get("/parameters", function() use ($app) {
 
 $app->get("/norms", function() use ($app) {
 	try {
+		$userId = (validateTokenUser($app)) ? validateTokenUser($app) : 0;
 		$menu = \Service\DALSiclab::getInstance()->getNorms();
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
@@ -122,6 +132,7 @@ $app->get("/norms", function() use ($app) {
 
 $app->get("/sampling/types", function() use ($app) {
 	try {
+		$userId = (validateTokenUser($app)) ? validateTokenUser($app) : 0;
 		$menu = \Service\DALSiclab::getInstance()->getSamplingTypes();
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
@@ -131,7 +142,20 @@ $app->get("/sampling/types", function() use ($app) {
 		$app->response()->header('X-Status-Reason', $e->getMessage());
 	}
 });
-/*
+
+$app->get("/quotes", function() use ($app) {
+	try {
+		$userId = (validateTokenUser($app)) ? validateTokenUser($app) : 0;
+		$menu = \Service\DALSiclab::getInstance()->getQuotes();
+		$app->response()->status(200);
+		$app->response()->header('Content-Type', 'application/json');
+		echo $menu;
+	} catch (Exception $e) {
+		$app->response()->status(400);
+		$app->response()->header('X-Status-Reason', $e->getMessage());
+	}
+});
+
 $app->get("/quotes/:quoteId", function($quoteId) use ($app) {
 	try {
 		$userId = (validateTokenUser($app)) ? validateTokenUser($app) : 0;
@@ -144,9 +168,10 @@ $app->get("/quotes/:quoteId", function($quoteId) use ($app) {
 		$app->response()->header('X-Status-Reason', $e->getMessage());
 	}
 });
-*/
+
 $app->get("/order/sources", function() use ($app) {
 	try {
+		$userId = (validateTokenUser($app)) ? validateTokenUser($app) : 0;
 		$menu = \Service\DALSiclab::getInstance()->getOrderSources();
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
@@ -159,6 +184,7 @@ $app->get("/order/sources", function() use ($app) {
 
 $app->get("/matrices", function() use ($app) {
 	try {
+		$userId = (validateTokenUser($app)) ? validateTokenUser($app) : 0;
 		$menu = \Service\DALSiclab::getInstance()->getMatrices();
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
@@ -171,6 +197,7 @@ $app->get("/matrices", function() use ($app) {
 
 $app->get("/sampling/supervisors", function() use ($app) {
 	try {
+		$userId = (validateTokenUser($app)) ? validateTokenUser($app) : 0;
 		$menu = \Service\DALSiclab::getInstance()->getSamplingSupervisors();
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
@@ -196,6 +223,7 @@ $app->get("/sampling/orders/:orderId", function() use ($app) {
 */
 $app->get("/plan/objectives", function() use ($app) {
 	try {
+		$userId = (validateTokenUser($app)) ? validateTokenUser($app) : 0;
 		$menu = \Service\DALSiclab::getInstance()->getPlanObjectives();
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
@@ -208,6 +236,7 @@ $app->get("/plan/objectives", function() use ($app) {
 
 $app->get("/point/kinds", function() use ($app) {
 	try {
+		$userId = (validateTokenUser($app)) ? validateTokenUser($app) : 0;
 		$menu = \Service\DALSiclab::getInstance()->getPointKinds();
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
@@ -220,6 +249,7 @@ $app->get("/point/kinds", function() use ($app) {
 
 $app->get("/districts", function() use ($app) {
 	try {
+		$userId = (validateTokenUser($app)) ? validateTokenUser($app) : 0;
 		$menu = \Service\DALSiclab::getInstance()->getDistricts();
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
@@ -232,6 +262,7 @@ $app->get("/districts", function() use ($app) {
 
 $app->get("/sampling/employees", function() use ($app) {
 	try {
+		$userId = (validateTokenUser($app)) ? validateTokenUser($app) : 0;
 		$menu = \Service\DALSiclab::getInstance()->getSamplingEmployees();
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
@@ -244,6 +275,7 @@ $app->get("/sampling/employees", function() use ($app) {
 
 $app->get("/preservations", function() use ($app) {
 	try {
+		$userId = (validateTokenUser($app)) ? validateTokenUser($app) : 0;
 		$menu = \Service\DALSiclab::getInstance()->getPreservations();
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
@@ -256,6 +288,7 @@ $app->get("/preservations", function() use ($app) {
 
 $app->get("/containers/kinds", function() use ($app) {
 	try {
+		$userId = (validateTokenUser($app)) ? validateTokenUser($app) : 0;
 		$menu = \Service\DALSiclab::getInstance()->getContainerKinds();
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
@@ -268,6 +301,7 @@ $app->get("/containers/kinds", function() use ($app) {
 
 $app->get("/reactives", function() use ($app) {
 	try {
+		$userId = (validateTokenUser($app)) ? validateTokenUser($app) : 0;
 		$menu = \Service\DALSiclab::getInstance()->getReactives();
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
@@ -280,6 +314,7 @@ $app->get("/reactives", function() use ($app) {
 
 $app->get("/materials", function() use ($app) {
 	try {
+		$userId = (validateTokenUser($app)) ? validateTokenUser($app) : 0;
 		$menu = \Service\DALSiclab::getInstance()->getMaterials();
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
@@ -292,6 +327,7 @@ $app->get("/materials", function() use ($app) {
 
 $app->get("/coolers", function() use ($app) {
 	try {
+		$userId = (validateTokenUser($app)) ? validateTokenUser($app) : 0;
 		$menu = \Service\DALSiclab::getInstance()->getCoolers();
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
@@ -317,6 +353,7 @@ $app->get("/sampling/plans/:planId", function() use ($app) {
 */
 $app->get("/clouds", function() use ($app) {
 	try {
+		$userId = (validateTokenUser($app)) ? validateTokenUser($app) : 0;
 		$menu = \Service\DALSiclab::getInstance()->getClouds();
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
@@ -329,6 +366,7 @@ $app->get("/clouds", function() use ($app) {
 
 $app->get("/winds", function() use ($app) {
 	try {
+		$userId = (validateTokenUser($app)) ? validateTokenUser($app) : 0;
 		$menu = \Service\DALSiclab::getInstance()->getWinds();
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
@@ -341,6 +379,7 @@ $app->get("/winds", function() use ($app) {
 
 $app->get("/waves", function() use ($app) {
 	try {
+		$userId = (validateTokenUser($app)) ? validateTokenUser($app) : 0;
 		$menu = \Service\DALSiclab::getInstance()->getWaves();
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
@@ -353,6 +392,7 @@ $app->get("/waves", function() use ($app) {
 
 $app->get("/sampling/norms", function() use ($app) {
 	try {
+		$userId = (validateTokenUser($app)) ? validateTokenUser($app) : 0;
 		$menu = \Service\DALSiclab::getInstance()->getSamplingNorms();
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
@@ -365,6 +405,7 @@ $app->get("/sampling/norms", function() use ($app) {
 
 $app->get("/points", function() use ($app) {
 	try {
+		$userId = (validateTokenUser($app)) ? validateTokenUser($app) : 0;
 		$menu = \Service\DALSiclab::getInstance()->getPoints();
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
@@ -377,6 +418,7 @@ $app->get("/points", function() use ($app) {
 
 $app->get("/parameters/field", function() use ($app) {
 	try {
+		$userId = (validateTokenUser($app)) ? validateTokenUser($app) : 0;
 		$menu = \Service\DALSiclab::getInstance()->getParametersField();
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
@@ -402,6 +444,7 @@ $app->get("/fieldsheets/:fieldsheetId", function() use ($app) {
 */
 $app->get("/receptionists", function() use ($app) {
 	try {
+		$userId = (validateTokenUser($app)) ? validateTokenUser($app) : 0;
 		$menu = \Service\DALSiclab::getInstance()->getReceptionists();
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
@@ -427,6 +470,7 @@ $app->get("/receptions/:receptionId", function() use ($app) {
 */
 $app->get("/expirations", function() use ($app) {
 	try {
+		$userId = (validateTokenUser($app)) ? validateTokenUser($app) : 0;
 		$menu = \Service\DALSiclab::getInstance()->getExpirations();
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
@@ -439,6 +483,7 @@ $app->get("/expirations", function() use ($app) {
 
 $app->get("/volumes", function() use ($app) {
 	try {
+		$userId = (validateTokenUser($app)) ? validateTokenUser($app) : 0;
 		$menu = \Service\DALSiclab::getInstance()->getVolumes();
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
@@ -451,6 +496,7 @@ $app->get("/volumes", function() use ($app) {
 
 $app->get("/checkers", function() use ($app) {
 	try {
+		$userId = (validateTokenUser($app)) ? validateTokenUser($app) : 0;
 		$menu = \Service\DALSiclab::getInstance()->getCheckers();
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
@@ -476,6 +522,7 @@ $app->get("/custodies/:custodyId", function() use ($app) {
 */
 $app->get("/samples", function() use ($app) {
 	try {
+		$userId = (validateTokenUser($app)) ? validateTokenUser($app) : 0;
 		$menu = \Service\DALSiclab::getInstance()->getSamples();
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
@@ -488,6 +535,7 @@ $app->get("/samples", function() use ($app) {
 
 $app->get("/instruments", function() use ($app) {
 	try {
+		$userId = (validateTokenUser($app)) ? validateTokenUser($app) : 0;
 		$menu = \Service\DALSiclab::getInstance()->getInstruments();
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
@@ -500,6 +548,7 @@ $app->get("/instruments", function() use ($app) {
 
 $app->get("/containers", function() use ($app) {
 	try {
+		$userId = (validateTokenUser($app)) ? validateTokenUser($app) : 0;
 		$menu = \Service\DALSiclab::getInstance()->getContainers();
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
@@ -512,6 +561,7 @@ $app->get("/containers", function() use ($app) {
 
 $app->get("/analysis", function() use ($app) {
 	try {
+		$userId = (validateTokenUser($app)) ? validateTokenUser($app) : 0;
 		$menu = \Service\DALSiclab::getInstance()->getAnalysis();
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
@@ -524,6 +574,7 @@ $app->get("/analysis", function() use ($app) {
 
 $app->get("/areas", function() use ($app) {
 	try {
+		$userId = (validateTokenUser($app)) ? validateTokenUser($app) : 0;
 		$menu = \Service\DALSiclab::getInstance()->getAreas();
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
@@ -536,6 +587,7 @@ $app->get("/areas", function() use ($app) {
 
 $app->get("/analysis/selections", function() use ($app) {
 	try {
+		$userId = (validateTokenUser($app)) ? validateTokenUser($app) : 0;
 		$menu = \Service\DALSiclab::getInstance()->getAnalysisSelections();
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
@@ -548,6 +600,7 @@ $app->get("/analysis/selections", function() use ($app) {
 
 $app->get("/reports", function() use ($app) {
 	try {
+		$userId = (validateTokenUser($app)) ? validateTokenUser($app) : 0;
 		$menu = \Service\DALSiclab::getInstance()->getReports();
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
@@ -573,6 +626,7 @@ $app->get("/reports/:reportId", function() use ($app) {
 */
 $app->get("/employees", function() use ($app) {
 	try {
+		$userId = (validateTokenUser($app)) ? validateTokenUser($app) : 0;
 		$menu = \Service\DALSiclab::getInstance()->getEmployees();
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
@@ -585,6 +639,7 @@ $app->get("/employees", function() use ($app) {
 
 $app->get("/references", function() use ($app) {
 	try {
+		$userId = (validateTokenUser($app)) ? validateTokenUser($app) : 0;
 		$menu = \Service\DALSiclab::getInstance()->getReferences();
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
@@ -597,6 +652,7 @@ $app->get("/references", function() use ($app) {
 
 $app->get("/methods", function() use ($app) {
 	try {
+		$userId = (validateTokenUser($app)) ? validateTokenUser($app) : 0;
 		$menu = \Service\DALSiclab::getInstance()->getMethods();
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
@@ -609,6 +665,7 @@ $app->get("/methods", function() use ($app) {
 
 $app->get("/prices", function() use ($app) {
 	try {
+		$userId = (validateTokenUser($app)) ? validateTokenUser($app) : 0;
 		$menu = \Service\DALSiclab::getInstance()->getPrices();
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
@@ -645,17 +702,6 @@ $app->get("/users/:userId", function() use ($app) {
 	}
 });
 */
-$app->get("/quotes", function() use ($app) {
-	try {
-		$menu = \Service\DALSiclab::getInstance()->getQuotes();
-		$app->response()->status(200);
-		$app->response()->header('Content-Type', 'application/json');
-		echo $menu;
-	} catch (Exception $e) {
-		$app->response()->status(400);
-		$app->response()->header('X-Status-Reason', $e->getMessage());
-	}
-});
 /*
 $app->get("/clients/:clientId", function() use ($app) {
 	try {
@@ -676,15 +722,19 @@ function validateTokenUser($app) {
 	$headers = $request->headers();
 
 	$jwt = $headers["Auth-Token"];
-	$decoded = JWT::decode($jwt, KEY);
-	$userPass = hex2bin($decoded->upt);
-	$userPassArray = explode (".", $userPass);
-	$userId = 0;
-	if ($userPassArray[0] === "rgarcia" && $userPassArray[1] === "rgarcia")
-	{
-		$userId = 1;
+	try {
+		$decoded = JWT::decode($jwt, KEY);
+		//$userPass = hex2bin($decoded->upt);
+		//$userPassArray = explode (".", $userPass);
+		//$userId = 0;
+		return $decoded->uid;
+
+	} catch (Exception $e) {
+		$app->response()->status(401);
+		$app->response()->header('X-Status-Reason', $e->getMessage());
+		echo '{"error":"Unauthorized access"}';
+		$app->stop();
 	}
-	return $userId;
 }
 
 /*
@@ -790,4 +840,3 @@ function getConnection() {
 }
 */
 $app->run();
-

@@ -18,15 +18,17 @@
   <div class="row">
     <div class="col-xs-12" bs-collapse>
       <h4 bs-collapse-toggle>
-        <a class="btn">
+        <a class="btn btn-default">
           <!--
-          <span class="glyphicon glyphicon-chevron-up" aria-hidden="true"></span>
+          <i class="glyphicon glyphicon-chevron-up"
+            aria-hidden="true"></i>
           -->
-          <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
+          <i class="glyphicon glyphicon-chevron-down"
+            aria-hidden="true"></i>
         </a>
         Datos de Referencia
       </h4>
-      <div class="well well-sm" bs-collapse-target>
+      <div class="well wel-sm item-z1" bs-collapse-target>
         <ul class="list-inline">
           <li>
             Folio:
@@ -53,16 +55,15 @@
   </div>
   <div class="row">
     <div class="col-xs-12 col-sm-6 col-md-3">
-      <!--
-      <label for="quoteDateSub">Fecha recepción</label>
-      -->
-      <label for="quoteDateSub"><i class="glyphicon glyphicon-calendar"></i> Fecha recepción</label>
+      <label for="quoteDateSub">
+        <i class="glyphicon glyphicon-calendar"></i>
+        Fecha solicitud
+      </label>
       <input type="text"
         class="form-control"
         placeholder="aaaa-mm-dd"
         id="quoteDateSub"
         name="quoteDateSub"
-        readonly
         required
         data-ng-model="quote.quote.fecha_solicitud"
         data-date-format="yyyy-MM-dd"
@@ -101,19 +102,23 @@
           ''}}
         </option>
       </select>
-      <br>
-      <div class="well well-sm item-z2 details-tooltip"
-        data-ng-show="quote.clientDetailVisible"
-        data-ng-click="quote.toggleClientDetail()">
-        <div class="pull-right">
-          <button type="button" class="close">
-            <span aria-hidden="true">&times;</span>
-            <span class="sr-only">Close</span>
-          </button>
-        </div>
-        <h4>{{quote.selectClient(quote.quote.id_cliente).cliente}}<br>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12" bs-collapse>
+      <h4 bs-collapse-toggle>
+        <a class="btn btn-default">
+          <i class="glyphicon glyphicon-chevron-down"
+            aria-hidden="true"></i>
+        </a>
+        Cliente seleccionado
+      </h4>
+      <div class="well wel-sm item-z1" bs-collapse-target>
+        <h5>
+          {{quote.selectClient(quote.quote.id_cliente).cliente}}
+          <br>
           <small>{{quote.quote.cliente.area}}</small>
-        </h4>
+        </h5>
         <ul class="list-unstyled">
           <li>Domicilio <strong>
             {{quote.quote.cliente.calle}}
@@ -125,10 +130,6 @@
           <li>Tarifa <strong>{{100 * quote.quote.cliente.tasa}}%</strong></li>
         </ul>
       </div>
-      <button class="btn btn-default"
-        data-ng-click="quote.toggleClientDetail()">
-        Datos Cliente
-      </button>
     </div>
   </div>
   <div class="row">
@@ -188,55 +189,48 @@
     </div>
   </div>
   <div class="row">
-    <div class="col-xs-12">
-      <div class="well well-sm item-z2 details-modal"
-        data-ng-show="quote.parametersDetailVisible"
-        >
-        <div class="pull-right">
-          <button type="button" class="close"
-            data-ng-click="quote.toggleParametersDetail()"
-            >
-            <span aria-hidden="true">&times;</span>
-            <span class="sr-only">Close</span>
-          </button>
+    <div class="col-xs-12" bs-collapse>
+      <h4 bs-collapse-toggle>
+        <a class="btn btn-default">
+          <i class="glyphicon glyphicon-chevron-down"
+            aria-hidden="true"></i>
+        </a>
+        Parámetros seleccionados
+      </h4>
+      <div class="well wel-sm item-z1" bs-collapse-target>
+        <label>
+          <input type="checkbox"
+            data-ng-model="quote.allParametersSelected"
+            name="allParametersSelected"
+            data-ng-click="quote.selectAllParameters()"
+            />
+            Seleccionar todos
+        </label>
+        <div class="row">
+          <div class="col-xs-12 col-sm-6"
+            data-ng-repeat="parameter in quote.parameters">
+            <div class="row">
+              <div class="col-xs-9">
+                <label>
+                  <input type="checkbox"
+                    data-ng-model="parameter.selected"
+                    name="{{parameter.param}}" />
+                    {{parameter.parametro}}
+                </label>
+                <br>
+                <small class="hidden-xs hidden-sm text-muted">
+                  {{parameter.metodo}}
+                </small>
+              </div>
+              <div class="col-xs-3">
+                <span class="text-muted pull-right">
+                  {{parameter.precio | currency}}
+                </span>
+              </div>
+            </div>
+          </div>
         </div>
-        <h4>Parámetros seleccionados</h4>
-        <div class="form-control">
-          <label>
-            <input type="checkbox"
-              data-ng-model="quote.allParametersSelected"
-              name="allParametersSelected"
-              data-ng-click="quote.selectAllParameters()"
-              />
-              Seleccionar todos
-          </label>
-        </div>
-        <table class="table table-condensed">
-          <tr data-ng-repeat="parameter in quote.parameters">
-            <td>
-              <label>
-                <input type="checkbox"
-                  data-ng-model="parameter.selected"
-                  name="{{parameter.parametro}}" />
-                  {{parameter.parametro}}
-              </label>
-            </td>
-            <td>
-              {{parameter.metodo_ensayo}}
-            </td>
-            <td>
-              <span class="text-muted">
-                {{parameter.precio | currency}}
-              </span>
-            </td>
-          </tr>
-        </table>
       </div>
-      <h4>Parámetros seleccionados</h4>
-      <button class="btn btn-default"
-        data-ng-click="quote.toggleParametersDetail()">
-        Parámetros
-      </button>
     </div>
   </div>
   <br>

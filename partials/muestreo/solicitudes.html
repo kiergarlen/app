@@ -16,8 +16,10 @@
       value="Nueva" title="Nueva"
       data-ng-click="quotes.addQuote()"
       >
-      Nueva</button>
-      <br>
+      <i class="glyphicon glyphicon-plus" aria-hidden="true"></i>
+      Nueva Solicitud
+    </button>
+    <br>
   </div>
 </div>
 <form class="form" role="form"
@@ -65,10 +67,10 @@
             <tr
               data-ng-repeat="item in quotes.quotes
               | filter:quotes.filter.$"
-              id="quoteId{{item.id_solicitud_cotizacion}}"
+              id="quoteId{{item.id_solicitud}}"
               data-ng-click="quotes.selectRow($event)">
               <td>
-                {{item.id_solicitud_cotizacion}}
+                {{item.id_solicitud}}
               </td>
               <td>
                 <span class="text-info"

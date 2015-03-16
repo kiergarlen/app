@@ -43,7 +43,7 @@
         controller: 'QuotesListController',
         controllerAs: 'quotes'
       }).
-      when('/muestreo/solicitud', {
+      when('/muestreo/solicitud/:quoteId', {
         templateUrl: 'partials/muestreo/solicitud.html',
         controller: 'QuoteController',
         controllerAs: 'quote'
@@ -307,7 +307,7 @@
         }
       }).then(function success(response) {
         var token = response.data || null;
-        $window.localStorage.setItem('user-token', token);
+        $window.localStorage.setItem('siclab-token', token);
         $location.path('main');
       }, function error(response) {
         if (response.status === 404) {
@@ -358,9 +358,9 @@
     vm.userName = "";
     vm.tasks = {};
 
-    if ($window.localStorage.getItem('user-token'))
+    if ($window.localStorage.getItem('siclab-token'))
     {
-      token = $window.localStorage.getItem('user-token');
+      token = $window.localStorage.getItem('siclab-token');
       decodedJwt = token && jwtHelper.decodeToken(token);
       vm.userName = decodedJwt.nam;
       vm.tasks = TasksListService.query(decodedJwt.uid);
@@ -392,13 +392,12 @@
     vm.selectRow = selectRow;
 
     function addQuote() {
-      $location.path('/muestreo/solicitud');
+      $location.path('/muestreo/solicitud/0');
     }
 
     function selectRow(e) {
       var itemId = e.currentTarget.id.split('Id')[1];
-      console.log(itemId);
-      //$location.path('/muestreo/solicitud/' + itemId);
+      $location.path('/muestreo/solicitud/' + itemId);
     }
   }
 
@@ -423,14 +422,14 @@
    * @param {Object} SamplingTypeService - Proveedor de datos, Tipos muestreo
    * @param {Object} QuoteService - Proveedor de datos, Cotizaciones
    */
-  function QuoteController(ClientService, ParameterService, NormService,
-    SamplingTypeService, QuoteService) {
+  function QuoteController($routeParams, ClientService, ParameterService,
+    NormService, SamplingTypeService, QuoteService) {
     var vm = this;
     vm.clients = ClientService.query();
     vm.parameters = ParameterService.query();
     vm.norms = NormService.query();
     vm.samplingTypes = SamplingTypeService.query();
-    vm.quote = QuoteService.query();
+    vm.quote = QuoteService.query({quoteId: $routeParams.quoteId});
     vm.clientDetailVisible = false;
     vm.parametersDetailVisible = false;
     vm.allParametersSelected = false;
@@ -564,8 +563,8 @@
     .module('siclabApp')
     .controller('QuoteController',
       [
-        'ClientService', 'ParameterService', 'NormService',
-        'SamplingTypeService', 'QuoteService',
+        '$routeParams', 'ClientService', 'ParameterService',
+        'NormService', 'SamplingTypeService', 'QuoteService',
         QuoteController
       ]
     );
@@ -1587,7 +1586,7 @@
     vm.logout = logout;
 
     function logout() {
-      $window.localStorage.removeItem('user-token');
+      $window.localStorage.removeItem('siclab-token');
       $location.path('sistema/login');
     }
   }
@@ -1634,37 +1633,32 @@
    * @return {Object} Object - Métodos para manejo de token
    */
   function TokenService($window) {
-    var tokenKey = 'user-token';
-    var storage = $window.localStorage;
-    var cachedToken;
+    var tokenKey = 'siclab-token',
+    storage = $window.localStorage,
+    cachedToken;
+
     return {
-      isAuthenticated: isAuthenticated,
-      setToken: setToken,
-      getToken: getToken,
-      clearToken: clearToken
+      isAuthenticated: function isAuthenticated() {
+        return !!getToken();
+      },
+      setToken: function setToken(token) {
+        cachedToken = token;
+        storage.setItem(tokenKey, token);
+      },
+      getToken: function getToken() {
+        if (!cachedToken)
+        {
+          cachedToken = storage.getItem(tokenKey);
+        }
+        return cachedToken;
+      },
+      clearToken: function clearToken() {
+        cachedToken = null;
+        storage.removeItem(tokenKey);
+      }
     };
 
-    function setToken(token) {
-      cachedToken = token;
-      storage.setItem(tokenKey, token);
-    }
 
-    function getToken() {
-      if (!cachedToken)
-      {
-        cachedToken = storage.getItem(tokenKey);
-      }
-      return cachedToken;
-    }
-
-    function clearToken() {
-      cachedToken = null;
-      storage.removeItem(tokenKey);
-    }
-
-    function isAuthenticated() {
-      return !!getToken();
-    }
   }
 
   angular
@@ -1691,7 +1685,7 @@
         params:{},
         isArray:true,
         headers: {
-          'Auth-Token': $window.localStorage.getItem('user-token')
+          'Auth-Token' : $window.localStorage.getItem('siclab-token')
         }
       }
     });
@@ -1720,7 +1714,7 @@
         params:{},
         isArray:true,
         headers: {
-          'Auth-Token': $window.localStorage.getItem('user-token')
+          'Auth-Token' : $window.localStorage.getItem('siclab-token')
         }
       }
     });
@@ -1742,12 +1736,15 @@
    * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
    */
-  function ClientService($resource) {
+  function ClientService($resource, $window) {
     return $resource(API_BASE_URL + 'clients', {}, {
       query: {
         method:'GET',
         params:{},
-        isArray:true
+        isArray:true,
+        headers: {
+          'Auth-Token' : $window.localStorage.getItem('siclab-token')
+        }
       }
     });
   }
@@ -1755,7 +1752,7 @@
   angular
     .module('siclabApp')
     .factory('ClientService', [
-      '$resource',
+      '$resource', '$window',
       ClientService
     ]
   );
@@ -1768,12 +1765,15 @@
    * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
    */
-  function ParameterService($resource) {
+  function ParameterService($resource, $window) {
     return $resource(API_BASE_URL + 'parameters', {}, {
       query: {
         method:'GET',
         params:{},
-        isArray:true
+        isArray:true,
+        headers: {
+          'Auth-Token': $window.localStorage.getItem('siclab-token')
+        }
       }
     });
   }
@@ -1781,7 +1781,7 @@
   angular
     .module('siclabApp')
     .factory('ParameterService', [
-      '$resource',
+      '$resource', '$window',
       ParameterService
     ]
   );
@@ -1794,12 +1794,15 @@
    * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
    */
-  function NormService($resource) {
+  function NormService($resource, $window) {
     return $resource(API_BASE_URL + 'norms', {}, {
       query: {
         method:'GET',
         params:{},
-        isArray:true
+        isArray:true,
+        headers: {
+          'Auth-Token' : $window.localStorage.getItem('siclab-token')
+        }
       }
     });
   }
@@ -1807,7 +1810,7 @@
   angular
     .module('siclabApp')
     .factory('NormService', [
-      '$resource',
+      '$resource', '$window',
       NormService
     ]
   );
@@ -1820,12 +1823,15 @@
    * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
    */
-  function SamplingTypeService($resource) {
+  function SamplingTypeService($resource, $window) {
     return $resource(API_BASE_URL + 'sampling/types', {}, {
       query: {
         method:'GET',
         params:{},
-        isArray:true
+        isArray:true,
+        headers: {
+          'Auth-Token' : $window.localStorage.getItem('siclab-token')
+        }
       }
     });
   }
@@ -1833,7 +1839,7 @@
   angular
     .module('siclabApp')
     .factory('SamplingTypeService', [
-      '$resource',
+      '$resource', '$window',
       SamplingTypeService
     ]
   );
@@ -1846,13 +1852,15 @@
    * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
    */
-  function QuoteService($resource) {
-    //return $resource(API_BASE_URL + 'quotes/:quoteId', {}, {
-    return $resource('models/quotes/1.json', {}, {
+  function QuoteService($resource, $window) {
+    return $resource(API_BASE_URL + 'quotes/:quoteId', {}, {
       query: {
         method:'GET',
-        params:{},
-        isArray:false
+        params:{quoteId:'id_solicitud'},
+        isArray:false,
+        headers: {
+          'Auth-Token' : $window.localStorage.getItem('siclab-token')
+        }
       }
     });
   }
@@ -1860,7 +1868,7 @@
   angular
     .module('siclabApp')
     .factory('QuoteService', [
-      '$resource',
+      '$resource', '$window',
       QuoteService
     ]
    );
@@ -1874,12 +1882,15 @@
    * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
    */
-  function OrderSourceService($resource) {
+  function OrderSourceService($resource, $window) {
     return $resource(API_BASE_URL + 'order/sources', {}, {
       query: {
         method:'GET',
         params:{},
-        isArray:true
+        isArray:true,
+        headers: {
+          'Auth-Token' : $window.localStorage.getItem('siclab-token')
+        }
       }
     });
   }
@@ -1887,7 +1898,7 @@
   angular
     .module('siclabApp')
     .factory('OrderSourceService', [
-      '$resource',
+      '$resource', '$window',
       OrderSourceService
     ]
   );
@@ -1900,12 +1911,15 @@
    * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
    */
-  function MatrixService($resource) {
+  function MatrixService($resource, $window) {
     return $resource(API_BASE_URL + 'matrices', {}, {
       query: {
         method:'GET',
         params:{},
-        isArray:true
+        isArray:true,
+        headers: {
+          'Auth-Token' : $window.localStorage.getItem('siclab-token')
+        }
       }
     });
   }
@@ -1913,7 +1927,7 @@
   angular
     .module('siclabApp')
     .factory('MatrixService', [
-      '$resource',
+      '$resource', '$window',
       MatrixService
     ]
   );
@@ -1926,12 +1940,15 @@
    * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
    */
-  function SamplingSupervisorService($resource) {
+  function SamplingSupervisorService($resource, $window) {
     return $resource(API_BASE_URL + 'sampling/supervisors', {}, {
       query: {
         method:'GET',
         params:{},
-        isArray:true
+        isArray:true,
+        headers: {
+          'Auth-Token' : $window.localStorage.getItem('siclab-token')
+        }
       }
     });
   }
@@ -1939,7 +1956,7 @@
   angular
     .module('siclabApp')
     .factory('SamplingSupervisorService', [
-      '$resource',
+      '$resource', '$window',
       SamplingSupervisorService
     ]
   );
@@ -1952,13 +1969,16 @@
    * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
    */
-  function OrderService($resource) {
+  function OrderService($resource, $window) {
     //return $resource(API_BASE_URL + 'sampling/orders/:orderId', {}, {
     return $resource('models/sampling/orders/1.json', {}, {
       query: {
         method:'GET',
         params:{},
-        isArray:false
+        isArray:false,
+        headers: {
+          'Auth-Token' : $window.localStorage.getItem('siclab-token')
+        }
       }
     });
   }
@@ -1966,7 +1986,7 @@
   angular
     .module('siclabApp')
     .factory('OrderService', [
-      '$resource',
+      '$resource', '$window',
       OrderService
     ]
   );
@@ -1979,12 +1999,15 @@
    * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
    */
-  function PlanObjectivesService($resource) {
+  function PlanObjectivesService($resource, $window) {
     return $resource(API_BASE_URL + 'plan/objectives', {}, {
       query: {
         method:'GET',
         params:{},
-        isArray:true
+        isArray:true,
+        headers: {
+          'Auth-Token' : $window.localStorage.getItem('siclab-token')
+        }
       }
     });
   }
@@ -1992,7 +2015,7 @@
   angular
     .module('siclabApp')
     .factory('PlanObjectivesService', [
-      '$resource',
+      '$resource', '$window',
       PlanObjectivesService
     ]
   );
@@ -2005,12 +2028,15 @@
    * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
    */
-  function PointKindsService($resource) {
+  function PointKindsService($resource, $window) {
     return $resource(API_BASE_URL + 'point/kinds', {}, {
       query: {
         method:'GET',
         params:{},
-        isArray:true
+        isArray:true,
+        headers: {
+          'Auth-Token' : $window.localStorage.getItem('siclab-token')
+        }
       }
     });
   }
@@ -2018,7 +2044,7 @@
   angular
     .module('siclabApp')
     .factory('PointKindsService', [
-      '$resource',
+      '$resource', '$window',
       PointKindsService
     ]
   );
@@ -2031,12 +2057,15 @@
    * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
    */
-  function DistrictService($resource) {
+  function DistrictService($resource, $window) {
     return $resource(API_BASE_URL + 'districts', {}, {
       query: {
         method:'GET',
         params:{},
-        isArray:true
+        isArray:true,
+        headers: {
+          'Auth-Token' : $window.localStorage.getItem('siclab-token')
+        }
       }
     });
   }
@@ -2044,7 +2073,7 @@
   angular
     .module('siclabApp')
     .factory('DistrictService', [
-      '$resource',
+      '$resource', '$window',
       DistrictService
     ]
   );
@@ -2057,13 +2086,16 @@
    * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
    */
-  function CityService($resource) {
+  function CityService($resource, $window) {
     //return $resource(API_BASE_URL + 'cities', {}, {
     return $resource('models/cities.json', {}, {
       query: {
         method:'GET',
         params:{},
-        isArray:true
+        isArray:true,
+        headers: {
+          'Auth-Token' : $window.localStorage.getItem('siclab-token')
+        }
       }
     });
   }
@@ -2071,7 +2103,7 @@
   angular
     .module('siclabApp')
     .factory('CityService', [
-      '$resource',
+      '$resource', '$window',
       CityService
     ]
   );
@@ -2084,12 +2116,15 @@
    * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
    */
-  function SamplingEmployeeService($resource) {
+  function SamplingEmployeeService($resource, $window) {
     return $resource(API_BASE_URL + 'sampling/employees', {}, {
       query: {
         method:'GET',
         params:{},
-        isArray:true
+        isArray:true,
+        headers: {
+          'Auth-Token' : $window.localStorage.getItem('siclab-token')
+        }
       }
     });
   }
@@ -2097,7 +2132,7 @@
   angular
     .module('siclabApp')
     .factory('SamplingEmployeeService', [
-      '$resource',
+      '$resource', '$window',
       SamplingEmployeeService
     ]
   );
@@ -2110,12 +2145,15 @@
    * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
    */
-  function PreservationService($resource) {
+  function PreservationService($resource, $window) {
     return $resource(API_BASE_URL + 'preservations', {}, {
       query: {
         method:'GET',
         params:{},
-        isArray:true
+        isArray:true,
+        headers: {
+          'Auth-Token' : $window.localStorage.getItem('siclab-token')
+        }
       }
     });
   }
@@ -2123,7 +2161,7 @@
   angular
     .module('siclabApp')
     .factory('PreservationService', [
-      '$resource',
+      '$resource', '$window',
       PreservationService
     ]
   );
@@ -2136,12 +2174,15 @@
    * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
    */
-  function ContainerKindsService($resource) {
+  function ContainerKindsService($resource, $window) {
     return $resource(API_BASE_URL + 'containers/kinds', {}, {
       query: {
         method:'GET',
         params:{},
-        isArray:true
+        isArray:true,
+        headers: {
+          'Auth-Token' : $window.localStorage.getItem('siclab-token')
+        }
       }
     });
   }
@@ -2149,7 +2190,7 @@
   angular
     .module('siclabApp')
     .factory('ContainerKindsService', [
-      '$resource',
+      '$resource', '$window',
       ContainerKindsService
     ]
   );
@@ -2162,12 +2203,15 @@
    * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
    */
-  function ReactivesListService($resource) {
+  function ReactivesListService($resource, $window) {
     return $resource(API_BASE_URL + 'reactives', {}, {
       query: {
         method:'GET',
         params:{},
-        isArray:true
+        isArray:true,
+        headers: {
+          'Auth-Token' : $window.localStorage.getItem('siclab-token')
+        }
       }
     });
   }
@@ -2175,7 +2219,7 @@
   angular
     .module('siclabApp')
     .factory('ReactivesListService', [
-      '$resource',
+      '$resource', '$window',
       ReactivesListService
     ]
   );
@@ -2188,12 +2232,15 @@
    * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
    */
-  function MaterialService($resource) {
+  function MaterialService($resource, $window) {
     return $resource(API_BASE_URL + 'materials', {}, {
       query: {
         method:'GET',
         params:{},
-        isArray:true
+        isArray:true,
+        headers: {
+          'Auth-Token' : $window.localStorage.getItem('siclab-token')
+        }
       }
     });
   }
@@ -2201,7 +2248,7 @@
   angular
     .module('siclabApp')
     .factory('MaterialService', [
-      '$resource',
+      '$resource', '$window',
       MaterialService
     ]
   );
@@ -2214,12 +2261,15 @@
    * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
    */
-  function CoolerService($resource) {
+  function CoolerService($resource, $window) {
     return $resource(API_BASE_URL + 'coolers', {}, {
       query: {
         method:'GET',
         params:{},
-        isArray:true
+        isArray:true,
+        headers: {
+          'Auth-Token' : $window.localStorage.getItem('siclab-token')
+        }
       }
     });
   }
@@ -2227,7 +2277,7 @@
   angular
     .module('siclabApp')
     .factory('CoolerService', [
-      '$resource',
+      '$resource', '$window',
       CoolerService
     ]
   );
@@ -2240,13 +2290,16 @@
    * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
    */
-  function PlanService($resource) {
+  function PlanService($resource, $window) {
     //return $resource(API_BASE_URL + 'sampling/plans/:planId', {}, {
     return $resource('models/sampling/plans/1.json', {}, {
       query: {
         method:'GET',
         params:{},
-        isArray:false
+        isArray:false,
+        headers: {
+          'Auth-Token' : $window.localStorage.getItem('siclab-token')
+        }
       }
     });
   }
@@ -2254,7 +2307,7 @@
   angular
     .module('siclabApp')
     .factory('PlanService', [
-      '$resource',
+      '$resource', '$window',
       PlanService
     ]
   );
@@ -2267,12 +2320,15 @@
    * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
    */
-  function CloudService($resource) {
+  function CloudService($resource, $window) {
     return $resource(API_BASE_URL + 'clouds', {}, {
       query: {
         method:'GET',
         params:{},
-        isArray:true
+        isArray:true,
+        headers: {
+          'Auth-Token' : $window.localStorage.getItem('siclab-token')
+        }
       }
     });
   }
@@ -2280,7 +2336,7 @@
   angular
     .module('siclabApp')
     .factory('CloudService', [
-      '$resource',
+      '$resource', '$window',
       CloudService
     ]
   );
@@ -2293,12 +2349,15 @@
    * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
    */
-  function WindService($resource) {
+  function WindService($resource, $window) {
     return $resource(API_BASE_URL + 'winds', {}, {
       query: {
         method:'GET',
         params:{},
-        isArray:true
+        isArray:true,
+        headers: {
+          'Auth-Token' : $window.localStorage.getItem('siclab-token')
+        }
       }
     });
   }
@@ -2306,7 +2365,7 @@
   angular
     .module('siclabApp')
     .factory('WindService', [
-      '$resource',
+      '$resource', '$window',
       WindService
     ]
   );
@@ -2319,12 +2378,15 @@
    * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
    */
-  function WaveService($resource) {
+  function WaveService($resource, $window) {
     return $resource(API_BASE_URL + 'waves', {}, {
       query: {
         method:'GET',
         params:{},
-        isArray:true
+        isArray:true,
+        headers: {
+          'Auth-Token' : $window.localStorage.getItem('siclab-token')
+        }
       }
     });
   }
@@ -2332,7 +2394,7 @@
   angular
     .module('siclabApp')
     .factory('WaveService', [
-      '$resource',
+      '$resource', '$window',
       WaveService
     ]
   );
@@ -2345,12 +2407,15 @@
    * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
    */
-  function SamplingNormService($resource) {
+  function SamplingNormService($resource, $window) {
     return $resource(API_BASE_URL + 'sampling/norms', {}, {
       query: {
         method:'GET',
         params:{},
-        isArray:true
+        isArray:true,
+        headers: {
+          'Auth-Token' : $window.localStorage.getItem('siclab-token')
+        }
       }
     });
   }
@@ -2358,7 +2423,7 @@
   angular
     .module('siclabApp')
     .factory('SamplingNormService', [
-      '$resource',
+      '$resource', '$window',
       SamplingNormService
     ]
   );
@@ -2371,12 +2436,15 @@
    * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
    */
-  function PointService($resource) {
+  function PointService($resource, $window) {
     return $resource(API_BASE_URL + 'points', {}, {
       query: {
         method:'GET',
         params:{},
-        isArray:true
+        isArray:true,
+        headers: {
+          'Auth-Token' : $window.localStorage.getItem('siclab-token')
+        }
       }
     });
   }
@@ -2384,7 +2452,7 @@
   angular
     .module('siclabApp')
     .factory('PointService', [
-      '$resource',
+      '$resource', '$window',
       PointService
     ]
   );
@@ -2397,12 +2465,15 @@
    * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
    */
-  function FieldParameterService($resource) {
+  function FieldParameterService($resource, $window) {
     return $resource(API_BASE_URL + 'parameters/field', {}, {
       query: {
         method:'GET',
         params:{},
-        isArray:true
+        isArray:true,
+        headers: {
+          'Auth-Token' : $window.localStorage.getItem('siclab-token')
+        }
       }
     });
   }
@@ -2410,7 +2481,7 @@
   angular
     .module('siclabApp')
     .factory('FieldParameterService', [
-      '$resource',
+      '$resource', '$window',
       FieldParameterService
     ]
   );
@@ -2423,13 +2494,16 @@
    * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
    */
-  function FieldSheetService($resource) {
+  function FieldSheetService($resource, $window) {
     //return $resource(API_BASE_URL + 'fieldsheets/:fieldsheetId', {}, {
     return $resource('models/field_sheets/1.json', {}, {
       query: {
         method:'GET',
         params:{},
-        isArray:false
+        isArray:false,
+        headers: {
+          'Auth-Token' : $window.localStorage.getItem('siclab-token')
+        }
       }
     });
   }
@@ -2437,7 +2511,7 @@
   angular
     .module('siclabApp')
     .factory('FieldSheetService', [
-      '$resource',
+      '$resource', '$window',
       FieldSheetService
     ]
   );
@@ -2450,12 +2524,15 @@
    * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
    */
-  function ReceptionistService($resource) {
+  function ReceptionistService($resource, $window) {
     return $resource(API_BASE_URL + 'receptionists', {}, {
       query: {
         method:'GET',
         params:{},
-        isArray:true
+        isArray:true,
+        headers: {
+          'Auth-Token' : $window.localStorage.getItem('siclab-token')
+        }
       }
     });
   }
@@ -2463,7 +2540,7 @@
   angular
     .module('siclabApp')
     .factory('ReceptionistService', [
-      '$resource',
+      '$resource', '$window',
       ReceptionistService
     ]
   );
@@ -2476,13 +2553,16 @@
    * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
    */
-  function ReceptionService($resource) {
+  function ReceptionService($resource, $window) {
     //return $resource(API_BASE_URL + 'receptions/:receptionId', {}, {
     return $resource('models/sampling/samples/1.json', {}, {
       query: {
         method:'GET',
         params:{},
-        isArray:false
+        isArray:false,
+        headers: {
+          'Auth-Token' : $window.localStorage.getItem('siclab-token')
+        }
       }
     });
   }
@@ -2490,7 +2570,7 @@
   angular
     .module('siclabApp')
     .factory('ReceptionService', [
-      '$resource',
+      '$resource', '$window',
       ReceptionService
     ]
   );
@@ -2503,12 +2583,15 @@
    * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
    */
-  function ExpirationService($resource) {
+  function ExpirationService($resource, $window) {
     return $resource(API_BASE_URL + 'expirations', {}, {
       query: {
         method:'GET',
         params:{},
-        isArray:true
+        isArray:true,
+        headers: {
+          'Auth-Token' : $window.localStorage.getItem('siclab-token')
+        }
       }
     });
   }
@@ -2516,7 +2599,7 @@
   angular
     .module('siclabApp')
     .factory('ExpirationService', [
-      '$resource',
+      '$resource', '$window',
       ExpirationService
     ]
   );
@@ -2529,12 +2612,15 @@
    * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
    */
-  function RequiredVolumeService($resource) {
+  function RequiredVolumeService($resource, $window) {
     return $resource(API_BASE_URL + 'volumes', {}, {
       query: {
         method:'GET',
         params:{},
-        isArray:true
+        isArray:true,
+        headers: {
+          'Auth-Token' : $window.localStorage.getItem('siclab-token')
+        }
       }
     });
   }
@@ -2542,7 +2628,7 @@
   angular
     .module('siclabApp')
     .factory('RequiredVolumeService', [
-      '$resource',
+      '$resource', '$window',
       RequiredVolumeService
     ]
   );
@@ -2555,12 +2641,15 @@
    * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
    */
-  function CheckerService($resource) {
+  function CheckerService($resource, $window) {
     return $resource(API_BASE_URL + 'checkers', {}, {
       query: {
         method:'GET',
         params:{},
-        isArray:true
+        isArray:true,
+        headers: {
+          'Auth-Token' : $window.localStorage.getItem('siclab-token')
+        }
       }
     });
   }
@@ -2568,7 +2657,7 @@
   angular
     .module('siclabApp')
     .factory('CheckerService', [
-      '$resource',
+      '$resource', '$window',
       CheckerService
     ]
   );
@@ -2581,13 +2670,16 @@
    * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
    */
-  function CustodyService($resource) {
+  function CustodyService($resource, $window) {
     //return $resource(API_BASE_URL + 'custodies/:custodyId', {}, {
     return $resource('models/custodies/100.json', {}, {
       query: {
         method:'GET',
         params:{},
-        isArray:false
+        isArray:false,
+        headers: {
+          'Auth-Token' : $window.localStorage.getItem('siclab-token')
+        }
       }
     });
   }
@@ -2595,7 +2687,7 @@
   angular
     .module('siclabApp')
     .factory('CustodyService', [
-      '$resource',
+      '$resource', '$window',
       CustodyService
     ]
   );
@@ -2608,12 +2700,15 @@
    * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
    */
-  function SamplesListService($resource) {
+  function SamplesListService($resource, $window) {
     return $resource(API_BASE_URL + 'samples', {}, {
       query: {
         method:'GET',
         params:{},
-        isArray:true
+        isArray:true,
+        headers: {
+          'Auth-Token' : $window.localStorage.getItem('siclab-token')
+        }
       }
     });
   }
@@ -2621,7 +2716,7 @@
   angular
     .module('siclabApp')
     .factory('SamplesListService', [
-      '$resource',
+      '$resource', '$window',
       SamplesListService
     ]
   );
@@ -2634,12 +2729,15 @@
    * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
    */
-  function InstrumentsListService($resource) {
+  function InstrumentsListService($resource, $window) {
     return $resource(API_BASE_URL + 'instruments', {}, {
       query: {
         method:'GET',
         params:{},
-        isArray:true
+        isArray:true,
+        headers: {
+          'Auth-Token' : $window.localStorage.getItem('siclab-token')
+        }
       }
     });
   }
@@ -2647,7 +2745,7 @@
   angular
     .module('siclabApp')
     .factory('InstrumentsListService', [
-      '$resource',
+      '$resource', '$window',
       InstrumentsListService
     ]
   );
@@ -2660,12 +2758,15 @@
    * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
    */
-  function ContainersListService($resource) {
+  function ContainersListService($resource, $window) {
     return $resource(API_BASE_URL + 'containers', {}, {
       query: {
         method:'GET',
         params:{},
-        isArray:true
+        isArray:true,
+        headers: {
+          'Auth-Token' : $window.localStorage.getItem('siclab-token')
+        }
       }
     });
   }
@@ -2673,7 +2774,7 @@
   angular
     .module('siclabApp')
     .factory('ContainersListService', [
-      '$resource',
+      '$resource', '$window',
       ContainersListService
     ]
   );
@@ -2686,12 +2787,15 @@
    * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
    */
-  function AnalysisListService($resource) {
+  function AnalysisListService($resource, $window) {
     return $resource(API_BASE_URL + 'analysis', {}, {
       query: {
         method:'GET',
         params:{},
-        isArray:true
+        isArray:true,
+        headers: {
+          'Auth-Token' : $window.localStorage.getItem('siclab-token')
+        }
       }
     });
   }
@@ -2699,7 +2803,7 @@
   angular
     .module('siclabApp')
     .factory('AnalysisListService', [
-      '$resource',
+      '$resource', '$window',
       AnalysisListService
     ]
   );
@@ -2712,12 +2816,15 @@
    * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
    */
-  function DepartmentService($resource) {
+  function DepartmentService($resource, $window) {
     return $resource(API_BASE_URL + 'areas', {}, {
       query: {
         method:'GET',
         params:{},
-        isArray:true
+        isArray:true,
+        headers: {
+          'Auth-Token' : $window.localStorage.getItem('siclab-token')
+        }
       }
     });
   }
@@ -2725,7 +2832,7 @@
   angular
     .module('siclabApp')
     .factory('DepartmentService', [
-      '$resource',
+      '$resource', '$window',
       DepartmentService
     ]
   );
@@ -2738,12 +2845,15 @@
    * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
    */
-  function AnalysisService($resource) {
+  function AnalysisService($resource, $window) {
     return $resource(API_BASE_URL + 'analysis/selections', {}, {
       query: {
         method:'GET',
         params:{},
-        isArray:true
+        isArray:true,
+        headers: {
+          'Auth-Token' : $window.localStorage.getItem('siclab-token')
+        }
       }
     });
   }
@@ -2751,7 +2861,7 @@
   angular
     .module('siclabApp')
     .factory('AnalysisService', [
-      '$resource',
+      '$resource', '$window',
       AnalysisService
     ]
   );
@@ -2764,12 +2874,15 @@
    * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
    */
-  function ReportsListService($resource) {
+  function ReportsListService($resource, $window) {
     return $resource(API_BASE_URL + 'reports', {}, {
       query: {
         method:'GET',
         params:{},
-        isArray:true
+        isArray:true,
+        headers: {
+          'Auth-Token' : $window.localStorage.getItem('siclab-token')
+        }
       }
     });
   }
@@ -2777,7 +2890,7 @@
   angular
     .module('siclabApp')
     .factory('ReportsListService', [
-      '$resource',
+      '$resource', '$window',
       ReportsListService
     ]
   );
@@ -2790,13 +2903,16 @@
    * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
    */
-  function ReportApprovalService($resource) {
+  function ReportApprovalService($resource, $window) {
     //return $resource(API_BASE_URL + 'reports/:reportId', {}, {
     return $resource('models/report.json', {}, {
       query: {
         method:'GET',
         params:{},
-        isArray:true
+        isArray:true,
+        headers: {
+          'Auth-Token' : $window.localStorage.getItem('siclab-token')
+        }
       }
     });
   }
@@ -2804,7 +2920,7 @@
   angular
     .module('siclabApp')
     .factory('ReportApprovalService', [
-      '$resource',
+      '$resource', '$window',
       ReportApprovalService
     ]
   );
@@ -2817,12 +2933,15 @@
    * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
    */
-  function PointsListService($resource) {
+  function PointsListService($resource, $window) {
     return $resource(API_BASE_URL + 'points', {}, {
       query: {
         method:'GET',
         params:{},
-        isArray:true
+        isArray:true,
+        headers: {
+          'Auth-Token' : $window.localStorage.getItem('siclab-token')
+        }
       }
     });
   }
@@ -2830,7 +2949,7 @@
   angular
     .module('siclabApp')
     .factory('PointsListService', [
-      '$resource',
+      '$resource', '$window',
       PointsListService
     ]
   );
@@ -2843,12 +2962,15 @@
    * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
    */
-  function EmployeeService($resource) {
+  function EmployeeService($resource, $window) {
     return $resource(API_BASE_URL + 'employees', {}, {
       query: {
         method:'GET',
         params:{},
-        isArray:true
+        isArray:true,
+        headers: {
+          'Auth-Token' : $window.localStorage.getItem('siclab-token')
+        }
       }
     });
   }
@@ -2856,7 +2978,7 @@
   angular
     .module('siclabApp')
     .factory('EmployeeService', [
-      '$resource',
+      '$resource', '$window',
       EmployeeService
     ]
   );
@@ -2869,12 +2991,15 @@
    * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
    */
-  function NormsListService($resource) {
+  function NormsListService($resource, $window) {
     return $resource(API_BASE_URL + 'norms', {}, {
       query: {
         method:'GET',
         params:{},
-        isArray:true
+        isArray:true,
+        headers: {
+          'Auth-Token' : $window.localStorage.getItem('siclab-token')
+        }
       }
     });
   }
@@ -2882,7 +3007,7 @@
   angular
     .module('siclabApp')
     .factory('NormsListService', [
-      '$resource',
+      '$resource', '$window',
       NormsListService
     ]
   );
@@ -2895,12 +3020,15 @@
    * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
    */
-  function ReferencesListService($resource) {
+  function ReferencesListService($resource, $window) {
     return $resource(API_BASE_URL + 'references', {}, {
       query: {
         method:'GET',
         params:{},
-        isArray:true
+        isArray:true,
+        headers: {
+          'Auth-Token' : $window.localStorage.getItem('siclab-token')
+        }
       }
     });
   }
@@ -2908,7 +3036,7 @@
   angular
     .module('siclabApp')
     .factory('ReferencesListService', [
-      '$resource',
+      '$resource', '$window',
       ReferencesListService
     ]
   );
@@ -2921,12 +3049,15 @@
    * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
    */
-  function MethodsListService($resource) {
+  function MethodsListService($resource, $window) {
     return $resource(API_BASE_URL + 'methods', {}, {
       query: {
         method:'GET',
         params:{},
-        isArray:true
+        isArray:true,
+        headers: {
+          'Auth-Token' : $window.localStorage.getItem('siclab-token')
+        }
       }
     });
   }
@@ -2934,7 +3065,7 @@
   angular
     .module('siclabApp')
     .factory('MethodsListService', [
-      '$resource',
+      '$resource', '$window',
       MethodsListService
     ]
   );
@@ -2947,12 +3078,15 @@
    * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
    */
-  function PricesListService($resource) {
+  function PricesListService($resource, $window) {
     return $resource(API_BASE_URL + 'prices', {}, {
       query: {
         method:'GET',
         params:{},
-        isArray:true
+        isArray:true,
+        headers: {
+          'Auth-Token' : $window.localStorage.getItem('siclab-token')
+        }
       }
     });
   }
@@ -2960,7 +3094,7 @@
   angular
     .module('siclabApp')
     .factory('PricesListService', [
-      '$resource',
+      '$resource', '$window',
       PricesListService
     ]
   );
@@ -2980,7 +3114,7 @@
         params:{},
         isArray:true,
         headers: {
-          'Auth-Token': $window.localStorage.getItem('user-token')
+          'Auth-Token' : $window.localStorage.getItem('siclab-token')
         }
       }
     });
@@ -3002,13 +3136,16 @@
    * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
    */
-  function UserProfileService($resource) {
+  function UserProfileService($resource, $window) {
     //return $resource(API_BASE_URL + 'users/:userId', {}, {
     return $resource('models/profile.json', {}, {
       query: {
         method:'GET',
         params:{},
-        isArray:true
+        isArray:true,
+        headers: {
+          'Auth-Token' : $window.localStorage.getItem('siclab-token')
+        }
       }
     });
   }
@@ -3016,7 +3153,7 @@
   angular
     .module('siclabApp')
     .factory('UserProfileService', [
-      '$resource',
+      '$resource', '$window',
       UserProfileService
     ]
   );
@@ -3034,7 +3171,10 @@
       query: {
         method:'GET',
         params:{},
-        isArray:true
+        isArray:true,
+        headers: {
+          'Auth-Token' : $window.localStorage.getItem('siclab-token')
+        }
       }
     });
   }
@@ -3055,13 +3195,16 @@
    * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
    */
-  function ClientDetailService($resource) {
+  function ClientDetailService($resource, $window) {
     //return $resource(API_BASE_URL + 'clients/:clientId', {}, {
     return $resource('models/clients/:clientId.json', {}, {
       query: {
         method:'GET',
         params:{clientId:'id_cliente'},
-        isArray:true
+        isArray:true,
+        headers: {
+          'Auth-Token' : $window.localStorage.getItem('siclab-token')
+        }
       }
     });
   }
@@ -3069,7 +3212,7 @@
   angular
     .module('siclabApp')
     .factory('ClientDetailService', [
-      '$resource',
+      '$resource', '$window',
       ClientDetailService
     ]
   );

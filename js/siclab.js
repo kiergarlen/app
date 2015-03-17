@@ -48,12 +48,22 @@
         controller: 'QuoteController',
         controllerAs: 'quote'
       }).
-      when('/muestreo/orden', {
+      when('/muestreo/ordenes', {
+        templateUrl: 'partials/muestreo/ordenes.html',
+        controller: 'OrdersListController',
+        controllerAs: 'orders'
+      }).
+      when('/muestreo/orden/:orderId', {
         templateUrl: 'partials/muestreo/orden.html',
         controller: 'OrderController',
         controllerAs: 'order'
       }).
-      when('/muestreo/plan', {
+      when('/muestreo/planes', {
+        templateUrl: 'partials/muestreo/planes.html',
+        controller: 'PlansListController',
+        controllerAs: 'plans'
+      }).
+      when('/muestreo/plan/:planId', {
         templateUrl: 'partials/muestreo/plan.html',
         controller: 'PlanController',
         controllerAs: 'plan'
@@ -569,6 +579,40 @@
       ]
     );
 
+  // OrdersListController.js
+  /**
+   * @name OrdersListController
+   * @constructor
+   * @desc Controla la vista para el listado de Órdenes de muestreo
+   * @this {Object} $scope - Contenedor para el modelo [AngularJS]
+   * @param {Object} $location - Manejo de URL [AngularJS]
+   * @param {Object} OrdersListService - Proveedor de datos, órdenes
+   */
+  function OrdersListController($location, OrdersListService) {
+    var vm = this;
+    vm.orders = OrdersListService.query();
+    vm.addOrder = addOrder;
+    vm.selectRow = selectRow;
+
+    function addOrder() {
+      $location.path('/muestreo/orden/0');
+    }
+
+    function selectRow(e) {
+      var itemId = e.currentTarget.id.split('Id')[1];
+      $location.path('/muestreo/orden/' + itemId);
+    }
+  }
+
+  angular
+    .module('siclabApp')
+    .controller('OrdersListController',
+      [
+        '$location', 'OrdersListService',
+        OrdersListController
+      ]
+    );
+
   // OrderController.js
   /**
    * @name OrderController
@@ -582,22 +626,17 @@
    * @param {Object} SamplingSupervisorService - Proveedor de datos, Supervisores muestreo
    * @param {Object} OrderService - Proveedor de datos, Orden muestreo
    */
-  function OrderController(QuoteService, OrderSourceService,
-    MatrixService, ParameterService, SamplingSupervisorService,
+  function OrderController($routeParams, OrderSourceService,
+    MatrixService, SamplingSupervisorService,
     OrderService) {
     var vm = this;
-    vm.order = OrderService.query();
-    vm.quote = QuoteService.query();
+    vm.order = OrderService.query({orderId: $routeParams.orderId});
     vm.orderSources = OrderSourceService.query();
     vm.matrices = MatrixService.query();
     vm.supervisors = SamplingSupervisorService.query();
-    vm.parameters = ParameterService.query();
     vm.parametersDetailVisible = false;
 
     vm.toggleParametersDetail = toggleParametersDetail;
-    vm.selectOrderSource = selectOrderSource;
-    vm.selectMatrix = selectMatrix;
-    vm.selectSupervisor = selectSupervisor;
     vm.validateOrderForm = validateOrderForm;
     vm.submitOrderForm = submitOrderForm;
 
@@ -605,47 +644,9 @@
       vm.parametersDetailVisible = !vm.parametersDetailVisible;
     }
 
-    function selectOrderSource(idSource) {
-      var i = 0, l = vm.orderSources.length;
-      vm.order.origen_orden = {};
-      for (i = 0; i < l; i += 1) {
-        if (vm.orderSources[i].id_origen_orden == idSource)
-        {
-          vm.order.origen_orden = vm.orderSources[i];
-          break;
-        }
-      }
-      return vm.order.origen_orden;
-    }
-
-    function selectMatrix(idMatrix) {
-      var i = 0, l = vm.matrices.length;
-      vm.order.matriz = {};
-      for (i = 0; i < l; i += 1) {
-        if (vm.matrices[i].id_matriz == idMatrix)
-        {
-          vm.order.matriz = vm.matrices[i];
-          break;
-        }
-      }
-      return vm.order.matriz;
-    }
-
-    function selectSupervisor(idSupervisor) {
-      var i = 0, l = vm.supervisors.length;
-      vm.order.id_supervisor_muestreo = {};
-      for (i = 0; i < l; i += 1) {
-        if (vm.supervisors[i].id_id_supervisor_muestreo == idSupervisor)
-        {
-          vm.order.id_supervisor_muestreo = vm.supervisors[i];
-          break;
-        }
-      }
-      return vm.order.id_supervisor_muestreo;
-    }
-
-    function validateOrderForm() {
-
+    function validateOrderForm(form) {
+      //TODO validation
+      return form;
     }
 
     function submitOrderForm() {
@@ -657,9 +658,44 @@
     .module('siclabApp')
     .controller('OrderController',
       [
-        'QuoteService','OrderSourceService','MatrixService',
-        'ParameterService','SamplingSupervisorService','OrderService',
+        '$routeParams', 'OrderSourceService',
+        'MatrixService', 'SamplingSupervisorService',
+        'OrderService',
         OrderController
+      ]
+    );
+
+  // PlansListController.js
+  /**
+   * @name PlansListController
+   * @constructor
+   * @desc Controla la vista para el listado de Planes de muestreo
+   * @this {Object} $scope - Contenedor para el modelo [AngularJS]
+   * @param {Object} $location - Manejo de URL [AngularJS]
+   * @param {Object} PlansListService - Proveedor de datos, planes
+   */
+  function PlansListController($location, PlansListService) {
+    var vm = this;
+    vm.plans = PlansListService.query();
+    vm.addPlan = addPlan;
+    vm.selectRow = selectRow;
+
+    function addPlan() {
+      $location.path('/muestreo/plan/0');
+    }
+
+    function selectRow(e) {
+      var itemId = e.currentTarget.id.split('Id')[1];
+      $location.path('/muestreo/plan/' + itemId);
+    }
+  }
+
+  angular
+    .module('siclabApp')
+    .controller('PlansListController',
+      [
+        '$location', 'PlansListService',
+        PlansListController
       ]
     );
 
@@ -682,17 +718,17 @@
    * @param {Object} CoolerService - Proveedor de datos, lista Hieleras
    * @param {Object} PlanService - Proveedor de datos, Plan muestreo
    */
-  function PlanController(PlanObjectivesService, PointKindsService,
+  function PlanController($routeParams, PlanObjectivesService, PointKindsService,
     DistrictService, CityService, SamplingSupervisorService,
     SamplingEmployeeService, PreservationService, ContainerKindsService,
     ReactivesListService, MaterialService, CoolerService,
     PlanService) {
     var vm = this;
-    vm.plan = PlanService.query();
+    vm.plan = PlanService.query({planId: $routeParams.planId});
     vm.objectives = PlanObjectivesService.query();
     vm.pointKinds = PointKindsService.query();
     vm.districts = DistrictService.query();
-    vm.cities = CityService.query(vm.plan.id_municipio);
+    vm.cities = CityService.query({cityId: vm.plan.id_municipio});
     vm.samplingSupervisors = SamplingSupervisorService.query();
     vm.samplingEmployees = SamplingEmployeeService.query();
     vm.preservations = PreservationService.query();
@@ -741,7 +777,7 @@
     }
 
     function selectDistrict() {
-      vm.cities = CityService.query(vm.plan.id_municipio);
+      vm.cities = CityService.query({cityId: vm.plan.id_municipio});
     }
   }
 
@@ -749,7 +785,7 @@
     .module('siclabApp')
     .controller('PlanController',
       [
-        'PlanObjectivesService', 'PointKindsService',
+        '$routeParams', 'PlanObjectivesService', 'PointKindsService',
         'DistrictService', 'CityService', 'SamplingSupervisorService',
         'SamplingEmployeeService', 'PreservationService', 'ContainerKindsService',
         'ReactivesListService', 'MaterialService', 'CoolerService',
@@ -1628,7 +1664,7 @@
   /**
    * @name TokenService
    * @constructor
-   * @desc Proveedor para lectura/escritura de token
+   * @desc Proveedor para manejo del token
    * @param {Object} $window - Acceso a Objeto Window [AngularJS]
    * @return {Object} Object - Métodos para manejo de token
    */
@@ -1657,8 +1693,6 @@
         storage.removeItem(tokenKey);
       }
     };
-
-
   }
 
   angular
@@ -1961,6 +1995,35 @@
     ]
   );
 
+  // OrdersListService.js
+  /**
+   * @name OrdersListService
+   * @constructor
+   * @desc Proveedor de datos, lista de órdenes de muestreo
+   * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
+   * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
+   */
+  function OrdersListService($resource, $window) {
+    return $resource(API_BASE_URL + 'orders', {}, {
+      query: {
+        method:'GET',
+        params:{},
+        isArray:true,
+        headers: {
+          'Auth-Token' : $window.localStorage.getItem('siclab-token')
+        }
+      }
+    });
+  }
+
+  angular
+    .module('siclabApp')
+    .factory('OrdersListService', [
+      '$resource', '$window',
+      OrdersListService
+    ]
+  );
+
   // OrderService.js
   /**
    * @name OrderService
@@ -1970,11 +2033,10 @@
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
    */
   function OrderService($resource, $window) {
-    //return $resource(API_BASE_URL + 'sampling/orders/:orderId', {}, {
-    return $resource('models/sampling/orders/1.json', {}, {
+    return $resource(API_BASE_URL + 'orders/:orderId', {}, {
       query: {
         method:'GET',
-        params:{},
+        params:{orderId: 'id_orden'},
         isArray:false,
         headers: {
           'Auth-Token' : $window.localStorage.getItem('siclab-token')
@@ -2087,11 +2149,10 @@
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
    */
   function CityService($resource, $window) {
-    //return $resource(API_BASE_URL + 'cities', {}, {
-    return $resource('models/cities.json', {}, {
+    return $resource(API_BASE_URL + 'districts/cities/:districtId', {}, {
       query: {
         method:'GET',
-        params:{},
+        params:{districtId: 'id_municipio'},
         isArray:true,
         headers: {
           'Auth-Token' : $window.localStorage.getItem('siclab-token')
@@ -2282,6 +2343,35 @@
     ]
   );
 
+  // PlansListService.js
+  /**
+   * @name PlansListService
+   * @constructor
+   * @desc Proveedor de datos, lista de Planes muestreo
+   * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
+   * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
+   */
+  function PlansListService($resource, $window) {
+    return $resource(API_BASE_URL + 'plans', {}, {
+      query: {
+        method:'GET',
+        params:{},
+        isArray:true,
+        headers: {
+          'Auth-Token' : $window.localStorage.getItem('siclab-token')
+        }
+      }
+    });
+  }
+
+  angular
+    .module('siclabApp')
+    .factory('PlansListService', [
+      '$resource', '$window',
+      PlansListService
+    ]
+  );
+
   // PlanService.js
   /**
    * @name PlanService
@@ -2291,11 +2381,10 @@
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
    */
   function PlanService($resource, $window) {
-    //return $resource(API_BASE_URL + 'sampling/plans/:planId', {}, {
-    return $resource('models/sampling/plans/1.json', {}, {
+    return $resource(API_BASE_URL + 'plans/:planId', {}, {
       query: {
         method:'GET',
-        params:{},
+        params:{planId: 'id_plan'},
         isArray:false,
         headers: {
           'Auth-Token' : $window.localStorage.getItem('siclab-token')

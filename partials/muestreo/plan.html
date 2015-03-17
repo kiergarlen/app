@@ -38,7 +38,7 @@
             Fecha actualización:
             {{plan.plan.fecha_actualizacion}}</li>
         </ul>
-        <span class="text-info"
+        <span class="label label-info"
           data-ng-show="plan.plan.validado > 0">Validada</span>
       </div>
     </div>
@@ -48,11 +48,11 @@
       <div class="well well-sm">
         <h6>Orden de muestreo</h6>
         Folio:
-        {{plan.plan.orden_muestreo.folio}}
+        {{plan.plan.orden.folio}}
         /
-        {{plan.plan.orden_muestreo.ejercicio}}
+        {{plan.plan.orden.ejercicio}}
         <br>Fecha:
-        {{plan.plan.orden_muestreo.fecha_captura}}
+        {{plan.plan.orden.fecha_captura}}
         <br>Matriz:
         {{plan.plan.matriz.matriz}}
       </div>
@@ -268,13 +268,13 @@
     </div>
   </div>
   <div class="row"
-    data-ng-show="plan.plan.orden_muestreo.supervisor_muestreo"
+    data-ng-show="plan.plan.orden.supervisor_muestreo"
     >
     <div class="col-xs-12">
       <h5>Responsable muestreo <small>(Orden de muestreo)</small></h5>
-      {{plan.plan.orden_muestreo.supervisor_muestreo.nombres}}
-      {{plan.plan.orden_muestreo.supervisor_muestreo.ap}}
-      {{plan.plan.orden_muestreo.supervisor_muestreo.am}}
+      {{plan.plan.orden.supervisor_muestreo.nombres}}
+      {{plan.plan.orden.supervisor_muestreo.ap}}
+      {{plan.plan.orden.supervisor_muestreo.am}}
     </div>
   </div>
   <div class="row">

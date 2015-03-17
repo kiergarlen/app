@@ -44,7 +44,7 @@
             Fecha actualización:
             {{order.order.fecha_actualizacion}}</li>
         </ul>
-        <span class="text-info"
+        <span class="label label-info"
           data-ng-show="order.order.validado > 0">Validada</span>
       </div>
     </div>
@@ -88,7 +88,6 @@
         name="orderSourceSelect"
         required
         data-ng-model="order.order.id_origen_orden"
-        data-ng-change="order.selectOrderSource()"
         >
         <option value="">
           Seleccione una opción
@@ -126,7 +125,6 @@
         name="matrixSelect"
         required
         data-ng-model="order.order.id_matriz"
-        data-ng-change="order.selectMatrix()"
         >
         <option value="">
           Seleccione una opción
@@ -223,7 +221,6 @@
         name="supervisorSelect"
         required
         data-ng-model="order.id_supervisor_muestreo"
-        data-ng-change="order.selectSupervisor()"
         >
         <option value="">
           Seleccione una opción

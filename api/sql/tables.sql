@@ -115,9 +115,9 @@ GO
 
 
 CREATE TABLE [dbo].[OrdenMuestreo](
-	[id_orden_muestreo] [int] IDENTITY(1,1) NOT NULL,
+	[id_orden] [int] IDENTITY(1,1) NOT NULL,
 	[id_cliente] [int] NULL,
-	[id_plan_muestreo] [int] NULL,
+	[id_plan] [int] NULL,
 	[id_solicitud] [int] NULL,
 	[id_supervisor_orden] [int] NULL,
 	[id_supervisor_muestreo] [int] NULL,
@@ -145,7 +145,7 @@ CREATE TABLE [dbo].[OrdenMuestreo](
 	[activo] [int] NULL,
  CONSTRAINT [PK_OrdenMuestreo] PRIMARY KEY CLUSTERED
 (
-	[id_orden_muestreo] ASC
+	[id_orden] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF,
 IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON,
 ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]

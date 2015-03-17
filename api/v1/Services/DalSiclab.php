@@ -83,7 +83,7 @@ class DALSiclab
 								"id_submenu":2,
 								"id_menu":1,
 								"orden":2,
-								"url":"/muestreo/orden",
+								"url":"/muestreo/ordenes",
 								"label":"Orden Muestreo",
 								"activo":1
 							},
@@ -91,7 +91,7 @@ class DALSiclab
 								"id_submenu":3,
 								"id_menu":1,
 								"orden":3,
-								"url":"/muestreo/plan",
+								"url":"/muestreo/planes",
 								"label":"Plan Muestreo",
 								"activo":1
 							}
@@ -4764,7 +4764,6 @@ class DALSiclab
 		return $result;
 	}
 
-
 	public function getQuotes() {
 		//$sql = "SELECT
 		//		*
@@ -5860,6 +5859,4571 @@ class DALSiclab
 							"cantidad":1,
 							"precio":164.65
 						}
+					]
+				}
+			]
+		';
+		return $result;
+	}
+
+	public function getOrder($orderId) {
+		//$sql = "SELECT
+		//		*
+		//	FROM
+		//		orden
+		//	WHERE id_orden := $orderId AND activo = 1";
+		//return self::getAllRows($sql);
+		if ($orderId == 1) {
+			$result = '
+				{
+					"id_orden":1,
+					"id_cliente":1,
+					"id_solicitud":1,
+					"id_plan":1,
+					"id_origen_orden":1,
+					"id_matriz":3,
+					"id_tipo_muestreo":1,
+					"id_origen_muestreo":1,
+					"id_supervisor_orden":1,
+					"id_supervisor_muestreo":2,
+					"id_supervisor_custodia":4,
+					"id_norma":1,
+					"folio":656,
+					"ejercicio":2014,
+					"fecha_captura":"2014-11-01",
+					"fecha_valida":"2014-11-02",
+					"fecha_muestreo":"2014-11-04",
+					"hora_muestreo":"9:25",
+					"fecha_actualizacion":"2014-11-01",
+					"emergencia":"",
+					"origen_muestreo":"Agua",
+					"validado":0,
+					"aceptado":0,
+					"activo":1,
+					"origen_orden":
+					{
+						"id_origen_orden":2,
+						"origen_orden":"Cotización"
+					},
+					"cliente":
+					{
+						"id_cliente":1,
+						"id_organismo":1,
+						"cliente":"CEA Jalisco",
+						"area":"Dirección de Operación de PTAR\'S",
+						"rfc":"Registro Federal de Contribuyentes",
+						"calle":"Av. Brasilia",
+						"numero":"2970",
+						"colonia":"Col. Colomos Providencia",
+						"cp":"44680",
+						"id_estado":14,
+						"id_municipio":14039,
+						"municipio":"Guadalajara",
+						"id_localidad":140390001,
+						"localidad":"Guadalajara",
+						"tel":"3030-9350 ext. 8370",
+						"fax":"",
+						"contacto":"Biol. Luis Aceves Martínez",
+						"puesto_contacto":"puesto contacto",
+						"email":"laceves@ceajalisco.gob.mx",
+						"fecha_act":"2014-11-23",
+						"interno":1,
+						"cea":1,
+						"tasa":0,
+						"activo":1
+					},
+					"supervisor_muestreo":
+					{
+						"id_supervisor_muestreo":2,
+						"id_empleado":3,
+						"id_nivel":3,
+						"id_area":2,
+						"area":"Metales Pesados",
+						"id_puesto":4,
+						"puesto":"Supervisor (MP)",
+						"nombres":"Marín",
+						"ap":"Gomar",
+						"am":"Sosa",
+						"fecha_act":"2014-11-30",
+						"calidad":0,
+						"supervisa":1,
+						"analiza":1,
+						"muestrea":1,
+						"cert":1,
+						"activo":1
+					},
+					"solicitud":
+					{
+						"id_solicitud":1,
+						"folio":432,
+						"ejercicio":2014,
+						"fecha_solicitud":"2014-07-01",
+						"fecha_captura":"2014-07-01",
+						"fecha_valida":null,
+						"fecha_acepta":null,
+						"fecha_actualizacion":"2014-07-01",
+						"validado":0,
+						"id_cliente":1,
+						"id_usuario_captura":1,
+						"id_usuario_valida":3,
+						"id_norma":1,
+						"id_tipo_muestreo":1,
+						"total":0,
+						"cliente":
+						{
+							"id_cliente":1,
+							"id_organismo":1,
+							"cliente":"CEA Jalisco",
+							"area":"Dirección de Operación de PTAR\'S",
+							"rfc":"Registro Federal de Contribuyentes",
+							"calle":"Av. Brasilia",
+							"numero":"2970",
+							"colonia":"Col. Colomos Providencia",
+							"cp":"44680",
+							"id_estado":14,
+							"id_municipio":14039,
+							"municipio":"Guadalajara",
+							"id_localidad":140390001,
+							"localidad":"Guadalajara",
+							"tel":"3030-9350 ext. 8370",
+							"fax":"",
+							"contacto":"Biol. Luis Aceves Martínez",
+							"puesto_contacto":"puesto contacto",
+							"email":"laceves@ceajalisco.gob.mx",
+							"fecha_act":"2014-11-23",
+							"interno":1,
+							"cea":1,
+							"tasa":0,
+							"activo":1
+						},
+						"descripcion_servicio":"Servicio de muestreo y análisis, para verificar el cumplimiento de la norma NOM-001-SEMARNAT-1996, que establece los límites máximos permisibles de contaminantes en las descargas de aguas residuales a los sistemas de alcantarillado urbano o municipal. -auto",
+						"notas":"La presente cotización se realiza sin visita previa y se contempla un fácil y seguro acceso para la toma de muestras. Se requiere regresar esta cotización con la firma y sello de Aceptación del Servicio. -auto",
+						"condiciones":"El informe de resultados se entregará a los 10 días hábiles de haber ingresado las muestras al laboratorio. El pago de resultados se hará en las instalaciones del Laboratorio de Calidad del Agua de la CEA, así también mediante depósito bancario a la cuenta: 884371445 de la Institución Bancaria BANORTE a nombre de la Comisión Estatal del Agua de Jalisco o por transferencia electrónica, cuenta interbancaria: 072320008843714454. -auto",
+						"captura":{
+							"id_usuario":1,
+							"nombre":"Usuario captura",
+							"puesto":"puesto Usuario captura"
+						},
+						"valida":{
+							"id_empleado":3,
+							"nombre":"Gerente que valida",
+							"puesto":"puesto Usuario valida"
+						},
+						"norma":{
+							"id_norma":1,
+							"norma":"NOM-001-SEMARNAT-1996",
+							"desc":"Norma Oficial Mexicana",
+							"parametros":[
+								{
+									"id_parametro":25,
+									"parametro":"Arsénico",
+									"cert":1,
+									"id_metodo":1,
+									"metodo": {
+										"id_metodo":1,
+										"metodo":"NMX-AA-000-0000"
+									},
+									"cantidad":1,
+									"precio":164.65
+								},
+								{
+									"id_parametro":27,
+									"parametro":"Cadmio",
+									"cert":1,
+									"id_metodo":1,
+									"metodo": {
+										"id_metodo":1,
+										"metodo":"NMX-AA-000-0000"
+									},
+									"cantidad":1,
+									"precio":164.65
+								},
+								{
+									"id_parametro":28,
+									"parametro":"Cobre",
+									"cert":1,
+									"id_metodo":1,
+									"metodo": {
+										"id_metodo":1,
+										"metodo":"NMX-AA-000-0000"
+									},
+									"cantidad":1,
+									"precio":164.65
+								},
+								{
+									"id_parametro":38,
+									"parametro":"Coliformes fecales",
+									"cert":1,
+									"id_metodo":1,
+									"metodo": {
+										"id_metodo":1,
+										"metodo":"NMX-AA-000-0000"
+									},
+									"cantidad":1,
+									"precio":164.65
+								},
+								{
+									"id_parametro":29,
+									"parametro":"Cromo",
+									"cert":1,
+									"id_metodo":1,
+									"metodo": {
+										"id_metodo":1,
+										"metodo":"NMX-AA-000-0000"
+									},
+									"cantidad":1,
+									"precio":164.65
+								},
+								{
+									"id_parametro":16,
+									"parametro":"Demada bioquímica de oxígeno",
+									"cert":0,
+									"id_metodo":1,
+									"metodo": {
+										"id_metodo":1,
+										"metodo":"NMX-AA-000-0000"
+									},
+									"cantidad":1,
+									"precio":164.65
+								},
+								{
+									"id_parametro":19,
+									"parametro":"Fósforo total",
+									"cert":1,
+									"id_metodo":1,
+									"metodo": {
+										"id_metodo":1,
+										"metodo":"NMX-AA-000-0000"
+									},
+									"cantidad":1,
+									"precio":164.65
+								},
+								{
+									"id_parametro":18,
+									"parametro":"Grasas y aceites",
+									"cert":1,
+									"id_metodo":1,
+									"metodo": {
+										"id_metodo":1,
+										"metodo":"NMX-AA-000-0000"
+									},
+									"cantidad":1,
+									"precio":164.65
+								},
+								{
+									"id_parametro":6,
+									"parametro":"Alcalinidad total",
+									"cert":1,
+									"id_metodo":1,
+									"metodo": {
+										"id_metodo":1,
+										"metodo":"NMX-AA-000-0000"
+									},
+									"cantidad":1,
+									"precio":164.65
+								},
+								{
+									"id_parametro":39,
+									"parametro":"Materia flotante",
+									"cert":1,
+									"id_metodo":1,
+									"metodo": {
+										"id_metodo":1,
+										"metodo":"NMX-AA-000-0000"
+									},
+									"cantidad":1,
+									"precio":164.65
+								},
+								{
+									"id_parametro":32,
+									"parametro":"Mercurio",
+									"cert":1,
+									"id_metodo":1,
+									"metodo": {
+										"id_metodo":1,
+										"metodo":"NMX-AA-000-0000"
+									},
+									"cantidad":1,
+									"precio":164.65
+								},
+								{
+									"id_parametro":7,
+									"parametro":"Cloruros totales",
+									"cert":1,
+									"id_metodo":1,
+									"metodo": {
+										"id_metodo":1,
+										"metodo":"NMX-AA-000-0000"
+									},
+									"cantidad":1,
+									"precio":164.65
+								},
+								{
+									"id_parametro":33,
+									"parametro":"Níquel",
+									"cert":1,
+									"id_metodo":1,
+									"metodo": {
+										"id_metodo":1,
+										"metodo":"NMX-AA-000-0000"
+									},
+									"cantidad":1,
+									"precio":164.65
+								},
+								{
+									"id_parametro":2,
+									"parametro":"Potencial de hidrógeno",
+									"cert":1,
+									"id_metodo":1,
+									"metodo": {
+										"id_metodo":1,
+										"metodo":"NMX-AA-000-0000"
+									},
+									"cantidad":1,
+									"precio":164.65
+								},
+								{
+									"id_parametro":34,
+									"parametro":"Plomo",
+									"cert":1,
+									"id_metodo":1,
+									"metodo": {
+										"id_metodo":1,
+										"metodo":"NMX-AA-000-0000"
+									},
+									"cantidad":1,
+									"precio":164.65
+								},
+								{
+									"id_parametro":22,
+									"parametro":"Sólidos sedimentables",
+									"cert":1,
+									"id_metodo":1,
+									"metodo": {
+										"id_metodo":1,
+										"metodo":"NMX-AA-000-0000"
+									},
+									"cantidad":1,
+									"precio":164.65
+								},
+								{
+									"id_parametro":20,
+									"parametro":"Sólidos suspendidos totales",
+									"cert":1,
+									"id_metodo":1,
+									"metodo": {
+										"id_metodo":1,
+										"metodo":"NMX-AA-000-0000"
+									},
+									"cantidad":1,
+									"precio":164.65
+								},
+								{
+									"id_parametro":1,
+									"parametro":"Temperatura",
+									"cert":1,
+									"id_metodo":1,
+									"metodo": {
+										"id_metodo":1,
+										"metodo":"NMX-AA-000-0000"
+									},
+									"cantidad":1,
+									"precio":164.65
+								},
+								{
+									"id_parametro":36,
+									"parametro":"Zinc",
+									"cert":1,
+									"id_metodo":1,
+									"metodo": {
+										"id_metodo":1,
+										"metodo":"NMX-AA-000-0000"
+									},
+									"cantidad":1,
+									"precio":164.65
+								}
+							]
+						},
+						"actividades":[
+							{
+								"id_actividad":1,
+								"actividad":"Muestreo instantáneo",
+								"id_metodo":87,
+								"metodo":{
+									"id_metodo":87,
+									"metodo":"metodo para muestreo instantáneo"
+								},
+								"cantidad":1,
+								"precio":0
+							}
+						],
+						"tipo_muestreo":
+						{
+							"id_tipo_muestreo":1,
+							"tipo_muestreo":"Simple"
+						}
+					},
+					"parametros":
+					[
+						{
+							"id_parametro":25,
+							"parametro":"Arsénico",
+							"cert":1,
+							"id_metodo":1,
+							"metodo_ensayo":"NMX-AA-000-0000",
+							"cantidad":1,
+							"precio":164.65
+						},
+						{
+							"id_parametro":27,
+							"parametro":"Cadmio",
+							"cert":1,
+							"id_metodo":1,
+							"metodo_ensayo":"NMX-AA-000-0000",
+							"cantidad":1,
+							"precio":164.65
+						},
+						{
+							"id_parametro":28,
+							"parametro":"Cobre",
+							"cert":1,
+							"id_metodo":1,
+							"metodo_ensayo":"NMX-AA-000-0000",
+							"cantidad":1,
+							"precio":164.65
+						},
+						{
+							"id_parametro":38,
+							"parametro":"Coliformes fecales",
+							"cert":1,
+							"id_metodo":1,
+							"metodo_ensayo":"NMX-AA-000-0000",
+							"cantidad":1,
+							"precio":164.65
+						},
+						{
+							"id_parametro":29,
+							"parametro":"Cromo",
+							"cert":1,
+							"id_metodo":1,
+							"metodo_ensayo":"NMX-AA-000-0000",
+							"cantidad":1,
+							"precio":164.65
+						},
+						{
+							"id_parametro":16,
+							"parametro":"Demada bioquímica de oxígeno",
+							"cert":0,
+							"id_metodo":1,
+							"metodo_ensayo":"NMX-AA-000-0000",
+							"cantidad":1,
+							"precio":164.65
+						},
+						{
+							"id_parametro":19,
+							"parametro":"Fósforo total",
+							"cert":1,
+							"id_metodo":1,
+							"metodo_ensayo":"NMX-AA-000-0000",
+							"cantidad":1,
+							"precio":164.65
+						},
+						{
+							"id_parametro":18,
+							"parametro":"Grasas y aceites",
+							"cert":1,
+							"id_metodo":1,
+							"metodo_ensayo":"NMX-AA-000-0000",
+							"cantidad":1,
+							"precio":164.65
+						},
+						{
+							"id_parametro":6,
+							"parametro":"Alcalinidad total",
+							"cert":1,
+							"id_metodo":1,
+							"metodo_ensayo":"NMX-AA-000-0000",
+							"cantidad":1,
+							"precio":164.65
+						},
+						{
+							"id_parametro":39,
+							"parametro":"Materia flotante",
+							"cert":1,
+							"id_metodo":1,
+							"metodo_ensayo":"NMX-AA-000-0000",
+							"cantidad":1,
+							"precio":164.65
+						},
+						{
+							"id_parametro":32,
+							"parametro":"Mercurio",
+							"cert":1,
+							"id_metodo":1,
+							"metodo_ensayo":"NMX-AA-000-0000",
+							"cantidad":1,
+							"precio":164.65
+						},
+						{
+							"id_parametro":7,
+							"parametro":"Cloruros totales",
+							"cert":1,
+							"id_metodo":1,
+							"metodo_ensayo":"NMX-AA-000-0000",
+							"cantidad":1,
+							"precio":164.65
+						},
+						{
+							"id_parametro":33,
+							"parametro":"Níquel",
+							"cert":1,
+							"id_metodo":1,
+							"metodo_ensayo":"NMX-AA-000-0000",
+							"cantidad":1,
+							"precio":164.65
+						},
+						{
+							"id_parametro":2,
+							"parametro":"Potencial de hidrógeno",
+							"cert":1,
+							"id_metodo":1,
+							"metodo_ensayo":"NMX-AA-000-0000",
+							"cantidad":1,
+							"precio":164.65
+						},
+						{
+							"id_parametro":34,
+							"parametro":"Plomo",
+							"cert":1,
+							"id_metodo":1,
+							"metodo_ensayo":"NMX-AA-000-0000",
+							"cantidad":1,
+							"precio":164.65
+						},
+						{
+							"id_parametro":22,
+							"parametro":"Sólidos sedimentables",
+							"cert":1,
+							"id_metodo":1,
+							"metodo_ensayo":"NMX-AA-000-0000",
+							"cantidad":1,
+							"precio":164.65
+						},
+						{
+							"id_parametro":20,
+							"parametro":"Sólidos suspendidos totales",
+							"cert":1,
+							"id_metodo":1,
+							"metodo_ensayo":"NMX-AA-000-0000",
+							"cantidad":1,
+							"precio":164.65
+						},
+						{
+							"id_parametro":1,
+							"parametro":"Temperatura",
+							"cert":1,
+							"id_metodo":1,
+							"metodo_ensayo":"NMX-AA-000-0000",
+							"cantidad":1,
+							"precio":164.65
+						},
+						{
+							"id_parametro":36,
+							"parametro":"Zinc",
+							"cert":1,
+							"id_metodo":1,
+							"metodo_ensayo":"NMX-AA-000-0000",
+							"cantidad":1,
+							"precio":164.65
+						}
+					],
+					"matriz":
+					{
+						"id_matriz":3,
+						"matriz":"Agua Residual Tratada"
+					},
+					"tipo_muestreo":
+					{
+						"id_tipo_muestreo":1,
+						"tipo_muestreo":"Simple"
+					},
+					"supervisor_orden":
+					{
+						"id_supervisor_orden":2,
+						"id_empleado":1,
+						"id_nivel":1,
+						"id_area":5,
+						"area":"Administrativo",
+						"id_puesto":1,
+						"puesto":"Gerente de Laboratorio",
+						"nombres":"Reyna",
+						"ap":"García",
+						"am":"Meneses",
+						"fecha_act":"2014-11-30",
+						"calidad":0,
+						"supervisa":1,
+						"analiza":1,
+						"muestrea":1,
+						"cert":1,
+						"activo":1
+					},
+					"supervisor_muestreo":
+					{
+						"id_supervisor_muestreo":2,
+						"id_empleado":3,
+						"id_nivel":3,
+						"id_area":2,
+						"area":"Metales Pesados",
+						"id_puesto":4,
+						"puesto":"Supervisor (MP)",
+						"nombres":"Marín",
+						"ap":"Gomar",
+						"am":"Sosa",
+						"fecha_act":"2014-11-30",
+						"calidad":0,
+						"supervisa":1,
+						"analiza":1,
+						"muestrea":1,
+						"cert":1,
+						"activo":1
+					},
+					"norma":
+					{
+						"id_norma":1,
+						"norma":"NOM-001-SEMARNAT-1996",
+						"desc":"Norma Oficial Mexicana",
+						"parametros":[
+							{
+								"id_parametro":25,
+								"parametro":"Arsénico",
+								"cert":1,
+								"id_metodo":1,
+								"metodo": {
+									"id_metodo":1,
+									"metodo":"NMX-AA-000-0000"
+								},
+								"cantidad":1,
+								"precio":164.65
+							},
+							{
+								"id_parametro":27,
+								"parametro":"Cadmio",
+								"cert":1,
+								"id_metodo":1,
+								"metodo": {
+									"id_metodo":1,
+									"metodo":"NMX-AA-000-0000"
+								},
+								"cantidad":1,
+								"precio":164.65
+							},
+							{
+								"id_parametro":28,
+								"parametro":"Cobre",
+								"cert":1,
+								"id_metodo":1,
+								"metodo": {
+									"id_metodo":1,
+									"metodo":"NMX-AA-000-0000"
+								},
+								"cantidad":1,
+								"precio":164.65
+							},
+							{
+								"id_parametro":38,
+								"parametro":"Coliformes fecales",
+								"cert":1,
+								"id_metodo":1,
+								"metodo": {
+									"id_metodo":1,
+									"metodo":"NMX-AA-000-0000"
+								},
+								"cantidad":1,
+								"precio":164.65
+							},
+							{
+								"id_parametro":29,
+								"parametro":"Cromo",
+								"cert":1,
+								"id_metodo":1,
+								"metodo": {
+									"id_metodo":1,
+									"metodo":"NMX-AA-000-0000"
+								},
+								"cantidad":1,
+								"precio":164.65
+							},
+							{
+								"id_parametro":16,
+								"parametro":"Demada bioquímica de oxígeno",
+								"cert":0,
+								"id_metodo":1,
+								"metodo": {
+									"id_metodo":1,
+									"metodo":"NMX-AA-000-0000"
+								},
+								"cantidad":1,
+								"precio":164.65
+							},
+							{
+								"id_parametro":19,
+								"parametro":"Fósforo total",
+								"cert":1,
+								"id_metodo":1,
+								"metodo": {
+									"id_metodo":1,
+									"metodo":"NMX-AA-000-0000"
+								},
+								"cantidad":1,
+								"precio":164.65
+							},
+							{
+								"id_parametro":18,
+								"parametro":"Grasas y aceites",
+								"cert":1,
+								"id_metodo":1,
+								"metodo": {
+									"id_metodo":1,
+									"metodo":"NMX-AA-000-0000"
+								},
+								"cantidad":1,
+								"precio":164.65
+							},
+							{
+								"id_parametro":6,
+								"parametro":"Alcalinidad total",
+								"cert":1,
+								"id_metodo":1,
+								"metodo": {
+									"id_metodo":1,
+									"metodo":"NMX-AA-000-0000"
+								},
+								"cantidad":1,
+								"precio":164.65
+							},
+							{
+								"id_parametro":39,
+								"parametro":"Materia flotante",
+								"cert":1,
+								"id_metodo":1,
+								"metodo": {
+									"id_metodo":1,
+									"metodo":"NMX-AA-000-0000"
+								},
+								"cantidad":1,
+								"precio":164.65
+							},
+							{
+								"id_parametro":32,
+								"parametro":"Mercurio",
+								"cert":1,
+								"id_metodo":1,
+								"metodo": {
+									"id_metodo":1,
+									"metodo":"NMX-AA-000-0000"
+								},
+								"cantidad":1,
+								"precio":164.65
+							},
+							{
+								"id_parametro":7,
+								"parametro":"Cloruros totales",
+								"cert":1,
+								"id_metodo":1,
+								"metodo": {
+									"id_metodo":1,
+									"metodo":"NMX-AA-000-0000"
+								},
+								"cantidad":1,
+								"precio":164.65
+							},
+							{
+								"id_parametro":33,
+								"parametro":"Níquel",
+								"cert":1,
+								"id_metodo":1,
+								"metodo": {
+									"id_metodo":1,
+									"metodo":"NMX-AA-000-0000"
+								},
+								"cantidad":1,
+								"precio":164.65
+							},
+							{
+								"id_parametro":2,
+								"parametro":"Potencial de hidrógeno",
+								"cert":1,
+								"id_metodo":1,
+								"metodo": {
+									"id_metodo":1,
+									"metodo":"NMX-AA-000-0000"
+								},
+								"cantidad":1,
+								"precio":164.65
+							},
+							{
+								"id_parametro":34,
+								"parametro":"Plomo",
+								"cert":1,
+								"id_metodo":1,
+								"metodo": {
+									"id_metodo":1,
+									"metodo":"NMX-AA-000-0000"
+								},
+								"cantidad":1,
+								"precio":164.65
+							},
+							{
+								"id_parametro":22,
+								"parametro":"Sólidos sedimentables",
+								"cert":1,
+								"id_metodo":1,
+								"metodo": {
+									"id_metodo":1,
+									"metodo":"NMX-AA-000-0000"
+								},
+								"cantidad":1,
+								"precio":164.65
+							},
+							{
+								"id_parametro":20,
+								"parametro":"Sólidos suspendidos totales",
+								"cert":1,
+								"id_metodo":1,
+								"metodo": {
+									"id_metodo":1,
+									"metodo":"NMX-AA-000-0000"
+								},
+								"cantidad":1,
+								"precio":164.65
+							},
+							{
+								"id_parametro":1,
+								"parametro":"Temperatura",
+								"cert":1,
+								"id_metodo":1,
+								"metodo": {
+									"id_metodo":1,
+									"metodo":"NMX-AA-000-0000"
+								},
+								"cantidad":1,
+								"precio":164.65
+							},
+							{
+								"id_parametro":36,
+								"parametro":"Zinc",
+								"cert":1,
+								"id_metodo":1,
+								"metodo": {
+									"id_metodo":1,
+									"metodo":"NMX-AA-000-0000"
+								},
+								"cantidad":1,
+								"precio":164.65
+							}
+						]
+					}
+				}
+			';
+		}
+		else {
+			$result = '
+				{
+					"id_orden":0,
+					"id_cliente":0,
+					"id_solicitud":0,
+					"id_plan":0,
+					"id_origen_orden":0,
+					"id_matriz":0,
+					"id_tipo_muestreo":0,
+					"id_origen_muestreo":0,
+					"id_supervisor_orden":0,
+					"id_supervisor_muestreo":0,
+					"id_supervisor_custodia":0,
+					"id_norma":1,
+					"folio":0,
+					"ejercicio":0,
+					"fecha_captura":"",
+					"fecha_valida":"",
+					"fecha_muestreo":"",
+					"hora_muestreo":"",
+					"fecha_actualizacion":"",
+					"emergencia":"",
+					"origen_muestreo":"",
+					"validado":0,
+					"aceptado":0,
+					"activo":0,
+					"origen_orden":
+					{
+
+					},
+					"cliente":
+					{
+
+					},
+					"supervisor_muestreo":
+					{
+
+					},
+					"solicitud":
+					{
+
+					},
+					"parametros":
+					[
+
+					],
+					"matriz":
+					{
+
+					},
+					"tipo_muestreo":
+					{
+
+					},
+					"supervisor_orden":
+					{
+
+					},
+					"supervisor_muestreo":
+					{
+
+					},
+					"norma":{
+					}
+				}
+			';
+		}
+		return $result;
+	}
+
+	public function getOrders() {
+		//$sql = "SELECT
+		//		*
+		//	FROM
+		//		orden";
+		//return self::getAllRows($sql);
+		$result = '
+			[
+				{
+					"id_orden":1,
+					"id_cliente":1,
+					"id_solicitud":1,
+					"id_plan":0,
+					"id_origen_orden":1,
+					"id_matriz":3,
+					"id_tipo_muestreo":1,
+					"id_origen_muestreo":1,
+					"id_supervisor_orden":1,
+					"id_supervisor_muestreo":2,
+					"id_supervisor_custodia":4,
+					"id_norma":1,
+					"folio":656,
+					"ejercicio":2014,
+					"fecha_captura":"2014-11-01",
+					"fecha_valida":"2014-11-02",
+					"fecha_muestreo":"2014-11-04",
+					"hora_muestreo":"9:25",
+					"fecha_actualizacion":"2014-11-01",
+					"emergencia":"",
+					"origen_muestreo":"Agua",
+					"validado":0,
+					"aceptado":0,
+					"activo":0,
+					"origen_orden":
+					{
+						"id_origen_orden":2,
+						"origen_orden":"Cotización"
+					},
+					"cliente":
+					{
+						"id_cliente":1,
+						"id_organismo":1,
+						"cliente":"CEA Jalisco",
+						"area":"Dirección de Operación de PTAR\'S",
+						"rfc":"Registro Federal de Contribuyentes",
+						"calle":"Av. Brasilia",
+						"numero":"2970",
+						"colonia":"Col. Colomos Providencia",
+						"cp":"44680",
+						"id_estado":14,
+						"id_municipio":14039,
+						"municipio":"Guadalajara",
+						"id_localidad":140390001,
+						"localidad":"Guadalajara",
+						"tel":"3030-9350 ext. 8370",
+						"fax":"",
+						"contacto":"Biol. Luis Aceves Martínez",
+						"puesto_contacto":"puesto contacto",
+						"email":"laceves@ceajalisco.gob.mx",
+						"fecha_act":"2014-11-23",
+						"interno":1,
+						"cea":1,
+						"tasa":0,
+						"activo":1
+					},
+					"supervisor_muestreo":
+					{
+						"id_supervisor_muestreo":2,
+						"id_empleado":3,
+						"id_nivel":3,
+						"id_area":2,
+						"area":"Metales Pesados",
+						"id_puesto":4,
+						"puesto":"Supervisor (MP)",
+						"nombres":"Marín",
+						"ap":"Gomar",
+						"am":"Sosa",
+						"fecha_act":"2014-11-30",
+						"calidad":0,
+						"supervisa":1,
+						"analiza":1,
+						"muestrea":1,
+						"cert":1,
+						"activo":1
+					},
+					"solicitud":
+					{
+						"id_solicitud":1,
+						"folio":432,
+						"ejercicio":2014,
+						"fecha_solicitud":"2014-07-01",
+						"fecha_captura":"2014-07-01",
+						"fecha_valida":null,
+						"fecha_acepta":null,
+						"fecha_actualizacion":"2014-07-01",
+						"validado":0,
+						"id_cliente":1,
+						"id_usuario_captura":1,
+						"id_usuario_valida":3,
+						"id_norma":1,
+						"id_tipo_muestreo":1,
+						"total":0,
+						"cliente":
+						{
+							"id_cliente":1,
+							"id_organismo":1,
+							"cliente":"CEA Jalisco",
+							"area":"Dirección de Operación de PTAR\'S",
+							"rfc":"Registro Federal de Contribuyentes",
+							"calle":"Av. Brasilia",
+							"numero":"2970",
+							"colonia":"Col. Colomos Providencia",
+							"cp":"44680",
+							"id_estado":14,
+							"id_municipio":14039,
+							"municipio":"Guadalajara",
+							"id_localidad":140390001,
+							"localidad":"Guadalajara",
+							"tel":"3030-9350 ext. 8370",
+							"fax":"",
+							"contacto":"Biol. Luis Aceves Martínez",
+							"puesto_contacto":"puesto contacto",
+							"email":"laceves@ceajalisco.gob.mx",
+							"fecha_act":"2014-11-23",
+							"interno":1,
+							"cea":1,
+							"tasa":0,
+							"activo":1
+						},
+						"descripcion_servicio":"Servicio de muestreo y análisis, para verificar el cumplimiento de la norma NOM-001-SEMARNAT-1996, que establece los límites máximos permisibles de contaminantes en las descargas de aguas residuales a los sistemas de alcantarillado urbano o municipal. -auto",
+						"notas":"La presente cotización se realiza sin visita previa y se contempla un fácil y seguro acceso para la toma de muestras. Se requiere regresar esta cotización con la firma y sello de Aceptación del Servicio. -auto",
+						"condiciones":"El informe de resultados se entregará a los 10 días hábiles de haber ingresado las muestras al laboratorio. El pago de resultados se hará en las instalaciones del Laboratorio de Calidad del Agua de la CEA, así también mediante depósito bancario a la cuenta: 884371445 de la Institución Bancaria BANORTE a nombre de la Comisión Estatal del Agua de Jalisco o por transferencia electrónica, cuenta interbancaria: 072320008843714454. -auto",
+						"captura":{
+							"id_usuario":1,
+							"nombre":"Usuario captura",
+							"puesto":"puesto Usuario captura"
+						},
+						"valida":{
+							"id_empleado":3,
+							"nombre":"Gerente que valida",
+							"puesto":"puesto Usuario valida"
+						},
+						"norma":{
+							"id_norma":1,
+							"norma":"NOM-001-SEMARNAT-1996",
+							"desc":"Norma Oficial Mexicana",
+							"parametros":[
+								{
+									"id_parametro":25,
+									"parametro":"Arsénico",
+									"cert":1,
+									"id_metodo":1,
+									"metodo": {
+										"id_metodo":1,
+										"metodo":"NMX-AA-000-0000"
+									},
+									"cantidad":1,
+									"precio":164.65
+								},
+								{
+									"id_parametro":27,
+									"parametro":"Cadmio",
+									"cert":1,
+									"id_metodo":1,
+									"metodo": {
+										"id_metodo":1,
+										"metodo":"NMX-AA-000-0000"
+									},
+									"cantidad":1,
+									"precio":164.65
+								},
+								{
+									"id_parametro":28,
+									"parametro":"Cobre",
+									"cert":1,
+									"id_metodo":1,
+									"metodo": {
+										"id_metodo":1,
+										"metodo":"NMX-AA-000-0000"
+									},
+									"cantidad":1,
+									"precio":164.65
+								},
+								{
+									"id_parametro":38,
+									"parametro":"Coliformes fecales",
+									"cert":1,
+									"id_metodo":1,
+									"metodo": {
+										"id_metodo":1,
+										"metodo":"NMX-AA-000-0000"
+									},
+									"cantidad":1,
+									"precio":164.65
+								},
+								{
+									"id_parametro":29,
+									"parametro":"Cromo",
+									"cert":1,
+									"id_metodo":1,
+									"metodo": {
+										"id_metodo":1,
+										"metodo":"NMX-AA-000-0000"
+									},
+									"cantidad":1,
+									"precio":164.65
+								},
+								{
+									"id_parametro":16,
+									"parametro":"Demada bioquímica de oxígeno",
+									"cert":0,
+									"id_metodo":1,
+									"metodo": {
+										"id_metodo":1,
+										"metodo":"NMX-AA-000-0000"
+									},
+									"cantidad":1,
+									"precio":164.65
+								},
+								{
+									"id_parametro":19,
+									"parametro":"Fósforo total",
+									"cert":1,
+									"id_metodo":1,
+									"metodo": {
+										"id_metodo":1,
+										"metodo":"NMX-AA-000-0000"
+									},
+									"cantidad":1,
+									"precio":164.65
+								},
+								{
+									"id_parametro":18,
+									"parametro":"Grasas y aceites",
+									"cert":1,
+									"id_metodo":1,
+									"metodo": {
+										"id_metodo":1,
+										"metodo":"NMX-AA-000-0000"
+									},
+									"cantidad":1,
+									"precio":164.65
+								},
+								{
+									"id_parametro":6,
+									"parametro":"Alcalinidad total",
+									"cert":1,
+									"id_metodo":1,
+									"metodo": {
+										"id_metodo":1,
+										"metodo":"NMX-AA-000-0000"
+									},
+									"cantidad":1,
+									"precio":164.65
+								},
+								{
+									"id_parametro":39,
+									"parametro":"Materia flotante",
+									"cert":1,
+									"id_metodo":1,
+									"metodo": {
+										"id_metodo":1,
+										"metodo":"NMX-AA-000-0000"
+									},
+									"cantidad":1,
+									"precio":164.65
+								},
+								{
+									"id_parametro":32,
+									"parametro":"Mercurio",
+									"cert":1,
+									"id_metodo":1,
+									"metodo": {
+										"id_metodo":1,
+										"metodo":"NMX-AA-000-0000"
+									},
+									"cantidad":1,
+									"precio":164.65
+								},
+								{
+									"id_parametro":7,
+									"parametro":"Cloruros totales",
+									"cert":1,
+									"id_metodo":1,
+									"metodo": {
+										"id_metodo":1,
+										"metodo":"NMX-AA-000-0000"
+									},
+									"cantidad":1,
+									"precio":164.65
+								},
+								{
+									"id_parametro":33,
+									"parametro":"Níquel",
+									"cert":1,
+									"id_metodo":1,
+									"metodo": {
+										"id_metodo":1,
+										"metodo":"NMX-AA-000-0000"
+									},
+									"cantidad":1,
+									"precio":164.65
+								},
+								{
+									"id_parametro":2,
+									"parametro":"Potencial de hidrógeno",
+									"cert":1,
+									"id_metodo":1,
+									"metodo": {
+										"id_metodo":1,
+										"metodo":"NMX-AA-000-0000"
+									},
+									"cantidad":1,
+									"precio":164.65
+								},
+								{
+									"id_parametro":34,
+									"parametro":"Plomo",
+									"cert":1,
+									"id_metodo":1,
+									"metodo": {
+										"id_metodo":1,
+										"metodo":"NMX-AA-000-0000"
+									},
+									"cantidad":1,
+									"precio":164.65
+								},
+								{
+									"id_parametro":22,
+									"parametro":"Sólidos sedimentables",
+									"cert":1,
+									"id_metodo":1,
+									"metodo": {
+										"id_metodo":1,
+										"metodo":"NMX-AA-000-0000"
+									},
+									"cantidad":1,
+									"precio":164.65
+								},
+								{
+									"id_parametro":20,
+									"parametro":"Sólidos suspendidos totales",
+									"cert":1,
+									"id_metodo":1,
+									"metodo": {
+										"id_metodo":1,
+										"metodo":"NMX-AA-000-0000"
+									},
+									"cantidad":1,
+									"precio":164.65
+								},
+								{
+									"id_parametro":1,
+									"parametro":"Temperatura",
+									"cert":1,
+									"id_metodo":1,
+									"metodo": {
+										"id_metodo":1,
+										"metodo":"NMX-AA-000-0000"
+									},
+									"cantidad":1,
+									"precio":164.65
+								},
+								{
+									"id_parametro":36,
+									"parametro":"Zinc",
+									"cert":1,
+									"id_metodo":1,
+									"metodo": {
+										"id_metodo":1,
+										"metodo":"NMX-AA-000-0000"
+									},
+									"cantidad":1,
+									"precio":164.65
+								}
+							]
+						},
+						"actividades":[
+							{
+								"id_actividad":1,
+								"actividad":"Muestreo instantáneo",
+								"id_metodo":87,
+								"metodo":{
+									"id_metodo":87,
+									"metodo":"metodo para muestreo instantáneo"
+								},
+								"cantidad":1,
+								"precio":0
+							}
+						],
+						"tipo_muestreo":
+						{
+							"id_tipo_muestreo":1,
+							"tipo_muestreo":"Simple"
+						}
+					},
+					"parametros":
+					[
+						{
+							"id_parametro":25,
+							"parametro":"Arsénico",
+							"cert":1,
+							"id_metodo":1,
+							"metodo_ensayo":"NMX-AA-000-0000",
+							"cantidad":1,
+							"precio":164.65
+						},
+						{
+							"id_parametro":27,
+							"parametro":"Cadmio",
+							"cert":1,
+							"id_metodo":1,
+							"metodo_ensayo":"NMX-AA-000-0000",
+							"cantidad":1,
+							"precio":164.65
+						},
+						{
+							"id_parametro":28,
+							"parametro":"Cobre",
+							"cert":1,
+							"id_metodo":1,
+							"metodo_ensayo":"NMX-AA-000-0000",
+							"cantidad":1,
+							"precio":164.65
+						},
+						{
+							"id_parametro":38,
+							"parametro":"Coliformes fecales",
+							"cert":1,
+							"id_metodo":1,
+							"metodo_ensayo":"NMX-AA-000-0000",
+							"cantidad":1,
+							"precio":164.65
+						},
+						{
+							"id_parametro":29,
+							"parametro":"Cromo",
+							"cert":1,
+							"id_metodo":1,
+							"metodo_ensayo":"NMX-AA-000-0000",
+							"cantidad":1,
+							"precio":164.65
+						},
+						{
+							"id_parametro":16,
+							"parametro":"Demada bioquímica de oxígeno",
+							"cert":0,
+							"id_metodo":1,
+							"metodo_ensayo":"NMX-AA-000-0000",
+							"cantidad":1,
+							"precio":164.65
+						},
+						{
+							"id_parametro":19,
+							"parametro":"Fósforo total",
+							"cert":1,
+							"id_metodo":1,
+							"metodo_ensayo":"NMX-AA-000-0000",
+							"cantidad":1,
+							"precio":164.65
+						},
+						{
+							"id_parametro":18,
+							"parametro":"Grasas y aceites",
+							"cert":1,
+							"id_metodo":1,
+							"metodo_ensayo":"NMX-AA-000-0000",
+							"cantidad":1,
+							"precio":164.65
+						},
+						{
+							"id_parametro":6,
+							"parametro":"Alcalinidad total",
+							"cert":1,
+							"id_metodo":1,
+							"metodo_ensayo":"NMX-AA-000-0000",
+							"cantidad":1,
+							"precio":164.65
+						},
+						{
+							"id_parametro":39,
+							"parametro":"Materia flotante",
+							"cert":1,
+							"id_metodo":1,
+							"metodo_ensayo":"NMX-AA-000-0000",
+							"cantidad":1,
+							"precio":164.65
+						},
+						{
+							"id_parametro":32,
+							"parametro":"Mercurio",
+							"cert":1,
+							"id_metodo":1,
+							"metodo_ensayo":"NMX-AA-000-0000",
+							"cantidad":1,
+							"precio":164.65
+						},
+						{
+							"id_parametro":7,
+							"parametro":"Cloruros totales",
+							"cert":1,
+							"id_metodo":1,
+							"metodo_ensayo":"NMX-AA-000-0000",
+							"cantidad":1,
+							"precio":164.65
+						},
+						{
+							"id_parametro":33,
+							"parametro":"Níquel",
+							"cert":1,
+							"id_metodo":1,
+							"metodo_ensayo":"NMX-AA-000-0000",
+							"cantidad":1,
+							"precio":164.65
+						},
+						{
+							"id_parametro":2,
+							"parametro":"Potencial de hidrógeno",
+							"cert":1,
+							"id_metodo":1,
+							"metodo_ensayo":"NMX-AA-000-0000",
+							"cantidad":1,
+							"precio":164.65
+						},
+						{
+							"id_parametro":34,
+							"parametro":"Plomo",
+							"cert":1,
+							"id_metodo":1,
+							"metodo_ensayo":"NMX-AA-000-0000",
+							"cantidad":1,
+							"precio":164.65
+						},
+						{
+							"id_parametro":22,
+							"parametro":"Sólidos sedimentables",
+							"cert":1,
+							"id_metodo":1,
+							"metodo_ensayo":"NMX-AA-000-0000",
+							"cantidad":1,
+							"precio":164.65
+						},
+						{
+							"id_parametro":20,
+							"parametro":"Sólidos suspendidos totales",
+							"cert":1,
+							"id_metodo":1,
+							"metodo_ensayo":"NMX-AA-000-0000",
+							"cantidad":1,
+							"precio":164.65
+						},
+						{
+							"id_parametro":1,
+							"parametro":"Temperatura",
+							"cert":1,
+							"id_metodo":1,
+							"metodo_ensayo":"NMX-AA-000-0000",
+							"cantidad":1,
+							"precio":164.65
+						},
+						{
+							"id_parametro":36,
+							"parametro":"Zinc",
+							"cert":1,
+							"id_metodo":1,
+							"metodo_ensayo":"NMX-AA-000-0000",
+							"cantidad":1,
+							"precio":164.65
+						}
+					],
+					"matriz":
+					{
+						"id_matriz":3,
+						"matriz":"Agua Residual Tratada"
+					},
+					"tipo_muestreo":
+					{
+						"id_tipo_muestreo":1,
+						"tipo_muestreo":"Simple"
+					},
+					"supervisor_orden":
+					{
+						"id_supervisor_orden":2,
+						"id_empleado":1,
+						"id_nivel":1,
+						"id_area":5,
+						"area":"Administrativo",
+						"id_puesto":1,
+						"puesto":"Gerente de Laboratorio",
+						"nombres":"Reyna",
+						"ap":"García",
+						"am":"Meneses",
+						"fecha_act":"2014-11-30",
+						"calidad":0,
+						"supervisa":1,
+						"analiza":1,
+						"muestrea":1,
+						"cert":1,
+						"activo":1
+					},
+					"supervisor_muestreo":
+					{
+						"id_supervisor_muestreo":2,
+						"id_empleado":3,
+						"id_nivel":3,
+						"id_area":2,
+						"area":"Metales Pesados",
+						"id_puesto":4,
+						"puesto":"Supervisor (MP)",
+						"nombres":"Marín",
+						"ap":"Gomar",
+						"am":"Sosa",
+						"fecha_act":"2014-11-30",
+						"calidad":0,
+						"supervisa":1,
+						"analiza":1,
+						"muestrea":1,
+						"cert":1,
+						"activo":1
+					},
+					"norma":
+					{
+						"id_norma":1,
+						"norma":"NOM-001-SEMARNAT-1996",
+						"desc":"Norma Oficial Mexicana",
+						"parametros":[
+							{
+								"id_parametro":25,
+								"parametro":"Arsénico",
+								"cert":1,
+								"id_metodo":1,
+								"metodo": {
+									"id_metodo":1,
+									"metodo":"NMX-AA-000-0000"
+								},
+								"cantidad":1,
+								"precio":164.65
+							},
+							{
+								"id_parametro":27,
+								"parametro":"Cadmio",
+								"cert":1,
+								"id_metodo":1,
+								"metodo": {
+									"id_metodo":1,
+									"metodo":"NMX-AA-000-0000"
+								},
+								"cantidad":1,
+								"precio":164.65
+							},
+							{
+								"id_parametro":28,
+								"parametro":"Cobre",
+								"cert":1,
+								"id_metodo":1,
+								"metodo": {
+									"id_metodo":1,
+									"metodo":"NMX-AA-000-0000"
+								},
+								"cantidad":1,
+								"precio":164.65
+							},
+							{
+								"id_parametro":38,
+								"parametro":"Coliformes fecales",
+								"cert":1,
+								"id_metodo":1,
+								"metodo": {
+									"id_metodo":1,
+									"metodo":"NMX-AA-000-0000"
+								},
+								"cantidad":1,
+								"precio":164.65
+							},
+							{
+								"id_parametro":29,
+								"parametro":"Cromo",
+								"cert":1,
+								"id_metodo":1,
+								"metodo": {
+									"id_metodo":1,
+									"metodo":"NMX-AA-000-0000"
+								},
+								"cantidad":1,
+								"precio":164.65
+							},
+							{
+								"id_parametro":16,
+								"parametro":"Demada bioquímica de oxígeno",
+								"cert":0,
+								"id_metodo":1,
+								"metodo": {
+									"id_metodo":1,
+									"metodo":"NMX-AA-000-0000"
+								},
+								"cantidad":1,
+								"precio":164.65
+							},
+							{
+								"id_parametro":19,
+								"parametro":"Fósforo total",
+								"cert":1,
+								"id_metodo":1,
+								"metodo": {
+									"id_metodo":1,
+									"metodo":"NMX-AA-000-0000"
+								},
+								"cantidad":1,
+								"precio":164.65
+							},
+							{
+								"id_parametro":18,
+								"parametro":"Grasas y aceites",
+								"cert":1,
+								"id_metodo":1,
+								"metodo": {
+									"id_metodo":1,
+									"metodo":"NMX-AA-000-0000"
+								},
+								"cantidad":1,
+								"precio":164.65
+							},
+							{
+								"id_parametro":6,
+								"parametro":"Alcalinidad total",
+								"cert":1,
+								"id_metodo":1,
+								"metodo": {
+									"id_metodo":1,
+									"metodo":"NMX-AA-000-0000"
+								},
+								"cantidad":1,
+								"precio":164.65
+							},
+							{
+								"id_parametro":39,
+								"parametro":"Materia flotante",
+								"cert":1,
+								"id_metodo":1,
+								"metodo": {
+									"id_metodo":1,
+									"metodo":"NMX-AA-000-0000"
+								},
+								"cantidad":1,
+								"precio":164.65
+							},
+							{
+								"id_parametro":32,
+								"parametro":"Mercurio",
+								"cert":1,
+								"id_metodo":1,
+								"metodo": {
+									"id_metodo":1,
+									"metodo":"NMX-AA-000-0000"
+								},
+								"cantidad":1,
+								"precio":164.65
+							},
+							{
+								"id_parametro":7,
+								"parametro":"Cloruros totales",
+								"cert":1,
+								"id_metodo":1,
+								"metodo": {
+									"id_metodo":1,
+									"metodo":"NMX-AA-000-0000"
+								},
+								"cantidad":1,
+								"precio":164.65
+							},
+							{
+								"id_parametro":33,
+								"parametro":"Níquel",
+								"cert":1,
+								"id_metodo":1,
+								"metodo": {
+									"id_metodo":1,
+									"metodo":"NMX-AA-000-0000"
+								},
+								"cantidad":1,
+								"precio":164.65
+							},
+							{
+								"id_parametro":2,
+								"parametro":"Potencial de hidrógeno",
+								"cert":1,
+								"id_metodo":1,
+								"metodo": {
+									"id_metodo":1,
+									"metodo":"NMX-AA-000-0000"
+								},
+								"cantidad":1,
+								"precio":164.65
+							},
+							{
+								"id_parametro":34,
+								"parametro":"Plomo",
+								"cert":1,
+								"id_metodo":1,
+								"metodo": {
+									"id_metodo":1,
+									"metodo":"NMX-AA-000-0000"
+								},
+								"cantidad":1,
+								"precio":164.65
+							},
+							{
+								"id_parametro":22,
+								"parametro":"Sólidos sedimentables",
+								"cert":1,
+								"id_metodo":1,
+								"metodo": {
+									"id_metodo":1,
+									"metodo":"NMX-AA-000-0000"
+								},
+								"cantidad":1,
+								"precio":164.65
+							},
+							{
+								"id_parametro":20,
+								"parametro":"Sólidos suspendidos totales",
+								"cert":1,
+								"id_metodo":1,
+								"metodo": {
+									"id_metodo":1,
+									"metodo":"NMX-AA-000-0000"
+								},
+								"cantidad":1,
+								"precio":164.65
+							},
+							{
+								"id_parametro":1,
+								"parametro":"Temperatura",
+								"cert":1,
+								"id_metodo":1,
+								"metodo": {
+									"id_metodo":1,
+									"metodo":"NMX-AA-000-0000"
+								},
+								"cantidad":1,
+								"precio":164.65
+							},
+							{
+								"id_parametro":36,
+								"parametro":"Zinc",
+								"cert":1,
+								"id_metodo":1,
+								"metodo": {
+									"id_metodo":1,
+									"metodo":"NMX-AA-000-0000"
+								},
+								"cantidad":1,
+								"precio":164.65
+							}
+						]
+					}
+				}
+			]
+		';
+		return $result;
+	}
+
+	public function getPlan($planId) {
+		//$sql = "SELECT
+		//		*
+		//	FROM
+		//		plan
+		//	WHERE id_plan := $planId AND activo = 1";
+		//return self::getAllRows($sql);
+		if ($planId == 1) {
+			$result = '
+				{
+					"id_plan":1,
+					"id_cliente":1,
+					"id_solicitud":1,
+					"id_orden":1,
+					"id_tipo_muestreo":2,
+					"id_objetivo_plan":2,
+					"id_estado":14,
+					"id_municipio":14039,
+					"id_localidad":140390001,
+					"id_supervisor_muestreo":2,
+					"id_supervisor_recoleccion":2,
+					"id_supervisor_registro":2,
+					"id_supervisor_calibracion":2,
+					"id_supervisor_recipientes":2,
+					"id_supervisor_reactivos":2,
+					"folio":437,
+					"ejercicio":2014,
+					"fecha_captura":"2015-02-06",
+					"fecha_plan":"2014-11-06",
+					"fecha_calibracion":"2015-02-06",
+					"fecha_valida":"",
+					"objetivo_otro":"",
+					"municipio":"Guadalajara",
+					"localidad":"Guadalajara",
+					"calle":"Av. Brasilia",
+					"numero":"2970",
+					"colonia":"Col. Colomos Providencia",
+					"asistente_muestreo":"",
+					"asistente_recoleccion":"",
+					"asistente_registro":"",
+					"tipo_muestreo":"Compuesto",
+					"fecha_actualizacion":"2015-02-06",
+					"validado":1,
+					"activo":1,
+					"puntos_muestreo":
+					[
+						{
+							"id_punto_muestreo":"1",
+							"punto_muestreo":"Ocotlán",
+							"descripcion":"Ocotlán",
+							"id_municipio":"14063",
+							"municipio":"municipio 14063",
+							"id_localidad":"140630001",
+							"localidad":"localidad 140630001",
+							"id_clase_punto":1,
+							"id_tipo_muestreo":1,
+							"frecuencia":0,
+							"activo":1,
+							"selected":false,
+							"lat":20.346928,
+							"lng":-102.779392,
+							"alt":0,
+							"idRegHid":12,
+							"idCuenca":1,
+							"idSubCuenca":1,
+							"idCuerpoCalidad":1,
+							"consecutivo":1,
+							"siglas":"RS",
+							"clave":"RS-01",
+							"fecha":"2012-07-11 00:00:00.000",
+							"usr_update":1,
+							"comentarios":""
+						},
+						{
+							"id_punto_muestreo":"2",
+							"punto_muestreo":"Presa Corona",
+							"descripcion":"Cortina Presa Corona - Poncitlán",
+							"id_municipio":"14030",
+							"municipio":"municipio 14030",
+							"id_localidad":"140300038",
+							"localidad":"localidad 140300038",
+							"id_clase_punto":1,
+							"id_tipo_muestreo":1,
+							"frecuencia_muestreo":0,
+							"activo":1,
+							"selected":false,
+							"lat":20.399667,
+							"lng":-103.090619,
+							"alt":0,
+							"idRegHid":0,
+							"idCuenca":1,
+							"idSubCuenca":1,
+							"idCuerpoCalidad":1,
+							"consecutivo":2,
+							"siglas":"RS",
+							"clave":"RS-02",
+							"fecha":"2013-01-31 12:44:51.860",
+							"usr_update":1,
+							"comentarios":""
+						},
+						{
+							"id_punto_muestreo":"3",
+							"punto_muestreo":"Ex-hacienda Zap.",
+							"descripcion":"Ex-hacienda de Zapotlanejo",
+							"id_municipio":"14051",
+							"municipio":"municipio 14051",
+							"id_localidad":"140510013",
+							"localidad":"localidad 140510013",
+							"id_clase_punto":1,
+							"id_tipo_muestreo":1,
+							"frecuencia_muestreo":0,
+							"activo":1,
+							"selected":false,
+							"lat":20.442003,
+							"lng":-103.143814,
+							"alt":0,
+							"idRegHid":0,
+							"idCuenca":1,
+							"idSubCuenca":1,
+							"idCuerpoCalidad":1,
+							"consecutivo":3,
+							"siglas":"RS",
+							"clave":"RS-03",
+							"fecha":"2013-01-31 12:39:11.093",
+							"usr_update":1,
+							"comentarios":""
+						},
+						{
+							"id_punto_muestreo":"4",
+							"punto_muestreo":"Salto-Juanacatlán",
+							"descripcion":"Compuerta - Puente El Salto-Juanacatlán",
+							"id_municipio":"14051",
+							"municipio":"municipio 14051",
+							"id_localidad":"140510001",
+							"localidad":"localidad 140510001",
+							"id_clase_punto":1,
+							"id_tipo_muestreo":1,
+							"frecuencia_muestreo":0,
+							"activo":1,
+							"selected":false,
+							"lat":20.512825,
+							"lng":-103.174558,
+							"alt":0,
+							"idRegHid":12,
+							"idCuenca":1,
+							"idSubCuenca":1,
+							"idCuerpoCalidad":1,
+							"consecutivo":4,
+							"siglas":"RS",
+							"clave":"RS-04",
+							"fecha":"2012-07-11 00:00:00.000",
+							"usr_update":1,
+							"comentarios":""
+						},
+						{
+							"id_punto_muestreo":"5",
+							"punto_muestreo":"Puente Grande",
+							"descripcion":"Puente Grande",
+							"id_municipio":"14101",
+							"municipio":"municipio 14101",
+							"id_localidad":"141010026",
+							"localidad":"localidad 141010026",
+							"id_clase_punto":1,
+							"id_tipo_muestreo":1,
+							"frecuencia_muestreo":0,
+							"activo":1,
+							"selected":false,
+							"lat":20.571036,
+							"lng":-103.147283,
+							"alt":0,
+							"idRegHid":12,
+							"idCuenca":1,
+							"idSubCuenca":1,
+							"idCuerpoCalidad":1,
+							"consecutivo":5,
+							"siglas":"RS",
+							"clave":"RS-05",
+							"fecha":"2012-07-11 00:00:00.000",
+							"usr_update":1,
+							"comentarios":""
+						},
+						{
+							"id_punto_muestreo":"6",
+							"punto_muestreo":"Matatlán",
+							"descripcion":"Vertedero Controlado Matatlán",
+							"id_municipio":"14101",
+							"municipio":"municipio 14101",
+							"id_localidad":"141010009",
+							"localidad":"localidad 141010009",
+							"id_clase_punto":1,
+							"id_tipo_muestreo":1,
+							"frecuencia_muestreo":0,
+							"activo":1,
+							"selected":false,
+							"lat":20.668289,
+							"lng":-103.187169,
+							"alt":0,
+							"idRegHid":12,
+							"idCuenca":1,
+							"idSubCuenca":1,
+							"idCuerpoCalidad":1,
+							"consecutivo":6,
+							"siglas":"RS",
+							"clave":"RS-06",
+							"fecha":"2012-07-11 00:00:00.000",
+							"usr_update":1,
+							"comentarios":""
+						},
+						{
+							"id_punto_muestreo":"7",
+							"punto_muestreo":"Paso de Gpe.",
+							"descripcion":"Paso de Guadalupe",
+							"id_municipio":"14045",
+							"municipio":"municipio 14045",
+							"id_localidad":"140450079",
+							"localidad":"localidad 140450079",
+							"id_clase_punto":1,
+							"id_tipo_muestreo":1,
+							"frecuencia_muestreo":0,
+							"activo":1,
+							"selected":false,
+							"lat":20.839097,
+							"lng":-103.328972,
+							"alt":0,
+							"idRegHid":12,
+							"idCuenca":1,
+							"idSubCuenca":1,
+							"idCuerpoCalidad":1,
+							"consecutivo":7,
+							"siglas":"RS",
+							"clave":"RS-07",
+							"fecha":"2012-07-11 00:00:00.000",
+							"usr_update":1,
+							"comentarios":""
+						},
+						{
+							"id_punto_muestreo":"8",
+							"punto_muestreo":"Cristóbal de la B.",
+							"descripcion":"San Cristóbal de la Barranca",
+							"id_municipio":"14071",
+							"municipio":"municipio 14071",
+							"id_localidad":"140710001",
+							"localidad":"localidad 140710001",
+							"id_clase_punto":1,
+							"id_tipo_muestreo":1,
+							"frecuencia_muestreo":0,
+							"activo":1,
+							"selected":false,
+							"lat":21.038356,
+							"lng":-103.426036,
+							"alt":0,
+							"idRegHid":12,
+							"idCuenca":1,
+							"idSubCuenca":1,
+							"idCuerpoCalidad":1,
+							"consecutivo":8,
+							"siglas":"RS",
+							"clave":"RS-08",
+							"fecha":"2012-07-11 00:00:00.000",
+							"usr_update":1,
+							"comentarios":""
+						},
+						{
+							"id_punto_muestreo":"9",
+							"punto_muestreo":"Camino Salvador",
+							"descripcion":"Camino al Salvador - Tequila",
+							"id_municipio":"14094",
+							"municipio":"municipio 14094",
+							"id_localidad":"140050001",
+							"localidad":"localidad 140050001",
+							"id_clase_punto":1,
+							"id_tipo_muestreo":1,
+							"frecuencia_muestreo":0,
+							"activo":1,
+							"selected":false,
+							"lat":20.912106,
+							"lng":-103.711964,
+							"alt":0,
+							"idRegHid":12,
+							"idCuenca":1,
+							"idSubCuenca":1,
+							"idCuerpoCalidad":1,
+							"consecutivo":9,
+							"siglas":"RS",
+							"clave":"RS-09",
+							"fecha":"2012-07-11 00:00:00.000",
+							"usr_update":1,
+							"comentarios":""
+						},
+						{
+							"id_punto_muestreo":"10",
+							"punto_muestreo":"Paso La Yesca",
+							"descripcion":"Paso La Yesca",
+							"id_municipio":"14040",
+							"municipio":"municipio 14040",
+							"id_localidad":"140400053",
+							"localidad":"localidad 140400053",
+							"id_clase_punto":1,
+							"id_tipo_muestreo":1,
+							"frecuencia_muestreo":0,
+							"activo":1,
+							"selected":false,
+							"lat":21.190106,
+							"lng":-104.073053,
+							"alt":0,
+							"idRegHid":0,
+							"idCuenca":1,
+							"idSubCuenca":1,
+							"idCuerpoCalidad":1,
+							"consecutivo":10,
+							"siglas":"RS",
+							"clave":"RS-10",
+							"fecha":"2013-01-31 11:56:53.347",
+							"usr_update":1,
+							"comentarios":""
+						},
+						{
+							"id_punto_muestreo":"11",
+							"punto_muestreo":"Carr. Chapala",
+							"descripcion":"Carretera a Chapala antes de Aeropuerto",
+							"id_municipio":"14097",
+							"municipio":"municipio 14097",
+							"id_localidad":"140700043",
+							"localidad":"localidad 140700043",
+							"id_clase_punto":1,
+							"id_tipo_muestreo":1,
+							"frecuencia_muestreo":0,
+							"activo":1,
+							"selected":false,
+							"lat":20.537825,
+							"lng":-103.296703,
+							"alt":0,
+							"idRegHid":12,
+							"idCuenca":1,
+							"idSubCuenca":1,
+							"idCuerpoCalidad":1,
+							"consecutivo":1,
+							"siglas":"AA",
+							"clave":"AA-01",
+							"fecha":"2012-07-11 00:00:00.000",
+							"usr_update":1,
+							"comentarios":""
+						},
+						{
+							"id_punto_muestreo":"12",
+							"punto_muestreo":"El Muelle",
+							"descripcion":"Puente localidad El Muelle",
+							"id_municipio":"14097",
+							"municipio":"municipio 14097",
+							"id_localidad":"140700011",
+							"localidad":"localidad 140700011",
+							"id_clase_punto":1,
+							"id_tipo_muestreo":1,
+							"frecuencia_muestreo":0,
+							"activo":1,
+							"selected":false,
+							"lat":20.497869,
+							"lng":-103.216722,
+							"alt":0,
+							"idRegHid":12,
+							"idCuenca":1,
+							"idSubCuenca":1,
+							"idCuerpoCalidad":1,
+							"consecutivo":2,
+							"siglas":"AA",
+							"clave":"AA-02",
+							"fecha":"2012-07-11 00:00:00.000",
+							"usr_update":1,
+							"comentarios":""
+						},
+						{
+							"id_punto_muestreo":"13",
+							"punto_muestreo":"Río Zula",
+							"descripcion":"Puente Carretera Guadalajara - La Barca",
+							"id_municipio":"14063",
+							"municipio":"municipio 14063",
+							"id_localidad":"140630001",
+							"localidad":"localidad 140630001",
+							"id_clase_punto":1,
+							"id_tipo_muestreo":1,
+							"frecuencia_muestreo":0,
+							"activo":1,
+							"selected":false,
+							"lat":20.34455,
+							"lng":-102.774767,
+							"alt":0,
+							"idRegHid":12,
+							"idCuenca":1,
+							"idSubCuenca":1,
+							"idCuerpoCalidad":1,
+							"consecutivo":1,
+							"siglas":"RZ",
+							"clave":"RZ-01",
+							"fecha":"2012-07-11 00:00:00.000",
+							"usr_update":1,
+							"comentarios":""
+						}
+					],
+					"cliente":
+					{
+						"id_cliente":1,
+						"id_organismo":1,
+						"cliente":"CEA Jalisco",
+						"area":"Dirección de Operación de PTAR\'S",
+						"rfc":"Registro Federal de Contribuyentes",
+						"calle":"Av. Brasilia",
+						"numero":"2970",
+						"colonia":"Col. Colomos Providencia",
+						"cp":"44680",
+						"id_estado":14,
+						"id_municipio":14039,
+						"municipio":"Guadalajara",
+						"id_localidad":140390001,
+						"localidad":"Guadalajara",
+						"tel":"3030-9350 ext. 8370",
+						"fax":"",
+						"contacto":"Biol. Luis Aceves Martínez",
+						"puesto_contacto":"puesto contacto",
+						"email":"laceves@ceajalisco.gob.mx",
+						"fecha_act":"2014-11-23",
+						"interno":1,
+						"cea":1,
+						"tasa":0,
+						"activo":1
+					},
+					"orden":
+					{
+						"id_orden":1,
+						"folio":656,
+						"ejercicio":2014,
+						"fecha_captura":"2014-11-01",
+						"fecha_valida":"2914-11-02",
+						"fecha_muestreo":"2014-11-04",
+						"hora_muestreo":"9:25",
+						"fecha_actualizacion":"2014-11-01",
+						"validado":0,
+						"aceptado":0,
+						"id_origen_orden":1,
+						"origen_orden":
+						{
+							"id_origen_orden":2,
+							"origen_orden":"Cotización"
+						},
+						"emergencia":"",
+						"id_cliente":1,
+						"cliente":
+						{
+							"id_cliente":1,
+							"id_organismo":1,
+							"cliente":"CEA Jalisco",
+							"area":"Dirección de Operación de PTAR\'S",
+							"rfc":"Registro Federal de Contribuyentes",
+							"calle":"Av. Brasilia",
+							"numero":"2970",
+							"colonia":"Col. Colomos Providencia",
+							"cp":"44680",
+							"id_estado":14,
+							"id_municipio":14039,
+							"municipio":"Guadalajara",
+							"id_localidad":140390001,
+							"localidad":"Guadalajara",
+							"tel":"3030-9350 ext. 8370",
+							"fax":"",
+							"contacto":"Biol. Luis Aceves Martínez",
+							"puesto_contacto":"puesto contacto",
+							"email":"laceves@ceajalisco.gob.mx",
+							"fecha_act":"2014-11-23",
+							"interno":1,
+							"cea":1,
+							"tasa":0,
+							"activo":1
+						},
+						"id_plan":1,
+						"id_supervisor_muestreo":2,
+						"supervisor_muestreo":
+						{
+							"id_supervisor_muestreo":2,
+							"id_empleado":3,
+							"id_nivel":3,
+							"id_area":2,
+							"area":"Metales Pesados",
+							"id_puesto":4,
+							"puesto":"Supervisor (MP)",
+							"nombres":"Marín",
+							"ap":"Gomar",
+							"am":"Sosa",
+							"fecha_act":"2014-11-30",
+							"calidad":0,
+							"supervisa":1,
+							"analiza":1,
+							"muestrea":1,
+							"cert":1,
+							"activo":1
+						},
+						"id_supervisor_custodia":4,
+						"id_solicitud":1,
+						"solicitud":
+						{
+							"id_solicitud":1,
+							"folio":432,
+							"ejercicio":2014,
+							"fecha_solicitud":"2014-07-01",
+							"fecha_captura":"2014-07-01",
+							"fecha_valida":null,
+							"fecha_acepta":null,
+							"fecha_actualizacion":"2014-07-01",
+							"validado":0,
+							"id_cliente":1,
+							"id_usuario_captura":1,
+							"id_usuario_valida":3,
+							"id_norma":1,
+							"id_tipo_muestreo":1,
+							"total":0,
+							"cliente":
+							{
+								"id_cliente":1,
+								"id_organismo":1,
+								"cliente":"CEA Jalisco",
+								"area":"Dirección de Operación de PTAR\'S",
+								"rfc":"Registro Federal de Contribuyentes",
+								"calle":"Av. Brasilia",
+								"numero":"2970",
+								"colonia":"Col. Colomos Providencia",
+								"cp":"44680",
+								"id_estado":14,
+								"id_municipio":14039,
+								"municipio":"Guadalajara",
+								"id_localidad":140390001,
+								"localidad":"Guadalajara",
+								"tel":"3030-9350 ext. 8370",
+								"fax":"",
+								"contacto":"Biol. Luis Aceves Martínez",
+								"puesto_contacto":"puesto contacto",
+								"email":"laceves@ceajalisco.gob.mx",
+								"fecha_act":"2014-11-23",
+								"interno":1,
+								"cea":1,
+								"tasa":0,
+								"activo":1
+							},
+							"descripcion_servicio":"Servicio de muestreo y análisis, para verificar el cumplimiento de la norma NOM-001-SEMARNAT-1996, que establece los límites máximos permisibles de contaminantes en las descargas de aguas residuales a los sistemas de alcantarillado urbano o municipal. -auto",
+							"notas":"La presente cotización se realiza sin visita previa y se contempla un fácil y seguro acceso para la toma de muestras. Se requiere regresar esta cotización con la firma y sello de Aceptación del Servicio. -auto",
+							"condiciones":"El informe de resultados se entregará a los 10 días hábiles de haber ingresado las muestras al laboratorio. El pago de resultados se hará en las instalaciones del Laboratorio de Calidad del Agua de la CEA, así también mediante depósito bancario a la cuenta: 884371445 de la Institución Bancaria BANORTE a nombre de la Comisión Estatal del Agua de Jalisco o por transferencia electrónica, cuenta interbancaria: 072320008843714454. -auto",
+							"captura":{
+								"id_usuario":1,
+								"nombre":"Usuario captura",
+								"puesto":"puesto Usuario captura"
+							},
+							"valida":{
+								"id_empleado":3,
+								"nombre":"Gerente que valida",
+								"puesto":"puesto Usuario valida"
+							},
+							"norma":{
+								"id_norma":1,
+								"norma":"NOM-001-SEMARNAT-1996",
+								"desc":"Norma Oficial Mexicana",
+								"parametros":[
+									{
+										"id_parametro":25,
+										"parametro":"Arsénico",
+										"cert":1,
+										"id_metodo":1,
+										"metodo": {
+											"id_metodo":1,
+											"metodo":"NMX-AA-000-0000"
+										},
+										"cantidad":1,
+										"precio":164.65
+									},
+									{
+										"id_parametro":27,
+										"parametro":"Cadmio",
+										"cert":1,
+										"id_metodo":1,
+										"metodo": {
+											"id_metodo":1,
+											"metodo":"NMX-AA-000-0000"
+										},
+										"cantidad":1,
+										"precio":164.65
+									},
+									{
+										"id_parametro":28,
+										"parametro":"Cobre",
+										"cert":1,
+										"id_metodo":1,
+										"metodo": {
+											"id_metodo":1,
+											"metodo":"NMX-AA-000-0000"
+										},
+										"cantidad":1,
+										"precio":164.65
+									},
+									{
+										"id_parametro":38,
+										"parametro":"Coliformes fecales",
+										"cert":1,
+										"id_metodo":1,
+										"metodo": {
+											"id_metodo":1,
+											"metodo":"NMX-AA-000-0000"
+										},
+										"cantidad":1,
+										"precio":164.65
+									},
+									{
+										"id_parametro":29,
+										"parametro":"Cromo",
+										"cert":1,
+										"id_metodo":1,
+										"metodo": {
+											"id_metodo":1,
+											"metodo":"NMX-AA-000-0000"
+										},
+										"cantidad":1,
+										"precio":164.65
+									},
+									{
+										"id_parametro":16,
+										"parametro":"Demada bioquímica de oxígeno",
+										"cert":0,
+										"id_metodo":1,
+										"metodo": {
+											"id_metodo":1,
+											"metodo":"NMX-AA-000-0000"
+										},
+										"cantidad":1,
+										"precio":164.65
+									},
+									{
+										"id_parametro":19,
+										"parametro":"Fósforo total",
+										"cert":1,
+										"id_metodo":1,
+										"metodo": {
+											"id_metodo":1,
+											"metodo":"NMX-AA-000-0000"
+										},
+										"cantidad":1,
+										"precio":164.65
+									},
+									{
+										"id_parametro":18,
+										"parametro":"Grasas y aceites",
+										"cert":1,
+										"id_metodo":1,
+										"metodo": {
+											"id_metodo":1,
+											"metodo":"NMX-AA-000-0000"
+										},
+										"cantidad":1,
+										"precio":164.65
+									},
+									{
+										"id_parametro":6,
+										"parametro":"Alcalinidad total",
+										"cert":1,
+										"id_metodo":1,
+										"metodo": {
+											"id_metodo":1,
+											"metodo":"NMX-AA-000-0000"
+										},
+										"cantidad":1,
+										"precio":164.65
+									},
+									{
+										"id_parametro":39,
+										"parametro":"Materia flotante",
+										"cert":1,
+										"id_metodo":1,
+										"metodo": {
+											"id_metodo":1,
+											"metodo":"NMX-AA-000-0000"
+										},
+										"cantidad":1,
+										"precio":164.65
+									},
+									{
+										"id_parametro":32,
+										"parametro":"Mercurio",
+										"cert":1,
+										"id_metodo":1,
+										"metodo": {
+											"id_metodo":1,
+											"metodo":"NMX-AA-000-0000"
+										},
+										"cantidad":1,
+										"precio":164.65
+									},
+									{
+										"id_parametro":7,
+										"parametro":"Cloruros totales",
+										"cert":1,
+										"id_metodo":1,
+										"metodo": {
+											"id_metodo":1,
+											"metodo":"NMX-AA-000-0000"
+										},
+										"cantidad":1,
+										"precio":164.65
+									},
+									{
+										"id_parametro":33,
+										"parametro":"Níquel",
+										"cert":1,
+										"id_metodo":1,
+										"metodo": {
+											"id_metodo":1,
+											"metodo":"NMX-AA-000-0000"
+										},
+										"cantidad":1,
+										"precio":164.65
+									},
+									{
+										"id_parametro":2,
+										"parametro":"Potencial de hidrógeno",
+										"cert":1,
+										"id_metodo":1,
+										"metodo": {
+											"id_metodo":1,
+											"metodo":"NMX-AA-000-0000"
+										},
+										"cantidad":1,
+										"precio":164.65
+									},
+									{
+										"id_parametro":34,
+										"parametro":"Plomo",
+										"cert":1,
+										"id_metodo":1,
+										"metodo": {
+											"id_metodo":1,
+											"metodo":"NMX-AA-000-0000"
+										},
+										"cantidad":1,
+										"precio":164.65
+									},
+									{
+										"id_parametro":22,
+										"parametro":"Sólidos sedimentables",
+										"cert":1,
+										"id_metodo":1,
+										"metodo": {
+											"id_metodo":1,
+											"metodo":"NMX-AA-000-0000"
+										},
+										"cantidad":1,
+										"precio":164.65
+									},
+									{
+										"id_parametro":20,
+										"parametro":"Sólidos suspendidos totales",
+										"cert":1,
+										"id_metodo":1,
+										"metodo": {
+											"id_metodo":1,
+											"metodo":"NMX-AA-000-0000"
+										},
+										"cantidad":1,
+										"precio":164.65
+									},
+									{
+										"id_parametro":1,
+										"parametro":"Temperatura",
+										"cert":1,
+										"id_metodo":1,
+										"metodo": {
+											"id_metodo":1,
+											"metodo":"NMX-AA-000-0000"
+										},
+										"cantidad":1,
+										"precio":164.65
+									},
+									{
+										"id_parametro":36,
+										"parametro":"Zinc",
+										"cert":1,
+										"id_metodo":1,
+										"metodo": {
+											"id_metodo":1,
+											"metodo":"NMX-AA-000-0000"
+										},
+										"cantidad":1,
+										"precio":164.65
+									}
+								]
+							},
+							"actividades":[
+								{
+									"id_actividad":1,
+									"actividad":"Muestreo instantáneo",
+									"id_metodo":87,
+									"metodo":{
+										"id_metodo":87,
+										"metodo":"metodo para muestreo instantáneo"
+									},
+									"cantidad":1,
+									"precio":0
+								}
+							],
+							"tipo_muestreo":
+							{
+								"id_tipo_muestreo":1,
+								"tipo_muestreo":"Simple"
+							}
+						},
+						"parametros":
+						[
+							{
+								"id_parametro":25,
+								"parametro":"Arsénico",
+								"cert":1,
+								"id_metodo":1,
+								"metodo_ensayo":"NMX-AA-000-0000",
+								"cantidad":1,
+								"precio":164.65
+							},
+							{
+								"id_parametro":27,
+								"parametro":"Cadmio",
+								"cert":1,
+								"id_metodo":1,
+								"metodo_ensayo":"NMX-AA-000-0000",
+								"cantidad":1,
+								"precio":164.65
+							},
+							{
+								"id_parametro":28,
+								"parametro":"Cobre",
+								"cert":1,
+								"id_metodo":1,
+								"metodo_ensayo":"NMX-AA-000-0000",
+								"cantidad":1,
+								"precio":164.65
+							},
+							{
+								"id_parametro":38,
+								"parametro":"Coliformes fecales",
+								"cert":1,
+								"id_metodo":1,
+								"metodo_ensayo":"NMX-AA-000-0000",
+								"cantidad":1,
+								"precio":164.65
+							},
+							{
+								"id_parametro":29,
+								"parametro":"Cromo",
+								"cert":1,
+								"id_metodo":1,
+								"metodo_ensayo":"NMX-AA-000-0000",
+								"cantidad":1,
+								"precio":164.65
+							},
+							{
+								"id_parametro":16,
+								"parametro":"Demada bioquímica de oxígeno",
+								"cert":0,
+								"id_metodo":1,
+								"metodo_ensayo":"NMX-AA-000-0000",
+								"cantidad":1,
+								"precio":164.65
+							},
+							{
+								"id_parametro":19,
+								"parametro":"Fósforo total",
+								"cert":1,
+								"id_metodo":1,
+								"metodo_ensayo":"NMX-AA-000-0000",
+								"cantidad":1,
+								"precio":164.65
+							},
+							{
+								"id_parametro":18,
+								"parametro":"Grasas y aceites",
+								"cert":1,
+								"id_metodo":1,
+								"metodo_ensayo":"NMX-AA-000-0000",
+								"cantidad":1,
+								"precio":164.65
+							},
+							{
+								"id_parametro":6,
+								"parametro":"Alcalinidad total",
+								"cert":1,
+								"id_metodo":1,
+								"metodo_ensayo":"NMX-AA-000-0000",
+								"cantidad":1,
+								"precio":164.65
+							},
+							{
+								"id_parametro":39,
+								"parametro":"Materia flotante",
+								"cert":1,
+								"id_metodo":1,
+								"metodo_ensayo":"NMX-AA-000-0000",
+								"cantidad":1,
+								"precio":164.65
+							},
+							{
+								"id_parametro":32,
+								"parametro":"Mercurio",
+								"cert":1,
+								"id_metodo":1,
+								"metodo_ensayo":"NMX-AA-000-0000",
+								"cantidad":1,
+								"precio":164.65
+							},
+							{
+								"id_parametro":7,
+								"parametro":"Cloruros totales",
+								"cert":1,
+								"id_metodo":1,
+								"metodo_ensayo":"NMX-AA-000-0000",
+								"cantidad":1,
+								"precio":164.65
+							},
+							{
+								"id_parametro":33,
+								"parametro":"Níquel",
+								"cert":1,
+								"id_metodo":1,
+								"metodo_ensayo":"NMX-AA-000-0000",
+								"cantidad":1,
+								"precio":164.65
+							},
+							{
+								"id_parametro":2,
+								"parametro":"Potencial de hidrógeno",
+								"cert":1,
+								"id_metodo":1,
+								"metodo_ensayo":"NMX-AA-000-0000",
+								"cantidad":1,
+								"precio":164.65
+							},
+							{
+								"id_parametro":34,
+								"parametro":"Plomo",
+								"cert":1,
+								"id_metodo":1,
+								"metodo_ensayo":"NMX-AA-000-0000",
+								"cantidad":1,
+								"precio":164.65
+							},
+							{
+								"id_parametro":22,
+								"parametro":"Sólidos sedimentables",
+								"cert":1,
+								"id_metodo":1,
+								"metodo_ensayo":"NMX-AA-000-0000",
+								"cantidad":1,
+								"precio":164.65
+							},
+							{
+								"id_parametro":20,
+								"parametro":"Sólidos suspendidos totales",
+								"cert":1,
+								"id_metodo":1,
+								"metodo_ensayo":"NMX-AA-000-0000",
+								"cantidad":1,
+								"precio":164.65
+							},
+							{
+								"id_parametro":1,
+								"parametro":"Temperatura",
+								"cert":1,
+								"id_metodo":1,
+								"metodo_ensayo":"NMX-AA-000-0000",
+								"cantidad":1,
+								"precio":164.65
+							},
+							{
+								"id_parametro":36,
+								"parametro":"Zinc",
+								"cert":1,
+								"id_metodo":1,
+								"metodo_ensayo":"NMX-AA-000-0000",
+								"cantidad":1,
+								"precio":164.65
+							}
+						],
+						"id_matriz":3,
+						"matriz":
+						{
+							"id_matriz":3,
+							"matriz":"Agua Residual Tratada"
+						},
+						"id_tipo_muestreo":1,
+						"tipo_muestreo":
+						{
+							"id_tipo_muestreo":1,
+							"tipo_muestreo":"Simple"
+						},
+						"id_origen_muestreo":1,
+						"origen_muestreo":"Agua",
+						"id_emite_orden":1,
+						"emite_orden":"Nombre del gerente",
+						"id_supervisor_muestreo":2,
+						"supervisor_muestreo":
+						{
+							"id_supervisor_muestreo":2,
+							"id_empleado":3,
+							"id_nivel":3,
+							"id_area":2,
+							"area":"Metales Pesados",
+							"id_puesto":4,
+							"puesto":"Supervisor (MP)",
+							"nombres":"Marín",
+							"ap":"Gomar",
+							"am":"Sosa",
+							"fecha_act":"2014-11-30",
+							"calidad":0,
+							"supervisa":1,
+							"analiza":1,
+							"muestrea":1,
+							"cert":1,
+							"activo":1
+						},
+						"id_norma":1,
+						"norma":{
+							"id_norma":1,
+							"norma":"NOM-001-SEMARNAT-1996",
+							"desc":"Norma Oficial Mexicana",
+							"parametros":[
+								{
+									"id_parametro":25,
+									"parametro":"Arsénico",
+									"cert":1,
+									"id_metodo":1,
+									"metodo": {
+										"id_metodo":1,
+										"metodo":"NMX-AA-000-0000"
+									},
+									"cantidad":1,
+									"precio":164.65
+								},
+								{
+									"id_parametro":27,
+									"parametro":"Cadmio",
+									"cert":1,
+									"id_metodo":1,
+									"metodo": {
+										"id_metodo":1,
+										"metodo":"NMX-AA-000-0000"
+									},
+									"cantidad":1,
+									"precio":164.65
+								},
+								{
+									"id_parametro":28,
+									"parametro":"Cobre",
+									"cert":1,
+									"id_metodo":1,
+									"metodo": {
+										"id_metodo":1,
+										"metodo":"NMX-AA-000-0000"
+									},
+									"cantidad":1,
+									"precio":164.65
+								},
+								{
+									"id_parametro":38,
+									"parametro":"Coliformes fecales",
+									"cert":1,
+									"id_metodo":1,
+									"metodo": {
+										"id_metodo":1,
+										"metodo":"NMX-AA-000-0000"
+									},
+									"cantidad":1,
+									"precio":164.65
+								},
+								{
+									"id_parametro":29,
+									"parametro":"Cromo",
+									"cert":1,
+									"id_metodo":1,
+									"metodo": {
+										"id_metodo":1,
+										"metodo":"NMX-AA-000-0000"
+									},
+									"cantidad":1,
+									"precio":164.65
+								},
+								{
+									"id_parametro":16,
+									"parametro":"Demada bioquímica de oxígeno",
+									"cert":0,
+									"id_metodo":1,
+									"metodo": {
+										"id_metodo":1,
+										"metodo":"NMX-AA-000-0000"
+									},
+									"cantidad":1,
+									"precio":164.65
+								},
+								{
+									"id_parametro":19,
+									"parametro":"Fósforo total",
+									"cert":1,
+									"id_metodo":1,
+									"metodo": {
+										"id_metodo":1,
+										"metodo":"NMX-AA-000-0000"
+									},
+									"cantidad":1,
+									"precio":164.65
+								},
+								{
+									"id_parametro":18,
+									"parametro":"Grasas y aceites",
+									"cert":1,
+									"id_metodo":1,
+									"metodo": {
+										"id_metodo":1,
+										"metodo":"NMX-AA-000-0000"
+									},
+									"cantidad":1,
+									"precio":164.65
+								},
+								{
+									"id_parametro":6,
+									"parametro":"Alcalinidad total",
+									"cert":1,
+									"id_metodo":1,
+									"metodo": {
+										"id_metodo":1,
+										"metodo":"NMX-AA-000-0000"
+									},
+									"cantidad":1,
+									"precio":164.65
+								},
+								{
+									"id_parametro":39,
+									"parametro":"Materia flotante",
+									"cert":1,
+									"id_metodo":1,
+									"metodo": {
+										"id_metodo":1,
+										"metodo":"NMX-AA-000-0000"
+									},
+									"cantidad":1,
+									"precio":164.65
+								},
+								{
+									"id_parametro":32,
+									"parametro":"Mercurio",
+									"cert":1,
+									"id_metodo":1,
+									"metodo": {
+										"id_metodo":1,
+										"metodo":"NMX-AA-000-0000"
+									},
+									"cantidad":1,
+									"precio":164.65
+								},
+								{
+									"id_parametro":7,
+									"parametro":"Cloruros totales",
+									"cert":1,
+									"id_metodo":1,
+									"metodo": {
+										"id_metodo":1,
+										"metodo":"NMX-AA-000-0000"
+									},
+									"cantidad":1,
+									"precio":164.65
+								},
+								{
+									"id_parametro":33,
+									"parametro":"Níquel",
+									"cert":1,
+									"id_metodo":1,
+									"metodo": {
+										"id_metodo":1,
+										"metodo":"NMX-AA-000-0000"
+									},
+									"cantidad":1,
+									"precio":164.65
+								},
+								{
+									"id_parametro":2,
+									"parametro":"Potencial de hidrógeno",
+									"cert":1,
+									"id_metodo":1,
+									"metodo": {
+										"id_metodo":1,
+										"metodo":"NMX-AA-000-0000"
+									},
+									"cantidad":1,
+									"precio":164.65
+								},
+								{
+									"id_parametro":34,
+									"parametro":"Plomo",
+									"cert":1,
+									"id_metodo":1,
+									"metodo": {
+										"id_metodo":1,
+										"metodo":"NMX-AA-000-0000"
+									},
+									"cantidad":1,
+									"precio":164.65
+								},
+								{
+									"id_parametro":22,
+									"parametro":"Sólidos sedimentables",
+									"cert":1,
+									"id_metodo":1,
+									"metodo": {
+										"id_metodo":1,
+										"metodo":"NMX-AA-000-0000"
+									},
+									"cantidad":1,
+									"precio":164.65
+								},
+								{
+									"id_parametro":20,
+									"parametro":"Sólidos suspendidos totales",
+									"cert":1,
+									"id_metodo":1,
+									"metodo": {
+										"id_metodo":1,
+										"metodo":"NMX-AA-000-0000"
+									},
+									"cantidad":1,
+									"precio":164.65
+								},
+								{
+									"id_parametro":1,
+									"parametro":"Temperatura",
+									"cert":1,
+									"id_metodo":1,
+									"metodo": {
+										"id_metodo":1,
+										"metodo":"NMX-AA-000-0000"
+									},
+									"cantidad":1,
+									"precio":164.65
+								},
+								{
+									"id_parametro":36,
+									"parametro":"Zinc",
+									"cert":1,
+									"id_metodo":1,
+									"metodo": {
+										"id_metodo":1,
+										"metodo":"NMX-AA-000-0000"
+									},
+									"cantidad":1,
+									"precio":164.65
+								}
+							]
+						}
+					},
+					"equipos":
+					[
+						{
+							"id_equipo":1,
+							"descripcion":"Descripcion equipo",
+							"inventario":"IE-MU-001",
+							"bitacora":"BU-AA-001",
+							"folio":1,
+							"ejercicio":2015,
+							"activo":1
+						},
+						{
+							"id_equipo":2,
+							"descripcion":"Descripcion equipo",
+							"inventario":"IE-MU-002",
+							"bitacora":"BU-AA-002",
+							"folio":2,
+							"ejercicio":2015,
+							"activo":1
+						},
+						{
+							"id_equipo":3,
+							"descripcion":"Descripcion equipo",
+							"inventario":"IE-MU-003",
+							"bitacora":"BU-AA-003",
+							"folio":3,
+							"ejercicio":2015,
+							"activo":1
+						},
+						{
+							"id_equipo":4,
+							"descripcion":"Descripcion equipo",
+							"inventario":"IE-MU-004",
+							"bitacora":"BU-AA-004",
+							"folio":4,
+							"ejercicio":2015,
+							"activo":1
+						}
+					],
+					"recipientes":
+					[
+						{
+							"id_recipiente":1,
+							"id_preservacion":1,
+							"cantidad":0,
+							"folio":1,
+							"ejercicio":2015,
+							"activo":1
+						},
+						{
+							"id_recipiente":2,
+							"id_preservacion":2,
+							"cantidad":0,
+							"folio":2,
+							"ejercicio":2015,
+							"activo":1
+						},
+						{
+							"id_recipiente":3,
+							"id_preservacion":3,
+							"cantidad":0,
+							"folio":3,
+							"ejercicio":2015,
+							"activo":1
+						},
+						{
+							"id_recipiente":4,
+							"id_preservacion":4,
+							"cantidad":0,
+							"folio":4,
+							"ejercicio":2015,
+							"activo":1
+						}
+					],
+					"reactivos":
+					[
+						{
+							"id_reactivo":1,
+							"reactivo":"Reactivo 1",
+							"cantidad":0,
+							"lote":"Lote reactivo 1",
+							"selected":false
+						}
+					],
+					"materiales":
+					[
+					],
+					"hieleras":
+					[
+					]
+				}
+			';
+		}
+		else {
+			$result = '
+				{
+					"id_plan":0,
+					"id_cliente":0,
+					"id_solicitud":0,
+					"id_orden":0,
+					"id_tipo_muestreo":0,
+					"id_objetivo_plan":0,
+					"id_estado":0,
+					"id_municipio":0,
+					"id_localidad":0,
+					"id_supervisor_muestreo":0,
+					"id_supervisor_recoleccion":0,
+					"id_supervisor_registro":0,
+					"id_supervisor_calibracion":0,
+					"id_supervisor_recipientes":0,
+					"id_supervisor_reactivos":0,
+					"folio":0,
+					"ejercicio":0,
+					"fecha_captura":"",
+					"fecha_plan":"",
+					"fecha_calibracion":"",
+					"fecha_valida":"",
+					"objetivo_otro":"",
+					"municipio":"",
+					"localidad":"",
+					"calle":"",
+					"numero":"",
+					"colonia":"",
+					"asistente_muestreo":"",
+					"asistente_recoleccion":"",
+					"asistente_registro":"",
+					"tipo_muestreo":"",
+					"fecha_actualizacion":"",
+					"validado":0,
+					"activo":0,
+					"puntos_muestreo":
+					[
+					],
+					"cliente":
+					{
+
+					},
+					"orden":
+					{
+
+					},
+					"equipos":
+					[
+
+					],
+					"recipientes":
+					[
+
+					],
+					"reactivos":
+					[
+
+					],
+					"materiales":
+					[
+
+					],
+					"hieleras":
+					[
+
+					]
+				}
+			';
+		}
+		return $result;
+	}
+
+	public function getPlans() {
+		//$sql = "SELECT
+		//		*
+		//	FROM
+		//		plan";
+		//return self::getAllRows($sql);
+		$result = '
+			[
+				{
+					"id_plan":1,
+					"id_cliente":1,
+					"id_solicitud":1,
+					"id_orden":1,
+					"id_tipo_muestreo":2,
+					"id_objetivo_plan":2,
+					"id_estado":14,
+					"id_municipio":14039,
+					"id_localidad":140390001,
+					"id_supervisor_muestreo":2,
+					"id_supervisor_recoleccion":2,
+					"id_supervisor_registro":2,
+					"id_supervisor_calibracion":2,
+					"id_supervisor_recipientes":2,
+					"id_supervisor_reactivos":2,
+					"folio":437,
+					"ejercicio":2014,
+					"fecha_captura":"2015-02-06",
+					"fecha_plan":"2014-11-06",
+					"fecha_calibracion":"2015-02-06",
+					"fecha_valida":"",
+					"objetivo_otro":"",
+					"municipio":"Guadalajara",
+					"localidad":"Guadalajara",
+					"calle":"Av. Brasilia",
+					"numero":"2970",
+					"colonia":"Col. Colomos Providencia",
+					"asistente_muestreo":"",
+					"asistente_recoleccion":"",
+					"asistente_registro":"",
+					"tipo_muestreo":"Compuesto",
+					"fecha_actualizacion":"2015-02-06",
+					"validado":1,
+					"activo":1,
+					"puntos_muestreo":
+					[
+						{
+							"id_punto_muestreo":"1",
+							"punto_muestreo":"Ocotlán",
+							"descripcion":"Ocotlán",
+							"id_municipio":"14063",
+							"municipio":"municipio 14063",
+							"id_localidad":"140630001",
+							"localidad":"localidad 140630001",
+							"id_clase_punto":1,
+							"id_tipo_muestreo":1,
+							"frecuencia":0,
+							"activo":1,
+							"selected":false,
+							"lat":20.346928,
+							"lng":-102.779392,
+							"alt":0,
+							"idRegHid":12,
+							"idCuenca":1,
+							"idSubCuenca":1,
+							"idCuerpoCalidad":1,
+							"consecutivo":1,
+							"siglas":"RS",
+							"clave":"RS-01",
+							"fecha":"2012-07-11 00:00:00.000",
+							"usr_update":1,
+							"comentarios":""
+						},
+						{
+							"id_punto_muestreo":"2",
+							"punto_muestreo":"Presa Corona",
+							"descripcion":"Cortina Presa Corona - Poncitlán",
+							"id_municipio":"14030",
+							"municipio":"municipio 14030",
+							"id_localidad":"140300038",
+							"localidad":"localidad 140300038",
+							"id_clase_punto":1,
+							"id_tipo_muestreo":1,
+							"frecuencia_muestreo":0,
+							"activo":1,
+							"selected":false,
+							"lat":20.399667,
+							"lng":-103.090619,
+							"alt":0,
+							"idRegHid":0,
+							"idCuenca":1,
+							"idSubCuenca":1,
+							"idCuerpoCalidad":1,
+							"consecutivo":2,
+							"siglas":"RS",
+							"clave":"RS-02",
+							"fecha":"2013-01-31 12:44:51.860",
+							"usr_update":1,
+							"comentarios":""
+						},
+						{
+							"id_punto_muestreo":"3",
+							"punto_muestreo":"Ex-hacienda Zap.",
+							"descripcion":"Ex-hacienda de Zapotlanejo",
+							"id_municipio":"14051",
+							"municipio":"municipio 14051",
+							"id_localidad":"140510013",
+							"localidad":"localidad 140510013",
+							"id_clase_punto":1,
+							"id_tipo_muestreo":1,
+							"frecuencia_muestreo":0,
+							"activo":1,
+							"selected":false,
+							"lat":20.442003,
+							"lng":-103.143814,
+							"alt":0,
+							"idRegHid":0,
+							"idCuenca":1,
+							"idSubCuenca":1,
+							"idCuerpoCalidad":1,
+							"consecutivo":3,
+							"siglas":"RS",
+							"clave":"RS-03",
+							"fecha":"2013-01-31 12:39:11.093",
+							"usr_update":1,
+							"comentarios":""
+						},
+						{
+							"id_punto_muestreo":"4",
+							"punto_muestreo":"Salto-Juanacatlán",
+							"descripcion":"Compuerta - Puente El Salto-Juanacatlán",
+							"id_municipio":"14051",
+							"municipio":"municipio 14051",
+							"id_localidad":"140510001",
+							"localidad":"localidad 140510001",
+							"id_clase_punto":1,
+							"id_tipo_muestreo":1,
+							"frecuencia_muestreo":0,
+							"activo":1,
+							"selected":false,
+							"lat":20.512825,
+							"lng":-103.174558,
+							"alt":0,
+							"idRegHid":12,
+							"idCuenca":1,
+							"idSubCuenca":1,
+							"idCuerpoCalidad":1,
+							"consecutivo":4,
+							"siglas":"RS",
+							"clave":"RS-04",
+							"fecha":"2012-07-11 00:00:00.000",
+							"usr_update":1,
+							"comentarios":""
+						},
+						{
+							"id_punto_muestreo":"5",
+							"punto_muestreo":"Puente Grande",
+							"descripcion":"Puente Grande",
+							"id_municipio":"14101",
+							"municipio":"municipio 14101",
+							"id_localidad":"141010026",
+							"localidad":"localidad 141010026",
+							"id_clase_punto":1,
+							"id_tipo_muestreo":1,
+							"frecuencia_muestreo":0,
+							"activo":1,
+							"selected":false,
+							"lat":20.571036,
+							"lng":-103.147283,
+							"alt":0,
+							"idRegHid":12,
+							"idCuenca":1,
+							"idSubCuenca":1,
+							"idCuerpoCalidad":1,
+							"consecutivo":5,
+							"siglas":"RS",
+							"clave":"RS-05",
+							"fecha":"2012-07-11 00:00:00.000",
+							"usr_update":1,
+							"comentarios":""
+						},
+						{
+							"id_punto_muestreo":"6",
+							"punto_muestreo":"Matatlán",
+							"descripcion":"Vertedero Controlado Matatlán",
+							"id_municipio":"14101",
+							"municipio":"municipio 14101",
+							"id_localidad":"141010009",
+							"localidad":"localidad 141010009",
+							"id_clase_punto":1,
+							"id_tipo_muestreo":1,
+							"frecuencia_muestreo":0,
+							"activo":1,
+							"selected":false,
+							"lat":20.668289,
+							"lng":-103.187169,
+							"alt":0,
+							"idRegHid":12,
+							"idCuenca":1,
+							"idSubCuenca":1,
+							"idCuerpoCalidad":1,
+							"consecutivo":6,
+							"siglas":"RS",
+							"clave":"RS-06",
+							"fecha":"2012-07-11 00:00:00.000",
+							"usr_update":1,
+							"comentarios":""
+						},
+						{
+							"id_punto_muestreo":"7",
+							"punto_muestreo":"Paso de Gpe.",
+							"descripcion":"Paso de Guadalupe",
+							"id_municipio":"14045",
+							"municipio":"municipio 14045",
+							"id_localidad":"140450079",
+							"localidad":"localidad 140450079",
+							"id_clase_punto":1,
+							"id_tipo_muestreo":1,
+							"frecuencia_muestreo":0,
+							"activo":1,
+							"selected":false,
+							"lat":20.839097,
+							"lng":-103.328972,
+							"alt":0,
+							"idRegHid":12,
+							"idCuenca":1,
+							"idSubCuenca":1,
+							"idCuerpoCalidad":1,
+							"consecutivo":7,
+							"siglas":"RS",
+							"clave":"RS-07",
+							"fecha":"2012-07-11 00:00:00.000",
+							"usr_update":1,
+							"comentarios":""
+						},
+						{
+							"id_punto_muestreo":"8",
+							"punto_muestreo":"Cristóbal de la B.",
+							"descripcion":"San Cristóbal de la Barranca",
+							"id_municipio":"14071",
+							"municipio":"municipio 14071",
+							"id_localidad":"140710001",
+							"localidad":"localidad 140710001",
+							"id_clase_punto":1,
+							"id_tipo_muestreo":1,
+							"frecuencia_muestreo":0,
+							"activo":1,
+							"selected":false,
+							"lat":21.038356,
+							"lng":-103.426036,
+							"alt":0,
+							"idRegHid":12,
+							"idCuenca":1,
+							"idSubCuenca":1,
+							"idCuerpoCalidad":1,
+							"consecutivo":8,
+							"siglas":"RS",
+							"clave":"RS-08",
+							"fecha":"2012-07-11 00:00:00.000",
+							"usr_update":1,
+							"comentarios":""
+						},
+						{
+							"id_punto_muestreo":"9",
+							"punto_muestreo":"Camino Salvador",
+							"descripcion":"Camino al Salvador - Tequila",
+							"id_municipio":"14094",
+							"municipio":"municipio 14094",
+							"id_localidad":"140050001",
+							"localidad":"localidad 140050001",
+							"id_clase_punto":1,
+							"id_tipo_muestreo":1,
+							"frecuencia_muestreo":0,
+							"activo":1,
+							"selected":false,
+							"lat":20.912106,
+							"lng":-103.711964,
+							"alt":0,
+							"idRegHid":12,
+							"idCuenca":1,
+							"idSubCuenca":1,
+							"idCuerpoCalidad":1,
+							"consecutivo":9,
+							"siglas":"RS",
+							"clave":"RS-09",
+							"fecha":"2012-07-11 00:00:00.000",
+							"usr_update":1,
+							"comentarios":""
+						},
+						{
+							"id_punto_muestreo":"10",
+							"punto_muestreo":"Paso La Yesca",
+							"descripcion":"Paso La Yesca",
+							"id_municipio":"14040",
+							"municipio":"municipio 14040",
+							"id_localidad":"140400053",
+							"localidad":"localidad 140400053",
+							"id_clase_punto":1,
+							"id_tipo_muestreo":1,
+							"frecuencia_muestreo":0,
+							"activo":1,
+							"selected":false,
+							"lat":21.190106,
+							"lng":-104.073053,
+							"alt":0,
+							"idRegHid":0,
+							"idCuenca":1,
+							"idSubCuenca":1,
+							"idCuerpoCalidad":1,
+							"consecutivo":10,
+							"siglas":"RS",
+							"clave":"RS-10",
+							"fecha":"2013-01-31 11:56:53.347",
+							"usr_update":1,
+							"comentarios":""
+						},
+						{
+							"id_punto_muestreo":"11",
+							"punto_muestreo":"Carr. Chapala",
+							"descripcion":"Carretera a Chapala antes de Aeropuerto",
+							"id_municipio":"14097",
+							"municipio":"municipio 14097",
+							"id_localidad":"140700043",
+							"localidad":"localidad 140700043",
+							"id_clase_punto":1,
+							"id_tipo_muestreo":1,
+							"frecuencia_muestreo":0,
+							"activo":1,
+							"selected":false,
+							"lat":20.537825,
+							"lng":-103.296703,
+							"alt":0,
+							"idRegHid":12,
+							"idCuenca":1,
+							"idSubCuenca":1,
+							"idCuerpoCalidad":1,
+							"consecutivo":1,
+							"siglas":"AA",
+							"clave":"AA-01",
+							"fecha":"2012-07-11 00:00:00.000",
+							"usr_update":1,
+							"comentarios":""
+						},
+						{
+							"id_punto_muestreo":"12",
+							"punto_muestreo":"El Muelle",
+							"descripcion":"Puente localidad El Muelle",
+							"id_municipio":"14097",
+							"municipio":"municipio 14097",
+							"id_localidad":"140700011",
+							"localidad":"localidad 140700011",
+							"id_clase_punto":1,
+							"id_tipo_muestreo":1,
+							"frecuencia_muestreo":0,
+							"activo":1,
+							"selected":false,
+							"lat":20.497869,
+							"lng":-103.216722,
+							"alt":0,
+							"idRegHid":12,
+							"idCuenca":1,
+							"idSubCuenca":1,
+							"idCuerpoCalidad":1,
+							"consecutivo":2,
+							"siglas":"AA",
+							"clave":"AA-02",
+							"fecha":"2012-07-11 00:00:00.000",
+							"usr_update":1,
+							"comentarios":""
+						},
+						{
+							"id_punto_muestreo":"13",
+							"punto_muestreo":"Río Zula",
+							"descripcion":"Puente Carretera Guadalajara - La Barca",
+							"id_municipio":"14063",
+							"municipio":"municipio 14063",
+							"id_localidad":"140630001",
+							"localidad":"localidad 140630001",
+							"id_clase_punto":1,
+							"id_tipo_muestreo":1,
+							"frecuencia_muestreo":0,
+							"activo":1,
+							"selected":false,
+							"lat":20.34455,
+							"lng":-102.774767,
+							"alt":0,
+							"idRegHid":12,
+							"idCuenca":1,
+							"idSubCuenca":1,
+							"idCuerpoCalidad":1,
+							"consecutivo":1,
+							"siglas":"RZ",
+							"clave":"RZ-01",
+							"fecha":"2012-07-11 00:00:00.000",
+							"usr_update":1,
+							"comentarios":""
+						}
+					],
+					"cliente":
+					{
+						"id_cliente":1,
+						"id_organismo":1,
+						"cliente":"CEA Jalisco",
+						"area":"Dirección de Operación de PTAR\'S",
+						"rfc":"Registro Federal de Contribuyentes",
+						"calle":"Av. Brasilia",
+						"numero":"2970",
+						"colonia":"Col. Colomos Providencia",
+						"cp":"44680",
+						"id_estado":14,
+						"id_municipio":14039,
+						"municipio":"Guadalajara",
+						"id_localidad":140390001,
+						"localidad":"Guadalajara",
+						"tel":"3030-9350 ext. 8370",
+						"fax":"",
+						"contacto":"Biol. Luis Aceves Martínez",
+						"puesto_contacto":"puesto contacto",
+						"email":"laceves@ceajalisco.gob.mx",
+						"fecha_act":"2014-11-23",
+						"interno":1,
+						"cea":1,
+						"tasa":0,
+						"activo":1
+					},
+					"orden":
+					{
+						"id_orden":1,
+						"folio":656,
+						"ejercicio":2014,
+						"fecha_captura":"2014-11-01",
+						"fecha_valida":"2914-11-02",
+						"fecha_muestreo":"2014-11-04",
+						"hora_muestreo":"9:25",
+						"fecha_actualizacion":"2014-11-01",
+						"validado":0,
+						"aceptado":0,
+						"id_origen_orden":1,
+						"origen_orden":
+						{
+							"id_origen_orden":2,
+							"origen_orden":"Cotización"
+						},
+						"emergencia":"",
+						"id_cliente":1,
+						"cliente":
+						{
+							"id_cliente":1,
+							"id_organismo":1,
+							"cliente":"CEA Jalisco",
+							"area":"Dirección de Operación de PTAR\'S",
+							"rfc":"Registro Federal de Contribuyentes",
+							"calle":"Av. Brasilia",
+							"numero":"2970",
+							"colonia":"Col. Colomos Providencia",
+							"cp":"44680",
+							"id_estado":14,
+							"id_municipio":14039,
+							"municipio":"Guadalajara",
+							"id_localidad":140390001,
+							"localidad":"Guadalajara",
+							"tel":"3030-9350 ext. 8370",
+							"fax":"",
+							"contacto":"Biol. Luis Aceves Martínez",
+							"puesto_contacto":"puesto contacto",
+							"email":"laceves@ceajalisco.gob.mx",
+							"fecha_act":"2014-11-23",
+							"interno":1,
+							"cea":1,
+							"tasa":0,
+							"activo":1
+						},
+						"id_plan":1,
+						"id_supervisor_muestreo":2,
+						"supervisor_muestreo":
+						{
+							"id_supervisor_muestreo":2,
+							"id_empleado":3,
+							"id_nivel":3,
+							"id_area":2,
+							"area":"Metales Pesados",
+							"id_puesto":4,
+							"puesto":"Supervisor (MP)",
+							"nombres":"Marín",
+							"ap":"Gomar",
+							"am":"Sosa",
+							"fecha_act":"2014-11-30",
+							"calidad":0,
+							"supervisa":1,
+							"analiza":1,
+							"muestrea":1,
+							"cert":1,
+							"activo":1
+						},
+						"id_supervisor_custodia":4,
+						"id_solicitud":1,
+						"solicitud":
+						{
+							"id_solicitud":1,
+							"folio":432,
+							"ejercicio":2014,
+							"fecha_solicitud":"2014-07-01",
+							"fecha_captura":"2014-07-01",
+							"fecha_valida":null,
+							"fecha_acepta":null,
+							"fecha_actualizacion":"2014-07-01",
+							"validado":0,
+							"id_cliente":1,
+							"id_usuario_captura":1,
+							"id_usuario_valida":3,
+							"id_norma":1,
+							"id_tipo_muestreo":1,
+							"total":0,
+							"cliente":
+							{
+								"id_cliente":1,
+								"id_organismo":1,
+								"cliente":"CEA Jalisco",
+								"area":"Dirección de Operación de PTAR\'S",
+								"rfc":"Registro Federal de Contribuyentes",
+								"calle":"Av. Brasilia",
+								"numero":"2970",
+								"colonia":"Col. Colomos Providencia",
+								"cp":"44680",
+								"id_estado":14,
+								"id_municipio":14039,
+								"municipio":"Guadalajara",
+								"id_localidad":140390001,
+								"localidad":"Guadalajara",
+								"tel":"3030-9350 ext. 8370",
+								"fax":"",
+								"contacto":"Biol. Luis Aceves Martínez",
+								"puesto_contacto":"puesto contacto",
+								"email":"laceves@ceajalisco.gob.mx",
+								"fecha_act":"2014-11-23",
+								"interno":1,
+								"cea":1,
+								"tasa":0,
+								"activo":1
+							},
+							"descripcion_servicio":"Servicio de muestreo y análisis, para verificar el cumplimiento de la norma NOM-001-SEMARNAT-1996, que establece los límites máximos permisibles de contaminantes en las descargas de aguas residuales a los sistemas de alcantarillado urbano o municipal. -auto",
+							"notas":"La presente cotización se realiza sin visita previa y se contempla un fácil y seguro acceso para la toma de muestras. Se requiere regresar esta cotización con la firma y sello de Aceptación del Servicio. -auto",
+							"condiciones":"El informe de resultados se entregará a los 10 días hábiles de haber ingresado las muestras al laboratorio. El pago de resultados se hará en las instalaciones del Laboratorio de Calidad del Agua de la CEA, así también mediante depósito bancario a la cuenta: 884371445 de la Institución Bancaria BANORTE a nombre de la Comisión Estatal del Agua de Jalisco o por transferencia electrónica, cuenta interbancaria: 072320008843714454. -auto",
+							"captura":{
+								"id_usuario":1,
+								"nombre":"Usuario captura",
+								"puesto":"puesto Usuario captura"
+							},
+							"valida":{
+								"id_empleado":3,
+								"nombre":"Gerente que valida",
+								"puesto":"puesto Usuario valida"
+							},
+							"norma":{
+								"id_norma":1,
+								"norma":"NOM-001-SEMARNAT-1996",
+								"desc":"Norma Oficial Mexicana",
+								"parametros":[
+									{
+										"id_parametro":25,
+										"parametro":"Arsénico",
+										"cert":1,
+										"id_metodo":1,
+										"metodo": {
+											"id_metodo":1,
+											"metodo":"NMX-AA-000-0000"
+										},
+										"cantidad":1,
+										"precio":164.65
+									},
+									{
+										"id_parametro":27,
+										"parametro":"Cadmio",
+										"cert":1,
+										"id_metodo":1,
+										"metodo": {
+											"id_metodo":1,
+											"metodo":"NMX-AA-000-0000"
+										},
+										"cantidad":1,
+										"precio":164.65
+									},
+									{
+										"id_parametro":28,
+										"parametro":"Cobre",
+										"cert":1,
+										"id_metodo":1,
+										"metodo": {
+											"id_metodo":1,
+											"metodo":"NMX-AA-000-0000"
+										},
+										"cantidad":1,
+										"precio":164.65
+									},
+									{
+										"id_parametro":38,
+										"parametro":"Coliformes fecales",
+										"cert":1,
+										"id_metodo":1,
+										"metodo": {
+											"id_metodo":1,
+											"metodo":"NMX-AA-000-0000"
+										},
+										"cantidad":1,
+										"precio":164.65
+									},
+									{
+										"id_parametro":29,
+										"parametro":"Cromo",
+										"cert":1,
+										"id_metodo":1,
+										"metodo": {
+											"id_metodo":1,
+											"metodo":"NMX-AA-000-0000"
+										},
+										"cantidad":1,
+										"precio":164.65
+									},
+									{
+										"id_parametro":16,
+										"parametro":"Demada bioquímica de oxígeno",
+										"cert":0,
+										"id_metodo":1,
+										"metodo": {
+											"id_metodo":1,
+											"metodo":"NMX-AA-000-0000"
+										},
+										"cantidad":1,
+										"precio":164.65
+									},
+									{
+										"id_parametro":19,
+										"parametro":"Fósforo total",
+										"cert":1,
+										"id_metodo":1,
+										"metodo": {
+											"id_metodo":1,
+											"metodo":"NMX-AA-000-0000"
+										},
+										"cantidad":1,
+										"precio":164.65
+									},
+									{
+										"id_parametro":18,
+										"parametro":"Grasas y aceites",
+										"cert":1,
+										"id_metodo":1,
+										"metodo": {
+											"id_metodo":1,
+											"metodo":"NMX-AA-000-0000"
+										},
+										"cantidad":1,
+										"precio":164.65
+									},
+									{
+										"id_parametro":6,
+										"parametro":"Alcalinidad total",
+										"cert":1,
+										"id_metodo":1,
+										"metodo": {
+											"id_metodo":1,
+											"metodo":"NMX-AA-000-0000"
+										},
+										"cantidad":1,
+										"precio":164.65
+									},
+									{
+										"id_parametro":39,
+										"parametro":"Materia flotante",
+										"cert":1,
+										"id_metodo":1,
+										"metodo": {
+											"id_metodo":1,
+											"metodo":"NMX-AA-000-0000"
+										},
+										"cantidad":1,
+										"precio":164.65
+									},
+									{
+										"id_parametro":32,
+										"parametro":"Mercurio",
+										"cert":1,
+										"id_metodo":1,
+										"metodo": {
+											"id_metodo":1,
+											"metodo":"NMX-AA-000-0000"
+										},
+										"cantidad":1,
+										"precio":164.65
+									},
+									{
+										"id_parametro":7,
+										"parametro":"Cloruros totales",
+										"cert":1,
+										"id_metodo":1,
+										"metodo": {
+											"id_metodo":1,
+											"metodo":"NMX-AA-000-0000"
+										},
+										"cantidad":1,
+										"precio":164.65
+									},
+									{
+										"id_parametro":33,
+										"parametro":"Níquel",
+										"cert":1,
+										"id_metodo":1,
+										"metodo": {
+											"id_metodo":1,
+											"metodo":"NMX-AA-000-0000"
+										},
+										"cantidad":1,
+										"precio":164.65
+									},
+									{
+										"id_parametro":2,
+										"parametro":"Potencial de hidrógeno",
+										"cert":1,
+										"id_metodo":1,
+										"metodo": {
+											"id_metodo":1,
+											"metodo":"NMX-AA-000-0000"
+										},
+										"cantidad":1,
+										"precio":164.65
+									},
+									{
+										"id_parametro":34,
+										"parametro":"Plomo",
+										"cert":1,
+										"id_metodo":1,
+										"metodo": {
+											"id_metodo":1,
+											"metodo":"NMX-AA-000-0000"
+										},
+										"cantidad":1,
+										"precio":164.65
+									},
+									{
+										"id_parametro":22,
+										"parametro":"Sólidos sedimentables",
+										"cert":1,
+										"id_metodo":1,
+										"metodo": {
+											"id_metodo":1,
+											"metodo":"NMX-AA-000-0000"
+										},
+										"cantidad":1,
+										"precio":164.65
+									},
+									{
+										"id_parametro":20,
+										"parametro":"Sólidos suspendidos totales",
+										"cert":1,
+										"id_metodo":1,
+										"metodo": {
+											"id_metodo":1,
+											"metodo":"NMX-AA-000-0000"
+										},
+										"cantidad":1,
+										"precio":164.65
+									},
+									{
+										"id_parametro":1,
+										"parametro":"Temperatura",
+										"cert":1,
+										"id_metodo":1,
+										"metodo": {
+											"id_metodo":1,
+											"metodo":"NMX-AA-000-0000"
+										},
+										"cantidad":1,
+										"precio":164.65
+									},
+									{
+										"id_parametro":36,
+										"parametro":"Zinc",
+										"cert":1,
+										"id_metodo":1,
+										"metodo": {
+											"id_metodo":1,
+											"metodo":"NMX-AA-000-0000"
+										},
+										"cantidad":1,
+										"precio":164.65
+									}
+								]
+							},
+							"actividades":[
+								{
+									"id_actividad":1,
+									"actividad":"Muestreo instantáneo",
+									"id_metodo":87,
+									"metodo":{
+										"id_metodo":87,
+										"metodo":"metodo para muestreo instantáneo"
+									},
+									"cantidad":1,
+									"precio":0
+								}
+							],
+							"tipo_muestreo":
+							{
+								"id_tipo_muestreo":1,
+								"tipo_muestreo":"Simple"
+							}
+						},
+						"parametros":
+						[
+							{
+								"id_parametro":25,
+								"parametro":"Arsénico",
+								"cert":1,
+								"id_metodo":1,
+								"metodo_ensayo":"NMX-AA-000-0000",
+								"cantidad":1,
+								"precio":164.65
+							},
+							{
+								"id_parametro":27,
+								"parametro":"Cadmio",
+								"cert":1,
+								"id_metodo":1,
+								"metodo_ensayo":"NMX-AA-000-0000",
+								"cantidad":1,
+								"precio":164.65
+							},
+							{
+								"id_parametro":28,
+								"parametro":"Cobre",
+								"cert":1,
+								"id_metodo":1,
+								"metodo_ensayo":"NMX-AA-000-0000",
+								"cantidad":1,
+								"precio":164.65
+							},
+							{
+								"id_parametro":38,
+								"parametro":"Coliformes fecales",
+								"cert":1,
+								"id_metodo":1,
+								"metodo_ensayo":"NMX-AA-000-0000",
+								"cantidad":1,
+								"precio":164.65
+							},
+							{
+								"id_parametro":29,
+								"parametro":"Cromo",
+								"cert":1,
+								"id_metodo":1,
+								"metodo_ensayo":"NMX-AA-000-0000",
+								"cantidad":1,
+								"precio":164.65
+							},
+							{
+								"id_parametro":16,
+								"parametro":"Demada bioquímica de oxígeno",
+								"cert":0,
+								"id_metodo":1,
+								"metodo_ensayo":"NMX-AA-000-0000",
+								"cantidad":1,
+								"precio":164.65
+							},
+							{
+								"id_parametro":19,
+								"parametro":"Fósforo total",
+								"cert":1,
+								"id_metodo":1,
+								"metodo_ensayo":"NMX-AA-000-0000",
+								"cantidad":1,
+								"precio":164.65
+							},
+							{
+								"id_parametro":18,
+								"parametro":"Grasas y aceites",
+								"cert":1,
+								"id_metodo":1,
+								"metodo_ensayo":"NMX-AA-000-0000",
+								"cantidad":1,
+								"precio":164.65
+							},
+							{
+								"id_parametro":6,
+								"parametro":"Alcalinidad total",
+								"cert":1,
+								"id_metodo":1,
+								"metodo_ensayo":"NMX-AA-000-0000",
+								"cantidad":1,
+								"precio":164.65
+							},
+							{
+								"id_parametro":39,
+								"parametro":"Materia flotante",
+								"cert":1,
+								"id_metodo":1,
+								"metodo_ensayo":"NMX-AA-000-0000",
+								"cantidad":1,
+								"precio":164.65
+							},
+							{
+								"id_parametro":32,
+								"parametro":"Mercurio",
+								"cert":1,
+								"id_metodo":1,
+								"metodo_ensayo":"NMX-AA-000-0000",
+								"cantidad":1,
+								"precio":164.65
+							},
+							{
+								"id_parametro":7,
+								"parametro":"Cloruros totales",
+								"cert":1,
+								"id_metodo":1,
+								"metodo_ensayo":"NMX-AA-000-0000",
+								"cantidad":1,
+								"precio":164.65
+							},
+							{
+								"id_parametro":33,
+								"parametro":"Níquel",
+								"cert":1,
+								"id_metodo":1,
+								"metodo_ensayo":"NMX-AA-000-0000",
+								"cantidad":1,
+								"precio":164.65
+							},
+							{
+								"id_parametro":2,
+								"parametro":"Potencial de hidrógeno",
+								"cert":1,
+								"id_metodo":1,
+								"metodo_ensayo":"NMX-AA-000-0000",
+								"cantidad":1,
+								"precio":164.65
+							},
+							{
+								"id_parametro":34,
+								"parametro":"Plomo",
+								"cert":1,
+								"id_metodo":1,
+								"metodo_ensayo":"NMX-AA-000-0000",
+								"cantidad":1,
+								"precio":164.65
+							},
+							{
+								"id_parametro":22,
+								"parametro":"Sólidos sedimentables",
+								"cert":1,
+								"id_metodo":1,
+								"metodo_ensayo":"NMX-AA-000-0000",
+								"cantidad":1,
+								"precio":164.65
+							},
+							{
+								"id_parametro":20,
+								"parametro":"Sólidos suspendidos totales",
+								"cert":1,
+								"id_metodo":1,
+								"metodo_ensayo":"NMX-AA-000-0000",
+								"cantidad":1,
+								"precio":164.65
+							},
+							{
+								"id_parametro":1,
+								"parametro":"Temperatura",
+								"cert":1,
+								"id_metodo":1,
+								"metodo_ensayo":"NMX-AA-000-0000",
+								"cantidad":1,
+								"precio":164.65
+							},
+							{
+								"id_parametro":36,
+								"parametro":"Zinc",
+								"cert":1,
+								"id_metodo":1,
+								"metodo_ensayo":"NMX-AA-000-0000",
+								"cantidad":1,
+								"precio":164.65
+							}
+						],
+						"id_matriz":3,
+						"matriz":
+						{
+							"id_matriz":3,
+							"matriz":"Agua Residual Tratada"
+						},
+						"id_tipo_muestreo":1,
+						"tipo_muestreo":
+						{
+							"id_tipo_muestreo":1,
+							"tipo_muestreo":"Simple"
+						},
+						"id_origen_muestreo":1,
+						"origen_muestreo":"Agua",
+						"id_emite_orden":1,
+						"emite_orden":"Nombre del gerente",
+						"id_supervisor_muestreo":2,
+						"supervisor_muestreo":
+						{
+							"id_supervisor_muestreo":2,
+							"id_empleado":3,
+							"id_nivel":3,
+							"id_area":2,
+							"area":"Metales Pesados",
+							"id_puesto":4,
+							"puesto":"Supervisor (MP)",
+							"nombres":"Marín",
+							"ap":"Gomar",
+							"am":"Sosa",
+							"fecha_act":"2014-11-30",
+							"calidad":0,
+							"supervisa":1,
+							"analiza":1,
+							"muestrea":1,
+							"cert":1,
+							"activo":1
+						},
+						"id_norma":1,
+						"norma":{
+							"id_norma":1,
+							"norma":"NOM-001-SEMARNAT-1996",
+							"desc":"Norma Oficial Mexicana",
+							"parametros":[
+								{
+									"id_parametro":25,
+									"parametro":"Arsénico",
+									"cert":1,
+									"id_metodo":1,
+									"metodo": {
+										"id_metodo":1,
+										"metodo":"NMX-AA-000-0000"
+									},
+									"cantidad":1,
+									"precio":164.65
+								},
+								{
+									"id_parametro":27,
+									"parametro":"Cadmio",
+									"cert":1,
+									"id_metodo":1,
+									"metodo": {
+										"id_metodo":1,
+										"metodo":"NMX-AA-000-0000"
+									},
+									"cantidad":1,
+									"precio":164.65
+								},
+								{
+									"id_parametro":28,
+									"parametro":"Cobre",
+									"cert":1,
+									"id_metodo":1,
+									"metodo": {
+										"id_metodo":1,
+										"metodo":"NMX-AA-000-0000"
+									},
+									"cantidad":1,
+									"precio":164.65
+								},
+								{
+									"id_parametro":38,
+									"parametro":"Coliformes fecales",
+									"cert":1,
+									"id_metodo":1,
+									"metodo": {
+										"id_metodo":1,
+										"metodo":"NMX-AA-000-0000"
+									},
+									"cantidad":1,
+									"precio":164.65
+								},
+								{
+									"id_parametro":29,
+									"parametro":"Cromo",
+									"cert":1,
+									"id_metodo":1,
+									"metodo": {
+										"id_metodo":1,
+										"metodo":"NMX-AA-000-0000"
+									},
+									"cantidad":1,
+									"precio":164.65
+								},
+								{
+									"id_parametro":16,
+									"parametro":"Demada bioquímica de oxígeno",
+									"cert":0,
+									"id_metodo":1,
+									"metodo": {
+										"id_metodo":1,
+										"metodo":"NMX-AA-000-0000"
+									},
+									"cantidad":1,
+									"precio":164.65
+								},
+								{
+									"id_parametro":19,
+									"parametro":"Fósforo total",
+									"cert":1,
+									"id_metodo":1,
+									"metodo": {
+										"id_metodo":1,
+										"metodo":"NMX-AA-000-0000"
+									},
+									"cantidad":1,
+									"precio":164.65
+								},
+								{
+									"id_parametro":18,
+									"parametro":"Grasas y aceites",
+									"cert":1,
+									"id_metodo":1,
+									"metodo": {
+										"id_metodo":1,
+										"metodo":"NMX-AA-000-0000"
+									},
+									"cantidad":1,
+									"precio":164.65
+								},
+								{
+									"id_parametro":6,
+									"parametro":"Alcalinidad total",
+									"cert":1,
+									"id_metodo":1,
+									"metodo": {
+										"id_metodo":1,
+										"metodo":"NMX-AA-000-0000"
+									},
+									"cantidad":1,
+									"precio":164.65
+								},
+								{
+									"id_parametro":39,
+									"parametro":"Materia flotante",
+									"cert":1,
+									"id_metodo":1,
+									"metodo": {
+										"id_metodo":1,
+										"metodo":"NMX-AA-000-0000"
+									},
+									"cantidad":1,
+									"precio":164.65
+								},
+								{
+									"id_parametro":32,
+									"parametro":"Mercurio",
+									"cert":1,
+									"id_metodo":1,
+									"metodo": {
+										"id_metodo":1,
+										"metodo":"NMX-AA-000-0000"
+									},
+									"cantidad":1,
+									"precio":164.65
+								},
+								{
+									"id_parametro":7,
+									"parametro":"Cloruros totales",
+									"cert":1,
+									"id_metodo":1,
+									"metodo": {
+										"id_metodo":1,
+										"metodo":"NMX-AA-000-0000"
+									},
+									"cantidad":1,
+									"precio":164.65
+								},
+								{
+									"id_parametro":33,
+									"parametro":"Níquel",
+									"cert":1,
+									"id_metodo":1,
+									"metodo": {
+										"id_metodo":1,
+										"metodo":"NMX-AA-000-0000"
+									},
+									"cantidad":1,
+									"precio":164.65
+								},
+								{
+									"id_parametro":2,
+									"parametro":"Potencial de hidrógeno",
+									"cert":1,
+									"id_metodo":1,
+									"metodo": {
+										"id_metodo":1,
+										"metodo":"NMX-AA-000-0000"
+									},
+									"cantidad":1,
+									"precio":164.65
+								},
+								{
+									"id_parametro":34,
+									"parametro":"Plomo",
+									"cert":1,
+									"id_metodo":1,
+									"metodo": {
+										"id_metodo":1,
+										"metodo":"NMX-AA-000-0000"
+									},
+									"cantidad":1,
+									"precio":164.65
+								},
+								{
+									"id_parametro":22,
+									"parametro":"Sólidos sedimentables",
+									"cert":1,
+									"id_metodo":1,
+									"metodo": {
+										"id_metodo":1,
+										"metodo":"NMX-AA-000-0000"
+									},
+									"cantidad":1,
+									"precio":164.65
+								},
+								{
+									"id_parametro":20,
+									"parametro":"Sólidos suspendidos totales",
+									"cert":1,
+									"id_metodo":1,
+									"metodo": {
+										"id_metodo":1,
+										"metodo":"NMX-AA-000-0000"
+									},
+									"cantidad":1,
+									"precio":164.65
+								},
+								{
+									"id_parametro":1,
+									"parametro":"Temperatura",
+									"cert":1,
+									"id_metodo":1,
+									"metodo": {
+										"id_metodo":1,
+										"metodo":"NMX-AA-000-0000"
+									},
+									"cantidad":1,
+									"precio":164.65
+								},
+								{
+									"id_parametro":36,
+									"parametro":"Zinc",
+									"cert":1,
+									"id_metodo":1,
+									"metodo": {
+										"id_metodo":1,
+										"metodo":"NMX-AA-000-0000"
+									},
+									"cantidad":1,
+									"precio":164.65
+								}
+							]
+						}
+					},
+					"equipos":
+					[
+						{
+							"id_equipo":1,
+							"descripcion":"Descripcion equipo",
+							"inventario":"IE-MU-001",
+							"bitacora":"BU-AA-001",
+							"folio":1,
+							"ejercicio":2015,
+							"activo":1
+						},
+						{
+							"id_equipo":2,
+							"descripcion":"Descripcion equipo",
+							"inventario":"IE-MU-002",
+							"bitacora":"BU-AA-002",
+							"folio":2,
+							"ejercicio":2015,
+							"activo":1
+						},
+						{
+							"id_equipo":3,
+							"descripcion":"Descripcion equipo",
+							"inventario":"IE-MU-003",
+							"bitacora":"BU-AA-003",
+							"folio":3,
+							"ejercicio":2015,
+							"activo":1
+						},
+						{
+							"id_equipo":4,
+							"descripcion":"Descripcion equipo",
+							"inventario":"IE-MU-004",
+							"bitacora":"BU-AA-004",
+							"folio":4,
+							"ejercicio":2015,
+							"activo":1
+						}
+					],
+					"recipientes":
+					[
+						{
+							"id_recipiente":1,
+							"id_preservacion":1,
+							"cantidad":0,
+							"folio":1,
+							"ejercicio":2015,
+							"activo":1
+						},
+						{
+							"id_recipiente":2,
+							"id_preservacion":2,
+							"cantidad":0,
+							"folio":2,
+							"ejercicio":2015,
+							"activo":1
+						},
+						{
+							"id_recipiente":3,
+							"id_preservacion":3,
+							"cantidad":0,
+							"folio":3,
+							"ejercicio":2015,
+							"activo":1
+						},
+						{
+							"id_recipiente":4,
+							"id_preservacion":4,
+							"cantidad":0,
+							"folio":4,
+							"ejercicio":2015,
+							"activo":1
+						}
+					],
+					"reactivos":
+					[
+						{
+							"id_reactivo":1,
+							"reactivo":"Reactivo 1",
+							"cantidad":0,
+							"lote":"Lote reactivo 1",
+							"selected":false
+						}
+					],
+					"materiales":
+					[
+					],
+					"hieleras":
+					[
 					]
 				}
 			]
@@ -8966,7 +13530,7 @@ class DALSiclab
 					"ejercicio":2014,
 					"id_reporte":1,
 					"id_cliente":1,
-					"id_orden_muestreo":1,
+					"id_orden":1,
 					"id_matriz":3,
 					"id_punto_muestreo":1,
 					"id_recepcionista":15,
@@ -9141,9 +13705,9 @@ class DALSiclab
 						"cert":1,
 						"activo":1
 					},
-					"orden_muestreo":
+					"orden":
 					{
-						"id_orden_muestreo":1,
+						"id_orden":1,
 						"folio":656,
 						"ejercicio":2014,
 						"fecha_orden":"2014-11-01",
@@ -9188,7 +13752,7 @@ class DALSiclab
 							"tasa":0,
 							"activo":1
 						},
-						"id_plan_muestreo":1,
+						"id_plan":1,
 						"id_responsable_muestreo":2,
 						"responsable_muestreo":
 						{

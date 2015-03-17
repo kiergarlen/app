@@ -54,10 +54,10 @@
       </div>
       <div class="table-responsive">
         <table class="table table-hover table-condensed"
-          id="clientsList">
+          id="quotesList">
           <thead>
             <tr>
-              <th>Id</th>
+              <th>Id Sol.</th>
               <th>Status</th>
               <th>Cliente</th>
               <th>Fecha</th>
@@ -73,19 +73,21 @@
                 {{item.id_solicitud}}
               </td>
               <td>
-                <span class="text-info"
+                <span class="label label-info"
                   data-ng-show="item.validado > 0">Validada</span>
-                <span class="text-default"
+                <span class="label label-default"
                   data-ng-show="item.validado < 1">Sin Validar</span>
               </td>
               <td>
-                <h6>{{item.cliente.cliente}}</h6>
+                {{item.cliente.cliente}}
                 <span class="text-muted"
                   data-ng-show="item.cliente.area.length > 0">
                   {{item.cliente.area}}
                 </span>
                 <span class="label label-default"
                   data-ng-show="item.cliente.interno < 1">Externo</span>
+                <br>
+                {{item.cliente.contacto}}
               </td>
               <td>
                 {{item.fecha_solicitud}}

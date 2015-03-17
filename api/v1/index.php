@@ -143,6 +143,19 @@ $app->get("/sampling/types", function() use ($app) {
 	}
 });
 
+$app->get("/quotes/:quoteId", function($quoteId) use ($app) {
+	try {
+		$userId = (validateTokenUser($app)) ? validateTokenUser($app) : 0;
+		$menu = \Service\DALSiclab::getInstance()->getQuote($quoteId);
+		$app->response()->status(200);
+		$app->response()->header('Content-Type', 'application/json');
+		echo $menu;
+	} catch (Exception $e) {
+		$app->response()->status(400);
+		$app->response()->header('X-Status-Reason', $e->getMessage());
+	}
+});
+
 $app->get("/quotes", function() use ($app) {
 	try {
 		$userId = (validateTokenUser($app)) ? validateTokenUser($app) : 0;
@@ -156,10 +169,49 @@ $app->get("/quotes", function() use ($app) {
 	}
 });
 
-$app->get("/quotes/:quoteId", function($quoteId) use ($app) {
+$app->get("/orders/:orderId", function($orderId) use ($app) {
 	try {
 		$userId = (validateTokenUser($app)) ? validateTokenUser($app) : 0;
-		$menu = \Service\DALSiclab::getInstance()->getQuote($quoteId);
+		$menu = \Service\DALSiclab::getInstance()->getOrder($orderId);
+		$app->response()->status(200);
+		$app->response()->header('Content-Type', 'application/json');
+		echo $menu;
+	} catch (Exception $e) {
+		$app->response()->status(400);
+		$app->response()->header('X-Status-Reason', $e->getMessage());
+	}
+});
+
+$app->get("/orders", function() use ($app) {
+	try {
+		$userId = (validateTokenUser($app)) ? validateTokenUser($app) : 0;
+		$menu = \Service\DALSiclab::getInstance()->getOrders();
+		$app->response()->status(200);
+		$app->response()->header('Content-Type', 'application/json');
+		echo $menu;
+	} catch (Exception $e) {
+		$app->response()->status(400);
+		$app->response()->header('X-Status-Reason', $e->getMessage());
+	}
+});
+
+$app->get("/plans/:planId", function($planId) use ($app) {
+	try {
+		$userId = (validateTokenUser($app)) ? validateTokenUser($app) : 0;
+		$menu = \Service\DALSiclab::getInstance()->getPlan($planId);
+		$app->response()->status(200);
+		$app->response()->header('Content-Type', 'application/json');
+		echo $menu;
+	} catch (Exception $e) {
+		$app->response()->status(400);
+		$app->response()->header('X-Status-Reason', $e->getMessage());
+	}
+});
+
+$app->get("/plans", function() use ($app) {
+	try {
+		//$userId = (validateTokenUser($app)) ? validateTokenUser($app) : 0;
+		$menu = \Service\DALSiclab::getInstance()->getPlans();
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
 		echo $menu;
@@ -207,20 +259,7 @@ $app->get("/sampling/supervisors", function() use ($app) {
 		$app->response()->header('X-Status-Reason', $e->getMessage());
 	}
 });
-/*
-$app->get("/sampling/orders/:orderId", function() use ($app) {
-	try {
-		$userId = (validateTokenUser($app)) ? validateTokenUser($app) : 0;
-		$menu = \Service\DALSiclab::getInstance()->getSamplingOrder($orderId);
-		$app->response()->status(200);
-		$app->response()->header('Content-Type', 'application/json');
-		echo $menu;
-	} catch (Exception $e) {
-		$app->response()->status(400);
-		$app->response()->header('X-Status-Reason', $e->getMessage());
-	}
-});
-*/
+
 $app->get("/plan/objectives", function() use ($app) {
 	try {
 		$userId = (validateTokenUser($app)) ? validateTokenUser($app) : 0;
@@ -337,20 +376,7 @@ $app->get("/coolers", function() use ($app) {
 		$app->response()->header('X-Status-Reason', $e->getMessage());
 	}
 });
-/*
-$app->get("/sampling/plans/:planId", function() use ($app) {
-	try {
-		$userId = (validateTokenUser($app)) ? validateTokenUser($app) : 0;
-		$menu = \Service\DALSiclab::getInstance()->getSamplingPlan($planId);
-		$app->response()->status(200);
-		$app->response()->header('Content-Type', 'application/json');
-		echo $menu;
-	} catch (Exception $e) {
-		$app->response()->status(400);
-		$app->response()->header('X-Status-Reason', $e->getMessage());
-	}
-});
-*/
+
 $app->get("/clouds", function() use ($app) {
 	try {
 		$userId = (validateTokenUser($app)) ? validateTokenUser($app) : 0;
@@ -402,6 +428,20 @@ $app->get("/sampling/norms", function() use ($app) {
 		$app->response()->header('X-Status-Reason', $e->getMessage());
 	}
 });
+/*
+$app->get("/points/:pointId", function($pointId) use ($app) {
+	try {
+		$userId = (validateTokenUser($app)) ? validateTokenUser($app) : 0;
+		$menu = \Service\DALSiclab::getInstance()->getPoint($pointId);
+		$app->response()->status(200);
+		$app->response()->header('Content-Type', 'application/json');
+		echo $menu;
+	} catch (Exception $e) {
+		$app->response()->status(400);
+		$app->response()->header('X-Status-Reason', $e->getMessage());
+	}
+});
+*/
 
 $app->get("/points", function() use ($app) {
 	try {
@@ -415,7 +455,6 @@ $app->get("/points", function() use ($app) {
 		$app->response()->header('X-Status-Reason', $e->getMessage());
 	}
 });
-
 $app->get("/parameters/field", function() use ($app) {
 	try {
 		$userId = (validateTokenUser($app)) ? validateTokenUser($app) : 0;
@@ -429,10 +468,23 @@ $app->get("/parameters/field", function() use ($app) {
 	}
 });
 /*
-$app->get("/fieldsheets/:fieldsheetId", function() use ($app) {
+$app->get("/fieldsheets/:fieldsheetId", function($fieldsheetId) use ($app) {
 	try {
 		$userId = (validateTokenUser($app)) ? validateTokenUser($app) : 0;
 		$menu = \Service\DALSiclab::getInstance()->getFieldsheet($fieldsheetId);
+		$app->response()->status(200);
+		$app->response()->header('Content-Type', 'application/json');
+		echo $menu;
+	} catch (Exception $e) {
+		$app->response()->status(400);
+		$app->response()->header('X-Status-Reason', $e->getMessage());
+	}
+});
+
+$app->get("/fieldsheets", function() use ($app) {
+	try {
+		$userId = (validateTokenUser($app)) ? validateTokenUser($app) : 0;
+		$menu = \Service\DALSiclab::getInstance()->getFieldsheets();
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
 		echo $menu;
@@ -455,10 +507,23 @@ $app->get("/receptionists", function() use ($app) {
 	}
 });
 /*
-$app->get("/receptions/:receptionId", function() use ($app) {
+$app->get("/receptions/:receptionId", function($receptionId) use ($app) {
 	try {
 		$userId = (validateTokenUser($app)) ? validateTokenUser($app) : 0;
 		$menu = \Service\DALSiclab::getInstance()->getReception($receptionId);
+		$app->response()->status(200);
+		$app->response()->header('Content-Type', 'application/json');
+		echo $menu;
+	} catch (Exception $e) {
+		$app->response()->status(400);
+		$app->response()->header('X-Status-Reason', $e->getMessage());
+	}
+});
+
+$app->get("/receptions", function() use ($app) {
+	try {
+		$userId = (validateTokenUser($app)) ? validateTokenUser($app) : 0;
+		$menu = \Service\DALSiclab::getInstance()->getReceptions();
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
 		echo $menu;
@@ -507,10 +572,23 @@ $app->get("/checkers", function() use ($app) {
 	}
 });
 /*
-$app->get("/custodies/:custodyId", function() use ($app) {
+$app->get("/custodies/:custodyId", function($cutodyId) use ($app) {
 	try {
 		$userId = (validateTokenUser($app)) ? validateTokenUser($app) : 0;
 		$menu = \Service\DALSiclab::getInstance()->getCustody($custodyId);
+		$app->response()->status(200);
+		$app->response()->header('Content-Type', 'application/json');
+		echo $menu;
+	} catch (Exception $e) {
+		$app->response()->status(400);
+		$app->response()->header('X-Status-Reason', $e->getMessage());
+	}
+});
+
+$app->get("/custodies", function() use ($app) {
+	try {
+		$userId = (validateTokenUser($app)) ? validateTokenUser($app) : 0;
+		$menu = \Service\DALSiclab::getInstance()->getCustodies();
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
 		echo $menu;
@@ -611,10 +689,23 @@ $app->get("/reports", function() use ($app) {
 	}
 });
 /*
-$app->get("/reports/:reportId", function() use ($app) {
+$app->get("/reports/:reportId", function($reportId) use ($app) {
 	try {
 		$userId = (validateTokenUser($app)) ? validateTokenUser($app) : 0;
 		$menu = \Service\DALSiclab::getInstance()->getReport($reportId);
+		$app->response()->status(200);
+		$app->response()->header('Content-Type', 'application/json');
+		echo $menu;
+	} catch (Exception $e) {
+		$app->response()->status(400);
+		$app->response()->header('X-Status-Reason', $e->getMessage());
+	}
+});
+
+$app->get("/reports/:reportId", function() use ($app) {
+	try {
+		$userId = (validateTokenUser($app)) ? validateTokenUser($app) : 0;
+		$menu = \Service\DALSiclab::getInstance()->getReports();
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
 		echo $menu;

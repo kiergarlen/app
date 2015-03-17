@@ -68,20 +68,35 @@
         controller: 'PlanController',
         controllerAs: 'plan'
       }).
-      when('/recepcion/campo', {
+      when('/recepcion/campo/:fieldId', {
         templateUrl: 'partials/recepcion/campo.html',
         controller: 'FieldSheetController',
         controllerAs: 'fieldSheet'
       }).
-      when('/recepcion/muestra', {
-        templateUrl: 'partials/recepcion/muestra.html',
+      when('/recepcion/campos', {
+        templateUrl: 'partials/recepcion/campos.html',
+        controller: 'FieldSheetListController',
+        controllerAs: 'fieldSheets'
+      }).
+      when('/recepcion/recepcion/:receptionId', {
+        templateUrl: 'partials/recepcion/recepcion.html',
         controller: 'ReceptionController',
         controllerAs: 'reception'
       }).
-      when('/recepcion/custodia', {
+      when('/recepcion/recepciones', {
+        templateUrl: 'partials/recepcion/recepciones.html',
+        controller: 'ReceptionsListController',
+        controllerAs: 'receptions'
+      }).
+      when('/recepcion/custodia/:custodyId', {
         templateUrl: 'partials/recepcion/custodia.html',
         controller: 'CustodyController',
         controllerAs: 'custody'
+      }).
+      when('/recepcion/custodias', {
+        templateUrl: 'partials/recepcion/custodias.html',
+        controller: 'CustodiesListController',
+        controllerAs: 'custodies'
       }).
       when('/inventario/muestras', {
         templateUrl: 'partials/inventario/muestras.html',
@@ -103,17 +118,22 @@
         controller: 'ContainersListController',
         controllerAs: 'containersList'
       }).
-      when('/analisis/consulta', {
+      when('/analisis/:analysisId', {
+        templateUrl: 'partials/analisis/analisis.html',
+        controller: 'AnalysisController',
+        controllerAs: 'analysis'
+      }).
+      when('/analisis', {
         templateUrl: 'partials/analisis/consulta.html',
         controller: 'AnalysisListController',
         controllerAs: 'analysisList'
       }).
-      when('/analisis/captura', {
-        templateUrl: 'partials/analisis/captura.html',
-        controller: 'AnalysisController',
-        controllerAs: 'analysis'
+      when('/reporte/reporte/:reportId', {
+        templateUrl: 'partials/reporte/reporte.html',
+        controller: 'ReportController',
+        controllerAs: 'report'
       }).
-      when('/reporte/consulta', {
+      when('/reporte/reportes', {
         templateUrl: 'partials/reporte/reportes.html',
         controller: 'ReportsListController',
         controllerAs: 'reportsList'
@@ -128,6 +148,11 @@
         controller: 'PointsListController',
         controllerAs: 'pointsList'
       }).
+      when('/catalogo/cliente/:clientId', {
+        templateUrl: 'partials/catalogo/cliente.html',
+        controller: 'ClientDetailController',
+        controllerAs: 'clientDetail'
+      })
       when('/catalogo/clientes', {
         templateUrl: 'partials/catalogo/clientes.html',
         controller: 'ClientsListController',
@@ -177,11 +202,6 @@
         templateUrl: 'partials/sistema/logout.html',
         controller: 'LogoutController',
         controllerAs: 'logout'
-      }).
-      when('/catalogo/clientes/:clientId', {
-        templateUrl: 'partials/catalogo/cliente.html',
-        controller: 'ClientDetailController',
-        controllerAs: 'clientDetail'
       })
     ;
     angular.extend($collapseProvider.defaults, {

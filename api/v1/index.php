@@ -210,7 +210,7 @@ $app->get("/plans/:planId", function($planId) use ($app) {
 
 $app->get("/plans", function() use ($app) {
 	try {
-		//$userId = (validateTokenUser($app)) ? validateTokenUser($app) : 0;
+		$userId = (validateTokenUser($app)) ? validateTokenUser($app) : 0;
 		$menu = \Service\DALSiclab::getInstance()->getPlans();
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');

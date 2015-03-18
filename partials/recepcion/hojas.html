@@ -1,48 +1,111 @@
+    <siclab-menu></siclab-menu>
+    <siclab-banner></siclab-banner>
+    <div class="container-fluid">
       <div class="row">
-        <div class="col-xs-12">
-          <h2 class="page-header">Hojas de campo</h2>
-        </div>
+        <div class="col-xs-12 col-lg-8 col-lg-offset-2 main item-themed-z2">
+          <div class="view-container">
+
+<div class="row">
+  <div class="col-xs-12">
+    <h2 class="page-header">Hojas de campo</h2>
+  </div>
+</div>
+<div class="row">
+  <div class="col-xs-12">
+    <button type="submit" class="btn btn-primary"
+      value="Nueva" title="Nueva"
+      data-ng-click="fieldSheets.addFieldSheet()"
+      >
+      <i class="glyphicon glyphicon-plus" aria-hidden="true"></i>
+      Nueva Hoja Campo
+    </button>
+    <br>
+  </div>
+</div>
+<form class="form" role="form"
+  name="clientsForm"
+  novalidate
+  >
+  <div class="row">
+    <div class="col-xs-12">
+      <h4>Búsqueda</h4>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12 col-sm-8">
+      <label for="fieldSheetSearch" class="sr-only">
+        Ingrese una búsqueda (Municipio, Localidad, Calle, etc.)
+      </label>
+      <input type="text"
+        class="form-control"
+        placeholder="Ingrese una búsqueda (Municipio, Localidad, Calle, etc.)"
+        id="fieldSheetSearch"
+        name="fieldSheetSearch"
+        data-ng-model="fieldSheets.filter.$">
+      <br>
+    </div>
+  </div>
+</form>
+<div class="row">
+  <div class="col-xs-12">
+    <div class="panel">
+      <div class="panel-heading">
+        <h3 class="panel-title">Hojas</h3>
       </div>
-      <div class="row">
-        <div class="col-xs-12">
-          <div class="panel">
-            <div class="panel-heading">
-              <h3 class="panel-title">Hojas de campo</h3>
-              <!--
-              <h3 class="sub-header">Hojas de campo</h3>
-              -->
-            </div>
-            <div class="table-responsive">
-              <table class="table table-hover table-striped" id="clientsList" ng-controller="ClientsListCtrl">
-                <thead>
-                  <tr>
-                    <th>Cliente</th>
-                    <th>Contacto</th>
-                    <th>Domicilio</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr ng-repeat="item in clients" id="clientId{{item.id_cliente}}">
-                    <td>
-                      <h6>{{item.cliente}}</h6>
-                      <span class="text-muted" ng-show="item.area.length > 0">{{item.area}}</span>
-                      <span class="label label-default" ng-show="item.interno < 1">Externo</span>
-                    </td>
-                    <td>
-                      {{item.contacto}}<br>
-                      <a href="mailto:{{item.email}}" ng-show="item.email.length > 0">{{item.email}}</a><br>
-                      {{item.tel}}
-                    </td>
-                    <td>
-                      {{item.calle}}, {{item.numero}}<br>
-                      {{item.colonia}}<br>
-                      {{item.localidad}}, {{item.estado}}<br>
-                      CP {{item.cp}}
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
+      <div class="table-responsive">
+        <table class="table table-hover table-condensed"
+          id="fieldSheetsList">
+          <thead>
+            <tr>
+              <th>Id Hoja</th>
+              <th>Status</th>
+              <th>Ubicación</th>
+              <th>Fecha Ini.</th>
+              <th>Fecha Fin</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              data-ng-repeat="item in fieldSheets.fieldSheets
+              | filter:fieldSheets.filter.$"
+              id="fieldSheetId{{item.id_hoja_campo}}"
+              data-ng-click="fieldSheets.selectRow($event)">
+              <td>
+                {{item.id_hoja_campo}}
+              </td>
+              <td>
+                <span class="label label-info"
+                  data-ng-show="item.validado > 0">Validado</span>
+                <span class="label label-default"
+                  data-ng-show="item.validado < 1">Sin Validar</span>
+              </td>
+              <td>
+                <!--
+                <span class="label label-default">
+                  {{item.id_municipio}}
+                </span><br>
+                -->
+                {{item.calle}}
+                {{item.numero}},
+                {{item.municipio}}
+              </td>
+              <td>
+                {{item.fecha_inicio}}
+              </td>
+              <td>
+                {{item.fecha_fin}}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
           </div>
-        </div>
-      </div>
+          <siclab-footer></siclab-footer>
+        </div><!-- view-container -->
+      </div><!-- row -->
+    </div><!-- container -->
+    <siclab-banner-bottom></siclab-banner-bottom>

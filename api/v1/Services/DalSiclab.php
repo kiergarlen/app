@@ -185,16 +185,8 @@ class DALSiclab
 								"id_submenu":12,
 								"id_menu":4,
 								"orden":1,
-								"url":"/analisis/consulta",
-								"label":"Consultar",
-								"activo":1
-							},
-							{
-								"id_submenu":13,
-								"id_menu":4,
-								"orden":2,
-								"url":"/analisis/captura",
-								"label":"Registrar",
+								"url":"/analisis/analisis",
+								"label":"Análisis",
 								"activo":1
 							}
 						]
@@ -208,19 +200,11 @@ class DALSiclab
 						"submenu":
 						[
 							{
-								"id_submenu":14,
+								"id_submenu":13,
 								"id_menu":5,
 								"orden":1,
-								"url":"/reporte/consulta",
-								"label":"Consultar",
-								"activo":1
-							},
-							{
-								"id_submenu":15,
-								"id_menu":5,
-								"orden":2,
-								"url":"/reporte/validar",
-								"label":"Validar",
+								"url":"/reporte/reportes",
+								"label":"Reportes",
 								"activo":1
 							}
 						]
@@ -577,7 +561,7 @@ class DALSiclab
 					"id_cliente":1,
 					"id_organismo":1,
 					"cliente":"CEA Jalisco",
-					"area":"Dirección de Operación de PTAR\'S",
+					"area":"Dirección de Operación de PTARS",
 					"rfc":"Registro Federal de Contribuyentes",
 					"calle":"Av. Brasilia",
 					"numero":"2970",
@@ -631,7 +615,7 @@ class DALSiclab
 					"id_cliente":3,
 					"id_organismo":1,
 					"cliente":"CEA Jalisco",
-					"area":"Gerencia de PTAR\'S",
+					"area":"Gerencia de PTARS",
 					"rfc":"Registro Federal de Contribuyentes",
 					"calle":"Av. Brasilia",
 					"numero":"2970",
@@ -3573,7 +3557,7 @@ class DALSiclab
 						"id_cliente":1,
 						"id_organismo":1,
 						"cliente":"CEA Jalisco",
-						"area":"Dirección de Operación de PTAR\'S",
+						"area":"Dirección de Operación de PTARS",
 						"rfc":"Registro Federal de Contribuyentes",
 						"calle":"Av. Brasilia",
 						"numero":"2970",
@@ -4793,7 +4777,7 @@ class DALSiclab
 						"id_cliente":1,
 						"id_organismo":1,
 						"cliente":"CEA Jalisco",
-						"area":"Dirección de Operación de PTAR\'S",
+						"area":"Dirección de Operación de PTARS",
 						"rfc":"Registro Federal de Contribuyentes",
 						"calle":"Av. Brasilia",
 						"numero":"2970",
@@ -5337,7 +5321,7 @@ class DALSiclab
 						"id_cliente":3,
 						"id_organismo":1,
 						"cliente":"CEA Jalisco",
-						"area":"Gerencia de PTAR\'S",
+						"area":"Gerencia de PTARS",
 						"rfc":"Registro Federal de Contribuyentes",
 						"calle":"Av. Brasilia",
 						"numero":"2970",
@@ -5910,7 +5894,7 @@ class DALSiclab
 						"id_cliente":1,
 						"id_organismo":1,
 						"cliente":"CEA Jalisco",
-						"area":"Dirección de Operación de PTAR\'S",
+						"area":"Dirección de Operación de PTARS",
 						"rfc":"Registro Federal de Contribuyentes",
 						"calle":"Av. Brasilia",
 						"numero":"2970",
@@ -5974,7 +5958,7 @@ class DALSiclab
 							"id_cliente":1,
 							"id_organismo":1,
 							"cliente":"CEA Jalisco",
-							"area":"Dirección de Operación de PTAR\'S",
+							"area":"Dirección de Operación de PTARS",
 							"rfc":"Registro Federal de Contribuyentes",
 							"calle":"Av. Brasilia",
 							"numero":"2970",
@@ -6840,7 +6824,7 @@ class DALSiclab
 						"id_cliente":1,
 						"id_organismo":1,
 						"cliente":"CEA Jalisco",
-						"area":"Dirección de Operación de PTAR\'S",
+						"area":"Dirección de Operación de PTARS",
 						"rfc":"Registro Federal de Contribuyentes",
 						"calle":"Av. Brasilia",
 						"numero":"2970",
@@ -6904,7 +6888,7 @@ class DALSiclab
 							"id_cliente":1,
 							"id_organismo":1,
 							"cliente":"CEA Jalisco",
-							"area":"Dirección de Operación de PTAR\'S",
+							"area":"Dirección de Operación de PTARS",
 							"rfc":"Registro Federal de Contribuyentes",
 							"calle":"Av. Brasilia",
 							"numero":"2970",
@@ -8062,7 +8046,7 @@ class DALSiclab
 						"id_cliente":1,
 						"id_organismo":1,
 						"cliente":"CEA Jalisco",
-						"area":"Dirección de Operación de PTAR\'S",
+						"area":"Dirección de Operación de PTARS",
 						"rfc":"Registro Federal de Contribuyentes",
 						"calle":"Av. Brasilia",
 						"numero":"2970",
@@ -8109,7 +8093,7 @@ class DALSiclab
 							"id_cliente":1,
 							"id_organismo":1,
 							"cliente":"CEA Jalisco",
-							"area":"Dirección de Operación de PTAR\'S",
+							"area":"Dirección de Operación de PTARS",
 							"rfc":"Registro Federal de Contribuyentes",
 							"calle":"Av. Brasilia",
 							"numero":"2970",
@@ -8177,7 +8161,7 @@ class DALSiclab
 								"id_cliente":1,
 								"id_organismo":1,
 								"cliente":"CEA Jalisco",
-								"area":"Dirección de Operación de PTAR\'S",
+								"area":"Dirección de Operación de PTARS",
 								"rfc":"Registro Federal de Contribuyentes",
 								"calle":"Av. Brasilia",
 								"numero":"2970",
@@ -9483,7 +9467,7 @@ class DALSiclab
 						"id_cliente":1,
 						"id_organismo":1,
 						"cliente":"CEA Jalisco",
-						"area":"Dirección de Operación de PTAR\'S",
+						"area":"Dirección de Operación de PTARS",
 						"rfc":"Registro Federal de Contribuyentes",
 						"calle":"Av. Brasilia",
 						"numero":"2970",
@@ -9530,7 +9514,7 @@ class DALSiclab
 							"id_cliente":1,
 							"id_organismo":1,
 							"cliente":"CEA Jalisco",
-							"area":"Dirección de Operación de PTAR\'S",
+							"area":"Dirección de Operación de PTARS",
 							"rfc":"Registro Federal de Contribuyentes",
 							"calle":"Av. Brasilia",
 							"numero":"2970",
@@ -9598,7 +9582,7 @@ class DALSiclab
 								"id_cliente":1,
 								"id_organismo":1,
 								"cliente":"CEA Jalisco",
-								"area":"Dirección de Operación de PTAR\'S",
+								"area":"Dirección de Operación de PTARS",
 								"rfc":"Registro Federal de Contribuyentes",
 								"calle":"Av. Brasilia",
 								"numero":"2970",
@@ -13115,6 +13099,798 @@ class DALSiclab
 		return $result;
 	}
 
+	public function getFieldSheets() {
+		$result = '
+			[
+				{
+				  "id_hoja_campo":1,
+				  "id_cliente":1,
+				  "id_solicitud":1,
+				  "id_cotizacion":1,
+				  "id_orden_muestreo":1,
+				  "id_plan_muestreo":1,
+				  "id_punto_muestreo":1,
+				  "id_metodo_muestreo":2,
+				  "id_responsable_muestreo":1,
+				  "id_tipo_muestreo":1,
+				  "id_matriz":1,
+				  "id_metodo":156,
+				  "id_cobertura_nubes":1,
+				  "id_direccion_viento":1,
+				  "id_oleaje":1,
+				  "id_calibracion":1,
+				  "id_verificacion":1,
+				  "id_informe":1,
+				  "id_estado":14,
+				  "id_municipio":14124,
+				  "id_localidad":1411240001,
+				  "fecha_captura":"",
+				  "fecha_acepta":"",
+				  "fecha_actualizacion":"",
+				  "fecha_valida":"",
+				  "fecha_firmado":"",
+				  "fecha_inicio":"",
+				  "fecha_fin":"",
+				  "hora_inicio":"",
+				  "hora_fin":"",
+				  "folio":1,
+				  "ejercicio":2014,
+				  "aceptado":0,
+				  "validado":0,
+				  "firmado":0,
+				  "comentarios":"",
+				  "cobertura_nubes_otra":"",
+				  "colonia":"Col. Colomos Providencia",
+				  "calle":"Av. Brasilia",
+				  "numero":"2970",
+				  "estado":"Jalisco",
+				  "municipio":"Zapotlanejo",
+				  "localidad":"Zapotlanejo",
+				  "cliente":
+				  {
+				    "id_cliente":1,
+				    "id_organismo":1,
+				    "cliente":"CEA Jalisco",
+				    "area":"Dirección de Operación de PTARS",
+				    "contacto":"Biol. Luis Aceves Martínez"
+				  },
+				  "orden_muestreo":
+				  {
+				    "id_orden_muestreo":1,
+				    "folio":656,
+				    "ejercicio":2014,
+				    "fecha_orden":"2014-11-01",
+				    "id_responsable_muestreo":2,
+				    "responsable_muestreo":
+				    {
+				      "id_responsable_muestreo":2,
+				      "id_empleado":3,
+				      "id_nivel":3,
+				      "id_area":2,
+				      "area":"Metales Pesados",
+				      "id_puesto":4,
+				      "puesto":"Supervisor (MP)",
+				      "nombres":"Marín",
+				      "ap":"Gomar",
+				      "am":"Sosa",
+				      "fecha_act":"2014-11-30",
+				      "calidad":0,
+				      "supervisa":1,
+				      "analiza":1,
+				      "muestrea":1,
+				      "cert":1,
+				      "activo":1
+				    }
+				  },
+				  "muestra":
+				  {
+				    "id_muestra":1,
+				    "folio":1,
+				    "ejercicio":2014,
+				    "muestra":"",
+				    "fecha_muestra":"2014-12-10",
+				    "hora_muestra":"12:45",
+				    "parametros_campo":
+				    [
+				      {
+				        "id_parametro":1,
+				        "param":"color",
+				        "parametro":"Color",
+				        "id_tipo_parametro":1,
+				        "id_clase_parametro":1,
+				        "id_preservacion":1,
+				        "id_unidad":1,
+				        "id_metodo":1,
+				        "tipo_parametro":"Físicoquímico",
+				        "clase_parametro":"Campo",
+				        "activo":1,
+				        "valor":null,
+				        "selected":false
+				      },
+				      {
+				        "id_parametro":1,
+				        "param":"olor",
+				        "parametro":"Olor",
+				        "id_tipo_parametro":1,
+				        "id_clase_parametro":1,
+				        "id_preservacion":1,
+				        "id_unidad":1,
+				        "id_metodo":1,
+				        "tipo_parametro":"Físicoquímico",
+				        "clase_parametro":"Campo",
+				        "activo":1,
+				        "valor":null,
+				        "selected":false
+				      },
+				      {
+				        "id_parametro":1,
+				        "param":"gasto",
+				        "parametro":"Gasto",
+				        "id_tipo_parametro":1,
+				        "id_clase_parametro":1,
+				        "id_preservacion":1,
+				        "id_unidad":1,
+				        "id_metodo":1,
+				        "tipo_parametro":"Físicoquímico",
+				        "clase_parametro":"Campo",
+				        "activo":1,
+				        "valor":null,
+				        "selected":false
+				      },
+				      {
+				        "id_parametro":1,
+				        "param":"profundidad",
+				        "parametro":"Profundidad",
+				        "id_tipo_parametro":1,
+				        "id_clase_parametro":1,
+				        "id_preservacion":1,
+				        "id_unidad":1,
+				        "id_metodo":1,
+				        "tipo_parametro":"Físicoquímico",
+				        "clase_parametro":"Campo",
+				        "activo":1,
+				        "valor":null,
+				        "selected":false
+				      },
+				      {
+				        "id_parametro":1,
+				        "param":"olor",
+				        "parametro":"Olor",
+				        "id_tipo_parametro":1,
+				        "id_clase_parametro":1,
+				        "id_preservacion":1,
+				        "id_unidad":1,
+				        "id_metodo":1,
+				        "tipo_parametro":"Físicoquímico",
+				        "clase_parametro":"Campo",
+				        "activo":1,
+				        "valor":null,
+				        "selected":false
+				      },
+				      {
+				        "id_parametro":1,
+				        "param":"temp_ambiente",
+				        "parametro":"Temperatura ambiente",
+				        "id_tipo_parametro":1,
+				        "id_clase_parametro":1,
+				        "id_preservacion":1,
+				        "id_unidad":1,
+				        "id_metodo":1,
+				        "tipo_parametro":"Físicoquímico",
+				        "clase_parametro":"Campo",
+				        "activo":1,
+				        "valor":null,
+				        "selected":false
+				      },
+				      {
+				        "id_parametro":1,
+				        "param":"temperatura",
+				        "parametro":"Temperatura",
+				        "id_tipo_parametro":1,
+				        "id_clase_parametro":1,
+				        "id_preservacion":1,
+				        "id_unidad":1,
+				        "id_metodo":1,
+				        "tipo_parametro":"Físicoquímico",
+				        "clase_parametro":"Campo",
+				        "activo":1,
+				        "valor":null,
+				        "selected":false
+				      },
+				      {
+				        "id_parametro":1,
+				        "param":"ph",
+				        "parametro":"Ph",
+				        "id_tipo_parametro":1,
+				        "id_clase_parametro":1,
+				        "id_preservacion":1,
+				        "id_unidad":1,
+				        "id_metodo":1,
+				        "tipo_parametro":"Físicoquímico",
+				        "clase_parametro":"Campo",
+				        "activo":1,
+				        "valor":null,
+				        "selected":false
+				      },
+				      {
+				        "id_parametro":1,
+				        "param":"conductividad",
+				        "parametro":"Conductividad",
+				        "id_tipo_parametro":1,
+				        "id_clase_parametro":1,
+				        "id_preservacion":1,
+				        "id_unidad":1,
+				        "id_metodo":1,
+				        "tipo_parametro":"Físicoquímico",
+				        "clase_parametro":"Campo",
+				        "activo":1,
+				        "valor":null,
+				        "selected":false
+				      },
+				      {
+				        "id_parametro":1,
+				        "param":"oxigeno_disuelto",
+				        "parametro":"Oxigeno_disuelto",
+				        "id_tipo_parametro":1,
+				        "id_clase_parametro":1,
+				        "id_preservacion":1,
+				        "id_unidad":1,
+				        "id_metodo":1,
+				        "tipo_parametro":"Físicoquímico",
+				        "clase_parametro":"Campo",
+				        "activo":1,
+				        "valor":null,
+				        "selected":false
+				      },
+				      {
+				        "id_parametro":1,
+				        "param":"transparencia",
+				        "parametro":"Transparencia",
+				        "id_tipo_parametro":1,
+				        "id_clase_parametro":1,
+				        "id_preservacion":1,
+				        "id_unidad":1,
+				        "id_metodo":1,
+				        "tipo_parametro":"Físicoquímico",
+				        "clase_parametro":"Campo",
+				        "activo":1,
+				        "valor":null,
+				        "selected":false
+				      },
+				      {
+				        "id_parametro":1,
+				        "param":"cloro_residual",
+				        "parametro":"Cloro_residual",
+				        "id_tipo_parametro":1,
+				        "id_clase_parametro":1,
+				        "id_preservacion":1,
+				        "id_unidad":1,
+				        "id_metodo":1,
+				        "tipo_parametro":"Físicoquímico",
+				        "clase_parametro":"Campo",
+				        "activo":1,
+				        "valor":null,
+				        "selected":false
+				      },
+				      {
+				        "id_parametro":1,
+				        "param":"materia_flotante",
+				        "parametro":"Materia_flotante",
+				        "id_tipo_parametro":1,
+				        "id_clase_parametro":1,
+				        "id_preservacion":1,
+				        "id_unidad":1,
+				        "id_metodo":1,
+				        "tipo_parametro":"Físicoquímico",
+				        "clase_parametro":"Campo",
+				        "activo":1,
+				        "valor":null,
+				        "selected":false
+				      }
+				    ]
+				  },
+				  "punto_muestreo":
+				  {
+				    "id_punto_muestreo":1,
+				    "punto_muestreo":"Punto muestreo Prueba",
+				    "descripcion":"Descripción detallada del Punto de muestreo de Prueba",
+				    "id_municipio":14124,
+				    "municipio":"Zapotlanejo",
+				    "id_localidad":141240001,
+				    "localidad":"Zapotlanejo",
+				    "lat":23.123456,
+				    "lng":-103.654321
+				  },
+				  "parametros_campo":
+				  [
+
+				  ],
+				  "componentes":
+				  {
+				    "temp_1":0,
+				    "temp_2":0,
+				    "temp_3":0,
+				    "temp":0,
+				    "ph_1":0,
+				    "ph_2":0,
+				    "ph_3":0,
+				    "ph":0,
+				    "cond_1":0,
+				    "cond_2":0,
+				    "cond_3":0,
+				    "cond":0,
+				    "od_1":0,
+				    "od_2":0,
+				    "od_3":0,
+				    "od":0
+				  },
+				  "preservaciones":
+				  [
+				  ],
+				  "validaciones":
+				  [
+				    {
+
+				    }
+				  ],
+				  "cobertura_nubes":
+				  {
+				      "id_cobertura_nubes":1,
+				      "cobertura_nubes":"Despejado"
+				  },
+				  "direccion_viento":
+				  {
+				    "id_direccion_viento":1,
+				    "direccion_viento":"Norte"
+				  },
+				  "oleaje":
+				  {
+				    "id_oleaje":1,
+				    "oleaje":"Nulo"
+				  },
+				  "calibracion":
+				  {
+				    "id_calibracion":1,
+				    "bitacora":"BT-00-AAA-2134",
+				    "folio":"001",
+				    "ejercicio":"2014"
+				  },
+				  "verificacion":
+				  {
+				    "id_verificacion":1,
+				    "bitacora":"BT-00-AAA-2134",
+				    "folio":"001",
+				    "ejercicio":"2014"
+				  },
+				  "informe":
+				  {
+				  }
+				}
+			]';
+		return $result;
+	}
+
+	public function getFieldSheet($sheetId) {
+		if ($sheetId == 1) {
+			$result = '
+				{
+				  "id_hoja_campo":1,
+				  "id_cliente":1,
+				  "id_solicitud":1,
+				  "id_cotizacion":1,
+				  "id_orden_muestreo":1,
+				  "id_plan_muestreo":1,
+				  "id_punto_muestreo":1,
+				  "id_metodo_muestreo":2,
+				  "id_responsable_muestreo":1,
+				  "id_tipo_muestreo":1,
+				  "id_matriz":1,
+				  "id_metodo":156,
+				  "id_cobertura_nubes":1,
+				  "id_direccion_viento":1,
+				  "id_oleaje":1,
+				  "id_calibracion":1,
+				  "id_verificacion":1,
+				  "id_informe":1,
+				  "id_estado":14,
+				  "id_municipio":14124,
+				  "id_localidad":1411240001,
+				  "fecha_captura":"",
+				  "fecha_acepta":"",
+				  "fecha_actualizacion":"",
+				  "fecha_valida":"",
+				  "fecha_firmado":"",
+				  "fecha_inicio":"",
+				  "fecha_fin":"",
+				  "hora_inicio":"",
+				  "hora_fin":"",
+				  "folio":1,
+				  "ejercicio":2014,
+				  "aceptado":0,
+				  "validado":0,
+				  "firmado":0,
+				  "comentarios":"",
+				  "cobertura_nubes_otra":"",
+				  "colonia":"Col. Colomos Providencia",
+				  "calle":"Av. Brasilia",
+				  "numero":"2970",
+				  "estado":"Jalisco",
+				  "municipio":"Zapotlanejo",
+				  "localidad":"Zapotlanejo",
+				  "cliente":
+				  {
+				    "id_cliente":1,
+				    "id_organismo":1,
+				    "cliente":"CEA Jalisco",
+				    "area":"Dirección de Operación de PTARS",
+				    "contacto":"Biol. Luis Aceves Martínez",
+				  },
+				  "orden_muestreo":
+				  {
+				    "id_orden_muestreo":1,
+				    "folio":656,
+				    "ejercicio":2014,
+				    "fecha_orden":"2014-11-01",
+				    "id_responsable_muestreo":2,
+				    "responsable_muestreo":
+				    {
+				      "id_responsable_muestreo":2,
+				      "id_empleado":3,
+				      "id_nivel":3,
+				      "id_area":2,
+				      "area":"Metales Pesados",
+				      "id_puesto":4,
+				      "puesto":"Supervisor (MP)",
+				      "nombres":"Marín",
+				      "ap":"Gomar",
+				      "am":"Sosa",
+				      "fecha_act":"2014-11-30",
+				      "calidad":0,
+				      "supervisa":1,
+				      "analiza":1,
+				      "muestrea":1,
+				      "cert":1,
+				      "activo":1
+				    }
+				  },
+				  "muestra":
+				  {
+				    "id_muestra":1,
+				    "folio":1,
+				    "ejercicio":2014,
+				    "muestra":"",
+				    "fecha_muestra":"2014-12-10",
+				    "hora_muestra":"12:45",
+				    "parametros_campo":
+				    [
+				      {
+				        "id_parametro":1,
+				        "param":"color",
+				        "parametro":"Color",
+				        "id_tipo_parametro":1,
+				        "id_clase_parametro":1,
+				        "id_preservacion":1,
+				        "id_unidad":1,
+				        "id_metodo":1,
+				        "tipo_parametro":"Físicoquímico",
+				        "clase_parametro":"Campo",
+				        "activo":1,
+				        "valor":null,
+				        "selected":false
+				      },
+				      {
+				        "id_parametro":1,
+				        "param":"olor",
+				        "parametro":"Olor",
+				        "id_tipo_parametro":1,
+				        "id_clase_parametro":1,
+				        "id_preservacion":1,
+				        "id_unidad":1,
+				        "id_metodo":1,
+				        "tipo_parametro":"Físicoquímico",
+				        "clase_parametro":"Campo",
+				        "activo":1,
+				        "valor":null,
+				        "selected":false
+				      },
+				      {
+				        "id_parametro":1,
+				        "param":"gasto",
+				        "parametro":"Gasto",
+				        "id_tipo_parametro":1,
+				        "id_clase_parametro":1,
+				        "id_preservacion":1,
+				        "id_unidad":1,
+				        "id_metodo":1,
+				        "tipo_parametro":"Físicoquímico",
+				        "clase_parametro":"Campo",
+				        "activo":1,
+				        "valor":null,
+				        "selected":false
+				      },
+				      {
+				        "id_parametro":1,
+				        "param":"profundidad",
+				        "parametro":"Profundidad",
+				        "id_tipo_parametro":1,
+				        "id_clase_parametro":1,
+				        "id_preservacion":1,
+				        "id_unidad":1,
+				        "id_metodo":1,
+				        "tipo_parametro":"Físicoquímico",
+				        "clase_parametro":"Campo",
+				        "activo":1,
+				        "valor":null,
+				        "selected":false
+				      },
+				      {
+				        "id_parametro":1,
+				        "param":"olor",
+				        "parametro":"Olor",
+				        "id_tipo_parametro":1,
+				        "id_clase_parametro":1,
+				        "id_preservacion":1,
+				        "id_unidad":1,
+				        "id_metodo":1,
+				        "tipo_parametro":"Físicoquímico",
+				        "clase_parametro":"Campo",
+				        "activo":1,
+				        "valor":null,
+				        "selected":false
+				      },
+				      {
+				        "id_parametro":1,
+				        "param":"temp_ambiente",
+				        "parametro":"Temperatura ambiente",
+				        "id_tipo_parametro":1,
+				        "id_clase_parametro":1,
+				        "id_preservacion":1,
+				        "id_unidad":1,
+				        "id_metodo":1,
+				        "tipo_parametro":"Físicoquímico",
+				        "clase_parametro":"Campo",
+				        "activo":1,
+				        "valor":null,
+				        "selected":false
+				      },
+				      {
+				        "id_parametro":1,
+				        "param":"temperatura",
+				        "parametro":"Temperatura",
+				        "id_tipo_parametro":1,
+				        "id_clase_parametro":1,
+				        "id_preservacion":1,
+				        "id_unidad":1,
+				        "id_metodo":1,
+				        "tipo_parametro":"Físicoquímico",
+				        "clase_parametro":"Campo",
+				        "activo":1,
+				        "valor":null,
+				        "selected":false
+				      },
+				      {
+				        "id_parametro":1,
+				        "param":"ph",
+				        "parametro":"Ph",
+				        "id_tipo_parametro":1,
+				        "id_clase_parametro":1,
+				        "id_preservacion":1,
+				        "id_unidad":1,
+				        "id_metodo":1,
+				        "tipo_parametro":"Físicoquímico",
+				        "clase_parametro":"Campo",
+				        "activo":1,
+				        "valor":null,
+				        "selected":false
+				      },
+				      {
+				        "id_parametro":1,
+				        "param":"conductividad",
+				        "parametro":"Conductividad",
+				        "id_tipo_parametro":1,
+				        "id_clase_parametro":1,
+				        "id_preservacion":1,
+				        "id_unidad":1,
+				        "id_metodo":1,
+				        "tipo_parametro":"Físicoquímico",
+				        "clase_parametro":"Campo",
+				        "activo":1,
+				        "valor":null,
+				        "selected":false
+				      },
+				      {
+				        "id_parametro":1,
+				        "param":"oxigeno_disuelto",
+				        "parametro":"Oxigeno_disuelto",
+				        "id_tipo_parametro":1,
+				        "id_clase_parametro":1,
+				        "id_preservacion":1,
+				        "id_unidad":1,
+				        "id_metodo":1,
+				        "tipo_parametro":"Físicoquímico",
+				        "clase_parametro":"Campo",
+				        "activo":1,
+				        "valor":null,
+				        "selected":false
+				      },
+				      {
+				        "id_parametro":1,
+				        "param":"transparencia",
+				        "parametro":"Transparencia",
+				        "id_tipo_parametro":1,
+				        "id_clase_parametro":1,
+				        "id_preservacion":1,
+				        "id_unidad":1,
+				        "id_metodo":1,
+				        "tipo_parametro":"Físicoquímico",
+				        "clase_parametro":"Campo",
+				        "activo":1,
+				        "valor":null,
+				        "selected":false
+				      },
+				      {
+				        "id_parametro":1,
+				        "param":"cloro_residual",
+				        "parametro":"Cloro_residual",
+				        "id_tipo_parametro":1,
+				        "id_clase_parametro":1,
+				        "id_preservacion":1,
+				        "id_unidad":1,
+				        "id_metodo":1,
+				        "tipo_parametro":"Físicoquímico",
+				        "clase_parametro":"Campo",
+				        "activo":1,
+				        "valor":null,
+				        "selected":false
+				      },
+				      {
+				        "id_parametro":1,
+				        "param":"materia_flotante",
+				        "parametro":"Materia_flotante",
+				        "id_tipo_parametro":1,
+				        "id_clase_parametro":1,
+				        "id_preservacion":1,
+				        "id_unidad":1,
+				        "id_metodo":1,
+				        "tipo_parametro":"Físicoquímico",
+				        "clase_parametro":"Campo",
+				        "activo":1,
+				        "valor":null,
+				        "selected":false
+				      }
+				    ]
+				  },
+				  "punto_muestreo":
+				  {
+				    "id_punto_muestreo":1,
+				    "punto_muestreo":"Punto muestreo Prueba",
+				    "descripcion":"Descripción detallada del Punto de muestreo de Prueba",
+				    "id_municipio":14124,
+				    "municipio":"Zapotlanejo",
+				    "id_localidad":141240001,
+				    "localidad":"Zapotlanejo",
+				    "lat":23.123456,
+				    "lng":-103.654321
+				  },
+				  "parametros_campo":
+				  [
+
+				  ],
+				  "componentes":
+				  {
+				    "temp_1":0,
+				    "temp_2":0,
+				    "temp_3":0,
+				    "temp":0,
+				    "ph_1":0,
+				    "ph_2":0,
+				    "ph_3":0,
+				    "ph":0,
+				    "cond_1":0,
+				    "cond_2":0,
+				    "cond_3":0,
+				    "cond":0,
+				    "od_1":0,
+				    "od_2":0,
+				    "od_3":0,
+				    "od":0
+				  },
+				  "preservaciones":
+				  [
+				  ],
+				  "validaciones":
+				  [
+				    {
+
+				    }
+				  ],
+				  "cobertura_nubes":
+				  {
+				      "id_cobertura_nubes":1,
+				      "cobertura_nubes":"Despejado"
+				  },
+				  "direccion_viento":
+				  {
+				    "id_direccion_viento":1,
+				    "direccion_viento":"Norte"
+				  },
+				  "oleaje":
+				  {
+				    "id_oleaje":1,
+				    "oleaje":"Nulo"
+				  },
+				  "calibracion":
+				  {
+				    "id_calibracion":1,
+				    "bitacora":"BT-00-AAA-2134",
+				    "folio":"001",
+				    "ejercicio":"2014"
+				  },
+				  "verificacion":
+				  {
+				    "id_verificacion":1,
+				    "bitacora":"BT-00-AAA-2134",
+				    "folio":"001",
+				    "ejercicio":"2014"
+				  },
+				  "informe":
+				  {
+				  }
+				}
+			';
+		}
+		else {
+			$result = '
+				{
+				  "id_hoja_campo":0,
+				  "id_cliente":0,
+				  "id_solicitud":0,
+				  "id_cotizacion":0,
+				  "id_orden_muestreo":0,
+				  "id_plan_muestreo":0,
+				  "id_punto_muestreo":0,
+				  "id_metodo_muestreo":0,
+				  "id_responsable_muestreo":0,
+				  "id_tipo_muestreo":0,
+				  "id_matriz":0,
+				  "id_metodo":0,
+				  "id_cobertura_nubes":0,
+				  "id_direccion_viento":0,
+				  "id_oleaje":0,
+				  "id_calibracion":0,
+				  "id_verificacion":0,
+				  "id_informe":0,
+				  "id_estado":0,
+				  "id_municipio":0,
+				  "id_localidad":0,
+				  "fecha_captura":"",
+				  "fecha_acepta":"",
+				  "fecha_actualizacion":"",
+				  "fecha_valida":"",
+				  "fecha_firmado":"",
+				  "fecha_inicio":"",
+				  "fecha_fin":"",
+				  "hora_inicio":"",
+				  "hora_fin":"",
+				  "folio":0,
+				  "ejercicio":0,
+				  "aceptado":0,
+				  "validado":0,
+				  "firmado":0,
+				  "comentarios":"",
+				  "cobertura_nubes_otra":"",
+				  "colonia":"",
+				  "calle":"",
+				  "numero":"",
+				  "estado":"",
+				  "municipio":"",
+				  "localidad":""
+				}
+			';
+		}
+		return $result;
+	}
+
 	public function getReceptionists() {
 		//$sql = "SELECT
 		//		*
@@ -13234,6 +14010,10 @@ class DALSiclab
 			]
 		';
 		return $result;
+	}
+
+	public function getReceptions() {
+		return '[]';
 	}
 
 	public function getReception($receptionId) {
@@ -13607,6 +14387,10 @@ class DALSiclab
 		return $result;
 	}
 
+	public function getCustodies() {
+		return '[]';
+	}
+
 	public function getCustody($custodyId) {
 		return '{}';
 	}
@@ -13735,7 +14519,7 @@ class DALSiclab
 						"id_cliente":1,
 						"id_organismo":1,
 						"cliente":"CEA Jalisco",
-						"area":"Dirección de Operación de PTAR\'S",
+						"area":"Dirección de Operación de PTARS",
 						"rfc":"Registro Federal de Contribuyentes",
 						"calle":"Av. Brasilia",
 						"numero":"2970",
@@ -13825,7 +14609,7 @@ class DALSiclab
 							"id_cliente":1,
 							"id_organismo":1,
 							"cliente":"CEA Jalisco",
-							"area":"Dirección de Operación de PTAR\'S",
+							"area":"Dirección de Operación de PTARS",
 							"rfc":"Registro Federal de Contribuyentes",
 							"calle":"Av. Brasilia",
 							"numero":"2970",
@@ -13893,7 +14677,7 @@ class DALSiclab
 								"id_cliente":1,
 								"id_organismo":1,
 								"cliente":"CEA Jalisco",
-								"area":"Dirección de Operación de PTAR\'S",
+								"area":"Dirección de Operación de PTARS",
 								"rfc":"Registro Federal de Contribuyentes",
 								"calle":"Av. Brasilia",
 								"numero":"2970",

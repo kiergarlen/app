@@ -547,12 +547,12 @@
     vm.selectRow = selectRow;
 
     function addFieldSheet() {
-      $location.path('/recepcion/recepcion/0');
+      $location.path('/recepcion/hoja/0');
     }
 
     function selectRow(e) {
       var itemId = e.currentTarget.id.split('Id')[1];
-      $location.path('/recepcion/recepcion/' + itemId);
+      $location.path('/recepcion/hoja/' + itemId);
     }
   }
 
@@ -581,11 +581,11 @@
    * @param {Object} PreservationService - Proveedor de datos, Preservaciones
    * @param {Object} FieldSheetService - Proveedor de datos, Hojas de campo
    */
-  function FieldSheetController(CloudService, WindService, WaveService,
-    SamplingNormService, PointService, FieldParameterService,
-    PreservationService, FieldSheetService) {
+  function FieldSheetController($routeParams, CloudService, WindService,
+    WaveService, SamplingNormService, PointService,
+    FieldParameterService, PreservationService, FieldSheetService) {
     var vm = this;
-    vm.fieldSheet = FieldSheetService.query();
+    vm.fieldSheet = FieldSheetService.query({sheetId: $routeParams.sheetId});
     vm.cloudCovers = CloudService.query();
     vm.windDirections = WindService.query();
     vm.waveIntensities = WaveService.query();
@@ -760,10 +760,44 @@
     .module('siclabApp')
     .controller('FieldSheetController',
       [
-        'CloudService', 'WindService', 'WaveService',
-        'SamplingNormService', 'PointService', 'FieldParameterService',
-        'PreservationService', 'FieldSheetService',
+        '$routeParams', 'CloudService', 'WindService',
+        'WaveService', 'SamplingNormService', 'PointService',
+        'FieldParameterService', 'PreservationService', 'FieldSheetService',
         FieldSheetController
+      ]
+    );
+
+  // ReceptionsListController.js
+  /**
+   * @name ReceptionsListController
+   * @constructor
+   * @desc Controla la vista para el listado de Recepciones
+   * @this {Object} $scope - Contenedor para el modelo [AngularJS]
+   * @param {Object} $location - Manejo de URL [AngularJS]
+   * @param {Object} ReceptionsListService - Proveedor de datos, Recepciones
+   */
+  function ReceptionsListController($location, ReceptionsListService) {
+    var vm = this;
+    vm.receptions = ReceptionsListService.query();
+    vm.addReception = addReception;
+    vm.selectRow = selectRow;
+
+    function addReception() {
+      $location.path('/recepcion/recepcion/0');
+    }
+
+    function selectRow(e) {
+      var itemId = e.currentTarget.id.split('Id')[1];
+      $location.path('/recepcion/recepcion/' + itemId);
+    }
+  }
+
+  angular
+    .module('siclabApp')
+    .controller('ReceptionsListController',
+      [
+        '$location', 'ReceptionsListService',
+        ReceptionsListController
       ]
     );
 
@@ -776,10 +810,10 @@
    * @param {Object} ReceptionistService - Proveedor de datos, Recepcionistas
    * @param {Object} ReceptionService - Proveedor de datos, Recepción muestras
    */
-  function ReceptionController(ReceptionistService, ReceptionService) {
+  function ReceptionController($routeParams, ReceptionistService, ReceptionService) {
     var vm = this;
     vm.receptionists = ReceptionistService.query();
-    vm.reception = ReceptionService.query();
+    vm.reception = ReceptionService.query({receptionId: $routeParams.sheetId});
 
     vm.selectReceptionist = selectReceptionist;
     vm.validateReceptionForm = validateReceptionForm;
@@ -811,8 +845,41 @@
     .module('siclabApp')
     .controller('ReceptionController',
       [
-        'ReceptionistService', 'ReceptionService',
+        '$routeParams', 'ReceptionistService', 'ReceptionService',
         ReceptionController
+      ]
+    );
+
+  /**
+   * @name CustodiesListController
+   * @constructor
+   * @desc Controla la vista para el listado de Cadenas de custodia
+   * @this {Object} $scope - Contenedor para el modelo [AngularJS]
+   * @param {Object} $location - Manejo de URL [AngularJS]
+   * @param {Object} CustodiesListService - Proveedor de datos, Cadenas de custodia
+   */
+  function CustodiesListController($location, CustodiesListService) {
+    var vm = this;
+    vm.custodies = CustodiesListService.query();
+    vm.addCustody = addCustody;
+    vm.selectRow = selectRow;
+
+    function addCustody() {
+      $location.path('/recepcion/custodia/0');
+    }
+
+    function selectRow(e) {
+      var itemId = e.currentTarget.id.split('Id')[1];
+      $location.path('/recepcion/custodia/' + itemId);
+    }
+  }
+
+  angular
+    .module('siclabApp')
+    .controller('CustodiesListController',
+      [
+        '$location', 'CustodiesListService',
+        CustodiesListController
       ]
     );
 
@@ -829,7 +896,7 @@
    * @param {Object} CheckerService - Proveedor de datos, Responsables verificación
    * @param {Object} CustodyService - Proveedor de datos, Cadenas custodia
    */
-  function CustodyController(PreservationService, ExpirationService,
+  function CustodyController($routeParams, PreservationService, ExpirationService,
     RequiredVolumeService, ContainerKindsService, CheckerService,
     CustodyService) {
     var vm = this;
@@ -838,7 +905,7 @@
     vm.volumes = RequiredVolumeService.query();
     vm.containers = ContainerKindsService.query();
     vm.checkers = CheckerService.query();
-    vm.custody = CustodyService.query();
+    vm.custody = CustodyService.query({custodyId: $routeParams.custodyId});
 
     vm.selectChecker = selectChecker;
 
@@ -877,8 +944,9 @@
     .module('siclabApp')
     .controller('CustodyController',
       [
-        'PreservationService', 'ExpirationService', 'RequiredVolumeService',
-        'ContainerKindsService', 'CheckerService', 'CustodyService',
+        '$routeParams', 'PreservationService', 'ExpirationService',
+        'RequiredVolumeService', 'ContainerKindsService', 'CheckerService',
+        'CustodyService',
         CustodyController
       ]
     );
@@ -1095,37 +1163,37 @@
       ]
     );
 
-  // ReportApprovalController.js
+  // ReportController.js
   /**
-   * @name ReportApprovalController
+   * @name ReportController
    * @constructor
-   * @desc Controla la vista para validación Reporte
+   * @desc Controla la vista para Reporte
    * @this {Object} $scope - Contenedor para el modelo [AngularJS]
-   * @param {Object} ReportApprovalService - Proveedor de datos, validación Reporte
+   * @param {Object} $routeParams - Proveedor de parámetros de ruta
+   * @param {Object} ReportService - Proveedor de datos, Reporte
    */
-  function ReportApprovalController(ReportApprovalService) {
+  function ReportController($routeParams, ReportService) {
     var vm = this;
-    vm.reportApproval = ReportApprovalService.query();
+    vm.report = ReportService.query();
 
+    vm.validateReportForm = validateReportForm;
+    vm.submitReportForm = submitReportForm;
 
-    vm.validateReportApprovalForm = validateReportApprovalForm;
-    vm.submitReportApprovalForm = submitReportApprovalForm;
-
-    function validateReportApprovalForm() {
+    function validateReportForm() {
 
     }
 
-    function submitReportApprovalForm() {
+    function submitReportForm() {
 
     }
   }
 
   angular
     .module('siclabApp')
-    .controller('ReportApprovalController',
+    .controller('ReportController',
       [
-        'ReportApprovalService',
-        ReportApprovalController
+        'ReportService',
+        ReportController
       ]
     );
 

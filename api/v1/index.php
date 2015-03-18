@@ -506,11 +506,11 @@ $app->get("/parameters/field", function() use ($app) {
 		$app->response()->header('X-Status-Reason', $e->getMessage());
 	}
 });
-/*
-$app->get("/fieldsheets/:fieldsheetId", function($fieldsheetId) use ($app) {
+
+$app->get("/sheets/:sheetId", function($sheetId) use ($app) {
 	try {
 		$userId = (validateTokenUser($app)) ? validateTokenUser($app) : 0;
-		$menu = \Service\DALSiclab::getInstance()->getFieldsheet($fieldsheetId);
+		$menu = \Service\DALSiclab::getInstance()->getFieldsheet($sheetId);
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
 		echo $menu;
@@ -520,7 +520,7 @@ $app->get("/fieldsheets/:fieldsheetId", function($fieldsheetId) use ($app) {
 	}
 });
 
-$app->get("/fieldsheets", function() use ($app) {
+$app->get("/sheets", function() use ($app) {
 	try {
 		$userId = (validateTokenUser($app)) ? validateTokenUser($app) : 0;
 		$menu = \Service\DALSiclab::getInstance()->getFieldsheets();
@@ -532,7 +532,7 @@ $app->get("/fieldsheets", function() use ($app) {
 		$app->response()->header('X-Status-Reason', $e->getMessage());
 	}
 });
-*/
+
 $app->get("/receptionists", function() use ($app) {
 	try {
 		$userId = (validateTokenUser($app)) ? validateTokenUser($app) : 0;
@@ -545,7 +545,7 @@ $app->get("/receptionists", function() use ($app) {
 		$app->response()->header('X-Status-Reason', $e->getMessage());
 	}
 });
-/*
+
 $app->get("/receptions/:receptionId", function($receptionId) use ($app) {
 	try {
 		$userId = (validateTokenUser($app)) ? validateTokenUser($app) : 0;
@@ -571,7 +571,7 @@ $app->get("/receptions", function() use ($app) {
 		$app->response()->header('X-Status-Reason', $e->getMessage());
 	}
 });
-*/
+
 $app->get("/expirations", function() use ($app) {
 	try {
 		$userId = (validateTokenUser($app)) ? validateTokenUser($app) : 0;
@@ -610,7 +610,7 @@ $app->get("/checkers", function() use ($app) {
 		$app->response()->header('X-Status-Reason', $e->getMessage());
 	}
 });
-/*
+
 $app->get("/custodies/:custodyId", function($cutodyId) use ($app) {
 	try {
 		$userId = (validateTokenUser($app)) ? validateTokenUser($app) : 0;
@@ -636,7 +636,7 @@ $app->get("/custodies", function() use ($app) {
 		$app->response()->header('X-Status-Reason', $e->getMessage());
 	}
 });
-*/
+
 $app->get("/samples", function() use ($app) {
 	try {
 		$userId = (validateTokenUser($app)) ? validateTokenUser($app) : 0;

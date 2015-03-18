@@ -912,20 +912,48 @@
     ]
   );
 
+  // FieldSheetsListService.js
+  /**
+   * @name FieldSheetsListService
+   * @constructor
+   * @desc Proveedor de datos, lista de Hojas campo
+   * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
+   * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
+   */
+  function FieldSheetsListService($resource, $window) {
+    return $resource(API_BASE_URL + 'sheets', {}, {
+      query: {
+        method:'GET',
+        params:{},
+        isArray:true,
+        headers: {
+          'Auth-Token' : $window.localStorage.getItem('siclab-token')
+        }
+      }
+    });
+  }
+
+  angular
+    .module('siclabApp')
+    .factory('FieldSheetsListService', [
+      '$resource', '$window',
+      FieldSheetsListService
+    ]
+  );
+
   // FieldSheetService.js
   /**
    * @name FieldSheetService
    * @constructor
-   * @desc Proveedor de datos, Hojas campo
+   * @desc Proveedor de datos, Hoja campo
    * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
    */
   function FieldSheetService($resource, $window) {
-    //return $resource(API_BASE_URL + 'fieldsheets/:fieldsheetId', {}, {
-    return $resource('models/field_sheets/1.json', {}, {
+    return $resource(API_BASE_URL + 'sheets/:sheetId', {}, {
       query: {
         method:'GET',
-        params:{},
+        params:{sheetId: 'id_hoja_campo'},
         isArray:false,
         headers: {
           'Auth-Token' : $window.localStorage.getItem('siclab-token')
@@ -971,6 +999,35 @@
     ]
   );
 
+  // ReceptionsListService.js
+  /**
+   * @name ReceptionsListService
+   * @constructor
+   * @desc Proveedor de datos, lista de Recepciones
+   * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
+   * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
+   */
+  function ReceptionsListService($resource, $window) {
+    return $resource(API_BASE_URL + 'receptions', {}, {
+      query: {
+        method:'GET',
+        params:{},
+        isArray:true,
+        headers: {
+          'Auth-Token' : $window.localStorage.getItem('siclab-token')
+        }
+      }
+    });
+  }
+
+  angular
+    .module('siclabApp')
+    .factory('ReceptionsListService', [
+      '$resource', '$window',
+      ReceptionsListService
+    ]
+  );
+
   // ReceptionService.js
   /**
    * @name ReceptionService
@@ -980,11 +1037,10 @@
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
    */
   function ReceptionService($resource, $window) {
-    //return $resource(API_BASE_URL + 'receptions/:receptionId', {}, {
-    return $resource('models/sampling/samples/1.json', {}, {
+    return $resource(API_BASE_URL + 'receptions/:receptionId', {}, {
       query: {
         method:'GET',
-        params:{},
+        params:{receptionId: 'id_recepcion'},
         isArray:false,
         headers: {
           'Auth-Token' : $window.localStorage.getItem('siclab-token')
@@ -1088,6 +1144,35 @@
     ]
   );
 
+  // CustodiesListService.js
+  /**
+   * @name CustodiesListService
+   * @constructor
+   * @desc Proveedor de datos, lista de Cadenas de custodia
+   * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
+   * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
+   */
+  function CustodiesListService($resource, $window) {
+    return $resource(API_BASE_URL + 'custodies', {}, {
+      query: {
+        method:'GET',
+        params:{},
+        isArray:true,
+        headers: {
+          'Auth-Token' : $window.localStorage.getItem('siclab-token')
+        }
+      }
+    });
+  }
+
+  angular
+    .module('siclabApp')
+    .factory('CustodiesListService', [
+      '$resource', '$window',
+      CustodiesListService
+    ]
+  );
+
   // CustodyService.js
   /**
    * @name CustodyService
@@ -1097,11 +1182,10 @@
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
    */
   function CustodyService($resource, $window) {
-    //return $resource(API_BASE_URL + 'custodies/:custodyId', {}, {
-    return $resource('models/custodies/100.json', {}, {
+    return $resource(API_BASE_URL + 'custodies/:custodyId', {}, {
       query: {
         method:'GET',
-        params:{},
+        params:{custodyId: 'id_custodia'},
         isArray:false,
         headers: {
           'Auth-Token' : $window.localStorage.getItem('siclab-token')
@@ -1321,20 +1405,19 @@
     ]
   );
 
-  // ReportApprovalService.js
+  // ReportService.js
   /**
-   * @name ReportApprovalService
+   * @name ReportService
    * @constructor
-   * @desc Proveedor de datos, validación Reporte
+   * @desc Proveedor de datos, Reporte
    * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
    */
-  function ReportApprovalService($resource, $window) {
-    //return $resource(API_BASE_URL + 'reports/:reportId', {}, {
-    return $resource('models/report.json', {}, {
+  function ReportService($resource, $window) {
+    return $resource(API_BASE_URL + 'reports/:reportId', {}, {
       query: {
         method:'GET',
-        params:{},
+        params:{reportId: 'id_reporte'},
         isArray:true,
         headers: {
           'Auth-Token' : $window.localStorage.getItem('siclab-token')
@@ -1345,9 +1428,9 @@
 
   angular
     .module('siclabApp')
-    .factory('ReportApprovalService', [
+    .factory('ReportService', [
       '$resource', '$window',
-      ReportApprovalService
+      ReportService
     ]
   );
 

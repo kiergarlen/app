@@ -70,10 +70,10 @@
       }).
       when('/recepcion/hojas', {
         templateUrl: 'partials/recepcion/hojas.html',
-        controller: 'FieldSheetListController',
+        controller: 'FieldSheetsListController',
         controllerAs: 'fieldSheets'
       }).
-      when('/recepcion/hoja/:fieldId', {
+      when('/recepcion/hoja/:sheetId', {
         templateUrl: 'partials/recepcion/hoja.html',
         controller: 'FieldSheetController',
         controllerAs: 'fieldSheet'
@@ -118,30 +118,25 @@
         controller: 'ContainersListController',
         controllerAs: 'containersList'
       }).
-      when('/analisis/:analysisId', {
+      when('/analisis/analisis/:analysisId', {
         templateUrl: 'partials/analisis/analisis.html',
         controller: 'AnalysisController',
         controllerAs: 'analysis'
       }).
-      when('/analisis', {
+      when('/analisis/analisis', {
         templateUrl: 'partials/analisis/consulta.html',
         controller: 'AnalysisListController',
         controllerAs: 'analysisList'
-      }).
-      when('/reporte/reportes', {
-        templateUrl: 'partials/reporte/reportes.html',
-        controller: 'ReportsListController',
-        controllerAs: 'reportsList'
       }).
       when('/reporte/reporte/:reportId', {
         templateUrl: 'partials/reporte/reporte.html',
         controller: 'ReportController',
         controllerAs: 'report'
       }).
-      when('/reporte/validar', {
-        templateUrl: 'partials/reporte/validar.html',
-        controller: 'ReportApprovalController',
-        controllerAs: 'reportApproval'
+      when('/reporte/reportes', {
+        templateUrl: 'partials/reporte/reportes.html',
+        controller: 'ReportsListController',
+        controllerAs: 'reportsList'
       }).
       when('/catalogo/puntos', {
         templateUrl: 'partials/catalogo/puntos.html',

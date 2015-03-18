@@ -1,48 +1,104 @@
+    <siclab-menu></siclab-menu>
+    <siclab-banner></siclab-banner>
+    <div class="container-fluid">
       <div class="row">
-        <div class="col-xs-12">
-          <h2 class="page-header">Muestras</h2>
-        </div>
+        <div class="col-xs-12 col-lg-8 col-lg-offset-2 main item-themed-z2">
+          <div class="view-container">
+
+<div class="row">
+  <div class="col-xs-12">
+    <h2 class="page-header">Recepciones de muestras</h2>
+  </div>
+</div>
+<div class="row">
+  <div class="col-xs-12">
+    <button type="submit" class="btn btn-primary"
+      value="Nueva" title="Nueva"
+      data-ng-click="receptions.addReception()"
+      >
+      <i class="glyphicon glyphicon-plus" aria-hidden="true"></i>
+      Nueva Recepción Muestra
+    </button>
+    <br>
+  </div>
+</div>
+<form class="form" role="form"
+  name="clientsForm"
+  novalidate
+  >
+  <div class="row">
+    <div class="col-xs-12">
+      <h4>Búsqueda</h4>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12 col-sm-8">
+      <label for="receptionSearch" class="sr-only">
+        Ingrese una búsqueda (Municipio, Localidad, Calle, etc.)
+      </label>
+      <input type="text"
+        class="form-control"
+        placeholder="Ingrese una búsqueda (Municipio, Localidad, Calle, etc.)"
+        id="receptionSearch"
+        name="receptionSearch"
+        data-ng-model="receptions.filter.$">
+      <br>
+    </div>
+  </div>
+</form>
+<div class="row">
+  <div class="col-xs-12">
+    <div class="panel">
+      <div class="panel-heading">
+        <h3 class="panel-title">Recepciones</h3>
       </div>
-      <div class="row">
-        <div class="col-xs-12">
-          <div class="panel">
-            <div class="panel-heading">
-              <h3 class="panel-title">Muestras</h3>
-              <!--
-              <h3 class="sub-header">Muestras</h3>
-              -->
-            </div>
-            <div class="table-responsive">
-              <table class="table table-hover table-striped" id="clientsList" ng-controller="ClientsListCtrl">
-                <thead>
-                  <tr>
-                    <th>Cliente</th>
-                    <th>Contacto</th>
-                    <th>Domicilio</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr ng-repeat="item in clients" id="clientId{{item.id_cliente}}">
-                    <td>
-                      <h6>{{item.cliente}}</h6>
-                      <span class="text-muted" ng-show="item.area.length > 0">{{item.area}}</span>
-                      <span class="label label-default" ng-show="item.interno < 1">Externo</span>
-                    </td>
-                    <td>
-                      {{item.contacto}}<br>
-                      <a href="mailto:{{item.email}}" ng-show="item.email.length > 0">{{item.email}}</a><br>
-                      {{item.tel}}
-                    </td>
-                    <td>
-                      {{item.calle}}, {{item.numero}}<br>
-                      {{item.colonia}}<br>
-                      {{item.localidad}}, {{item.estado}}<br>
-                      CP {{item.cp}}
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
+      <div class="table-responsive">
+        <table class="table table-hover table-condensed"
+          id="receptionsList">
+          <thead>
+            <tr>
+              <th>Id Recepción</th>
+              <th>Status</th>
+              <th>Muestra</th>
+              <th>Fecha Muestreo</th>
+              <th>Fecha Recepción</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              data-ng-repeat="item in receptions.receptions
+              | filter:receptions.filter.$"
+              id="receptionId{{item.id_recepcion}}"
+              data-ng-click="receptions.selectRow($event)">
+              <td>
+                {{item.id_recepcion}}
+              </td>
+              <td>
+                <span class="label label-info"
+                  data-ng-show="item.validado > 0">Validada</span>
+                <span class="label label-default"
+                  data-ng-show="item.validado < 1">Sin Validar</span>
+              </td>
+              <td>
+                {{item.calle}}
+              </td>
+              <td>
+                {{item.fecha_muestreo}}
+              </td>
+              <td>
+                {{item.fecha_recepcion}}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
           </div>
-        </div>
-      </div>
+          <siclab-footer></siclab-footer>
+        </div><!-- view-container -->
+      </div><!-- row -->
+    </div><!-- container -->
+    <siclab-banner-bottom></siclab-banner-bottom>

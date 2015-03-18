@@ -67,7 +67,7 @@
             <tr
               data-ng-repeat="item in plans.plans
               | filter:plans.filter.$"
-              id="planId{{item.id_solicitud}}"
+              id="planId{{item.id_plan}}"
               data-ng-click="plans.selectRow($event)">
               <td>
                 {{item.id_plan}}
@@ -90,6 +90,7 @@
               </td>
               <td>
                 {{item.fecha_plan}}
+              </td>
             </tr>
           </tbody>
         </table>

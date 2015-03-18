@@ -60,6 +60,7 @@
               <th>Id Plan</th>
               <th>Status</th>
               <th>Ubicación</th>
+              <th>Fecha</th>
             </tr>
           </thead>
           <tbody>
@@ -78,14 +79,17 @@
                   data-ng-show="item.validado < 1">Sin Validar</span>
               </td>
               <td>
+                <!--
                 <span class="label label-default">
                   {{item.id_municipio}}
                 </span><br>
-                {{item.municipio}}
-                <br>
+                -->
                 {{item.calle}}
-                {{item.numero}}
+                {{item.numero}},
+                {{item.municipio}}
               </td>
+              <td>
+                {{item.fecha_plan}}
             </tr>
           </tbody>
         </table>

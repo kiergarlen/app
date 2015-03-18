@@ -42,7 +42,7 @@ $app->post("/login", function() use ($app) {
 		$token["upt"] = $userPass;
 		$token["uid"] = $userId;
 		$token["ulv"] = $userLv;
-		$token["cip"] = $request->getIp();
+		$token["cip"] = $request->getIp() . "";
 		$token["iss"] = $request->getUrl();
 		$token["aud"] = "siclab.ceajalisco.gob.mx";
 		$token["iat"] = time();
@@ -277,6 +277,45 @@ $app->get("/point/kinds", function() use ($app) {
 	try {
 		$userId = (validateTokenUser($app)) ? validateTokenUser($app) : 0;
 		$menu = \Service\DALSiclab::getInstance()->getPointKinds();
+		$app->response()->status(200);
+		$app->response()->header('Content-Type', 'application/json');
+		echo $menu;
+	} catch (Exception $e) {
+		$app->response()->status(400);
+		$app->response()->header('X-Status-Reason', $e->getMessage());
+	}
+});
+
+$app->get("/districts/:districtId", function($districtId) use ($app) {
+	try {
+		$userId = (validateTokenUser($app)) ? validateTokenUser($app) : 0;
+		$menu = \Service\DALSiclab::getInstance()->getDistrict($districtId);
+		$app->response()->status(200);
+		$app->response()->header('Content-Type', 'application/json');
+		echo $menu;
+	} catch (Exception $e) {
+		$app->response()->status(400);
+		$app->response()->header('X-Status-Reason', $e->getMessage());
+	}
+});
+
+$app->get("/districts", function() use ($app) {
+	try {
+		$userId = (validateTokenUser($app)) ? validateTokenUser($app) : 0;
+		$menu = \Service\DALSiclab::getInstance()->getDistricts();
+		$app->response()->status(200);
+		$app->response()->header('Content-Type', 'application/json');
+		echo $menu;
+	} catch (Exception $e) {
+		$app->response()->status(400);
+		$app->response()->header('X-Status-Reason', $e->getMessage());
+	}
+});
+
+$app->get("/districts/cities/:districtId", function($districtId) use ($app) {
+	try {
+		$userId = (validateTokenUser($app)) ? validateTokenUser($app) : 0;
+		$menu = \Service\DALSiclab::getInstance()->getCitiesByDistrictId($districtId);
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
 		echo $menu;

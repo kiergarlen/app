@@ -464,7 +464,7 @@
     vm.objectives = PlanObjectivesService.query();
     vm.pointKinds = PointKindsService.query();
     vm.districts = DistrictService.query();
-    vm.cities = CityService.query({cityId: vm.plan.id_municipio});
+    vm.cities = [];
     vm.samplingSupervisors = SamplingSupervisorService.query();
     vm.samplingEmployees = SamplingEmployeeService.query();
     vm.preservations = PreservationService.query();
@@ -513,7 +513,8 @@
     }
 
     function selectDistrict() {
-      vm.cities = CityService.query({cityId: vm.plan.id_municipio});
+      vm.plan.id_municipio = parseInt(vm.plan.id_municipio);
+      vm.cities = CityService.query({districtId: vm.plan.id_municipio});
     }
   }
 

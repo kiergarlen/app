@@ -109,7 +109,7 @@ class DALSiclab
 								"id_submenu":4,
 								"id_menu":2,
 								"orden":1,
-								"url":"/recepcion/campo",
+								"url":"/recepcion/hojas",
 								"label":"Hoja Campo",
 								"activo":1
 							},
@@ -117,7 +117,7 @@ class DALSiclab
 								"id_submenu":5,
 								"id_menu":2,
 								"orden":1,
-								"url":"/recepcion/muestra",
+								"url":"/recepcion/recepciones",
 								"label":"Recepción Muestras",
 								"activo":1
 							},
@@ -125,7 +125,7 @@ class DALSiclab
 								"id_submenu":7,
 								"id_menu":2,
 								"orden":4,
-								"url":"/recepcion/custodia",
+								"url":"/recepcion/custodias",
 								"label":"Cadena Custodia",
 								"activo":1
 							}
@@ -9016,9 +9016,9 @@ class DALSiclab
 					"id_orden":0,
 					"id_tipo_muestreo":0,
 					"id_objetivo_plan":0,
-					"id_estado":0,
-					"id_municipio":0,
-					"id_localidad":0,
+					"id_estado":14,
+					"id_municipio":14039,
+					"id_localidad":140390001,
 					"id_supervisor_muestreo":0,
 					"id_supervisor_recoleccion":0,
 					"id_supervisor_registro":0,
@@ -10707,6 +10707,101 @@ class DALSiclab
 				}
 			]
 		';
+		return $result;
+	}
+
+	public function getDistrict($districtId) {
+		//$sql = "SELECT
+		//		*
+		//	FROM
+		//		municipio
+		// WHERE
+		//		id_municipio := $districtId";
+		//return self::getAllRows($sql);
+		if ($districtId == 14001)
+		{
+			$result = '
+				{
+					"id_municipio":14001,
+					"municipio":"Acatic"
+				}
+			';
+		}
+		else if ($districtId == 14039)
+		{
+			$result = '
+				{
+					"id_municipio":14039,
+					"municipio":"Guadalajara"
+				},
+			';
+		}
+		else
+		{
+			$result = '
+					{
+						"id_municipio":0,
+						"municipio":"0"
+					}
+			';
+		}
+		return $result;
+	}
+
+	public function getCitiesByDistrictId($districtId) {
+		//$sql = "SELECT
+		//		*
+		//	FROM
+		//		municipio
+		// WHERE
+		//		id_municipio := $districtId";
+		//return self::getAllRows($sql);
+		if ($districtId == 14001)
+		{
+			$result = '
+				[
+					{
+						"id_municipio":14001,
+						"id_localidad":14001001,
+						"localidad":"Acatic"
+					}
+				]
+			';
+		}
+		else if ($districtId == 14030)
+		{
+			$result = '
+				[
+					{
+						"id_municipio":14030,
+						"id_localidad":14030001,
+						"localidad":"Chapala"
+					}
+				]
+			';
+		}
+		else if ($districtId == 14039)
+		{
+			$result = '
+				[
+					{
+						"id_municipio":14039,
+						"id_localidad":14039001,
+						"localidad":"Guadalajara"
+					}
+				]
+			';
+		}
+		else
+		{
+			$result = '
+					{
+						"id_municipio":0,
+						"id_localidad":0,
+						"localidad":"0"
+					}
+			';
+		}
 		return $result;
 	}
 

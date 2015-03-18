@@ -158,7 +158,7 @@
         name="districtSelect"
         required
         data-ng-model="plan.plan.id_municipio"
-        data-ng-change="plan.plan.selectDistrict()"
+        data-ng-change="plan.selectDistrict($event)"
         >
         <option value="">
           Seleccione una opción

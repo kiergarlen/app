@@ -68,35 +68,35 @@
         controller: 'PlanController',
         controllerAs: 'plan'
       }).
-      when('/recepcion/campo/:fieldId', {
-        templateUrl: 'partials/recepcion/campo.html',
-        controller: 'FieldSheetController',
-        controllerAs: 'fieldSheet'
-      }).
-      when('/recepcion/campos', {
-        templateUrl: 'partials/recepcion/campos.html',
+      when('/recepcion/hojas', {
+        templateUrl: 'partials/recepcion/hojas.html',
         controller: 'FieldSheetListController',
         controllerAs: 'fieldSheets'
       }).
-      when('/recepcion/recepcion/:receptionId', {
-        templateUrl: 'partials/recepcion/recepcion.html',
-        controller: 'ReceptionController',
-        controllerAs: 'reception'
+      when('/recepcion/hoja/:fieldId', {
+        templateUrl: 'partials/recepcion/hoja.html',
+        controller: 'FieldSheetController',
+        controllerAs: 'fieldSheet'
       }).
       when('/recepcion/recepciones', {
         templateUrl: 'partials/recepcion/recepciones.html',
         controller: 'ReceptionsListController',
         controllerAs: 'receptions'
       }).
-      when('/recepcion/custodia/:custodyId', {
-        templateUrl: 'partials/recepcion/custodia.html',
-        controller: 'CustodyController',
-        controllerAs: 'custody'
+      when('/recepcion/recepcion/:receptionId', {
+        templateUrl: 'partials/recepcion/recepcion.html',
+        controller: 'ReceptionController',
+        controllerAs: 'reception'
       }).
       when('/recepcion/custodias', {
         templateUrl: 'partials/recepcion/custodias.html',
         controller: 'CustodiesListController',
         controllerAs: 'custodies'
+      }).
+      when('/recepcion/custodia/:custodyId', {
+        templateUrl: 'partials/recepcion/custodia.html',
+        controller: 'CustodyController',
+        controllerAs: 'custody'
       }).
       when('/inventario/muestras', {
         templateUrl: 'partials/inventario/muestras.html',
@@ -128,15 +128,15 @@
         controller: 'AnalysisListController',
         controllerAs: 'analysisList'
       }).
-      when('/reporte/reporte/:reportId', {
-        templateUrl: 'partials/reporte/reporte.html',
-        controller: 'ReportController',
-        controllerAs: 'report'
-      }).
       when('/reporte/reportes', {
         templateUrl: 'partials/reporte/reportes.html',
         controller: 'ReportsListController',
         controllerAs: 'reportsList'
+      }).
+      when('/reporte/reporte/:reportId', {
+        templateUrl: 'partials/reporte/reporte.html',
+        controller: 'ReportController',
+        controllerAs: 'report'
       }).
       when('/reporte/validar', {
         templateUrl: 'partials/reporte/validar.html',
@@ -148,15 +148,15 @@
         controller: 'PointsListController',
         controllerAs: 'pointsList'
       }).
-      when('/catalogo/cliente/:clientId', {
-        templateUrl: 'partials/catalogo/cliente.html',
-        controller: 'ClientDetailController',
-        controllerAs: 'clientDetail'
-      })
       when('/catalogo/clientes', {
         templateUrl: 'partials/catalogo/clientes.html',
         controller: 'ClientsListController',
         controllerAs: 'clients'
+      }).
+      when('/catalogo/cliente/:clientId', {
+        templateUrl: 'partials/catalogo/cliente.html',
+        controller: 'ClientDetailController',
+        controllerAs: 'clientDetail'
       }).
       when('/catalogo/areas', {
         templateUrl: 'partials/catalogo/areas.html',

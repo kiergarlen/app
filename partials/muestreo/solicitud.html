@@ -233,6 +233,24 @@
       </div>
     </div>
   </div>
+  <div class="row"
+    data-ng-show="order.user.id_nivel">
+    <div class="col-xs-12">
+      <a class="btn btn-success"
+        value="Validar" title="Validar"
+        data-ng-click="quote.validateQuote(quote.quote.id_solicitud)"
+        >
+        <i class="glyphicon glyphicon-ok-circle" aria-hidden="true"></i>
+        Validar
+      </a>
+      <a class="btn btn-danger"
+        value="Rechazar" title="Rechazar"
+        data-ng-click="quote.rejectQuote(quote.quote.id_solicitud)"
+        >
+        <i class="glyphicon glyphicon-ban-circle" aria-hidden="true"></i>
+        Rechazar
+      </a>
+    </div>
   <br>
   <button type="submit" class="btn btn-primary"
     value="Guardar" title="Guardar"

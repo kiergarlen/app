@@ -60,7 +60,7 @@
               <th>Id Sol.</th>
               <th>Status</th>
               <th>Cliente</th>
-              <th>Fecha</th>
+              <th>Acciones</th>
             </tr>
           </thead>
           <tbody>
@@ -68,7 +68,7 @@
               data-ng-repeat="item in quotes.quotes
               | filter:quotes.filter.$"
               id="quoteId{{item.id_solicitud}}"
-              data-ng-click="quotes.selectRow($event)">
+              >
               <td>
                 {{item.id_solicitud}}
               </td>
@@ -90,7 +90,18 @@
                 {{item.cliente.contacto}}
               </td>
               <td>
-                {{item.fecha_solicitud}}
+                <a class="btn btn-default"
+                  value="Consultar" title="Consultar"
+                  data-ng-click="quotes.viewQuote(item.id_solicitud)"
+                  >
+                  <i class="glyphicon glyphicon-eye-open" aria-hidden="true"></i>
+                </a>
+                <a class="btn btn-info"
+                  value="Enviar a orden" title="Enviar a orden"
+                  data-ng-click="quotes.sendToOrder(item.id_solicitud)"
+                  >
+                  <i class="glyphicon glyphicon-chevron-right" aria-hidden="true"></i>
+                </a>
               </td>
             </tr>
           </tbody>

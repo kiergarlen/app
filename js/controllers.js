@@ -135,14 +135,15 @@
     var vm = this;
     vm.quotes = QuotesListService.query();
     vm.addQuote = addQuote;
-    vm.selectRow = selectRow;
+    vm.viewQuote = viewQuote;
 
     function addQuote() {
       $location.path('/muestreo/solicitud/0');
     }
 
-    function selectRow(e) {
-      var itemId = e.currentTarget.id.split('Id')[1];
+    function viewQuote(id) {
+      var itemId = parseInt(id);
+      //var itemId = e.currentTarget.id.split('Id')[1];
       $location.path('/muestreo/solicitud/' + itemId);
     }
   }

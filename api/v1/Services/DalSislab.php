@@ -38,28 +38,6 @@ class DALSislab
 		//	ORDER BY
 		//		order";
 		//return self::getAllRows($sql);
-		$result = '
-			[
-				{
-					"id_menu":7,
-					"orden":7,
-					"url":"/#",
-					"label":"Administración",
-					"activo":1,
-					"submenu":
-					[
-						{
-							"id_submenu":26,
-							"id_menu":7,
-							"orden":3,
-							"url":"/sistema/logout",
-							"label":"Cerrar sesión",
-							"activo":1
-						}
-					]
-				}
-			]
-		';
 		if ($userId == 1) {
 			$result = '
 				[
@@ -320,7 +298,7 @@ class DALSislab
 				]
 			';
 		}
-		if ($userId == 20)
+		else if ($userId == 20)
 		{
 			$result = '
 				[
@@ -450,6 +428,31 @@ class DALSislab
 								"label":"Ver Perfil",
 								"activo":1
 							},
+							{
+								"id_submenu":26,
+								"id_menu":7,
+								"orden":3,
+								"url":"/sistema/logout",
+								"label":"Cerrar sesión",
+								"activo":1
+							}
+						]
+					}
+				]
+			';
+		}
+		else
+		{
+			$result = '
+				[
+					{
+						"id_menu":7,
+						"orden":7,
+						"url":"/#",
+						"label":"Administración",
+						"activo":1,
+						"submenu":
+						[
 							{
 								"id_submenu":26,
 								"id_menu":7,

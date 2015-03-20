@@ -2,7 +2,7 @@
   'use strict';
   // ANGULAR MODULE SETTER
   angular
-    .module('siclabApp', [
+    .module('sislabApp', [
       'ngRoute',
       'ngResource',
       'ngAnimate',
@@ -210,7 +210,7 @@
   }
 
   angular
-    .module('siclabApp')
+    .module('sislabApp')
     .config(
       [
         '$routeProvider', '$httpProvider', 'jwtInterceptorProvider',
@@ -220,12 +220,12 @@
     );
 
   // DIRECTIVES
-  // siclabMenu.js
+  // sislabMenu.js
   /**
-   * @name siclabMenu
+   * @name sislabMenu
    * @desc Directiva para menú principal
    */
-  function siclabMenu() {
+  function sislabMenu() {
     return {
       restrict: 'EA',
       require: '^ngModel',
@@ -234,15 +234,15 @@
   }
 
   angular
-    .module('siclabApp')
-    .directive('siclabMenu', siclabMenu);
+    .module('sislabApp')
+    .directive('sislabMenu', sislabMenu);
 
-  // siclabBanner.js
+  // sislabBanner.js
   /**
-   * @name siclabBanner
+   * @name sislabBanner
    * @desc Directiva para banner superior
    */
-  function siclabBanner() {
+  function sislabBanner() {
     return {
       restrict: 'EA',
       templateUrl: 'partials/sistema/banner.html'
@@ -250,15 +250,15 @@
   }
 
   angular
-    .module('siclabApp')
-    .directive('siclabBanner', siclabBanner);
+    .module('sislabApp')
+    .directive('sislabBanner', sislabBanner);
 
-  // siclabFooter.js
+  // sislabFooter.js
   /**
-   * @name siclabFooter
+   * @name sislabFooter
    * @desc Directiva para pie de página
    */
-  function siclabFooter() {
+  function sislabFooter() {
     return {
       restrict: 'EA',
       templateUrl: 'partials/sistema/footer.html'
@@ -266,15 +266,15 @@
   }
 
   angular
-    .module('siclabApp')
-    .directive('siclabFooter', siclabFooter);
+    .module('sislabApp')
+    .directive('sislabFooter', sislabFooter);
 
-  // siclabBannerBottom.js
+  // sislabBannerBottom.js
   /**
-   * @name siclabBannerBottom
+   * @name sislabBannerBottom
    * @desc Directiva para banner inferior
    */
-  function siclabBannerBottom() {
+  function sislabBannerBottom() {
     return {
       restrict: 'EA',
       templateUrl: 'partials/sistema/banner-bottom.html'
@@ -282,8 +282,8 @@
   }
 
   angular
-    .module('siclabApp')
-    .directive('siclabBannerBottom', siclabBannerBottom);
+    .module('sislabApp')
+    .directive('sislabBannerBottom', sislabBannerBottom);
 
   // CONTROLLERS
   // MenuController.js
@@ -299,7 +299,7 @@
   }
 
   angular
-    .module('siclabApp')
+    .module('sislabApp')
     .controller('MenuController',
       [
         '$scope',
@@ -337,7 +337,7 @@
         }
       }).then(function success(response) {
         var token = response.data || null;
-        $window.localStorage.setItem('siclab-token', token);
+        $window.localStorage.setItem('sislab-token', token);
         $location.path('main');
       }, function error(response) {
         if (response.status === 404) {
@@ -364,7 +364,7 @@
   }
 
   angular
-    .module('siclabApp')
+    .module('sislabApp')
     .controller('LoginController',
       [
         '$scope', '$http', '$location',
@@ -388,9 +388,9 @@
     vm.userName = "";
     vm.tasks = {};
 
-    if ($window.localStorage.getItem('siclab-token'))
+    if ($window.localStorage.getItem('sislab-token'))
     {
-      token = $window.localStorage.getItem('siclab-token');
+      token = $window.localStorage.getItem('sislab-token');
       decodedJwt = token && jwtHelper.decodeToken(token);
       vm.userName = decodedJwt.nam;
       vm.tasks = TasksListService.query(decodedJwt.uid);
@@ -398,7 +398,7 @@
   }
 
   angular
-    .module('siclabApp')
+    .module('sislabApp')
     .controller('TasksListController',
       [
         '$window', 'jwtHelper', 'TasksListService',
@@ -432,7 +432,7 @@
   }
 
   angular
-    .module('siclabApp')
+    .module('sislabApp')
     .controller('QuotesListController',
       [
         '$location', 'QuotesListService',
@@ -590,7 +590,7 @@
   }
 
   angular
-    .module('siclabApp')
+    .module('sislabApp')
     .controller('QuoteController',
       [
         '$routeParams', 'ClientService', 'ParameterService',
@@ -625,7 +625,7 @@
   }
 
   angular
-    .module('siclabApp')
+    .module('sislabApp')
     .controller('OrdersListController',
       [
         '$location', 'OrdersListService',
@@ -675,7 +675,7 @@
   }
 
   angular
-    .module('siclabApp')
+    .module('sislabApp')
     .controller('OrderController',
       [
         '$routeParams', 'OrderSourceService',
@@ -711,7 +711,7 @@
   }
 
   angular
-    .module('siclabApp')
+    .module('sislabApp')
     .controller('PlansListController',
       [
         '$location', 'PlansListService',
@@ -802,7 +802,7 @@
   }
 
   angular
-    .module('siclabApp')
+    .module('sislabApp')
     .controller('PlanController',
       [
         '$routeParams', 'PlanObjectivesService', 'PointKindsService',
@@ -1005,7 +1005,7 @@
   }
 
   angular
-    .module('siclabApp')
+    .module('sislabApp')
     .controller('FieldSheetController',
       [
         'CloudService', 'WindService', 'WaveService',
@@ -1056,7 +1056,7 @@
   }
 
   angular
-    .module('siclabApp')
+    .module('sislabApp')
     .controller('ReceptionController',
       [
         'ReceptionistService', 'ReceptionService',
@@ -1122,7 +1122,7 @@
   }
 
   angular
-    .module('siclabApp')
+    .module('sislabApp')
     .controller('CustodyController',
       [
         'PreservationService', 'ExpirationService', 'RequiredVolumeService',
@@ -1150,7 +1150,7 @@
   }
 
   angular
-    .module('siclabApp')
+    .module('sislabApp')
     .controller('SamplesListController',
       [
         'SamplesListService',
@@ -1177,7 +1177,7 @@
   }
 
   angular
-    .module('siclabApp')
+    .module('sislabApp')
     .controller('InstrumentsListController',
       [
         'InstrumentsListService',
@@ -1204,7 +1204,7 @@
   }
 
   angular
-    .module('siclabApp')
+    .module('sislabApp')
     .controller('ReactivesListController',
       [
         'ReactivesListService',
@@ -1231,7 +1231,7 @@
   }
 
   angular
-    .module('siclabApp')
+    .module('sislabApp')
     .controller('ContainersListController',
       [
         'ContainersListService',
@@ -1259,7 +1259,7 @@
   }
 
   angular
-    .module('siclabApp')
+    .module('sislabApp')
     .controller('AnalysisListController',
       [
         'AnalysisListService',
@@ -1307,7 +1307,7 @@
   }
 
   angular
-    .module('siclabApp')
+    .module('sislabApp')
     .controller('AnalysisController',
       [
         'DepartmentService', 'ParameterService',
@@ -1335,7 +1335,7 @@
   }
 
   angular
-    .module('siclabApp')
+    .module('sislabApp')
     .controller('ReportsListController',
       [
         'ReportsListService',
@@ -1369,7 +1369,7 @@
   }
 
   angular
-    .module('siclabApp')
+    .module('sislabApp')
     .controller('ReportApprovalController',
       [
         'ReportApprovalService',
@@ -1396,7 +1396,7 @@
   }
 
   angular
-    .module('siclabApp')
+    .module('sislabApp')
     .controller('PointsListController',
       [
         'PointsListService',
@@ -1424,7 +1424,7 @@
   }
 
   angular
-    .module('siclabApp')
+    .module('sislabApp')
     .controller('ClientsListController',
       [
         'ClientService',
@@ -1446,7 +1446,7 @@
   }
 
   angular
-    .module('siclabApp')
+    .module('sislabApp')
     .controller('DepartmentsListController',
       [
         'DepartmentService',
@@ -1468,7 +1468,7 @@
   }
 
   angular
-    .module('siclabApp')
+    .module('sislabApp')
     .controller('EmployeesListController',
       [
         'EmployeeService',
@@ -1495,7 +1495,7 @@
   }
 
   angular
-    .module('siclabApp')
+    .module('sislabApp')
     .controller('NormsListController',
       [
         'NormsListService',
@@ -1522,7 +1522,7 @@
   }
 
   angular
-    .module('siclabApp')
+    .module('sislabApp')
     .controller('ReferencesListController',
       [
         'ReferencesListService',
@@ -1549,7 +1549,7 @@
   }
 
   angular
-    .module('siclabApp')
+    .module('sislabApp')
     .controller('MethodsListController',
       [
         'MethodsListService',
@@ -1576,7 +1576,7 @@
   }
 
   angular
-    .module('siclabApp')
+    .module('sislabApp')
     .controller('PricesListController',
       [
         'PricesListService',
@@ -1598,7 +1598,7 @@
   }
 
   angular
-    .module('siclabApp')
+    .module('sislabApp')
     .controller('UsersListController',
       [
         'UsersListService',
@@ -1620,7 +1620,7 @@
   }
 
   angular
-    .module('siclabApp')
+    .module('sislabApp')
     .controller('ProfileController',
       [
         'UserProfileService',
@@ -1642,13 +1642,13 @@
     vm.logout = logout;
 
     function logout() {
-      $window.localStorage.removeItem('siclab-token');
+      $window.localStorage.removeItem('sislab-token');
       $location.path('sistema/login');
     }
   }
 
   angular
-    .module('siclabApp')
+    .module('sislabApp')
     .controller('LogoutController',
       [
         '$location', '$window',
@@ -1670,7 +1670,7 @@
   }
 
   angular
-    .module('siclabApp')
+    .module('sislabApp')
     .controller('ClientDetailController',
       [
         '$scope',
@@ -1689,7 +1689,7 @@
    * @return {Object} Object - Métodos para manejo de token
    */
   function TokenService($window) {
-    var tokenKey = 'siclab-token',
+    var tokenKey = 'sislab-token',
     storage = $window.localStorage,
     cachedToken;
 
@@ -1716,7 +1716,7 @@
   }
 
   angular
-    .module('siclabApp')
+    .module('sislabApp')
     .factory('TokenService', [
       '$window'
     ]
@@ -1739,14 +1739,14 @@
         params:{},
         isArray:true,
         headers: {
-          'Auth-Token' : $window.localStorage.getItem('siclab-token')
+          'Auth-Token' : $window.localStorage.getItem('sislab-token')
         }
       }
     });
   }
 
   angular
-    .module('siclabApp')
+    .module('sislabApp')
     .factory('MenuService', [
       '$resource', '$window',
       MenuService
@@ -1768,14 +1768,14 @@
         params:{},
         isArray:true,
         headers: {
-          'Auth-Token' : $window.localStorage.getItem('siclab-token')
+          'Auth-Token' : $window.localStorage.getItem('sislab-token')
         }
       }
     });
   }
 
   angular
-    .module('siclabApp')
+    .module('sislabApp')
     .factory('TasksListService', [
       '$resource', '$window',
       TasksListService
@@ -1797,14 +1797,14 @@
         params:{},
         isArray:true,
         headers: {
-          'Auth-Token' : $window.localStorage.getItem('siclab-token')
+          'Auth-Token' : $window.localStorage.getItem('sislab-token')
         }
       }
     });
   }
 
   angular
-    .module('siclabApp')
+    .module('sislabApp')
     .factory('ClientService', [
       '$resource', '$window',
       ClientService
@@ -1826,14 +1826,14 @@
         params:{},
         isArray:true,
         headers: {
-          'Auth-Token': $window.localStorage.getItem('siclab-token')
+          'Auth-Token': $window.localStorage.getItem('sislab-token')
         }
       }
     });
   }
 
   angular
-    .module('siclabApp')
+    .module('sislabApp')
     .factory('ParameterService', [
       '$resource', '$window',
       ParameterService
@@ -1855,14 +1855,14 @@
         params:{},
         isArray:true,
         headers: {
-          'Auth-Token' : $window.localStorage.getItem('siclab-token')
+          'Auth-Token' : $window.localStorage.getItem('sislab-token')
         }
       }
     });
   }
 
   angular
-    .module('siclabApp')
+    .module('sislabApp')
     .factory('NormService', [
       '$resource', '$window',
       NormService
@@ -1884,14 +1884,14 @@
         params:{},
         isArray:true,
         headers: {
-          'Auth-Token' : $window.localStorage.getItem('siclab-token')
+          'Auth-Token' : $window.localStorage.getItem('sislab-token')
         }
       }
     });
   }
 
   angular
-    .module('siclabApp')
+    .module('sislabApp')
     .factory('SamplingTypeService', [
       '$resource', '$window',
       SamplingTypeService
@@ -1913,14 +1913,14 @@
         params:{quoteId:'id_solicitud'},
         isArray:false,
         headers: {
-          'Auth-Token' : $window.localStorage.getItem('siclab-token')
+          'Auth-Token' : $window.localStorage.getItem('sislab-token')
         }
       }
     });
   }
 
   angular
-    .module('siclabApp')
+    .module('sislabApp')
     .factory('QuoteService', [
       '$resource', '$window',
       QuoteService
@@ -1943,14 +1943,14 @@
         params:{},
         isArray:true,
         headers: {
-          'Auth-Token' : $window.localStorage.getItem('siclab-token')
+          'Auth-Token' : $window.localStorage.getItem('sislab-token')
         }
       }
     });
   }
 
   angular
-    .module('siclabApp')
+    .module('sislabApp')
     .factory('OrderSourceService', [
       '$resource', '$window',
       OrderSourceService
@@ -1972,14 +1972,14 @@
         params:{},
         isArray:true,
         headers: {
-          'Auth-Token' : $window.localStorage.getItem('siclab-token')
+          'Auth-Token' : $window.localStorage.getItem('sislab-token')
         }
       }
     });
   }
 
   angular
-    .module('siclabApp')
+    .module('sislabApp')
     .factory('MatrixService', [
       '$resource', '$window',
       MatrixService
@@ -2001,14 +2001,14 @@
         params:{},
         isArray:true,
         headers: {
-          'Auth-Token' : $window.localStorage.getItem('siclab-token')
+          'Auth-Token' : $window.localStorage.getItem('sislab-token')
         }
       }
     });
   }
 
   angular
-    .module('siclabApp')
+    .module('sislabApp')
     .factory('SamplingSupervisorService', [
       '$resource', '$window',
       SamplingSupervisorService
@@ -2030,14 +2030,14 @@
         params:{},
         isArray:true,
         headers: {
-          'Auth-Token' : $window.localStorage.getItem('siclab-token')
+          'Auth-Token' : $window.localStorage.getItem('sislab-token')
         }
       }
     });
   }
 
   angular
-    .module('siclabApp')
+    .module('sislabApp')
     .factory('OrdersListService', [
       '$resource', '$window',
       OrdersListService
@@ -2059,14 +2059,14 @@
         params:{orderId: 'id_orden'},
         isArray:false,
         headers: {
-          'Auth-Token' : $window.localStorage.getItem('siclab-token')
+          'Auth-Token' : $window.localStorage.getItem('sislab-token')
         }
       }
     });
   }
 
   angular
-    .module('siclabApp')
+    .module('sislabApp')
     .factory('OrderService', [
       '$resource', '$window',
       OrderService
@@ -2088,14 +2088,14 @@
         params:{},
         isArray:true,
         headers: {
-          'Auth-Token' : $window.localStorage.getItem('siclab-token')
+          'Auth-Token' : $window.localStorage.getItem('sislab-token')
         }
       }
     });
   }
 
   angular
-    .module('siclabApp')
+    .module('sislabApp')
     .factory('PlanObjectivesService', [
       '$resource', '$window',
       PlanObjectivesService
@@ -2117,14 +2117,14 @@
         params:{},
         isArray:true,
         headers: {
-          'Auth-Token' : $window.localStorage.getItem('siclab-token')
+          'Auth-Token' : $window.localStorage.getItem('sislab-token')
         }
       }
     });
   }
 
   angular
-    .module('siclabApp')
+    .module('sislabApp')
     .factory('PointKindsService', [
       '$resource', '$window',
       PointKindsService
@@ -2146,14 +2146,14 @@
         params:{},
         isArray:true,
         headers: {
-          'Auth-Token' : $window.localStorage.getItem('siclab-token')
+          'Auth-Token' : $window.localStorage.getItem('sislab-token')
         }
       }
     });
   }
 
   angular
-    .module('siclabApp')
+    .module('sislabApp')
     .factory('DistrictService', [
       '$resource', '$window',
       DistrictService
@@ -2175,14 +2175,14 @@
         params:{districtId: 'id_municipio'},
         isArray:true,
         headers: {
-          'Auth-Token' : $window.localStorage.getItem('siclab-token')
+          'Auth-Token' : $window.localStorage.getItem('sislab-token')
         }
       }
     });
   }
 
   angular
-    .module('siclabApp')
+    .module('sislabApp')
     .factory('CityService', [
       '$resource', '$window',
       CityService
@@ -2204,14 +2204,14 @@
         params:{},
         isArray:true,
         headers: {
-          'Auth-Token' : $window.localStorage.getItem('siclab-token')
+          'Auth-Token' : $window.localStorage.getItem('sislab-token')
         }
       }
     });
   }
 
   angular
-    .module('siclabApp')
+    .module('sislabApp')
     .factory('SamplingEmployeeService', [
       '$resource', '$window',
       SamplingEmployeeService
@@ -2233,14 +2233,14 @@
         params:{},
         isArray:true,
         headers: {
-          'Auth-Token' : $window.localStorage.getItem('siclab-token')
+          'Auth-Token' : $window.localStorage.getItem('sislab-token')
         }
       }
     });
   }
 
   angular
-    .module('siclabApp')
+    .module('sislabApp')
     .factory('PreservationService', [
       '$resource', '$window',
       PreservationService
@@ -2262,14 +2262,14 @@
         params:{},
         isArray:true,
         headers: {
-          'Auth-Token' : $window.localStorage.getItem('siclab-token')
+          'Auth-Token' : $window.localStorage.getItem('sislab-token')
         }
       }
     });
   }
 
   angular
-    .module('siclabApp')
+    .module('sislabApp')
     .factory('ContainerKindsService', [
       '$resource', '$window',
       ContainerKindsService
@@ -2291,14 +2291,14 @@
         params:{},
         isArray:true,
         headers: {
-          'Auth-Token' : $window.localStorage.getItem('siclab-token')
+          'Auth-Token' : $window.localStorage.getItem('sislab-token')
         }
       }
     });
   }
 
   angular
-    .module('siclabApp')
+    .module('sislabApp')
     .factory('ReactivesListService', [
       '$resource', '$window',
       ReactivesListService
@@ -2320,14 +2320,14 @@
         params:{},
         isArray:true,
         headers: {
-          'Auth-Token' : $window.localStorage.getItem('siclab-token')
+          'Auth-Token' : $window.localStorage.getItem('sislab-token')
         }
       }
     });
   }
 
   angular
-    .module('siclabApp')
+    .module('sislabApp')
     .factory('MaterialService', [
       '$resource', '$window',
       MaterialService
@@ -2349,14 +2349,14 @@
         params:{},
         isArray:true,
         headers: {
-          'Auth-Token' : $window.localStorage.getItem('siclab-token')
+          'Auth-Token' : $window.localStorage.getItem('sislab-token')
         }
       }
     });
   }
 
   angular
-    .module('siclabApp')
+    .module('sislabApp')
     .factory('CoolerService', [
       '$resource', '$window',
       CoolerService
@@ -2378,14 +2378,14 @@
         params:{},
         isArray:true,
         headers: {
-          'Auth-Token' : $window.localStorage.getItem('siclab-token')
+          'Auth-Token' : $window.localStorage.getItem('sislab-token')
         }
       }
     });
   }
 
   angular
-    .module('siclabApp')
+    .module('sislabApp')
     .factory('PlansListService', [
       '$resource', '$window',
       PlansListService
@@ -2407,14 +2407,14 @@
         params:{planId: 'id_plan'},
         isArray:false,
         headers: {
-          'Auth-Token' : $window.localStorage.getItem('siclab-token')
+          'Auth-Token' : $window.localStorage.getItem('sislab-token')
         }
       }
     });
   }
 
   angular
-    .module('siclabApp')
+    .module('sislabApp')
     .factory('PlanService', [
       '$resource', '$window',
       PlanService
@@ -2436,14 +2436,14 @@
         params:{},
         isArray:true,
         headers: {
-          'Auth-Token' : $window.localStorage.getItem('siclab-token')
+          'Auth-Token' : $window.localStorage.getItem('sislab-token')
         }
       }
     });
   }
 
   angular
-    .module('siclabApp')
+    .module('sislabApp')
     .factory('CloudService', [
       '$resource', '$window',
       CloudService
@@ -2465,14 +2465,14 @@
         params:{},
         isArray:true,
         headers: {
-          'Auth-Token' : $window.localStorage.getItem('siclab-token')
+          'Auth-Token' : $window.localStorage.getItem('sislab-token')
         }
       }
     });
   }
 
   angular
-    .module('siclabApp')
+    .module('sislabApp')
     .factory('WindService', [
       '$resource', '$window',
       WindService
@@ -2494,14 +2494,14 @@
         params:{},
         isArray:true,
         headers: {
-          'Auth-Token' : $window.localStorage.getItem('siclab-token')
+          'Auth-Token' : $window.localStorage.getItem('sislab-token')
         }
       }
     });
   }
 
   angular
-    .module('siclabApp')
+    .module('sislabApp')
     .factory('WaveService', [
       '$resource', '$window',
       WaveService
@@ -2523,14 +2523,14 @@
         params:{},
         isArray:true,
         headers: {
-          'Auth-Token' : $window.localStorage.getItem('siclab-token')
+          'Auth-Token' : $window.localStorage.getItem('sislab-token')
         }
       }
     });
   }
 
   angular
-    .module('siclabApp')
+    .module('sislabApp')
     .factory('SamplingNormService', [
       '$resource', '$window',
       SamplingNormService
@@ -2552,14 +2552,14 @@
         params:{},
         isArray:true,
         headers: {
-          'Auth-Token' : $window.localStorage.getItem('siclab-token')
+          'Auth-Token' : $window.localStorage.getItem('sislab-token')
         }
       }
     });
   }
 
   angular
-    .module('siclabApp')
+    .module('sislabApp')
     .factory('PointService', [
       '$resource', '$window',
       PointService
@@ -2581,14 +2581,14 @@
         params:{},
         isArray:true,
         headers: {
-          'Auth-Token' : $window.localStorage.getItem('siclab-token')
+          'Auth-Token' : $window.localStorage.getItem('sislab-token')
         }
       }
     });
   }
 
   angular
-    .module('siclabApp')
+    .module('sislabApp')
     .factory('FieldParameterService', [
       '$resource', '$window',
       FieldParameterService
@@ -2611,14 +2611,14 @@
         params:{},
         isArray:false,
         headers: {
-          'Auth-Token' : $window.localStorage.getItem('siclab-token')
+          'Auth-Token' : $window.localStorage.getItem('sislab-token')
         }
       }
     });
   }
 
   angular
-    .module('siclabApp')
+    .module('sislabApp')
     .factory('FieldSheetService', [
       '$resource', '$window',
       FieldSheetService
@@ -2640,14 +2640,14 @@
         params:{},
         isArray:true,
         headers: {
-          'Auth-Token' : $window.localStorage.getItem('siclab-token')
+          'Auth-Token' : $window.localStorage.getItem('sislab-token')
         }
       }
     });
   }
 
   angular
-    .module('siclabApp')
+    .module('sislabApp')
     .factory('ReceptionistService', [
       '$resource', '$window',
       ReceptionistService
@@ -2670,14 +2670,14 @@
         params:{},
         isArray:false,
         headers: {
-          'Auth-Token' : $window.localStorage.getItem('siclab-token')
+          'Auth-Token' : $window.localStorage.getItem('sislab-token')
         }
       }
     });
   }
 
   angular
-    .module('siclabApp')
+    .module('sislabApp')
     .factory('ReceptionService', [
       '$resource', '$window',
       ReceptionService
@@ -2699,14 +2699,14 @@
         params:{},
         isArray:true,
         headers: {
-          'Auth-Token' : $window.localStorage.getItem('siclab-token')
+          'Auth-Token' : $window.localStorage.getItem('sislab-token')
         }
       }
     });
   }
 
   angular
-    .module('siclabApp')
+    .module('sislabApp')
     .factory('ExpirationService', [
       '$resource', '$window',
       ExpirationService
@@ -2728,14 +2728,14 @@
         params:{},
         isArray:true,
         headers: {
-          'Auth-Token' : $window.localStorage.getItem('siclab-token')
+          'Auth-Token' : $window.localStorage.getItem('sislab-token')
         }
       }
     });
   }
 
   angular
-    .module('siclabApp')
+    .module('sislabApp')
     .factory('RequiredVolumeService', [
       '$resource', '$window',
       RequiredVolumeService
@@ -2757,14 +2757,14 @@
         params:{},
         isArray:true,
         headers: {
-          'Auth-Token' : $window.localStorage.getItem('siclab-token')
+          'Auth-Token' : $window.localStorage.getItem('sislab-token')
         }
       }
     });
   }
 
   angular
-    .module('siclabApp')
+    .module('sislabApp')
     .factory('CheckerService', [
       '$resource', '$window',
       CheckerService
@@ -2787,14 +2787,14 @@
         params:{},
         isArray:false,
         headers: {
-          'Auth-Token' : $window.localStorage.getItem('siclab-token')
+          'Auth-Token' : $window.localStorage.getItem('sislab-token')
         }
       }
     });
   }
 
   angular
-    .module('siclabApp')
+    .module('sislabApp')
     .factory('CustodyService', [
       '$resource', '$window',
       CustodyService
@@ -2816,14 +2816,14 @@
         params:{},
         isArray:true,
         headers: {
-          'Auth-Token' : $window.localStorage.getItem('siclab-token')
+          'Auth-Token' : $window.localStorage.getItem('sislab-token')
         }
       }
     });
   }
 
   angular
-    .module('siclabApp')
+    .module('sislabApp')
     .factory('SamplesListService', [
       '$resource', '$window',
       SamplesListService
@@ -2845,14 +2845,14 @@
         params:{},
         isArray:true,
         headers: {
-          'Auth-Token' : $window.localStorage.getItem('siclab-token')
+          'Auth-Token' : $window.localStorage.getItem('sislab-token')
         }
       }
     });
   }
 
   angular
-    .module('siclabApp')
+    .module('sislabApp')
     .factory('InstrumentsListService', [
       '$resource', '$window',
       InstrumentsListService
@@ -2874,14 +2874,14 @@
         params:{},
         isArray:true,
         headers: {
-          'Auth-Token' : $window.localStorage.getItem('siclab-token')
+          'Auth-Token' : $window.localStorage.getItem('sislab-token')
         }
       }
     });
   }
 
   angular
-    .module('siclabApp')
+    .module('sislabApp')
     .factory('ContainersListService', [
       '$resource', '$window',
       ContainersListService
@@ -2903,14 +2903,14 @@
         params:{},
         isArray:true,
         headers: {
-          'Auth-Token' : $window.localStorage.getItem('siclab-token')
+          'Auth-Token' : $window.localStorage.getItem('sislab-token')
         }
       }
     });
   }
 
   angular
-    .module('siclabApp')
+    .module('sislabApp')
     .factory('AnalysisListService', [
       '$resource', '$window',
       AnalysisListService
@@ -2932,14 +2932,14 @@
         params:{},
         isArray:true,
         headers: {
-          'Auth-Token' : $window.localStorage.getItem('siclab-token')
+          'Auth-Token' : $window.localStorage.getItem('sislab-token')
         }
       }
     });
   }
 
   angular
-    .module('siclabApp')
+    .module('sislabApp')
     .factory('DepartmentService', [
       '$resource', '$window',
       DepartmentService
@@ -2961,14 +2961,14 @@
         params:{},
         isArray:true,
         headers: {
-          'Auth-Token' : $window.localStorage.getItem('siclab-token')
+          'Auth-Token' : $window.localStorage.getItem('sislab-token')
         }
       }
     });
   }
 
   angular
-    .module('siclabApp')
+    .module('sislabApp')
     .factory('AnalysisService', [
       '$resource', '$window',
       AnalysisService
@@ -2990,14 +2990,14 @@
         params:{},
         isArray:true,
         headers: {
-          'Auth-Token' : $window.localStorage.getItem('siclab-token')
+          'Auth-Token' : $window.localStorage.getItem('sislab-token')
         }
       }
     });
   }
 
   angular
-    .module('siclabApp')
+    .module('sislabApp')
     .factory('ReportsListService', [
       '$resource', '$window',
       ReportsListService
@@ -3020,14 +3020,14 @@
         params:{},
         isArray:true,
         headers: {
-          'Auth-Token' : $window.localStorage.getItem('siclab-token')
+          'Auth-Token' : $window.localStorage.getItem('sislab-token')
         }
       }
     });
   }
 
   angular
-    .module('siclabApp')
+    .module('sislabApp')
     .factory('ReportApprovalService', [
       '$resource', '$window',
       ReportApprovalService
@@ -3049,14 +3049,14 @@
         params:{},
         isArray:true,
         headers: {
-          'Auth-Token' : $window.localStorage.getItem('siclab-token')
+          'Auth-Token' : $window.localStorage.getItem('sislab-token')
         }
       }
     });
   }
 
   angular
-    .module('siclabApp')
+    .module('sislabApp')
     .factory('PointsListService', [
       '$resource', '$window',
       PointsListService
@@ -3078,14 +3078,14 @@
         params:{},
         isArray:true,
         headers: {
-          'Auth-Token' : $window.localStorage.getItem('siclab-token')
+          'Auth-Token' : $window.localStorage.getItem('sislab-token')
         }
       }
     });
   }
 
   angular
-    .module('siclabApp')
+    .module('sislabApp')
     .factory('EmployeeService', [
       '$resource', '$window',
       EmployeeService
@@ -3107,14 +3107,14 @@
         params:{},
         isArray:true,
         headers: {
-          'Auth-Token' : $window.localStorage.getItem('siclab-token')
+          'Auth-Token' : $window.localStorage.getItem('sislab-token')
         }
       }
     });
   }
 
   angular
-    .module('siclabApp')
+    .module('sislabApp')
     .factory('NormsListService', [
       '$resource', '$window',
       NormsListService
@@ -3136,14 +3136,14 @@
         params:{},
         isArray:true,
         headers: {
-          'Auth-Token' : $window.localStorage.getItem('siclab-token')
+          'Auth-Token' : $window.localStorage.getItem('sislab-token')
         }
       }
     });
   }
 
   angular
-    .module('siclabApp')
+    .module('sislabApp')
     .factory('ReferencesListService', [
       '$resource', '$window',
       ReferencesListService
@@ -3165,14 +3165,14 @@
         params:{},
         isArray:true,
         headers: {
-          'Auth-Token' : $window.localStorage.getItem('siclab-token')
+          'Auth-Token' : $window.localStorage.getItem('sislab-token')
         }
       }
     });
   }
 
   angular
-    .module('siclabApp')
+    .module('sislabApp')
     .factory('MethodsListService', [
       '$resource', '$window',
       MethodsListService
@@ -3194,14 +3194,14 @@
         params:{},
         isArray:true,
         headers: {
-          'Auth-Token' : $window.localStorage.getItem('siclab-token')
+          'Auth-Token' : $window.localStorage.getItem('sislab-token')
         }
       }
     });
   }
 
   angular
-    .module('siclabApp')
+    .module('sislabApp')
     .factory('PricesListService', [
       '$resource', '$window',
       PricesListService
@@ -3223,14 +3223,14 @@
         params:{},
         isArray:true,
         headers: {
-          'Auth-Token' : $window.localStorage.getItem('siclab-token')
+          'Auth-Token' : $window.localStorage.getItem('sislab-token')
         }
       }
     });
   }
 
   angular
-    .module('siclabApp')
+    .module('sislabApp')
     .factory('UsersListService', [
       '$resource', '$window',
       UsersListService
@@ -3253,14 +3253,14 @@
         params:{},
         isArray:true,
         headers: {
-          'Auth-Token' : $window.localStorage.getItem('siclab-token')
+          'Auth-Token' : $window.localStorage.getItem('sislab-token')
         }
       }
     });
   }
 
   angular
-    .module('siclabApp')
+    .module('sislabApp')
     .factory('UserProfileService', [
       '$resource', '$window',
       UserProfileService
@@ -3282,14 +3282,14 @@
         params:{},
         isArray:true,
         headers: {
-          'Auth-Token' : $window.localStorage.getItem('siclab-token')
+          'Auth-Token' : $window.localStorage.getItem('sislab-token')
         }
       }
     });
   }
 
   angular
-    .module('siclabApp')
+    .module('sislabApp')
     .factory('QuotesListService', [
       '$resource', '$window',
       QuotesListService
@@ -3312,14 +3312,14 @@
         params:{clientId:'id_cliente'},
         isArray:true,
         headers: {
-          'Auth-Token' : $window.localStorage.getItem('siclab-token')
+          'Auth-Token' : $window.localStorage.getItem('sislab-token')
         }
       }
     });
   }
 
   angular
-    .module('siclabApp')
+    .module('sislabApp')
     .factory('ClientDetailService', [
       '$resource', '$window',
       ClientDetailService

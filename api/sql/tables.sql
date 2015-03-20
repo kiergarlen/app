@@ -1,4 +1,4 @@
-USE [siclab]
+USE [sislab]
 GO
 
 SET ANSI_NULLS ON

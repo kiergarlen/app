@@ -1,5 +1,5 @@
-    <siclab-menu></siclab-menu>
-    <siclab-banner></siclab-banner>
+    <sislab-menu></sislab-menu>
+    <sislab-banner></sislab-banner>
     <div class="container-fluid">
       <div class="row">
         <div class="col-xs-12 col-lg-8 col-lg-offset-2 main item-themed-z2">
@@ -234,7 +234,7 @@
     </div>
   </div>
   <div class="row"
-    data-ng-show="order.user.id_nivel">
+    data-ng-show="quote.user.level < 3">
     <div class="col-xs-12">
       <a class="btn btn-success"
         value="Validar" title="Validar"
@@ -251,6 +251,7 @@
         Rechazar
       </a>
     </div>
+  </div>
   <br>
   <button type="submit" class="btn btn-primary"
     value="Guardar" title="Guardar"
@@ -260,8 +261,8 @@
 </form>
 
           </div>
-          <siclab-footer></siclab-footer>
+          <sislab-footer></sislab-footer>
         </div><!-- view-container -->
       </div><!-- row -->
     </div><!-- container -->
-    <siclab-banner-bottom></siclab-banner-bottom>
+    <sislab-banner-bottom></sislab-banner-bottom>

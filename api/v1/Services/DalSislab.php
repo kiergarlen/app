@@ -1,17 +1,17 @@
 <?php
 namespace Service;
 //require_once 'PDOAdapter.php';
-//require_once 'ConnectionConstantsSiclab.php';
+//require_once 'ConnectionConstantsSislab.php';
 
-class DALSiclab
+class DALSislab
 {
 	protected static $_instance;
 	const DB_DRIVER = "mysql";
 	//const DB_DRIVER = "sqlsrv";
 	const DB_HOST = "localhost";
-	const DB_USER = "siclab";
-	const DB_PASSWORD = "siclab@12#";
-	const DB_DATA_BASE = "Siclab";
+	const DB_USER = "sislab";
+	const DB_PASSWORD = "sislab@12#";
+	const DB_DATA_BASE = "Sislab";
 
 	public static function getInstance() {
 		if (self::$_instance === null) {

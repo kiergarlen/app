@@ -1,2 +1,2 @@
-# Siclab
+# Sislab
 Laboratory management excercise

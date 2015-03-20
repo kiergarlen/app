@@ -12,7 +12,7 @@
   }
 
   angular
-    .module('siclabApp')
+    .module('sislabApp')
     .controller('MenuController',
       [
         '$scope',
@@ -29,11 +29,10 @@
    * @this {Object} $scope - Contenedor para el modelo [AngularJS]
    * @param {Object} $http - Manejo de peticiones HTTP [AngularJS]
    * @param {Object} $location - Manejo de URL [AngularJS]
-   * @param {Object} $window - Manejo de objeto Window [AngularJS]
-   * @param {Object} jwtHelper - Utilerías para JWT [angular-jwt]
+   * @param {Object} TokenService - Proveedor para manejo del token
    */
   function LoginController($scope, $http, $location,
-    $window, jwtHelper) {
+    TokenService) {
     var vm = this;
     vm.message = '';
     vm.user = {username: '', password: ''};
@@ -50,7 +49,7 @@
         }
       }).then(function success(response) {
         var token = response.data || null;
-        $window.localStorage.setItem('siclab-token', token);
+        TokenService.setToken(token);
         $location.path('main');
       }, function error(response) {
         if (response.status === 404)
@@ -80,11 +79,11 @@
   }
 
   angular
-    .module('siclabApp')
+    .module('sislabApp')
     .controller('LoginController',
       [
         '$scope', '$http', '$location',
-        '$window', 'jwtHelper',
+        'TokenService',
         LoginController
       ]
     );
@@ -95,29 +94,28 @@
    * @constructor
    * @desc Controla la vista para Tareas
    * @this {Object} $scope - Contenedor para el modelo [AngularJS]
+   * @param {Object} TokenService - Proveedor para manejo del token
    * @param {Object} TasksListService - Proveedor de datos, Tareas
    */
-  function TasksListController($window, jwtHelper, TasksListService) {
+  function TasksListController(TokenService, TasksListService) {
     var vm = this,
-    token,
-    decodedJwt;
+    userData;
     vm.userName = "";
     vm.tasks = {};
 
-    if ($window.localStorage.getItem('siclab-token'))
+    if (TokenService.isAuthenticated())
     {
-      token = $window.localStorage.getItem('siclab-token');
-      decodedJwt = token && jwtHelper.decodeToken(token);
-      vm.userName = decodedJwt.nam;
-      vm.tasks = TasksListService.query(decodedJwt.uid);
+      userData = TokenService.getUserFromToken();
+      vm.userName = userData.name;
+      vm.tasks = TasksListService.query(userData.id);
     }
   }
 
   angular
-    .module('siclabApp')
+    .module('sislabApp')
     .controller('TasksListController',
       [
-        '$window', 'jwtHelper', 'TasksListService',
+        'TokenService', 'TasksListService',
         TasksListController
       ]
     );
@@ -149,7 +147,7 @@
   }
 
   angular
-    .module('siclabApp')
+    .module('sislabApp')
     .controller('QuotesListController',
       [
         '$location', 'QuotesListService',
@@ -169,8 +167,8 @@
    * @param {Object} SamplingTypeService - Proveedor de datos, Tipos muestreo
    * @param {Object} QuoteService - Proveedor de datos, Cotizaciones
    */
-  function QuoteController($routeParams, ClientService, ParameterService,
-    NormService, SamplingTypeService, QuoteService) {
+  function QuoteController($routeParams, TokenService, ClientService,
+    ParameterService, NormService, SamplingTypeService, QuoteService) {
     var vm = this;
     vm.clients = ClientService.query();
     vm.parameters = ParameterService.query();
@@ -182,6 +180,7 @@
     vm.allParametersSelected = false;
     vm.totalCost = 0;
 
+    vm.user = TokenService.getUserFromToken();
     vm.toggleClientDetail = toggleClientDetail;
     vm.toggleParametersDetail = toggleParametersDetail;
     vm.selectClient = selectClient;
@@ -307,10 +306,10 @@
   }
 
   angular
-    .module('siclabApp')
+    .module('sislabApp')
     .controller('QuoteController',
       [
-        '$routeParams', 'ClientService', 'ParameterService',
+        '$routeParams', 'TokenService', 'ClientService', 'ParameterService',
         'NormService', 'SamplingTypeService', 'QuoteService',
         QuoteController
       ]
@@ -342,7 +341,7 @@
   }
 
   angular
-    .module('siclabApp')
+    .module('sislabApp')
     .controller('OrdersListController',
       [
         '$location', 'OrdersListService',
@@ -392,7 +391,7 @@
   }
 
   angular
-    .module('siclabApp')
+    .module('sislabApp')
     .controller('OrderController',
       [
         '$routeParams', 'OrderSourceService',
@@ -428,7 +427,7 @@
   }
 
   angular
-    .module('siclabApp')
+    .module('sislabApp')
     .controller('PlansListController',
       [
         '$location', 'PlansListService',
@@ -520,7 +519,7 @@
   }
 
   angular
-    .module('siclabApp')
+    .module('sislabApp')
     .controller('PlanController',
       [
         '$routeParams', 'PlanObjectivesService', 'PointKindsService',
@@ -558,7 +557,7 @@
   }
 
   angular
-    .module('siclabApp')
+    .module('sislabApp')
     .controller('FieldSheetsListController',
       [
         '$location', 'FieldSheetsListService',
@@ -758,7 +757,7 @@
   }
 
   angular
-    .module('siclabApp')
+    .module('sislabApp')
     .controller('FieldSheetController',
       [
         '$routeParams', 'CloudService', 'WindService',
@@ -794,7 +793,7 @@
   }
 
   angular
-    .module('siclabApp')
+    .module('sislabApp')
     .controller('ReceptionsListController',
       [
         '$location', 'ReceptionsListService',
@@ -843,7 +842,7 @@
   }
 
   angular
-    .module('siclabApp')
+    .module('sislabApp')
     .controller('ReceptionController',
       [
         '$routeParams', 'ReceptionistService', 'ReceptionService',
@@ -876,7 +875,7 @@
   }
 
   angular
-    .module('siclabApp')
+    .module('sislabApp')
     .controller('CustodiesListController',
       [
         '$location', 'CustodiesListService',
@@ -942,7 +941,7 @@
   }
 
   angular
-    .module('siclabApp')
+    .module('sislabApp')
     .controller('CustodyController',
       [
         '$routeParams', 'PreservationService', 'ExpirationService',
@@ -971,7 +970,7 @@
   }
 
   angular
-    .module('siclabApp')
+    .module('sislabApp')
     .controller('SamplesListController',
       [
         'SamplesListService',
@@ -998,7 +997,7 @@
   }
 
   angular
-    .module('siclabApp')
+    .module('sislabApp')
     .controller('InstrumentsListController',
       [
         'InstrumentsListService',
@@ -1025,7 +1024,7 @@
   }
 
   angular
-    .module('siclabApp')
+    .module('sislabApp')
     .controller('ReactivesListController',
       [
         'ReactivesListService',
@@ -1052,7 +1051,7 @@
   }
 
   angular
-    .module('siclabApp')
+    .module('sislabApp')
     .controller('ContainersListController',
       [
         'ContainersListService',
@@ -1080,7 +1079,7 @@
   }
 
   angular
-    .module('siclabApp')
+    .module('sislabApp')
     .controller('AnalysisListController',
       [
         'AnalysisListService',
@@ -1128,7 +1127,7 @@
   }
 
   angular
-    .module('siclabApp')
+    .module('sislabApp')
     .controller('AnalysisController',
       [
         'DepartmentService', 'ParameterService',
@@ -1156,7 +1155,7 @@
   }
 
   angular
-    .module('siclabApp')
+    .module('sislabApp')
     .controller('ReportsListController',
       [
         'ReportsListService',
@@ -1190,7 +1189,7 @@
   }
 
   angular
-    .module('siclabApp')
+    .module('sislabApp')
     .controller('ReportController',
       [
         'ReportService',
@@ -1217,7 +1216,7 @@
   }
 
   angular
-    .module('siclabApp')
+    .module('sislabApp')
     .controller('PointsListController',
       [
         'PointsListService',
@@ -1245,7 +1244,7 @@
   }
 
   angular
-    .module('siclabApp')
+    .module('sislabApp')
     .controller('ClientsListController',
       [
         'ClientService',
@@ -1267,7 +1266,7 @@
   }
 
   angular
-    .module('siclabApp')
+    .module('sislabApp')
     .controller('DepartmentsListController',
       [
         'DepartmentService',
@@ -1289,7 +1288,7 @@
   }
 
   angular
-    .module('siclabApp')
+    .module('sislabApp')
     .controller('EmployeesListController',
       [
         'EmployeeService',
@@ -1316,7 +1315,7 @@
   }
 
   angular
-    .module('siclabApp')
+    .module('sislabApp')
     .controller('NormsListController',
       [
         'NormsListService',
@@ -1343,7 +1342,7 @@
   }
 
   angular
-    .module('siclabApp')
+    .module('sislabApp')
     .controller('ReferencesListController',
       [
         'ReferencesListService',
@@ -1370,7 +1369,7 @@
   }
 
   angular
-    .module('siclabApp')
+    .module('sislabApp')
     .controller('MethodsListController',
       [
         'MethodsListService',
@@ -1397,7 +1396,7 @@
   }
 
   angular
-    .module('siclabApp')
+    .module('sislabApp')
     .controller('PricesListController',
       [
         'PricesListService',
@@ -1419,7 +1418,7 @@
   }
 
   angular
-    .module('siclabApp')
+    .module('sislabApp')
     .controller('UsersListController',
       [
         'UsersListService',
@@ -1441,7 +1440,7 @@
   }
 
   angular
-    .module('siclabApp')
+    .module('sislabApp')
     .controller('ProfileController',
       [
         'UserProfileService',
@@ -1456,23 +1455,23 @@
    * @desc Controla la vista para Logout
    * @this {Object} $scope - Contenedor para el modelo [AngularJS]
    * @param {Object} $location - Manejo de URL [AngularJS]
-   * @param {Object} $window - Manejo de objeto Window [AngularJS]
+   * @param {Object} TokenService - Manejo de objeto Window [AngularJS]
    */
-  function LogoutController($location, $window) {
+  function LogoutController($location, TokenService) {
     var vm = this;
     vm.logout = logout;
 
     function logout() {
-      $window.localStorage.removeItem('siclab-token');
+      TokenService.clearToken();
       $location.path('sistema/login');
     }
   }
 
   angular
-    .module('siclabApp')
+    .module('sislabApp')
     .controller('LogoutController',
       [
-        '$location', '$window',
+        '$location', 'TokenService',
         LogoutController
       ]
     );
@@ -1491,7 +1490,7 @@
   }
 
   angular
-    .module('siclabApp')
+    .module('sislabApp')
     .controller('ClientDetailController',
       [
         '$scope',

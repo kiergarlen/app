@@ -2,7 +2,7 @@
   'use strict';
   // ANGULAR MODULE SETTER
   angular
-    .module('siclabApp', [
+    .module('sislabApp', [
       'ngRoute',
       'ngResource',
       'ngAnimate',
@@ -205,7 +205,7 @@
   }
 
   angular
-    .module('siclabApp')
+    .module('sislabApp')
     .config(
       [
         '$routeProvider', '$httpProvider', 'jwtInterceptorProvider',
@@ -215,12 +215,12 @@
     );
 
   // DIRECTIVES
-  // siclabMenu.js
+  // sislabMenu.js
   /**
-   * @name siclabMenu
+   * @name sislabMenu
    * @desc Directiva para menú principal
    */
-  function siclabMenu() {
+  function sislabMenu() {
     return {
       restrict: 'EA',
       require: '^ngModel',
@@ -229,15 +229,15 @@
   }
 
   angular
-    .module('siclabApp')
-    .directive('siclabMenu', siclabMenu);
+    .module('sislabApp')
+    .directive('sislabMenu', sislabMenu);
 
-  // siclabBanner.js
+  // sislabBanner.js
   /**
-   * @name siclabBanner
+   * @name sislabBanner
    * @desc Directiva para banner superior
    */
-  function siclabBanner() {
+  function sislabBanner() {
     return {
       restrict: 'EA',
       templateUrl: 'partials/sistema/banner.html'
@@ -245,15 +245,15 @@
   }
 
   angular
-    .module('siclabApp')
-    .directive('siclabBanner', siclabBanner);
+    .module('sislabApp')
+    .directive('sislabBanner', sislabBanner);
 
-  // siclabFooter.js
+  // sislabFooter.js
   /**
-   * @name siclabFooter
+   * @name sislabFooter
    * @desc Directiva para pie de página
    */
-  function siclabFooter() {
+  function sislabFooter() {
     return {
       restrict: 'EA',
       templateUrl: 'partials/sistema/footer.html'
@@ -261,15 +261,15 @@
   }
 
   angular
-    .module('siclabApp')
-    .directive('siclabFooter', siclabFooter);
+    .module('sislabApp')
+    .directive('sislabFooter', sislabFooter);
 
-  // siclabBannerBottom.js
+  // sislabBannerBottom.js
   /**
-   * @name siclabBannerBottom
+   * @name sislabBannerBottom
    * @desc Directiva para banner inferior
    */
-  function siclabBannerBottom() {
+  function sislabBannerBottom() {
     return {
       restrict: 'EA',
       templateUrl: 'partials/sistema/banner-bottom.html'
@@ -277,5 +277,5 @@
   }
 
   angular
-    .module('siclabApp')
-    .directive('siclabBannerBottom', siclabBannerBottom);
+    .module('sislabApp')
+    .directive('sislabBannerBottom', sislabBannerBottom);

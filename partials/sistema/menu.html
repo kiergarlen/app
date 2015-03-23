@@ -1,5 +1,4 @@
-<div class="navbar navbar-fixed-top" role="navigation"
-  data-ng-controller="MenuController">
+<div class="navbar navbar-fixed-top" role="navigation">
   <div class="container-fluid">
     <div class="navbar-header">
       <button type="button" class="navbar-toggle collapsed"
@@ -10,15 +9,18 @@
       <a class="navbar-brand" href="#/main">SISLAB</a>
     </div>
     <div id="navbar" class="navbar-collapse collapse"
-      data-ng-show="menu.length > 0">
+      data-ng-show="menu.menu.length > 0">
       <ul class="nav navbar-nav navbar-right">
-        <li class="dropdown" data-ng-repeat="item in menu">
+        <li class="dropdown" data-ng-repeat="item in menu.menu">
           <a class="dropdown-toggle" data-toggle="dropdown">
-              {{::item.label}} <span class="caret"></span>
+              {{::item.label}}
+              <span class="caret"></span>
           </a>
           <ul class="dropdown-menu" role="menu">
             <li data-ng-repeat="subItem in item.submenu">
-              <a href="#{{::subItem.url}}">{{::subItem.label}}</a>
+              <a href="#{{::subItem.url}}">
+                {{::subItem.label}}
+              </a>
             </li>
           </ul>
         </li>

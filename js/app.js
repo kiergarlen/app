@@ -38,6 +38,16 @@
         controller: 'TasksListController',
         controllerAs: 'tasks'
       }).
+      when('/estudio/estudios', {
+        templateUrl: 'partials/estudio/estudios.html',
+        controller: 'StudiesListController',
+        controllerAs: 'studies'
+      }).
+      when('/estudio/estudio/:studyId', {
+        templateUrl: 'partials/estudio/estudio.html',
+        controller: 'StudyController',
+        controllerAs: 'study'
+      }).
       when('/muestreo/solicitudes', {
         templateUrl: 'partials/muestreo/solicitudes.html',
         controller: 'QuotesListController',
@@ -224,7 +234,9 @@
     return {
       restrict: 'EA',
       require: '^ngModel',
-      templateUrl: 'partials/sistema/menu.html'
+      templateUrl: 'partials/sistema/menu.html',
+      controller: 'MenuController',
+      controllerAs: 'menu'
     };
   }
 

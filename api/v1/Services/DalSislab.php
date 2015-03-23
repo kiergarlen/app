@@ -42,6 +42,24 @@ class DALSislab
 			$result = '
 				[
 					{
+						"id_menu":0,
+						"orden":1,
+						"url":"/#",
+						"label":"Estudio",
+						"activo":1,
+						"submenu":
+						[
+							{
+								"id_submenu":100,
+								"id_menu":100,
+								"orden":1,
+								"url":"/estudio/estudios",
+								"label":"Estudio",
+								"activo":1
+							}
+						]
+					},
+					{
 						"id_menu":1,
 						"orden":1,
 						"url":"/#",
@@ -3364,6 +3382,7 @@ class DALSislab
 			[
 				{
 					"id_norma":1,
+					"id_tipo_matriz":1,
 					"norma":"NOM-001-SEMARNAT-1996",
 					"desc":"Norma Oficial Mexicana",
 					"parametros":[
@@ -3390,6 +3409,7 @@ class DALSislab
 				},
 				{
 					"id_norma":2,
+					"id_tipo_matriz":1,
 					"norma":"NOM-002-SEMARNAT-1996",
 					"desc":"Norma Oficial Mexicana",
 					"parametros":[
@@ -3412,6 +3432,7 @@ class DALSislab
 				},
 				{
 					"id_norma":3,
+					"id_tipo_matriz":1,
 					"norma":"NOM-003-SEMARNAT-1997",
 					"desc":"Norma Oficial Mexicana",
 					"parametros":[
@@ -3432,6 +3453,7 @@ class DALSislab
 				},
 				{
 					"id_norma":5,
+					"id_tipo_matriz":1,
 					"norma":"NOM-127-SSA1-1994",
 					"desc":"Norma Oficial Mexicana",
 					"parametros":[
@@ -3467,6 +3489,7 @@ class DALSislab
 				},
 				{
 					"id_norma":7,
+					"id_tipo_matriz":1,
 					"norma":"LFD Uso 3",
 					"desc":"Ley Federal de Derechos",
 					"parametros":[
@@ -3507,6 +3530,204 @@ class DALSislab
 		return $result;
 	}
 
+	public function getNormsByMatrixType($matrixTypeId) {
+		//$sql = "SELECT
+		//		*
+		//	FROM
+		//		norma";
+		//return self::getAllRows($sql);
+		if ($matrixTypeId == 1)
+		{
+			$result = '
+				[
+					{
+						"id_norma":1,
+						"id_tipo_matriz":1,
+						"norma":"NOM-001-SEMARNAT-1996",
+						"desc":"Norma Oficial Mexicana",
+						"parametros":[
+							{"id_parametro":25,"parametro":"Arsénico"},
+							{"id_parametro":27,"parametro":"Cadmio"},
+							{"id_parametro":28,"parametro":"Cobre"},
+							{"id_parametro":38,"parametro":"Coliformes fecales"},
+							{"id_parametro":29,"parametro":"Cromo"},
+							{"id_parametro":16,"parametro":"Demada bioquímica de oxígeno*"},
+							{"id_parametro":19,"parametro":"Fósforo total"},
+							{"id_parametro":18,"parametro":"Grasas y aceites"},
+							{"id_parametro":6,"parametro":"Alcalinidad total"},
+							{"id_parametro":39,"parametro":"Materia flotante"},
+							{"id_parametro":32,"parametro":"Mercurio"},
+							{"id_parametro":7,"parametro":"Cloruros totales"},
+							{"id_parametro":33,"parametro":"Níquel"},
+							{"id_parametro":2,"parametro":"Potencial de hidrógeno"},
+							{"id_parametro":34,"parametro":"Plomo"},
+							{"id_parametro":22,"parametro":"Sólidos sedimentables"},
+							{"id_parametro":20,"parametro":"Sólidos suspendidos totales"},
+							{"id_parametro":1,"parametro":"Temperatura"},
+							{"id_parametro":36,"parametro":"Zinc"}
+						]
+					},
+					{
+						"id_norma":2,
+						"id_tipo_matriz":1,
+						"norma":"NOM-002-SEMARNAT-1996",
+						"desc":"Norma Oficial Mexicana",
+						"parametros":[
+							{"id_parametro":25,"parametro":"Arsénico"},
+							{"id_parametro":27,"parametro":"Cadmio"},
+							{"id_parametro":28,"parametro":"Cobre"},
+							{"id_parametro":51,"parametro":"Cromo hexavalente"},
+							{"id_parametro":16,"parametro":"Demada bioquímica de oxígeno*"},
+							{"id_parametro":18,"parametro":"Grasas y aceites"},
+							{"id_parametro":39,"parametro":"Materia flotante"},
+							{"id_parametro":32,"parametro":"Mercurio"},
+							{"id_parametro":33,"parametro":"Níquel"},
+							{"id_parametro":2,"parametro":"Potencial de hidrógeno"},
+							{"id_parametro":34,"parametro":"Plomo"},
+							{"id_parametro":22,"parametro":"Sólidos sedimentables"},
+							{"id_parametro":20,"parametro":"Sólidos suspendidos totales"},
+							{"id_parametro":1,"parametro":"Temperatura"},
+							{"id_parametro":36,"parametro":"Zinc"}
+						]
+					},
+					{
+						"id_norma":3,
+						"id_tipo_matriz":1,
+						"norma":"NOM-003-SEMARNAT-1997",
+						"desc":"Norma Oficial Mexicana",
+						"parametros":[
+							{"id_parametro":25,"parametro":"Arsénico"},
+							{"id_parametro":27,"parametro":"Cadmio"},
+							{"id_parametro":28,"parametro":"Cobre"},
+							{"id_parametro":38,"parametro":"Coliformes fecales"},
+							{"id_parametro":29,"parametro":"Cromo"},
+							{"id_parametro":16,"parametro":"Demada bioquímica de oxígeno*"},
+							{"id_parametro":6,"parametro":"Alcalinidad total"},
+							{"id_parametro":18,"parametro":"Grasas y aceites"},
+							{"id_parametro":32,"parametro":"Mercurio"},
+							{"id_parametro":33,"parametro":"Níquel"},
+							{"id_parametro":34,"parametro":"Plomo"},
+							{"id_parametro":20,"parametro":"Sólidos suspendidos totales"},
+							{"id_parametro":36,"parametro":"Zinc"}
+						]
+					},
+					{
+						"id_norma":5,
+						"id_tipo_matriz":1,
+						"norma":"NOM-127-SSA1-1994",
+						"desc":"Norma Oficial Mexicana",
+						"parametros":[
+							{"id_parametro":24,"parametro":"Aluminio"},
+							{"id_parametro":25,"parametro":"Arsénico"},
+							{"id_parametro":26,"parametro":"Bario"},
+							{"id_parametro":27,"parametro":"Cadmio"},
+							{"id_parametro":40,"parametro":"Cloro libre residual"},
+							{"id_parametro":7,"parametro":"Cloruros totales"},
+							{"id_parametro":28,"parametro":"Cobre"},
+							{"id_parametro":38,"parametro":"Coliformes fecales"},
+							{"id_parametro":37,"parametro":"Coliformes totales"},
+							{"id_parametro":29,"parametro":"Cromo"},
+							{"id_parametro":50,"parametro":"Color verdadero"},
+							{"id_parametro":8,"parametro":"Dureza total"},
+							{"id_parametro":54,"parametro":"Fenoles"},
+							{"id_parametro":30,"parametro":"Fierro"},
+							{"id_parametro":9,"parametro":"Fluoruros"},
+							{"id_parametro":31,"parametro":"Manganeso*"},
+							{"id_parametro":32,"parametro":"Mercurio"},
+							{"id_parametro":10,"parametro":"Nitrógeno de nitratos"},
+							{"id_parametro":11,"parametro":"Nitrógeno de nitritos"},
+							{"id_parametro":12,"parametro":"Nitrógeno amoniacal"},
+							{"id_parametro":2,"parametro":"Potencial de hidrógeno"},
+							{"id_parametro":34,"parametro":"Plomo"},
+							{"id_parametro":35,"parametro":"Sodio"},
+							{"id_parametro":21,"parametro":"Sólidos disueltos totales"},
+							{"id_parametro":14,"parametro":"Sulfatos"},
+							{"id_parametro":15,"parametro":"Sustancias activas al azul de metileno"},
+							{"id_parametro":36,"parametro":"Zinc"},
+							{"id_parametro":5,"parametro":"Turbiedad"}
+						]
+					},
+					{
+						"id_norma":7,
+						"id_tipo_matriz":1,
+						"norma":"LFD Uso 3",
+						"desc":"Ley Federal de Derechos",
+						"parametros":[
+							{"id_parametro":1,"parametro":"Temperatura"},
+							{"id_parametro":2,"parametro":"pH"},
+							{"id_parametro":39,"parametro":"Materia flotante"},
+							{"id_parametro":4,"parametro":"Conductividad*"},
+							{"id_parametro":44,"parametro":"Oxígeno disuelto"},
+							{"id_parametro":6,"parametro":"Alcalinidad total"},
+							{"id_parametro":7,"parametro":"Cloruros totales"},
+							{"id_parametro":16,"parametro":"Demada bioquímica de oxígeno*"},
+							{"id_parametro":17,"parametro":"Demanda química de oxígeno*"},
+							{"id_parametro":9,"parametro":"Fluoruros"},
+							{"id_parametro":19,"parametro":"Fósforo total"},
+							{"id_parametro":18,"parametro":"Grasas y aceites"},
+							{"id_parametro":12,"parametro":"Nitrógeno amoniacal"},
+							{"id_parametro":20,"parametro":"Sólidos suspendidos totales"},
+							{"id_parametro":23,"parametro":"Sulfuros"},
+							{"id_parametro":54,"parametro":"Fenoles"},
+							{"id_parametro":50,"parametro":"Color verdadero"},
+							{"id_parametro":24,"parametro":"Aluminio"},
+							{"id_parametro":25,"parametro":"Arsénico"},
+							{"id_parametro":26,"parametro":"Bario"},
+							{"id_parametro":27,"parametro":"Cadmio"},
+							{"id_parametro":28,"parametro":"Cobre"},
+							{"id_parametro":29,"parametro":"Cromo"},
+							{"id_parametro":30,"parametro":"Fierro"},
+							{"id_parametro":31,"parametro":"Manganeso*"},
+							{"id_parametro":32,"parametro":"Mercurio"},
+							{"id_parametro":33,"parametro":"Níquel"},
+							{"id_parametro":34,"parametro":"Plomo"},
+							{"id_parametro":36,"parametro":"Zinc"},
+							{"id_parametro":7,"parametro":"Cloruros totales"}
+						]
+					}
+				]
+			';
+		}
+		else
+		{
+			$result = '
+				[
+					{
+						"id_norma":1,
+						"id_tipo_matriz":1,
+						"norma":"NOM-001-SEMARNAT-1996",
+						"desc":"Norma Oficial Mexicana",
+						"parametros":[
+							{"id_parametro":25,"parametro":"Arsénico"},
+							{"id_parametro":27,"parametro":"Cadmio"},
+							{"id_parametro":28,"parametro":"Cobre"},
+							{"id_parametro":38,"parametro":"Coliformes fecales"},
+							{"id_parametro":29,"parametro":"Cromo"},
+							{"id_parametro":16,"parametro":"Demada bioquímica de oxígeno*"},
+							{"id_parametro":19,"parametro":"Fósforo total"},
+							{"id_parametro":18,"parametro":"Grasas y aceites"},
+							{"id_parametro":6,"parametro":"Alcalinidad total"},
+							{"id_parametro":39,"parametro":"Materia flotante"},
+							{"id_parametro":32,"parametro":"Mercurio"},
+							{"id_parametro":7,"parametro":"Cloruros totales"},
+							{"id_parametro":33,"parametro":"Níquel"},
+							{"id_parametro":2,"parametro":"Potencial de hidrógeno"},
+							{"id_parametro":34,"parametro":"Plomo"},
+							{"id_parametro":22,"parametro":"Sólidos sedimentables"},
+							{"id_parametro":20,"parametro":"Sólidos suspendidos totales"},
+							{"id_parametro":1,"parametro":"Temperatura"},
+							{"id_parametro":36,"parametro":"Zinc"}
+						]
+					}
+				]
+			';
+		}
+
+		return $result;
+	}
+
+
+
 	public function getSamplingTypes() {
 		//$sql = "SELECT
 		//		*
@@ -3524,6 +3745,258 @@ class DALSislab
 					"id_tipo_muestreo":2,
 					"tipo_muestreo":"Compuesto",
 					"selected":false
+				}
+			]
+		';
+		return $result;
+	}
+
+	public function getStudy($studyId) {
+		//$sql = "SELECT
+		//		*
+		//	FROM
+		//		estudio
+		//	WHERE id_estudio := $studyId AND activo = 1";
+		//return self::getAllRows($sql);
+			$result = '
+				{
+					"id_estudio":1,
+					"folio":432,
+					"ejercicio":2015,
+					"id_cliente":1,
+					"fecha_solicitud":"2015-03-21",
+					"ubicacion":"",
+
+					"fecha_captura":"2015-03-21",
+					"fecha_entrega":"",
+					"id_usuario_captura":20,
+					"ip_captura":"::1",
+					"host_captura":"localhost",
+					"fecha_valida":"2015-03-21",
+					"id_usuario_valida":1,
+					"ip_valida":"::1",
+					"host_valida":"localhost",
+					"fecha_actualizacion":"2015-03-21",
+					"id_usuario_actualizacion":1,
+					"ip_actualizacion":"::1",
+					"host_actualizacion":"localhost",
+
+					"validado":0,
+					"rechazado":0,
+					"entregado":0,
+					"motivo_rechazo":"",
+					"activo":0,
+
+					"cliente":
+					{
+						"id_cliente":1,
+						"id_organismo":1,
+						"cliente":"CEA Jalisco",
+						"area":"Dirección de Operación de PTARS",
+						"rfc":"Registro Federal de Contribuyentes",
+						"calle":"Av. Brasilia",
+						"numero":"2970",
+						"colonia":"Col. Colomos Providencia",
+						"cp":"44680",
+						"id_estado":14,
+						"id_municipio":14039,
+						"municipio":"Guadalajara",
+						"id_localidad":140390001,
+						"localidad":"Guadalajara",
+						"tel":"3030-9350 ext. 8370",
+						"fax":"",
+						"contacto":"Biol. Luis Aceves Martínez",
+						"puesto_contacto":"puesto contacto",
+						"email":"laceves@ceajalisco.gob.mx",
+						"fecha_act":"2014-11-23",
+						"interno":1,
+						"cea":1,
+						"tasa":0,
+						"activo":1
+					},
+					"solicitudes":
+					[
+						{
+							"id_solicitud":1,
+							"id_estudio":1,
+							"id_matriz":1,
+							"cantidad_muestras":15,
+							"id_tipo_muestreo":2,
+							"id_norma":3
+						},
+						{
+							"id_solicitud":2,
+							"id_estudio":1,
+							"id_matriz":2,
+							"cantidad_muestras":16,
+							"id_tipo_muestreo":1,
+							"id_norma":1
+						}
+					]
+				}
+			';
+
+		return $result;
+	}
+
+	public function getStudies() {
+		//$sql = "SELECT
+		//		*
+		//	FROM
+		//		estudio
+		//	WHERE activo = 1";
+		//return self::getAllRows($sql);
+		$result = '
+			[
+				{
+					"id_estudio":1,
+					"folio":432,
+					"ejercicio":2015,
+					"id_cliente":1,
+					"fecha_solicitud":"2015-03-21",
+					"ubicacion":"",
+
+					"fecha_captura":"2015-03-21",
+					"fecha_entrega":"",
+					"id_usuario_captura":20,
+					"ip_captura":"::1",
+					"host_captura":"localhost",
+					"fecha_valida":"2015-03-21",
+					"id_usuario_valida":1,
+					"ip_valida":"::1",
+					"host_valida":"localhost",
+					"fecha_actualizacion":"2015-03-21",
+					"id_usuario_actualizacion":1,
+					"ip_actualizacion":"::1",
+					"host_actualizacion":"localhost",
+
+					"validado":0,
+					"rechazado":0,
+					"entregado":0,
+					"motivo_rechazo":"",
+					"activo":0,
+
+					"cliente":
+					{
+						"id_cliente":1,
+						"id_organismo":1,
+						"cliente":"CEA Jalisco",
+						"area":"Dirección de Operación de PTARS",
+						"rfc":"Registro Federal de Contribuyentes",
+						"calle":"Av. Brasilia",
+						"numero":"2970",
+						"colonia":"Col. Colomos Providencia",
+						"cp":"44680",
+						"id_estado":14,
+						"id_municipio":14039,
+						"municipio":"Guadalajara",
+						"id_localidad":140390001,
+						"localidad":"Guadalajara",
+						"tel":"3030-9350 ext. 8370",
+						"fax":"",
+						"contacto":"Biol. Luis Aceves Martínez",
+						"puesto_contacto":"puesto contacto",
+						"email":"laceves@ceajalisco.gob.mx",
+						"fecha_act":"2014-11-23",
+						"interno":1,
+						"cea":1,
+						"tasa":0,
+						"activo":1
+					},
+					"solicitudes":
+					[
+						{
+							"id_solicitud":1,
+							"id_estudio":1,
+							"id_matriz":1,
+							"cantidad_muestras":15,
+							"id_tipo_muestreo":2,
+							"id_norma":3
+						},
+						{
+							"id_solicitud":2,
+							"id_estudio":1,
+							"id_matriz":2,
+							"cantidad_muestras":16,
+							"id_tipo_muestreo":1,
+							"id_norma":1
+						}
+					]
+				},
+				{
+					"id_estudio":2,
+					"folio":432,
+					"ejercicio":2015,
+					"id_cliente":1,
+					"fecha_solicitud":"2015-03-21",
+					"ubicacion":"",
+
+					"fecha_captura":"2015-03-21",
+					"fecha_entrega":"",
+					"id_usuario_captura":20,
+					"ip_captura":"::1",
+					"host_captura":"localhost",
+					"fecha_valida":"2015-03-21",
+					"id_usuario_valida":1,
+					"ip_valida":"::1",
+					"host_valida":"localhost",
+					"fecha_actualizacion":"2015-03-21",
+					"id_usuario_actualizacion":1,
+					"ip_actualizacion":"::1",
+					"host_actualizacion":"localhost",
+
+					"validado":0,
+					"rechazado":0,
+					"entregado":0,
+					"motivo_rechazo":"",
+					"activo":0,
+
+					"cliente":
+					{
+						"id_cliente":1,
+						"id_organismo":1,
+						"cliente":"CEA Jalisco",
+						"area":"Dirección de Operación de PTARS",
+						"rfc":"Registro Federal de Contribuyentes",
+						"calle":"Av. Brasilia",
+						"numero":"2970",
+						"colonia":"Col. Colomos Providencia",
+						"cp":"44680",
+						"id_estado":14,
+						"id_municipio":14039,
+						"municipio":"Guadalajara",
+						"id_localidad":140390001,
+						"localidad":"Guadalajara",
+						"tel":"3030-9350 ext. 8370",
+						"fax":"",
+						"contacto":"Biol. Luis Aceves Martínez",
+						"puesto_contacto":"puesto contacto",
+						"email":"laceves@ceajalisco.gob.mx",
+						"fecha_act":"2014-11-23",
+						"interno":1,
+						"cea":1,
+						"tasa":0,
+						"activo":1
+					},
+					"solicitudes":
+					[
+						{
+							"id_solicitud":1,
+							"id_estudio":1,
+							"id_matriz":1,
+							"cantidad_muestras":15,
+							"id_tipo_muestreo":2,
+							"id_norma":3
+						},
+						{
+							"id_solicitud":2,
+							"id_estudio":1,
+							"id_matriz":2,
+							"cantidad_muestras":16,
+							"id_tipo_muestreo":1,
+							"id_norma":1
+						}
+					]
 				}
 			]
 		';
@@ -10457,41 +10930,49 @@ class DALSislab
 			[
 				{
 					"id_matriz":1,
+					"id_tipo_matriz":1,
 					"matriz":"Agua Residual",
 					"clave":"AR"
 				},
 				{
 					"id_matriz":2,
+					"id_tipo_matriz":1,
 					"matriz":"Agua Residual Tratada",
 					"clave":"ART"
 				},
 				{
 					"id_matriz":3,
+					"id_tipo_matriz":1,
 					"matriz":"Agua Potable",
 					"clave":"AP"
 				},
 				{
 					"id_matriz":4,
+					"id_tipo_matriz":1,
 					"matriz":"Agua Superficial",
 					"clave":"AS"
 				},
 				{
 					"id_matriz":5,
+					"id_tipo_matriz":1,
 					"matriz":"Agua Subterránea",
 					"clave":"ASb"
 				},
 				{
 					"id_matriz":6,
+					"id_tipo_matriz":2,
 					"matriz":"Lodos",
 					"clave":"LD"
 				},
 				{
 					"id_matriz":7,
+					"id_tipo_matriz":1,
 					"matriz":"Planta Potabilizadora",
 					"clave":"PPt"
 				},
 				{
 					"id_matriz":8,
+					"id_tipo_matriz":1,
 					"matriz":"Otra",
 					"clave":"OTR"
 				}
@@ -10908,7 +11389,8 @@ class DALSislab
 					"id_clase_parametro":1,
 					"clase_parametro":"Fisicoquímico",
 					"clase_param":"FQ",
-					"preservacion":"Fisicoquímico",
+					"preservacion":"Hielo, 4°C",
+					"tipo_preservacion":"Fisicoquímico",
 					"descripcion":"Hielo, 4°C",
 					"preservado":0,
 					"selected":false,
@@ -10920,7 +11402,8 @@ class DALSislab
 					"id_clase_parametro":2,
 					"clase_parametro":"Oxígeno disuelto",
 					"clase_param":"OD",
-					"preservacion":"Oxígeno disuelto",
+					"preservacion":"2 ml MnSo4 + 2 ml Álcali Ioduro + 2 ml H2So4",
+					"tipo_preservacion":"Oxígeno disuelto",
 					"descripcion":"2 ml MnSo4 + 2 ml Álcali Ioduro + 2 ml H2So4",
 					"preservado":0,
 					"selected":false,
@@ -10932,7 +11415,8 @@ class DALSislab
 					"id_clase_parametro":3,
 					"clase_parametro":"Sustancias activas al azul de metileno",
 					"clase_param":"SAAM",
-					"preservacion":"Sustancias activas al azul de metileno",
+					"preservacion":"H2SO4, 4°C, pH<2",
+					"tipo_preservacion":"Sustancias activas al azul de metileno",
 					"descripcion":"H2SO4, 4°C, pH<2",
 					"preservado":0,
 					"selected":false,
@@ -10944,7 +11428,8 @@ class DALSislab
 					"id_clase_parametro":4,
 					"clase_parametro":"Fenoles",
 					"clase_param":"FEN",
-					"preservacion":"Fenoles",
+					"preservacion":"5ml H2SO4 + CuSO4, 4°C, pH<2",
+					"tipo_preservacion":"Fenoles",
 					"descripcion":"5ml H2SO4 + CuSO4, 4°C, pH<2",
 					"preservado":0,
 					"selected":false,
@@ -10956,7 +11441,8 @@ class DALSislab
 					"id_clase_parametro":5,
 					"clase_parametro":"Dureza",
 					"clase_param":"DZA",
-					"preservacion":"Dureza",
+					"preservacion":"HNO3, pH<2",
+					"tipo_preservacion":"Dureza",
 					"descripcion":"HNO3, pH<2",
 					"preservado":0,
 					"selected":false,
@@ -10968,7 +11454,8 @@ class DALSislab
 					"id_clase_parametro":6,
 					"clase_parametro":"Sulfuros",
 					"clase_param":"Sulfuros",
-					"preservacion":"Sulfuros",
+					"preservacion":"6.5 ml de Acetato de Zn 2N, NaOH 6N pH≥9, 4°C",
+					"tipo_preservacion":"Sulfuros",
 					"descripcion":"6.5 ml de Acetato de Zn 2N, NaOH 6N pH≥9, 4°C",
 					"preservado":0,
 					"selected":false,
@@ -10980,7 +11467,8 @@ class DALSislab
 					"id_clase_parametro":7,
 					"clase_parametro":"Fisicoquímico 2",
 					"clase_param":"FQ-2",
-					"preservacion":"Fisicoquímico 2",
+					"preservacion":"H2SO4, 4°C, pH<2",
+					"tipo_preservacion":"Fisicoquímico 2",
 					"descripcion":"H2SO4, 4°C, pH<2",
 					"preservado":0,
 					"selected":false,
@@ -10992,7 +11480,8 @@ class DALSislab
 					"id_clase_parametro":8,
 					"clase_parametro":"Grasas y aceites",
 					"clase_param":"GyA",
-					"preservacion":"Grasas y aceites",
+					"preservacion":"HCL1:1, 4°C, pH<2",
+					"tipo_preservacion":"Grasas y aceites",
 					"descripcion":"HCL1:1, 4°C, pH<2",
 					"preservado":0,
 					"selected":false,
@@ -11004,20 +11493,9 @@ class DALSislab
 					"id_clase_parametro":9,
 					"clase_parametro":"Metales pesados",
 					"clase_param":"MP",
-					"preservacion":"Metales pesados",
+					"preservacion":"HNO3, pH<2",
+					"tipo_preservacion":"Metales pesados",
 					"descripcion":"HNO3, pH<2",
-					"preservado":0,
-					"selected":false,
-					"cantidad":0,
-					"activo":1
-				},
-				{
-					"id_preservacion":10,
-					"id_clase_parametro":10,
-					"clase_parametro":"Fenoles",
-					"clase_param":"Fenoles",
-					"preservacion":"Fenoles",
-					"descripcion":"CuSO4, pH<2 ",
 					"preservado":0,
 					"selected":false,
 					"cantidad":0,
@@ -11039,91 +11517,145 @@ class DALSislab
 				{
 					"id_clase_recipiente":1,
 					"id_preservacion":1,
-					"preservacion":"Físicoquimico",
+					"id_clase_parametro":1,
+					"clase_parametro":"Fisicoquímico",
+					"clase_param":"FQ",
+					"preservacion":"Hielo, 4°C",
+					"tipo_preservacion":"Fisicoquímico",
+					"descripcion":"Hielo, 4°C",
 					"cantidad":0,
 					"adecuado":0,
+					"preservado":0,
 					"selected":false,
+					"cantidad":0,
 					"activo":1
 				},
 				{
 					"id_clase_recipiente":2,
 					"id_preservacion":2,
-					"preservacion":"Oxígeno disuelto",
+					"id_clase_parametro":2,
+					"clase_parametro":"Oxígeno disuelto",
+					"clase_param":"OD",
+					"preservacion":"2 ml MnSo4 + 2 ml Álcali Ioduro + 2 ml H2So4",
+					"tipo_preservacion":"Oxígeno disuelto",
+					"descripcion":"2 ml MnSo4 + 2 ml Álcali Ioduro + 2 ml H2So4",
 					"cantidad":0,
 					"adecuado":0,
+					"preservado":0,
 					"selected":false,
+					"cantidad":0,
 					"activo":1
 				},
 				{
 					"id_clase_recipiente":3,
 					"id_preservacion":3,
-					"preservacion":"Sustancias activas al azul de metileno",
+					"id_clase_parametro":3,
+					"clase_parametro":"Sustancias activas al azul de metileno",
+					"clase_param":"SAAM",
+					"preservacion":"H2SO4, 4°C, pH<2",
+					"tipo_preservacion":"Sustancias activas al azul de metileno",
+					"descripcion":"H2SO4, 4°C, pH<2",
 					"cantidad":0,
 					"adecuado":0,
+					"preservado":0,
 					"selected":false,
+					"cantidad":0,
 					"activo":1
 				},
 				{
 					"id_clase_recipiente":4,
 					"id_preservacion":4,
-					"preservacion":"Fenoles",
+					"id_clase_parametro":4,
+					"clase_parametro":"Fenoles",
+					"clase_param":"FEN",
+					"preservacion":"5ml H2SO4 + CuSO4, 4°C, pH<2",
+					"tipo_preservacion":"Fenoles",
+					"descripcion":"5ml H2SO4 + CuSO4, 4°C, pH<2",
 					"cantidad":0,
 					"adecuado":0,
+					"preservado":0,
 					"selected":false,
+					"cantidad":0,
 					"activo":1
 				},
 				{
 					"id_clase_recipiente":5,
 					"id_preservacion":5,
-					"preservacion":"Dureza",
+					"id_clase_parametro":5,
+					"clase_parametro":"Dureza",
+					"clase_param":"DZA",
+					"preservacion":"HNO3, pH<2",
+					"tipo_preservacion":"Dureza",
+					"descripcion":"HNO3, pH<2",
 					"cantidad":0,
 					"adecuado":0,
+					"preservado":0,
 					"selected":false,
+					"cantidad":0,
 					"activo":1
 				},
 				{
 					"id_clase_recipiente":6,
 					"id_preservacion":6,
-					"preservacion":"Sulfuros",
+					"id_clase_parametro":6,
+					"clase_parametro":"Sulfuros",
+					"clase_param":"Sulfuros",
+					"preservacion":"6.5 ml de Acetato de Zn 2N, NaOH 6N pH≥9, 4°C",
+					"tipo_preservacion":"Sulfuros",
+					"descripcion":"6.5 ml de Acetato de Zn 2N, NaOH 6N pH≥9, 4°C",
 					"cantidad":0,
 					"adecuado":0,
+					"preservado":0,
 					"selected":false,
+					"cantidad":0,
 					"activo":1
 				},
 				{
 					"id_clase_recipiente":7,
 					"id_preservacion":7,
-					"preservacion":"Físicoquimico 2",
+					"id_clase_parametro":7,
+					"clase_parametro":"Fisicoquímico 2",
+					"clase_param":"FQ-2",
+					"preservacion":"H2SO4, 4°C, pH<2",
+					"tipo_preservacion":"Fisicoquímico 2",
+					"descripcion":"H2SO4, 4°C, pH<2",
 					"cantidad":0,
 					"adecuado":0,
+					"preservado":0,
 					"selected":false,
+					"cantidad":0,
 					"activo":1
 				},
 				{
 					"id_clase_recipiente":8,
 					"id_preservacion":8,
-					"preservacion":"Grasas y aceites",
+					"id_clase_parametro":8,
+					"clase_parametro":"Grasas y aceites",
+					"clase_param":"GyA",
+					"preservacion":"HCL1:1, 4°C, pH<2",
+					"tipo_preservacion":"Grasas y aceites",
+					"descripcion":"HCL1:1, 4°C, pH<2",
 					"cantidad":0,
 					"adecuado":0,
+					"preservado":0,
 					"selected":false,
+					"cantidad":0,
 					"activo":1
 				},
 				{
 					"id_clase_recipiente":9,
 					"id_preservacion":9,
-					"preservacion":"Metales pesados",
+					"id_clase_parametro":9,
+					"clase_parametro":"Metales pesados",
+					"clase_param":"MP",
+					"preservacion":"HNO3, pH<2",
+					"tipo_preservacion":"Metales pesados",
+					"descripcion":"HNO3, pH<2",
 					"cantidad":0,
 					"adecuado":0,
+					"preservado":0,
 					"selected":false,
-					"activo":1
-				},
-				{
-					"id_clase_recipiente":10,
-					"id_preservacion":10,
-					"preservacion":"Fenoles",
 					"cantidad":0,
-					"adecuado":0,
-					"selected":false,
 					"activo":1
 				}
 			]

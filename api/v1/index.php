@@ -143,6 +143,32 @@ $app->get("/sampling/types", function() use ($app) {
 	}
 });
 
+$app->get("/studies/:studyId", function($studyId) use ($app) {
+	try {
+		$userId = (validateTokenUser($app)) ? validateTokenUser($app) : 0;
+		$menu = \Service\DALSislab::getInstance()->getStudy($studyId);
+		$app->response()->status(200);
+		$app->response()->header('Content-Type', 'application/json');
+		echo $menu;
+	} catch (Exception $e) {
+		$app->response()->status(400);
+		$app->response()->header('X-Status-Reason', $e->getMessage());
+	}
+});
+
+$app->get("/studies", function() use ($app) {
+	try {
+		$userId = (validateTokenUser($app)) ? validateTokenUser($app) : 0;
+		$menu = \Service\DALSislab::getInstance()->getStudies();
+		$app->response()->status(200);
+		$app->response()->header('Content-Type', 'application/json');
+		echo $menu;
+	} catch (Exception $e) {
+		$app->response()->status(400);
+		$app->response()->header('X-Status-Reason', $e->getMessage());
+	}
+});
+
 $app->get("/quotes/:quoteId", function($quoteId) use ($app) {
 	try {
 		$userId = (validateTokenUser($app)) ? validateTokenUser($app) : 0;

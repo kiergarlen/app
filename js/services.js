@@ -1,4 +1,87 @@
   // SERVICES
+  // ArrayUtilsService.js
+  /**
+   * @name ArrayUtilsService
+   * @constructor
+   * @desc Proveedor con Métodos para manejo de arreglos
+   * @return {Object} Object - Métodos para manejo de arreglos
+   */
+  function ArrayUtilsService() {
+    var ArrayUtils = {};
+
+    ArrayUtils.selectItemFromCollection = selectItemFromCollection;
+    ArrayUtils.extractItemFromCollection = extractItemFromCollection;
+    ArrayUtils.countSelectedItems = countSelectedItems;
+    ArrayUtils.averageFromValues = averageFromValues;
+
+    function selectItemFromCollection(collection, field, value) {
+      var i = 0,
+      l = collection.length,
+      item = {};
+      for (i = 0; i < l; i += 1) {
+        if (collection[i][field] == value)
+        {
+          item = collection[i];
+          break;
+        }
+      }
+      return item;
+    }
+
+    function extractItemFromCollection(collection, field, value) {
+      var i = 0,
+      l = collection.length,
+      item = {};
+      for (i = 0; i < l; i += 1) {
+        if (collection[i][field] == value)
+        {
+          item = collection.splice(i, 1);
+          break;
+        }
+      }
+      return item;
+    }
+
+    function countSelectedItems(collection){
+      var i, l, count = 0;
+      if (!collection)
+      {
+        return 0;
+      }
+      l = collection.length;
+      for (i = 0; i < l; i += 1) {
+        if (collection[i].selected)
+        {
+          count += 1;
+        }
+      }
+      return count;
+    }
+
+    function averageFromValues(collection) {
+      var i = 0,
+      l = collection.length,
+      sum = 0;
+      if (l < 1)
+      {
+        return 0;
+      }
+      for (i; i < l; i++) {
+        sum += parseFloat(collection[i]);
+      }
+      return Math.round((sum / l) * 1000 * 1000) / (1000 * 1000);
+    }
+
+    return ArrayUtils;
+  }
+
+  angular
+    .module('sislabApp')
+    .factory('ArrayUtilsService', [
+      ArrayUtilsService
+    ]
+  );
+
   // TokenService.js
   /**
    * @name TokenService
@@ -253,6 +336,67 @@
       SamplingTypeService
     ]
   );
+
+  // StudiesListService.js
+  /**
+   * @name StudiesListService
+   * @constructor
+   * @desc Proveedor de datos, lista de Estudios
+   * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
+   * @param {Object} TokenService - Proveedor de métodos para token
+   * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
+   */
+  function StudiesListService($resource, TokenService) {
+    return $resource(API_BASE_URL + 'studies', {}, {
+      query: {
+        method:'GET',
+        params:{},
+        isArray:true,
+        headers: {
+          'Auth-Token': TokenService.getToken()
+        }
+      }
+    });
+  }
+
+  angular
+    .module('sislabApp')
+    .factory('StudiesListService', [
+      '$resource', 'TokenService',
+      StudiesListService
+    ]
+  );
+
+  // StudyService.js
+  /**
+   * @name StudyService
+   * @constructor
+   * @desc Proveedor de datos, Estudio
+   * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
+   * @param {Object} TokenService - Proveedor de métodos para token
+   * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
+   */
+  function StudyService($resource, TokenService) {
+    return $resource(API_BASE_URL + 'studies/:studyId', {}, {
+      query: {
+        method:'GET',
+        params:{studyId: 'id_estudio'},
+        isArray:false,
+        headers: {
+          'Auth-Token': TokenService.getToken()
+        }
+      }
+    });
+  }
+
+  angular
+    .module('sislabApp')
+    .factory('StudyService', [
+      '$resource', 'TokenService',
+      StudyService
+    ]
+  );
+
 
   // QuoteService.js
   /**
@@ -739,7 +883,7 @@
   /**
    * @name PlansListService
    * @constructor
-   * @desc Proveedor de datos, lista de Planes muestreo
+   * @desc Proveedor de datos, Planes de muestreo
    * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @param {Object} TokenService - Proveedor de métodos para token
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
@@ -1760,7 +1904,7 @@
   /**
    * @name QuotesListService
    * @constructor
-   * @desc Proveedor de datos, lista de Cotizaciones
+   * @desc Controla la vista para el listado de Solicitudes/Cotizaciones
    * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @param {Object} TokenService - Proveedor de métodos para token
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros

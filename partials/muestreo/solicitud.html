@@ -53,6 +53,24 @@
       </div>
     </div>
   </div>
+
+
+    <div class="row">
+        <div class="col-md-6">
+            <p class="input-group">
+              <input type="text" class="form-control"
+              datepicker-popup="aaaa-MM-DD"
+              data-ng-model="quote.quote.fecha_solicitud"
+               is-open="true"
+               ng-required="true"
+               close-text="Close" />
+              <span class="input-group-btn">
+                <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+              </span>
+            </p>
+        </div>
+    </div>
+
   <div class="row">
     <div class="col-xs-12 col-sm-6 col-lg-4">
       <label for="quoteDateSub">
@@ -216,13 +234,22 @@
                     data-ng-model="parameter.selected"
                     name="{{parameter.param}}" />
                     {{parameter.parametro}}
+                    <i class="glyphicon glyphicon glyphicon-star"
+                      aria-hidden="true"
+                      data-ng-show="parameter.acreditado > 0"></i>
+
                 </label>
                 <br>
                 <small class="hidden-xs hidden-sm text-muted">
                   {{parameter.metodo}}
                 </small>
               </div>
-              <div class="col-xs-3">
+              <div class="col-xs-1">
+                <label>
+                  15
+                </label>
+              </div>
+              <div class="col-xs-2">
                 <span class="text-muted pull-right">
                   {{parameter.precio | currency}}
                 </span>
@@ -240,14 +267,14 @@
         value="Validar" title="Validar"
         data-ng-click="quote.validateQuote(quote.quote.id_solicitud)"
         >
-        <i class="glyphicon glyphicon-ok-circle" aria-hidden="true"></i>
+        <i class="glyphicon glyphicon-ok-sign" aria-hidden="true"></i>
         Validar
       </a>
       <a class="btn btn-danger"
         value="Rechazar" title="Rechazar"
         data-ng-click="quote.rejectQuote(quote.quote.id_solicitud)"
         >
-        <i class="glyphicon glyphicon-ban-circle" aria-hidden="true"></i>
+        <i class="glyphicon glyphicon-remove-sign" aria-hidden="true"></i>
         Rechazar
       </a>
     </div>

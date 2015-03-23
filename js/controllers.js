@@ -3,19 +3,19 @@
   /**
    * @name MenuController
    * @constructor
-   * @desc Controla la vista para el Menú principal
+   * @desc Controla la directiva para el Menú principal
    * @this {Object} $scope - Contenedor para el modelo [AngularJS]
    * @param {Object} MenuService - Proveedor de datos, Menú
    */
-  function MenuController($scope, MenuService) {
-    $scope.menu = MenuService.query();
+  function MenuController(MenuService) {
+    var vm = this;
+    vm.menu = MenuService.query();
   }
 
   angular
     .module('sislabApp')
     .controller('MenuController',
       [
-        '$scope',
         'MenuService',
         MenuController
       ]
@@ -120,14 +120,151 @@
       ]
     );
 
+  // StudiesListController.js
+  /**
+   * @name StudiesListController
+   * @constructor
+   * @desc Controla la vista para el listado de Estudios
+   * @this {Object} $scope - Contenedor para el modelo [AngularJS]
+   * @param {Object} $location - Manejo de URL [AngularJS]
+   * @param {Object} StudiesListService - Proveedor de datos, Estudios
+   */
+  function StudiesListController($location, StudiesListService) {
+    var vm = this;
+    vm.studies = StudiesListService.query();
+    vm.addStudy = addStudy;
+    vm.viewStudy = viewStudy;
+    vm.sendToQuote = sendToQuote;
+
+    function addStudy() {
+      $location.path('/estudio/estudio/0');
+    }
+
+    function viewStudy(id) {
+      $location.path('/estudio/estudio/' + parseInt(id));
+    }
+
+    function sendToQuote(id) {
+
+    }
+  }
+
+  angular
+    .module('sislabApp')
+    .controller('StudiesListController',
+      [
+        '$location', 'StudiesListService',
+        StudiesListController
+      ]
+    );
+
+  // StudyController.js
+  /**
+   * @name StudyController
+   * @constructor
+   * @desc Controla la vista para capturar un Estudio
+   * @this {Object} $scope - Contenedor para el modelo [AngularJS]
+   * @param {Object} $routeParams - Proveedor de parámetros de ruta
+   * @param {Object} TokenService - Proveedor para manejo del token
+   * @param {Object} ArrayUtilsService - Proveedor con Métodos para manejo de arreglos
+   * @param {Object} ClientService - Proveedor de datos, Clientes
+   * @param {Object} MatrixService - Proveedor de datos, Tipos matriz
+   * @param {Object} SamplingTypeService - Proveedor de datos, Tipos muestreo
+   * @param {Object} NormService - Proveedor de datos, Normas
+   * @param {Object} OrderSourceService - Proveedor de datos, Orígenes orden
+   * @param {Object} StudyService - Proveedor de datos, Estudios
+   */
+  function StudyController($routeParams, TokenService, ArrayUtilsService,
+    ClientService, MatrixService, SamplingTypeService,
+    NormService, OrderSourceService, StudyService) {
+    var vm = this;
+    vm.study = StudyService.query({studyId: $routeParams.studyId});
+    vm.user = TokenService.getUserFromToken();
+    vm.clients = ClientService.query();
+    vm.matrices = MatrixService.query();
+    vm.samplingTypes = SamplingTypeService.query();
+    vm.norms = NormService.query();
+    vm.orderSources = OrderSourceService.query();
+
+    vm.getStudyScope = getStudyScope;
+    vm.selectClient = selectClient;
+    vm.addQuote = addQuote;
+    vm.removeQuote = removeQuote;
+    vm.approveItem = approveItem;
+    vm.rejectItem = rejectItem;
+    vm.validateForm = validateForm;
+    vm.submitForm = submitForm;
+
+    function getStudyScope() {
+      return vm;
+    }
+
+    function selectClient() {
+      vm.study.cliente = ArrayUtilsService.selectItemFromCollection(
+        vm.clients,
+        'id_cliente',
+        vm.study.id_cliente
+      );
+      return vm.study.cliente;
+    }
+
+    function addQuote() {
+      vm.study.solicitudes.push({
+        "id_solicitud":vm.study.solicitudes.length + 1,
+        "id_estudio":vm.study.id_estudio,
+        "id_matriz":0,
+        "cantidad_muestras":0,
+        "id_tipo_muestreo":1,
+        "id_norma":0
+      });
+    }
+
+    function removeQuote(e) {
+      var field = '$$hashKey';
+      var quoteRow = ArrayUtilsService.extractItemFromCollection(
+        vm.study.solicitudes,
+        field,
+        e[field]
+      );
+    }
+
+    function approveItem() {
+
+    }
+
+    function rejectItem() {
+
+    }
+
+    function validateForm(form) {
+      //TODO validation
+      return form;
+    }
+
+    function submitForm() {
+      //TODO send to php API
+    }
+  }
+
+  angular
+    .module('sislabApp')
+    .controller('StudyController',
+      [
+        '$routeParams', 'TokenService', 'ArrayUtilsService',
+        'ClientService', 'MatrixService', 'SamplingTypeService',
+        'NormService', 'OrderSourceService', 'StudyService',
+        StudyController
+      ]
+    );
+
   // QuotesListController.js
   /**
    * @name QuotesListController
    * @constructor
-   * @desc Controla la vista para el listado de Solicitudes
+   * @desc Controla la vista para el listado de Solicitudes/Cotizaciones
    * @this {Object} $scope - Contenedor para el modelo [AngularJS]
    * @param {Object} $location - Manejo de URL [AngularJS]
-   * @param {Object} QuotesListService - Proveedor de datos, solicitudes
+   * @param {Object} QuotesListService - Proveedor de datos, Solicitudes/Cotizaciones
    */
   function QuotesListController($location, QuotesListService) {
     var vm = this;
@@ -161,16 +298,21 @@
    * @constructor
    * @desc Controla la vista para capturar una Solicitud/Cotización
    * @this {Object} $scope - Contenedor para el modelo [AngularJS]
+   * @param {Object} $routeParams - Proveedor de parámetros de ruta
+   * @param {Object} TokenService - Proveedor para manejo del token
+   * @param {Object} ArrayUtilsService - Proveedor con Métodos para manejo de arreglos
    * @param {Object} ClientService - Proveedor de datos, Clientes
    * @param {Object} ParameterService - Proveedor de datos, Parámetros
    * @param {Object} NormService - Proveedor de datos, Normas
    * @param {Object} SamplingTypeService - Proveedor de datos, Tipos muestreo
-   * @param {Object} QuoteService - Proveedor de datos, Cotizaciones
+   * @param {Object} QuoteService - Proveedor de datos, Solicitud/Cotización
    */
-  function QuoteController($routeParams, TokenService, ClientService,
-    ParameterService, NormService, SamplingTypeService, QuoteService) {
+  function QuoteController($routeParams, TokenService, ArrayUtilsService,
+    ClientService, ParameterService, NormService,
+    SamplingTypeService, QuoteService) {
     var vm = this;
     vm.clients = ClientService.query();
+    vm.user = TokenService.getUserFromToken();
     vm.parameters = ParameterService.query();
     vm.norms = NormService.query();
     vm.samplingTypes = SamplingTypeService.query();
@@ -180,7 +322,6 @@
     vm.allParametersSelected = false;
     vm.totalCost = 0;
 
-    vm.user = TokenService.getUserFromToken();
     vm.toggleClientDetail = toggleClientDetail;
     vm.toggleParametersDetail = toggleParametersDetail;
     vm.selectClient = selectClient;
@@ -190,20 +331,6 @@
     vm.selectAllParameters = selectAllParameters;
     vm.selectSamplingType = selectSamplingType;
     vm.submitQuoteForm = submitQuoteForm;
-
-    function selectItemFromCollection(id, collection, field) {
-      var i = 0,
-      l = collection.length,
-      item = {};
-      for (i = 0; i < l; i += 1) {
-        if (collection[i][field] == id)
-        {
-          item = collection[i];
-          break;
-        }
-      }
-      return item;
-    }
 
     function toggleClientDetail() {
       var id = vm.quote.id_cliente;
@@ -219,10 +346,10 @@
     }
 
     function selectClient() {
-      vm.quote.cliente = selectItemFromCollection(
-        vm.quote.id_cliente,
+      vm.quote.cliente = ArrayUtilsService.selectItemFromCollection(
         vm.clients,
-        'id_cliente'
+        'id_cliente',
+        vm.quote.id_cliente
       );
       return vm.quote.cliente;
     }
@@ -309,8 +436,9 @@
     .module('sislabApp')
     .controller('QuoteController',
       [
-        '$routeParams', 'TokenService', 'ClientService', 'ParameterService',
-        'NormService', 'SamplingTypeService', 'QuoteService',
+        '$routeParams', 'TokenService', 'ArrayUtilsService',
+        'ClientService', 'ParameterService', 'NormService',
+        'SamplingTypeService', 'QuoteService',
         QuoteController
       ]
     );
@@ -319,7 +447,7 @@
   /**
    * @name OrdersListController
    * @constructor
-   * @desc Controla la vista para el listado de Órdenes de muestreo
+   * @desc Controla la vista para el listado de Órdenes muestreo
    * @this {Object} $scope - Contenedor para el modelo [AngularJS]
    * @param {Object} $location - Manejo de URL [AngularJS]
    * @param {Object} OrdersListService - Proveedor de datos, órdenes
@@ -355,18 +483,18 @@
    * @constructor
    * @desc Controla la vista para capturar una Orden de muestreo
    * @this {Object} $scope - Contenedor para el modelo [AngularJS]
-   * @param {Object} QuoteService - Proveedor de datos, Cotizaciones
+   * @param {Object} $routeParams - Proveedor de parámetros de ruta
+   * @param {Object} TokenService - Proveedor para manejo del token
    * @param {Object} OrderSourceService - Proveedor de datos, Orígenes orden
    * @param {Object} MatrixService - Proveedor de datos, Tipos matriz
-   * @param {Object} ParameterService - Proveedor de datos, Parámetros
    * @param {Object} SamplingSupervisorService - Proveedor de datos, Supervisores muestreo
    * @param {Object} OrderService - Proveedor de datos, Orden muestreo
    */
-  function OrderController($routeParams, OrderSourceService,
-    MatrixService, SamplingSupervisorService,
-    OrderService) {
+  function OrderController($routeParams, TokenService, OrderSourceService,
+    MatrixService, SamplingSupervisorService, OrderService) {
     var vm = this;
     vm.order = OrderService.query({orderId: $routeParams.orderId});
+    vm.user = TokenService.getUserFromToken();
     vm.orderSources = OrderSourceService.query();
     vm.matrices = MatrixService.query();
     vm.supervisors = SamplingSupervisorService.query();
@@ -394,9 +522,8 @@
     .module('sislabApp')
     .controller('OrderController',
       [
-        '$routeParams', 'OrderSourceService',
-        'MatrixService', 'SamplingSupervisorService',
-        'OrderService',
+        '$routeParams', 'TokenService', 'OrderSourceService',
+        'MatrixService', 'SamplingSupervisorService', 'OrderService',
         OrderController
       ]
     );
@@ -408,7 +535,7 @@
    * @desc Controla la vista para el listado de Planes de muestreo
    * @this {Object} $scope - Contenedor para el modelo [AngularJS]
    * @param {Object} $location - Manejo de URL [AngularJS]
-   * @param {Object} PlansListService - Proveedor de datos, planes
+   * @param {Object} PlansListService - Proveedor de datos, Planes de muestreo
    */
   function PlansListController($location, PlansListService) {
     var vm = this;
@@ -439,9 +566,12 @@
   /**
    * @name PlanController
    * @constructor
-   * @desc Controla la vista para capturar un Plan muestreo
+   * @desc Controla la vista para capturar un Plan de muestreo
    * @this {Object} $scope - Contenedor para el modelo [AngularJS]
-   * @param {Object} PlanObjectivesService - Proveedor de datos, Objetivos Plan muestreo
+   * @param {Object} $routeParams - Proveedor de parámetros de ruta
+   * @param {Object} TokenService - Proveedor para manejo del token
+   * @param {Object} ArrayUtilsService - Proveedor con Métodos para manejo de arreglos
+   * @param {Object} PlanObjectivesService - Proveedor de datos, Objetivos Plan de muestreo
    * @param {Object} PointKindsService - Proveedor de datos, tipos Punto
    * @param {Object} DistrictService - Proveedor de datos, Municipios
    * @param {Object} CityService - Proveedor de datos, Localidades
@@ -452,15 +582,16 @@
    * @param {Object} ReactivesListService - Proveedor de datos, lista Reactivos
    * @param {Object} MaterialService - Proveedor de datos, Material
    * @param {Object} CoolerService - Proveedor de datos, lista Hieleras
-   * @param {Object} PlanService - Proveedor de datos, Plan muestreo
+   * @param {Object} PlanService - Proveedor de datos, Plan de muestreo
    */
-  function PlanController($routeParams, PlanObjectivesService, PointKindsService,
-    DistrictService, CityService, SamplingSupervisorService,
-    SamplingEmployeeService, PreservationService, ContainerKindsService,
-    ReactivesListService, MaterialService, CoolerService,
-    PlanService) {
+  function PlanController($routeParams, TokenService, ArrayUtilsService,
+    PlanObjectivesService, PointKindsService, DistrictService,
+    CityService, SamplingSupervisorService, SamplingEmployeeService,
+    PreservationService, ContainerKindsService, ReactivesListService,
+    MaterialService, CoolerService, PlanService) {
     var vm = this;
     vm.plan = PlanService.query({planId: $routeParams.planId});
+    vm.user = TokenService.getUserFromToken();
     vm.objectives = PlanObjectivesService.query();
     vm.pointKinds = PointKindsService.query();
     vm.districts = DistrictService.query();
@@ -472,49 +603,22 @@
     vm.containers = ContainerKindsService.query();
     vm.materials = MaterialService.query();
     vm.coolers = CoolerService.query();
-    vm.addPoints = addPoints;
-
-    vm.selectDistrict = selectDistrict;
 
     vm.countSelectedItems = countSelectedItems;
+    vm.selectDistrict = selectDistrict;
+    vm.addPoints = addPoints;
 
-    function selectItemFromCollection(id, collection, field) {
-      var i = 0,
-      l = collection.length,
-      item = {};
-      for (i = 0; i < l; i += 1) {
-        if (collection[i][field] == id)
-        {
-          item = collection[i];
-          break;
-        }
-      }
-      return item;
-    }
-
-    function countSelectedItems(collection){
-      var i, l, count = 0;
-      if (!collection)
-      {
-        return 0;
-      }
-      l = collection.length;
-      for (i = 0; i < l; i += 1) {
-        if (collection[i].selected)
-        {
-          count += 1;
-        }
-      }
-      return count;
-    }
-
-    function addPoints() {
-
+    function countSelectedItems(collection) {
+      return ArrayUtilsService.countSelectedItems(collection);
     }
 
     function selectDistrict() {
       vm.plan.id_municipio = parseInt(vm.plan.id_municipio);
       vm.cities = CityService.query({districtId: vm.plan.id_municipio});
+    }
+
+    function addPoints() {
+
     }
   }
 
@@ -522,11 +626,11 @@
     .module('sislabApp')
     .controller('PlanController',
       [
-        '$routeParams', 'PlanObjectivesService', 'PointKindsService',
-        'DistrictService', 'CityService', 'SamplingSupervisorService',
-        'SamplingEmployeeService', 'PreservationService', 'ContainerKindsService',
-        'ReactivesListService', 'MaterialService', 'CoolerService',
-        'PlanService',
+        '$routeParams', 'TokenService', 'ArrayUtilsService',
+        'PlanObjectivesService', 'PointKindsService', 'DistrictService',
+        'CityService', 'SamplingSupervisorService', 'SamplingEmployeeService',
+        'PreservationService', 'ContainerKindsService', 'ReactivesListService',
+        'MaterialService', 'CoolerService', 'PlanService',
         PlanController
       ]
     );
@@ -572,6 +676,9 @@
    * @constructor
    * @desc Controla la vista para capturar la hoja de campo
    * @this {Object} $scope - Contenedor para el modelo [AngularJS]
+   * @param {Object} $routeParams - Proveedor de parámetros de ruta
+   * @param {Object} TokenService - Proveedor para manejo del token
+   * @param {Object} ArrayUtilsService - Proveedor con Métodos para manejo de arreglos
    * @param {Object} CloudService - Proveedor de datos, Coberturas nubes
    * @param {Object} WindService - Proveedor de datos, Direcciones viento
    * @param {Object} WaveService - Proveedor de datos, Intensidades oleaje
@@ -581,11 +688,13 @@
    * @param {Object} PreservationService - Proveedor de datos, Preservaciones
    * @param {Object} FieldSheetService - Proveedor de datos, Hojas de campo
    */
-  function FieldSheetController($routeParams, CloudService, WindService,
-    WaveService, SamplingNormService, PointService,
-    FieldParameterService, PreservationService, FieldSheetService) {
+  function FieldSheetController($routeParams, TokenService, ArrayUtilsService,
+    CloudService, WindService, WaveService,
+    SamplingNormService, PointService, FieldParameterService,
+    PreservationService, FieldSheetService) {
     var vm = this;
     vm.fieldSheet = FieldSheetService.query({sheetId: $routeParams.sheetId});
+    vm.user = TokenService.getUserFromToken();
     vm.cloudCovers = CloudService.query();
     vm.windDirections = WindService.query();
     vm.waveIntensities = WaveService.query();
@@ -635,36 +744,8 @@
     vm.validateFieldSheetForm = validateFieldSheetForm;
     vm.submitFieldSheetForm = submitFieldSheetForm;
 
-    function selectItemFromCollection(id, collection, field) {
-      var i = 0,
-      l = collection.length,
-      item = {};
-      for (i = 0; i < l; i += 1) {
-        if (collection[i][field] == id)
-        {
-          item = collection[i];
-          break;
-        }
-      }
-      return item;
-    }
-
-    function averageFromArray(arr) {
-      var i = 0,
-      l = arr.length,
-      sum = 0;
-      if (l < 1)
-      {
-        return 0;
-      }
-      for (i; i < l; i++) {
-        sum += parseFloat(arr[i]);
-      }
-      return Math.round((sum / l) * 1000 * 1000) / (1000 * 1000);
-    }
-
     function tempAvg(){
-      vm.temp = averageFromArray([
+      vm.temp = ArrayUtilsService.averageFromValues([
         vm.temp1,
         vm.temp2,
         vm.temp3
@@ -673,7 +754,7 @@
     }
 
     function tempAmbAvg(){
-      vm.tempAmb = averageFromArray([
+      vm.tempAmb = ArrayUtilsService.averageFromValues([
         vm.tempAmb1,
         vm.tempAmb2,
         vm.tempAmb3
@@ -682,7 +763,7 @@
     }
 
     function phAvg() {
-      vm.ph = averageFromArray([
+      vm.ph = ArrayUtilsService.averageFromValues([
         vm.ph1,
         vm.ph2,
         vm.ph3
@@ -691,7 +772,7 @@
     }
 
     function condAvg() {
-      vm.cond = averageFromArray([
+      vm.cond = ArrayUtilsService.averageFromValues([
         vm.cond1,
         vm.cond2,
         vm.cond3
@@ -700,7 +781,7 @@
     }
 
     function odAvg() {
-      vm.od = averageFromArray([
+      vm.od = ArrayUtilsService.averageFromValues([
         vm.od1,
         vm.od2,
         vm.od3
@@ -709,7 +790,7 @@
     }
 
     function crAvg() {
-      vm.cr = averageFromArray([
+      vm.cr = ArrayUtilsService.averageFromValues([
         vm.cr1,
         vm.cr2,
         vm.cr3
@@ -718,32 +799,42 @@
     }
 
     function selectCloudCover(idCloud) {
-      selectItemFromCollection(
-        idCloud,'id_cobertura_nubes', vm.cloudCovers
+      ArrayUtilsService.selectItemFromCollection(
+        vm.cloudCovers,
+        'id_cobertura_nubes',
+        idCloud
       );
     }
 
     function selectWindDirection(idWind) {
-      selectItemFromCollection(
-        idWind,'id_direccion_viento', vm.windDirections
+      ArrayUtilsService.selectItemFromCollection(
+        vm.windDirections,
+        'id_direccion_viento',
+        idWind
       );
     }
 
     function selectWaveIntensity(idWave) {
-      selectItemFromCollection(
-        idWave,'id_oleaje', vm.waveIntensities
+      ArrayUtilsService.selectItemFromCollection(
+        vm.waveIntensities,
+        'id_oleaje',
+        idWave
       );
     }
 
     function selectSamplingNorm(idNorm) {
-      selectItemFromCollection(
-        idNorm,'id_metodo_muestreo', vm.samplingNorms
+      ArrayUtilsService.selectItemFromCollection(
+        vm.samplingNorms,
+        'id_metodo_muestreo',
+        idNorm
       );
     }
 
     function selectPoint(idPoint) {
-      selectItemFromCollection(
-        idPoint,'id_punto_muestreo', vm.points
+      ArrayUtilsService.selectItemFromCollection(
+        vm.points,
+        'id_punto_muestreo',
+        idPoint
       );
     }
 
@@ -760,9 +851,10 @@
     .module('sislabApp')
     .controller('FieldSheetController',
       [
-        '$routeParams', 'CloudService', 'WindService',
-        'WaveService', 'SamplingNormService', 'PointService',
-        'FieldParameterService', 'PreservationService', 'FieldSheetService',
+        '$routeParams', 'TokenService', 'ArrayUtilsService',
+        'CloudService', 'WindService', 'WaveService',
+        'SamplingNormService', 'PointService', 'FieldParameterService',
+        'PreservationService', 'FieldSheetService',
         FieldSheetController
       ]
     );
@@ -810,7 +902,8 @@
    * @param {Object} ReceptionistService - Proveedor de datos, Recepcionistas
    * @param {Object} ReceptionService - Proveedor de datos, Recepción muestras
    */
-  function ReceptionController($routeParams, ReceptionistService, ReceptionService) {
+  function ReceptionController($routeParams, ReceptionistService,
+    ReceptionService) {
     var vm = this;
     vm.receptionists = ReceptionistService.query();
     vm.reception = ReceptionService.query({receptionId: $routeParams.sheetId});
@@ -889,6 +982,8 @@
    * @constructor
    * @desc Controla la vista para capturar las Hojas de custodia
    * @this {Object} $scope - Contenedor para el modelo [AngularJS]
+   * @param {Object} TokenService - Proveedor para manejo del token
+   * @param {Object} ArrayUtilsService - Proveedor con Métodos para manejo de arreglos
    * @param {Object} PreservationService - Proveedor de datos, Preservaciones
    * @param {Object} ExpirationService - Proveedor de datos, Vigencias
    * @param {Object} RequiredVolumeService - Proveedor de datos, Volúmenes requeridos
@@ -896,10 +991,11 @@
    * @param {Object} CheckerService - Proveedor de datos, Responsables verificación
    * @param {Object} CustodyService - Proveedor de datos, Cadenas custodia
    */
-  function CustodyController($routeParams, PreservationService, ExpirationService,
-    RequiredVolumeService, ContainerKindsService, CheckerService,
-    CustodyService) {
+  function CustodyController($routeParams, TokenService, ArrayUtilsService,
+    PreservationService, ExpirationService, RequiredVolumeService,
+    ContainerKindsService, CheckerService, CustodyService) {
     var vm = this;
+    vm.user = TokenService.getUserFromToken();
     vm.preservations = PreservationService.query();
     vm.expirations = ExpirationService.query();
     vm.volumes = RequiredVolumeService.query();
@@ -912,22 +1008,11 @@
     vm.validateCustodyForm = validateCustodyForm;
     vm.submitCustodyForm = submitCustodyForm;
 
-    function selectItemFromCollection(id, collection, field) {
-      var i = 0, l = collection.length,
-      item = {};
-      for (i = 0; i < l; i += 1) {
-        if (collection[i][field] == id)
-        {
-          item = collection[i];
-          break;
-        }
-      }
-      return item;
-    }
-
     function selectChecker(idChecker) {
-      selectItemFromCollection(
-        idChecker,'id_responsable_verificacion', vm.checkers
+      ArrayUtilsService.selectItemFromCollection(
+        vm.checkers,
+        'id_responsable_verificacion',
+        idChecker
       );
     }
 
@@ -944,9 +1029,9 @@
     .module('sislabApp')
     .controller('CustodyController',
       [
-        '$routeParams', 'PreservationService', 'ExpirationService',
-        'RequiredVolumeService', 'ContainerKindsService', 'CheckerService',
-        'CustodyService',
+        '$routeParams', 'TokenService', 'ArrayUtilsService',
+        'PreservationService', 'ExpirationService', 'RequiredVolumeService',
+        'ContainerKindsService', 'CheckerService', 'CustodyService',
         CustodyController
       ]
     );
@@ -955,9 +1040,9 @@
   /**
    * @name SamplesListController
    * @constructor
-   * @desc Controla la vista para consulta de Muestras
+   * @desc Controla la vista para el listado de Muestras
    * @this {Object} $scope - Contenedor para el modelo [AngularJS]
-   * @param {Object} SamplesListService - Proveedor de datos, lista Muestras
+   * @param {Object} SamplesListService - Proveedor de datos, lista de Muestras
    */
   function SamplesListController(SamplesListService) {
     var vm = this;
@@ -982,9 +1067,9 @@
   /**
    * @name InstrumentsListController
    * @constructor
-   * @desc Controla la vista para consulta de Equipos
+   * @desc Controla la vista para el listado de Equipos
    * @this {Object} $scope - Contenedor para el modelo [AngularJS]
-   * @param {Object} InstrumentsListService - Proveedor de datos, lista Equipos
+   * @param {Object} InstrumentsListService - Proveedor de datos, lista de Equipos
    */
   function InstrumentsListController(InstrumentsListService) {
     var vm = this;
@@ -1009,9 +1094,9 @@
   /**
    * @name ReactivesListController
    * @constructor
-   * @desc Controla la vista para consulta de Reactivos
+   * @desc Controla la vista para el listado de Reactivos
    * @this {Object} $scope - Contenedor para el modelo [AngularJS]
-   * @param {Object} ReactivesListService - Proveedor de datos, lista Reactivos
+   * @param {Object} ReactivesListService - Proveedor de datos, lista de Reactivos
    */
   function ReactivesListController(ReactivesListService) {
     var vm = this;
@@ -1036,7 +1121,7 @@
   /**
    * @name ContainersListController
    * @constructor
-   * @desc Controla la vista para consulta de Recipientes
+   * @desc Controla la vista para el listado de Recipientes
    * @this {Object} $scope - Contenedor para el modelo [AngularJS]
    * @param {Object} ContainersListService - Proveedor de datos, lista Recipientes
    */
@@ -1097,7 +1182,8 @@
    * @param {Object} ParameterService - Proveedor de datos, Parámetros
    * @param {Object} AnalysisService - Proveedor de datos, selección de captura de Análisis
    */
-  function AnalysisController(DepartmentService, ParameterService, AnalysisService) {
+  function AnalysisController(DepartmentService, ParameterService,
+    AnalysisService) {
     var vm = this;
     vm.areas = DepartmentService.query();
     vm.parameters = ParameterService.query();
@@ -1140,9 +1226,9 @@
   /**
    * @name ReportsListController
    * @constructor
-   * @desc Controla la vista para consulta de Reportes
+   * @desc Controla la vista para el listado de Reportes
    * @this {Object} $scope - Contenedor para el modelo [AngularJS]
-   * @param {Object} ReportsListService - Proveedor de datos, lista Reportes
+   * @param {Object} ReportsListService - Proveedor de datos, lista de Reportes
    */
   function ReportsListController(ReportsListService) {
     var vm = this;
@@ -1167,7 +1253,7 @@
   /**
    * @name ReportController
    * @constructor
-   * @desc Controla la vista para Reporte
+   * @desc Controla la vista para captura de Reporte
    * @this {Object} $scope - Contenedor para el modelo [AngularJS]
    * @param {Object} $routeParams - Proveedor de parámetros de ruta
    * @param {Object} ReportService - Proveedor de datos, Reporte
@@ -1201,9 +1287,9 @@
   /**
    * @name PointsListController
    * @constructor
-   * @desc Controla la vista para consulta de Puntos
+   * @desc Controla la vista para el listado de Puntos
    * @this {Object} $scope - Contenedor para el modelo [AngularJS]
-   * @param {Object} PointsListService - Proveedor de datos, lista Puntos
+   * @param {Object} PointsListService - Proveedor de datos, lista de Puntos
    */
   function PointsListController(PointsListService) {
     var vm = this;
@@ -1300,7 +1386,7 @@
   /**
    * @name NormsListController
    * @constructor
-   * @desc Controla la vista para consulta de Normas
+   * @desc Controla la vista para el listado de Normas
    * @this {Object} $scope - Contenedor para el modelo [AngularJS]
    * @param {Object} NormsListService - Proveedor de datos, lista Normas
    */
@@ -1327,7 +1413,7 @@
   /**
    * @name ReferencesListController
    * @constructor
-   * @desc Controla la vista para consulta de Referencias
+   * @desc Controla la vista para el listado de Referencias
    * @this {Object} $scope - Contenedor para el modelo [AngularJS]
    * @param {Object} ReferencesListService - Proveedor de datos, lista Referencias
    */
@@ -1381,7 +1467,7 @@
   /**
    * @name PricesListController
    * @constructor
-   * @desc Controla la vista para consulta de Precios
+   * @desc Controla la vista para el listado de Precios
    * @this {Object} $scope - Contenedor para el modelo [AngularJS]
    * @param {Object} PricesListService - Proveedor de datos, lista Precios
    */

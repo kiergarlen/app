@@ -7,23 +7,23 @@
 
 <div class="row">
   <div class="col-xs-12">
-    <h2 class="page-header">Solicitudes de servicio</h2>
+    <h2 class="page-header">Estudios</h2>
   </div>
 </div>
 <div class="row">
   <div class="col-xs-12">
     <button type="submit" class="btn btn-primary"
       value="Nueva" title="Nueva"
-      data-ng-click="quotes.addQuote()"
+      data-ng-click="studies.addStudy()"
       >
       <i class="glyphicon glyphicon-plus" aria-hidden="true"></i>
-      Nueva Solicitud
+      Nuevo Estudio
     </button>
     <br>
   </div>
 </div>
 <form class="form" role="form"
-  name="clientsForm"
+  name="studiesForm"
   novalidate
   >
   <div class="row">
@@ -33,15 +33,15 @@
   </div>
   <div class="row">
     <div class="col-xs-12 col-sm-8">
-      <label for="quoteSearch" class="sr-only">
+      <label for="studySearch" class="sr-only">
         Ingrese una búsqueda (Cliente, Contacto, etc.)
       </label>
       <input type="text"
         class="form-control"
         placeholder="Ingrese una búsqueda (Cliente, Contacto, etc.)"
-        id="quoteSearch"
-        name="quoteSearch"
-        data-ng-model="quotes.filter.$">
+        id="studySearch"
+        name="studySearch"
+        data-ng-model="studies.filter.$">
       <br>
     </div>
   </div>
@@ -50,15 +50,14 @@
   <div class="col-xs-12">
     <div class="panel">
       <div class="panel-heading">
-        <h3 class="panel-title">Solicitudes</h3>
+        <h3 class="panel-title">Estudios</h3>
       </div>
       <div class="table-responsive">
         <table class="table table-hover table-condensed"
-          id="quotesList">
+          id="studiesList">
           <thead>
             <tr>
               <th>Id Estudio</th>
-              <th>Id Sol.</th>
               <th>Status</th>
               <th>Cliente</th>
               <th>Acciones</th>
@@ -66,15 +65,12 @@
           </thead>
           <tbody>
             <tr
-              data-ng-repeat="item in quotes.quotes
-              | filter:quotes.filter.$"
-              id="quoteId{{item.id_solicitud}}"
+              data-ng-repeat="item in studies.studies
+              | filter:studies.filter.$"
+              id="quoteId{{item.id_estudio}}"
               >
               <td>
                 {{item.id_estudio}}
-              </td>
-              <td>
-                {{item.id_solicitud}}
               </td>
               <td>
                 <span class="label label-info"
@@ -96,13 +92,13 @@
               <td>
                 <a class="btn btn-default"
                   value="Consultar" title="Consultar"
-                  data-ng-click="quotes.viewQuote(item.id_solicitud)"
+                  data-ng-click="studies.viewStudy(item.id_estudio)"
                   >
                   <i class="glyphicon glyphicon-eye-open" aria-hidden="true"></i>
                 </a>
                 <a class="btn btn-info"
                   value="Enviar a orden" title="Enviar a orden"
-                  data-ng-click="quotes.sendToOrder(item.id_solicitud)"
+                  data-ng-click="studies.sendToQuote(item.id_estudio)"
                   data-ng-disabled="item.validado < 1"
                   >
                   <i class="glyphicon glyphicon-share-alt" aria-hidden="true"></i>

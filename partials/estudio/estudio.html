@@ -12,7 +12,7 @@
 </div>
 <form class="form" role="form"
   name="studyForm"
-  data-ng-submit="study.submitQuoteForm()"
+  data-ng-submit="study.submitForm()"
   novalidate
   >
   <div class="row">
@@ -30,8 +30,8 @@
         data-ng-model="study.study.fecha_solicitud"
         data-date-format="yyyy-MM-dd"
         data-date-type="number"
-        data-min-date="01/01/2000"
-        data-max-date="01/01/2016"
+        data-min-date="01/01/{{study.study.ejercicio - 2}}"
+        data-max-date="01/01/{{study.study.ejercicio + 1}}"
         data-autoclose="1"
         bs-datepicker
         >
@@ -132,19 +132,19 @@
       </select>
     </div>
     <div class="col-xs-6 col-sm-1">
-      <label for="sampleAmountText">
+      <label for="sampleAmountTextId{{req.id_solicitud}}">
         Muestras
       </label>
       <input type="text" class="form-control"
-        id="sampleAmountText"
-        name="sampleAmountText"
+        id="sampleAmountTextId{{req.id_solicitud}}"
+        name="sampleAmountTextId{{req.id_solicitud}}"
         title="Muestras"
         placeholder="Cant."
         data-ng-model="req.cantidad_muestras"
         >
     </div>
     <div class="col-xs-6 col-sm-3">
-      <label>
+      <label for="samplingSelectId{{req.id_solicitud}}">
         Tipo muestreo
       </label>
       <select class="form-control"
@@ -163,12 +163,12 @@
       </select>
     </div>
     <div class="col-xs-6 col-sm-3">
-      <label for="normSelect">
+      <label for="normSelectId{{req.id_solicitud}}">
         Norma
       </label>
       <select class="form-control"
-        id="normSelect"
-        name="normSelect"
+        id="normSelectId{{req.id_solicitud}}"
+        name="normSelectId{{req.id_solicitud}}"
         required
         data-ng-model="req.id_norma"
         >
@@ -182,8 +182,12 @@
       </select>
     </div>
     <div class="col-xs-1">
-      <label>Eliminar</label>
-      <a class="btn btn-danger"
+      <label for="removeButtonId{{req.id_solicitud}}">
+        Eliminar
+      </label>
+      <button class="btn btn-danger"
+        id="removeButtonId{{req.id_solicitud}}"
+        name="removeButtonId{{req.id_solicitud}}"
         value="Eliminar" title="Eliminar"
         data-ng-click="study.getStudyScope().removeQuote(req)"
         data-ng-disabled="study.study.solicitudes.length < 2"
@@ -219,12 +223,12 @@
     </div>
     <div class="col-xs-12 col-sm-6 col-md-7 col-lg-7">
       <label class="sr-only" for="emergencyText">
-        Especificar
+        Especificar Oficio o Emergencia
       </label>
       <input type="text" class="form-control"
         id="emergencyText"
         name="emergencyText"
-        placeholder="Especificar"
+        placeholder="Especificar Oficio o Emergencia"
         data-ng-model="study.study.origen_descripcion"
         >
     </div>
@@ -258,14 +262,14 @@
         value="Validar" title="Validar"
         data-ng-click="study.approveItem(study.study.id_estudio)"
         >
-        <i class="glyphicon glyphicon-ok-circle" aria-hidden="true"></i>
+        <i class="glyphicon glyphicon-ok" aria-hidden="true"></i>
         Validar
       </a>
       <a class="btn btn-danger"
         value="Rechazar" title="Rechazar"
         data-ng-click="study.rejectItem(study.study.id_estudio)"
         >
-        <i class="glyphicon glyphicon-ban-circle" aria-hidden="true"></i>
+        <i class="glyphicon glyphicon-remove" aria-hidden="true"></i>
         Rechazar
       </a>
     </div>

@@ -19,183 +19,97 @@
     <div class="col-xs-12" bs-collapse>
       <h4 bs-collapse-toggle>
         <a class="btn btn-default">
-          <!--
-          <i class="glyphicon glyphicon-chevron-up"
-            aria-hidden="true"></i>
-          -->
           <i class="glyphicon glyphicon-chevron-down"
             aria-hidden="true"></i>
         </a>
         Datos de Referencia
       </h4>
-      <div class="well wel-sm item-z1" bs-collapse-target>
-        <ul class="list-inline">
-          <li>
-            Folio:
-            {{quote.quote.folio}} /
-            {{quote.quote.ejercicio}}
-          </li>
-          <li data-ng-show="quote.quote.fecha_captura.length > 0">
-            Fecha captura: {{quote.quote.fecha_captura}}
-          </li>
-          <li data-ng-show="quote.quote.fecha_valida.length > 0">
-            Fecha validación gerente: {{quote.quote.fecha_valida}}
-          </li>
-          <li data-ng-show="quote.quote.fecha_acepta.length > 0">
-            Fecha aceptación cliente: {{quote.quote.fecha_acepta}}
-          </li>
-          <li data-ng-show="quote.quote.fecha_actualizacion.length > 0">
-            Fecha actualización: {{quote.quote.fecha_actualizacion}}
-          </li>
-        </ul>
-        <span class="label label-info"
-          data-ng-show="quote.quote.validado > 0">Validada</span>
-      </div>
-    </div>
-  </div>
-
-
-    <div class="row">
-        <div class="col-md-6">
-            <p class="input-group">
-              <input type="text" class="form-control"
-              datepicker-popup="aaaa-MM-DD"
-              data-ng-model="quote.quote.fecha_solicitud"
-               is-open="true"
-               ng-required="true"
-               close-text="Close" />
-              <span class="input-group-btn">
-                <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
-              </span>
-            </p>
+      <div class="row well wel-sm item-z1" bs-collapse-target>
+        <div class="col-xs-12 col-sm-6">
+          <ul class="list-inline">
+            <li>
+              Folio:
+              {{quote.quote.folio}} /
+              {{quote.quote.ejercicio}}
+            </li>
+            <li data-ng-show="quote.quote.fecha_captura.length > 0">
+              Fecha captura: {{quote.quote.fecha_captura}}
+            </li>
+            <li data-ng-show="quote.quote.fecha_valida.length > 0">
+              Fecha validación: {{quote.quote.fecha_valida}}
+            </li>
+            <li data-ng-show="quote.quote.fecha_acepta.length > 0">
+              Fecha aceptación: {{quote.quote.fecha_acepta}}
+            </li>
+            <li data-ng-show="quote.quote.fecha_actualizacion.length > 0">
+              Fecha actualización: {{quote.quote.fecha_actualizacion}}
+            </li>
+          </ul>
+          <span class="label label-info"
+            data-ng-show="quote.quote.validado > 0">
+            <i class="glyphicon glyphicon-ok"></i>
+            Validada
+          </span>
         </div>
-    </div>
-
-  <div class="row">
-    <div class="col-xs-12 col-sm-6 col-lg-4">
-      <label for="quoteDateSub">
-        <i class="glyphicon glyphicon-calendar"></i>
-        Fecha solicitud
-      </label>
-      <input type="text"
-        class="form-control"
-        placeholder="aaaa-mm-dd"
-        id="quoteDateSub"
-        name="quoteDateSub"
-        required
-        data-ng-model="quote.quote.fecha_solicitud"
-        data-date-format="yyyy-MM-dd"
-        data-date-type="number"
-        data-min-date="01/01/2000"
-        data-max-date="today"
-        data-autoclose="1"
-        bs-datepicker
-        >
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-xs-12">
-      <h4>Cliente</h4>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-xs-12 col-sm-7 col-md-7 col-lg-6">
-      <label for="clientSelect" class="sr-only">
-        Cliente</label>
-      <select class="form-control"
-        id="clientSelect"
-        name="clientSelect"
-        required
-        data-ng-model="quote.quote.id_cliente"
-        data-ng-change="quote.selectClient()"
-        >
-        <option value="">
-          Seleccione una opción
-        </option>
-        <option data-ng-repeat="client in quote.clients"
-          value="{{client.id_cliente}}">
-          {{client.cliente}}
-          {{client.area.length > 0 &&
-          ' - ' + client.area ||
-          ''}}
-        </option>
-      </select>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-xs-12" bs-collapse>
-      <h4 bs-collapse-toggle>
-        <a class="btn btn-default">
-          <i class="glyphicon glyphicon-chevron-down"
-            aria-hidden="true"></i>
-        </a>
-        Cliente seleccionado
-      </h4>
-      <div class="well wel-sm item-z1" bs-collapse-target>
-        <h5>
+        <div class="col-xs-12 col-sm-6">
+          <h6>Estudio</h6>
+          Folio:
+          {{quote.quote.estudio.folio}}
+          /
+          {{quote.quote.estudio.ejercicio}}
+          <br>
+          Fecha:
+          {{quote.quote.estudio.fecha}}
+          <br>
+          <span class="label label-info"
+            data-ng-show="quote.quote.estudio.validado > 0">
+            <i class="glyphicon glyphicon-ok"></i>
+            Validado
+          </span>
+        </div>
+        <div class="col-xs-12">
+          <h6>Cliente</h6>
           {{quote.selectClient(quote.quote.id_cliente).cliente}}
           <br>
           <small>{{quote.quote.cliente.area}}</small>
-        </h5>
-        <ul class="list-unstyled">
-          <li>Domicilio <strong>
-            {{quote.quote.cliente.calle}}
-            {{quote.quote.cliente.numero}}<br>
-            {{quote.quote.cliente.colonia}}</strong></li>
-          <li>Contacto <strong>{{quote.quote.cliente.contacto}}</strong></li>
-          <li>Tel. <strong>{{quote.quote.cliente.tel}}</strong></li>
-          <li>Email <strong>{{quote.quote.cliente.email}}</strong></li>
-          <li>Tarifa <strong>{{100 * quote.quote.cliente.tasa}}%</strong></li>
-        </ul>
+          <br>
+          Contacto: {{quote.quote.cliente.contacto}}
+        </div>
       </div>
     </div>
   </div>
   <div class="row">
     <div class="col-xs-12">
-      <h5>Tipo de muestreo</h5>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-xs-6">
-      <div class="radio"
-        data-ng-repeat="samplingType in quote.samplingTypes">
-        <label>
-          <input type="radio"
-            id="samplingTypeId{{samplingType.id_tipo_muestreo}}"
-            name="samplingTypesRadios"
-            data-ng-model="quote.quote.id_tipo_muestreo"
-            value="{{samplingType.id_tipo_muestreo}}"
-            required>
-            {{samplingType.tipo_muestreo}}
-        </label>
-      </div>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-xs-12">
-      <h5>Norma</h5>
+      <h5>Cuerpo receptor</h5>
     </div>
   </div>
   <div class="row">
     <div class="col-xs-12 col-sm-7 col-md-7 col-lg-6">
-      <label for="normSelect">
-        Análisis de parámetros según Norma
+      <label class="sr-only" for="receivingWaterBodyText">
+        Cuerpo receptor
       </label>
-      <select class="form-control"
-        id="normSelect"
-        name="normSelect"
-        required
-        data-ng-model="quote.quote.id_norma"
-        data-ng-change="quote.selectNorm(quote.quote.id_norma)"
+      <input type="text" class="form-control"
+        id="receivingWaterBodyText"
+        name="receivingWaterBodyText"
+        placeholder="Cuerpo receptor"
+
         >
-        <option value="">
-          Seleccione una opción
-        </option>
-        <option data-ng-repeat="norm in quote.norms"
-          value="{{norm.id_norma}}">
-          {{norm.norma}}
-        </option>
-      </select>
+    </div>
+    <div class="col-xs-12 col-sm-5 col-md-5 col-lg-6">
+      <label class="sr-only" for="receivingWaterBodyTypeText">
+        Tipo
+      </label>
+      <input type="text" class="form-control"
+        id="receivingWaterBodyTypeText"
+        name="receivingWaterBodyTypeText"
+        placeholder="Tipo"
+
+        >
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12">
+      <h5>Costo Servicios</h5>
     </div>
   </div>
   <div class="row">

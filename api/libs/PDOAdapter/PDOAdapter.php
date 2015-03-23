@@ -1,20 +1,21 @@
 <?php
 class PDOAdapter
 {
-	/** @var array $_config Arreglo con los datos de conexión a la Base de Datos */
+	/** @var array $_config Arreglo con los datos de conexión */
 	protected $_config = array();
 	/** @var mixed|null $_link Enlace a la Base de Datos */
 	protected $_link = null;
-	/** @var mixed|null $_instance Instancia única (Singleton) de la clase PDOAdapter */
+	/** @var mixed|null $_instance Singleton de la clase PDOAdapter */
 	protected static $_instance = null;
 
 	/**
-	 * Obtiene la Instancia única (Singleton) de la clase PDOAdapter
+	 * Obtiene Singleton de la clase PDOAdapter
 	 * @param array Arreglo con los datos de conexión a la Base de Datos
-	 * @return PDOAdapter Instancia única (Singleton) de la clase PDOAdapter
+	 * @return PDOAdapter Singleton de la clase PDOAdapter
 	 */
 	public static function getInstance(array $config = array()) {
-		if (self::$_instance === null) {
+		if (self::$_instance === null)
+		{
 			self::$_instance = new self($config);
 		}
 		return self::$_instance;
@@ -25,11 +26,13 @@ class PDOAdapter
 	 * @param array Arreglo con los datos de conexión a la Base de Datos
 	 */
 	protected function __construct(array $config) {
-		if (count($config) !== 5) {
+		if (count($config) !== 5)
+		{
 			throw new Exception('Invalid number of connection parameters.');
 		}
 		$this->_config = $config;
-		if ($this->_link === null) {
+		if ($this->_link === null)
+		{
 			list($driver, $host, $user, $password, $database) = $this->_config;
 			try {
 				$dsn = $driver . ":server=" . $host . ";Database=" . $database;
@@ -83,10 +86,12 @@ class PDOAdapter
 	 * @return mixed $input Valor procesada
 	 */
 	public function mysql_escape_mimic($input) {
-		if(is_array($input)) {
+		if(is_array($input))
+		{
 			return array_map(__METHOD__, $input);
 		}
-		if(!empty($input) && is_string($input)) {
+		if(!empty($input) && is_string($input))
+		{
 			return str_replace(
 				array('\\', '\0', '\n', '\r', '\'', '"', '\x1a'),
 				array('\\\\', '\\0', '\\n', '\\r', '\\\'', '\\"', '\\Z'),

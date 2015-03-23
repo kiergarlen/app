@@ -46,7 +46,8 @@ $app->post("/login", function() use ($app) {
 		$token["iss"] = $request->getUrl();
 		$token["aud"] = "sislab.ceajalisco.gob.mx";
 		$token["iat"] = time();
-		$token["exp"] = time() + (50 * 60);
+		/// Token expires 3 hours from now
+		$token["exp"] = time() + (3 * 60 * 60);
 		$jwt = JWT::encode($token, KEY);
 
 		////debugging only

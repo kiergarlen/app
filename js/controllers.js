@@ -229,11 +229,15 @@
     }
 
     function approveItem() {
-
+      vm.study.validado = 1;
+      vm.study.rechazado = 0;
+      vm.study.fecha_valida = new Date().toISOString().slice(0,10);
     }
 
     function rejectItem() {
-
+      vm.study.rechazado = 1;
+      vm.study.validado = 0;
+      vm.study.fecha_rechaza = new Date().toISOString().slice(0,10);
     }
 
     function validateForm(form) {

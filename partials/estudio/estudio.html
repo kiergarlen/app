@@ -252,7 +252,7 @@
       <br>
     </div>
   </div>
-  <div class="row"
+  <div class="row item-z1"
     data-ng-show="study.user.level < 3">
     <div class="col-xs-12">
       <h4>Validación</h4>
@@ -281,6 +281,7 @@
         id="rejectText"
         name="rejectText"
         placeholder="Motivo rechazo"
+        data-ng-disabled="study.study.rechazado < 1"
         data-ng-model="study.study.motivo_rechazo"
         >
     </div>

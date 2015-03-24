@@ -571,6 +571,72 @@ class DALSislab
 		return $result;
 	}
 
+	public function getApprovalStatus($statusId) {
+		if ($statusId == 1)
+		{
+			$result = '
+				{
+					"id_status":1,
+					"status":"Pendiente",
+					"activo":1
+				}
+			';
+		}
+		else if ($statusId == 2)
+		{
+			$result = '
+				{
+					"id_status":2,
+					"status":"Validado",
+					"activo":1
+				}
+			';
+		}
+		else if ($statuId == 3)
+		{
+			$result = '
+				{
+					"id_status":3,
+					"status":"Rechazado",
+					"activo":1
+				}
+			';
+		}
+		else
+		{
+			$result = '
+				{
+					"id_status":0,
+					"status":"Sin status",
+					"activo":1
+				}
+			';
+		}
+		return $result;
+	}
+
+	public function getApprovalStatusList() {
+		$result = '
+			[
+				{
+					"id_status":1,
+					"status":"Sin validar",
+					"activo":1
+				},
+				{
+					"id_status":2,
+					"status":"Validado",
+					"activo":1
+				},
+				{
+					"id_status":3,
+					"status":"Rechazado",
+					"activo":1
+				}
+			]
+		';
+	}
+
 	public function getStudy($studyId) {
 		//$sql = "SELECT
 		//		*
@@ -583,6 +649,7 @@ class DALSislab
 			$result = '
 				{
 					"id_estudio":1,
+					"id_status":1,
 					"folio":432,
 					"ejercicio":2015,
 					"id_cliente":1,
@@ -641,6 +708,7 @@ class DALSislab
 						{
 							"id_solicitud":1,
 							"id_estudio":1,
+							"id_status":1,
 							"id_matriz":1,
 							"cantidad_muestras":15,
 							"id_tipo_muestreo":2,
@@ -649,6 +717,7 @@ class DALSislab
 						{
 							"id_solicitud":2,
 							"id_estudio":1,
+							"id_status":1,
 							"id_matriz":2,
 							"cantidad_muestras":16,
 							"id_tipo_muestreo":1,
@@ -663,6 +732,7 @@ class DALSislab
 			$result = '
 				{
 					"id_estudio":2,
+					"id_status":1,
 					"folio":432,
 					"ejercicio":2015,
 					"id_cliente":13,
@@ -722,6 +792,7 @@ class DALSislab
 						{
 							"id_solicitud":1,
 							"id_estudio":1,
+							"id_status":1,
 							"id_matriz":1,
 							"cantidad_muestras":15,
 							"id_tipo_muestreo":2,
@@ -730,6 +801,7 @@ class DALSislab
 						{
 							"id_solicitud":2,
 							"id_estudio":1,
+							"id_status":1,
 							"id_matriz":2,
 							"cantidad_muestras":16,
 							"id_tipo_muestreo":1,
@@ -744,6 +816,7 @@ class DALSislab
 			$result = '
 				{
 					"id_estudio":3,
+					"id_status":1,
 					"folio":3,
 					"ejercicio":2015,
 					"id_cliente":21,
@@ -803,6 +876,7 @@ class DALSislab
 						{
 							"id_solicitud":5,
 							"id_estudio":3,
+							"id_status":1,
 							"id_matriz":1,
 							"cantidad_muestras":15,
 							"id_tipo_muestreo":2,
@@ -811,6 +885,7 @@ class DALSislab
 						{
 							"id_solicitud":6,
 							"id_estudio":3,
+							"id_status":1,
 							"id_matriz":2,
 							"cantidad_muestras":16,
 							"id_tipo_muestreo":1,
@@ -838,6 +913,7 @@ class DALSislab
 			[
 				{
 					"id_estudio":1,
+					"id_status":1,
 					"folio":432,
 					"ejercicio":2015,
 					"id_cliente":1,
@@ -896,6 +972,7 @@ class DALSislab
 						{
 							"id_solicitud":1,
 							"id_estudio":1,
+							"id_status":1,
 							"id_matriz":1,
 							"cantidad_muestras":15,
 							"id_tipo_muestreo":2,
@@ -904,6 +981,7 @@ class DALSislab
 						{
 							"id_solicitud":2,
 							"id_estudio":1,
+							"id_status":1,
 							"id_matriz":2,
 							"cantidad_muestras":16,
 							"id_tipo_muestreo":1,
@@ -913,6 +991,7 @@ class DALSislab
 				},
 				{
 					"id_estudio":2,
+					"id_status":1,
 					"folio":432,
 					"ejercicio":2015,
 					"id_cliente":13,
@@ -972,6 +1051,7 @@ class DALSislab
 						{
 							"id_solicitud":1,
 							"id_estudio":1,
+							"id_status":1,
 							"id_matriz":1,
 							"cantidad_muestras":15,
 							"id_tipo_muestreo":2,
@@ -980,6 +1060,7 @@ class DALSislab
 						{
 							"id_solicitud":2,
 							"id_estudio":1,
+							"id_status":1,
 							"id_matriz":2,
 							"cantidad_muestras":16,
 							"id_tipo_muestreo":1,
@@ -1006,6 +1087,7 @@ class DALSislab
 					"id_solicitud":1,
 					"id_matriz":1,
 					"id_estudio":1,
+					"id_status":1,
 					"cantidad_muestras":1,
 					"folio":432,
 					"ejercicio":2014,
@@ -1585,6 +1667,7 @@ class DALSislab
 					"id_solicitud":2,
 					"id_matriz":1,
 					"id_estudio":1,
+					"id_status":1,
 					"cantidad_muestras":1,
 					"folio":433,
 					"ejercicio":2015,

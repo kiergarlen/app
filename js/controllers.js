@@ -317,13 +317,9 @@
     vm.norms = NormService.query();
     vm.samplingTypes = SamplingTypeService.query();
     vm.quote = QuoteService.query({quoteId: $routeParams.quoteId});
-    vm.clientDetailVisible = false;
-    vm.parametersDetailVisible = false;
     vm.allParametersSelected = false;
     vm.totalCost = 0;
 
-    vm.toggleClientDetail = toggleClientDetail;
-    vm.toggleParametersDetail = toggleParametersDetail;
     vm.selectClient = selectClient;
     vm.totalParameter = totalParameter;
     vm.selectNorm = selectNorm;
@@ -331,19 +327,6 @@
     vm.selectAllParameters = selectAllParameters;
     vm.selectSamplingType = selectSamplingType;
     vm.submitQuoteForm = submitQuoteForm;
-
-    function toggleClientDetail() {
-      var id = vm.quote.id_cliente;
-      vm.clientDetailVisible = (
-        vm.quote.id_cliente > 0 &&
-        vm.selectClient(id).cliente &&
-        !vm.clientDetailVisible
-      );
-    }
-
-    function toggleParametersDetail() {
-      vm.parametersDetailVisible = !vm.parametersDetailVisible;
-    }
 
     function selectClient() {
       vm.quote.cliente = ArrayUtilsService.selectItemFromCollection(

@@ -38,14 +38,15 @@ class DALSislab
 		//	ORDER BY
 		//		order";
 		//return \Service\Adapter\PDOAdapter::getInstance()->getAllRows($sql);
-		if ($userId == 1) {
+		if ($userId == 1)
+		{
 			$result = '
 				[
 					{
 						"id_menu":0,
 						"orden":1,
 						"url":"/#",
-						"label":"Estudio",
+						"label":"Informe",
 						"activo":1,
 						"submenu":
 						[
@@ -54,7 +55,7 @@ class DALSislab
 								"id_menu":100,
 								"orden":1,
 								"url":"/estudio/estudios",
-								"label":"Estudio",
+								"label":"Informe",
 								"activo":1
 							}
 						]
@@ -577,6 +578,8 @@ class DALSislab
 		//		estudio
 		//	WHERE id_estudio := $studyId AND activo = 1";
 		//return \Service\Adapter\PDOAdapter::getInstance()->getAllRows($sql);
+		if ($studyId == 1)
+		{
 			$result = '
 				{
 					"id_estudio":1,
@@ -654,7 +657,173 @@ class DALSislab
 					]
 				}
 			';
+		}
+		else if ($studyId == 2)
+		{
+			$result = '
+				{
+					"id_estudio":2,
+					"folio":432,
+					"ejercicio":2015,
+					"id_cliente":13,
+					"fecha":"2015-03-21",
+					"ubicacion":"",
 
+					"fecha_captura":"2015-03-21",
+					"fecha_entrega":"",
+					"id_usuario_captura":20,
+					"ip_captura":"::1",
+					"host_captura":"localhost",
+					"fecha_valida":"2015-03-21",
+					"id_usuario_valida":1,
+					"ip_valida":"::1",
+					"host_valida":"localhost",
+					"fecha_actualizacion":"2015-03-21",
+					"id_usuario_actualizacion":1,
+					"ip_actualizacion":"::1",
+					"host_actualizacion":"localhost",
+
+					"validado":0,
+					"rechazado":0,
+					"entregado":0,
+					"motivo_rechazo":"",
+					"activo":0,
+
+					"cliente":
+					{
+						"id_cliente":13,
+						"id_organismo":6,
+						"cliente":"Ayuntamiento de Cotija, Michoacan",
+						"area":"",
+						"rfc":"Registro Federal de Contribuyentes",
+						"calle":"Pino Suárez Pte.",
+						"numero":"100",
+						"colonia":"Col. Centro",
+						"cp":"59940",
+						"id_estado":16,
+						"estado":"Michoacán de Ocampo",
+						"id_municipio":16019,
+						"municipio":"Cotija",
+						"id_localidad":160190001,
+						"localidad":"Cotija de La Paz",
+						"tel":"045-35-4100-1836",
+						"fax":"",
+						"contacto":"Arq. Juan Jesús Zarate Barajas",
+						"puesto_contacto":"puesto contacto",
+						"email":"ooapascotija@hotmail.com",
+						"fecha_act":"2014-11-23",
+						"interno":0,
+						"cea":0,
+						"tasa":1,
+						"activo":1
+					},
+					"solicitudes":
+					[
+						{
+							"id_solicitud":1,
+							"id_estudio":1,
+							"id_matriz":1,
+							"cantidad_muestras":15,
+							"id_tipo_muestreo":2,
+							"id_norma":3
+						},
+						{
+							"id_solicitud":2,
+							"id_estudio":1,
+							"id_matriz":2,
+							"cantidad_muestras":16,
+							"id_tipo_muestreo":1,
+							"id_norma":1
+						}
+					]
+				}
+			';
+		}
+		else if ($studyId == 3)
+		{
+			$result = '
+				{
+					"id_estudio":3,
+					"folio":3,
+					"ejercicio":2015,
+					"id_cliente":21,
+					"fecha":"2015-03-21",
+					"ubicacion":"",
+
+					"fecha_captura":"2015-03-21",
+					"fecha_entrega":"",
+					"id_usuario_captura":20,
+					"ip_captura":"::1",
+					"host_captura":"localhost",
+					"fecha_valida":"2015-03-22",
+					"id_usuario_valida":1,
+					"ip_valida":"::1",
+					"host_valida":"localhost",
+					"fecha_actualizacion":"2015-03-22",
+					"id_usuario_actualizacion":1,
+					"ip_actualizacion":"::1",
+					"host_actualizacion":"localhost",
+
+					"validado":1,
+					"rechazado":0,
+					"entregado":0,
+					"motivo_rechazo":"",
+					"activo":1,
+
+					"cliente":
+					{
+						"id_cliente":21,
+						"id_organismo":14,
+						"cliente":"SECOLAM S.A. de C.V.",
+						"area":"",
+						"rfc":"Registro Federal de Contribuyentes",
+						"calle":"De los Fiordos",
+						"numero":"16",
+						"colonia":"Col. Acueducto de Guadalupe",
+						"cp":"07279",
+						"id_estado":9,
+						"estado":"Distrito Federal",
+						"id_municipio":9007,
+						"municipio":"Gustavo A. Madero",
+						"id_localidad":90070001,
+						"localidad":"Gustavo A. Madero",
+						"tel":"1567-4406",
+						"fax":"",
+						"contacto":"Ing. Roberto Escalante Villanueva",
+						"puesto_contacto":"puesto contacto",
+						"email":"rescalante@secovam.com",
+						"fecha_act":"2014-11-23",
+						"interno":0,
+						"cea":0,
+						"tasa":1,
+						"activo":1
+					},
+					"solicitudes":
+					[
+						{
+							"id_solicitud":5,
+							"id_estudio":3,
+							"id_matriz":1,
+							"cantidad_muestras":15,
+							"id_tipo_muestreo":2,
+							"id_norma":3
+						},
+						{
+							"id_solicitud":6,
+							"id_estudio":3,
+							"id_matriz":2,
+							"cantidad_muestras":16,
+							"id_tipo_muestreo":1,
+							"id_norma":1
+						}
+					]
+				}
+			';
+		}
+		else if ($studyId == 3)
+		{
+
+		}
 		return $result;
 	}
 
@@ -746,7 +915,7 @@ class DALSislab
 					"id_estudio":2,
 					"folio":432,
 					"ejercicio":2015,
-					"id_cliente":1,
+					"id_cliente":13,
 					"fecha":"2015-03-21",
 					"ubicacion":"",
 
@@ -772,29 +941,30 @@ class DALSislab
 
 					"cliente":
 					{
-						"id_cliente":1,
-						"id_organismo":1,
-						"cliente":"CEA Jalisco",
-						"area":"Dirección de Operación de PTARS",
+						"id_cliente":13,
+						"id_organismo":6,
+						"cliente":"Ayuntamiento de Cotija, Michoacan",
+						"area":"",
 						"rfc":"Registro Federal de Contribuyentes",
-						"calle":"Av. Brasilia",
-						"numero":"2970",
-						"colonia":"Col. Colomos Providencia",
-						"cp":"44680",
-						"id_estado":14,
-						"id_municipio":14039,
-						"municipio":"Guadalajara",
-						"id_localidad":140390001,
-						"localidad":"Guadalajara",
-						"tel":"3030-9350 ext. 8370",
+						"calle":"Pino Suárez Pte.",
+						"numero":"100",
+						"colonia":"Col. Centro",
+						"cp":"59940",
+						"id_estado":16,
+						"estado":"Michoacán de Ocampo",
+						"id_municipio":16019,
+						"municipio":"Cotija",
+						"id_localidad":160190001,
+						"localidad":"Cotija de La Paz",
+						"tel":"045-35-4100-1836",
 						"fax":"",
-						"contacto":"Biol. Luis Aceves Martínez",
+						"contacto":"Arq. Juan Jesús Zarate Barajas",
 						"puesto_contacto":"puesto contacto",
-						"email":"laceves@ceajalisco.gob.mx",
+						"email":"ooapascotija@hotmail.com",
 						"fecha_act":"2014-11-23",
-						"interno":1,
-						"cea":1,
-						"tasa":0,
+						"interno":0,
+						"cea":0,
+						"tasa":1,
 						"activo":1
 					},
 					"solicitudes":
@@ -829,10 +999,14 @@ class DALSislab
 		//		solicitud
 		//	WHERE id_solicitud := $quoteId AND activo = 1";
 		//return \Service\Adapter\PDOAdapter::getInstance()->getAllRows($sql);
-		if ($quoteId == 1) {
+		if ($quoteId == 1)
+		{
 			$result = '
 				{
 					"id_solicitud":1,
+					"id_matriz":1,
+					"id_estudio":1,
+					"cantidad_muestras":1,
 					"folio":432,
 					"ejercicio":2014,
 					"fecha_solicitud":"2014-07-01",
@@ -1404,10 +1578,14 @@ class DALSislab
 				}
 			';
 		}
-		else if ($quoteId == 2) {
+		else if ($quoteId == 2)
+		{
 			$result = '
 				{
 					"id_solicitud":2,
+					"id_matriz":1,
+					"id_estudio":1,
+					"cantidad_muestras":1,
 					"folio":433,
 					"ejercicio":2015,
 					"fecha_solicitud":"2015-07-01",
@@ -1491,11 +1669,13 @@ class DALSislab
 						"cert":1,
 						"activo":1
 					},
-					"norma":{
+					"norma":
+					{
 						"id_norma":1,
 						"norma":"NOM-001-SEMARNAT-1996",
 						"desc":"Norma Oficial Mexicana",
-						"parametros":[
+						"parametros":
+						[
 							{
 								"id_parametro":25,
 								"parametro":"Arsénico",
@@ -1983,6 +2163,9 @@ class DALSislab
 			$result = '
 				{
 					"id_solicitud":0,
+					"id_matriz":1,
+					"id_ejercicio":0,
+					"cantidad_muestras":1,
 					"folio":0,
 					"ejercicio":0,
 					"fecha_solicitud":null,

@@ -235,8 +235,8 @@
     }
 
     function rejectItem() {
-      vm.study.rechazado = 1;
       vm.study.validado = 0;
+      vm.study.rechazado = 1;
       vm.study.fecha_rechaza = new Date().toISOString().slice(0,10);
     }
 

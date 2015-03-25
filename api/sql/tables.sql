@@ -10,6 +10,74 @@ GO
 SET ANSI_PADDING ON
 GO
 
+CREATE TABLE [dbo].[Menu](
+	[id_menu] [int] IDENTITY(1,1) NOT NULL,
+	[orden] [int] NULL,
+	[url] [varchar] (200) NULL,
+	[label] [varchar] (50) NULL,
+	[activo] [int] NULL,
+ CONSTRAINT [PK_Menu] PRIMARY KEY CLUSTERED
+(
+	[id_menu] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF,
+IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON,
+ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+CREATE TABLE [dbo].[SubMenu](
+	[id_submenu] [int] IDENTITY(1,1) NOT NULL,
+	[id_menu] [int] NOT NULL,
+	[orden] [int] NULL,
+	[url] [varchar] (200) NULL,
+	[label] [varchar] (50) NULL,
+	[activo] [int] NULL,
+ CONSTRAINT [PK_SubMenu] PRIMARY KEY CLUSTERED
+(
+	[id_submenu] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF,
+IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON,
+ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+ALTER TABLE [dbo].[SubMenu] WITH CHECK ADD CONSTRAINT [FK_Menu] FOREIGN KEY([id_menu])
+REFERENCES [dbo].[Menu] ([id_menu])
+GO
+
+ALTER TABLE [dbo].[submenu] CHECK CONSTRAINT [FK_Menu]
+GO
+
+CREATE TABLE [dbo].[Rol](
+	[id_rol] [int] IDENTITY(1,1) NOT NULL,
+	[rol] [varchar] (200) NULL,
+	[activo] [int] NULL,
+ CONSTRAINT [PK_Rol] PRIMARY KEY CLUSTERED
+(
+	[id_rol] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF,
+IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON,
+ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+CREATE TABLE [dbo].[RolSubMenu](
+	[id_rol_submenu] [int] IDENTITY(1,1) NOT NULL,
+	[id_rol] [int] NOT NULL,
+	[id_submenu] [int] NOT NULL,
+	[activo] [int] NULL,
+ CONSTRAINT [PK_RolMenu] PRIMARY KEY CLUSTERED
+(
+	[id_rol_submenu] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF,
+IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON,
+ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+
+
+
 CREATE TABLE [dbo].[Cliente](
 	[id_cliente] [int] IDENTITY(1,1) NOT NULL,
 	[id_organismo] [int] NULL,

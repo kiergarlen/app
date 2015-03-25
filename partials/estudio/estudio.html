@@ -84,7 +84,8 @@
           <li>Domicilio <strong>
             {{study.study.cliente.calle}}
             {{study.study.cliente.numero}}<br>
-            {{study.study.cliente.colonia}}</strong></li>
+            {{study.study.cliente.colonia}}</strong>
+          </li>
           <li>Contacto <strong>{{study.study.cliente.contacto}}</strong></li>
           <li>Tel. <strong>{{study.study.cliente.tel}}</strong></li>
           <li>Email <strong>{{study.study.cliente.email}}</strong></li>
@@ -252,12 +253,12 @@
       <br>
     </div>
   </div>
-  <div class="row item-z1"
+  <div class="row"
     data-ng-show="study.user.level < 3">
     <div class="col-xs-12">
       <h4>Validación</h4>
     </div>
-    <div class="col-xs-12 col-sm-4">
+    <div class="col-xs-12 col-sm-3">
       <a class="btn btn-success"
         value="Validar" title="Validar"
         data-ng-click="study.approveItem(study.study.id_estudio)"
@@ -273,7 +274,7 @@
         Rechazar
       </a>
     </div>
-    <div class="col-xs-12 col-sm-8">
+    <div class="col-xs-12 col-sm-7">
       <label class="sr-only" for="rejectText">
         Motivo rechazo
       </label>
@@ -281,7 +282,6 @@
         id="rejectText"
         name="rejectText"
         placeholder="Motivo rechazo"
-        data-ng-disabled="study.study.rechazado < 1"
         data-ng-model="study.study.motivo_rechazo"
         >
     </div>

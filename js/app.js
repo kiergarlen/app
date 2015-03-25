@@ -20,7 +20,7 @@
    * @desc Configuración de AngularJS
    * @param {Object} $routeProvider - Proveedor, manejo de rutas de la applicación
    * @param {Object} $httpProvider - Proveedor, manejo de peticiones HTTP
-   * @param {Object} jwtInterceptorProvider - Proveedor, manejo de interceptor para implentación de JWT
+   * @param {Object} jwtInterceptorProvider - Proveedor, intercepción de JWT
    */
   function config($routeProvider, $httpProvider, jwtInterceptorProvider,
     $collapseProvider) {

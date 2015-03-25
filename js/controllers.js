@@ -166,7 +166,7 @@
    * @this {Object} $scope - Contenedor para el modelo [AngularJS]
    * @param {Object} $routeParams - Proveedor de parámetros de ruta
    * @param {Object} TokenService - Proveedor para manejo del token
-   * @param {Object} ArrayUtilsService - Proveedor con Métodos para manejo de arreglos
+   * @param {Object} ArrayUtilsService - Proveedor para manejo de arreglos
    * @param {Object} ClientService - Proveedor de datos, Clientes
    * @param {Object} MatrixService - Proveedor de datos, Tipos matriz
    * @param {Object} SamplingTypeService - Proveedor de datos, Tipos muestreo
@@ -220,8 +220,8 @@
     }
 
     function removeQuote(e) {
-      var field = '$$hashKey';
-      var quoteRow = ArrayUtilsService.extractItemFromCollection(
+      var field = '$$hashKey',
+      quoteRow = ArrayUtilsService.extractItemFromCollection(
         vm.study.solicitudes,
         field,
         e[field]
@@ -240,8 +240,19 @@
       vm.study.fecha_rechaza = new Date().toISOString().slice(0,10);
     }
 
-    function validateForm(form) {
+    function validateForm() {
       //TODO validation
+      var message = '';
+      console.log(vm.studyForm);
+      if (!$scope.studyForm.$valid)
+      {
+        message = 'shucks!';
+      }
+      else
+      {
+        message = 'Ok';
+      }
+      alert(message);
       return form;
     }
 
@@ -304,7 +315,7 @@
    * @this {Object} $scope - Contenedor para el modelo [AngularJS]
    * @param {Object} $routeParams - Proveedor de parámetros de ruta
    * @param {Object} TokenService - Proveedor para manejo del token
-   * @param {Object} ArrayUtilsService - Proveedor con Métodos para manejo de arreglos
+   * @param {Object} ArrayUtilsService - Proveedor para manejo de arreglos
    * @param {Object} ClientService - Proveedor de datos, Clientes
    * @param {Object} ParameterService - Proveedor de datos, Parámetros
    * @param {Object} NormService - Proveedor de datos, Normas
@@ -557,7 +568,7 @@
    * @this {Object} $scope - Contenedor para el modelo [AngularJS]
    * @param {Object} $routeParams - Proveedor de parámetros de ruta
    * @param {Object} TokenService - Proveedor para manejo del token
-   * @param {Object} ArrayUtilsService - Proveedor con Métodos para manejo de arreglos
+   * @param {Object} ArrayUtilsService - Proveedor para manejo de arreglos
    * @param {Object} PlanObjectivesService - Proveedor de datos, Objetivos Plan de muestreo
    * @param {Object} PointKindsService - Proveedor de datos, tipos Punto
    * @param {Object} DistrictService - Proveedor de datos, Municipios
@@ -665,7 +676,7 @@
    * @this {Object} $scope - Contenedor para el modelo [AngularJS]
    * @param {Object} $routeParams - Proveedor de parámetros de ruta
    * @param {Object} TokenService - Proveedor para manejo del token
-   * @param {Object} ArrayUtilsService - Proveedor con Métodos para manejo de arreglos
+   * @param {Object} ArrayUtilsService - Proveedor para manejo de arreglos
    * @param {Object} CloudService - Proveedor de datos, Coberturas nubes
    * @param {Object} WindService - Proveedor de datos, Direcciones viento
    * @param {Object} WaveService - Proveedor de datos, Intensidades oleaje
@@ -970,7 +981,7 @@
    * @desc Controla la vista para capturar las Hojas de custodia
    * @this {Object} $scope - Contenedor para el modelo [AngularJS]
    * @param {Object} TokenService - Proveedor para manejo del token
-   * @param {Object} ArrayUtilsService - Proveedor con Métodos para manejo de arreglos
+   * @param {Object} ArrayUtilsService - Proveedor para manejo de arreglos
    * @param {Object} PreservationService - Proveedor de datos, Preservaciones
    * @param {Object} ExpirationService - Proveedor de datos, Vigencias
    * @param {Object} RequiredVolumeService - Proveedor de datos, Volúmenes requeridos

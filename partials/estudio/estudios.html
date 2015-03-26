@@ -36,12 +36,17 @@
       <label for="studySearch" class="sr-only">
         Ingrese una búsqueda (Cliente, Contacto, etc.)
       </label>
-      <input type="text"
-        class="form-control"
-        placeholder="Ingrese una búsqueda (Cliente, Contacto, etc.)"
-        id="studySearch"
-        name="studySearch"
-        data-ng-model="studies.filter.$">
+      <div class="input-group">
+        <div class="input-group-addon">
+          <i class="glyphicon glyphicon-search"></i>
+        </div>
+        <input type="text"
+          class="form-control"
+          placeholder="Ingrese una búsqueda (Cliente, Contacto, etc.)"
+          id="studySearch"
+          name="studySearch"
+          data-ng-model="studies.filter.$">
+      </div>
       <br>
     </div>
   </div>

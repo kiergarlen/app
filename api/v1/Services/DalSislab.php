@@ -571,13 +571,13 @@ class DALSislab
 		return $result;
 	}
 
-	public function getApprovalStatus($statusId) {
+	public function getStatus($statusId) {
 		if ($statusId == 1)
 		{
 			$result = '
 				{
 					"id_status":1,
-					"status":"Pendiente",
+					"status":"Sin validar",
 					"activo":1
 				}
 			';
@@ -615,7 +615,7 @@ class DALSislab
 		return $result;
 	}
 
-	public function getApprovalStatusList() {
+	public function getStatusList() {
 		$result = '
 			[
 				{
@@ -649,15 +649,14 @@ class DALSislab
 			$result = '
 				{
 					"id_estudio":1,
+					"id_cliente":1,
 					"id_status":1,
+					"consecutivo":"432",
 					"folio":432,
 					"ejercicio":2015,
-					"id_cliente":1,
+					"ubicacion":"Río Santiago",
 					"fecha":"2015-03-21",
-					"ubicacion":"",
-
 					"fecha_captura":"2015-03-21",
-					"fecha_entrega":"",
 					"id_usuario_captura":20,
 					"ip_captura":"::1",
 					"host_captura":"localhost",
@@ -669,13 +668,8 @@ class DALSislab
 					"id_usuario_actualizacion":1,
 					"ip_actualizacion":"::1",
 					"host_actualizacion":"localhost",
-
-					"validado":0,
-					"rechazado":0,
-					"entregado":0,
 					"motivo_rechazo":"",
-					"activo":0,
-
+					"activo":1,
 					"cliente":
 					{
 						"id_cliente":1,
@@ -710,18 +704,18 @@ class DALSislab
 							"id_estudio":1,
 							"id_status":1,
 							"id_matriz":1,
-							"cantidad_muestras":15,
 							"id_tipo_muestreo":2,
-							"id_norma":3
+							"id_norma":3,
+							"cantidad_muestras":15
 						},
 						{
 							"id_solicitud":2,
 							"id_estudio":1,
 							"id_status":1,
 							"id_matriz":2,
-							"cantidad_muestras":16,
 							"id_tipo_muestreo":1,
-							"id_norma":1
+							"id_norma":1,
+							"cantidad_muestras":16
 						}
 					]
 				}
@@ -732,15 +726,14 @@ class DALSislab
 			$result = '
 				{
 					"id_estudio":2,
-					"id_status":1,
-					"folio":432,
-					"ejercicio":2015,
 					"id_cliente":13,
+					"id_status":1,
+					"consecutivo":"433",
+					"folio":433,
+					"ejercicio":2015,
+					"ubicacion":"Río Santiago",
 					"fecha":"2015-03-21",
-					"ubicacion":"",
-
 					"fecha_captura":"2015-03-21",
-					"fecha_entrega":"",
 					"id_usuario_captura":20,
 					"ip_captura":"::1",
 					"host_captura":"localhost",
@@ -752,13 +745,8 @@ class DALSislab
 					"id_usuario_actualizacion":1,
 					"ip_actualizacion":"::1",
 					"host_actualizacion":"localhost",
-
-					"validado":0,
-					"rechazado":0,
-					"entregado":0,
 					"motivo_rechazo":"",
-					"activo":0,
-
+					"activo":1,
 					"cliente":
 					{
 						"id_cliente":13,
@@ -794,18 +782,9 @@ class DALSislab
 							"id_estudio":1,
 							"id_status":1,
 							"id_matriz":1,
-							"cantidad_muestras":15,
 							"id_tipo_muestreo":2,
-							"id_norma":3
-						},
-						{
-							"id_solicitud":2,
-							"id_estudio":1,
-							"id_status":1,
-							"id_matriz":2,
-							"cantidad_muestras":16,
-							"id_tipo_muestreo":1,
-							"id_norma":1
+							"id_norma":3,
+							"cantidad_muestras":15
 						}
 					]
 				}
@@ -816,15 +795,14 @@ class DALSislab
 			$result = '
 				{
 					"id_estudio":3,
-					"id_status":1,
+					"id_cliente":21,
+					"id_status":2,
+					"consecutivo":"3",
 					"folio":3,
 					"ejercicio":2015,
-					"id_cliente":21,
-					"fecha":"2015-03-21",
 					"ubicacion":"",
-
+					"fecha":"2015-03-21",
 					"fecha_captura":"2015-03-21",
-					"fecha_entrega":"",
 					"id_usuario_captura":20,
 					"ip_captura":"::1",
 					"host_captura":"localhost",
@@ -836,13 +814,8 @@ class DALSislab
 					"id_usuario_actualizacion":1,
 					"ip_actualizacion":"::1",
 					"host_actualizacion":"localhost",
-
-					"validado":1,
-					"rechazado":0,
-					"entregado":0,
 					"motivo_rechazo":"",
 					"activo":1,
-
 					"cliente":
 					{
 						"id_cliente":21,
@@ -878,26 +851,66 @@ class DALSislab
 							"id_estudio":3,
 							"id_status":1,
 							"id_matriz":1,
-							"cantidad_muestras":15,
 							"id_tipo_muestreo":2,
-							"id_norma":3
+							"id_norma":3,
+							"cantidad_muestras":15
 						},
 						{
 							"id_solicitud":6,
 							"id_estudio":3,
 							"id_status":1,
 							"id_matriz":2,
-							"cantidad_muestras":16,
 							"id_tipo_muestreo":1,
-							"id_norma":1
+							"id_norma":1,
+							"cantidad_muestras":16
 						}
 					]
 				}
 			';
 		}
-		else if ($studyId == 3)
+		else
 		{
-
+			$result = '
+				{
+					"id_estudio":0,
+					"id_cliente":0,
+					"id_status":1,
+					"consecutivo":"0",
+					"folio":0,
+					"ejercicio":0,
+					"ubicacion":"",
+					"fecha":"",
+					"fecha_captura":"",
+					"id_usuario_captura":0,
+					"ip_captura":0,
+					"host_captura":"",
+					"id_usuario_valida":0,
+					"fecha_valida":"",
+					"ip_valida":"",
+					"host_valida":"",
+					"fecha_actualizacion":"",
+					"id_usuario_actualizacion":0,
+					"ip_actualizacion":"",
+					"host_actualizacion":"",
+					"motivo_rechazo":"",
+					"activo":1,
+					"cliente":
+					{
+					},
+					"solicitudes":
+					[
+						{
+							"id_solicitud":0,
+							"id_estudio":0,
+							"id_status":1,
+							"id_matriz":0,
+							"id_tipo_muestreo":1,
+							"id_norma":0,
+							"cantidad_muestras":0
+						}
+					]
+				}
+			';
 		}
 		return $result;
 	}

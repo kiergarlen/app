@@ -174,9 +174,10 @@
    * @param {Object} OrderSourceService - Proveedor de datos, Orígenes orden
    * @param {Object} StudyService - Proveedor de datos, Estudios
    */
-  function StudyController($routeParams, TokenService, ArrayUtilsService,
-    ClientService, MatrixService, SamplingTypeService,
-    NormService, OrderSourceService, StudyService) {
+  function StudyController($scope, $routeParams, $alert, TokenService,
+    ArrayUtilsService, ClientService, MatrixService,
+    SamplingTypeService, NormService, OrderSourceService,
+    StudyService) {
     var vm = this;
     vm.study = StudyService.query({studyId: $routeParams.studyId});
     vm.user = TokenService.getUserFromToken();
@@ -229,21 +230,42 @@
     }
 
     function approveItem() {
-      vm.study.validado = 1;
-      vm.study.rechazado = 0;
+      vm.study.status = 2;
       vm.study.fecha_valida = new Date().toISOString().slice(0,10);
     }
 
     function rejectItem() {
-      vm.study.validado = 0;
-      vm.study.rechazado = 1;
+      vm.study.status = 3;
       vm.study.fecha_rechaza = new Date().toISOString().slice(0,10);
+    }
+
+    function isValidDate(d) {
+      if ( Object.prototype.toString.call(d) !== "[object Date]" )
+      {
+        return false;
+      }
+      return !isNaN(d.getTime());
+    }
+
+    function validateDate(timestamp) {
+      if (parseInt(timestamp))
+      {
+        console.log(timestamp);
+        return true;
+      }
+      return false;
     }
 
     function validateForm() {
       //TODO validation
+      var dateIsValid = false;
+
+      console.log(isValidDate(vm.study.fecha));
+console.log(vm.study);
+      dateIsValid = validateDate(vm.study.fecha);
+console.log(dateIsValid);
+        ///console.log(angular.isDate(new Date(vm.study.fecha)));
       var message = '';
-      console.log(vm.studyForm);
       if (!$scope.studyForm.$valid)
       {
         message = 'shucks!';
@@ -252,8 +274,8 @@
       {
         message = 'Ok';
       }
-      alert(message);
-      return form;
+      //alert(message);
+      //console.log($scope.studyForm);
     }
 
     function submitForm() {
@@ -265,9 +287,10 @@
     .module('sislabApp')
     .controller('StudyController',
       [
-        '$routeParams', 'TokenService', 'ArrayUtilsService',
-        'ClientService', 'MatrixService', 'SamplingTypeService',
-        'NormService', 'OrderSourceService', 'StudyService',
+        '$scope', '$routeParams', '$alert', 'TokenService',
+        'ArrayUtilsService', 'ClientService', 'MatrixService',
+        'SamplingTypeService', 'NormService', 'OrderSourceService',
+        'StudyService',
         StudyController
       ]
     );

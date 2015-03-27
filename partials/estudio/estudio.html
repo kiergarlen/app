@@ -9,18 +9,31 @@
   <div class="col-xs-12">
     <h2 class="page-header">Informe</h2>
   </div>
-  <div class="col-xs-7">
+  <div class="col-xs-12">
     <div class="alert alert-danger" role="alert"
-      data-ng-show="study.study.motivo_rechazo > 0">
-      Este Informe no se validó por:
-      {{study.study.motivo_rechazo}}
-      ({{study.study.fecha_rechazo || date}})
+      data-ng-show="study.study.motivo_rechazo.length > 0">
+      <i class="glyphicon glyphicon-warning-sign"></i>
+      Motivo rechazo:
+      <strong>
+        {{study.study.motivo_rechazo}}
+        <span
+          data-ng-show="study.study.fecha_rechazo.length > 0">
+          ({{study.study.fecha_rechazo || date}})
+        </span>
+      </strong>
     </div>
   </div>
-  <div class="col-xs-6">
-    <div class="alert alert-warning" role="alert"
+  <div class="col-xs-12">
+    <div class="alert alert-warning alert-dismissible" role="alert"
       data-ng-show="study.message.length > 0">
-      {{study.message}}
+      <button type="button" class="close" aria-label="Cerrar"
+        data-ng-click="study.message = ''">
+        <span aria-hidden="true">&times;</span>
+      </button>
+      <i class="glyphicon glyphicon-warning-sign"></i>
+      <strong>
+        {{study.message}}
+      </strong>
     </div>
   </div>
 </div>

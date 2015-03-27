@@ -229,13 +229,13 @@
     }
 
     function approveItem() {
-      vm.study.status = 2;
+      vm.study.id_status = 2;
       vm.study.fecha_valida = new Date().toISOString().slice(0,10);
     }
 
     function rejectItem() {
-      vm.study.status = 3;
-      vm.study.fecha_rechaza = new Date().toISOString().slice(0,10);
+      vm.study.id_status = 3;
+      vm.study.fecha_rechazo = new Date().toISOString().slice(0,10);
     }
 
     function isValidDate(d) {
@@ -252,7 +252,7 @@
       l = 0,
       quotes = [];
       vm.message = '';
-
+      /*
       if (!isValidDate(vm.study.fecha))
       {
         vm.message += ' Ingrese una fecha válida ';
@@ -274,28 +274,25 @@
           if (isNaN(quotes[i].id_matriz) || quotes[i].id_matriz < 1)
           {
             vm.message += ' Seleccione una matriz, para la solicitud ';
-            vm.message += (i + 1);
+            vm.message += '[' + (i + 1) + ']';
             return false;
           }
-          if (isNaN(quotes[i].cantidad_muestras)
-            || quotes[i].cantidad_muestras < 1)
+          if (isNaN(quotes[i].cantidad_muestras) || quotes[i].cantidad_muestras < 1)
           {
             vm.message += ' Ingrese cantidad de muestras, para la solicitud ';
-            vm.message += (i + 1);
+            vm.message += '[' + (i + 1) + ']';
             return false;
           }
-          if (isNaN(quotes[i].id_tipo_muestreo)
-           || quotes[i].id_tipo_muestreo < 1
-           || quotes[i].id_tipo_muestreo > 2)
+          if (isNaN(quotes[i].id_tipo_muestreo) || quotes[i].id_tipo_muestreo < 1 || quotes[i].id_tipo_muestreo > 2)
           {
             vm.message += ' Seleccione un tipo de muestreo, para la solicitud ';
-            vm.message += (i + 1);
+            vm.message += '[' + (i + 1) + ']';
             return false;
           }
           if (isNaN(quotes[i].id_norma) || quotes[i].id_norma < 1)
           {
             vm.message += ' Seleccione una norma, para la solicitud ';
-            vm.message += (i + 1);
+            vm.message += '[' + (i + 1) + ']';
             return false;
           }
         }
@@ -318,29 +315,24 @@
         return false;
       }
 
-      if (vm.user.level < 3 && vm.study.id_status == 3
-          && vm.study.motivo_rechazo.length < 1)
+      if (vm.user.level < 3)
       {
+        if (vm.study.id_status == 3 && vm.study.motivo_rechazo.length < 1)
+        {
           vm.message += ' Debe escribir un motivo de rechazo del Informe ';
           return false;
+        }
       }
-
-      if (vm.user.level < 3 && vm.study.id_status == 3
-          && vm.study.motivo_rechazo.length < 1)
-      {
-          vm.message += ' Ingrese un motivo de rechazo del Informe ';
-          return false;
-      }
-
-      if (!$scope.studyForm.$valid)
-      {
-        vm.message += ' Faltan datos, revise el formato ';
-        return false;
-      }
-      else
-      {
-        vm.message = '';
-      }
+      */
+      //if (!$scope.studyForm.$valid)
+      //{
+      //  vm.message += ' Faltan datos, revise el formato ';
+      //  return false;
+      //}
+      //else
+      //{
+      //  vm.message = '';
+      //}
       return true;
     }
 
@@ -348,7 +340,7 @@
       if (formIsValid())
       {
         //TODO send to php API
-        console.log($scope.studyForm);
+        console.log(JSON.stringify(vm.study));
       }
     }
   }

@@ -230,12 +230,14 @@
 
     function approveItem() {
       vm.study.id_status = 2;
-      vm.study.fecha_valida = new Date().toISOString().slice(0,10);
+      vm.study.fecha_valida = new Date();
+      //vm.study.fecha_valida = new Date().toISOString().slice(0,10);
     }
 
     function rejectItem() {
       vm.study.id_status = 3;
-      vm.study.fecha_rechazo = new Date().toISOString().slice(0,10);
+      vm.study.fecha_rechazo = new Date();
+      //vm.study.fecha_rechazo = new Date().toISOString().slice(0,10);
     }
 
     function isValidDate(d) {
@@ -333,6 +335,7 @@
       //{
       //  vm.message = '';
       //}
+
       return true;
     }
 
@@ -340,7 +343,27 @@
       if (formIsValid())
       {
         //TODO send to php API
-        console.log(JSON.stringify(vm.study));
+        //console.log(JSON.stringify(vm.study));
+        /*
+        $http({
+          url: API_BASE_URL + 'login',
+          method: 'POST',
+          data: vm.study
+        }).then(function success(response) {
+          var token = response.data || null;
+          TokenService.setToken(token);
+          $location.path('main');
+        }, function error(response) {
+          if (response.status === 404)
+          {
+            vm.message = 'Sin enlace al servidor';
+          }
+          else
+          {
+            vm.message = 'Error no especificado';
+          }
+        });
+  */
       }
     }
   }

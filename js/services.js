@@ -14,6 +14,14 @@
     ArrayUtils.countSelectedItems = countSelectedItems;
     ArrayUtils.averageFromValues = averageFromValues;
 
+    /**
+     * @function selectItemFromCollection
+     * @desc Selecciona un ítem de un Array, empatando una propiedad y su valor
+     * @param {Array} collection - Array de objetos a seleccionar
+     * @param {String} field - Nombre de la propiedad a empatar
+     * @param {Object} value - Valor de la propiedad a empatar
+     * @return {Object} item - Item seleccionado
+     */
     function selectItemFromCollection(collection, field, value) {
       var i = 0,
       l = collection.length,
@@ -28,6 +36,14 @@
       return item;
     }
 
+    /**
+     * @function extractItemFromCollection
+     * @desc Extrae un ítem de un Array, empatando una propiedad y su valor
+     * @param {Array} collection - Array de objetos a extraer
+     * @param {String} field - Nombre de la propiedad a empatar
+     * @param {Object} value - Valor de la propiedad a empatar
+     * @return {Object} item - Item extraído
+     */
     function extractItemFromCollection(collection, field, value) {
       var i = 0,
       l = collection.length,
@@ -42,6 +58,12 @@
       return item;
     }
 
+    /**
+     * @function countSelectedItems
+     * @desc Cuenta los objetos de un Array con valor TRUE de la propiedad 'selected'
+     * @param {Array} collection - Array de objetos a extraer
+     * @return {Number} count - Cantidad de objetos que cumplen la condición
+     */
     function countSelectedItems(collection){
       var i, l, count = 0;
       if (!collection)
@@ -58,18 +80,25 @@
       return count;
     }
 
+    /**
+     * @function averageFromValues
+     * @desc Calcula el promedio de los valores numéricos de un Array
+     * @param {Array} collection - Array de valores a promediar
+     * @return {Number} avg - Cantidad de objetos que cumplen la condición
+     */
     function averageFromValues(collection) {
       var i = 0,
       l = collection.length,
-      sum = 0;
-      if (l < 1)
+      sum = 0,
+      avg = 0;
+      if (l > 0)
       {
-        return 0;
+        for (i; i < l; i++) {
+          sum += parseFloat(collection[i]);
+        }
+        avg = Math.round((sum / l) * 1000 * 1000) / (1000 * 1000);
       }
-      for (i; i < l; i++) {
-        sum += parseFloat(collection[i]);
-      }
-      return Math.round((sum / l) * 1000 * 1000) / (1000 * 1000);
+      return avg;
     }
 
     return ArrayUtils;
@@ -104,15 +133,30 @@
     Token.decodeToken = decodeToken;
     Token.getUserFromToken = getUserFromToken;
 
+    /**
+     * @function isAuthenticated
+     * @desc Indica si el usuario está autenticado, por la presencia del token
+     * @return {Boolean} - Comprobación de presencia del token
+     */
     function isAuthenticated() {
       return !!getToken();
     }
 
+    /**
+     * @function setToken
+     * @desc Almacena el token
+     * @param {Object} token - Token de autenticación
+     */
     function setToken(token) {
       cachedToken = token;
       storage.setItem(tokenKey, token);
     }
 
+    /**
+     * @function getToken
+     * @desc Obtiene el token
+     * @return {Object} cachedToken - Token de autenticación
+     */
     function getToken() {
       if (!cachedToken)
       {
@@ -121,16 +165,30 @@
       return cachedToken;
     }
 
+    /**
+     * @function clearToken
+     * @desc Elimina el token
+     */
     function clearToken() {
       cachedToken = null;
       storage.removeItem(tokenKey);
     }
 
+    /**
+     * @function decodeToken
+     * @desc Decodifica el token
+     * @return {Object} - Token de autenticación, decodificado
+     */
     function decodeToken() {
       var token = getToken();
       return token && jwtHelper.decodeToken(token);
     }
 
+    /**
+     * @function getUserFromToken
+     * @desc Obtiene datos del usuario del token decodificado
+     * @return {Object} userData - Datos del usuario
+     */
     function getUserFromToken() {
       var decodedJwt,
       userData;
@@ -1879,8 +1937,7 @@
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
    */
   function UserProfileService($resource, TokenService) {
-    //return $resource(API_BASE_URL + 'users/:userId', {}, {
-    return $resource('models/profile.json', {}, {
+    return $resource(API_BASE_URL + 'users/:userId', {}, {
       query: {
         method:'GET',
         params:{},
@@ -1940,8 +1997,7 @@
    * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
    */
   function ClientDetailService($resource, TokenService) {
-    //return $resource(API_BASE_URL + 'clients/:clientId', {}, {
-    return $resource('models/clients/:clientId.json', {}, {
+    return $resource(API_BASE_URL + 'clients/:clientId', {}, {
       query: {
         method:'GET',
         params:{clientId:'id_cliente'},

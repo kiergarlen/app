@@ -346,7 +346,7 @@
         //console.log(JSON.stringify(vm.study));
         /*
         $http({
-          url: API_BASE_URL + 'login',
+          url: API_BASE_URL + 'study',
           method: 'POST',
           data: vm.study
         }).then(function success(response) {
@@ -363,7 +363,7 @@
             vm.message = 'Error no especificado';
           }
         });
-  */
+        */
       }
     }
   }

@@ -3,8 +3,8 @@
   /**
    * @name ArrayUtilsService
    * @constructor
-   * @desc Proveedor con Métodos para manejo de arreglos
-   * @return {Object} Object - Métodos para manejo de arreglos
+   * @desc Proveedor para manejo de arreglos
+   * @return {ArrayUtilsService} ArrayUtils - Métodos para manejo de arreglos
    */
   function ArrayUtilsService() {
     var ArrayUtils = {};
@@ -111,6 +111,91 @@
     ]
   );
 
+  // DateUtilsService.js
+  /**
+   * @name DateUtilsService
+   * @constructor
+   * @desc Proveedor para manejo de arreglos
+   * @return {DateUtilsService} DateUtils - Métodos para manejo de fechas
+   */
+  function DateUtilsService() {
+    var DateUtils = {};
+
+    DateUtils.padNumber = padNumber;
+    DateUtils.dateToISOString = dateToISOString;
+    DateUtils.isValidDate = isValidDate;
+
+    /**
+     * @function padNumber
+     * @desc Agrega ceros a un número, devuelve una cadena de la longitud dada
+     * @param {Number} number - Número a procesar
+     * @param {Number} plces - longitud mínima de la cadena
+     * @return {Object} paddedNumber - cadena de la longitud dada
+     */
+    function padNumber(number, places) {
+      var paddedNumber = String(number),
+      i = 0,
+      l = paddedNumber.length,
+      padding = '';
+      if (l < places)
+      {
+        l = places - l;
+        for (i = 0; i < l; i += 1) {
+          padding += '0';
+        }
+        return padding + '' + paddedNumber;
+      }
+      return paddedNumber;
+    }
+
+    /**
+     * @function dateToISOString
+     * @desc Convierte una fecha local a una cadena con formato ISO 8601
+     * @param {Date} date - Fecha a convertir
+     * @return {String} - Cadena con formato ISO 8601
+     */
+    function dateToISOString(date) {
+      return [
+        date.getFullYear(),
+        '-',
+        padNumber(date.getMonth() + 1, 2),
+        '-',
+        padNumber(date.getDate(), 2),
+        'T',
+        padNumber(date.getHours(), 2),
+        ':',
+        padNumber(date.getMinutes(), 2),
+        ':',
+        padNumber(date.getSeconds(), 2),
+        '.',
+        (date.getMilliseconds() / 1000).toFixed(3).slice(2, 5)
+      ].join('');
+    }
+
+    /**
+     * @function isValidDate
+     * @desc Determina si la fecha dada es válida
+     * @param {Date} date - Fecha a evaluar
+     * @return {Boolean} - Resultado de la evaluación
+     */
+    function isValidDate(date) {
+      if (Object.prototype.toString.call(date) !== "[object Date]")
+      {
+        return false;
+      }
+      return !isNaN(date.getTime());
+    }
+
+    return DateUtils;
+  }
+
+  angular
+    .module('sislabApp')
+    .factory('DateUtilsService', [
+      DateUtilsService
+    ]
+  );
+
   // TokenService.js
   /**
    * @name TokenService
@@ -118,7 +203,7 @@
    * @desc Proveedor para manejo del token
    * @param {Object} $window - Acceso a Objeto Window [AngularJS]
    * @param {Object} jwtHelper - Acceso a utilerías de token [Angular-jwt]
-   * @return {Object} Object - Métodos para manejo de token
+   * @return {TokenService} Token - Métodos para manejo de token
    */
   function TokenService($window, jwtHelper) {
     var tokenKey = 'sislab-token',
@@ -136,7 +221,7 @@
     /**
      * @function isAuthenticated
      * @desc Indica si el usuario está autenticado, por la presencia del token
-     * @return {Boolean} - Comprobación de presencia del token
+     * @return {Boolean} - Presencia del token
      */
     function isAuthenticated() {
       return !!getToken();
@@ -436,6 +521,14 @@
    */
   function StudyService($resource, TokenService) {
     return $resource(API_BASE_URL + 'studies/:studyId', {}, {
+      save: {
+        method:'POST',
+        params:{},
+        isArray:false,
+        headers: {
+          'Auth-Token': TokenService.getToken()
+        }
+      },
       query: {
         method:'GET',
         params:{studyId: 'id_estudio'},

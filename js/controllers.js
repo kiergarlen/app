@@ -166,6 +166,7 @@
    * @param {Object} $routeParams - Proveedor de parámetros de ruta
    * @param {Object} TokenService - Proveedor para manejo del token
    * @param {Object} ArrayUtilsService - Proveedor para manejo de arreglos
+   * @param {Object} DateUtilsService - Proveedor para manejo de fechas
    * @param {Object} ClientService - Proveedor de datos, Clientes
    * @param {Object} MatrixService - Proveedor de datos, Tipos matriz
    * @param {Object} SamplingTypeService - Proveedor de datos, Tipos muestreo
@@ -173,10 +174,10 @@
    * @param {Object} OrderSourceService - Proveedor de datos, Orígenes orden
    * @param {Object} StudyService - Proveedor de datos, Estudios
    */
-  function StudyController($scope, $routeParams, $alert, TokenService,
-    ArrayUtilsService, ClientService, MatrixService,
-    SamplingTypeService, NormService, OrderSourceService,
-    StudyService) {
+  function StudyController($scope, $routeParams, TokenService,
+    ArrayUtilsService, DateUtilsService, ClientService,
+    MatrixService, SamplingTypeService, NormService,
+    OrderSourceService, StudyService) {
     var vm = this;
     vm.study = StudyService.query({studyId: $routeParams.studyId});
     vm.user = TokenService.getUserFromToken();
@@ -186,6 +187,7 @@
     vm.norms = NormService.query();
     vm.orderSources = OrderSourceService.query();
     vm.message = '';
+    vm.isDataSubmitted = false;
     vm.getStudyScope = getStudyScope;
     vm.selectClient = selectClient;
     vm.addQuote = addQuote;
@@ -196,7 +198,7 @@
     vm.submitForm = submitForm;
 
     function getStudyScope() {
-      return $scope;
+      return vm;
     }
 
     function selectClient() {
@@ -230,32 +232,64 @@
 
     function approveItem() {
       vm.study.id_status = 2;
-      vm.study.fecha_valida = new Date();
-      //vm.study.fecha_valida = new Date().toISOString().slice(0,10);
+      vm.study.id_usuario_valida = vm.user.id;
+      vm.study.fecha_valida = DateUtilsService.dateToISOString(new Date()).slice(0,10);
     }
 
     function rejectItem() {
       vm.study.id_status = 3;
-      vm.study.fecha_rechazo = new Date();
-      //vm.study.fecha_rechazo = new Date().toISOString().slice(0,10);
+      vm.study.id_usuario_valida = vm.user.id;
+      vm.study.fecha_rechazo = DateUtilsService.dateToISOString(new Date()).slice(0,10);
     }
 
-    function isValidDate(d) {
-      if (Object.prototype.toString.call(d) !== "[object Date]")
-      {
-        return false;
-      }
-      return !isNaN(d.getTime());
-    }
-
-
-    function formIsValid() {
+    function quotesAreValid() {
       var i = 0,
       l = 0,
       quotes = [];
+      if (vm.study.solicitudes && vm.study.solicitudes.length > 0)
+      {
+        quotes = vm.study.solicitudes;
+        l = quotes.length;
+
+        for (i = 0; i < l; i += 1) {
+          if (isNaN(quotes[i].id_matriz) || quotes[i].id_matriz < 1)
+          {
+            vm.message += ' Seleccione una matriz, para la solicitud ';
+            vm.message += '(fila ' + (i + 1) + ')';
+            return false;
+          }
+          if (isNaN(quotes[i].cantidad_muestras) || quotes[i].cantidad_muestras < 1)
+          {
+            vm.message += ' Ingrese cantidad de muestras, para la solicitud ';
+            vm.message += '(fila ' + (i + 1) + ')';
+            return false;
+          }
+          if (isNaN(quotes[i].id_tipo_muestreo) || quotes[i].id_tipo_muestreo < 1 || quotes[i].id_tipo_muestreo > 2)
+          {
+            vm.message += ' Seleccione un tipo de muestreo, para la solicitud ';
+            vm.message += '(fila ' + (i + 1) + ')';
+            return false;
+          }
+          if (isNaN(quotes[i].id_norma) || quotes[i].id_norma < 1)
+          {
+            vm.message += ' Seleccione una norma, para la solicitud ';
+            vm.message += '(fila ' + (i + 1) + ')';
+            return false;
+          }
+        }
+      }
+      else
+      {
+        vm.message += ' No tiene relacionada ninguna solicitud';
+        return false;
+      }
+      return true;
+    }
+
+    function formIsValid() {
+      var validQuotes = false;
       vm.message = '';
-      /*
-      if (!isValidDate(vm.study.fecha))
+      if (!DateUtilsService.isValidDate(vm.study.fecha))
       {
         vm.message += ' Ingrese una fecha válida ';
         return false;
@@ -266,57 +300,21 @@
         vm.message += ' Seleccione un cliente ';
         return false;
       }
-
-      if (vm.study.solicitudes && vm.study.solicitudes.length > 0)
+      validQuotes = quotesAreValid();
+      if (!validQuotes)
       {
-        quotes = vm.study.solicitudes;
-        l = quotes.length;
-
-        for (i = 0; i < l; i += 1) {
-          if (isNaN(quotes[i].id_matriz) || quotes[i].id_matriz < 1)
-          {
-            vm.message += ' Seleccione una matriz, para la solicitud ';
-            vm.message += '[' + (i + 1) + ']';
-            return false;
-          }
-          if (isNaN(quotes[i].cantidad_muestras) || quotes[i].cantidad_muestras < 1)
-          {
-            vm.message += ' Ingrese cantidad de muestras, para la solicitud ';
-            vm.message += '[' + (i + 1) + ']';
-            return false;
-          }
-          if (isNaN(quotes[i].id_tipo_muestreo) || quotes[i].id_tipo_muestreo < 1 || quotes[i].id_tipo_muestreo > 2)
-          {
-            vm.message += ' Seleccione un tipo de muestreo, para la solicitud ';
-            vm.message += '[' + (i + 1) + ']';
-            return false;
-          }
-          if (isNaN(quotes[i].id_norma) || quotes[i].id_norma < 1)
-          {
-            vm.message += ' Seleccione una norma, para la solicitud ';
-            vm.message += '[' + (i + 1) + ']';
-            return false;
-          }
-        }
-      }
-      else
-      {
-        vm.message += ' No tiene relacionada ninguna solicitud';
         return false;
       }
-
       if (isNaN(vm.study.id_origen_orden) || vm.study.id_origen_orden < 1)
       {
         vm.message += ' Seleccione un origen de muestreo ';
         return false;
       }
-
       if (vm.study.ubicacion.length < 1)
       {
         vm.message += ' Ingrese una ubicación ';
         return false;
       }
-
       if (vm.user.level < 3)
       {
         if (vm.study.id_status == 3 && vm.study.motivo_rechazo.length < 1)
@@ -325,45 +323,54 @@
           return false;
         }
       }
-      */
-      //if (!$scope.studyForm.$valid)
-      //{
-      //  vm.message += ' Faltan datos, revise el formato ';
-      //  return false;
-      //}
-      //else
-      //{
-      //  vm.message = '';
-      //}
-
       return true;
     }
 
     function submitForm() {
-      if (formIsValid())
+      if (formIsValid() && !vm.isDataSubmitted)
       {
-        //TODO send to php API
-        //console.log(JSON.stringify(vm.study));
-        /*
-        $http({
-          url: API_BASE_URL + 'study',
-          method: 'POST',
-          data: vm.study
-        }).then(function success(response) {
-          var token = response.data || null;
-          TokenService.setToken(token);
-          $location.path('main');
-        }, function error(response) {
-          if (response.status === 404)
-          {
-            vm.message = 'Sin enlace al servidor';
-          }
-          else
-          {
-            vm.message = 'Error no especificado';
-          }
-        });
-        */
+        vm.isDataSubmitted = true;
+        if (vm.study.id_estudio > 0)
+        {
+          StudyService
+          .save(JSON.stringify(vm.study))
+          .$promise
+          .then(function success(response) {
+            //'Datos cargados con éxito';
+            console.log(response.id_estudio);
+            $location.path('/estudio/estudios');
+          }, function error(response) {
+            if (response.status === 404)
+            {
+              vm.message = 'Recurso no encontrado';
+            }
+            else
+            {
+              vm.message = 'Error no especificado';
+            }
+          });
+        }
+        else
+        {
+          //TODO: update
+          //StudyService
+          //.update(JSON.stringify(vm.study))
+          //.$promise
+          //.then(function success(response) {
+          //  //'Datos cargados con éxito';
+          //  console.log(response.id_estudio);
+          //  $location.path('/estudio/estudios');
+          //}, function error(response) {
+          //  if (response.status === 404)
+          //  {
+          //    vm.message = 'Recurso no encontrado';
+          //  }
+          //  else
+          //  {
+          //    vm.message = 'Error no especificado';
+          //  }
+          //});
+        }
       }
     }
   }
@@ -372,10 +379,10 @@
     .module('sislabApp')
     .controller('StudyController',
       [
-        '$scope', '$routeParams', '$alert', 'TokenService',
-        'ArrayUtilsService', 'ClientService', 'MatrixService',
-        'SamplingTypeService', 'NormService', 'OrderSourceService',
-        'StudyService',
+        '$scope', '$routeParams', 'TokenService',
+        'ArrayUtilsService', 'DateUtilsService', 'ClientService',
+        'MatrixService', 'SamplingTypeService', 'NormService',
+        'OrderSourceService', 'StudyService',
         StudyController
       ]
     );
@@ -1689,4 +1696,4 @@
         'ClientDetailService',
         ClientsListController
       ]
-    )
+    );

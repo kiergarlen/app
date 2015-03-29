@@ -10,7 +10,7 @@
     <h2 class="page-header">Informe</h2>
   </div>
   <div class="col-xs-12">
-    <div class="alert alert-danger" role="alert"
+    <div class="alert alert-danger item-z1" role="alert"
       data-ng-show="study.study.motivo_rechazo.length > 0">
       <i class="glyphicon glyphicon-warning-sign"></i>
       Motivo rechazo:
@@ -24,7 +24,7 @@
     </div>
   </div>
   <div class="col-xs-12">
-    <div class="alert alert-warning alert-dismissible" role="alert"
+    <div class="alert alert-warning alert-dismissible item-z1" role="alert"
       data-ng-show="study.message.length > 0">
       <button type="button" class="close" aria-label="Cerrar"
         data-ng-click="study.message = ''">
@@ -122,18 +122,6 @@
       <h4>Solicitud Muestreo</h4>
     </div>
   </div>
-  <div class="row">
-    <div class="col-xs-12">
-      <br>
-      <a class="btn btn-success"
-        value="Agregar solicitud" title="Agregar solicitud"
-        data-ng-click="study.addQuote()"
-        >
-        <i class="glyphicon glyphicon-plus" aria-hidden="true"></i>
-        Agregar solicitud
-      </a>
-    </div>
-  </div>
   <div class="row"
     data-ng-repeat="req in study.study.solicitudes">
     <div class="col-xs-6 col-sm-4">
@@ -218,6 +206,19 @@
         >
         <i class="glyphicon glyphicon-remove" aria-hidden="true"></i>
       </a>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12">
+      <br>
+      <a class="btn btn-success"
+        value="Agregar solicitud" title="Agregar solicitud"
+        data-ng-click="study.addQuote()"
+        >
+        <i class="glyphicon glyphicon-plus" aria-hidden="true"></i>
+        Agregar solicitud
+      </a>
+      <br>
     </div>
   </div>
   <div class="row">
@@ -313,6 +314,7 @@
   <button type="submit" class="btn btn-primary"
     value="Guardar" title="Guardar"
     data-ng-click="study.submitForm()"
+    data-ng-disable="study.isDataSubmitted"
     >
     Guardar</button>
 </form>

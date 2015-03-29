@@ -19,9 +19,7 @@ $app->post("/login", function() use ($app) {
 		$usr = $input->username;
 		$pwd = $input->password;
 
-		$userData = \Service\DALSislab::getInstance()->getUserByCredentials(
-			$usr, $pwd
-		);
+		$userData = \Service\DALSislab::getInstance()->getUserByCredentials($usr, $pwd);
 		$userInfo = json_decode($userData);
 
 		$userId = $userInfo->id_usuario;
@@ -151,6 +149,39 @@ $app->get("/studies/:studyId", function($studyId) use ($app) {
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
 		echo $menu;
+	} catch (Exception $e) {
+		$app->response()->status(400);
+		$app->response()->header('X-Status-Reason', $e->getMessage());
+	}
+});
+
+
+$app->post("/studies", function() use ($app) {
+	try {
+		// get and decode JSON request body
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		$userId = (validateTokenUser($app)) ? validateTokenUser($app) : 0;
+		//$menu = \Service\DALSislab::getInstance()->getStudies();
+		$app->response()->status(200);
+		$app->response()->header('Content-Type', 'application/json');
+		echo $requestBody;
 	} catch (Exception $e) {
 		$app->response()->status(400);
 		$app->response()->header('X-Status-Reason', $e->getMessage());
@@ -873,6 +904,12 @@ $app->get("/clients/:clientId", function() use ($app) {
 	}
 });
 */
+
+function extractDataFromRequest($app) {
+	$request = $app->request();
+	$requestBody = $request->getBody();
+	return json_decode($requestBody);
+}
 
 function validateTokenUser($app) {
 	$request = $app->request();

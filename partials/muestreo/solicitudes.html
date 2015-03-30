@@ -10,18 +10,6 @@
     <h2 class="page-header">Solicitudes de servicio</h2>
   </div>
 </div>
-<div class="row">
-  <div class="col-xs-12">
-    <button type="submit" class="btn btn-primary"
-      value="Nueva" title="Nueva"
-      data-ng-click="quotes.addQuote()"
-      >
-      <i class="glyphicon glyphicon-plus" aria-hidden="true"></i>
-      Nueva Solicitud
-    </button>
-    <br>
-  </div>
-</div>
 <form class="form" role="form"
   name="clientsForm"
   novalidate
@@ -34,14 +22,19 @@
   <div class="row">
     <div class="col-xs-12 col-sm-8">
       <label for="quoteSearch" class="sr-only">
-        Ingrese una búsqueda (Cliente, Contacto, etc.)
+        Ingrese una búsqueda (Estudio, Cliente, Contacto, etc.)
       </label>
-      <input type="text"
-        class="form-control"
-        placeholder="Ingrese una búsqueda (Cliente, Contacto, etc.)"
-        id="quoteSearch"
-        name="quoteSearch"
-        data-ng-model="quotes.filter.$">
+      <div class="input-group">
+        <div class="input-group-addon">
+          <i class="glyphicon glyphicon-search"></i>
+        </div>
+        <input type="text"
+          class="form-control"
+          placeholder="Ingrese una búsqueda (Estudio, Cliente, Contacto, etc.)"
+          id="quoteSearch"
+          name="quoteSearch"
+          data-ng-model="quotes.filter.$">
+      </div>
       <br>
     </div>
   </div>
@@ -58,7 +51,7 @@
           <thead>
             <tr>
               <th>Id Estudio</th>
-              <th>Id Sol.</th>
+              <th>Id Solicitud</th>
               <th>Status</th>
               <th>Cliente</th>
               <th>Acciones</th>
@@ -78,9 +71,13 @@
               </td>
               <td>
                 <span class="label label-info"
-                  data-ng-show="item.validado > 0">Validada</span>
+                  data-ng-show="item.validado > 0">Validado</span>
                 <span class="label label-default"
                   data-ng-show="item.validado < 1">Sin Validar</span>
+                <span class="label label-danger"
+                  data-ng-show="item.fecha_captura.length < 1">
+                  Capturar info.
+                </span>
               </td>
               <td>
                 {{item.cliente.cliente}}
@@ -99,13 +96,6 @@
                   data-ng-click="quotes.viewQuote(item.id_solicitud)"
                   >
                   <i class="glyphicon glyphicon-eye-open" aria-hidden="true"></i>
-                </a>
-                <a class="btn btn-info"
-                  value="Enviar a orden" title="Enviar a orden"
-                  data-ng-click="quotes.sendToOrder(item.id_solicitud)"
-                  data-ng-disabled="item.validado < 1"
-                  >
-                  <i class="glyphicon glyphicon-share-alt" aria-hidden="true"></i>
                 </a>
               </td>
             </tr>

@@ -1211,13 +1211,13 @@ class DALSislab
 					"fecha":"2015-03-21",
 					"fecha_captura":"2015-03-21",
 					"ip_captura":"[::1]",
-					"host_captura":"localhost";
+					"host_captura":"localhost",
 					"fecha_valida":"2015-03-21",
 					"ip_valida":"[::1]",
-					"host_valida":"localhost";
+					"host_valida":"localhost",
 					"fecha_actualiza":"2015-03-21",
 					"ip_actualiza":"[::1]",
-					"host_actualiza":"localhost";
+					"host_actualiza":"localhost",
 					"fecha_acepta":"2015-03-21",
 					"fecha_rechaza":"2015-03-21",
 					"motivo_rechaza":"Error en tipo del cuerpo receptor",
@@ -1267,13 +1267,13 @@ class DALSislab
 					"fecha":"2015-03-21",
 					"fecha_captura":"2015-03-21",
 					"ip_captura":"[::1]",
-					"host_captura":"localhost";
+					"host_captura":"localhost",
 					"fecha_valida":"2015-03-21",
 					"ip_valida":"[::1]",
-					"host_valida":"localhost";
+					"host_valida":"localhost",
 					"fecha_actualiza":"2015-03-21",
 					"ip_actualiza":"[::1]",
-					"host_actualiza":"localhost";
+					"host_actualiza":"localhost",
 					"fecha_acepta":"2015-03-21",
 					"fecha_rechaza":"2015-03-21",
 					"motivo_rechaza":"Error en nombre del cuerpo receptor",
@@ -1388,13 +1388,13 @@ class DALSislab
 						"fecha":"2015-03-21",
 						"fecha_captura":"2015-03-21",
 						"ip_captura":"[::1]",
-						"host_captura":"localhost";
+						"host_captura":"localhost",
 						"fecha_valida":"2015-03-21",
 						"ip_valida":"[::1]",
-						"host_valida":"localhost";
+						"host_valida":"localhost",
 						"fecha_actualiza":"2015-03-21",
 						"ip_actualiza":"[::1]",
-						"host_actualiza":"localhost";
+						"host_actualiza":"localhost",
 						"fecha_acepta":"2015-03-21",
 						"fecha_rechaza":"2015-03-21",
 						"motivo_rechaza":"Error en tipo del cuerpo receptor",
@@ -1439,13 +1439,13 @@ class DALSislab
 						"fecha":"2015-03-21",
 						"fecha_captura":"2015-03-21",
 						"ip_captura":"[::1]",
-						"host_captura":"localhost";
+						"host_captura":"localhost",
 						"fecha_valida":"2015-03-21",
 						"ip_valida":"[::1]",
-						"host_valida":"localhost";
+						"host_valida":"localhost",
 						"fecha_actualiza":"2015-03-21",
 						"ip_actualiza":"[::1]",
-						"host_actualiza":"localhost";
+						"host_actualiza":"localhost",
 						"fecha_acepta":"2015-03-21",
 						"fecha_rechaza":"2015-03-21",
 						"motivo_rechaza":"Error en nombre del cuerpo receptor",
@@ -1510,13 +1510,13 @@ class DALSislab
 					"fecha":"2015-03-21",
 					"fecha_captura":"2015-03-21",
 					"ip_captura":"[::1]",
-					"host_captura":"localhost";
+					"host_captura":"localhost",
 					"fecha_valida":"2015-03-21",
 					"ip_valida":"[::1]",
-					"host_valida":"localhost";
+					"host_valida":"localhost",
 					"fecha_actualiza":"2015-03-21",
 					"ip_actualiza":"[::1]",
-					"host_actualiza":"localhost";
+					"host_actualiza":"localhost",
 					"fecha_acepta":"2015-03-21",
 					"fecha_rechaza":"2015-03-21",
 					"motivo_rechaza":"Error en tipo del cuerpo receptor",
@@ -1561,13 +1561,13 @@ class DALSislab
 					"fecha":"2015-03-21",
 					"fecha_captura":"2015-03-21",
 					"ip_captura":"[::1]",
-					"host_captura":"localhost";
+					"host_captura":"localhost",
 					"fecha_valida":"2015-03-21",
 					"ip_valida":"[::1]",
-					"host_valida":"localhost";
+					"host_valida":"localhost",
 					"fecha_actualiza":"2015-03-21",
 					"ip_actualiza":"[::1]",
-					"host_actualiza":"localhost";
+					"host_actualiza":"localhost",
 					"fecha_acepta":"2015-03-21",
 					"fecha_rechaza":"2015-03-21",
 					"motivo_rechaza":"Error en nombre del cuerpo receptor",

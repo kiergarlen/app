@@ -133,7 +133,6 @@
     vm.studies = StudyService.get();
     vm.addStudy = addStudy;
     vm.viewStudy = viewStudy;
-    vm.sendToQuote = sendToQuote;
 
     function addStudy() {
       $location.path('/estudio/estudio/0');
@@ -253,7 +252,7 @@
             vm.message += '(fila ' + (i + 1) + ')';
             return false;
           }
-          if (isNaN(quotes[i].id_tipo_muestreo) || quotes[i].id_tipo_muestreo < 1 || quotes[i].id_tipo_muestreo > 2)
+          if (isNaN(quotes[i].id_tipo_muestreo) || quotes[i].id_tipo_muestreo < 1)
           {
             vm.message += ' Seleccione un tipo de muestreo, para la solicitud ';
             vm.message += '(fila ' + (i + 1) + ')';
@@ -325,9 +324,7 @@
           .save(JSON.stringify(vm.study))
           .$promise
           .then(function success(response) {
-            vm.message =
-            //'Datos cargados con éxito';
-            console.log(response);
+            vm.message = response.id_estudio;
             $location.path('estudio/estudios');
           }, function error(response) {
             if (response.status === 404)
@@ -348,7 +345,7 @@
             .update(JSON.stringify(vm.study))
             .$promise
             .then(function success(response) {
-              vm.message =
+              vm.message = response.id_estudio;
               $location.path('estudio/estudios');
             }, function error(response) {
               if (response.status === 404)
@@ -360,7 +357,6 @@
                 vm.message = 'Error no especificado';
               }
             });
-
           }
         }
       }
@@ -386,17 +382,12 @@
    * @desc Controla la vista para el listado de Solicitudes/Cotizaciones
    * @this {Object} $scope - Contenedor para el modelo [AngularJS]
    * @param {Object} $location - Manejo de URL [AngularJS]
-   * @param {Object} QuotesListService - Proveedor de datos, Solicitudes/Cotizaciones
+   * @param {Object} QuoteService - Proveedor de datos, Solicitud
    */
-  function QuotesListController($location, QuotesListService) {
+  function QuotesListController($location, QuoteService) {
     var vm = this;
-    vm.quotes = QuotesListService.query();
-    vm.addQuote = addQuote;
+    vm.quotes = QuoteService.get();
     vm.viewQuote = viewQuote;
-
-    function addQuote() {
-      $location.path('/muestreo/solicitud/0');
-    }
 
     function viewQuote(id) {
       var itemId = parseInt(id);
@@ -409,7 +400,7 @@
     .module('sislabApp')
     .controller('QuotesListController',
       [
-        '$location', 'QuotesListService',
+        '$location', 'QuoteService',
         QuotesListController
       ]
     );
@@ -427,7 +418,7 @@
    * @param {Object} ParameterService - Proveedor de datos, Parámetros
    * @param {Object} NormService - Proveedor de datos, Normas
    * @param {Object} SamplingTypeService - Proveedor de datos, Tipos muestreo
-   * @param {Object} QuoteService - Proveedor de datos, Solicitud/Cotización
+   * @param {Object} QuoteService - Proveedor de datos, Solicitud
    */
   function QuoteController($routeParams, TokenService, ArrayUtilsService,
     ClientService, ParameterService, NormService,

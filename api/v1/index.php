@@ -123,6 +123,25 @@ $app->get("/studies(/)(:studyId)", function($studyId = -1) use ($app) {
 	}
 });
 
+$app->post("/studies", function() use ($app) {
+	try {
+		$request = $app->request();
+		$requestBody = $request->getBody();
+
+		$requestData = extractDataFromRequest($app);
+		$result = json_encode($requestData);
+
+		$userId = (validateTokenUser($app)) ? validateTokenUser($app) : 0;
+		//$result = \Service\DALSislab::getInstance()->insertStudy();
+		$app->response()->status(200);
+		$app->response()->header('Content-Type', 'application/json');
+		echo $result;
+	} catch (Exception $e) {
+		$app->response()->status(400);
+		$app->response()->header('X-Status-Reason', $e->getMessage());
+	}
+});
+
 $app->get("/studies", function() use ($app) {
 	try {
 		$userId = (validateTokenUser($app)) ? validateTokenUser($app) : 0;

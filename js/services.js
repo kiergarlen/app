@@ -558,6 +558,14 @@
    */
   function QuoteService($resource, TokenService) {
     return $resource(API_BASE_URL + 'quotes/:quoteId', {}, {
+      get: {
+        method: 'GET',
+        params: {},
+        isArray: true,
+        headers: {
+          'Auth-Token': TokenService.getToken()
+        }
+      },
       query: {
         method: 'GET',
         params: {quoteId:'id_solicitud'},

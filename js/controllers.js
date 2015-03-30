@@ -184,6 +184,7 @@
     vm.orderSources = OrderSourceService.query();
     vm.message = '';
     vm.isDataSubmitted = false;
+    vm.selectClient = selectClient;
     vm.getStudyScope = getStudyScope;
     vm.addQuote = addQuote;
     vm.removeQuote = removeQuote;
@@ -191,6 +192,15 @@
     vm.rejectItem = rejectItem;
     vm.isFormValid = isFormValid;
     vm.submitForm = submitForm;
+
+    function selectClient() {
+      vm.study.cliente = ArrayUtilsService.selectItemFromCollection(
+        vm.clients,
+        'id_cliente',
+        vm.study.id_cliente
+      );
+      return vm.study.cliente;
+    }
 
     function getStudyScope() {
       return vm;
@@ -216,20 +226,20 @@
       );
     }
 
-    function approveItem() {
-      vm.study.id_status = 2;
-      vm.study.status = "Validado";
-      vm.study.id_usuario_valida = vm.user.id;
-      vm.study.fecha_valida = DateUtilsService.dateToISOString(new Date()).slice(0,10);
-      //vm.study.fecha_valida = (new Date()).getTime();
+    function approveItem(item, user) {
+      item.id_status = 2;
+      item.status = "Validado";
+      item.id_usuario_valida = user.id;
+      item.fecha_valida = DateUtilsService.dateToISOString(new Date()).slice(0,10);
+      //item.fecha_valida = (new Date()).getTime();
     }
 
-    function rejectItem() {
-      vm.study.id_status = 3;
-      vm.study.status = "Rechazado";
-      vm.study.id_usuario_valida = vm.user.id;
-      vm.study.fecha_rechaza = DateUtilsService.dateToISOString(new Date()).slice(0,10);
-      //vm.study.fecha_rechaza = (new Date()).getTime();
+    function rejectItem(item, user) {
+      item.id_status = 3;
+      item.status = "Rechazado";
+      item.id_usuario_valida = user.id;
+      item.fecha_rechaza = DateUtilsService.dateToISOString(new Date()).slice(0,10);
+      //item.fecha_rechaza = (new Date()).getTime();
     }
 
     function isQuoteListValid() {
@@ -417,22 +427,42 @@
     ClientService, ParameterService, NormService,
     SamplingTypeService, QuoteService) {
     var vm = this;
+    vm.quote = QuoteService.query({quoteId: $routeParams.quoteId});
+    vm.study = StudyService.query({studyId: vm.quote.id_estudio});
     vm.clients = ClientService.query();
+
     vm.user = TokenService.getUserFromToken();
     vm.parameters = ParameterService.query();
     vm.norms = NormService.query();
     vm.samplingTypes = SamplingTypeService.query();
-    vm.quote = QuoteService.query({quoteId: $routeParams.quoteId});
+
+
     vm.allParametersSelected = false;
     vm.totalCost = 0;
+    vm.message = '';
+    vm.isDataSubmitted = false;
 
+
+    vm.selectNorm = selectNorm;
     vm.selectClient = selectClient;
     vm.totalParameter = totalParameter;
-    vm.selectNorm = selectNorm;
     vm.selectNormParameters = selectNormParameters;
     vm.selectAllParameters = selectAllParameters;
-    vm.selectSamplingType = selectSamplingType;
-    vm.submitQuoteForm = submitQuoteForm;
+
+
+    vm.approveItem = approveItem;
+    vm.rejectItem = rejectItem;
+    vm.isFormValid = isFormValid;
+    vm.submitForm = submitForm;
+
+    function selectNorm() {
+      vm.quote.norma = ArrayUtilsService.selectItemFromCollection(
+        vm.norms,
+        'id_norma',
+        vm.quote.id_norma
+      );
+      return vm.quote.norma;
+    }
 
     function selectClient() {
       vm.quote.cliente = ArrayUtilsService.selectItemFromCollection(
@@ -455,42 +485,30 @@
           }
         }
         t = t * vm.quote.cliente.tasa;
-        vm.totalCost = (Math.round(t * 100) / 100);
+        vm.totalCost = (Math.round(t * 100) / 100) * vm.quote.cantidad_muestras;
         vm.quote.total = vm.totalCost;
       }
       return vm.totalCost;
     }
 
-    function selectNorm(idNorm) {
-      var i, l;
-      l = vm.norms.length;
-      vm.quote.norma = {};
-      vm.quote.parametros_seleccionados = [];
-      vm.quote.allParametersSelected = false;
-      for (i = 0; i < l; i += 1) {
-        if (vm.norms[i].id_norma == idNorm)
-        {
-          vm.quote.norma = vm.norms[i];
-          break;
-        }
-      }
-      vm.selectNormParameters();
-      return '';
-    }
-
     function selectNormParameters() {
-      var i, l, j, m;
-      l = vm.parameters.length;
-      for(i = 0; i < l; i += 1) {
-        vm.parameters[i].selected = false;
-        if (vm.quote.norma.parametros !== undefined)
-        {
-          m = vm.quote.norma.parametros.length;
-          for (j = 0; j < m; j += 1) {
-            if (vm.parameters[i].id_parametro ==
-              vm.quote.norma.parametros[j].id_parametro)
-            {
-              vm.parameters[i].selected = true;
+      var i, l, j, m,
+      norma = vm.quote.norma,
+      params = vm.parameters;
+      l = params.length;
+      if (l > 0 && norma.id_tipo_matriz)
+      {
+        for(i = 0; i < l; i += 1) {
+          params[i].selected = false;
+          if (norma.parametros !== undefined)
+          {
+            m = norma.parametros.length;
+            for (j = 0; j < m; j += 1) {
+              if (params[i].id_parametro == norma.parametros[j].id_parametro)
+              {
+                params[i].selected = true;
+                break;
+              }
             }
           }
         }
@@ -506,18 +524,62 @@
       }
     }
 
-    function selectSamplingType() {
-      var i, l;
-      l = vm.samplingTypes.length;
-      for (i = 0; i < l; i += 1) {
-        vn.samplingTypes[i].selected =
-        (vm.samplingTypes[i].id_tipo_muestreo ==
-          vm.quote.id_tipo_muestreo);
-      }
+
+    function approveItem(item, user) {
+      item.id_status = 2;
+      item.status = "Validado";
+      item.id_usuario_valida = user.id;
+      item.fecha_valida = DateUtilsService.dateToISOString(new Date()).slice(0,10);
+      //item.fecha_valida = (new Date()).getTime();
     }
 
-    function submitQuoteForm() {
+    function rejectItem(item, user) {
+      item.id_status = 3;
+      item.status = "Rechazado";
+      item.id_usuario_valida = user.id;
+      item.fecha_rechaza = DateUtilsService.dateToISOString(new Date()).slice(0,10);
+      //item.fecha_rechaza = (new Date()).getTime();
+    }
 
+    function isFormValid() {
+      return true;
+    }
+
+    function saveData(service, data, returnPath, itemIdName) {
+      service
+      .save(JSON.stringify(data))
+      .$promise
+      .then(function success(response) {
+        vm.message = response[itemIdName];
+        $location.path(returnPath);
+      }, function error(response) {
+        if (response.status === 404)
+        {
+          vm.message = 'Recurso no encontrado';
+        }
+        else
+        {
+          vm.message = 'Error no especificado';
+        }
+      });
+    }
+
+    function submitForm() {
+      if (isFormValid() && !vm.isDataSubmitted)
+      {
+        vm.isDataSubmitted = true;
+        if (vm.quote.id_solicitud > 0)
+        {
+          saveData(QuoteService, vm.quote, 'muestreo/solicitudes', 'id_solicitud');
+        }
+        else
+        {
+          if (vm.user.level < 3 || vm.quote.quote.id_status < 2)
+          {
+            saveData(QuoteService, vm.quote, 'muestreo/solicitudes', 'id_solicitud');
+          }
+        }
+      }
     }
   }
 

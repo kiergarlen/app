@@ -9,6 +9,8 @@
   <div class="col-xs-12">
     <h2 class="page-header">Informe</h2>
   </div>
+</div>
+<div class="row">
   <div class="col-xs-12">
     <div class="alert alert-danger item-z1" role="alert"
       data-ng-show="study.study.id_status == 3">
@@ -101,7 +103,7 @@
       </h5>
       <div class="well wel-sm item-z1" bs-collapse-target>
         <h5>
-          {{study.study.cliente.cliente}}
+          {{study.selectClient().cliente}}
           <br>
           <small>{{study.study.cliente.area}}</small>
         </h5>
@@ -280,14 +282,14 @@
     <div class="col-xs-12 col-sm-5 well wel-sm ">
       <a class="btn btn-success"
         value="Validar" title="Validar"
-        data-ng-click="study.approveItem(study.study.id_estudio)"
+        data-ng-click="study.approveItem(study.study, study.user)"
         >
         <i class="glyphicon glyphicon-ok" aria-hidden="true"></i>
         Validar
       </a>
       <a class="btn btn-danger"
         value="Rechazar" title="Rechazar"
-        data-ng-click="study.rejectItem(study.study.id_estudio)"
+        data-ng-click="study.rejectItem(study.study, study.user)"
         >
         <i class="glyphicon glyphicon-remove" aria-hidden="true"></i>
         Rechazar

@@ -11,14 +11,14 @@
   </div>
   <div class="col-xs-12">
     <div class="alert alert-danger item-z1" role="alert"
-      data-ng-show="study.study.motivo_rechazo.length > 0">
+      data-ng-show="study.study.id_status == 3">
       <i class="glyphicon glyphicon-warning-sign"></i>
       Motivo rechazo:
       <strong>
-        {{study.study.motivo_rechazo}}
+        {{study.study.motivo_rechaza}}
         <span
-          data-ng-show="study.study.fecha_rechazo.length > 0">
-          ({{study.study.fecha_rechazo || date}})
+          data-ng-show="study.study.fecha_rechaza.length > 0">
+          ({{study.study.fecha_rechaza || date}})
         </span>
       </strong>
     </div>
@@ -49,15 +49,19 @@
       </label>
       <input type="text"
         class="form-control"
-        placeholder="dd/MM/aaaa"
         id="studyRequestDate"
         name="studyRequestDate"
+        placeholder="aaaa-MM-dd"
         required
         data-ng-model="study.study.fecha"
-        data-date-format="dd/MM/yyyy"
+        data-date-format="yyyy-MM-dd"
         data-autoclose="1"
+        data-date-type="string"
+        date-use-native="true"
         bs-datepicker
         >
+        <!--
+        -->
     </div>
   </div>
   <div class="row">
@@ -68,16 +72,14 @@
   <div class="row">
     <div class="col-xs-12 col-sm-7 col-md-7 col-lg-6">
       <label for="clientSelect" class="sr-only">
-        Cliente</label>
+        Cliente
+      </label>
       <select class="form-control"
         id="clientSelect"
         name="clientSelect"
         required
         data-ng-model="study.study.id_cliente"
         >
-        <option value="">
-          Seleccione una opción
-        </option>
         <option data-ng-repeat="client in study.clients"
           value="{{client.id_cliente}}">
           {{client.cliente}}
@@ -99,7 +101,7 @@
       </h5>
       <div class="well wel-sm item-z1" bs-collapse-target>
         <h5>
-          {{study.selectClient().cliente}}
+          {{study.study.cliente.cliente}}
           <br>
           <small>{{study.study.cliente.area}}</small>
         </h5>
@@ -134,11 +136,10 @@
         required
         data-ng-model="req.id_matriz"
         >
-        <option value="0" selected>
-          Seleccione una opción
-        </option>
         <option data-ng-repeat="matrix in study.matrices"
-          value="{{matrix.id_matriz}}">
+          value="{{matrix.id_matriz}}"
+          data-ng-selected="req.id_matriz == matrix.id_matriz"
+          >
           {{matrix.matriz}}
         </option>
       </select>
@@ -165,11 +166,10 @@
         required
         data-ng-model="req.id_tipo_muestreo"
         >
-        <option value="0" selected>
-          Seleccione una opción
-        </option>
         <option data-ng-repeat="samplingType in study.samplingTypes"
-          value="{{samplingType.id_tipo_muestreo}}">
+          value="{{samplingType.id_tipo_muestreo}}"
+          data-ng-selected="req.id_tipo_muestreo == samplingType.id_tipo_muestreo"
+          >
           {{samplingType.tipo_muestreo}}
         </option>
       </select>
@@ -184,11 +184,10 @@
         required
         data-ng-model="req.id_norma"
         >
-        <option value="0" selected>
-          Seleccione una opción
-        </option>
         <option data-ng-repeat="norm in study.norms"
-          value="{{norm.id_norma}}">
+          value="{{norm.id_norma}}"
+          data-ng-selected="req.id_norma == norm.id_norma"
+          >
           {{norm.norma}}
         </option>
       </select>
@@ -205,7 +204,6 @@
         data-ng-disabled="study.study.solicitudes.length < 2"
         >
         <i class="glyphicon glyphicon-remove" aria-hidden="true"></i>
-      </a>
     </div>
   </div>
   <div class="row">
@@ -237,9 +235,6 @@
         required
         data-ng-model="study.study.id_origen_orden"
         >
-        <option value="0" selected>
-          Seleccione una opción
-        </option>
         <option data-ng-repeat="orderSource in study.orderSources"
           value="{{orderSource.id_origen_orden}}">
           {{orderSource.origen_orden}}
@@ -306,7 +301,7 @@
         id="rejectText"
         name="rejectText"
         placeholder="Motivo rechazo"
-        data-ng-model="study.study.motivo_rechazo"
+        data-ng-model="study.study.motivo_rechaza"
         >
     </div>
   </div>

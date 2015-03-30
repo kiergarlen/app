@@ -126,11 +126,11 @@
    * @desc Controla la vista para el listado de Estudios
    * @this {Object} $scope - Contenedor para el modelo [AngularJS]
    * @param {Object} $location - Manejo de URL [AngularJS]
-   * @param {Object} StudiesListService - Proveedor de datos, Estudios
+   * @param {Object} StudyService - Proveedor de datos, Estudios
    */
-  function StudiesListController($location, StudiesListService) {
+  function StudiesListController($location, StudyService) {
     var vm = this;
-    vm.studies = StudiesListService.query();
+    vm.studies = StudyService.get();
     vm.addStudy = addStudy;
     vm.viewStudy = viewStudy;
     vm.sendToQuote = sendToQuote;
@@ -142,17 +142,13 @@
     function viewStudy(id) {
       $location.path('/estudio/estudio/' + parseInt(id));
     }
-
-    function sendToQuote(id) {
-
-    }
   }
 
   angular
     .module('sislabApp')
     .controller('StudiesListController',
       [
-        '$location', 'StudiesListService',
+        '$location', 'StudyService',
         StudiesListController
       ]
     );
@@ -163,7 +159,8 @@
    * @constructor
    * @desc Controla la vista para capturar un Estudio
    * @this {Object} $scope - Contenedor para el modelo [AngularJS]
-   * @param {Object} $routeParams - Proveedor de parámetros de ruta
+   * @param {Object} $routeParams - Proveedor de parámetros de ruta [AngularJS]
+   * @param {Object} $location - Manejo de URL [AngularJS]
    * @param {Object} TokenService - Proveedor para manejo del token
    * @param {Object} ArrayUtilsService - Proveedor para manejo de arreglos
    * @param {Object} DateUtilsService - Proveedor para manejo de fechas
@@ -174,10 +171,10 @@
    * @param {Object} OrderSourceService - Proveedor de datos, Orígenes orden
    * @param {Object} StudyService - Proveedor de datos, Estudios
    */
-  function StudyController($scope, $routeParams, TokenService,
-    ArrayUtilsService, DateUtilsService, ClientService,
-    MatrixService, SamplingTypeService, NormService,
-    OrderSourceService, StudyService) {
+  function StudyController($scope, $routeParams, $location,
+    TokenService, ArrayUtilsService, DateUtilsService,
+    ClientService, MatrixService, SamplingTypeService,
+    NormService, OrderSourceService, StudyService) {
     var vm = this;
     vm.study = StudyService.query({studyId: $routeParams.studyId});
     vm.user = TokenService.getUserFromToken();
@@ -189,25 +186,15 @@
     vm.message = '';
     vm.isDataSubmitted = false;
     vm.getStudyScope = getStudyScope;
-    vm.selectClient = selectClient;
     vm.addQuote = addQuote;
     vm.removeQuote = removeQuote;
     vm.approveItem = approveItem;
     vm.rejectItem = rejectItem;
-    vm.formIsValid = formIsValid;
+    vm.isFormValid = isFormValid;
     vm.submitForm = submitForm;
 
     function getStudyScope() {
       return vm;
-    }
-
-    function selectClient() {
-      vm.study.cliente = ArrayUtilsService.selectItemFromCollection(
-        vm.clients,
-        'id_cliente',
-        vm.study.id_cliente
-      );
-      return vm.study.cliente;
     }
 
     function addQuote() {
@@ -234,15 +221,17 @@
       vm.study.id_status = 2;
       vm.study.id_usuario_valida = vm.user.id;
       vm.study.fecha_valida = DateUtilsService.dateToISOString(new Date()).slice(0,10);
+      //vm.study.fecha_valida = (new Date()).getTime();
     }
 
     function rejectItem() {
       vm.study.id_status = 3;
       vm.study.id_usuario_valida = vm.user.id;
-      vm.study.fecha_rechazo = DateUtilsService.dateToISOString(new Date()).slice(0,10);
+      vm.study.fecha_rechaza = DateUtilsService.dateToISOString(new Date()).slice(0,10);
+      //vm.study.fecha_rechaza = (new Date()).getTime();
     }
 
-    function quotesAreValid() {
+    function isQuoteListValid() {
       var i = 0,
       l = 0,
       quotes = [];
@@ -286,10 +275,10 @@
       return true;
     }
 
-    function formIsValid() {
+    function isFormValid() {
       var validQuotes = false;
       vm.message = '';
-      if (!DateUtilsService.isValidDate(vm.study.fecha))
+      if (!DateUtilsService.isValidDate(new Date(vm.study.fecha)))
       {
         vm.message += ' Ingrese una fecha válida ';
         return false;
@@ -300,7 +289,7 @@
         vm.message += ' Seleccione un cliente ';
         return false;
       }
-      validQuotes = quotesAreValid();
+      validQuotes = isQuoteListValid();
       if (!validQuotes)
       {
         return false;
@@ -317,7 +306,7 @@
       }
       if (vm.user.level < 3)
       {
-        if (vm.study.id_status == 3 && vm.study.motivo_rechazo.length < 1)
+        if (vm.study.id_status == 3 && vm.study.motivo_rechaza.length < 1)
         {
           vm.message += ' Debe escribir un motivo de rechazo del Informe ';
           return false;
@@ -327,7 +316,7 @@
     }
 
     function submitForm() {
-      if (formIsValid() && !vm.isDataSubmitted)
+      if (isFormValid() && !vm.isDataSubmitted)
       {
         vm.isDataSubmitted = true;
         if (vm.study.id_estudio > 0)
@@ -336,9 +325,10 @@
           .save(JSON.stringify(vm.study))
           .$promise
           .then(function success(response) {
+            vm.message =
             //'Datos cargados con éxito';
-            console.log(response.id_estudio);
-            $location.path('/estudio/estudios');
+            console.log(response);
+            $location.path('estudio/estudios');
           }, function error(response) {
             if (response.status === 404)
             {
@@ -352,24 +342,26 @@
         }
         else
         {
-          //TODO: update
-          //StudyService
-          //.update(JSON.stringify(vm.study))
-          //.$promise
-          //.then(function success(response) {
-          //  //'Datos cargados con éxito';
-          //  console.log(response.id_estudio);
-          //  $location.path('/estudio/estudios');
-          //}, function error(response) {
-          //  if (response.status === 404)
-          //  {
-          //    vm.message = 'Recurso no encontrado';
-          //  }
-          //  else
-          //  {
-          //    vm.message = 'Error no especificado';
-          //  }
-          //});
+          if (vm.user.level < 3 || vm.study.study.id_status < 2)
+          {
+            StudyService
+            .update(JSON.stringify(vm.study))
+            .$promise
+            .then(function success(response) {
+              vm.message =
+              $location.path('estudio/estudios');
+            }, function error(response) {
+              if (response.status === 404)
+              {
+                vm.message = 'Recurso no encontrado';
+              }
+              else
+              {
+                vm.message = 'Error no especificado';
+              }
+            });
+
+          }
         }
       }
     }
@@ -379,10 +371,10 @@
     .module('sislabApp')
     .controller('StudyController',
       [
-        '$scope', '$routeParams', 'TokenService',
-        'ArrayUtilsService', 'DateUtilsService', 'ClientService',
-        'MatrixService', 'SamplingTypeService', 'NormService',
-        'OrderSourceService', 'StudyService',
+        '$scope','$routeParams','$location',
+        'TokenService','ArrayUtilsService','DateUtilsService',
+        'ClientService','MatrixService','SamplingTypeService',
+        'NormService','OrderSourceService','StudyService',
         StudyController
       ]
     );
@@ -428,7 +420,7 @@
    * @constructor
    * @desc Controla la vista para capturar una Solicitud/Cotización
    * @this {Object} $scope - Contenedor para el modelo [AngularJS]
-   * @param {Object} $routeParams - Proveedor de parámetros de ruta
+   * @param {Object} $routeParams - Proveedor de parámetros de ruta [AngularJS]
    * @param {Object} TokenService - Proveedor para manejo del token
    * @param {Object} ArrayUtilsService - Proveedor para manejo de arreglos
    * @param {Object} ClientService - Proveedor de datos, Clientes
@@ -596,7 +588,7 @@
    * @constructor
    * @desc Controla la vista para capturar una Orden de muestreo
    * @this {Object} $scope - Contenedor para el modelo [AngularJS]
-   * @param {Object} $routeParams - Proveedor de parámetros de ruta
+   * @param {Object} $routeParams - Proveedor de parámetros de ruta [AngularJS]
    * @param {Object} TokenService - Proveedor para manejo del token
    * @param {Object} OrderSourceService - Proveedor de datos, Orígenes orden
    * @param {Object} MatrixService - Proveedor de datos, Tipos matriz
@@ -681,7 +673,7 @@
    * @constructor
    * @desc Controla la vista para capturar un Plan de muestreo
    * @this {Object} $scope - Contenedor para el modelo [AngularJS]
-   * @param {Object} $routeParams - Proveedor de parámetros de ruta
+   * @param {Object} $routeParams - Proveedor de parámetros de ruta [AngularJS]
    * @param {Object} TokenService - Proveedor para manejo del token
    * @param {Object} ArrayUtilsService - Proveedor para manejo de arreglos
    * @param {Object} PlanObjectivesService - Proveedor de datos, Objetivos Plan de muestreo
@@ -789,7 +781,7 @@
    * @constructor
    * @desc Controla la vista para capturar la hoja de campo
    * @this {Object} $scope - Contenedor para el modelo [AngularJS]
-   * @param {Object} $routeParams - Proveedor de parámetros de ruta
+   * @param {Object} $routeParams - Proveedor de parámetros de ruta [AngularJS]
    * @param {Object} TokenService - Proveedor para manejo del token
    * @param {Object} ArrayUtilsService - Proveedor para manejo de arreglos
    * @param {Object} CloudService - Proveedor de datos, Coberturas nubes
@@ -1368,7 +1360,7 @@
    * @constructor
    * @desc Controla la vista para captura de Reporte
    * @this {Object} $scope - Contenedor para el modelo [AngularJS]
-   * @param {Object} $routeParams - Proveedor de parámetros de ruta
+   * @param {Object} $routeParams - Proveedor de parámetros de ruta [AngularJS]
    * @param {Object} ReportService - Proveedor de datos, Reporte
    */
   function ReportController($routeParams, ReportService) {

@@ -152,7 +152,7 @@
      * @function dateToISOString
      * @desc Convierte una fecha local a una cadena con formato ISO 8601
      * @param {Date} date - Fecha a convertir
-     * @return {String} - Cadena con formato ISO 8601
+     * @return {String} - Cadena de fecha con formato ISO 8601
      */
     function dateToISOString(date) {
       return [
@@ -168,7 +168,10 @@
         ':',
         padNumber(date.getSeconds(), 2),
         '.',
-        (date.getMilliseconds() / 1000).toFixed(3).slice(2, 5)
+        (date.getMilliseconds() / 1000).toFixed(3).slice(2, 5),
+        (date.getTimezoneOffset() / 60 > -1) ? '+' : '-',
+        padNumber(date.getTimezoneOffset() / 60, 2),
+        ':00'
       ].join('');
     }
 
@@ -307,14 +310,14 @@
    * @desc Proveedor de datos, Menú
    * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @param {Object} TokenService - Proveedor de métodos para token
-   * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
+   * @return {Object} $resource - Acceso a recursos HTTP
    */
   function MenuService($resource, TokenService) {
     return $resource(API_BASE_URL + 'menu', {}, {
       query: {
-        method:'GET',
-        params:{},
-        isArray:true,
+        method: 'GET',
+        params: {},
+        isArray: true,
         headers: {
           'Auth-Token': TokenService.getToken()
         }
@@ -337,14 +340,14 @@
    * @desc Proveedor de datos, Tareas
    * @param {Object} $resource- Acceso a recursos HTTP, AngularJS
    * @param {Object} TokenService - Proveedor de métodos para token
-   * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
+   * @return {Object} $resource - Acceso a recursos HTTP
    */
   function TasksListService($resource, TokenService) {
     return $resource(API_BASE_URL + 'tasks', {}, {
       query: {
-        method:'GET',
-        params:{},
-        isArray:true,
+        method: 'GET',
+        params: {},
+        isArray: true,
         headers: {
           'Auth-Token': TokenService.getToken()
         }
@@ -367,14 +370,14 @@
    * @desc Proveedor de datos, Cliente
    * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @param {Object} TokenService - Proveedor de métodos para token
-   * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
+   * @return {Object} $resource - Acceso a recursos HTTP
    */
   function ClientService($resource, TokenService) {
     return $resource(API_BASE_URL + 'clients', {}, {
       query: {
-        method:'GET',
-        params:{},
-        isArray:true,
+        method: 'GET',
+        params: {},
+        isArray: true,
         headers: {
           'Auth-Token': TokenService.getToken()
         }
@@ -397,14 +400,14 @@
    * @desc Proveedor de datos, Parámetros análisis
    * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @param {Object} TokenService - Proveedor de métodos para token
-   * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
+   * @return {Object} $resource - Acceso a recursos HTTP
    */
   function ParameterService($resource, TokenService) {
     return $resource(API_BASE_URL + 'parameters', {}, {
       query: {
-        method:'GET',
-        params:{},
-        isArray:true,
+        method: 'GET',
+        params: {},
+        isArray: true,
         headers: {
           'Auth-Token': TokenService.getToken()
         }
@@ -427,14 +430,14 @@
    * @desc Proveedor de datos, Normas referencia
    * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @param {Object} TokenService - Proveedor de métodos para token
-   * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
+   * @return {Object} $resource - Acceso a recursos HTTP
    */
   function NormService($resource, TokenService) {
     return $resource(API_BASE_URL + 'norms', {}, {
       query: {
-        method:'GET',
-        params:{},
-        isArray:true,
+        method: 'GET',
+        params: {},
+        isArray: true,
         headers: {
           'Auth-Token': TokenService.getToken()
         }
@@ -457,14 +460,14 @@
    * @desc Proveedor de datos, Tipo muestreo
    * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @param {Object} TokenService - Proveedor de métodos para token
-   * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
+   * @return {Object} $resource - Acceso a recursos HTTP
    */
   function SamplingTypeService($resource, TokenService) {
     return $resource(API_BASE_URL + 'sampling/types', {}, {
       query: {
-        method:'GET',
-        params:{},
-        isArray:true,
+        method: 'GET',
+        params: {},
+        isArray: true,
         headers: {
           'Auth-Token': TokenService.getToken()
         }
@@ -480,35 +483,6 @@
     ]
   );
 
-  // StudiesListService.js
-  /**
-   * @name StudiesListService
-   * @constructor
-   * @desc Proveedor de datos, lista de Estudios
-   * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
-   * @param {Object} TokenService - Proveedor de métodos para token
-   * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
-   */
-  function StudiesListService($resource, TokenService) {
-    return $resource(API_BASE_URL + 'studies', {}, {
-      query: {
-        method:'GET',
-        params:{},
-        isArray:true,
-        headers: {
-          'Auth-Token': TokenService.getToken()
-        }
-      }
-    });
-  }
-
-  angular
-    .module('sislabApp')
-    .factory('StudiesListService', [
-      '$resource', 'TokenService',
-      StudiesListService
-    ]
-  );
 
   // StudyService.js
   /**
@@ -517,26 +491,50 @@
    * @desc Proveedor de datos, Estudio
    * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @param {Object} TokenService - Proveedor de métodos para token
-   * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
+   * @return {Object} $resource - Acceso a recursos HTTP
    */
   function StudyService($resource, TokenService) {
     return $resource(API_BASE_URL + 'studies/:studyId', {}, {
+      get: {
+        method: 'GET',
+        params: {},
+        isArray: true,
+        headers: {
+          'Auth-Token': TokenService.getToken()
+        }
+      },
       save: {
-        method:'POST',
-        params:{},
-        isArray:false,
+        method: 'POST',
+        params: {},
+        isArray: false,
         headers: {
           'Auth-Token': TokenService.getToken()
         }
       },
       query: {
-        method:'GET',
-        params:{studyId: 'id_estudio'},
-        isArray:false,
+        method: 'GET',
+        params: {studyId: 'id_estudio'},
+        isArray: false,
         headers: {
           'Auth-Token': TokenService.getToken()
         }
-      }
+      },
+      update: {
+        method: 'PUT',
+        params: {studyId: 'id_estudio'},
+        isArray: false,
+        headers: {
+          'Auth-Token': TokenService.getToken()
+        }
+      },
+      remove: {
+        method: 'DELETE',
+        params: {studyId: 'id_estudio'},
+        isArray: false,
+        headers: {
+          'Auth-Token': TokenService.getToken()
+        }
+      },
     });
   }
 
@@ -546,7 +544,7 @@
       '$resource', 'TokenService',
       StudyService
     ]
-  );
+   );
 
 
   // QuoteService.js
@@ -556,14 +554,14 @@
    * @desc Proveedor de datos, Cotizaciones
    * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @param {Object} TokenService - Proveedor de métodos para token
-   * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
+   * @return {Object} $resource - Acceso a recursos HTTP
    */
   function QuoteService($resource, TokenService) {
     return $resource(API_BASE_URL + 'quotes/:quoteId', {}, {
       query: {
-        method:'GET',
-        params:{quoteId:'id_solicitud'},
-        isArray:false,
+        method: 'GET',
+        params: {quoteId:'id_solicitud'},
+        isArray: false,
         headers: {
           'Auth-Token': TokenService.getToken()
         }
@@ -587,14 +585,14 @@
    * @desc Proveedor de datos, Orígenes orden
    * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @param {Object} TokenService - Proveedor de métodos para token
-   * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
+   * @return {Object} $resource - Acceso a recursos HTTP
    */
   function OrderSourceService($resource, TokenService) {
     return $resource(API_BASE_URL + 'order/sources', {}, {
       query: {
-        method:'GET',
-        params:{},
-        isArray:true,
+        method: 'GET',
+        params: {},
+        isArray: true,
         headers: {
           'Auth-Token': TokenService.getToken()
         }
@@ -617,14 +615,14 @@
    * @desc Proveedor de datos, Matrices
    * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @param {Object} TokenService - Proveedor de métodos para token
-   * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
+   * @return {Object} $resource - Acceso a recursos HTTP
    */
   function MatrixService($resource, TokenService) {
     return $resource(API_BASE_URL + 'matrices', {}, {
       query: {
-        method:'GET',
-        params:{},
-        isArray:true,
+        method: 'GET',
+        params: {},
+        isArray: true,
         headers: {
           'Auth-Token': TokenService.getToken()
         }
@@ -647,14 +645,14 @@
    * @desc Proveedor de datos, Supervisores muestreo
    * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @param {Object} TokenService - Proveedor de métodos para token
-   * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
+   * @return {Object} $resource - Acceso a recursos HTTP
    */
   function SamplingSupervisorService($resource, TokenService) {
     return $resource(API_BASE_URL + 'sampling/supervisors', {}, {
       query: {
-        method:'GET',
-        params:{},
-        isArray:true,
+        method: 'GET',
+        params: {},
+        isArray: true,
         headers: {
           'Auth-Token': TokenService.getToken()
         }
@@ -677,14 +675,14 @@
    * @desc Proveedor de datos, lista de órdenes de muestreo
    * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @param {Object} TokenService - Proveedor de métodos para token
-   * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
+   * @return {Object} $resource - Acceso a recursos HTTP
    */
   function OrdersListService($resource, TokenService) {
     return $resource(API_BASE_URL + 'orders', {}, {
       query: {
-        method:'GET',
-        params:{},
-        isArray:true,
+        method: 'GET',
+        params: {},
+        isArray: true,
         headers: {
           'Auth-Token': TokenService.getToken()
         }
@@ -707,14 +705,14 @@
    * @desc Proveedor de datos, Orden muestreo
    * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @param {Object} TokenService - Proveedor de métodos para token
-   * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
+   * @return {Object} $resource - Acceso a recursos HTTP
    */
   function OrderService($resource, TokenService) {
     return $resource(API_BASE_URL + 'orders/:orderId', {}, {
       query: {
-        method:'GET',
-        params:{orderId: 'id_orden'},
-        isArray:false,
+        method: 'GET',
+        params: {orderId: 'id_orden'},
+        isArray: false,
         headers: {
           'Auth-Token': TokenService.getToken()
         }
@@ -737,14 +735,14 @@
    * @desc Proveedor de datos, Objetivos plan
    * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @param {Object} TokenService - Proveedor de métodos para token
-   * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
+   * @return {Object} $resource - Acceso a recursos HTTP
    */
   function PlanObjectivesService($resource, TokenService) {
     return $resource(API_BASE_URL + 'plan/objectives', {}, {
       query: {
-        method:'GET',
-        params:{},
-        isArray:true,
+        method: 'GET',
+        params: {},
+        isArray: true,
         headers: {
           'Auth-Token': TokenService.getToken()
         }
@@ -767,14 +765,14 @@
    * @desc Proveedor de datos, tipos Punto
    * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @param {Object} TokenService - Proveedor de métodos para token
-   * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
+   * @return {Object} $resource - Acceso a recursos HTTP
    */
   function PointKindsService($resource, TokenService) {
     return $resource(API_BASE_URL + 'point/kinds', {}, {
       query: {
-        method:'GET',
-        params:{},
-        isArray:true,
+        method: 'GET',
+        params: {},
+        isArray: true,
         headers: {
           'Auth-Token': TokenService.getToken()
         }
@@ -797,14 +795,14 @@
    * @desc Proveedor de datos, Municipios
    * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @param {Object} TokenService - Proveedor de métodos para token
-   * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
+   * @return {Object} $resource - Acceso a recursos HTTP
    */
   function DistrictService($resource, TokenService) {
     return $resource(API_BASE_URL + 'districts', {}, {
       query: {
-        method:'GET',
-        params:{},
-        isArray:true,
+        method: 'GET',
+        params: {},
+        isArray: true,
         headers: {
           'Auth-Token': TokenService.getToken()
         }
@@ -827,14 +825,14 @@
    * @desc Proveedor de datos, Localidades
    * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @param {Object} TokenService - Proveedor de métodos para token
-   * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
+   * @return {Object} $resource - Acceso a recursos HTTP
    */
   function CityService($resource, TokenService) {
     return $resource(API_BASE_URL + 'districts/cities/:districtId', {}, {
       query: {
-        method:'GET',
-        params:{districtId: 'id_municipio'},
-        isArray:true,
+        method: 'GET',
+        params: {districtId: 'id_municipio'},
+        isArray: true,
         headers: {
           'Auth-Token': TokenService.getToken()
         }
@@ -857,14 +855,14 @@
    * @desc Proveedor de datos, Empleados muestreo
    * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @param {Object} TokenService - Proveedor de métodos para token
-   * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
+   * @return {Object} $resource - Acceso a recursos HTTP
    */
   function SamplingEmployeeService($resource, TokenService) {
     return $resource(API_BASE_URL + 'sampling/employees', {}, {
       query: {
-        method:'GET',
-        params:{},
-        isArray:true,
+        method: 'GET',
+        params: {},
+        isArray: true,
         headers: {
           'Auth-Token': TokenService.getToken()
         }
@@ -887,14 +885,14 @@
    * @desc Proveedor de datos, Preservaciones
    * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @param {Object} TokenService - Proveedor de métodos para token
-   * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
+   * @return {Object} $resource - Acceso a recursos HTTP
    */
   function PreservationService($resource, TokenService) {
     return $resource(API_BASE_URL + 'preservations', {}, {
       query: {
-        method:'GET',
-        params:{},
-        isArray:true,
+        method: 'GET',
+        params: {},
+        isArray: true,
         headers: {
           'Auth-Token': TokenService.getToken()
         }
@@ -917,14 +915,14 @@
    * @desc Proveedor de datos, Recipientes
    * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @param {Object} TokenService - Proveedor de métodos para token
-   * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
+   * @return {Object} $resource - Acceso a recursos HTTP
    */
   function ContainerKindsService($resource, TokenService) {
     return $resource(API_BASE_URL + 'containers/kinds', {}, {
       query: {
-        method:'GET',
-        params:{},
-        isArray:true,
+        method: 'GET',
+        params: {},
+        isArray: true,
         headers: {
           'Auth-Token': TokenService.getToken()
         }
@@ -947,14 +945,14 @@
    * @desc Proveedor de datos, lista Reactivos
    * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @param {Object} TokenService - Proveedor de métodos para token
-   * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
+   * @return {Object} $resource - Acceso a recursos HTTP
    */
   function ReactivesListService($resource, TokenService) {
     return $resource(API_BASE_URL + 'reactives', {}, {
       query: {
-        method:'GET',
-        params:{},
-        isArray:true,
+        method: 'GET',
+        params: {},
+        isArray: true,
         headers: {
           'Auth-Token': TokenService.getToken()
         }
@@ -977,14 +975,14 @@
    * @desc Proveedor de datos, Materiales
    * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @param {Object} TokenService - Proveedor de métodos para token
-   * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
+   * @return {Object} $resource - Acceso a recursos HTTP
    */
   function MaterialService($resource, TokenService) {
     return $resource(API_BASE_URL + 'materials', {}, {
       query: {
-        method:'GET',
-        params:{},
-        isArray:true,
+        method: 'GET',
+        params: {},
+        isArray: true,
         headers: {
           'Auth-Token': TokenService.getToken()
         }
@@ -1007,14 +1005,14 @@
    * @desc Proveedor de datos, Hieleras
    * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @param {Object} TokenService - Proveedor de métodos para token
-   * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
+   * @return {Object} $resource - Acceso a recursos HTTP
    */
   function CoolerService($resource, TokenService) {
     return $resource(API_BASE_URL + 'coolers', {}, {
       query: {
-        method:'GET',
-        params:{},
-        isArray:true,
+        method: 'GET',
+        params: {},
+        isArray: true,
         headers: {
           'Auth-Token': TokenService.getToken()
         }
@@ -1037,14 +1035,14 @@
    * @desc Proveedor de datos, Planes de muestreo
    * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @param {Object} TokenService - Proveedor de métodos para token
-   * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
+   * @return {Object} $resource - Acceso a recursos HTTP
    */
   function PlansListService($resource, TokenService) {
     return $resource(API_BASE_URL + 'plans', {}, {
       query: {
-        method:'GET',
-        params:{},
-        isArray:true,
+        method: 'GET',
+        params: {},
+        isArray: true,
         headers: {
           'Auth-Token': TokenService.getToken()
         }
@@ -1067,14 +1065,14 @@
    * @desc Proveedor de datos, Plan muestreo
    * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @param {Object} TokenService - Proveedor de métodos para token
-   * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
+   * @return {Object} $resource - Acceso a recursos HTTP
    */
   function PlanService($resource, TokenService) {
     return $resource(API_BASE_URL + 'plans/:planId', {}, {
       query: {
-        method:'GET',
-        params:{planId: 'id_plan'},
-        isArray:false,
+        method: 'GET',
+        params: {planId: 'id_plan'},
+        isArray: false,
         headers: {
           'Auth-Token': TokenService.getToken()
         }
@@ -1097,14 +1095,14 @@
    * @desc Proveedor de datos, Coberturas nubes
    * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @param {Object} TokenService - Proveedor de métodos para token
-   * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
+   * @return {Object} $resource - Acceso a recursos HTTP
    */
   function CloudService($resource, TokenService) {
     return $resource(API_BASE_URL + 'clouds', {}, {
       query: {
-        method:'GET',
-        params:{},
-        isArray:true,
+        method: 'GET',
+        params: {},
+        isArray: true,
         headers: {
           'Auth-Token': TokenService.getToken()
         }
@@ -1127,14 +1125,14 @@
    * @desc Proveedor de datos, Direcciones viento
    * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @param {Object} TokenService - Proveedor de métodos para token
-   * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
+   * @return {Object} $resource - Acceso a recursos HTTP
    */
   function WindService($resource, TokenService) {
     return $resource(API_BASE_URL + 'winds', {}, {
       query: {
-        method:'GET',
-        params:{},
-        isArray:true,
+        method: 'GET',
+        params: {},
+        isArray: true,
         headers: {
           'Auth-Token': TokenService.getToken()
         }
@@ -1157,14 +1155,14 @@
    * @desc Proveedor de datos, Intensidades oleaje
    * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @param {Object} TokenService - Proveedor de métodos para token
-   * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
+   * @return {Object} $resource - Acceso a recursos HTTP
    */
   function WaveService($resource, TokenService) {
     return $resource(API_BASE_URL + 'waves', {}, {
       query: {
-        method:'GET',
-        params:{},
-        isArray:true,
+        method: 'GET',
+        params: {},
+        isArray: true,
         headers: {
           'Auth-Token': TokenService.getToken()
         }
@@ -1187,14 +1185,14 @@
    * @desc Proveedor de datos, Normas muestreo
    * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @param {Object} TokenService - Proveedor de métodos para token
-   * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
+   * @return {Object} $resource - Acceso a recursos HTTP
    */
   function SamplingNormService($resource, TokenService) {
     return $resource(API_BASE_URL + 'sampling/norms', {}, {
       query: {
-        method:'GET',
-        params:{},
-        isArray:true,
+        method: 'GET',
+        params: {},
+        isArray: true,
         headers: {
           'Auth-Token': TokenService.getToken()
         }
@@ -1217,14 +1215,14 @@
    * @desc Proveedor de datos, Puntos muestreo
    * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @param {Object} TokenService - Proveedor de métodos para token
-   * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
+   * @return {Object} $resource - Acceso a recursos HTTP
    */
   function PointService($resource, TokenService) {
     return $resource(API_BASE_URL + 'points', {}, {
       query: {
-        method:'GET',
-        params:{},
-        isArray:true,
+        method: 'GET',
+        params: {},
+        isArray: true,
         headers: {
           'Auth-Token': TokenService.getToken()
         }
@@ -1247,14 +1245,14 @@
    * @desc Proveedor de datos, Parámetros campo
    * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @param {Object} TokenService - Proveedor de métodos para token
-   * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
+   * @return {Object} $resource - Acceso a recursos HTTP
    */
   function FieldParameterService($resource, TokenService) {
     return $resource(API_BASE_URL + 'parameters/field', {}, {
       query: {
-        method:'GET',
-        params:{},
-        isArray:true,
+        method: 'GET',
+        params: {},
+        isArray: true,
         headers: {
           'Auth-Token': TokenService.getToken()
         }
@@ -1277,14 +1275,14 @@
    * @desc Proveedor de datos, lista de Hojas campo
    * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @param {Object} TokenService - Proveedor de métodos para token
-   * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
+   * @return {Object} $resource - Acceso a recursos HTTP
    */
   function FieldSheetsListService($resource, TokenService) {
     return $resource(API_BASE_URL + 'sheets', {}, {
       query: {
-        method:'GET',
-        params:{},
-        isArray:true,
+        method: 'GET',
+        params: {},
+        isArray: true,
         headers: {
           'Auth-Token': TokenService.getToken()
         }
@@ -1307,14 +1305,14 @@
    * @desc Proveedor de datos, Hoja campo
    * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @param {Object} TokenService - Proveedor de métodos para token
-   * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
+   * @return {Object} $resource - Acceso a recursos HTTP
    */
   function FieldSheetService($resource, TokenService) {
     return $resource(API_BASE_URL + 'sheets/:sheetId', {}, {
       query: {
-        method:'GET',
-        params:{sheetId: 'id_hoja_campo'},
-        isArray:false,
+        method: 'GET',
+        params: {sheetId: 'id_hoja_campo'},
+        isArray: false,
         headers: {
           'Auth-Token': TokenService.getToken()
         }
@@ -1337,14 +1335,14 @@
    * @desc Proveedor de datos, Recepcionistas
    * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @param {Object} TokenService - Proveedor de métodos para token
-   * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
+   * @return {Object} $resource - Acceso a recursos HTTP
    */
   function ReceptionistService($resource, TokenService) {
     return $resource(API_BASE_URL + 'receptionists', {}, {
       query: {
-        method:'GET',
-        params:{},
-        isArray:true,
+        method: 'GET',
+        params: {},
+        isArray: true,
         headers: {
           'Auth-Token': TokenService.getToken()
         }
@@ -1367,14 +1365,14 @@
    * @desc Proveedor de datos, lista de Recepciones
    * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @param {Object} TokenService - Proveedor de métodos para token
-   * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
+   * @return {Object} $resource - Acceso a recursos HTTP
    */
   function ReceptionsListService($resource, TokenService) {
     return $resource(API_BASE_URL + 'receptions', {}, {
       query: {
-        method:'GET',
-        params:{},
-        isArray:true,
+        method: 'GET',
+        params: {},
+        isArray: true,
         headers: {
           'Auth-Token': TokenService.getToken()
         }
@@ -1397,14 +1395,14 @@
    * @desc Proveedor de datos, Recepción
    * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @param {Object} TokenService - Proveedor de métodos para token
-   * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
+   * @return {Object} $resource - Acceso a recursos HTTP
    */
   function ReceptionService($resource, TokenService) {
     return $resource(API_BASE_URL + 'receptions/:receptionId', {}, {
       query: {
-        method:'GET',
-        params:{receptionId: 'id_recepcion'},
-        isArray:false,
+        method: 'GET',
+        params: {receptionId: 'id_recepcion'},
+        isArray: false,
         headers: {
           'Auth-Token': TokenService.getToken()
         }
@@ -1427,14 +1425,14 @@
    * @desc Proveedor de datos, Vigencias
    * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @param {Object} TokenService - Proveedor de métodos para token
-   * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
+   * @return {Object} $resource - Acceso a recursos HTTP
    */
   function ExpirationService($resource, TokenService) {
     return $resource(API_BASE_URL + 'expirations', {}, {
       query: {
-        method:'GET',
-        params:{},
-        isArray:true,
+        method: 'GET',
+        params: {},
+        isArray: true,
         headers: {
           'Auth-Token': TokenService.getToken()
         }
@@ -1457,14 +1455,14 @@
    * @desc Proveedor de datos, Volúmenes requeridos
    * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @param {Object} TokenService - Proveedor de métodos para token
-   * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
+   * @return {Object} $resource - Acceso a recursos HTTP
    */
   function RequiredVolumeService($resource, TokenService) {
     return $resource(API_BASE_URL + 'volumes', {}, {
       query: {
-        method:'GET',
-        params:{},
-        isArray:true,
+        method: 'GET',
+        params: {},
+        isArray: true,
         headers: {
           'Auth-Token': TokenService.getToken()
         }
@@ -1487,14 +1485,14 @@
    * @desc Proveedor de datos, Responsables verificación
    * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @param {Object} TokenService - Proveedor de métodos para token
-   * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
+   * @return {Object} $resource - Acceso a recursos HTTP
    */
   function CheckerService($resource, TokenService) {
     return $resource(API_BASE_URL + 'checkers', {}, {
       query: {
-        method:'GET',
-        params:{},
-        isArray:true,
+        method: 'GET',
+        params: {},
+        isArray: true,
         headers: {
           'Auth-Token': TokenService.getToken()
         }
@@ -1517,14 +1515,14 @@
    * @desc Proveedor de datos, lista de Cadenas de custodia
    * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @param {Object} TokenService - Proveedor de métodos para token
-   * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
+   * @return {Object} $resource - Acceso a recursos HTTP
    */
   function CustodiesListService($resource, TokenService) {
     return $resource(API_BASE_URL + 'custodies', {}, {
       query: {
-        method:'GET',
-        params:{},
-        isArray:true,
+        method: 'GET',
+        params: {},
+        isArray: true,
         headers: {
           'Auth-Token': TokenService.getToken()
         }
@@ -1547,14 +1545,14 @@
    * @desc Proveedor de datos, Cadenas custodia
    * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @param {Object} TokenService - Proveedor de métodos para token
-   * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
+   * @return {Object} $resource - Acceso a recursos HTTP
    */
   function CustodyService($resource, TokenService) {
     return $resource(API_BASE_URL + 'custodies/:custodyId', {}, {
       query: {
-        method:'GET',
-        params:{custodyId: 'id_custodia'},
-        isArray:false,
+        method: 'GET',
+        params: {custodyId: 'id_custodia'},
+        isArray: false,
         headers: {
           'Auth-Token': TokenService.getToken()
         }
@@ -1577,14 +1575,14 @@
    * @desc Proveedor de datos, lista Muestras
    * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @param {Object} TokenService - Proveedor de métodos para token
-   * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
+   * @return {Object} $resource - Acceso a recursos HTTP
    */
   function SamplesListService($resource, TokenService) {
     return $resource(API_BASE_URL + 'samples', {}, {
       query: {
-        method:'GET',
-        params:{},
-        isArray:true,
+        method: 'GET',
+        params: {},
+        isArray: true,
         headers: {
           'Auth-Token': TokenService.getToken()
         }
@@ -1607,14 +1605,14 @@
    * @desc Proveedor de datos, lista Equipos
    * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @param {Object} TokenService - Proveedor de métodos para token
-   * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
+   * @return {Object} $resource - Acceso a recursos HTTP
    */
   function InstrumentsListService($resource, TokenService) {
     return $resource(API_BASE_URL + 'instruments', {}, {
       query: {
-        method:'GET',
-        params:{},
-        isArray:true,
+        method: 'GET',
+        params: {},
+        isArray: true,
         headers: {
           'Auth-Token': TokenService.getToken()
         }
@@ -1637,14 +1635,14 @@
    * @desc Proveedor de datos, lista Recipients
    * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @param {Object} TokenService - Proveedor de métodos para token
-   * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
+   * @return {Object} $resource - Acceso a recursos HTTP
    */
   function ContainersListService($resource, TokenService) {
     return $resource(API_BASE_URL + 'containers', {}, {
       query: {
-        method:'GET',
-        params:{},
-        isArray:true,
+        method: 'GET',
+        params: {},
+        isArray: true,
         headers: {
           'Auth-Token': TokenService.getToken()
         }
@@ -1667,14 +1665,14 @@
    * @desc Proveedor de datos, consulta de Análisis
    * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @param {Object} TokenService - Proveedor de métodos para token
-   * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
+   * @return {Object} $resource - Acceso a recursos HTTP
    */
   function AnalysisListService($resource, TokenService) {
     return $resource(API_BASE_URL + 'analysis', {}, {
       query: {
-        method:'GET',
-        params:{},
-        isArray:true,
+        method: 'GET',
+        params: {},
+        isArray: true,
         headers: {
           'Auth-Token': TokenService.getToken()
         }
@@ -1697,14 +1695,14 @@
    * @desc Proveedor de datos, Áreas
    * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @param {Object} TokenService - Proveedor de métodos para token
-   * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
+   * @return {Object} $resource - Acceso a recursos HTTP
    */
   function DepartmentService($resource, TokenService) {
     return $resource(API_BASE_URL + 'areas', {}, {
       query: {
-        method:'GET',
-        params:{},
-        isArray:true,
+        method: 'GET',
+        params: {},
+        isArray: true,
         headers: {
           'Auth-Token': TokenService.getToken()
         }
@@ -1727,14 +1725,14 @@
    * @desc Proveedor de datos, selección de formato de captura de Análisis
    * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @param {Object} TokenService - Proveedor de métodos para token
-   * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
+   * @return {Object} $resource - Acceso a recursos HTTP
    */
   function AnalysisService($resource, TokenService) {
     return $resource(API_BASE_URL + 'analysis/selections', {}, {
       query: {
-        method:'GET',
-        params:{},
-        isArray:true,
+        method: 'GET',
+        params: {},
+        isArray: true,
         headers: {
           'Auth-Token': TokenService.getToken()
         }
@@ -1757,14 +1755,14 @@
    * @desc Proveedor de datos, lista Reportes
    * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @param {Object} TokenService - Proveedor de métodos para token
-   * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
+   * @return {Object} $resource - Acceso a recursos HTTP
    */
   function ReportsListService($resource, TokenService) {
     return $resource(API_BASE_URL + 'reports', {}, {
       query: {
-        method:'GET',
-        params:{},
-        isArray:true,
+        method: 'GET',
+        params: {},
+        isArray: true,
         headers: {
           'Auth-Token': TokenService.getToken()
         }
@@ -1787,14 +1785,14 @@
    * @desc Proveedor de datos, Reporte
    * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @param {Object} TokenService - Proveedor de métodos para token
-   * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
+   * @return {Object} $resource - Acceso a recursos HTTP
    */
   function ReportService($resource, TokenService) {
     return $resource(API_BASE_URL + 'reports/:reportId', {}, {
       query: {
-        method:'GET',
-        params:{reportId: 'id_reporte'},
-        isArray:true,
+        method: 'GET',
+        params: {reportId: 'id_reporte'},
+        isArray: true,
         headers: {
           'Auth-Token': TokenService.getToken()
         }
@@ -1817,14 +1815,14 @@
    * @desc Proveedor de datos, lista Puntos
    * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @param {Object} TokenService - Proveedor de métodos para token
-   * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
+   * @return {Object} $resource - Acceso a recursos HTTP
    */
   function PointsListService($resource, TokenService) {
     return $resource(API_BASE_URL + 'points', {}, {
       query: {
-        method:'GET',
-        params:{},
-        isArray:true,
+        method: 'GET',
+        params: {},
+        isArray: true,
         headers: {
           'Auth-Token': TokenService.getToken()
         }
@@ -1847,14 +1845,14 @@
    * @desc Proveedor de datos, Empleados
    * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @param {Object} TokenService - Proveedor de métodos para token
-   * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
+   * @return {Object} $resource - Acceso a recursos HTTP
    */
   function EmployeeService($resource, TokenService) {
     return $resource(API_BASE_URL + 'employees', {}, {
       query: {
-        method:'GET',
-        params:{},
-        isArray:true,
+        method: 'GET',
+        params: {},
+        isArray: true,
         headers: {
           'Auth-Token': TokenService.getToken()
         }
@@ -1877,14 +1875,14 @@
    * @desc Proveedor de datos, lista Normas
    * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @param {Object} TokenService - Proveedor de métodos para token
-   * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
+   * @return {Object} $resource - Acceso a recursos HTTP
    */
   function NormsListService($resource, TokenService) {
     return $resource(API_BASE_URL + 'norms', {}, {
       query: {
-        method:'GET',
-        params:{},
-        isArray:true,
+        method: 'GET',
+        params: {},
+        isArray: true,
         headers: {
           'Auth-Token': TokenService.getToken()
         }
@@ -1907,14 +1905,14 @@
    * @desc Proveedor de datos, lista Referencias
    * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @param {Object} TokenService - Proveedor de métodos para token
-   * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
+   * @return {Object} $resource - Acceso a recursos HTTP
    */
   function ReferencesListService($resource, TokenService) {
     return $resource(API_BASE_URL + 'references', {}, {
       query: {
-        method:'GET',
-        params:{},
-        isArray:true,
+        method: 'GET',
+        params: {},
+        isArray: true,
         headers: {
           'Auth-Token': TokenService.getToken()
         }
@@ -1937,14 +1935,14 @@
    * @desc Proveedor de datos, Métodos
    * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @param {Object} TokenService - Proveedor de métodos para token
-   * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
+   * @return {Object} $resource - Acceso a recursos HTTP
    */
   function MethodsListService($resource, TokenService) {
     return $resource(API_BASE_URL + 'methods', {}, {
       query: {
-        method:'GET',
-        params:{},
-        isArray:true,
+        method: 'GET',
+        params: {},
+        isArray: true,
         headers: {
           'Auth-Token': TokenService.getToken()
         }
@@ -1967,14 +1965,14 @@
    * @desc Proveedor de datos, lista Precios
    * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @param {Object} TokenService - Proveedor de métodos para token
-   * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
+   * @return {Object} $resource - Acceso a recursos HTTP
    */
   function PricesListService($resource, TokenService) {
     return $resource(API_BASE_URL + 'prices', {}, {
       query: {
-        method:'GET',
-        params:{},
-        isArray:true,
+        method: 'GET',
+        params: {},
+        isArray: true,
         headers: {
           'Auth-Token': TokenService.getToken()
         }
@@ -1997,14 +1995,14 @@
    * @desc Proveedor de datos, Usuarios
    * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @param {Object} TokenService - Proveedor de métodos para token
-   * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
+   * @return {Object} $resource - Acceso a recursos HTTP
    */
   function UsersListService($resource, TokenService) {
     return $resource(API_BASE_URL + 'users', {}, {
       query: {
-        method:'GET',
-        params:{},
-        isArray:true,
+        method: 'GET',
+        params: {},
+        isArray: true,
         headers: {
           'Auth-Token': TokenService.getToken()
         }
@@ -2027,14 +2025,14 @@
    * @desc Proveedor de datos, Perfil de usuario
    * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @param {Object} TokenService - Proveedor de métodos para token
-   * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
+   * @return {Object} $resource - Acceso a recursos HTTP
    */
   function UserProfileService($resource, TokenService) {
     return $resource(API_BASE_URL + 'users/:userId', {}, {
       query: {
-        method:'GET',
-        params:{},
-        isArray:true,
+        method: 'GET',
+        params: {},
+        isArray: true,
         headers: {
           'Auth-Token': TokenService.getToken()
         }
@@ -2057,14 +2055,14 @@
    * @desc Controla la vista para el listado de Solicitudes/Cotizaciones
    * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @param {Object} TokenService - Proveedor de métodos para token
-   * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
+   * @return {Object} $resource - Acceso a recursos HTTP
    */
   function QuotesListService($resource, TokenService) {
     return $resource(API_BASE_URL + 'quotes', {}, {
       query: {
-        method:'GET',
-        params:{},
-        isArray:true,
+        method: 'GET',
+        params: {},
+        isArray: true,
         headers: {
           'Auth-Token': TokenService.getToken()
         }
@@ -2087,14 +2085,14 @@
    * @desc Proveedor de datos, Detalle cliente
    * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @param {Object} TokenService - Proveedor de métodos para token
-   * @return {Object} $resource - Acceso a recursos HTTP, según ruta y parámetros
+   * @return {Object} $resource - Acceso a recursos HTTP
    */
   function ClientDetailService($resource, TokenService) {
     return $resource(API_BASE_URL + 'clients/:clientId', {}, {
       query: {
-        method:'GET',
-        params:{clientId:'id_cliente'},
-        isArray:true,
+        method: 'GET',
+        params: {clientId:'id_cliente'},
+        isArray: true,
         headers: {
           'Auth-Token': TokenService.getToken()
         }

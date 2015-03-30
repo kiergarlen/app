@@ -7,7 +7,7 @@ class DALSislab
 	protected static $_instance;
 	const DB_DRIVER = "mysql";
 	//const DB_DRIVER = "sqlsrv";
-	const DB_HOST = "localhost";
+	const DB_HOST = "[::1]";
 	const DB_USER = "sislab";
 	const DB_PASSWORD = "sislab@12#";
 	const DB_DATA_BASE = "Sislab";
@@ -650,25 +650,29 @@ class DALSislab
 				{
 					"id_estudio":1,
 					"id_cliente":1,
-					"id_status":1,
-					"consecutivo":"432",
-					"folio":432,
-					"ejercicio":2015,
+					"id_origen_orden":1,
+					"id_ejercicio":2015,
+					"id_status":2,
+					"id_usuario_captura":20,
+					"id_usuario_valida":1,
+					"id_usuario_actualiza":1,
+					"numero_oficio":432,
+					"folio":"CEA-432/2015",
+					"origen_descripcion":"GP-001/2015",
 					"ubicacion":"Río Santiago",
+					"status":"Validado",
 					"fecha":"2015-03-21",
 					"fecha_captura":"2015-03-21",
-					"id_usuario_captura":20,
-					"ip_captura":"::1",
-					"host_captura":"localhost",
+					"ip_captura":"[::1]",
+					"host_captura":"[::1]",
 					"fecha_valida":"2015-03-21",
-					"id_usuario_valida":1,
-					"ip_valida":"::1",
-					"host_valida":"localhost",
-					"fecha_actualizacion":"2015-03-21",
-					"id_usuario_actualizacion":1,
-					"ip_actualizacion":"::1",
-					"host_actualizacion":"localhost",
-					"motivo_rechazo":"",
+					"ip_valida":"[::1]",
+					"host_valida":"[::1]",
+					"fecha_actualiza":"2015-03-21",
+					"ip_actualiza":"[::1]",
+					"host_actualiza":"[::1]",
+					"fecha_rechaza":"2015-03-21",
+					"motivo_rechaza":"Error en datos cliente",
 					"activo":1,
 					"cliente":
 					{
@@ -691,7 +695,7 @@ class DALSislab
 						"contacto":"Biol. Luis Aceves Martínez",
 						"puesto_contacto":"puesto contacto",
 						"email":"laceves@ceajalisco.gob.mx",
-						"fecha_act":"2014-11-23",
+						"fecha_act":"23/11/2014",
 						"interno":1,
 						"cea":1,
 						"tasa":0,
@@ -702,20 +706,22 @@ class DALSislab
 						{
 							"id_solicitud":1,
 							"id_estudio":1,
-							"id_status":1,
 							"id_matriz":1,
 							"id_tipo_muestreo":2,
 							"id_norma":3,
-							"cantidad_muestras":15
+							"id_status":1,
+							"cantidad_muestras":15,
+							"activo":1
 						},
 						{
 							"id_solicitud":2,
 							"id_estudio":1,
-							"id_status":1,
-							"id_matriz":2,
+							"id_matriz":6,
 							"id_tipo_muestreo":1,
 							"id_norma":1,
-							"cantidad_muestras":16
+							"id_status":1,
+							"cantidad_muestras":16,
+							"activo":1
 						}
 					]
 				}
@@ -727,25 +733,29 @@ class DALSislab
 				{
 					"id_estudio":2,
 					"id_cliente":13,
+					"id_origen_orden":2,
+					"id_ejercicio":2015,
 					"id_status":1,
-					"consecutivo":"433",
-					"folio":433,
-					"ejercicio":2015,
+					"id_usuario_captura":20,
+					"id_usuario_valida":1,
+					"id_usuario_actualiza":1,
+					"numero_oficio":433,
+					"folio":"CEA-433/2015",
+					"origen_descripcion":"",
 					"ubicacion":"Río Santiago",
+					"status":"Sin validar",
 					"fecha":"2015-03-21",
 					"fecha_captura":"2015-03-21",
-					"id_usuario_captura":20,
-					"ip_captura":"::1",
-					"host_captura":"localhost",
+					"ip_captura":"[::1]",
+					"host_captura":"[::1]",
 					"fecha_valida":"2015-03-21",
-					"id_usuario_valida":1,
-					"ip_valida":"::1",
-					"host_valida":"localhost",
-					"fecha_actualizacion":"2015-03-21",
-					"id_usuario_actualizacion":1,
-					"ip_actualizacion":"::1",
-					"host_actualizacion":"localhost",
-					"motivo_rechazo":"",
+					"ip_valida":"[::1]",
+					"host_valida":"[::1]",
+					"fecha_actualiza":"2015-03-21",
+					"ip_actualiza":"[::1]",
+					"host_actualiza":"[::1]",
+					"fecha_rechaza":"",
+					"motivo_rechaza":"",
 					"activo":1,
 					"cliente":
 					{
@@ -769,7 +779,7 @@ class DALSislab
 						"contacto":"Arq. Juan Jesús Zarate Barajas",
 						"puesto_contacto":"puesto contacto",
 						"email":"ooapascotija@hotmail.com",
-						"fecha_act":"2014-11-23",
+						"fecha_act":"23/11/2014",
 						"interno":0,
 						"cea":0,
 						"tasa":1,
@@ -780,11 +790,12 @@ class DALSislab
 						{
 							"id_solicitud":1,
 							"id_estudio":1,
-							"id_status":1,
 							"id_matriz":1,
 							"id_tipo_muestreo":2,
 							"id_norma":3,
-							"cantidad_muestras":15
+							"id_status":1,
+							"cantidad_muestras":15,
+							"activo":1
 						}
 					]
 				}
@@ -796,25 +807,29 @@ class DALSislab
 				{
 					"id_estudio":3,
 					"id_cliente":21,
+					"id_origen_orden":2,
+					"id_ejercicio":2015,
 					"id_status":2,
-					"consecutivo":"3",
-					"folio":3,
-					"ejercicio":2015,
+					"id_usuario_captura":20,
+					"id_usuario_valida":1,
+					"id_usuario_actualiza":1,
+					"numero_oficio":3,
+					"folio":"CEA-3/2015",
+					"origen_descripcion":"",
 					"ubicacion":"",
+					"status":"Validado",
 					"fecha":"2015-03-21",
 					"fecha_captura":"2015-03-21",
-					"id_usuario_captura":20,
-					"ip_captura":"::1",
-					"host_captura":"localhost",
-					"fecha_valida":"2015-03-22",
-					"id_usuario_valida":1,
-					"ip_valida":"::1",
-					"host_valida":"localhost",
-					"fecha_actualizacion":"2015-03-22",
-					"id_usuario_actualizacion":1,
-					"ip_actualizacion":"::1",
-					"host_actualizacion":"localhost",
-					"motivo_rechazo":"",
+					"ip_captura":"[::1]",
+					"host_captura":"[::1]",
+					"fecha_valida":"22/03/2015",
+					"ip_valida":"[::1]",
+					"host_valida":"[::1]",
+					"fecha_actualiza":"22/03/2015",
+					"ip_actualiza":"[::1]",
+					"host_actualiza":"[::1]",
+					"fecha_rechaza":"",
+					"motivo_rechaza":"",
 					"activo":1,
 					"cliente":
 					{
@@ -838,7 +853,7 @@ class DALSislab
 						"contacto":"Ing. Roberto Escalante Villanueva",
 						"puesto_contacto":"puesto contacto",
 						"email":"rescalante@secovam.com",
-						"fecha_act":"2014-11-23",
+						"fecha_act":"23/11/2014",
 						"interno":0,
 						"cea":0,
 						"tasa":1,
@@ -849,20 +864,22 @@ class DALSislab
 						{
 							"id_solicitud":5,
 							"id_estudio":3,
-							"id_status":1,
 							"id_matriz":1,
 							"id_tipo_muestreo":2,
 							"id_norma":3,
-							"cantidad_muestras":15
+							"id_status":1,
+							"cantidad_muestras":15,
+							"activo":1
 						},
 						{
 							"id_solicitud":6,
 							"id_estudio":3,
-							"id_status":1,
 							"id_matriz":2,
 							"id_tipo_muestreo":1,
 							"id_norma":1,
-							"cantidad_muestras":16
+							"id_status":1,
+							"cantidad_muestras":16,
+							"activo":1
 						}
 					]
 				}
@@ -874,25 +891,29 @@ class DALSislab
 				{
 					"id_estudio":0,
 					"id_cliente":0,
+					"id_origen_orden":0,
+					"id_ejercicio":0,
 					"id_status":1,
-					"consecutivo":"0",
-					"folio":0,
-					"ejercicio":0,
+					"id_usuario_captura":0,
+					"id_usuario_valida":0,
+					"id_usuario_actualiza":0,
+					"numero_oficio":0,
+					"folio":"CEA-0/0",
+					"origen_descripcion":"",
 					"ubicacion":"",
+					"status":"Sin validar",
 					"fecha":"",
 					"fecha_captura":"",
-					"id_usuario_captura":0,
 					"ip_captura":0,
 					"host_captura":"",
-					"id_usuario_valida":0,
 					"fecha_valida":"",
 					"ip_valida":"",
 					"host_valida":"",
-					"fecha_actualizacion":"",
-					"id_usuario_actualizacion":0,
-					"ip_actualizacion":"",
-					"host_actualizacion":"",
-					"motivo_rechazo":"",
+					"fecha_actualiza":"",
+					"ip_actualiza":"",
+					"host_actualiza":"",
+					"fecha_rechaza":"",
+					"motivo_rechaza":"",
 					"activo":1,
 					"cliente":
 					{
@@ -902,11 +923,12 @@ class DALSislab
 						{
 							"id_solicitud":0,
 							"id_estudio":0,
-							"id_status":1,
 							"id_matriz":0,
-							"id_tipo_muestreo":1,
+							"id_tipo_muestreo":0,
 							"id_norma":0,
-							"cantidad_muestras":0
+							"id_status":1,
+							"cantidad_muestras":0,
+							"activo":1
 						}
 					]
 				}
@@ -926,33 +948,31 @@ class DALSislab
 			[
 				{
 					"id_estudio":1,
-					"id_status":1,
-					"folio":432,
-					"ejercicio":2015,
 					"id_cliente":1,
-					"fecha":"2015-03-21",
-					"ubicacion":"",
-
-					"fecha_captura":"2015-03-21",
-					"fecha_entrega":"",
+					"id_origen_orden":1,
+					"id_ejercicio":2015,
+					"id_status":2,
 					"id_usuario_captura":20,
-					"ip_captura":"::1",
-					"host_captura":"localhost",
-					"fecha_valida":"2015-03-21",
 					"id_usuario_valida":1,
-					"ip_valida":"::1",
-					"host_valida":"localhost",
-					"fecha_actualizacion":"2015-03-21",
-					"id_usuario_actualizacion":1,
-					"ip_actualizacion":"::1",
-					"host_actualizacion":"localhost",
-
-					"validado":0,
-					"rechazado":0,
-					"entregado":0,
-					"motivo_rechazo":"",
-					"activo":0,
-
+					"id_usuario_actualiza":1,
+					"numero_oficio":432,
+					"folio":"CEA-432/2015",
+					"origen_descripcion":"GP-001/2015",
+					"ubicacion":"Río Santiago",
+					"status":"Validado",
+					"fecha":"2015-03-21",
+					"fecha_captura":"2015-03-21",
+					"ip_captura":"[::1]",
+					"host_captura":"[::1]",
+					"fecha_valida":"2015-03-21",
+					"ip_valida":"[::1]",
+					"host_valida":"[::1]",
+					"fecha_actualiza":"2015-03-21",
+					"ip_actualiza":"[::1]",
+					"host_actualiza":"[::1]",
+					"fecha_rechaza":"2015-03-21",
+					"motivo_rechaza":"Error en datos cliente",
+					"activo":1,
 					"cliente":
 					{
 						"id_cliente":1,
@@ -974,7 +994,7 @@ class DALSislab
 						"contacto":"Biol. Luis Aceves Martínez",
 						"puesto_contacto":"puesto contacto",
 						"email":"laceves@ceajalisco.gob.mx",
-						"fecha_act":"2014-11-23",
+						"fecha_act":"23/11/2014",
 						"interno":1,
 						"cea":1,
 						"tasa":0,
@@ -985,52 +1005,52 @@ class DALSislab
 						{
 							"id_solicitud":1,
 							"id_estudio":1,
-							"id_status":1,
 							"id_matriz":1,
-							"cantidad_muestras":15,
 							"id_tipo_muestreo":2,
-							"id_norma":3
+							"id_norma":3,
+							"id_status":1,
+							"cantidad_muestras":15,
+							"activo":1
 						},
 						{
 							"id_solicitud":2,
 							"id_estudio":1,
-							"id_status":1,
-							"id_matriz":2,
-							"cantidad_muestras":16,
+							"id_matriz":6,
 							"id_tipo_muestreo":1,
-							"id_norma":1
+							"id_norma":1,
+							"id_status":1,
+							"cantidad_muestras":16,
+							"activo":1
 						}
 					]
 				},
 				{
 					"id_estudio":2,
-					"id_status":1,
-					"folio":432,
-					"ejercicio":2015,
 					"id_cliente":13,
-					"fecha":"2015-03-21",
-					"ubicacion":"",
-
-					"fecha_captura":"2015-03-21",
-					"fecha_entrega":"",
+					"id_origen_orden":2,
+					"id_ejercicio":2015,
+					"id_status":1,
 					"id_usuario_captura":20,
-					"ip_captura":"::1",
-					"host_captura":"localhost",
-					"fecha_valida":"2015-03-21",
 					"id_usuario_valida":1,
-					"ip_valida":"::1",
-					"host_valida":"localhost",
-					"fecha_actualizacion":"2015-03-21",
-					"id_usuario_actualizacion":1,
-					"ip_actualizacion":"::1",
-					"host_actualizacion":"localhost",
-
-					"validado":0,
-					"rechazado":0,
-					"entregado":0,
-					"motivo_rechazo":"",
-					"activo":0,
-
+					"id_usuario_actualiza":1,
+					"numero_oficio":433,
+					"folio":"CEA-433/2015",
+					"origen_descripcion":"",
+					"ubicacion":"Río Santiago",
+					"status":"Sin validar",
+					"fecha":"2015-03-21",
+					"fecha_captura":"2015-03-21",
+					"ip_captura":"[::1]",
+					"host_captura":"[::1]",
+					"fecha_valida":"2015-03-21",
+					"ip_valida":"[::1]",
+					"host_valida":"[::1]",
+					"fecha_actualiza":"2015-03-21",
+					"ip_actualiza":"[::1]",
+					"host_actualiza":"[::1]",
+					"fecha_rechaza":"",
+					"motivo_rechaza":"",
+					"activo":1,
 					"cliente":
 					{
 						"id_cliente":13,
@@ -1053,7 +1073,7 @@ class DALSislab
 						"contacto":"Arq. Juan Jesús Zarate Barajas",
 						"puesto_contacto":"puesto contacto",
 						"email":"ooapascotija@hotmail.com",
-						"fecha_act":"2014-11-23",
+						"fecha_act":"23/11/2014",
 						"interno":0,
 						"cea":0,
 						"tasa":1,
@@ -1064,20 +1084,91 @@ class DALSislab
 						{
 							"id_solicitud":1,
 							"id_estudio":1,
-							"id_status":1,
 							"id_matriz":1,
-							"cantidad_muestras":15,
 							"id_tipo_muestreo":2,
-							"id_norma":3
+							"id_norma":3,
+							"id_status":1,
+							"cantidad_muestras":15,
+							"activo":1
+						}
+					]
+				},
+				{
+					"id_estudio":3,
+					"id_cliente":21,
+					"id_origen_orden":2,
+					"id_ejercicio":2015,
+					"id_status":2,
+					"id_usuario_captura":20,
+					"id_usuario_valida":1,
+					"id_usuario_actualiza":1,
+					"numero_oficio":3,
+					"folio":"CEA-3/2015",
+					"origen_descripcion":"",
+					"ubicacion":"",
+					"status":"Validado",
+					"fecha":"2015-03-21",
+					"fecha_captura":"2015-03-21",
+					"ip_captura":"[::1]",
+					"host_captura":"[::1]",
+					"fecha_valida":"22/03/2015",
+					"ip_valida":"[::1]",
+					"host_valida":"[::1]",
+					"fecha_actualiza":"22/03/2015",
+					"ip_actualiza":"[::1]",
+					"host_actualiza":"[::1]",
+					"fecha_rechaza":"",
+					"motivo_rechaza":"",
+					"activo":1,
+					"cliente":
+					{
+						"id_cliente":21,
+						"id_organismo":14,
+						"cliente":"SECOLAM S.A. de C.V.",
+						"area":"",
+						"rfc":"Registro Federal de Contribuyentes",
+						"calle":"De los Fiordos",
+						"numero":"16",
+						"colonia":"Col. Acueducto de Guadalupe",
+						"cp":"07279",
+						"id_estado":9,
+						"estado":"Distrito Federal",
+						"id_municipio":9007,
+						"municipio":"Gustavo A. Madero",
+						"id_localidad":90070001,
+						"localidad":"Gustavo A. Madero",
+						"tel":"1567-4406",
+						"fax":"",
+						"contacto":"Ing. Roberto Escalante Villanueva",
+						"puesto_contacto":"puesto contacto",
+						"email":"rescalante@secovam.com",
+						"fecha_act":"23/11/2014",
+						"interno":0,
+						"cea":0,
+						"tasa":1,
+						"activo":1
+					},
+					"solicitudes":
+					[
+						{
+							"id_solicitud":5,
+							"id_estudio":3,
+							"id_matriz":1,
+							"id_tipo_muestreo":2,
+							"id_norma":3,
+							"id_status":1,
+							"cantidad_muestras":15,
+							"activo":1
 						},
 						{
-							"id_solicitud":2,
-							"id_estudio":1,
-							"id_status":1,
+							"id_solicitud":6,
+							"id_estudio":3,
 							"id_matriz":2,
-							"cantidad_muestras":16,
 							"id_tipo_muestreo":1,
-							"id_norma":1
+							"id_norma":1,
+							"id_status":1,
+							"cantidad_muestras":16,
+							"activo":1
 						}
 					]
 				}
@@ -1098,577 +1189,53 @@ class DALSislab
 			$result = '
 				{
 					"id_solicitud":1,
-					"id_matriz":1,
 					"id_estudio":1,
-					"id_status":1,
-					"cantidad_muestras":1,
-					"folio":432,
-					"ejercicio":2014,
-					"fecha_solicitud":"2014-07-01",
-					"fecha_captura":"2014-07-01",
-					"fecha_valida":null,
-					"fecha_acepta":null,
-					"fecha_actualizacion":"2014-07-01",
-					"validado":0,
-					"id_cliente":1,
-					"id_usuario_captura":1,
-					"id_usuario_valida":3,
-					"id_norma":1,
-					"id_tipo_muestreo":1,
-					"precio_total":0,
+					"id_cliente":13,
+					"id_matriz":1,
+					"id_tipo_muestreo":2,
+					"id_norma":3,
+					"id_cuerpo_receptor":0,
+					"id_tipo_cuerpo":3,
+					"id_ejercicio":2015,
+					"id_status":2,
+					"id_usuario_captura":20,
+					"id_usuario_valida":1,
+					"id_usuario_actualiza":1,
+					"numero_oficio":432,
+					"folio":"CEA-432/2014",
+					"cantidad_muestras":15,
+					"costo_total":33520,
+					"cuerpo_receptor":"Río Santiago",
+					"tipo_cuerpo":"C",
+					"status":"Validado",
+					"fecha":"2015-03-21",
+					"fecha_captura":"2015-03-21",
+					"ip_captura":"[::1]",
+					"host_captura":"localhost";
+					"fecha_valida":"2015-03-21",
+					"ip_valida":"[::1]",
+					"host_valida":"localhost";
+					"fecha_actualiza":"2015-03-21",
+					"ip_actualiza":"[::1]",
+					"host_actualiza":"localhost";
+					"fecha_acepta":"2015-03-21",
+					"fecha_rechaza":"2015-03-21",
+					"motivo_rechaza":"Error en tipo del cuerpo receptor",
+					"activo":1,
 					"cliente":
 					{
-						"id_cliente":1,
-						"id_organismo":1,
-						"cliente":"CEA Jalisco",
-						"area":"Dirección de Operación de PTARS",
-						"rfc":"Registro Federal de Contribuyentes",
-						"calle":"Av. Brasilia",
-						"numero":"2970",
-						"colonia":"Col. Colomos Providencia",
-						"cp":"44680",
-						"id_estado":14,
-						"id_municipio":14039,
-						"municipio":"Guadalajara",
-						"id_localidad":140390001,
-						"localidad":"Guadalajara",
-						"tel":"3030-9350 ext. 8370",
-						"fax":"",
-						"contacto":"Biol. Luis Aceves Martínez",
-						"puesto_contacto":"puesto contacto",
-						"email":"laceves@ceajalisco.gob.mx",
-						"fecha_act":"2014-11-23",
-						"interno":1,
-						"cea":1,
-						"tasa":0,
-						"activo":1
 					},
-					"usuario_captura":
+					"matriz":
 					{
-						"id_usuario":20,
-						"id_nivel":6,
-						"id_area":5,
-						"id_puesto":7,
-						"usr":"mroman",
-						"pwd":"mroman",
-						"area":"Administrativo",
-						"puesto":"Secretaria",
-						"nombres":"Mirna María",
-						"ap":"López",
-						"am":"Román",
-						"fecha_act":"2014-11-30",
-						"calidad":0,
-						"supervisa":0,
-						"analiza":0,
-						"muestrea":0,
-						"cert":0,
-						"activo":1
 					},
-					"usuario_valida":
-					{
-						"id_usuario":1,
-						"id_nivel":2,
-						"id_area":5,
-						"id_puesto":1,
-						"usr":"rgarcia",
-						"pwd":"rgarcia",
-						"area":"Administrativo",
-						"puesto":"Gerente",
-						"nombres":"Reyna",
-						"ap":"García",
-						"am":"Meneses",
-						"fecha_act":"2014-11-30",
-						"calidad":1,
-						"supervisa":1,
-						"analiza":1,
-						"muestrea":0,
-						"cert":1,
-						"activo":1
-					},
-					"norma":{
-						"id_norma":1,
-						"norma":"NOM-001-SEMARNAT-1996",
-						"desc":"Norma Oficial Mexicana",
-						"parametros":[
-							{
-								"id_parametro":25,
-								"parametro":"Arsénico",
-								"cert":1,
-								"id_metodo":1,
-								"metodo": {
-									"id_metodo":1,
-									"metodo":"NMX-AA-000-0000"
-								},
-								"cantidad":1,
-								"precio":164.65
-							},
-							{
-								"id_parametro":27,
-								"parametro":"Cadmio",
-								"cert":1,
-								"id_metodo":1,
-								"metodo": {
-									"id_metodo":1,
-									"metodo":"NMX-AA-000-0000"
-								},
-								"cantidad":1,
-								"precio":164.65
-							},
-							{
-								"id_parametro":28,
-								"parametro":"Cobre",
-								"cert":1,
-								"id_metodo":1,
-								"metodo": {
-									"id_metodo":1,
-									"metodo":"NMX-AA-000-0000"
-								},
-								"cantidad":1,
-								"precio":164.65
-							},
-							{
-								"id_parametro":38,
-								"parametro":"Coliformes fecales",
-								"cert":1,
-								"id_metodo":1,
-								"metodo": {
-									"id_metodo":1,
-									"metodo":"NMX-AA-000-0000"
-								},
-								"cantidad":1,
-								"precio":164.65
-							},
-							{
-								"id_parametro":29,
-								"parametro":"Cromo",
-								"cert":1,
-								"id_metodo":1,
-								"metodo": {
-									"id_metodo":1,
-									"metodo":"NMX-AA-000-0000"
-								},
-								"cantidad":1,
-								"precio":164.65
-							},
-							{
-								"id_parametro":16,
-								"parametro":"Demada bioquímica de oxígeno",
-								"cert":0,
-								"id_metodo":1,
-								"metodo": {
-									"id_metodo":1,
-									"metodo":"NMX-AA-000-0000"
-								},
-								"cantidad":1,
-								"precio":164.65
-							},
-							{
-								"id_parametro":19,
-								"parametro":"Fósforo total",
-								"cert":1,
-								"id_metodo":1,
-								"metodo": {
-									"id_metodo":1,
-									"metodo":"NMX-AA-000-0000"
-								},
-								"cantidad":1,
-								"precio":164.65
-							},
-							{
-								"id_parametro":18,
-								"parametro":"Grasas y aceites",
-								"cert":1,
-								"id_metodo":1,
-								"metodo": {
-									"id_metodo":1,
-									"metodo":"NMX-AA-000-0000"
-								},
-								"cantidad":1,
-								"precio":164.65
-							},
-							{
-								"id_parametro":6,
-								"parametro":"Alcalinidad total",
-								"cert":1,
-								"id_metodo":1,
-								"metodo": {
-									"id_metodo":1,
-									"metodo":"NMX-AA-000-0000"
-								},
-								"cantidad":1,
-								"precio":164.65
-							},
-							{
-								"id_parametro":39,
-								"parametro":"Materia flotante",
-								"cert":1,
-								"id_metodo":1,
-								"metodo": {
-									"id_metodo":1,
-									"metodo":"NMX-AA-000-0000"
-								},
-								"cantidad":1,
-								"precio":164.65
-							},
-							{
-								"id_parametro":32,
-								"parametro":"Mercurio",
-								"cert":1,
-								"id_metodo":1,
-								"metodo": {
-									"id_metodo":1,
-									"metodo":"NMX-AA-000-0000"
-								},
-								"cantidad":1,
-								"precio":164.65
-							},
-							{
-								"id_parametro":7,
-								"parametro":"Cloruros totales",
-								"cert":1,
-								"id_metodo":1,
-								"metodo": {
-									"id_metodo":1,
-									"metodo":"NMX-AA-000-0000"
-								},
-								"cantidad":1,
-								"precio":164.65
-							},
-							{
-								"id_parametro":33,
-								"parametro":"Níquel",
-								"cert":1,
-								"id_metodo":1,
-								"metodo": {
-									"id_metodo":1,
-									"metodo":"NMX-AA-000-0000"
-								},
-								"cantidad":1,
-								"precio":164.65
-							},
-							{
-								"id_parametro":2,
-								"parametro":"Potencial de hidrógeno",
-								"cert":1,
-								"id_metodo":1,
-								"metodo": {
-									"id_metodo":1,
-									"metodo":"NMX-AA-000-0000"
-								},
-								"cantidad":1,
-								"precio":164.65
-							},
-							{
-								"id_parametro":34,
-								"parametro":"Plomo",
-								"cert":1,
-								"id_metodo":1,
-								"metodo": {
-									"id_metodo":1,
-									"metodo":"NMX-AA-000-0000"
-								},
-								"cantidad":1,
-								"precio":164.65
-							},
-							{
-								"id_parametro":22,
-								"parametro":"Sólidos sedimentables",
-								"cert":1,
-								"id_metodo":1,
-								"metodo": {
-									"id_metodo":1,
-									"metodo":"NMX-AA-000-0000"
-								},
-								"cantidad":1,
-								"precio":164.65
-							},
-							{
-								"id_parametro":20,
-								"parametro":"Sólidos suspendidos totales",
-								"cert":1,
-								"id_metodo":1,
-								"metodo": {
-									"id_metodo":1,
-									"metodo":"NMX-AA-000-0000"
-								},
-								"cantidad":1,
-								"precio":164.65
-							},
-							{
-								"id_parametro":1,
-								"parametro":"Temperatura",
-								"cert":1,
-								"id_metodo":1,
-								"metodo": {
-									"id_metodo":1,
-									"metodo":"NMX-AA-000-0000"
-								},
-								"cantidad":1,
-								"precio":164.65
-							},
-							{
-								"id_parametro":36,
-								"parametro":"Zinc",
-								"cert":1,
-								"id_metodo":1,
-								"metodo": {
-									"id_metodo":1,
-									"metodo":"NMX-AA-000-0000"
-								},
-								"cantidad":1,
-								"precio":164.65
-							}
-						]
-					},
-					"actividades":[
-						{
-							"id_actividad":1,
-							"actividad":"Muestreo instantáneo",
-							"id_metodo":87,
-							"metodo":{
-								"id_metodo":87,
-								"metodo":"metodo para muestreo instantáneo"
-							},
-							"cantidad":1,
-							"precio":0
-						}
-					],
 					"tipo_muestreo":
 					{
-						"id_tipo_muestreo":1,
-						"tipo_muestreo":"Simple",
-						"selected":true
+					},
+					"norma":
+					{
 					},
 					"parametros":
 					[
-						{
-							"id_parametro":25,
-							"parametro":"Arsénico",
-							"cert":1,
-							"id_metodo":1,
-							"metodo": {
-								"id_metodo":1,
-								"metodo":"NMX-AA-000-0000"
-							},
-							"cantidad":1,
-							"precio":164.65
-						},
-						{
-							"id_parametro":27,
-							"parametro":"Cadmio",
-							"cert":1,
-							"id_metodo":1,
-							"metodo": {
-								"id_metodo":1,
-								"metodo":"NMX-AA-000-0000"
-							},
-							"cantidad":1,
-							"precio":164.65
-						},
-						{
-							"id_parametro":28,
-							"parametro":"Cobre",
-							"cert":1,
-							"id_metodo":1,
-							"metodo": {
-								"id_metodo":1,
-								"metodo":"NMX-AA-000-0000"
-							},
-							"cantidad":1,
-							"precio":164.65
-						},
-						{
-							"id_parametro":38,
-							"parametro":"Coliformes fecales",
-							"cert":1,
-							"id_metodo":1,
-							"metodo": {
-								"id_metodo":1,
-								"metodo":"NMX-AA-000-0000"
-							},
-							"cantidad":1,
-							"precio":164.65
-						},
-						{
-							"id_parametro":29,
-							"parametro":"Cromo",
-							"cert":1,
-							"id_metodo":1,
-							"metodo": {
-								"id_metodo":1,
-								"metodo":"NMX-AA-000-0000"
-							},
-							"cantidad":1,
-							"precio":164.65
-						},
-						{
-							"id_parametro":16,
-							"parametro":"Demada bioquímica de oxígeno",
-							"cert":0,
-							"id_metodo":1,
-							"metodo": {
-								"id_metodo":1,
-								"metodo":"NMX-AA-000-0000"
-							},
-							"cantidad":1,
-							"precio":164.65
-						},
-						{
-							"id_parametro":19,
-							"parametro":"Fósforo total",
-							"cert":1,
-							"id_metodo":1,
-							"metodo": {
-								"id_metodo":1,
-								"metodo":"NMX-AA-000-0000"
-							},
-							"cantidad":1,
-							"precio":164.65
-						},
-						{
-							"id_parametro":18,
-							"parametro":"Grasas y aceites",
-							"cert":1,
-							"id_metodo":1,
-							"metodo": {
-								"id_metodo":1,
-								"metodo":"NMX-AA-000-0000"
-							},
-							"cantidad":1,
-							"precio":164.65
-						},
-						{
-							"id_parametro":6,
-							"parametro":"Alcalinidad total",
-							"cert":1,
-							"id_metodo":1,
-							"metodo": {
-								"id_metodo":1,
-								"metodo":"NMX-AA-000-0000"
-							},
-							"cantidad":1,
-							"precio":164.65
-						},
-						{
-							"id_parametro":39,
-							"parametro":"Materia flotante",
-							"cert":1,
-							"id_metodo":1,
-							"metodo": {
-								"id_metodo":1,
-								"metodo":"NMX-AA-000-0000"
-							},
-							"cantidad":1,
-							"precio":164.65
-						},
-						{
-							"id_parametro":32,
-							"parametro":"Mercurio",
-							"cert":1,
-							"id_metodo":1,
-							"metodo": {
-								"id_metodo":1,
-								"metodo":"NMX-AA-000-0000"
-							},
-							"cantidad":1,
-							"precio":164.65
-						},
-						{
-							"id_parametro":7,
-							"parametro":"Cloruros totales",
-							"cert":1,
-							"id_metodo":1,
-							"metodo": {
-								"id_metodo":1,
-								"metodo":"NMX-AA-000-0000"
-							},
-							"cantidad":1,
-							"precio":164.65
-						},
-						{
-							"id_parametro":33,
-							"parametro":"Níquel",
-							"cert":1,
-							"id_metodo":1,
-							"metodo": {
-								"id_metodo":1,
-								"metodo":"NMX-AA-000-0000"
-							},
-							"cantidad":1,
-							"precio":164.65
-						},
-						{
-							"id_parametro":2,
-							"parametro":"Potencial de hidrógeno",
-							"cert":1,
-							"id_metodo":1,
-							"metodo": {
-								"id_metodo":1,
-								"metodo":"NMX-AA-000-0000"
-							},
-							"cantidad":1,
-							"precio":164.65
-						},
-						{
-							"id_parametro":34,
-							"parametro":"Plomo",
-							"cert":1,
-							"id_metodo":1,
-							"metodo": {
-								"id_metodo":1,
-								"metodo":"NMX-AA-000-0000"
-							},
-							"cantidad":1,
-							"precio":164.65
-						},
-						{
-							"id_parametro":22,
-							"parametro":"Sólidos sedimentables",
-							"cert":1,
-							"id_metodo":1,
-							"metodo": {
-								"id_metodo":1,
-								"metodo":"NMX-AA-000-0000"
-							},
-							"cantidad":1,
-							"precio":164.65
-						},
-						{
-							"id_parametro":20,
-							"parametro":"Sólidos suspendidos totales",
-							"cert":1,
-							"id_metodo":1,
-							"metodo": {
-								"id_metodo":1,
-								"metodo":"NMX-AA-000-0000"
-							},
-							"cantidad":1,
-							"precio":164.65
-						},
-						{
-							"id_parametro":1,
-							"parametro":"Temperatura",
-							"cert":1,
-							"id_metodo":1,
-							"metodo": {
-								"id_metodo":1,
-								"metodo":"NMX-AA-000-0000"
-							},
-							"cantidad":1,
-							"precio":164.65
-						},
-						{
-							"id_parametro":36,
-							"parametro":"Zinc",
-							"cert":1,
-							"id_metodo":1,
-							"metodo": {
-								"id_metodo":1,
-								"metodo":"NMX-AA-000-0000"
-							},
-							"cantidad":1,
-							"precio":164.65
-						}
 					]
 				}
 			';
@@ -1678,579 +1245,53 @@ class DALSislab
 			$result = '
 				{
 					"id_solicitud":2,
-					"id_matriz":1,
 					"id_estudio":1,
-					"id_status":1,
-					"cantidad_muestras":1,
-					"folio":433,
-					"ejercicio":2015,
-					"fecha_solicitud":"2015-07-01",
-					"fecha_captura":"2015-07-01",
-					"fecha_valida":"2015-07-15",
-					"fecha_acepta":"2015-07-15",
-					"fecha_actualizacion":"2015-07-01",
-					"validado":1,
 					"id_cliente":13,
+					"id_matriz":2,
+					"id_tipo_muestreo":1,
+					"id_norma":1,
+					"id_cuerpo_receptor":0,
+					"id_tipo_cuerpo":3,
+					"id_ejercicio":2015,
+					"id_status":2,
 					"id_usuario_captura":20,
 					"id_usuario_valida":1,
-					"id_norma":1,
-					"id_tipo_muestreo":1,
-					"precio_total":2095,
+					"id_usuario_actualiza":1,
+					"numero_oficio":432,
+					"folio":"CEA-432/2015",
+					"cantidad_muestras":16,
+					"costo_total":33520,
+					"cuerpo_receptor":"Río Santiago",
+					"tipo_cuerpo":"C",
+					"status":"Validado",
+					"fecha":"2015-03-21",
+					"fecha_captura":"2015-03-21",
+					"ip_captura":"[::1]",
+					"host_captura":"localhost";
+					"fecha_valida":"2015-03-21",
+					"ip_valida":"[::1]",
+					"host_valida":"localhost";
+					"fecha_actualiza":"2015-03-21",
+					"ip_actualiza":"[::1]",
+					"host_actualiza":"localhost";
+					"fecha_acepta":"2015-03-21",
+					"fecha_rechaza":"2015-03-21",
+					"motivo_rechaza":"Error en nombre del cuerpo receptor",
+					"activo":1,
 					"cliente":
 					{
-						"id_cliente":13,
-						"id_organismo":6,
-						"cliente":"Ayuntamiento de Cotija, Michoacan",
-						"area":"",
-						"rfc":"Registro Federal de Contribuyentes",
-						"calle":"Pino Suárez Pte.",
-						"numero":"100",
-						"colonia":"Col. Centro",
-						"cp":"59940",
-						"id_estado":16,
-						"estado":"Michoacán de Ocampo",
-						"id_municipio":16019,
-						"municipio":"Cotija",
-						"id_localidad":160190001,
-						"localidad":"Cotija de La Paz",
-						"tel":"045-35-4100-1836",
-						"fax":"",
-						"contacto":"Arq. Juan Jesús Zarate Barajas",
-						"puesto_contacto":"puesto contacto",
-						"email":"ooapascotija@hotmail.com",
-						"fecha_act":"2014-11-23",
-						"interno":0,
-						"cea":0,
-						"tasa":1,
-						"activo":1
 					},
-					"usuario_captura": {
-						"id_usuario":20,
-						"id_nivel":6,
-						"id_area":5,
-						"id_puesto":7,
-						"usr":"mroman",
-						"pwd":"mroman",
-						"area":"Administrativo",
-						"puesto":"Secretaria",
-						"nombres":"Mirna María",
-						"ap":"López",
-						"am":"Román",
-						"fecha_act":"2014-11-30",
-						"calidad":0,
-						"supervisa":0,
-						"analiza":0,
-						"muestrea":0,
-						"cert":0,
-						"activo":1
-					},
-					"usuario_valida":
+					"matriz":
 					{
-						"id_usuario":1,
-						"id_nivel":2,
-						"id_area":5,
-						"id_puesto":1,
-						"usr":"rgarcia",
-						"pwd":"rgarcia",
-						"area":"Administrativo",
-						"puesto":"Gerente",
-						"nombres":"Reyna",
-						"ap":"García",
-						"am":"Meneses",
-						"fecha_act":"2014-11-30",
-						"calidad":1,
-						"supervisa":1,
-						"analiza":1,
-						"muestrea":0,
-						"cert":1,
-						"activo":1
+					},
+					"tipo_muestreo":
+					{
 					},
 					"norma":
 					{
-						"id_norma":1,
-						"norma":"NOM-001-SEMARNAT-1996",
-						"desc":"Norma Oficial Mexicana",
-						"parametros":
-						[
-							{
-								"id_parametro":25,
-								"parametro":"Arsénico",
-								"cert":1,
-								"id_metodo":1,
-								"metodo": {
-									"id_metodo":1,
-									"metodo":"NMX-AA-000-0000"
-								},
-								"cantidad":1,
-								"precio":164.65
-							},
-							{
-								"id_parametro":27,
-								"parametro":"Cadmio",
-								"cert":1,
-								"id_metodo":1,
-								"metodo": {
-									"id_metodo":1,
-									"metodo":"NMX-AA-000-0000"
-								},
-								"cantidad":1,
-								"precio":164.65
-							},
-							{
-								"id_parametro":28,
-								"parametro":"Cobre",
-								"cert":1,
-								"id_metodo":1,
-								"metodo": {
-									"id_metodo":1,
-									"metodo":"NMX-AA-000-0000"
-								},
-								"cantidad":1,
-								"precio":164.65
-							},
-							{
-								"id_parametro":38,
-								"parametro":"Coliformes fecales",
-								"cert":1,
-								"id_metodo":1,
-								"metodo": {
-									"id_metodo":1,
-									"metodo":"NMX-AA-000-0000"
-								},
-								"cantidad":1,
-								"precio":164.65
-							},
-							{
-								"id_parametro":29,
-								"parametro":"Cromo",
-								"cert":1,
-								"id_metodo":1,
-								"metodo": {
-									"id_metodo":1,
-									"metodo":"NMX-AA-000-0000"
-								},
-								"cantidad":1,
-								"precio":164.65
-							},
-							{
-								"id_parametro":16,
-								"parametro":"Demada bioquímica de oxígeno",
-								"cert":0,
-								"id_metodo":1,
-								"metodo": {
-									"id_metodo":1,
-									"metodo":"NMX-AA-000-0000"
-								},
-								"cantidad":1,
-								"precio":164.65
-							},
-							{
-								"id_parametro":19,
-								"parametro":"Fósforo total",
-								"cert":1,
-								"id_metodo":1,
-								"metodo": {
-									"id_metodo":1,
-									"metodo":"NMX-AA-000-0000"
-								},
-								"cantidad":1,
-								"precio":164.65
-							},
-							{
-								"id_parametro":18,
-								"parametro":"Grasas y aceites",
-								"cert":1,
-								"id_metodo":1,
-								"metodo": {
-									"id_metodo":1,
-									"metodo":"NMX-AA-000-0000"
-								},
-								"cantidad":1,
-								"precio":164.65
-							},
-							{
-								"id_parametro":6,
-								"parametro":"Alcalinidad total",
-								"cert":1,
-								"id_metodo":1,
-								"metodo": {
-									"id_metodo":1,
-									"metodo":"NMX-AA-000-0000"
-								},
-								"cantidad":1,
-								"precio":164.65
-							},
-							{
-								"id_parametro":39,
-								"parametro":"Materia flotante",
-								"cert":1,
-								"id_metodo":1,
-								"metodo": {
-									"id_metodo":1,
-									"metodo":"NMX-AA-000-0000"
-								},
-								"cantidad":1,
-								"precio":164.65
-							},
-							{
-								"id_parametro":32,
-								"parametro":"Mercurio",
-								"cert":1,
-								"id_metodo":1,
-								"metodo": {
-									"id_metodo":1,
-									"metodo":"NMX-AA-000-0000"
-								},
-								"cantidad":1,
-								"precio":164.65
-							},
-							{
-								"id_parametro":7,
-								"parametro":"Cloruros totales",
-								"cert":1,
-								"id_metodo":1,
-								"metodo": {
-									"id_metodo":1,
-									"metodo":"NMX-AA-000-0000"
-								},
-								"cantidad":1,
-								"precio":164.65
-							},
-							{
-								"id_parametro":33,
-								"parametro":"Níquel",
-								"cert":1,
-								"id_metodo":1,
-								"metodo": {
-									"id_metodo":1,
-									"metodo":"NMX-AA-000-0000"
-								},
-								"cantidad":1,
-								"precio":164.65
-							},
-							{
-								"id_parametro":2,
-								"parametro":"Potencial de hidrógeno",
-								"cert":1,
-								"id_metodo":1,
-								"metodo": {
-									"id_metodo":1,
-									"metodo":"NMX-AA-000-0000"
-								},
-								"cantidad":1,
-								"precio":164.65
-							},
-							{
-								"id_parametro":34,
-								"parametro":"Plomo",
-								"cert":1,
-								"id_metodo":1,
-								"metodo": {
-									"id_metodo":1,
-									"metodo":"NMX-AA-000-0000"
-								},
-								"cantidad":1,
-								"precio":164.65
-							},
-							{
-								"id_parametro":22,
-								"parametro":"Sólidos sedimentables",
-								"cert":1,
-								"id_metodo":1,
-								"metodo": {
-									"id_metodo":1,
-									"metodo":"NMX-AA-000-0000"
-								},
-								"cantidad":1,
-								"precio":164.65
-							},
-							{
-								"id_parametro":20,
-								"parametro":"Sólidos suspendidos totales",
-								"cert":1,
-								"id_metodo":1,
-								"metodo": {
-									"id_metodo":1,
-									"metodo":"NMX-AA-000-0000"
-								},
-								"cantidad":1,
-								"precio":164.65
-							},
-							{
-								"id_parametro":1,
-								"parametro":"Temperatura",
-								"cert":1,
-								"id_metodo":1,
-								"metodo": {
-									"id_metodo":1,
-									"metodo":"NMX-AA-000-0000"
-								},
-								"cantidad":1,
-								"precio":164.65
-							},
-							{
-								"id_parametro":36,
-								"parametro":"Zinc",
-								"cert":1,
-								"id_metodo":1,
-								"metodo": {
-									"id_metodo":1,
-									"metodo":"NMX-AA-000-0000"
-								},
-								"cantidad":1,
-								"precio":164.65
-							}
-						]
-					},
-					"actividades":[
-						{
-							"id_actividad":1,
-							"actividad":"Muestreo instantáneo",
-							"id_metodo":87,
-							"metodo":{
-								"id_metodo":87,
-								"metodo":"metodo para muestreo instantáneo"
-							},
-							"cantidad":1,
-							"precio":0
-						}
-					],
-					"tipo_muestreo":
-					{
-						"id_tipo_muestreo":1,
-						"tipo_muestreo":"Simple",
-						"selected":true
 					},
 					"parametros":
 					[
-						{
-							"id_parametro":25,
-							"parametro":"Arsénico",
-							"cert":1,
-							"id_metodo":1,
-							"metodo": {
-								"id_metodo":1,
-								"metodo":"NMX-AA-000-0000"
-							},
-							"cantidad":1,
-							"precio":164.65
-						},
-						{
-							"id_parametro":27,
-							"parametro":"Cadmio",
-							"cert":1,
-							"id_metodo":1,
-							"metodo": {
-								"id_metodo":1,
-								"metodo":"NMX-AA-000-0000"
-							},
-							"cantidad":1,
-							"precio":164.65
-						},
-						{
-							"id_parametro":28,
-							"parametro":"Cobre",
-							"cert":1,
-							"id_metodo":1,
-							"metodo": {
-								"id_metodo":1,
-								"metodo":"NMX-AA-000-0000"
-							},
-							"cantidad":1,
-							"precio":164.65
-						},
-						{
-							"id_parametro":38,
-							"parametro":"Coliformes fecales",
-							"cert":1,
-							"id_metodo":1,
-							"metodo": {
-								"id_metodo":1,
-								"metodo":"NMX-AA-000-0000"
-							},
-							"cantidad":1,
-							"precio":164.65
-						},
-						{
-							"id_parametro":29,
-							"parametro":"Cromo",
-							"cert":1,
-							"id_metodo":1,
-							"metodo": {
-								"id_metodo":1,
-								"metodo":"NMX-AA-000-0000"
-							},
-							"cantidad":1,
-							"precio":164.65
-						},
-						{
-							"id_parametro":16,
-							"parametro":"Demada bioquímica de oxígeno",
-							"cert":0,
-							"id_metodo":1,
-							"metodo": {
-								"id_metodo":1,
-								"metodo":"NMX-AA-000-0000"
-							},
-							"cantidad":1,
-							"precio":164.65
-						},
-						{
-							"id_parametro":19,
-							"parametro":"Fósforo total",
-							"cert":1,
-							"id_metodo":1,
-							"metodo": {
-								"id_metodo":1,
-								"metodo":"NMX-AA-000-0000"
-							},
-							"cantidad":1,
-							"precio":164.65
-						},
-						{
-							"id_parametro":18,
-							"parametro":"Grasas y aceites",
-							"cert":1,
-							"id_metodo":1,
-							"metodo": {
-								"id_metodo":1,
-								"metodo":"NMX-AA-000-0000"
-							},
-							"cantidad":1,
-							"precio":164.65
-						},
-						{
-							"id_parametro":6,
-							"parametro":"Alcalinidad total",
-							"cert":1,
-							"id_metodo":1,
-							"metodo": {
-								"id_metodo":1,
-								"metodo":"NMX-AA-000-0000"
-							},
-							"cantidad":1,
-							"precio":164.65
-						},
-						{
-							"id_parametro":39,
-							"parametro":"Materia flotante",
-							"cert":1,
-							"id_metodo":1,
-							"metodo": {
-								"id_metodo":1,
-								"metodo":"NMX-AA-000-0000"
-							},
-							"cantidad":1,
-							"precio":164.65
-						},
-						{
-							"id_parametro":32,
-							"parametro":"Mercurio",
-							"cert":1,
-							"id_metodo":1,
-							"metodo": {
-								"id_metodo":1,
-								"metodo":"NMX-AA-000-0000"
-							},
-							"cantidad":1,
-							"precio":164.65
-						},
-						{
-							"id_parametro":7,
-							"parametro":"Cloruros totales",
-							"cert":1,
-							"id_metodo":1,
-							"metodo": {
-								"id_metodo":1,
-								"metodo":"NMX-AA-000-0000"
-							},
-							"cantidad":1,
-							"precio":164.65
-						},
-						{
-							"id_parametro":33,
-							"parametro":"Níquel",
-							"cert":1,
-							"id_metodo":1,
-							"metodo": {
-								"id_metodo":1,
-								"metodo":"NMX-AA-000-0000"
-							},
-							"cantidad":1,
-							"precio":164.65
-						},
-						{
-							"id_parametro":2,
-							"parametro":"Potencial de hidrógeno",
-							"cert":1,
-							"id_metodo":1,
-							"metodo": {
-								"id_metodo":1,
-								"metodo":"NMX-AA-000-0000"
-							},
-							"cantidad":1,
-							"precio":164.65
-						},
-						{
-							"id_parametro":34,
-							"parametro":"Plomo",
-							"cert":1,
-							"id_metodo":1,
-							"metodo": {
-								"id_metodo":1,
-								"metodo":"NMX-AA-000-0000"
-							},
-							"cantidad":1,
-							"precio":164.65
-						},
-						{
-							"id_parametro":22,
-							"parametro":"Sólidos sedimentables",
-							"cert":1,
-							"id_metodo":1,
-							"metodo": {
-								"id_metodo":1,
-								"metodo":"NMX-AA-000-0000"
-							},
-							"cantidad":1,
-							"precio":164.65
-						},
-						{
-							"id_parametro":20,
-							"parametro":"Sólidos suspendidos totales",
-							"cert":1,
-							"id_metodo":1,
-							"metodo": {
-								"id_metodo":1,
-								"metodo":"NMX-AA-000-0000"
-							},
-							"cantidad":1,
-							"precio":164.65
-						},
-						{
-							"id_parametro":1,
-							"parametro":"Temperatura",
-							"cert":1,
-							"id_metodo":1,
-							"metodo": {
-								"id_metodo":1,
-								"metodo":"NMX-AA-000-0000"
-							},
-							"cantidad":1,
-							"precio":164.65
-						},
-						{
-							"id_parametro":36,
-							"parametro":"Zinc",
-							"cert":1,
-							"id_metodo":1,
-							"metodo": {
-								"id_metodo":1,
-								"metodo":"NMX-AA-000-0000"
-							},
-							"cantidad":1,
-							"precio":164.65
-						}
 					]
 				}
 			';
@@ -2259,64 +1300,179 @@ class DALSislab
 			$result = '
 				{
 					"id_solicitud":0,
-					"id_matriz":1,
-					"id_ejercicio":0,
-					"cantidad_muestras":1,
-					"folio":0,
-					"ejercicio":0,
-					"fecha_solicitud":null,
-					"fecha_captura":null,
-					"fecha_valida":null,
-					"fecha_acepta":null,
-					"fecha_actualizacion":null,
-					"validado":0,
+					"id_estudio":0,
 					"id_cliente":0,
+					"id_matriz":1,
+					"id_tipo_muestreo":0,
+					"id_norma":0,
+					"id_cuerpo_receptor":0,
+					"id_tipo_cuerpo":0,
+					"id_ejercicio":0,
+					"id_status":0,
 					"id_usuario_captura":0,
 					"id_usuario_valida":0,
-					"id_norma":0,
-					"id_tipo_muestreo":1,
-					"precio_total":0,
-					"cliente": {
-
+					"id_usuario_actualiza":0,
+					"numero_oficio":0,
+					"folio":"CEA-0/0",
+					"cantidad_muestras":1,
+					"costo_total":0,
+					"cuerpo_receptor":"",
+					"tipo_cuerpo":"",
+					"status":"Sin validar",
+					"fecha":"",
+					"fecha_captura":"",
+					"ip_captura":"",
+					"host_captura":"",
+					"fecha_valida":"",
+					"ip_valida":"",
+					"host_valida":"",
+					"fecha_actualiza":"",
+					"ip_actualiza":"",
+					"host_actualiza":"",
+					"fecha_acepta":"",
+					"fecha_rechaza":"",
+					"motivo_rechaza":"",
+					"activo":1,
+					"cliente":
+					{
 					},
-					"usuario_captura":{
-						"id_usuario":0,
-						"nombre":"",
-						"ap":"",
-						"am":"",
-						"puesto":"",
-						"usr":"",
-						"pwd":""
+					"matriz":
+					{
 					},
-					"valida":{
-						"id_usuario":0,
-						"nombre":"",
-						"ap":"",
-						"am":"",
-						"puesto":"",
-						"usr":"",
-						"pwd":""
-					},
-					"norma":{
-						"id_norma":0,
-						"norma":"",
-						"desc":"",
-						"parametros": [
-
-						]
-					},
-					"actividades":[
-
-					],
 					"tipo_muestreo":
 					{
-						"id_tipo_muestreo":1,
-						"tipo_muestreo":"Simple",
-						"selected":true
 					},
-					"parametros": [
+					"norma":
+					{
+					},
+					"parametros":
+					[
 					]
 				}
+			';
+		}
+		return $result;
+	}
+
+	public function getQuotesByStudyId($studyId) {
+		//$sql = "SELECT
+		//		*
+		//	FROM
+		//		solicitud_cotizacion";
+		//return \Service\Adapter\PDOAdapter::getInstance()->getAllRows($sql);
+		if ($studyId == 1)
+		{
+			$result = '
+				[
+					{
+						"id_solicitud":1,
+						"id_estudio":1,
+						"id_cliente":13,
+						"id_matriz":1,
+						"id_tipo_muestreo":2,
+						"id_norma":3,
+						"id_cuerpo_receptor":0,
+						"id_tipo_cuerpo":3,
+						"id_ejercicio":2015,
+						"id_status":2,
+						"id_usuario_captura":20,
+						"id_usuario_valida":1,
+						"id_usuario_actualiza":1,
+						"numero_oficio":432,
+						"folio":"CEA-432/2014",
+						"cantidad_muestras":15,
+						"costo_total":33520,
+						"cuerpo_receptor":"Río Santiago",
+						"tipo_cuerpo":"C",
+						"status":"Validado",
+						"fecha":"2015-03-21",
+						"fecha_captura":"2015-03-21",
+						"ip_captura":"[::1]",
+						"host_captura":"localhost";
+						"fecha_valida":"2015-03-21",
+						"ip_valida":"[::1]",
+						"host_valida":"localhost";
+						"fecha_actualiza":"2015-03-21",
+						"ip_actualiza":"[::1]",
+						"host_actualiza":"localhost";
+						"fecha_acepta":"2015-03-21",
+						"fecha_rechaza":"2015-03-21",
+						"motivo_rechaza":"Error en tipo del cuerpo receptor",
+						"activo":1,
+						"cliente":
+						{
+						},
+						"matriz":
+						{
+						},
+						"tipo_muestreo":
+						{
+						},
+						"norma":
+						{
+						},
+						"parametros":
+						[
+						]
+					},
+					{
+						"id_solicitud":2,
+						"id_estudio":1,
+						"id_cliente":13,
+						"id_matriz":2,
+						"id_tipo_muestreo":1,
+						"id_norma":1,
+						"id_cuerpo_receptor":0,
+						"id_tipo_cuerpo":3,
+						"id_ejercicio":2015,
+						"id_status":2,
+						"id_usuario_captura":20,
+						"id_usuario_valida":1,
+						"id_usuario_actualiza":1,
+						"numero_oficio":432,
+						"folio":"CEA-432/2015",
+						"cantidad_muestras":16,
+						"costo_total":33520,
+						"cuerpo_receptor":"Río Santiago",
+						"tipo_cuerpo":"C",
+						"status":"Validado",
+						"fecha":"2015-03-21",
+						"fecha_captura":"2015-03-21",
+						"ip_captura":"[::1]",
+						"host_captura":"localhost";
+						"fecha_valida":"2015-03-21",
+						"ip_valida":"[::1]",
+						"host_valida":"localhost";
+						"fecha_actualiza":"2015-03-21",
+						"ip_actualiza":"[::1]",
+						"host_actualiza":"localhost";
+						"fecha_acepta":"2015-03-21",
+						"fecha_rechaza":"2015-03-21",
+						"motivo_rechaza":"Error en nombre del cuerpo receptor",
+						"activo":1,
+						"cliente":
+						{
+						},
+						"matriz":
+						{
+						},
+						"tipo_muestreo":
+						{
+						},
+						"norma":
+						{
+						},
+						"parametros":
+						[
+						]
+					}
+				]
+			';
+		}
+		else
+		{
+			$result = '
+				[]
 			';
 		}
 		return $result;
@@ -2332,1091 +1488,104 @@ class DALSislab
 			[
 				{
 					"id_solicitud":1,
-					"folio":432,
-					"ejercicio":2015,
-					"fecha_solicitud":"2015-03-01",
-					"fecha_captura":"2015-03-01",
-					"fecha_valida":null,
-					"fecha_acepta":null,
-					"fecha_actualizacion":"2015-03-01",
-					"validado":0,
-					"id_cliente":1,
-					"id_usuario_captura":1,
-					"id_usuario_valida":3,
-					"id_norma":1,
-					"id_tipo_muestreo":1,
-					"precio_total":0,
+					"id_estudio":1,
+					"id_cliente":13,
+					"id_matriz":1,
+					"id_tipo_muestreo":2,
+					"id_norma":3,
+					"id_cuerpo_receptor":0,
+					"id_tipo_cuerpo":3,
+					"id_ejercicio":2015,
+					"id_status":2,
+					"id_usuario_captura":20,
+					"id_usuario_valida":1,
+					"id_usuario_actualiza":1,
+					"numero_oficio":432,
+					"folio":"CEA-432/2014",
+					"cantidad_muestras":15,
+					"costo_total":33520,
+					"cuerpo_receptor":"Río Santiago",
+					"tipo_cuerpo":"C",
+					"status":"Validado",
+					"fecha":"2015-03-21",
+					"fecha_captura":"2015-03-21",
+					"ip_captura":"[::1]",
+					"host_captura":"localhost";
+					"fecha_valida":"2015-03-21",
+					"ip_valida":"[::1]",
+					"host_valida":"localhost";
+					"fecha_actualiza":"2015-03-21",
+					"ip_actualiza":"[::1]",
+					"host_actualiza":"localhost";
+					"fecha_acepta":"2015-03-21",
+					"fecha_rechaza":"2015-03-21",
+					"motivo_rechaza":"Error en tipo del cuerpo receptor",
+					"activo":1,
 					"cliente":
 					{
-						"id_cliente":1,
-						"id_organismo":1,
-						"cliente":"CEA Jalisco",
-						"area":"Dirección de Operación de PTARS",
-						"rfc":"Registro Federal de Contribuyentes",
-						"calle":"Av. Brasilia",
-						"numero":"2970",
-						"colonia":"Col. Colomos Providencia",
-						"cp":"44680",
-						"id_estado":14,
-						"id_municipio":14039,
-						"municipio":"Guadalajara",
-						"id_localidad":140390001,
-						"localidad":"Guadalajara",
-						"tel":"3030-9350 ext. 8370",
-						"fax":"",
-						"contacto":"Biol. Luis Aceves Martínez",
-						"puesto_contacto":"puesto contacto",
-						"email":"laceves@ceajalisco.gob.mx",
-						"fecha_act":"2014-11-23",
-						"interno":1,
-						"cea":1,
-						"tasa":0,
-						"activo":1
 					},
-					"descripcion_servicio":"Servicio de muestreo y análisis, para verificar el cumplimiento de la norma NOM-001-SEMARNAT-1996, que establece los límites máximos permisibles de contaminantes en las descargas de aguas residuales a los sistemas de alcantarillado urbano o municipal. -auto",
-					"notas":"La presente cotización se realiza sin visita previa y se contempla un fácil y seguro acceso para la toma de muestras. Se requiere regresar esta cotización con la firma y sello de Aceptación del Servicio. -auto",
-					"condiciones":"El informe de resultados se entregará a los 10 días hábiles de haber ingresado las muestras al laboratorio. El pago de resultados se hará en las instalaciones del Laboratorio de Calidad del Agua de la CEA, así también mediante depósito bancario a la cuenta: 884371445 de la Institución Bancaria BANORTE a nombre de la Comisión Estatal del Agua de Jalisco o por transferencia electrónica, cuenta interbancaria: 072320008843714454. -auto",
-					"captura":{
-						"id_usuario":1,
-						"nombre":"Usuario captura",
-						"puesto":"puesto Usuario captura"
+					"matriz":
+					{
 					},
-					"usr":"rgarcia",
-					"pwd":"rgarcia",
-					"valida":{
-						"id_empleado":3,
-						"nombre":"Gerente que valida",
-						"puesto":"puesto Usuario valida"
-					},
-					"norma":{
-						"id_norma":1,
-						"norma":"NOM-001-SEMARNAT-1996",
-						"desc":"Norma Oficial Mexicana",
-						"parametros":[
-							{
-								"id_parametro":25,
-								"parametro":"Arsénico",
-								"cert":1,
-								"id_metodo":1,
-								"metodo": {
-									"id_metodo":1,
-									"metodo":"NMX-AA-000-0000"
-								},
-								"cantidad":1,
-								"precio":164.65
-							},
-							{
-								"id_parametro":27,
-								"parametro":"Cadmio",
-								"cert":1,
-								"id_metodo":1,
-								"metodo": {
-									"id_metodo":1,
-									"metodo":"NMX-AA-000-0000"
-								},
-								"cantidad":1,
-								"precio":164.65
-							},
-							{
-								"id_parametro":28,
-								"parametro":"Cobre",
-								"cert":1,
-								"id_metodo":1,
-								"metodo": {
-									"id_metodo":1,
-									"metodo":"NMX-AA-000-0000"
-								},
-								"cantidad":1,
-								"precio":164.65
-							},
-							{
-								"id_parametro":38,
-								"parametro":"Coliformes fecales",
-								"cert":1,
-								"id_metodo":1,
-								"metodo": {
-									"id_metodo":1,
-									"metodo":"NMX-AA-000-0000"
-								},
-								"cantidad":1,
-								"precio":164.65
-							},
-							{
-								"id_parametro":29,
-								"parametro":"Cromo",
-								"cert":1,
-								"id_metodo":1,
-								"metodo": {
-									"id_metodo":1,
-									"metodo":"NMX-AA-000-0000"
-								},
-								"cantidad":1,
-								"precio":164.65
-							},
-							{
-								"id_parametro":16,
-								"parametro":"Demada bioquímica de oxígeno",
-								"cert":0,
-								"id_metodo":1,
-								"metodo": {
-									"id_metodo":1,
-									"metodo":"NMX-AA-000-0000"
-								},
-								"cantidad":1,
-								"precio":164.65
-							},
-							{
-								"id_parametro":19,
-								"parametro":"Fósforo total",
-								"cert":1,
-								"id_metodo":1,
-								"metodo": {
-									"id_metodo":1,
-									"metodo":"NMX-AA-000-0000"
-								},
-								"cantidad":1,
-								"precio":164.65
-							},
-							{
-								"id_parametro":18,
-								"parametro":"Grasas y aceites",
-								"cert":1,
-								"id_metodo":1,
-								"metodo": {
-									"id_metodo":1,
-									"metodo":"NMX-AA-000-0000"
-								},
-								"cantidad":1,
-								"precio":164.65
-							},
-							{
-								"id_parametro":6,
-								"parametro":"Alcalinidad total",
-								"cert":1,
-								"id_metodo":1,
-								"metodo": {
-									"id_metodo":1,
-									"metodo":"NMX-AA-000-0000"
-								},
-								"cantidad":1,
-								"precio":164.65
-							},
-							{
-								"id_parametro":39,
-								"parametro":"Materia flotante",
-								"cert":1,
-								"id_metodo":1,
-								"metodo": {
-									"id_metodo":1,
-									"metodo":"NMX-AA-000-0000"
-								},
-								"cantidad":1,
-								"precio":164.65
-							},
-							{
-								"id_parametro":32,
-								"parametro":"Mercurio",
-								"cert":1,
-								"id_metodo":1,
-								"metodo": {
-									"id_metodo":1,
-									"metodo":"NMX-AA-000-0000"
-								},
-								"cantidad":1,
-								"precio":164.65
-							},
-							{
-								"id_parametro":7,
-								"parametro":"Cloruros totales",
-								"cert":1,
-								"id_metodo":1,
-								"metodo": {
-									"id_metodo":1,
-									"metodo":"NMX-AA-000-0000"
-								},
-								"cantidad":1,
-								"precio":164.65
-							},
-							{
-								"id_parametro":33,
-								"parametro":"Níquel",
-								"cert":1,
-								"id_metodo":1,
-								"metodo": {
-									"id_metodo":1,
-									"metodo":"NMX-AA-000-0000"
-								},
-								"cantidad":1,
-								"precio":164.65
-							},
-							{
-								"id_parametro":2,
-								"parametro":"Potencial de hidrógeno",
-								"cert":1,
-								"id_metodo":1,
-								"metodo": {
-									"id_metodo":1,
-									"metodo":"NMX-AA-000-0000"
-								},
-								"cantidad":1,
-								"precio":164.65
-							},
-							{
-								"id_parametro":34,
-								"parametro":"Plomo",
-								"cert":1,
-								"id_metodo":1,
-								"metodo": {
-									"id_metodo":1,
-									"metodo":"NMX-AA-000-0000"
-								},
-								"cantidad":1,
-								"precio":164.65
-							},
-							{
-								"id_parametro":22,
-								"parametro":"Sólidos sedimentables",
-								"cert":1,
-								"id_metodo":1,
-								"metodo": {
-									"id_metodo":1,
-									"metodo":"NMX-AA-000-0000"
-								},
-								"cantidad":1,
-								"precio":164.65
-							},
-							{
-								"id_parametro":20,
-								"parametro":"Sólidos suspendidos totales",
-								"cert":1,
-								"id_metodo":1,
-								"metodo": {
-									"id_metodo":1,
-									"metodo":"NMX-AA-000-0000"
-								},
-								"cantidad":1,
-								"precio":164.65
-							},
-							{
-								"id_parametro":1,
-								"parametro":"Temperatura",
-								"cert":1,
-								"id_metodo":1,
-								"metodo": {
-									"id_metodo":1,
-									"metodo":"NMX-AA-000-0000"
-								},
-								"cantidad":1,
-								"precio":164.65
-							},
-							{
-								"id_parametro":36,
-								"parametro":"Zinc",
-								"cert":1,
-								"id_metodo":1,
-								"metodo": {
-									"id_metodo":1,
-									"metodo":"NMX-AA-000-0000"
-								},
-								"cantidad":1,
-								"precio":164.65
-							}
-						]
-					},
-					"actividades":[
-						{
-							"id_actividad":1,
-							"actividad":"Muestreo instantáneo",
-							"id_metodo":87,
-							"metodo":{
-								"id_metodo":87,
-								"metodo":"metodo para muestreo instantáneo"
-							},
-							"cantidad":1,
-							"precio":0
-						}
-					],
 					"tipo_muestreo":
 					{
-						"id_tipo_muestreo":1,
-						"tipo_muestreo":"Simple",
-						"selected":true
+					},
+					"norma":
+					{
 					},
 					"parametros":
 					[
-						{
-							"id_parametro":25,
-							"parametro":"Arsénico",
-							"cert":1,
-							"id_metodo":1,
-							"metodo": {
-								"id_metodo":1,
-								"metodo":"NMX-AA-000-0000"
-							},
-							"cantidad":1,
-							"precio":164.65
-						},
-						{
-							"id_parametro":27,
-							"parametro":"Cadmio",
-							"cert":1,
-							"id_metodo":1,
-							"metodo": {
-								"id_metodo":1,
-								"metodo":"NMX-AA-000-0000"
-							},
-							"cantidad":1,
-							"precio":164.65
-						},
-						{
-							"id_parametro":28,
-							"parametro":"Cobre",
-							"cert":1,
-							"id_metodo":1,
-							"metodo": {
-								"id_metodo":1,
-								"metodo":"NMX-AA-000-0000"
-							},
-							"cantidad":1,
-							"precio":164.65
-						},
-						{
-							"id_parametro":38,
-							"parametro":"Coliformes fecales",
-							"cert":1,
-							"id_metodo":1,
-							"metodo": {
-								"id_metodo":1,
-								"metodo":"NMX-AA-000-0000"
-							},
-							"cantidad":1,
-							"precio":164.65
-						},
-						{
-							"id_parametro":29,
-							"parametro":"Cromo",
-							"cert":1,
-							"id_metodo":1,
-							"metodo": {
-								"id_metodo":1,
-								"metodo":"NMX-AA-000-0000"
-							},
-							"cantidad":1,
-							"precio":164.65
-						},
-						{
-							"id_parametro":16,
-							"parametro":"Demada bioquímica de oxígeno",
-							"cert":0,
-							"id_metodo":1,
-							"metodo": {
-								"id_metodo":1,
-								"metodo":"NMX-AA-000-0000"
-							},
-							"cantidad":1,
-							"precio":164.65
-						},
-						{
-							"id_parametro":19,
-							"parametro":"Fósforo total",
-							"cert":1,
-							"id_metodo":1,
-							"metodo": {
-								"id_metodo":1,
-								"metodo":"NMX-AA-000-0000"
-							},
-							"cantidad":1,
-							"precio":164.65
-						},
-						{
-							"id_parametro":18,
-							"parametro":"Grasas y aceites",
-							"cert":1,
-							"id_metodo":1,
-							"metodo": {
-								"id_metodo":1,
-								"metodo":"NMX-AA-000-0000"
-							},
-							"cantidad":1,
-							"precio":164.65
-						},
-						{
-							"id_parametro":6,
-							"parametro":"Alcalinidad total",
-							"cert":1,
-							"id_metodo":1,
-							"metodo": {
-								"id_metodo":1,
-								"metodo":"NMX-AA-000-0000"
-							},
-							"cantidad":1,
-							"precio":164.65
-						},
-						{
-							"id_parametro":39,
-							"parametro":"Materia flotante",
-							"cert":1,
-							"id_metodo":1,
-							"metodo": {
-								"id_metodo":1,
-								"metodo":"NMX-AA-000-0000"
-							},
-							"cantidad":1,
-							"precio":164.65
-						},
-						{
-							"id_parametro":32,
-							"parametro":"Mercurio",
-							"cert":1,
-							"id_metodo":1,
-							"metodo": {
-								"id_metodo":1,
-								"metodo":"NMX-AA-000-0000"
-							},
-							"cantidad":1,
-							"precio":164.65
-						},
-						{
-							"id_parametro":7,
-							"parametro":"Cloruros totales",
-							"cert":1,
-							"id_metodo":1,
-							"metodo": {
-								"id_metodo":1,
-								"metodo":"NMX-AA-000-0000"
-							},
-							"cantidad":1,
-							"precio":164.65
-						},
-						{
-							"id_parametro":33,
-							"parametro":"Níquel",
-							"cert":1,
-							"id_metodo":1,
-							"metodo": {
-								"id_metodo":1,
-								"metodo":"NMX-AA-000-0000"
-							},
-							"cantidad":1,
-							"precio":164.65
-						},
-						{
-							"id_parametro":2,
-							"parametro":"Potencial de hidrógeno",
-							"cert":1,
-							"id_metodo":1,
-							"metodo": {
-								"id_metodo":1,
-								"metodo":"NMX-AA-000-0000"
-							},
-							"cantidad":1,
-							"precio":164.65
-						},
-						{
-							"id_parametro":34,
-							"parametro":"Plomo",
-							"cert":1,
-							"id_metodo":1,
-							"metodo": {
-								"id_metodo":1,
-								"metodo":"NMX-AA-000-0000"
-							},
-							"cantidad":1,
-							"precio":164.65
-						},
-						{
-							"id_parametro":22,
-							"parametro":"Sólidos sedimentables",
-							"cert":1,
-							"id_metodo":1,
-							"metodo": {
-								"id_metodo":1,
-								"metodo":"NMX-AA-000-0000"
-							},
-							"cantidad":1,
-							"precio":164.65
-						},
-						{
-							"id_parametro":20,
-							"parametro":"Sólidos suspendidos totales",
-							"cert":1,
-							"id_metodo":1,
-							"metodo": {
-								"id_metodo":1,
-								"metodo":"NMX-AA-000-0000"
-							},
-							"cantidad":1,
-							"precio":164.65
-						},
-						{
-							"id_parametro":1,
-							"parametro":"Temperatura",
-							"cert":1,
-							"id_metodo":1,
-							"metodo": {
-								"id_metodo":1,
-								"metodo":"NMX-AA-000-0000"
-							},
-							"cantidad":1,
-							"precio":164.65
-						},
-						{
-							"id_parametro":36,
-							"parametro":"Zinc",
-							"cert":1,
-							"id_metodo":1,
-							"metodo": {
-								"id_metodo":1,
-								"metodo":"NMX-AA-000-0000"
-							},
-							"cantidad":1,
-							"precio":164.65
-						}
 					]
 				},
 				{
 					"id_solicitud":2,
-					"folio":433,
-					"ejercicio":2014,
-					"fecha_solicitud":"2014-07-01",
-					"fecha_captura":"2014-07-01",
-					"fecha_valida":"2014-07-15",
-					"fecha_acepta":"2014-07-15",
-					"fecha_actualizacion":"2014-07-01",
-					"validado":1,
-					"id_cliente":3,
-					"id_usuario_captura":1,
-					"id_usuario_valida":3,
-					"id_norma":1,
+					"id_estudio":1,
+					"id_cliente":13,
+					"id_matriz":2,
 					"id_tipo_muestreo":1,
-					"precio_total":0,
+					"id_norma":1,
+					"id_cuerpo_receptor":0,
+					"id_tipo_cuerpo":3,
+					"id_ejercicio":2015,
+					"id_status":2,
+					"id_usuario_captura":20,
+					"id_usuario_valida":1,
+					"id_usuario_actualiza":1,
+					"numero_oficio":432,
+					"folio":"CEA-432/2015",
+					"cantidad_muestras":16,
+					"costo_total":33520,
+					"cuerpo_receptor":"Río Santiago",
+					"tipo_cuerpo":"C",
+					"status":"Validado",
+					"fecha":"2015-03-21",
+					"fecha_captura":"2015-03-21",
+					"ip_captura":"[::1]",
+					"host_captura":"localhost";
+					"fecha_valida":"2015-03-21",
+					"ip_valida":"[::1]",
+					"host_valida":"localhost";
+					"fecha_actualiza":"2015-03-21",
+					"ip_actualiza":"[::1]",
+					"host_actualiza":"localhost";
+					"fecha_acepta":"2015-03-21",
+					"fecha_rechaza":"2015-03-21",
+					"motivo_rechaza":"Error en nombre del cuerpo receptor",
+					"activo":1,
 					"cliente":
 					{
-						"id_cliente":3,
-						"id_organismo":1,
-						"cliente":"CEA Jalisco",
-						"area":"Gerencia de PTARS",
-						"rfc":"Registro Federal de Contribuyentes",
-						"calle":"Av. Brasilia",
-						"numero":"2970",
-						"colonia":"Col. Colomos Providencia",
-						"cp":"44680",
-						"id_estado":14,
-						"estado":"Jalisco",
-						"id_municipio":14039,
-						"municipio":"Guadalajara",
-						"id_localidad":140390001,
-						"localidad":"Guadalajara",
-						"tel":"3030-9350 ext. 8382",
-						"fax":"",
-						"contacto":"Ing. Víctor Ignacio Méndez Gómez",
-						"puesto_contacto":"puesto contacto",
-						"email":"vmendez@ceajalisco.gob.mx",
-						"fecha_act":"2014-11-23",
-						"interno":1,
-						"cea":1,
-						"tasa":0,
-						"activo":1
 					},
-					"descripcion_servicio":"Servicio de muestreo y análisis, para verificar el cumplimiento de la norma NOM-001-SEMARNAT-1996, que establece los límites máximos permisibles de contaminantes en las descargas de aguas residuales a los sistemas de alcantarillado urbano o municipal. -auto",
-					"notas":"La presente cotización se realiza sin visita previa y se contempla un fácil y seguro acceso para la toma de muestras. Se requiere regresar esta cotización con la firma y sello de Aceptación del Servicio. -auto",
-					"condiciones":"El informe de resultados se entregará a los 10 días hábiles de haber ingresado las muestras al laboratorio. El pago de resultados se hará en las instalaciones del Laboratorio de Calidad del Agua de la CEA, así también mediante depósito bancario a la cuenta: 884371445 de la Institución Bancaria BANORTE a nombre de la Comisión Estatal del Agua de Jalisco o por transferencia electrónica, cuenta interbancaria: 072320008843714454. -auto",
-					"captura":{
-						"id_usuario":1,
-						"nombre":"Usuario captura",
-						"puesto":"puesto Usuario captura"
+					"matriz":
+					{
 					},
-					"usr":"rgarcia",
-					"pwd":"rgarcia",
-					"valida":{
-						"id_empleado":3,
-						"nombre":"Gerente que valida",
-						"puesto":"puesto Usuario valida"
-					},
-					"norma":{
-						"id_norma":1,
-						"norma":"NOM-001-SEMARNAT-1996",
-						"desc":"Norma Oficial Mexicana",
-						"parametros":[
-							{
-								"id_parametro":25,
-								"parametro":"Arsénico",
-								"cert":1,
-								"id_metodo":1,
-								"metodo": {
-									"id_metodo":1,
-									"metodo":"NMX-AA-000-0000"
-								},
-								"cantidad":1,
-								"precio":164.65
-							},
-							{
-								"id_parametro":27,
-								"parametro":"Cadmio",
-								"cert":1,
-								"id_metodo":1,
-								"metodo": {
-									"id_metodo":1,
-									"metodo":"NMX-AA-000-0000"
-								},
-								"cantidad":1,
-								"precio":164.65
-							},
-							{
-								"id_parametro":28,
-								"parametro":"Cobre",
-								"cert":1,
-								"id_metodo":1,
-								"metodo": {
-									"id_metodo":1,
-									"metodo":"NMX-AA-000-0000"
-								},
-								"cantidad":1,
-								"precio":164.65
-							},
-							{
-								"id_parametro":38,
-								"parametro":"Coliformes fecales",
-								"cert":1,
-								"id_metodo":1,
-								"metodo": {
-									"id_metodo":1,
-									"metodo":"NMX-AA-000-0000"
-								},
-								"cantidad":1,
-								"precio":164.65
-							},
-							{
-								"id_parametro":29,
-								"parametro":"Cromo",
-								"cert":1,
-								"id_metodo":1,
-								"metodo": {
-									"id_metodo":1,
-									"metodo":"NMX-AA-000-0000"
-								},
-								"cantidad":1,
-								"precio":164.65
-							},
-							{
-								"id_parametro":16,
-								"parametro":"Demada bioquímica de oxígeno",
-								"cert":0,
-								"id_metodo":1,
-								"metodo": {
-									"id_metodo":1,
-									"metodo":"NMX-AA-000-0000"
-								},
-								"cantidad":1,
-								"precio":164.65
-							},
-							{
-								"id_parametro":19,
-								"parametro":"Fósforo total",
-								"cert":1,
-								"id_metodo":1,
-								"metodo": {
-									"id_metodo":1,
-									"metodo":"NMX-AA-000-0000"
-								},
-								"cantidad":1,
-								"precio":164.65
-							},
-							{
-								"id_parametro":18,
-								"parametro":"Grasas y aceites",
-								"cert":1,
-								"id_metodo":1,
-								"metodo": {
-									"id_metodo":1,
-									"metodo":"NMX-AA-000-0000"
-								},
-								"cantidad":1,
-								"precio":164.65
-							},
-							{
-								"id_parametro":6,
-								"parametro":"Alcalinidad total",
-								"cert":1,
-								"id_metodo":1,
-								"metodo": {
-									"id_metodo":1,
-									"metodo":"NMX-AA-000-0000"
-								},
-								"cantidad":1,
-								"precio":164.65
-							},
-							{
-								"id_parametro":39,
-								"parametro":"Materia flotante",
-								"cert":1,
-								"id_metodo":1,
-								"metodo": {
-									"id_metodo":1,
-									"metodo":"NMX-AA-000-0000"
-								},
-								"cantidad":1,
-								"precio":164.65
-							},
-							{
-								"id_parametro":32,
-								"parametro":"Mercurio",
-								"cert":1,
-								"id_metodo":1,
-								"metodo": {
-									"id_metodo":1,
-									"metodo":"NMX-AA-000-0000"
-								},
-								"cantidad":1,
-								"precio":164.65
-							},
-							{
-								"id_parametro":7,
-								"parametro":"Cloruros totales",
-								"cert":1,
-								"id_metodo":1,
-								"metodo": {
-									"id_metodo":1,
-									"metodo":"NMX-AA-000-0000"
-								},
-								"cantidad":1,
-								"precio":164.65
-							},
-							{
-								"id_parametro":33,
-								"parametro":"Níquel",
-								"cert":1,
-								"id_metodo":1,
-								"metodo": {
-									"id_metodo":1,
-									"metodo":"NMX-AA-000-0000"
-								},
-								"cantidad":1,
-								"precio":164.65
-							},
-							{
-								"id_parametro":2,
-								"parametro":"Potencial de hidrógeno",
-								"cert":1,
-								"id_metodo":1,
-								"metodo": {
-									"id_metodo":1,
-									"metodo":"NMX-AA-000-0000"
-								},
-								"cantidad":1,
-								"precio":164.65
-							},
-							{
-								"id_parametro":34,
-								"parametro":"Plomo",
-								"cert":1,
-								"id_metodo":1,
-								"metodo": {
-									"id_metodo":1,
-									"metodo":"NMX-AA-000-0000"
-								},
-								"cantidad":1,
-								"precio":164.65
-							},
-							{
-								"id_parametro":22,
-								"parametro":"Sólidos sedimentables",
-								"cert":1,
-								"id_metodo":1,
-								"metodo": {
-									"id_metodo":1,
-									"metodo":"NMX-AA-000-0000"
-								},
-								"cantidad":1,
-								"precio":164.65
-							},
-							{
-								"id_parametro":20,
-								"parametro":"Sólidos suspendidos totales",
-								"cert":1,
-								"id_metodo":1,
-								"metodo": {
-									"id_metodo":1,
-									"metodo":"NMX-AA-000-0000"
-								},
-								"cantidad":1,
-								"precio":164.65
-							},
-							{
-								"id_parametro":1,
-								"parametro":"Temperatura",
-								"cert":1,
-								"id_metodo":1,
-								"metodo": {
-									"id_metodo":1,
-									"metodo":"NMX-AA-000-0000"
-								},
-								"cantidad":1,
-								"precio":164.65
-							},
-							{
-								"id_parametro":36,
-								"parametro":"Zinc",
-								"cert":1,
-								"id_metodo":1,
-								"metodo": {
-									"id_metodo":1,
-									"metodo":"NMX-AA-000-0000"
-								},
-								"cantidad":1,
-								"precio":164.65
-							}
-						]
-					},
-					"actividades":[
-						{
-							"id_actividad":1,
-							"actividad":"Muestreo instantáneo",
-							"id_metodo":87,
-							"metodo":{
-								"id_metodo":87,
-								"metodo":"metodo para muestreo instantáneo"
-							},
-							"cantidad":1,
-							"precio":0
-						}
-					],
 					"tipo_muestreo":
 					{
-						"id_tipo_muestreo":1,
-						"tipo_muestreo":"Simple",
-						"selected":true
+					},
+					"norma":
+					{
 					},
 					"parametros":
 					[
-						{
-							"id_parametro":25,
-							"parametro":"Arsénico",
-							"cert":1,
-							"id_metodo":1,
-							"metodo": {
-								"id_metodo":1,
-								"metodo":"NMX-AA-000-0000"
-							},
-							"cantidad":1,
-							"precio":164.65
-						},
-						{
-							"id_parametro":27,
-							"parametro":"Cadmio",
-							"cert":1,
-							"id_metodo":1,
-							"metodo": {
-								"id_metodo":1,
-								"metodo":"NMX-AA-000-0000"
-							},
-							"cantidad":1,
-							"precio":164.65
-						},
-						{
-							"id_parametro":28,
-							"parametro":"Cobre",
-							"cert":1,
-							"id_metodo":1,
-							"metodo": {
-								"id_metodo":1,
-								"metodo":"NMX-AA-000-0000"
-							},
-							"cantidad":1,
-							"precio":164.65
-						},
-						{
-							"id_parametro":38,
-							"parametro":"Coliformes fecales",
-							"cert":1,
-							"id_metodo":1,
-							"metodo": {
-								"id_metodo":1,
-								"metodo":"NMX-AA-000-0000"
-							},
-							"cantidad":1,
-							"precio":164.65
-						},
-						{
-							"id_parametro":29,
-							"parametro":"Cromo",
-							"cert":1,
-							"id_metodo":1,
-							"metodo": {
-								"id_metodo":1,
-								"metodo":"NMX-AA-000-0000"
-							},
-							"cantidad":1,
-							"precio":164.65
-						},
-						{
-							"id_parametro":16,
-							"parametro":"Demada bioquímica de oxígeno",
-							"cert":0,
-							"id_metodo":1,
-							"metodo": {
-								"id_metodo":1,
-								"metodo":"NMX-AA-000-0000"
-							},
-							"cantidad":1,
-							"precio":164.65
-						},
-						{
-							"id_parametro":19,
-							"parametro":"Fósforo total",
-							"cert":1,
-							"id_metodo":1,
-							"metodo": {
-								"id_metodo":1,
-								"metodo":"NMX-AA-000-0000"
-							},
-							"cantidad":1,
-							"precio":164.65
-						},
-						{
-							"id_parametro":18,
-							"parametro":"Grasas y aceites",
-							"cert":1,
-							"id_metodo":1,
-							"metodo": {
-								"id_metodo":1,
-								"metodo":"NMX-AA-000-0000"
-							},
-							"cantidad":1,
-							"precio":164.65
-						},
-						{
-							"id_parametro":6,
-							"parametro":"Alcalinidad total",
-							"cert":1,
-							"id_metodo":1,
-							"metodo": {
-								"id_metodo":1,
-								"metodo":"NMX-AA-000-0000"
-							},
-							"cantidad":1,
-							"precio":164.65
-						},
-						{
-							"id_parametro":39,
-							"parametro":"Materia flotante",
-							"cert":1,
-							"id_metodo":1,
-							"metodo": {
-								"id_metodo":1,
-								"metodo":"NMX-AA-000-0000"
-							},
-							"cantidad":1,
-							"precio":164.65
-						},
-						{
-							"id_parametro":32,
-							"parametro":"Mercurio",
-							"cert":1,
-							"id_metodo":1,
-							"metodo": {
-								"id_metodo":1,
-								"metodo":"NMX-AA-000-0000"
-							},
-							"cantidad":1,
-							"precio":164.65
-						},
-						{
-							"id_parametro":7,
-							"parametro":"Cloruros totales",
-							"cert":1,
-							"id_metodo":1,
-							"metodo": {
-								"id_metodo":1,
-								"metodo":"NMX-AA-000-0000"
-							},
-							"cantidad":1,
-							"precio":164.65
-						},
-						{
-							"id_parametro":33,
-							"parametro":"Níquel",
-							"cert":1,
-							"id_metodo":1,
-							"metodo": {
-								"id_metodo":1,
-								"metodo":"NMX-AA-000-0000"
-							},
-							"cantidad":1,
-							"precio":164.65
-						},
-						{
-							"id_parametro":2,
-							"parametro":"Potencial de hidrógeno",
-							"cert":1,
-							"id_metodo":1,
-							"metodo": {
-								"id_metodo":1,
-								"metodo":"NMX-AA-000-0000"
-							},
-							"cantidad":1,
-							"precio":164.65
-						},
-						{
-							"id_parametro":34,
-							"parametro":"Plomo",
-							"cert":1,
-							"id_metodo":1,
-							"metodo": {
-								"id_metodo":1,
-								"metodo":"NMX-AA-000-0000"
-							},
-							"cantidad":1,
-							"precio":164.65
-						},
-						{
-							"id_parametro":22,
-							"parametro":"Sólidos sedimentables",
-							"cert":1,
-							"id_metodo":1,
-							"metodo": {
-								"id_metodo":1,
-								"metodo":"NMX-AA-000-0000"
-							},
-							"cantidad":1,
-							"precio":164.65
-						},
-						{
-							"id_parametro":20,
-							"parametro":"Sólidos suspendidos totales",
-							"cert":1,
-							"id_metodo":1,
-							"metodo": {
-								"id_metodo":1,
-								"metodo":"NMX-AA-000-0000"
-							},
-							"cantidad":1,
-							"precio":164.65
-						},
-						{
-							"id_parametro":1,
-							"parametro":"Temperatura",
-							"cert":1,
-							"id_metodo":1,
-							"metodo": {
-								"id_metodo":1,
-								"metodo":"NMX-AA-000-0000"
-							},
-							"cantidad":1,
-							"precio":164.65
-						},
-						{
-							"id_parametro":36,
-							"parametro":"Zinc",
-							"cert":1,
-							"id_metodo":1,
-							"metodo": {
-								"id_metodo":1,
-								"metodo":"NMX-AA-000-0000"
-							},
-							"cantidad":1,
-							"precio":164.65
-						}
 					]
 				}
 			]
@@ -3446,13 +1615,14 @@ class DALSislab
 					"id_supervisor_muestreo":2,
 					"id_supervisor_custodia":4,
 					"id_norma":1,
-					"folio":656,
-					"ejercicio":2014,
+					"numero_oficio":656,
+					"id_ejercicio":2014,
+					"folio":"CEA-656/2014",
 					"fecha_captura":"2014-11-01",
 					"fecha_valida":"2014-11-02",
 					"fecha_muestreo":"2014-11-04",
 					"hora_muestreo":"9:25",
-					"fecha_actualizacion":"2014-11-01",
+					"fecha_actualiza":"2014-11-01",
 					"emergencia":"",
 					"origen_muestreo":"Agua",
 					"validado":0,
@@ -3484,7 +1654,7 @@ class DALSislab
 						"contacto":"Biol. Luis Aceves Martínez",
 						"puesto_contacto":"puesto contacto",
 						"email":"laceves@ceajalisco.gob.mx",
-						"fecha_act":"2014-11-23",
+						"fecha_act":"23/11/2014",
 						"interno":1,
 						"cea":1,
 						"tasa":0,
@@ -3513,13 +1683,14 @@ class DALSislab
 					"solicitud":
 					{
 						"id_solicitud":1,
-						"folio":432,
-						"ejercicio":2014,
-						"fecha_solicitud":"2014-07-01",
-						"fecha_captura":"2014-07-01",
+						"numero_oficio":432,
+						"id_ejercicio":2014,
+						"folio":"CEA-432/2014",
+						"fecha_solicitud":"2015-03-21",
+						"fecha_captura":"2015-03-21",
 						"fecha_valida":null,
 						"fecha_acepta":null,
-						"fecha_actualizacion":"2014-07-01",
+						"fecha_actualiza":"2015-03-21",
 						"validado":0,
 						"id_cliente":1,
 						"id_usuario_captura":1,
@@ -3548,7 +1719,7 @@ class DALSislab
 							"contacto":"Biol. Luis Aceves Martínez",
 							"puesto_contacto":"puesto contacto",
 							"email":"laceves@ceajalisco.gob.mx",
-							"fecha_act":"2014-11-23",
+							"fecha_act":"23/11/2014",
 							"interno":1,
 							"cea":1,
 							"tasa":0,
@@ -4299,13 +2470,14 @@ class DALSislab
 					"id_supervisor_muestreo":0,
 					"id_supervisor_custodia":0,
 					"id_norma":1,
-					"folio":0,
-					"ejercicio":0,
+					"numero_oficio":0,
+					"id_ejercicio":0,
+					"folio":"CEA-0/0",
 					"fecha_captura":"",
 					"fecha_valida":"",
 					"fecha_muestreo":"",
 					"hora_muestreo":"",
-					"fecha_actualizacion":"",
+					"fecha_actualiza":"",
 					"emergencia":"",
 					"origen_muestreo":"",
 					"validado":0,
@@ -4376,13 +2548,14 @@ class DALSislab
 					"id_supervisor_muestreo":2,
 					"id_supervisor_custodia":4,
 					"id_norma":1,
-					"folio":656,
-					"ejercicio":2014,
+					"numero_oficio":656,
+					"id_ejercicio":2014,
+					"folio":"CEA-656/2014",
 					"fecha_captura":"2014-11-01",
 					"fecha_valida":"2014-11-02",
 					"fecha_muestreo":"2014-11-04",
 					"hora_muestreo":"9:25",
-					"fecha_actualizacion":"2014-11-01",
+					"fecha_actualiza":"2014-11-01",
 					"emergencia":"",
 					"origen_muestreo":"Agua",
 					"validado":0,
@@ -4414,7 +2587,7 @@ class DALSislab
 						"contacto":"Biol. Luis Aceves Martínez",
 						"puesto_contacto":"puesto contacto",
 						"email":"laceves@ceajalisco.gob.mx",
-						"fecha_act":"2014-11-23",
+						"fecha_act":"23/11/2014",
 						"interno":1,
 						"cea":1,
 						"tasa":0,
@@ -4443,13 +2616,14 @@ class DALSislab
 					"solicitud":
 					{
 						"id_solicitud":1,
-						"folio":432,
-						"ejercicio":2014,
-						"fecha_solicitud":"2014-07-01",
-						"fecha_captura":"2014-07-01",
+						"numero_oficio":432,
+						"id_ejercicio":2014,
+						"folio":"CEA-432/2014",
+						"fecha_solicitud":"2015-03-21",
+						"fecha_captura":"2015-03-21",
 						"fecha_valida":null,
 						"fecha_acepta":null,
-						"fecha_actualizacion":"2014-07-01",
+						"fecha_actualiza":"2015-03-21",
 						"validado":0,
 						"id_cliente":1,
 						"id_usuario_captura":1,
@@ -4478,7 +2652,7 @@ class DALSislab
 							"contacto":"Biol. Luis Aceves Martínez",
 							"puesto_contacto":"puesto contacto",
 							"email":"laceves@ceajalisco.gob.mx",
-							"fecha_act":"2014-11-23",
+							"fecha_act":"23/11/2014",
 							"interno":1,
 							"cea":1,
 							"tasa":0,
@@ -5242,8 +3416,9 @@ class DALSislab
 					"id_supervisor_calibracion":2,
 					"id_supervisor_recipientes":2,
 					"id_supervisor_reactivos":2,
-					"folio":437,
-					"ejercicio":2014,
+					"numero_oficio":437,
+					"id_ejercicio":2014,
+					"folio":"CEA-437/2014",
 					"fecha_captura":"2015-02-06",
 					"fecha_plan":"2014-11-06",
 					"fecha_calibracion":"2015-02-06",
@@ -5258,7 +3433,7 @@ class DALSislab
 					"asistente_recoleccion":"",
 					"asistente_registro":"",
 					"tipo_muestreo":"Compuesto",
-					"fecha_actualizacion":"2015-02-06",
+					"fecha_actualiza":"2015-02-06",
 					"validado":1,
 					"activo":1,
 					"puntos_muestreo":
@@ -5636,7 +3811,7 @@ class DALSislab
 						"contacto":"Biol. Luis Aceves Martínez",
 						"puesto_contacto":"puesto contacto",
 						"email":"laceves@ceajalisco.gob.mx",
-						"fecha_act":"2014-11-23",
+						"fecha_act":"23/11/2014",
 						"interno":1,
 						"cea":1,
 						"tasa":0,
@@ -5645,13 +3820,14 @@ class DALSislab
 					"orden":
 					{
 						"id_orden":1,
-						"folio":656,
-						"ejercicio":2014,
+						"numero_oficio":656,
+						"id_ejercicio":2014,
+						"folio":"CEA-656/2014",
 						"fecha_captura":"2014-11-01",
 						"fecha_valida":"2914-11-02",
 						"fecha_muestreo":"2014-11-04",
 						"hora_muestreo":"9:25",
-						"fecha_actualizacion":"2014-11-01",
+						"fecha_actualiza":"2014-11-01",
 						"validado":0,
 						"aceptado":0,
 						"id_origen_orden":1,
@@ -5683,7 +3859,7 @@ class DALSislab
 							"contacto":"Biol. Luis Aceves Martínez",
 							"puesto_contacto":"puesto contacto",
 							"email":"laceves@ceajalisco.gob.mx",
-							"fecha_act":"2014-11-23",
+							"fecha_act":"23/11/2014",
 							"interno":1,
 							"cea":1,
 							"tasa":0,
@@ -5716,13 +3892,14 @@ class DALSislab
 						"solicitud":
 						{
 							"id_solicitud":1,
-							"folio":432,
-							"ejercicio":2014,
-							"fecha_solicitud":"2014-07-01",
-							"fecha_captura":"2014-07-01",
+							"numero_oficio":432,
+							"id_ejercicio":2014,
+							"folio":"CEA-432/2014",
+							"fecha_solicitud":"2015-03-21",
+							"fecha_captura":"2015-03-21",
 							"fecha_valida":null,
 							"fecha_acepta":null,
-							"fecha_actualizacion":"2014-07-01",
+							"fecha_actualiza":"2015-03-21",
 							"validado":0,
 							"id_cliente":1,
 							"id_usuario_captura":1,
@@ -5751,7 +3928,7 @@ class DALSislab
 								"contacto":"Biol. Luis Aceves Martínez",
 								"puesto_contacto":"puesto contacto",
 								"email":"laceves@ceajalisco.gob.mx",
-								"fecha_act":"2014-11-23",
+								"fecha_act":"23/11/2014",
 								"interno":1,
 								"cea":1,
 								"tasa":0,
@@ -6479,8 +4656,9 @@ class DALSislab
 							"descripcion":"Descripcion equipo",
 							"inventario":"IE-MU-001",
 							"bitacora":"BU-AA-001",
-							"folio":1,
-							"ejercicio":2015,
+							"numero_oficio":1,
+							"id_ejercicio":2015,
+							"folio":"CEA-1/2015",
 							"activo":1
 						},
 						{
@@ -6488,8 +4666,9 @@ class DALSislab
 							"descripcion":"Descripcion equipo",
 							"inventario":"IE-MU-002",
 							"bitacora":"BU-AA-002",
-							"folio":2,
-							"ejercicio":2015,
+							"numero_oficio":2,
+							"id_ejercicio":2015,
+							"folio":"CEA-2/2015",
 							"activo":1
 						},
 						{
@@ -6497,8 +4676,9 @@ class DALSislab
 							"descripcion":"Descripcion equipo",
 							"inventario":"IE-MU-003",
 							"bitacora":"BU-AA-003",
-							"folio":3,
-							"ejercicio":2015,
+							"numero_oficio":3,
+							"id_ejercicio":2015,
+							"folio":"CEA-3/2015",
 							"activo":1
 						},
 						{
@@ -6506,8 +4686,9 @@ class DALSislab
 							"descripcion":"Descripcion equipo",
 							"inventario":"IE-MU-004",
 							"bitacora":"BU-AA-004",
-							"folio":4,
-							"ejercicio":2015,
+							"numero_oficio":4,
+							"id_ejercicio":2015,
+							"folio":"CEA-4/2015",
 							"activo":1
 						}
 					],
@@ -6517,32 +4698,36 @@ class DALSislab
 							"id_recipiente":1,
 							"id_preservacion":1,
 							"cantidad":0,
-							"folio":1,
-							"ejercicio":2015,
+							"numero_oficio":1,
+							"id_ejercicio":2015,
+							"folio":"CEA-1/2015",
 							"activo":1
 						},
 						{
 							"id_recipiente":2,
 							"id_preservacion":2,
 							"cantidad":0,
-							"folio":2,
-							"ejercicio":2015,
+							"numero_oficio":2,
+							"id_ejercicio":2015,
+							"folio":"CEA-2/2015",
 							"activo":1
 						},
 						{
 							"id_recipiente":3,
 							"id_preservacion":3,
 							"cantidad":0,
-							"folio":3,
-							"ejercicio":2015,
+							"numero_oficio":3,
+							"id_ejercicio":2015,
+							"folio":"CEA-3/2015",
 							"activo":1
 						},
 						{
 							"id_recipiente":4,
 							"id_preservacion":4,
 							"cantidad":0,
-							"folio":4,
-							"ejercicio":2015,
+							"numero_oficio":4,
+							"id_ejercicio":2015,
+							"folio":"CEA-4/2015",
 							"activo":1
 						}
 					],
@@ -6583,8 +4768,9 @@ class DALSislab
 					"id_supervisor_calibracion":0,
 					"id_supervisor_recipientes":0,
 					"id_supervisor_reactivos":0,
-					"folio":0,
-					"ejercicio":0,
+					"numero_oficio":0,
+					"id_ejercicio":0,
+					"folio":"CEA-0/0",
 					"fecha_captura":"",
 					"fecha_plan":"",
 					"fecha_calibracion":"",
@@ -6599,7 +4785,7 @@ class DALSislab
 					"asistente_recoleccion":"",
 					"asistente_registro":"",
 					"tipo_muestreo":"",
-					"fecha_actualizacion":"",
+					"fecha_actualiza":"",
 					"validado":0,
 					"activo":0,
 					"puntos_muestreo":
@@ -6663,8 +4849,9 @@ class DALSislab
 					"id_supervisor_calibracion":2,
 					"id_supervisor_recipientes":2,
 					"id_supervisor_reactivos":2,
-					"folio":437,
-					"ejercicio":2014,
+					"numero_oficio":437,
+					"id_ejercicio":2014,
+					"folio":"CEA-437/2014",
 					"fecha_captura":"2015-02-06",
 					"fecha_plan":"2014-11-06",
 					"fecha_calibracion":"2015-02-06",
@@ -6679,7 +4866,7 @@ class DALSislab
 					"asistente_recoleccion":"",
 					"asistente_registro":"",
 					"tipo_muestreo":"Compuesto",
-					"fecha_actualizacion":"2015-02-06",
+					"fecha_actualiza":"2015-02-06",
 					"validado":1,
 					"activo":1,
 					"puntos_muestreo":
@@ -7057,7 +5244,7 @@ class DALSislab
 						"contacto":"Biol. Luis Aceves Martínez",
 						"puesto_contacto":"puesto contacto",
 						"email":"laceves@ceajalisco.gob.mx",
-						"fecha_act":"2014-11-23",
+						"fecha_act":"23/11/2014",
 						"interno":1,
 						"cea":1,
 						"tasa":0,
@@ -7066,13 +5253,14 @@ class DALSislab
 					"orden":
 					{
 						"id_orden":1,
-						"folio":656,
-						"ejercicio":2014,
+						"numero_oficio":656,
+						"id_ejercicio":2014,
+						"folio":"CEA-656/2014",
 						"fecha_captura":"2014-11-01",
 						"fecha_valida":"2914-11-02",
 						"fecha_muestreo":"2014-11-04",
 						"hora_muestreo":"9:25",
-						"fecha_actualizacion":"2014-11-01",
+						"fecha_actualiza":"2014-11-01",
 						"validado":0,
 						"aceptado":0,
 						"id_origen_orden":1,
@@ -7104,7 +5292,7 @@ class DALSislab
 							"contacto":"Biol. Luis Aceves Martínez",
 							"puesto_contacto":"puesto contacto",
 							"email":"laceves@ceajalisco.gob.mx",
-							"fecha_act":"2014-11-23",
+							"fecha_act":"23/11/2014",
 							"interno":1,
 							"cea":1,
 							"tasa":0,
@@ -7137,13 +5325,14 @@ class DALSislab
 						"solicitud":
 						{
 							"id_solicitud":1,
-							"folio":432,
-							"ejercicio":2014,
-							"fecha_solicitud":"2014-07-01",
-							"fecha_captura":"2014-07-01",
+							"numero_oficio":432,
+							"id_ejercicio":2014,
+							"folio":"CEA-432/2014",
+							"fecha_solicitud":"2015-03-21",
+							"fecha_captura":"2015-03-21",
 							"fecha_valida":null,
 							"fecha_acepta":null,
-							"fecha_actualizacion":"2014-07-01",
+							"fecha_actualiza":"2015-03-21",
 							"validado":0,
 							"id_cliente":1,
 							"id_usuario_captura":1,
@@ -7172,7 +5361,7 @@ class DALSislab
 								"contacto":"Biol. Luis Aceves Martínez",
 								"puesto_contacto":"puesto contacto",
 								"email":"laceves@ceajalisco.gob.mx",
-								"fecha_act":"2014-11-23",
+								"fecha_act":"23/11/2014",
 								"interno":1,
 								"cea":1,
 								"tasa":0,
@@ -7900,8 +6089,9 @@ class DALSislab
 							"descripcion":"Descripcion equipo",
 							"inventario":"IE-MU-001",
 							"bitacora":"BU-AA-001",
-							"folio":1,
-							"ejercicio":2015,
+							"numero_oficio":1,
+							"id_ejercicio":2015,
+							"folio":"CEA-1/2015",
 							"activo":1
 						},
 						{
@@ -7909,8 +6099,9 @@ class DALSislab
 							"descripcion":"Descripcion equipo",
 							"inventario":"IE-MU-002",
 							"bitacora":"BU-AA-002",
-							"folio":2,
-							"ejercicio":2015,
+							"numero_oficio":2,
+							"id_ejercicio":2015,
+							"folio":"CEA-2/2015",
 							"activo":1
 						},
 						{
@@ -7918,8 +6109,9 @@ class DALSislab
 							"descripcion":"Descripcion equipo",
 							"inventario":"IE-MU-003",
 							"bitacora":"BU-AA-003",
-							"folio":3,
-							"ejercicio":2015,
+							"numero_oficio":3,
+							"id_ejercicio":2015,
+							"folio":"CEA-3/2015",
 							"activo":1
 						},
 						{
@@ -7927,8 +6119,9 @@ class DALSislab
 							"descripcion":"Descripcion equipo",
 							"inventario":"IE-MU-004",
 							"bitacora":"BU-AA-004",
-							"folio":4,
-							"ejercicio":2015,
+							"numero_oficio":4,
+							"id_ejercicio":2015,
+							"folio":"CEA-4/2015",
 							"activo":1
 						}
 					],
@@ -7938,32 +6131,36 @@ class DALSislab
 							"id_recipiente":1,
 							"id_preservacion":1,
 							"cantidad":0,
-							"folio":1,
-							"ejercicio":2015,
+							"numero_oficio":1,
+							"id_ejercicio":2015,
+							"folio":"CEA-1/2015",
 							"activo":1
 						},
 						{
 							"id_recipiente":2,
 							"id_preservacion":2,
 							"cantidad":0,
-							"folio":2,
-							"ejercicio":2015,
+							"numero_oficio":2,
+							"id_ejercicio":2015,
+							"folio":"CEA-2/2015",
 							"activo":1
 						},
 						{
 							"id_recipiente":3,
 							"id_preservacion":3,
 							"cantidad":0,
-							"folio":3,
-							"ejercicio":2015,
+							"numero_oficio":3,
+							"id_ejercicio":2015,
+							"folio":"CEA-3/2015",
 							"activo":1
 						},
 						{
 							"id_recipiente":4,
 							"id_preservacion":4,
 							"cantidad":0,
-							"folio":4,
-							"ejercicio":2015,
+							"numero_oficio":4,
+							"id_ejercicio":2015,
+							"folio":"CEA-4/2015",
 							"activo":1
 						}
 					],
@@ -8016,15 +6213,16 @@ class DALSislab
 				  "id_localidad":1411240001,
 				  "fecha_captura":"",
 				  "fecha_acepta":"",
-				  "fecha_actualizacion":"",
+				  "fecha_actualiza":"",
 				  "fecha_valida":"",
 				  "fecha_firmado":"",
 				  "fecha_inicio":"",
 				  "fecha_fin":"",
 				  "hora_inicio":"",
 				  "hora_fin":"",
-				  "folio":1,
-				  "ejercicio":2014,
+				  "numero_oficio":1,
+				  "id_ejercicio":2014,
+				  "folio":"CEA-1/2014",
 				  "aceptado":0,
 				  "validado":0,
 				  "firmado":0,
@@ -8047,8 +6245,9 @@ class DALSislab
 				  "orden_muestreo":
 				  {
 				    "id_orden_muestreo":1,
-				    "folio":656,
-				    "ejercicio":2014,
+				    "numero_oficio":656,
+				    "id_ejercicio":2014,
+				    "folio":"CEA-656/2014",
 				    "fecha_orden":"2014-11-01",
 				    "id_responsable_muestreo":2,
 				    "responsable_muestreo":
@@ -8075,8 +6274,9 @@ class DALSislab
 				  "muestra":
 				  {
 				    "id_muestra":1,
-				    "folio":1,
-				    "ejercicio":2014,
+				    "numero_oficio":1,
+				    "id_ejercicio":2014,
+				    "folio":"CEA-1/2014",
 				    "muestra":"",
 				    "fecha_muestra":"2014-12-10",
 				    "hora_muestra":"12:45",
@@ -8342,15 +6542,17 @@ class DALSislab
 				  {
 				    "id_calibracion":1,
 				    "bitacora":"BT-00-AAA-2134",
-				    "folio":"001",
-				    "ejercicio":"2014"
+				    "numero_oficio":1,
+				    "id_ejercicio":"2014",
+				    "folio":"CEA-1/2014"
 				  },
 				  "verificacion":
 				  {
 				    "id_verificacion":1,
 				    "bitacora":"BT-00-AAA-2134",
-				    "folio":"001",
-				    "ejercicio":"2014"
+				    "numero_oficio":1,
+				    "id_ejercicio":"2014",
+				    "folio":"CEA-1/2014"
 				  },
 				  "informe":
 				  {
@@ -8387,15 +6589,16 @@ class DALSislab
 				  "id_localidad":1411240001,
 				  "fecha_captura":"",
 				  "fecha_acepta":"",
-				  "fecha_actualizacion":"",
+				  "fecha_actualiza":"",
 				  "fecha_valida":"",
 				  "fecha_firmado":"",
 				  "fecha_inicio":"",
 				  "fecha_fin":"",
 				  "hora_inicio":"",
 				  "hora_fin":"",
-				  "folio":1,
-				  "ejercicio":2014,
+				  "numero_oficio":1,
+				  "id_ejercicio":2014,
+				  "folio":"CEA-1/2014",
 				  "aceptado":0,
 				  "validado":0,
 				  "firmado":0,
@@ -8418,8 +6621,9 @@ class DALSislab
 				  "orden_muestreo":
 				  {
 				    "id_orden_muestreo":1,
-				    "folio":656,
-				    "ejercicio":2014,
+				    "numero_oficio":656,
+				    "id_ejercicio":2014,
+				    "folio":"CEA-656/2014",
 				    "fecha_orden":"2014-11-01",
 				    "id_responsable_muestreo":2,
 				    "responsable_muestreo":
@@ -8446,8 +6650,9 @@ class DALSislab
 				  "muestra":
 				  {
 				    "id_muestra":1,
-				    "folio":1,
-				    "ejercicio":2014,
+				    "numero_oficio":1,
+				    "id_ejercicio":2014,
+				    "folio":"CEA-1/2014",
 				    "muestra":"",
 				    "fecha_muestra":"2014-12-10",
 				    "hora_muestra":"12:45",
@@ -8713,15 +6918,17 @@ class DALSislab
 				  {
 				    "id_calibracion":1,
 				    "bitacora":"BT-00-AAA-2134",
-				    "folio":"001",
-				    "ejercicio":"2014"
+				    "numero_oficio":1,
+				    "id_ejercicio":"2014",
+				    "folio":"CEA-1/2014"
 				  },
 				  "verificacion":
 				  {
 				    "id_verificacion":1,
 				    "bitacora":"BT-00-AAA-2134",
-				    "folio":"001",
-				    "ejercicio":"2014"
+				    "numero_oficio":1,
+				    "id_ejercicio":"2014",
+				    "folio":"CEA-1/2014"
 				  },
 				  "informe":
 				  {
@@ -8755,15 +6962,16 @@ class DALSislab
 				  "id_localidad":0,
 				  "fecha_captura":"",
 				  "fecha_acepta":"",
-				  "fecha_actualizacion":"",
+				  "fecha_actualiza":"",
 				  "fecha_valida":"",
 				  "fecha_firmado":"",
 				  "fecha_inicio":"",
 				  "fecha_fin":"",
 				  "hora_inicio":"",
 				  "hora_fin":"",
-				  "folio":0,
-				  "ejercicio":0,
+				  "numero_oficio":0,
+				  "id_ejercicio":0,
+				  "folio":"CEA-0/0",
 				  "aceptado":0,
 				  "validado":0,
 				  "firmado":0,
@@ -10896,7 +9104,7 @@ class DALSislab
 					"contacto":"Biol. Luis Aceves Martínez",
 					"puesto_contacto":"puesto contacto",
 					"email":"laceves@ceajalisco.gob.mx",
-					"fecha_act":"2014-11-23",
+					"fecha_act":"23/11/2014",
 					"interno":1,
 					"cea":1,
 					"tasa":0,
@@ -10923,7 +9131,7 @@ class DALSislab
 					"contacto":"Martha Olga Peña Lie",
 					"puesto_contacto":"puesto contacto",
 					"email":"mpena@ceajalisco.gob.mx",
-					"fecha_act":"2014-11-23",
+					"fecha_act":"23/11/2014",
 					"interno":1,
 					"cea":1,
 					"tasa":0,
@@ -10950,7 +9158,7 @@ class DALSislab
 					"contacto":"Ing. Víctor Ignacio Méndez Gómez",
 					"puesto_contacto":"puesto contacto",
 					"email":"vmendez@ceajalisco.gob.mx",
-					"fecha_act":"2014-11-23",
+					"fecha_act":"23/11/2014",
 					"interno":1,
 					"cea":1,
 					"tasa":0,
@@ -10977,7 +9185,7 @@ class DALSislab
 					"contacto":"Salvador Delgado Sánchez",
 					"puesto_contacto":"puesto contacto",
 					"email":"sdelgado@ceajalisco.gob.mx",
-					"fecha_act":"2014-11-23",
+					"fecha_act":"23/11/2014",
 					"interno":1,
 					"cea":1,
 					"tasa":0,
@@ -11004,7 +9212,7 @@ class DALSislab
 					"contacto":"Ing. Armando Brígido Muñoz Juárez",
 					"puesto_contacto":"puesto contacto",
 					"email":"amunoz@ceajalisco.gob.mx",
-					"fecha_act":"2014-11-23",
+					"fecha_act":"23/11/2014",
 					"interno":1,
 					"cea":1,
 					"tasa":0,
@@ -11031,7 +9239,7 @@ class DALSislab
 					"contacto":"Ing. Ernesto Marroquín Álvarez",
 					"puesto_contacto":"puesto contacto",
 					"email":"emarroquin@ceajalisco.gob.mx",
-					"fecha_act":"2014-11-23",
+					"fecha_act":"23/11/2014",
 					"interno":1,
 					"cea":1,
 					"tasa":0,
@@ -11058,7 +9266,7 @@ class DALSislab
 					"contacto":"Arq. José Manuel Gómez Padilla",
 					"puesto_contacto":"puesto contacto",
 					"email":"jgomez@ceajalisco.gob.mx",
-					"fecha_act":"2014-11-23",
+					"fecha_act":"23/11/2014",
 					"interno":1,
 					"cea":1,
 					"tasa":0,
@@ -11085,7 +9293,7 @@ class DALSislab
 					"contacto":"Gustavo Luna González",
 					"puesto_contacto":"puesto contacto",
 					"email":"gluna@ceajalisco.gob.mx",
-					"fecha_act":"2014-11-23",
+					"fecha_act":"23/11/2014",
 					"interno":1,
 					"cea":1,
 					"tasa":0,
@@ -11112,7 +9320,7 @@ class DALSislab
 					"contacto":"Ing. J. Jesús Amezcua Cerda",
 					"puesto_contacto":"puesto contacto",
 					"email":"jamezcua@conagua.gob.mx",
-					"fecha_act":"2014-11-23",
+					"fecha_act":"23/11/2014",
 					"interno":1,
 					"cea":0,
 					"tasa":0,
@@ -11139,7 +9347,7 @@ class DALSislab
 					"contacto":"Lic. Sergio Enrique Arias García",
 					"puesto_contacto":"puesto contacto",
 					"email":"sergio.arias@jalisco.gob.mx",
-					"fecha_act":"2014-11-23",
+					"fecha_act":"23/11/2014",
 					"interno":1,
 					"cea":0,
 					"tasa":0,
@@ -11166,7 +9374,7 @@ class DALSislab
 					"contacto":"Lic. César Melendez Ibarra",
 					"puesto_contacto":"puesto contacto",
 					"email":"",
-					"fecha_act":"2014-11-23",
+					"fecha_act":"23/11/2014",
 					"interno":1,
 					"cea":0,
 					"tasa":0,
@@ -11193,7 +9401,7 @@ class DALSislab
 					"contacto":"Dr. Juan Jóse González Chávez",
 					"puesto_contacto":"puesto contacto",
 					"email":"",
-					"fecha_act":"2014-11-23",
+					"fecha_act":"23/11/2014",
 					"interno":1,
 					"cea":0,
 					"tasa":0,
@@ -11220,7 +9428,7 @@ class DALSislab
 					"contacto":"Arq. Juan Jesús Zarate Barajas",
 					"puesto_contacto":"puesto contacto",
 					"email":"ooapascotija@hotmail.com",
-					"fecha_act":"2014-11-23",
+					"fecha_act":"23/11/2014",
 					"interno":0,
 					"cea":0,
 					"tasa":1,
@@ -11247,7 +9455,7 @@ class DALSislab
 					"contacto":"Ing. Jorge de la Cruz",
 					"puesto_contacto":"puesto contacto",
 					"email":"jorge-eduardo@bio-si.com.mx",
-					"fecha_act":"2014-11-23",
+					"fecha_act":"23/11/2014",
 					"interno":0,
 					"cea":0,
 					"tasa":1,
@@ -11274,7 +9482,7 @@ class DALSislab
 					"contacto":"Cecilio Santos Villanueva",
 					"puesto_contacto":"puesto contacto",
 					"email":"cossa_02@yahoo.es",
-					"fecha_act":"2014-11-23",
+					"fecha_act":"23/11/2014",
 					"interno":0,
 					"cea":0,
 					"tasa":1,
@@ -11301,7 +9509,7 @@ class DALSislab
 					"contacto":"Biol. María de Jesús",
 					"puesto_contacto":"puesto contacto",
 					"email":"esteam@prodigy.net.mx",
-					"fecha_act":"2014-11-23",
+					"fecha_act":"23/11/2014",
 					"interno":0,
 					"cea":0,
 					"tasa":1,
@@ -11329,7 +9537,7 @@ class DALSislab
 					"contacto":"Francisco López López",
 					"puesto_contacto":"puesto contacto",
 					"email":"francisco.lopez@tecarandas.edu.mx",
-					"fecha_act":"2014-11-23",
+					"fecha_act":"23/11/2014",
 					"interno":0,
 					"cea":0,
 					"tasa":1,
@@ -11356,7 +9564,7 @@ class DALSislab
 					"contacto":"Ing. Ramón de Niz García",
 					"puesto_contacto":"puesto contacto",
 					"email":"compras@itslahuerta.edu.mx",
-					"fecha_act":"2014-11-23",
+					"fecha_act":"23/11/2014",
 					"interno":0,
 					"cea":0,
 					"tasa":1,
@@ -11383,7 +9591,7 @@ class DALSislab
 					"contacto":"Ing. Raúl Arambula",
 					"puesto_contacto":"puesto contacto",
 					"email":"jrulas2011@gmail.com",
-					"fecha_act":"2014-11-23",
+					"fecha_act":"23/11/2014",
 					"interno":0,
 					"cea":0,
 					"tasa":1,
@@ -11410,7 +9618,7 @@ class DALSislab
 					"contacto":"Bernardo Pulido Valdés",
 					"puesto_contacto":"puesto contacto",
 					"email":"bernardo.pulido@gmail.com",
-					"fecha_act":"2014-11-23",
+					"fecha_act":"23/11/2014",
 					"interno":0,
 					"cea":0,
 					"tasa":1,
@@ -11437,7 +9645,7 @@ class DALSislab
 					"contacto":"Ing. Roberto Escalante Villanueva",
 					"puesto_contacto":"puesto contacto",
 					"email":"rescalante@secovam.com",
-					"fecha_act":"2014-11-23",
+					"fecha_act":"23/11/2014",
 					"interno":0,
 					"cea":0,
 					"tasa":1,
@@ -11473,7 +9681,7 @@ class DALSislab
 					"contacto":"Biol. Luis Aceves Martínez",
 					"puesto_contacto":"puesto contacto",
 					"email":"laceves@ceajalisco.gob.mx",
-					"fecha_act":"2014-11-23",
+					"fecha_act":"23/11/2014",
 					"interno":1,
 					"cea":1,
 					"tasa":0,
@@ -16869,8 +15077,9 @@ class DALSislab
 			[
 				{
 					"id_muestra":1,
-					"folio":687,
-					"ejercicio":2014,
+					"numero_oficio":687,
+					"id_ejercicio":2014,
+					"folio":"CEA-687/2014",
 					"id_reporte":1,
 					"id_cliente":1,
 					"id_orden":1,
@@ -16884,7 +15093,7 @@ class DALSislab
 					"hora_recepcion":"14:08",
 					"fecha_captura":"2014-11-01",
 					"fecha_valida":"",
-					"fecha_actualizacion":"2014-11-02",
+					"fecha_actualiza":"2014-11-02",
 					"validado":0,
 					"recibe_fisicoquimico":1,
 					"recibe_metales":1,
@@ -16906,7 +15115,7 @@ class DALSislab
 						"lat":20.123456,
 						"lng":-102.654321,
 						"alt":0,
-						"fecha_actualizacion":"2014-11-30",
+						"fecha_actualiza":"2014-11-30",
 						"activo":1
 					},
 					"areas_seleccionadas":
@@ -16999,7 +15208,7 @@ class DALSislab
 						"contacto":"Biol. Luis Aceves Martínez",
 						"puesto_contacto":"puesto contacto",
 						"email":"laceves@ceajalisco.gob.mx",
-						"fecha_act":"2014-11-23",
+						"fecha_act":"23/11/2014",
 						"interno":1,
 						"cea":1,
 						"tasa":0,
@@ -17051,13 +15260,14 @@ class DALSislab
 					"orden":
 					{
 						"id_orden":1,
-						"folio":656,
-						"ejercicio":2014,
+						"numero_oficio":656,
+						"id_ejercicio":2014,
+						"folio":"CEA-656/2014",
 						"fecha_orden":"2014-11-01",
 						"fecha_captura":"2014-11-01",
 						"fecha_valida":"2914-07-02",
 						"fecha_acepta":"2014-11-03",
-						"fecha_actualizacion":"2014-11-01",
+						"fecha_actualiza":"2014-11-01",
 						"validado":0,
 						"aceptado":0,
 						"id_origen_orden":2,
@@ -17089,7 +15299,7 @@ class DALSislab
 							"contacto":"Biol. Luis Aceves Martínez",
 							"puesto_contacto":"puesto contacto",
 							"email":"laceves@ceajalisco.gob.mx",
-							"fecha_act":"2014-11-23",
+							"fecha_act":"23/11/2014",
 							"interno":1,
 							"cea":1,
 							"tasa":0,
@@ -17122,13 +15332,14 @@ class DALSislab
 						"solicitud":
 						{
 							"id_solicitud":1,
-							"folio":432,
-							"ejercicio":2014,
-							"fecha_solicitud":"2014-07-01",
-							"fecha_captura":"2014-07-01",
+							"numero_oficio":432,
+							"id_ejercicio":2014,
+							"folio":"CEA-432/2014",
+							"fecha_solicitud":"2015-03-21",
+							"fecha_captura":"2015-03-21",
 							"fecha_valida":null,
 							"fecha_acepta":null,
-							"fecha_actualizacion":"2014-07-01",
+							"fecha_actualiza":"2015-03-21",
 							"validado":0,
 							"id_cliente":1,
 							"id_usuario_captura":1,
@@ -17157,7 +15368,7 @@ class DALSislab
 								"contacto":"Biol. Luis Aceves Martínez",
 								"puesto_contacto":"puesto contacto",
 								"email":"laceves@ceajalisco.gob.mx",
-								"fecha_act":"2014-11-23",
+								"fecha_act":"23/11/2014",
 								"interno":1,
 								"cea":1,
 								"tasa":0,
@@ -17986,8 +16197,9 @@ class DALSislab
 					{
 						"id_muestra":1,
 						"muestra":"",
-						"folio":1,
-						"ejercicio":2014
+						"numero_oficio":1,
+						"id_ejercicio":2014,
+						"folio":"CEA-1/2014"
 					},
 					"norma":
 					{

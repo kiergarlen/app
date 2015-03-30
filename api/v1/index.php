@@ -10,54 +10,14 @@ $app = new \Slim\Slim();
 
 $app->post("/login", function() use ($app) {
 	try {
-		// get and decode JSON request body
-		$request = $app->request();
-		$input = json_decode($request->getBody());
-		$name = "";
-		$userId = 1;
-		$userLv = 0;
-		$usr = $input->username;
-		$pwd = $input->password;
-
-		$userData = \Service\DALSislab::getInstance()->getUserByCredentials($usr, $pwd);
-		$userInfo = json_decode($userData);
-
-		$userId = $userInfo->id_usuario;
-		$userLv = $userInfo->id_nivel;
-		$name = $userInfo->nombres . " ";
-		$name .= $userInfo->ap . " ";
-		$name .= $userInfo->am . " ";
-
-		$userPass = $usr . ".";
-		$userPass .= $pwd . ".";
-		$userPass .= $userId . "." . $userLv;
-		$userPass = bin2hex($userPass);
-
-		$token = array();
-		//$token["usr"] = $input->username;
-		//$token["pwd"] = $input->password;
-		$token["nam"] = $name;
-		$token["upt"] = $userPass;
-		$token["uid"] = $userId;
-		$token["ulv"] = $userLv;
-		$token["cip"] = $request->getIp() . "";
-		$token["iss"] = $request->getUrl();
-		$token["aud"] = "sislab.ceajalisco.gob.mx";
-		$token["iat"] = time();
-		/// Token expires 3 hours from now
-		$token["exp"] = time() + (3 * 60 * 60);
-		$jwt = JWT::encode($token, KEY);
-
+		$jwt = processUserJwt($app);
 		////debugging only
-		$decoded = JWT::decode($jwt, KEY);
-		$decoded_array = (array) $decoded;
-		//print_r($decoded_array);
-
-		//// return JSON-encoded response body
+		//$jwt = $token;
+		//$decodedToken = decodeToken($jwt);
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
+		echo ")]}',\n";
 		echo json_encode($jwt);
-		//echo json_encode($token);
 	} catch (Exception $e) {
 		$app->response()->status(400);
 		$app->response()->header('X-Status-Reason', $e->getMessage());
@@ -142,46 +102,21 @@ $app->get("/sampling/types", function() use ($app) {
 	}
 });
 
-$app->get("/studies/:studyId", function($studyId) use ($app) {
+$app->get("/studies(/)(:studyId)", function($studyId = -1) use ($app) {
 	try {
 		$userId = (validateTokenUser($app)) ? validateTokenUser($app) : 0;
-		$menu = \Service\DALSislab::getInstance()->getStudy($studyId);
+		if ($studyId > -1)
+		{
+			$menu = \Service\DALSislab::getInstance()->getStudy($studyId);
+		}
+		else
+		{
+			$menu = \Service\DALSislab::getInstance()->getStudies();
+
+		}
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
 		echo $menu;
-	} catch (Exception $e) {
-		$app->response()->status(400);
-		$app->response()->header('X-Status-Reason', $e->getMessage());
-	}
-});
-
-
-$app->post("/studies", function() use ($app) {
-	try {
-		// get and decode JSON request body
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-		$userId = (validateTokenUser($app)) ? validateTokenUser($app) : 0;
-		//$menu = \Service\DALSislab::getInstance()->getStudies();
-		$app->response()->status(200);
-		$app->response()->header('Content-Type', 'application/json');
-		echo $requestBody;
 	} catch (Exception $e) {
 		$app->response()->status(400);
 		$app->response()->header('X-Status-Reason', $e->getMessage());
@@ -905,32 +840,6 @@ $app->get("/clients/:clientId", function() use ($app) {
 });
 */
 
-function extractDataFromRequest($app) {
-	$request = $app->request();
-	$requestBody = $request->getBody();
-	return json_decode($requestBody);
-}
-
-function validateTokenUser($app) {
-	$request = $app->request();
-	$headers = $request->headers();
-
-	$jwt = $headers["Auth-Token"];
-	try {
-		$decoded = JWT::decode($jwt, KEY);
-		//$userPass = hex2bin($decoded->upt);
-		//$userPassArray = explode (".", $userPass);
-		//$userId = 0;
-		return $decoded->uid;
-
-	} catch (Exception $e) {
-		$app->response()->status(401);
-		$app->response()->header('X-Status-Reason', $e->getMessage());
-		echo '{"error":"Unauthorized access"}';
-		$app->stop();
-	}
-}
-
 /*
 $validateAccessToken = function($app) {
    return function () use ($app) {
@@ -1034,3 +943,77 @@ function getConnection() {
 }
 */
 $app->run();
+
+
+function decodeJwt($jwt) {
+	$decoded = JWT::decode($jwt, KEY);
+	$decoded_array = (array) $decoded;
+	//print_r($decoded_array);
+	return $decoded_array;
+}
+
+function processUserJwt($app) {
+	$request = $app->request();
+	$input = json_decode($request->getBody());
+	$name = "";
+	$userId = 1;
+	$userLv = 0;
+	$usr = $input->username;
+	$pwd = $input->password;
+
+	$userData = \Service\DALSislab::getInstance()->getUserByCredentials($usr, $pwd);
+	$userInfo = json_decode($userData);
+
+	$userId = $userInfo->id_usuario;
+	$userLv = $userInfo->id_nivel;
+	$name = $userInfo->nombres . " ";
+	$name .= $userInfo->ap . " ";
+	$name .= $userInfo->am . " ";
+
+	$userPass = $usr . ".";
+	$userPass .= $pwd . ".";
+	$userPass .= $userId . "." . $userLv;
+	$userPass = bin2hex($userPass);
+
+	$token = array();
+	//$token["usr"] = $input->username;
+	//$token["pwd"] = $input->password;
+	$token["nam"] = $name;
+	$token["upt"] = $userPass;
+	$token["uid"] = $userId;
+	$token["ulv"] = $userLv;
+	$token["cip"] = $request->getIp() . "";
+	$token["iss"] = $request->getUrl();
+	$token["aud"] = "sislab.ceajalisco.gob.mx";
+	$token["iat"] = time();
+	/// Token expires 3 hours from now
+	$token["exp"] = time() + (3 * 60 * 60);
+	$jwt = JWT::encode($token, KEY);
+	return $jwt;
+}
+
+function extractDataFromRequest($app) {
+	$request = $app->request();
+	$requestBody = $request->getBody();
+	return json_decode($requestBody);
+}
+
+function validateTokenUser($app) {
+	$request = $app->request();
+	$headers = $request->headers();
+
+	$jwt = $headers["Auth-Token"];
+	try {
+		$decoded = JWT::decode($jwt, KEY);
+		//$userPass = hex2bin($decoded->upt);
+		//$userPassArray = explode (".", $userPass);
+		//$userId = 0;
+		return $decoded->uid;
+
+	} catch (Exception $e) {
+		$app->response()->status(401);
+		$app->response()->header('X-Status-Reason', $e->getMessage());
+		echo '{"error":"Unauthorized"}';
+		$app->stop();
+	}
+}

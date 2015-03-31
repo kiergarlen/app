@@ -13,11 +13,11 @@
 <div class="row">
   <div class="col-xs-12">
     <button type="submit" class="btn btn-primary"
-      value="Nueva" title="Nueva"
+      value="Nuevo Informe" title="Nuevo Informe"
       data-ng-click="orders.addOrder()"
       >
       <i class="glyphicon glyphicon-plus" aria-hidden="true"></i>
-      Nueva Orden
+      Nuevo Informe
     </button>
     <br>
   </div>
@@ -34,14 +34,19 @@
   <div class="row">
     <div class="col-xs-12 col-sm-8">
       <label for="orderSearch" class="sr-only">
-        Ingrese una búsqueda (Cliente, Contacto, etc.)
+        Ingrese una búsqueda (Estudio, Cliente, Contacto, etc.)
       </label>
-      <input type="text"
-        class="form-control"
-        placeholder="Ingrese una búsqueda (Cliente, Contacto, etc.)"
-        id="orderSearch"
-        name="orderSearch"
-        data-ng-model="orders.filter.$">
+      <div class="input-group">
+        <div class="input-group-addon">
+          <i class="glyphicon glyphicon-search"></i>
+        </div>
+        <input type="text"
+          class="form-control"
+          placeholder="Ingrese una búsqueda (Estudio, Cliente, Contacto, etc.)"
+          id="orderSearch"
+          name="orderSearch"
+          data-ng-model="orders.filter.$">
+      </div>
       <br>
     </div>
   </div>

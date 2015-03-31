@@ -152,16 +152,16 @@
       </label>
       <input type="text"
         class="form-control"
-        placeholder="aaaa-mm-dd"
         id="samplingDate"
         name="samplingDate"
+        placeholder="aaaa-mm-dd"
         required
         data-ng-model="order.order.fecha_muestreo"
         data-date-format="yyyy-MM-dd"
-        data-date-type="number"
+        data-date-type="string"
         data-min-date="01/01/2000"
-        data-max-date="today"
         data-autoclose="1"
+        date-use-native="true"
         data-bs-datepicker
         >
     </div>
@@ -172,9 +172,9 @@
       </label>
       <input type="text"
         class="form-control"
-        placeholder="HH:mm"
         id="samplingTime"
         name="samplingTime"
+        placeholder="HH:mm"
         required
         data-ng-model="order.order.hora_muestreo"
         data-time-format="HH:mm"
@@ -268,7 +268,7 @@
   <br>
   <button type="submit" class="btn btn-primary"
     value="Guardar" title="Guardar"
-    data-ng-click="order.validateOrderForm()"
+    data-ng-click="order.submitForm()"
     >
     Guardar
   </button>

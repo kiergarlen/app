@@ -420,10 +420,11 @@
    * @param {Object} QuoteService - Proveedor de datos, Solicitud
    */
   function QuoteController($routeParams, TokenService, ArrayUtilsService,
-    QuoteService) {
+    ParameterService, QuoteService) {
     var vm = this;
     vm.quote = QuoteService.query({quoteId: $routeParams.quoteId});
     vm.user = TokenService.getUserFromToken();
+    vm.parameters = ParameterService.query();
     vm.allParametersSelected = false;
     vm.totalCost = 0;
     vm.message = '';
@@ -482,11 +483,11 @@
     }
 
     function approveItem(item, user) {
-      item.id_status = 2;
-      item.status = "Validado";
-      item.id_usuario_valida = user.id;
-      item.fecha_valida = DateUtilsService.dateToISOString(new Date()).slice(0,10);
-      //item.fecha_valida = (new Date()).getTime();
+      //item.id_status = 2;
+      //item.status = "Validado";
+      //item.id_usuario_valida = user.id;
+      //item.fecha_valida = DateUtilsService.dateToISOString(new Date()).slice(0,10);
+      ////item.fecha_valida = (new Date()).getTime();
     }
 
     function rejectItem(item, user) {
@@ -498,6 +499,25 @@
     }
 
     function isFormValid() {
+      vm.message = '';
+      if (vm.quote.cuerpo_receptor.length > 0 && vm.quote.tipo_cuerpo.length < 1)
+      {
+        vm.message += ' Si selecciona un cuerpo receptor, debe especificar tipo de cuerpo';
+        return false;
+      }
+      if (vm.quote.cuerpo_receptor.length < 1 && vm.quote.tipo_cuerpo.length > 0)
+      {
+        vm.message += ' Si selecciona un tipo de cuerpo, debe estar asociado a un cuerpo receptor';
+        return false;
+      }
+      if (vm.user.level < 3)
+      {
+        if (vm.quote.id_status == 3 && vm.quote.motivo_rechaza.length < 1)
+        {
+          vm.message += ' Debe escribir un motivo de rechazo del Informe ';
+          return false;
+        }
+      }
       return true;
     }
 
@@ -521,6 +541,9 @@
     }
 
     function submitForm() {
+      console.log('IS VALID' + isFormValid());
+      return;
+
       if (isFormValid() && !vm.isDataSubmitted)
       {
         vm.isDataSubmitted = true;
@@ -544,7 +567,7 @@
     .controller('QuoteController',
       [
         '$routeParams', 'TokenService', 'ArrayUtilsService',
-        'QuoteService',
+        'ParameterService', 'QuoteService',
         QuoteController
       ]
     );

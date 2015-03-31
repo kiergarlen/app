@@ -67,7 +67,6 @@
               <strong>{{::quote.quote.estudio.fecha}}</strong>
             </li>
           </ul>
-          <br>
           <span class="label label-success"
             data-ng-show="quote.quote.estudio.id_status == 2">
             <i class="glyphicon glyphicon-ok"></i>
@@ -281,7 +280,7 @@
   <br>
   <button type="submit" class="btn btn-primary"
     value="Guardar" title="Guardar"
-    data-ng-click="quote.validateOrderForm()"
+    data-ng-click="quote.submitForm()"
     >
     Guardar
   </button>

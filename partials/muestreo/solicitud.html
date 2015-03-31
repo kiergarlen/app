@@ -44,60 +44,68 @@
   novalidate
   >
   <div class="row">
-    <div class="col-xs-12" bs-collapse>
-      <h4 bs-collapse-toggle>
+    <div class="col-xs-12" data-bs-collapse>
+      <h4 data-bs-collapse-toggle>
         <a class="btn btn-default">
           <i class="glyphicon glyphicon-chevron-down"
             aria-hidden="true"></i>
         </a>
         Datos de Referencia
       </h4>
-      <div class="row well wel-sm item-z1" bs-collapse-target>
+      <div class="row well wel-sm item-z1"
+        data-bs-collapse-target
+        >
         <div class="col-xs-12 col-sm-6">
           <h6>Informe</h6>
           <ul class="list-inline">
             <li>
               Id Informe:
-              {{::quote.study.id_estudio}}
+              <strong>{{::quote.quote.id_estudio}}</strong>
             </li>
             <li>
               Fecha:
-              {{::quote.study.fecha}}
+              <strong>{{::quote.quote.estudio.fecha}}</strong>
             </li>
+          </ul>
           <br>
           <span class="label label-success"
-            data-ng-show="quote.study.id_status == 2">
+            data-ng-show="quote.quote.estudio.id_status == 2">
             <i class="glyphicon glyphicon-ok"></i>
-            {{::quote.study.status}}
+            {{quote.quote.estudio.status}}
           </span>
         </div>
         <div class="col-xs-12 col-sm-6">
           <h6>Cliente</h6>
-          {{quote.selectClient().cliente}}
+          <strong>{{::quote.quote.cliente.cliente}}</strong>
           <small data-ng-show="quote.quote.cliente.area.length > 0">
-            {{::quote.quote.cliente.area}}
+            <strong>{{::quote.quote.cliente.area}}</strong>
           </small>
           <br>
-          Contacto: {{::quote.quote.cliente.contacto}}
+          Contacto:
+          <strong>{{::quote.quote.cliente.contacto}}</strong>
         </div>
         <div class="col-xs-12">
           <h6>Solicitud</h6>
           <ul class="list-inline">
             <li>
               Folio:
-              {{::quote.quote.folio}}
+              <strong>{{::quote.quote.folio}}</strong>
             </li>
             <li data-ng-show="quote.quote.fecha_captura.length > 0">
-              Fecha captura: {{::quote.quote.fecha_captura}}
+              Fecha captura:
+              <strong>{{::quote.quote.fecha_captura}}</strong>
             </li>
             <li data-ng-show="quote.quote.fecha_valida.length > 0">
-              Fecha valida: {{quote.quote.fecha_valida}}
+              Fecha valida:
+              <strong>{{quote.quote.fecha_valida}}</strong>
             </li>
             <li data-ng-show="quote.quote.fecha_acepta.length > 0">
-              Fecha acepta cliente: {{quote.quote.fecha_acepta}}
+              Fecha acepta cliente:
+              <strong>{{quote.quote.fecha_acepta}}</strong>
             </li>
             <li data-ng-show="quote.quote.fecha_actualiza.length > 0">
-              Fecha actualiza: {{quote.quote.fecha_actualiza}}
+              Fecha actualiza:
+              <strong>{{quote.quote.fecha_actualiza}}</strong>
             </li>
           </ul>
           <span class="label label-success"
@@ -108,19 +116,19 @@
           <ul class="list-inline">
             <li>
               Matriz:
-              {{::quote.quote.matriz}}
+              <strong>{{::quote.quote.matriz}}</strong>
             </li>
             <li>
               Cantidad muestras:
-              {{::quote.quote.cantidad_muestras}}
+              <strong>{{::quote.quote.cantidad_muestras}}</strong>
             </li>
             <li>
               Tipo muestreo:
-              {{::quote.quote.tipo_muestreo}}
+              <strong>{{::quote.quote.tipo_muestreo}}</strong>
             </li>
             <li>
               Norma:
-              {{::quote.selectNorm().norma}}
+              <strong>{{::quote.quote.norma.norma}}</strong>
             </li>
           </ul>
         </div>
@@ -141,6 +149,7 @@
         id="receivingWaterBodyText"
         name="receivingWaterBodyText"
         placeholder="Cuerpo receptor"
+        data-ng-model="quote.quote.cuerpo_receptor"
         >
     </div>
     <div class="col-xs-12 col-sm-5 col-md-5 col-lg-6">
@@ -151,6 +160,7 @@
         id="receivingWaterBodyTypeText"
         name="receivingWaterBodyTypeText"
         placeholder="Tipo de cuerpo"
+        data-ng-model="quote.quote.tipo_cuerpo"
         >
     </div>
   </div>
@@ -198,7 +208,7 @@
                 </label>
               </div>
               <div class="col-xs-2">
-                {{::quote.quote.cantidad_muestras}}
+                {{quote.quote.cantidad_muestras}}
               </div>
               <div class="col-xs-2">
                 <span class="text-muted pull-right">

@@ -417,65 +417,27 @@
    * @param {Object} $routeParams - Proveedor de parámetros de ruta [AngularJS]
    * @param {Object} TokenService - Proveedor para manejo del token
    * @param {Object} ArrayUtilsService - Proveedor para manejo de arreglos
-   * @param {Object} ClientService - Proveedor de datos, Clientes
-   * @param {Object} ParameterService - Proveedor de datos, Parámetros
-   * @param {Object} NormService - Proveedor de datos, Normas
-   * @param {Object} SamplingTypeService - Proveedor de datos, Tipos muestreo
    * @param {Object} QuoteService - Proveedor de datos, Solicitud
    */
   function QuoteController($routeParams, TokenService, ArrayUtilsService,
-    ClientService, ParameterService, NormService,
-    SamplingTypeService, QuoteService) {
+    QuoteService) {
     var vm = this;
     vm.quote = QuoteService.query({quoteId: $routeParams.quoteId});
-    vm.study = StudyService.query({studyId: vm.quote.id_estudio});
-    vm.clients = ClientService.query();
-
     vm.user = TokenService.getUserFromToken();
-    vm.parameters = ParameterService.query();
-    vm.norms = NormService.query();
-    vm.samplingTypes = SamplingTypeService.query();
-
-
     vm.allParametersSelected = false;
     vm.totalCost = 0;
     vm.message = '';
     vm.isDataSubmitted = false;
-
-
-    vm.selectNorm = selectNorm;
-    vm.selectClient = selectClient;
     vm.totalParameter = totalParameter;
     vm.selectNormParameters = selectNormParameters;
-    vm.selectAllParameters = selectAllParameters;
-
-
     vm.approveItem = approveItem;
     vm.rejectItem = rejectItem;
     vm.isFormValid = isFormValid;
     vm.submitForm = submitForm;
 
-    function selectNorm() {
-      vm.quote.norma = ArrayUtilsService.selectItemFromCollection(
-        vm.norms,
-        'id_norma',
-        vm.quote.id_norma
-      );
-      return vm.quote.norma;
-    }
-
-    function selectClient() {
-      vm.quote.cliente = ArrayUtilsService.selectItemFromCollection(
-        vm.clients,
-        'id_cliente',
-        vm.quote.id_cliente
-      );
-      return vm.quote.cliente;
-    }
-
     function totalParameter(){
       var i = 0, l = 0, t = 0;
-      if (vm.parameters)
+      if (vm.parameters && vm.quote.cliente)
       {
         l = vm.parameters.length;
         for (i = 0; i < l; i += 1) {
@@ -484,31 +446,26 @@
             t = t + parseInt(vm.parameters[i].precio, 10);
           }
         }
-        t = t * vm.quote.cliente.tasa;
-        vm.totalCost = (Math.round(t * 100) / 100) * vm.quote.cantidad_muestras;
+        t = t * vm.quote.cliente.tasa * vm.quote.cantidad_muestras;
+        vm.totalCost = (Math.round(t * 100) / 100);
         vm.quote.total = vm.totalCost;
       }
       return vm.totalCost;
     }
 
     function selectNormParameters() {
-      var i, l, j, m,
-      norma = vm.quote.norma,
-      params = vm.parameters;
-      l = params.length;
-      if (l > 0 && norma.id_tipo_matriz)
+      var i, l, j, m;
+      l = vm.parameters.length;
+      if (l > 0 && vm.quote.parametros)
       {
         for(i = 0; i < l; i += 1) {
-          params[i].selected = false;
-          if (norma.parametros !== undefined)
-          {
-            m = norma.parametros.length;
-            for (j = 0; j < m; j += 1) {
-              if (params[i].id_parametro == norma.parametros[j].id_parametro)
-              {
-                params[i].selected = true;
-                break;
-              }
+          vm.parameters[i].selected = false;
+          m = vm.quote.parametros.length;
+          for (j = 0; j < m; j += 1) {
+            if (vm.parameters[i].id_parametro == vm.quote.norma.parametros[j].id_parametro)
+            {
+              vm.parameters[i].selected = true;
+              break;
             }
           }
         }
@@ -523,7 +480,6 @@
         vm.parameters[i].selected = vm.quote.allParametersSelected;
       }
     }
-
 
     function approveItem(item, user) {
       item.id_status = 2;
@@ -588,8 +544,7 @@
     .controller('QuoteController',
       [
         '$routeParams', 'TokenService', 'ArrayUtilsService',
-        'ClientService', 'ParameterService', 'NormService',
-        'SamplingTypeService', 'QuoteService',
+        'QuoteService',
         QuoteController
       ]
     );

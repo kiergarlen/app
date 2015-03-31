@@ -10,160 +10,135 @@
     <h2 class="page-header">Orden de muestreo</h2>
   </div>
 </div>
+<div class="row">
+  <div class="col-xs-12">
+    <div class="alert alert-danger item-z1" role="alert"
+      data-ng-show="order.order.id_status == 3">
+      <i class="glyphicon glyphicon-warning-sign"></i>
+      Motivo rechazo:
+      <strong>
+        {{order.order.motivo_rechaza}}
+        <span
+          data-ng-show="order.order.fecha_rechaza.length > 0">
+          ({{order.order.fecha_rechaza || date}})
+        </span>
+      </strong>
+    </div>
+  </div>
+  <div class="col-xs-12">
+    <div class="alert alert-warning alert-dismissible item-z1" role="alert"
+      data-ng-show="order.message.length > 0">
+      <button type="button" class="close" aria-label="Cerrar"
+        data-ng-click="order.message = ''">
+        <span aria-hidden="true">&times;</span>
+      </button>
+      <i class="glyphicon glyphicon-warning-sign"></i>
+      <strong>
+        {{order.message}}
+      </strong>
+    </div>
+  </div>
+</div>
 <form class="form" role="form"
   name="orderForm"
-  data-ng-submit="order.submitOrderForm()"
   novalidate
   >
   <div class="row">
-    <div class="col-xs-12" bs-collapse>
-      <h4 bs-collapse-toggle>
+    <div class="col-xs-12" data-bs-collapse>
+      <h4 data-bs-collapse-toggle>
         <a class="btn btn-default">
-          <!--
-          <i class="glyphicon glyphicon-chevron-up"
-            aria-hidden="true"></i>
-          -->
           <i class="glyphicon glyphicon-chevron-down"
             aria-hidden="true"></i>
         </a>
         Datos de Referencia
       </h4>
-      <div class="well wel-sm item-z1" bs-collapse-target>
-        <ul class="list-inline">
-          <li>
-            Folio:
-            {{order.order.folio}}
-            /
-            {{order.order.ejercicio}}
-          </li>
-          <li data-ng-show="order.order.fecha_orden.length > 0">
-            Fecha:
-            {{order.order.fecha_orden}}
-          </li>
-          <li data-ng-show="order.order.fecha_valida.length > 0">
-            Fecha validación:
-            {{order.order.fecha_valida}}
-          </li>
-          <li data-ng-show="order.order.fecha_acepta.length > 0">
-            Fecha aceptación:
-            {{order.order.fecha_acepta}}
-          </li>
-          <li data-ng-show="order.order.fecha_actualizacion.length > 0">
-            Fecha actualización:
-            {{order.order.fecha_actualizacion}}
-          </li>
-        </ul>
-        <span class="label label-info"
-          data-ng-show="order.order.validado > 0">Validada</span>
-        <div class="row">
-          <div class="col-xs-12 col-sm-6">
-            <h5>Solicitud</h5>
-            Folio:
-            {{order.order.solicitud.folio}}
-            /
-            {{order.order.solicitud.ejercicio}}
-            <br>Fecha:
-            {{order.order.solicitud.fecha_captura}}
-          </div>
-          <div class="col-xs-12 col-sm-6">
-            <h5>Cliente</h5>
-            Cliente:
-            {{order.order.cliente.cliente}}
-            {{order.order.cliente.area.length > 0 &&
-            ' - ' + order.order.cliente.area ||
-            ''}}
-            <br>
-            Contacto:
-            {{order.order.cliente.contacto}}
-          </div>
+      <div class="row well wel-sm item-z1"
+        data-bs-collapse-target
+        >
+        <div class="col-xs-12 col-sm-6">
+          <h6>Informe</h6>
+          <ul class="list-inline">
+            <li>
+              Id Informe:
+              <strong>{{::order.order.id_estudio}}</strong>
+            </li>
+            <li>
+              Fecha:
+              <strong>{{::order.order.estudio.fecha}}</strong>
+            </li>
+          </ul>
+          <br>
+          <span class="label label-success"
+            data-ng-show="order.order.estudio.id_status == 2">
+            <i class="glyphicon glyphicon-ok"></i>
+            {{order.order.estudio.status}}
+          </span>
+        </div>
+        <div class="col-xs-12 col-sm-6">
+          <h6>Cliente</h6>
+          <strong>{{::order.order.cliente.cliente}}</strong>
+          <small data-ng-show="order.order.cliente.area.length > 0">
+            <strong>{{::order.order.cliente.area}}</strong>
+          </small>
+          <br>
+          Contacto:
+          <strong>{{::order.order.cliente.contacto}}</strong>
+        </div>
+        <div class="col-xs-12">
+          <h6>Solicitud</h6>
+          <ul class="list-inline">
+            <li>
+              Folio:
+              <strong>{{::order.order.solicitud.folio}}</strong>
+            </li>
+            <li data-ng-show="order.order.solicitud.fecha_captura.length > 0">
+              Fecha captura:
+              <strong>{{::order.order.solicitud.fecha_captura}}</strong>
+            </li>
+            <li data-ng-show="order.order.solicitud.fecha_valida.length > 0">
+              Fecha valida:
+              <strong>{{order.order.solicitud.fecha_valida}}</strong>
+            </li>
+          </ul>
+          <br>
+          <span class="label label-success"
+            data-ng-show="order.order.solicitud.status == 2">
+            <i class="glyphicon glyphicon-ok"></i>
+            {{order.order.solicitud.status}}
+          </span>
+          <ul class="list-inline">
+            <li>
+              Matriz:
+              <strong>{{::order.order.solicitud.matriz}}</strong>
+            </li>
+            <li>
+              Cantidad muestras:
+              <strong>{{::order.order.solicitud.cantidad_muestras}}</strong>
+            </li>
+            <li>
+              Tipo muestreo:
+              <strong>{{::order.order.solicitud.tipo_muestreo}}</strong>
+            </li>
+            <li>
+              Norma:
+              <strong>{{::order.order.solicitud.norma.norma}}</strong>
+            </li>
+          </ul>
         </div>
       </div>
     </div>
   </div>
+  <!--
   <div class="row">
-    <div class="col-xs-12">
-      <h4>Medio de Solicitud de Muestreo</h4>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-xs-12 col-sm-6 col-md-5 col-lg-5">
-      <label for="orderSourceSelect" class="sr-only">
-        Medio de Solicitud
-      </label>
-      <select class="form-control"
-        id="orderSourceSelect"
-        name="orderSourceSelect"
-        required
-        data-ng-model="order.order.id_origen_orden"
-        >
-        <option value="">
-          Seleccione una opción
-        </option>
-        <option data-ng-repeat="orderSource in order.orderSources"
-          value="{{orderSource.id_origen_orden}}">
-          {{orderSource.origen_orden}}
-        </option>
-      </select>
-    </div>
-    <div class="col-xs-12 col-sm-6 col-md-7 col-lg-7">
-      <label class="sr-only" for="emergencyText">
-        En caso de emergencia, especificar
-      </label>
-      <input type="text" class="form-control"
-        id="emergencyText"
-        name="emergencyText"
-        placeholder="En caso de emergencia, especificar"
-        data-ng-model="order.order.origen_otro"
-        >
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-xs-12">
-      <h4>Matriz</h4>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-xs-12 col-sm-6 col-md-5 col-lg-5">
-      <label for="matrixSelect" class="sr-only">
-        Tipo de Matriz
-      </label>
-      <select class="form-control"
-        id="matrixSelect"
-        name="matrixSelect"
-        required
-        data-ng-model="order.order.id_matriz"
-        >
-        <option value="">
-          Seleccione una opción
-        </option>
-        <option data-ng-repeat="matrix in order.matrices"
-          value="{{matrix.id_matriz}}">
-          {{matrix.matriz}}
-        </option>
-      </select>
-    </div>
-    <div class="col-xs-12 col-sm-6 col-md-7 col-lg-7">
-      <label class="sr-only" for="matrixText">
-        En caso de otra, especificar
-      </label>
-      <input type="text" class="form-control"
-        id="matrixText"
-        name="matrixText"
-        placeholder="En caso de otra, especificar"
-        data-ng-model="order.order.matriz_otra"
-        >
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-xs-12" bs-collapse>
-      <h4 bs-collapse-toggle>
+    <div class="col-xs-12" data-bs-collapse>
+      <h4 data-bs-collapse-toggle>
         <a class="btn btn-default">
           <i class="glyphicon glyphicon-chevron-down"
             aria-hidden="true"></i>
         </a>
         Parámetros seleccionados
       </h4>
-      <div class="well wel-sm item-z1" bs-collapse-target>
+      <div class="well wel-sm item-z1" data-bs-collapse-target>
         <div class="row">
           <div class="col-xs-12 col-sm-6"
             data-ng-repeat="parameter in order.order.parametros">
@@ -181,6 +156,7 @@
       </div>
     </div>
   </div>
+  -->
   <div class="row">
     <div class="col-xs-12">
       <h4>Fecha y Hora probable de muestreo</h4>
@@ -204,7 +180,7 @@
         data-min-date="01/01/2000"
         data-max-date="today"
         data-autoclose="1"
-        bs-datepicker
+        data-bs-datepicker
         >
     </div>
     <div class="col-xs-12 col-sm-6 col-md-5">
@@ -221,10 +197,11 @@
         data-ng-model="order.order.hora_muestreo"
         data-time-format="HH:mm"
         data-length="1"
+        data-hour-step="1"
         data-minute-step="1"
         data-arrow-behavior="picker"
         data-auto-close="1"
-        bs-timepicker
+        data-bs-timepicker
         >
     </div>
   </div>
@@ -244,9 +221,31 @@
         required
         data-ng-model="order.id_supervisor_muestreo"
         >
-        <option value="">
-          Seleccione una opción
+        <option data-ng-repeat="supervisor in order.supervisors"
+          value="{{supervisor.id_empleado}}">
+          {{supervisor.nombres}}
+          {{supervisor.ap}}
+          {{supervisor.am}}
         </option>
+      </select>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12">
+      <h4>Asignar Puntos de Muestreo</h4>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12 col-sm-6 col-md-5 col-lg-5">
+      <label for="pointPackageSelect" class="sr-only">
+        Paquete de puntos
+      </label>
+      <select class="form-control"
+        id="pointPackageSelect"
+        name="pointPackageSelect"
+        required
+        data-ng-model="order.id_supervisor_muestreo"
+        >
         <option data-ng-repeat="supervisor in order.supervisors"
           value="{{supervisor.id_empleado}}">
           {{supervisor.nombres}}

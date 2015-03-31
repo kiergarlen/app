@@ -10,18 +10,6 @@
     <h2 class="page-header">Solicitudes de servicio</h2>
   </div>
 </div>
-<div class="row">
-  <div class="col-xs-12">
-    <button type="submit" class="btn btn-primary"
-      value="Nuevo Informe" title="Nuevo Informe"
-      data-ng-click="quotes.addQuote()"
-      >
-      <i class="glyphicon glyphicon-plus" aria-hidden="true"></i>
-      Nueva Solicitud
-    </button>
-    <br>
-  </div>
-</div>
 <form class="form" role="form"
   name="clientsForm"
   novalidate
@@ -82,10 +70,10 @@
                 {{item.id_solicitud}}
               </td>
               <td>
-                <span class="label label-info"
-                  data-ng-show="item.validado > 0">Validado</span>
+                <span class="label label-success"
+                  data-ng-show="item.id_status == 2">Validado</span>
                 <span class="label label-default"
-                  data-ng-show="item.validado < 1">Sin Validar</span>
+                  data-ng-show="item.id_status < 2">Sin Validar</span>
                 <span class="label label-danger"
                   data-ng-show="item.fecha_captura.length < 1">
                   Capturar info.

@@ -106,24 +106,6 @@
             <i class="glyphicon glyphicon-ok"></i>
             {{order.order.solicitud.status}}
           </span>
-          <ul class="list-inline">
-            <li>
-              Matriz:
-              <strong>{{::order.order.solicitud.matriz}}</strong>
-            </li>
-            <li>
-              Cantidad muestras:
-              <strong>{{::order.order.solicitud.cantidad_muestras}}</strong>
-            </li>
-            <li>
-              Tipo muestreo:
-              <strong>{{::order.order.solicitud.tipo_muestreo}}</strong>
-            </li>
-            <li>
-              Norma:
-              <strong>{{::order.order.solicitud.norma.norma}}</strong>
-            </li>
-          </ul>
         </div>
       </div>
     </div>
@@ -244,15 +226,43 @@
         id="pointPackageSelect"
         name="pointPackageSelect"
         required
-        data-ng-model="order.id_supervisor_muestreo"
+        data-ng-model="order.id_grupo_puntos"
         >
-        <option data-ng-repeat="supervisor in order.supervisors"
-          value="{{supervisor.id_empleado}}">
-          {{supervisor.nombres}}
-          {{supervisor.ap}}
-          {{supervisor.am}}
-        </option>
       </select>
+    </div>
+  </div>
+  <div class="row"
+    data-ng-show="order.user.level < 3">
+    <div class="col-xs-12">
+      <h4>Validación</h4>
+    </div>
+    <div class="col-xs-12 col-sm-5 well wel-sm ">
+      <a class="btn btn-success"
+        value="Validar" title="Validar"
+        data-ng-click="order.approveItem(order.order, order.user)"
+        >
+        <i class="glyphicon glyphicon-ok" aria-hidden="true"></i>
+        Validar
+      </a>
+      <a class="btn btn-danger"
+        value="Rechazar" title="Rechazar"
+        data-ng-click="order.rejectItem(order.order, order.user)"
+        >
+        <i class="glyphicon glyphicon-remove" aria-hidden="true"></i>
+        Rechazar
+      </a>
+    </div>
+    <div class="col-xs-12 col-sm-7 well wel-sm ">
+      <label class="sr-only" for="rejectText">
+        Motivo rechazo
+      </label>
+      <input type="text" class="form-control"
+        id="rejectText"
+        name="rejectText"
+        placeholder="Motivo rechazo"
+        data-ng-disabled="order.order.id_status != 3"
+        data-ng-model="order.order.motivo_rechaza"
+        >
     </div>
   </div>
   <br>
@@ -260,7 +270,8 @@
     value="Guardar" title="Guardar"
     data-ng-click="order.validateOrderForm()"
     >
-    Guardar</button>
+    Guardar
+  </button>
 </form>
 
           </div>

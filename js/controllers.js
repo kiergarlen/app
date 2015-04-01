@@ -1,156 +1,4 @@
-  // CONTROLLERS
-  // MenuController.js
-  /**
-   * @name MenuController
-   * @constructor
-   * @desc Controla la directiva para el Menú principal
-   * @this {Object} $scope - Contenedor para el modelo [AngularJS]
-   * @param {Object} MenuService - Proveedor de datos, Menú
-   */
-  function MenuController(MenuService) {
-    var vm = this;
-    vm.menu = MenuService.query();
-  }
 
-  angular
-    .module('sislabApp')
-    .controller('MenuController',
-      [
-        'MenuService',
-        MenuController
-      ]
-    );
-
-  // LoginController.js
-  /**
-   * @name LoginController
-   * @constructor
-   * @desc Controla la vista para Login
-   * @this {Object} $scope - Contenedor para el modelo [AngularJS]
-   * @param {Object} $http - Manejo de peticiones HTTP [AngularJS]
-   * @param {Object} $location - Manejo de URL [AngularJS]
-   * @param {Object} TokenService - Proveedor para manejo del token
-   */
-  function LoginController($scope, $http, $location,
-    TokenService) {
-    var vm = this;
-    vm.message = '';
-    vm.user = {username: '', password: ''};
-    vm.submit = submit;
-    vm.login = login;
-
-    function submit(username, password) {
-      $http({
-        url: API_BASE_URL + 'login',
-        method: 'POST',
-        data: {
-          username: username,
-          password: password
-        }
-      }).then(function success(response) {
-        var token = response.data || null;
-        TokenService.setToken(token);
-        $location.path('main');
-      }, function error(response) {
-        if (response.status === 404)
-        {
-          vm.message = 'Sin enlace al servidor';
-        }
-        else
-        {
-          vm.message = 'Error no especificado';
-        }
-      });
-    }
-
-    function login() {
-      vm.message = '';
-      if (!$scope.loginForm.$valid)
-      {
-        vm.message = 'Ingrese usuario y/o contraseña';
-        return;
-      }
-      vm.submit(
-        vm.user.username,
-        vm.user.password
-      );
-    }
-  }
-
-  angular
-    .module('sislabApp')
-    .controller('LoginController',
-      [
-        '$scope', '$http', '$location',
-        'TokenService',
-        LoginController
-      ]
-    );
-
-  // TasksListController.js
-  /**
-   * @name TasksListController
-   * @constructor
-   * @desc Controla la vista para Tareas
-   * @this {Object} $scope - Contenedor para el modelo [AngularJS]
-   * @param {Object} TokenService - Proveedor para manejo del token
-   * @param {Object} TasksListService - Proveedor de datos, Tareas
-   */
-  function TasksListController(TokenService, TasksListService) {
-    var vm = this,
-    userData;
-    vm.userName = "";
-    vm.tasks = {};
-
-    if (TokenService.isAuthenticated())
-    {
-      userData = TokenService.getUserFromToken();
-      vm.userName = userData.name;
-      vm.tasks = TasksListService.query(userData.id);
-    }
-  }
-
-  angular
-    .module('sislabApp')
-    .controller('TasksListController',
-      [
-        'TokenService', 'TasksListService',
-        TasksListController
-      ]
-    );
-
-  // StudiesListController.js
-  /**
-   * @name StudiesListController
-   * @constructor
-   * @desc Controla la vista para el listado de Estudios
-   * @this {Object} $scope - Contenedor para el modelo [AngularJS]
-   * @param {Object} $location - Manejo de URL [AngularJS]
-   * @param {Object} StudyService - Proveedor de datos, Estudios
-   */
-  function StudiesListController($location, StudyService) {
-    var vm = this;
-    vm.studies = StudyService.get();
-    vm.addStudy = addStudy;
-    vm.viewStudy = viewStudy;
-
-    function addStudy() {
-      $location.path('/estudio/estudio/0');
-    }
-
-    function viewStudy(id) {
-      $location.path('/estudio/estudio/' + parseInt(id));
-    }
-  }
-
-  angular
-    .module('sislabApp')
-    .controller('StudiesListController',
-      [
-        '$location', 'StudyService',
-        StudiesListController
-      ]
-    );
 
   // StudyController.js
   /**
@@ -159,8 +7,8 @@
    * @desc Controla la vista para capturar un Estudio
    * @this {Object} $scope - Contenedor para el modelo [AngularJS]
    * @param {Object} $routeParams - Proveedor de parámetros de ruta [AngularJS]
-   * @param {Object} $location - Manejo de URL [AngularJS]
    * @param {Object} TokenService - Proveedor para manejo del token
+   * @param {Object} RestUtilsService - Proveedor para manejo de servicios REST
    * @param {Object} ArrayUtilsService - Proveedor para manejo de arreglos
    * @param {Object} DateUtilsService - Proveedor para manejo de fechas
    * @param {Object} ClientService - Proveedor de datos, Clientes
@@ -170,8 +18,8 @@
    * @param {Object} OrderSourceService - Proveedor de datos, Orígenes orden
    * @param {Object} StudyService - Proveedor de datos, Estudios
    */
-  function StudyController($scope, $routeParams, $location,
-    TokenService, ArrayUtilsService, DateUtilsService,
+  function StudyController($scope, $routeParams, TokenService,
+    RestUtilsService, ArrayUtilsService, DateUtilsService,
     ClientService, MatrixService, SamplingTypeService,
     NormService, OrderSourceService, StudyService) {
     var vm = this;
@@ -208,12 +56,12 @@
 
     function addQuote() {
       vm.study.solicitudes.push({
-        "id_solicitud":vm.study.solicitudes.length + 1,
-        "id_estudio":vm.study.id_estudio,
-        "id_matriz":0,
-        "cantidad_muestras":0,
-        "id_tipo_muestreo":1,
-        "id_norma":0
+        'id_solicitud':vm.study.solicitudes.length + 1,
+        'id_estudio':vm.study.id_estudio,
+        'id_matriz':0,
+        'cantidad_muestras':0,
+        'id_tipo_muestreo':1,
+        'id_norma':0
       });
     }
 
@@ -228,18 +76,17 @@
 
     function approveItem(item, user) {
       item.id_status = 2;
-      item.status = "Validado";
+      item.status = 'Validado';
       item.id_usuario_valida = user.id;
+      item.motivo_rechaza = '';
       item.fecha_valida = DateUtilsService.dateToISOString(new Date()).slice(0,10);
-      //item.fecha_valida = (new Date()).getTime();
     }
 
     function rejectItem(item, user) {
       item.id_status = 3;
-      item.status = "Rechazado";
+      item.status = 'Rechazado';
       item.id_usuario_valida = user.id;
       item.fecha_rechaza = DateUtilsService.dateToISOString(new Date()).slice(0,10);
-      //item.fecha_rechaza = (new Date()).getTime();
     }
 
     function isQuoteListValid() {
@@ -324,38 +171,31 @@
       return true;
     }
 
-    function saveData(service, data, returnPath, itemIdName) {
-      service
-      .save(JSON.stringify(data))
-      .$promise
-      .then(function success(response) {
-        vm.message = response[itemIdName];
-        $location.path(returnPath);
-      }, function error(response) {
-        if (response.status === 404)
-        {
-          vm.message = 'Recurso no encontrado';
-        }
-        else
-        {
-          vm.message = 'Error no especificado';
-        }
-      });
-    }
-
     function submitForm() {
       if (isFormValid() && !vm.isDataSubmitted)
       {
         vm.isDataSubmitted = true;
         if (vm.study.id_estudio > 0)
         {
-          saveData(StudyService, vm.study, 'estudio/estudios', 'id_estudio');
+          RestUtilsService
+            .saveData(
+              StudyService,
+              vm.study,
+              'estudio/estudios',
+              'id_estudio'
+            );
         }
         else
         {
           if (vm.user.level < 3 || vm.study.study.id_status < 2)
           {
-            saveData(StudyService, vm.study, 'estudio/estudios', 'id_estudio');
+            RestUtilsService
+              .updateData(
+                StudyService,
+                vm.study,
+                'estudio/estudios',
+                'id_estudio'
+              );
           }
         }
       }
@@ -366,47 +206,14 @@
     .module('sislabApp')
     .controller('StudyController',
       [
-        '$scope','$routeParams','$location',
-        'TokenService','ArrayUtilsService','DateUtilsService',
-        'ClientService','MatrixService','SamplingTypeService',
-        'NormService','OrderSourceService','StudyService',
+        '$scope', '$routeParams', 'TokenService',
+        'RestUtilsService', 'ArrayUtilsService', 'DateUtilsService',
+        'ClientService', 'MatrixService', 'SamplingTypeService',
+        'NormService', 'OrderSourceService', 'StudyService',
         StudyController
       ]
     );
 
-  // QuotesListController.js
-  /**
-   * @name QuotesListController
-   * @constructor
-   * @desc Controla la vista para el listado de Solicitudes/Cotizaciones
-   * @this {Object} $scope - Contenedor para el modelo [AngularJS]
-   * @param {Object} $location - Manejo de URL [AngularJS]
-   * @param {Object} QuoteService - Proveedor de datos, Solicitud
-   */
-  function QuotesListController($location, QuoteService) {
-    var vm = this;
-    vm.quotes = QuoteService.get();
-    vm.viewQuote = viewQuote;
-    vm.addQuote = addQuote;
-
-    function viewQuote(id) {
-      var itemId = parseInt(id);
-      $location.path('/muestreo/solicitud/' + itemId);
-    }
-
-    function addQuote() {
-      $location.path('/muestreo/solicitud/0');
-    }
-  }
-
-  angular
-    .module('sislabApp')
-    .controller('QuotesListController',
-      [
-        '$location', 'QuoteService',
-        QuotesListController
-      ]
-    );
 
   // QuoteController.js
   /**
@@ -419,7 +226,8 @@
    * @param {Object} ArrayUtilsService - Proveedor para manejo de arreglos
    * @param {Object} QuoteService - Proveedor de datos, Solicitud
    */
-  function QuoteController($routeParams, TokenService, ArrayUtilsService,
+  function QuoteController($scope, $routeParams, TokenService,
+    RestUtilsService, ArrayUtilsService, DateUtilsService,
     ParameterService, QuoteService) {
     var vm = this;
     vm.quote = QuoteService.query({quoteId: $routeParams.quoteId});
@@ -483,19 +291,18 @@
     }
 
     function approveItem(item, user) {
-      //item.id_status = 2;
-      //item.status = "Validado";
-      //item.id_usuario_valida = user.id;
-      //item.fecha_valida = DateUtilsService.dateToISOString(new Date()).slice(0,10);
-      ////item.fecha_valida = (new Date()).getTime();
+      item.id_status = 2;
+      item.status = 'Validado';
+      item.id_usuario_valida = user.id;
+      item.motivo_rechaza = '';
+      item.fecha_valida = DateUtilsService.dateToISOString(new Date()).slice(0,10);
     }
 
     function rejectItem(item, user) {
       item.id_status = 3;
-      item.status = "Rechazado";
+      item.status = 'Rechazado';
       item.id_usuario_valida = user.id;
       item.fecha_rechaza = DateUtilsService.dateToISOString(new Date()).slice(0,10);
-      //item.fecha_rechaza = (new Date()).getTime();
     }
 
     function isFormValid() {
@@ -521,41 +328,31 @@
       return true;
     }
 
-    function saveData(service, data, returnPath, itemIdName) {
-      service
-      .save(JSON.stringify(data))
-      .$promise
-      .then(function success(response) {
-        vm.message = response[itemIdName];
-        $location.path(returnPath);
-      }, function error(response) {
-        if (response.status === 404)
-        {
-          vm.message = 'Recurso no encontrado';
-        }
-        else
-        {
-          vm.message = 'Error no especificado';
-        }
-      });
-    }
-
     function submitForm() {
-      console.log('IS VALID' + isFormValid());
-      return;
-
       if (isFormValid() && !vm.isDataSubmitted)
       {
         vm.isDataSubmitted = true;
-        if (vm.quote.id_solicitud > 0)
+        if (vm.study.id_estudio > 0)
         {
-          saveData(QuoteService, vm.quote, 'muestreo/solicitudes', 'id_solicitud');
+          RestUtilsService
+            .saveData(
+              QuoteService,
+              vm.quote,
+              'muestreo/solicitudes',
+              'id_solicitud'
+            );
         }
         else
         {
-          if (vm.user.level < 3 || vm.quote.quote.id_status < 2)
+          if (vm.user.level < 3 || vm.study.study.id_status < 2)
           {
-            saveData(QuoteService, vm.quote, 'muestreo/solicitudes', 'id_solicitud');
+            RestUtilsService
+              .updateData(
+                QuoteService,
+                vm.quote,
+                'muestreo/solicitudes',
+                'id_solicitud'
+              );
           }
         }
       }
@@ -566,45 +363,13 @@
     .module('sislabApp')
     .controller('QuoteController',
       [
-        '$routeParams', 'TokenService', 'ArrayUtilsService',
+        '$scope', '$routeParams', 'TokenService',
+        'RestUtilsService', 'ArrayUtilsService', 'DateUtilsService',
         'ParameterService', 'QuoteService',
         QuoteController
       ]
     );
 
-  // OrdersListController.js
-  /**
-   * @name OrdersListController
-   * @constructor
-   * @desc Controla la vista para el listado de Órdenes muestreo
-   * @this {Object} $scope - Contenedor para el modelo [AngularJS]
-   * @param {Object} $location - Manejo de URL [AngularJS]
-   * @param {Object} OrdersListService - Proveedor de datos, órdenes
-   */
-  function OrdersListController($location, OrdersListService) {
-    var vm = this;
-    vm.orders = OrdersListService.query();
-    vm.addOrder = addOrder;
-    vm.selectRow = selectRow;
-
-    function addOrder() {
-      $location.path('/muestreo/orden/0');
-    }
-
-    function selectRow(e) {
-      var itemId = e.currentTarget.id.split('Id')[1];
-      $location.path('/muestreo/orden/' + itemId);
-    }
-  }
-
-  angular
-    .module('sislabApp')
-    .controller('OrdersListController',
-      [
-        '$location', 'OrdersListService',
-        OrdersListController
-      ]
-    );
 
   // OrderController.js
   /**
@@ -617,9 +382,9 @@
    * @param {Object} OrderSourceService - Proveedor de datos, Orígenes orden
    * @param {Object} MatrixService - Proveedor de datos, Tipos matriz
    * @param {Object} SamplingSupervisorService - Proveedor de datos, Supervisores muestreo
-   * @param {Object} OrderService - Proveedor de datos, Orden muestreo
+   * @param {Object} OrderService - Proveedor de datos, Órdenes de muestreo
    */
-  function OrderController($routeParams, TokenService, OrderSourceService,
+  function OrderController($scope, $routeParams, TokenService, OrderSourceService,
     MatrixService, SamplingSupervisorService, OrderService) {
     var vm = this;
     vm.order = OrderService.query({orderId: $routeParams.orderId});
@@ -629,21 +394,67 @@
     vm.supervisors = SamplingSupervisorService.query();
     vm.parametersDetailVisible = false;
 
+    vm.message = '';
+    vm.isDataSubmitted = false;
     vm.toggleParametersDetail = toggleParametersDetail;
-    vm.validateOrderForm = validateOrderForm;
-    vm.submitOrderForm = submitOrderForm;
+
+    vm.approveItem = approveItem;
+    vm.rejectItem = rejectItem;
+    vm.isFormValid = isFormValid;
+    vm.submitForm = submitForm;
 
     function toggleParametersDetail() {
       vm.parametersDetailVisible = !vm.parametersDetailVisible;
     }
 
-    function validateOrderForm(form) {
-      //TODO validation
-      return form;
+    function approveItem(item, user) {
+      item.id_status = 2;
+      item.status = 'Validado';
+      item.id_usuario_valida = user.id;
+      item.motivo_rechaza = '';
+      item.fecha_valida = DateUtilsService.dateToISOString(new Date()).slice(0,10);
     }
 
-    function submitOrderForm() {
+    function rejectItem(item, user) {
+      item.id_status = 3;
+      item.status = 'Rechazado';
+      item.id_usuario_valida = user.id;
+      item.fecha_rechaza = DateUtilsService.dateToISOString(new Date()).slice(0,10);
+    }
 
+    function isFormValid() {
+      //TODO validation
+      return true;
+    }
+
+    function submitForm() {
+      if (isFormValid() && !vm.isDataSubmitted)
+      {
+        vm.isDataSubmitted = true;
+        if (vm.study.id_orden > 0)
+        {
+          RestUtilsService
+            .saveData(
+              OrderService,
+              vm.order,
+              'muestreo/ordenes',
+              'id_orden'
+            );
+        }
+        else
+        {
+          if (vm.user.level < 3 || vm.order.order.id_status < 2)
+          {
+            RestUtilsService
+              .updateData(
+                OrderService,
+                vm.order,
+                'muestreo/ordenes',
+                'id_orden'
+              );
+          }
+        }
+      }
     }
   }
 
@@ -651,45 +462,12 @@
     .module('sislabApp')
     .controller('OrderController',
       [
-        '$routeParams', 'TokenService', 'OrderSourceService',
+        '$scope', '$routeParams', 'TokenService', 'OrderSourceService',
         'MatrixService', 'SamplingSupervisorService', 'OrderService',
         OrderController
       ]
     );
 
-  // PlansListController.js
-  /**
-   * @name PlansListController
-   * @constructor
-   * @desc Controla la vista para el listado de Planes de muestreo
-   * @this {Object} $scope - Contenedor para el modelo [AngularJS]
-   * @param {Object} $location - Manejo de URL [AngularJS]
-   * @param {Object} PlansListService - Proveedor de datos, Planes de muestreo
-   */
-  function PlansListController($location, PlansListService) {
-    var vm = this;
-    vm.plans = PlansListService.query();
-    vm.addPlan = addPlan;
-    vm.selectRow = selectRow;
-
-    function addPlan() {
-      $location.path('/muestreo/plan/0');
-    }
-
-    function selectRow(e) {
-      var itemId = e.currentTarget.id.split('Id')[1];
-      $location.path('/muestreo/plan/' + itemId);
-    }
-  }
-
-  angular
-    .module('sislabApp')
-    .controller('PlansListController',
-      [
-        '$location', 'PlansListService',
-        PlansListController
-      ]
-    );
 
   // PlanController.js
   /**
@@ -763,41 +541,6 @@
         PlanController
       ]
     );
-
-  // FieldSheetsListController.js
-  /**
-   * @name FieldSheetsListController
-   * @constructor
-   * @desc Controla la vista para el listado de Hojas de campo
-   * @this {Object} $scope - Contenedor para el modelo [AngularJS]
-   * @param {Object} $location - Manejo de URL [AngularJS]
-   * @param {Object} FieldSheetsListService - Proveedor de datos, Hojas de campo
-   */
-  function FieldSheetsListController($location, FieldSheetsListService) {
-    var vm = this;
-    vm.fieldSheets = FieldSheetsListService.query();
-    vm.addFieldSheet = addFieldSheet;
-    vm.selectRow = selectRow;
-
-    function addFieldSheet() {
-      $location.path('/recepcion/hoja/0');
-    }
-
-    function selectRow(e) {
-      var itemId = e.currentTarget.id.split('Id')[1];
-      $location.path('/recepcion/hoja/' + itemId);
-    }
-  }
-
-  angular
-    .module('sislabApp')
-    .controller('FieldSheetsListController',
-      [
-        '$location', 'FieldSheetsListService',
-        FieldSheetsListController
-      ]
-    );
-
 
   // FieldSheetController.js
   /**
@@ -988,39 +731,6 @@
       ]
     );
 
-  // ReceptionsListController.js
-  /**
-   * @name ReceptionsListController
-   * @constructor
-   * @desc Controla la vista para el listado de Recepciones
-   * @this {Object} $scope - Contenedor para el modelo [AngularJS]
-   * @param {Object} $location - Manejo de URL [AngularJS]
-   * @param {Object} ReceptionsListService - Proveedor de datos, Recepciones
-   */
-  function ReceptionsListController($location, ReceptionsListService) {
-    var vm = this;
-    vm.receptions = ReceptionsListService.query();
-    vm.addReception = addReception;
-    vm.selectRow = selectRow;
-
-    function addReception() {
-      $location.path('/recepcion/recepcion/0');
-    }
-
-    function selectRow(e) {
-      var itemId = e.currentTarget.id.split('Id')[1];
-      $location.path('/recepcion/recepcion/' + itemId);
-    }
-  }
-
-  angular
-    .module('sislabApp')
-    .controller('ReceptionsListController',
-      [
-        '$location', 'ReceptionsListService',
-        ReceptionsListController
-      ]
-    );
 
   // ReceptionController.js
   /**
@@ -1069,39 +779,6 @@
       [
         '$routeParams', 'ReceptionistService', 'ReceptionService',
         ReceptionController
-      ]
-    );
-
-  /**
-   * @name CustodiesListController
-   * @constructor
-   * @desc Controla la vista para el listado de Cadenas de custodia
-   * @this {Object} $scope - Contenedor para el modelo [AngularJS]
-   * @param {Object} $location - Manejo de URL [AngularJS]
-   * @param {Object} CustodiesListService - Proveedor de datos, Cadenas de custodia
-   */
-  function CustodiesListController($location, CustodiesListService) {
-    var vm = this;
-    vm.custodies = CustodiesListService.query();
-    vm.addCustody = addCustody;
-    vm.selectRow = selectRow;
-
-    function addCustody() {
-      $location.path('/recepcion/custodia/0');
-    }
-
-    function selectRow(e) {
-      var itemId = e.currentTarget.id.split('Id')[1];
-      $location.path('/recepcion/custodia/' + itemId);
-    }
-  }
-
-  angular
-    .module('sislabApp')
-    .controller('CustodiesListController',
-      [
-        '$location', 'CustodiesListService',
-        CustodiesListController
       ]
     );
 
@@ -1162,554 +839,5 @@
         'PreservationService', 'ExpirationService', 'RequiredVolumeService',
         'ContainerKindsService', 'CheckerService', 'CustodyService',
         CustodyController
-      ]
-    );
-
-  // SamplesListController.js
-  /**
-   * @name SamplesListController
-   * @constructor
-   * @desc Controla la vista para el listado de Muestras
-   * @this {Object} $scope - Contenedor para el modelo [AngularJS]
-   * @param {Object} SamplesListService - Proveedor de datos, lista de Muestras
-   */
-  function SamplesListController(SamplesListService) {
-    var vm = this;
-    vm.pricesList = SamplesListService.query();
-    vm.selectRow = selectRow;
-
-    function selectRow() {
-
-    }
-  }
-
-  angular
-    .module('sislabApp')
-    .controller('SamplesListController',
-      [
-        'SamplesListService',
-        SamplesListController
-      ]
-    );
-
-  // InstrumentsListController.js
-  /**
-   * @name InstrumentsListController
-   * @constructor
-   * @desc Controla la vista para el listado de Equipos
-   * @this {Object} $scope - Contenedor para el modelo [AngularJS]
-   * @param {Object} InstrumentsListService - Proveedor de datos, lista de Equipos
-   */
-  function InstrumentsListController(InstrumentsListService) {
-    var vm = this;
-    vm.clients = InstrumentsListService.query();
-    vm.selectRow = selectRow;
-
-    function selectRow() {
-
-    }
-  }
-
-  angular
-    .module('sislabApp')
-    .controller('InstrumentsListController',
-      [
-        'InstrumentsListService',
-        InstrumentsListController
-      ]
-    );
-
-  // ReactivesListController.js
-  /**
-   * @name ReactivesListController
-   * @constructor
-   * @desc Controla la vista para el listado de Reactivos
-   * @this {Object} $scope - Contenedor para el modelo [AngularJS]
-   * @param {Object} ReactivesListService - Proveedor de datos, lista de Reactivos
-   */
-  function ReactivesListController(ReactivesListService) {
-    var vm = this;
-    vm.pricesList = ReactivesListService.query();
-    vm.selectRow = selectRow;
-
-    function selectRow() {
-
-    }
-  }
-
-  angular
-    .module('sislabApp')
-    .controller('ReactivesListController',
-      [
-        'ReactivesListService',
-        ReactivesListController
-      ]
-    );
-
-  // ContainersListController.js
-  /**
-   * @name ContainersListController
-   * @constructor
-   * @desc Controla la vista para el listado de Recipientes
-   * @this {Object} $scope - Contenedor para el modelo [AngularJS]
-   * @param {Object} ContainersListService - Proveedor de datos, lista Recipientes
-   */
-  function ContainersListController(ContainersListService) {
-    var vm = this;
-    vm.pricesList = ContainersListService.query();
-    vm.selectRow = selectRow;
-
-    function selectRow() {
-
-    }
-  }
-
-  angular
-    .module('sislabApp')
-    .controller('ContainersListController',
-      [
-        'ContainersListService',
-        ContainersListController
-      ]
-    );
-
-  // AnalysisListController.js
-  /**
-   * @name AnalysisListController
-   * @constructor
-   * @desc Controla la vista para la búsqueda de Análisis
-   * @this {Object} $scope - Contenedor para el modelo [AngularJS]
-   * @param {Object} AnalysisListService - Proveedor de datos, Análisis
-   */
-  function AnalysisListController(AnalysisListService) {
-    var vm = this;
-    vm.analysisList = AnalysisListService.query();
-
-    vm.selectRow = selectRow;
-    function selectRow() {
-      //TODO send to details view
-      console.log('clicked in row');
-    }
-  }
-
-  angular
-    .module('sislabApp')
-    .controller('AnalysisListController',
-      [
-        'AnalysisListService',
-        AnalysisListController
-      ]
-    );
-
-  // AnalysisController.js
-  /**
-   * @name AnalysisController
-   * @constructor
-   * @desc Controla la vista para seleccionar captura de Análisis
-   * @this {Object} $scope - Contenedor para el modelo [AngularJS]
-   * @param {Object} DepartmentService - Proveedor de datos, Áreas
-   * @param {Object} ParameterService - Proveedor de datos, Parámetros
-   * @param {Object} AnalysisService - Proveedor de datos, selección de captura de Análisis
-   */
-  function AnalysisController(DepartmentService, ParameterService,
-    AnalysisService) {
-    var vm = this;
-    vm.areas = DepartmentService.query();
-    vm.parameters = ParameterService.query();
-    vm.analysis = AnalysisService.query();
-
-    vm.selectArea = selectArea;
-    vm.selectParameter = selectParameter;
-
-    vm.validateAnalysisForm = validateAnalysisForm;
-    vm.submitAnalysisForm = submitAnalysisForm;
-
-    function selectArea() {
-
-    }
-
-    function selectParameter() {
-
-    }
-
-    function validateAnalysisForm() {
-
-    }
-
-    function submitAnalysisForm() {
-
-    }
-  }
-
-  angular
-    .module('sislabApp')
-    .controller('AnalysisController',
-      [
-        'DepartmentService', 'ParameterService',
-        'AnalysisService',
-        AnalysisController
-      ]
-    );
-
-  // ReportsListController.js
-  /**
-   * @name ReportsListController
-   * @constructor
-   * @desc Controla la vista para el listado de Reportes
-   * @this {Object} $scope - Contenedor para el modelo [AngularJS]
-   * @param {Object} ReportsListService - Proveedor de datos, lista de Reportes
-   */
-  function ReportsListController(ReportsListService) {
-    var vm = this;
-    vm.pricesList = ReportsListService.query();
-    vm.selectRow = selectRow;
-
-    function selectRow() {
-
-    }
-  }
-
-  angular
-    .module('sislabApp')
-    .controller('ReportsListController',
-      [
-        'ReportsListService',
-        ReportsListController
-      ]
-    );
-
-  // ReportController.js
-  /**
-   * @name ReportController
-   * @constructor
-   * @desc Controla la vista para captura de Reporte
-   * @this {Object} $scope - Contenedor para el modelo [AngularJS]
-   * @param {Object} $routeParams - Proveedor de parámetros de ruta [AngularJS]
-   * @param {Object} ReportService - Proveedor de datos, Reporte
-   */
-  function ReportController($routeParams, ReportService) {
-    var vm = this;
-    vm.report = ReportService.query();
-
-    vm.validateReportForm = validateReportForm;
-    vm.submitReportForm = submitReportForm;
-
-    function validateReportForm() {
-
-    }
-
-    function submitReportForm() {
-
-    }
-  }
-
-  angular
-    .module('sislabApp')
-    .controller('ReportController',
-      [
-        'ReportService',
-        ReportController
-      ]
-    );
-
-  // PointsListController.js
-  /**
-   * @name PointsListController
-   * @constructor
-   * @desc Controla la vista para el listado de Puntos
-   * @this {Object} $scope - Contenedor para el modelo [AngularJS]
-   * @param {Object} PointsListService - Proveedor de datos, lista de Puntos
-   */
-  function PointsListController(PointsListService) {
-    var vm = this;
-    vm.points = PointsListService.query();
-    vm.selectRow = selectRow;
-
-    function selectRow() {
-
-    }
-  }
-
-  angular
-    .module('sislabApp')
-    .controller('PointsListController',
-      [
-        'PointsListService',
-        PointsListController
-      ]
-    );
-
-  // ClientsListController.js
-  /**
-   * @name ClientsListController
-   * @constructor
-   * @desc Controla la vista para el listado de Clientes
-   * @this {Object} $scope - Contenedor para el modelo [AngularJS]
-   * @param {Object} ClientService - Proveedor de datos, Cliente
-   */
-  function ClientsListController(ClientService) {
-    var vm = this;
-    vm.clients = ClientService.query();
-    vm.selectRow = selectRow;
-
-    function selectRow(e) {
-      var itemId = e.currentTarget.id.split('Id')[1];
-      console.log(itemId);
-    }
-  }
-
-  angular
-    .module('sislabApp')
-    .controller('ClientsListController',
-      [
-        'ClientService',
-        ClientsListController
-      ]
-    );
-
-  // DepartmentsListController.js
-  /**
-   * @name DepartmentsListController
-   * @constructor
-   * @desc Controla la vista para el listado de Áreas
-   * @this {Object} $scope - Contenedor para el modelo [AngularJS]
-   * @param {Object} DepartmentService - Proveedor de datos, Áreas
-   */
-  function DepartmentsListController(DepartmentService) {
-    var vm = this;
-    vm.departments = DepartmentService.query();
-  }
-
-  angular
-    .module('sislabApp')
-    .controller('DepartmentsListController',
-      [
-        'DepartmentService',
-        DepartmentsListController
-      ]
-    );
-
-  // EmployeesListController.js
-  /**
-   * @name EmployeesListController
-   * @constructor
-   * @desc Controla la vista para el listado de Empleados
-   * @this {Object} $scope - Contenedor para el modelo [AngularJS]
-   * @param {Object} EmployeeService - Proveedor de datos, Empleados
-   */
-  function EmployeesListController(EmployeeService) {
-    var vm = this;
-    vm.employees = EmployeeService.query();
-  }
-
-  angular
-    .module('sislabApp')
-    .controller('EmployeesListController',
-      [
-        'EmployeeService',
-        EmployeesListController
-      ]
-    );
-
-  // NormsListController.js
-  /**
-   * @name NormsListController
-   * @constructor
-   * @desc Controla la vista para el listado de Normas
-   * @this {Object} $scope - Contenedor para el modelo [AngularJS]
-   * @param {Object} NormsListService - Proveedor de datos, lista Normas
-   */
-  function NormsListController(NormsListService) {
-    var vm = this;
-    vm.clients = NormsListService.query();
-    vm.selectRow = selectRow;
-
-    function selectRow() {
-
-    }
-  }
-
-  angular
-    .module('sislabApp')
-    .controller('NormsListController',
-      [
-        'NormsListService',
-        NormsListController
-      ]
-    );
-
-  // ReferencesListController.js
-  /**
-   * @name ReferencesListController
-   * @constructor
-   * @desc Controla la vista para el listado de Referencias
-   * @this {Object} $scope - Contenedor para el modelo [AngularJS]
-   * @param {Object} ReferencesListService - Proveedor de datos, lista Referencias
-   */
-  function ReferencesListController(ReferencesListService) {
-    var vm = this;
-    vm.ReferencesList = ReferencesListService.query();
-    vm.selectRow = selectRow;
-
-    function selectRow() {
-
-    }
-  }
-
-  angular
-    .module('sislabApp')
-    .controller('ReferencesListController',
-      [
-        'ReferencesListService',
-        ReferencesListController
-      ]
-    );
-
-  // MethodsListController.js
-  /**
-   * @name MethodsListController
-   * @constructor
-   * @desc Controla la vista para la búsqueda de Métodos
-   * @this {Object} $scope - Contenedor para el modelo [AngularJS]
-   * @param {Object} MethodsListService - Proveedor de datos, Métodos
-   */
-  function MethodsListController(MethodsListService) {
-    var vm = this;
-    vm.methodsList = MethodsListService.query();
-
-    vm.selectRow = selectRow;
-    function selectRow() {
-
-    }
-  }
-
-  angular
-    .module('sislabApp')
-    .controller('MethodsListController',
-      [
-        'MethodsListService',
-        MethodsListController
-      ]
-    );
-
-  // PricesListController.js
-  /**
-   * @name PricesListController
-   * @constructor
-   * @desc Controla la vista para el listado de Precios
-   * @this {Object} $scope - Contenedor para el modelo [AngularJS]
-   * @param {Object} PricesListService - Proveedor de datos, lista Precios
-   */
-  function PricesListController(PricesListService) {
-    var vm = this;
-    vm.pricesList = PricesListService.query();
-    vm.selectRow = selectRow;
-
-    function selectRow() {
-
-    }
-  }
-
-  angular
-    .module('sislabApp')
-    .controller('PricesListController',
-      [
-        'PricesListService',
-        PricesListController
-      ]
-    );
-
-  // UsersListController.js
-  /**
-   * @name UsersListController
-   * @constructor
-   * @desc Controla la vista para el listado de Usuarios
-   * @this {Object} $scope - Contenedor para el modelo [AngularJS]
-   * @param {Object} UsersListService - Proveedor de datos, Usuarios
-   */
-  function UsersListController (UsersListService) {
-    var vm = this;
-    vm.users = UsersListService.query();
-  }
-
-  angular
-    .module('sislabApp')
-    .controller('UsersListController',
-      [
-        'UsersListService',
-        UsersListController
-      ]
-    );
-
-  // ProfileController.js
-  /**
-   * @name ProfileController
-   * @constructor
-   * @desc Controla la vista para Perfil
-   * @this {Object} $scope - Contenedor para el modelo [AngularJS]
-   * @param {Object} UserProfileService - Proveedor de datos, Perfil de usuario
-   */
-  function ProfileController(UserProfileService) {
-    var vm = this;
-    vm.profile = UserProfileService.query();
-  }
-
-  angular
-    .module('sislabApp')
-    .controller('ProfileController',
-      [
-        'UserProfileService',
-        ProfileController
-      ]
-    );
-
-  // LogoutController.js
-  /**
-   * @name LogoutController
-   * @constructor
-   * @desc Controla la vista para Logout
-   * @this {Object} $scope - Contenedor para el modelo [AngularJS]
-   * @param {Object} $location - Manejo de URL [AngularJS]
-   * @param {Object} TokenService - Manejo de objeto Window [AngularJS]
-   */
-  function LogoutController($location, TokenService) {
-    var vm = this;
-    vm.logout = logout;
-
-    function logout() {
-      TokenService.clearToken();
-      $location.path('sistema/login');
-    }
-  }
-
-  angular
-    .module('sislabApp')
-    .controller('LogoutController',
-      [
-        '$location', 'TokenService',
-        LogoutController
-      ]
-    );
-
-  // ClientDetailController.js
-  /**
-   * @name ClientDetailController
-   * @constructor
-   * @desc Controla la vista para con el detalle de un Cliente
-   * @this {Object} $scope - Contenedor para el modelo [AngularJS]
-   * @param {Object} ClientDetailService - Proveedor de datos, Detalle cliente
-   */
-  function ClientDetailController($scope, ClientDetailService) {
-    var vm = this;
-    vm.clientDetail = ClientDetailService.query();
-  }
-
-  angular
-    .module('sislabApp')
-    .controller('ClientDetailController',
-      [
-        '$scope',
-        'ClientDetailService',
-        ClientsListController
       ]
     );

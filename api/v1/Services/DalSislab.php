@@ -54,7 +54,7 @@ class DALSislab
 								"id_submenu":1,
 								"id_menu":1,
 								"orden":1,
-								"url":"/estudio/estudios",
+								"url":"/estudio/estudio",
 								"label":"Informe",
 								"activo":1
 							}
@@ -72,7 +72,7 @@ class DALSislab
 								"id_submenu":2,
 								"id_menu":2,
 								"orden":1,
-								"url":"/muestreo/solicitudes",
+								"url":"/muestreo/solicitud",
 								"label":"Solicitud",
 								"activo":1
 							},
@@ -80,7 +80,7 @@ class DALSislab
 								"id_submenu":3,
 								"id_menu":2,
 								"orden":2,
-								"url":"/muestreo/ordenes",
+								"url":"/muestreo/orden",
 								"label":"Orden Muestreo",
 								"activo":1
 							},
@@ -88,7 +88,7 @@ class DALSislab
 								"id_submenu":4,
 								"id_menu":2,
 								"orden":3,
-								"url":"/muestreo/planes",
+								"url":"/muestreo/plan",
 								"label":"Plan Muestreo",
 								"activo":1
 							}
@@ -106,7 +106,7 @@ class DALSislab
 								"id_submenu":5,
 								"id_menu":3,
 								"orden":1,
-								"url":"/recepcion/hojas",
+								"url":"/recepcion/hoja",
 								"label":"Hoja Campo",
 								"activo":1
 							},
@@ -114,7 +114,7 @@ class DALSislab
 								"id_submenu":6,
 								"id_menu":3,
 								"orden":1,
-								"url":"/recepcion/recepciones",
+								"url":"/recepcion/recepcion",
 								"label":"Recepción Muestras",
 								"activo":1
 							},
@@ -122,7 +122,7 @@ class DALSislab
 								"id_submenu":7,
 								"id_menu":3,
 								"orden":4,
-								"url":"/recepcion/custodias",
+								"url":"/recepcion/custodia",
 								"label":"Cadena Custodia",
 								"activo":1
 							}
@@ -140,7 +140,7 @@ class DALSislab
 								"id_submenu":8,
 								"id_menu":4,
 								"orden":1,
-								"url":"/inventario/muestras",
+								"url":"/inventario/muestra",
 								"label":"Inventario Muestras",
 								"activo":1
 							},
@@ -148,7 +148,7 @@ class DALSislab
 								"id_submenu":9,
 								"id_menu":4,
 								"orden":2,
-								"url":"/inventario/equipos",
+								"url":"/inventario/equipo",
 								"label":"Equipos",
 								"activo":1
 							},
@@ -156,7 +156,7 @@ class DALSislab
 								"id_submenu":10,
 								"id_menu":4,
 								"orden":3,
-								"url":"/inventario/reactivos",
+								"url":"/inventario/reactivo",
 								"label":"Reactivos",
 								"activo":1
 							},
@@ -164,7 +164,7 @@ class DALSislab
 								"id_submenu":11,
 								"id_menu":4,
 								"orden":4,
-								"url":"/inventario/recipientes",
+								"url":"/inventario/recipiente",
 								"label":"Recipientes",
 								"activo":1
 							}
@@ -200,7 +200,7 @@ class DALSislab
 								"id_submenu":13,
 								"id_menu":6,
 								"orden":1,
-								"url":"/reporte/reportes",
+								"url":"/reporte/reporte",
 								"label":"Reportes",
 								"activo":1
 							}
@@ -218,7 +218,7 @@ class DALSislab
 								"id_submenu":16,
 								"id_menu":7,
 								"orden":1,
-								"url":"/catalogo/puntos",
+								"url":"/catalogo/punto",
 								"label":"Puntos Muestreo",
 								"activo":1
 							},
@@ -226,7 +226,7 @@ class DALSislab
 								"id_submenu":17,
 								"id_menu":7,
 								"orden":2,
-								"url":"/catalogo/clientes",
+								"url":"/catalogo/cliente",
 								"label":"Clientes",
 								"activo":1
 							},
@@ -234,7 +234,7 @@ class DALSislab
 								"id_submenu":18,
 								"id_menu":7,
 								"orden":3,
-								"url":"/catalogo/areas",
+								"url":"/catalogo/area",
 								"label":"Áreas",
 								"activo":1
 							},
@@ -242,7 +242,7 @@ class DALSislab
 								"id_submenu":19,
 								"id_menu":7,
 								"orden":4,
-								"url":"/catalogo/empleados",
+								"url":"/catalogo/empleado",
 								"label":"Empleados",
 								"activo":1
 							},
@@ -250,7 +250,7 @@ class DALSislab
 								"id_submenu":20,
 								"id_menu":7,
 								"orden":5,
-								"url":"/catalogo/normas",
+								"url":"/catalogo/norma",
 								"label":"Normas",
 								"activo":1
 							},
@@ -266,7 +266,7 @@ class DALSislab
 								"id_submenu":22,
 								"id_menu":7,
 								"orden":7,
-								"url":"/catalogo/metodos",
+								"url":"/catalogo/metodo",
 								"label":"Métodos análisis",
 								"activo":1
 							},
@@ -274,7 +274,7 @@ class DALSislab
 								"id_submenu":23,
 								"id_menu":7,
 								"orden":8,
-								"url":"/catalogo/precios",
+								"url":"/catalogo/precio",
 								"label":"Precio análisis",
 								"activo":1
 							}
@@ -292,7 +292,7 @@ class DALSislab
 								"id_submenu":24,
 								"id_menu":8,
 								"orden":1,
-								"url":"/sistema/usuarios",
+								"url":"/sistema/usuario",
 								"label":"Usuarios",
 								"activo":1
 							},
@@ -307,149 +307,6 @@ class DALSislab
 							{
 								"id_submenu":26,
 								"id_menu":8,
-								"orden":3,
-								"url":"/sistema/logout",
-								"label":"Cerrar sesión",
-								"activo":1
-							}
-						]
-					}
-				]
-			';
-		}
-		else if ($userId == 20)
-		{
-			$result = '
-				[
-					{
-						"id_menu":1,
-						"orden":1,
-						"url":"/#",
-						"label":"Muestreo",
-						"activo":1,
-						"submenu":
-						[
-							{
-								"id_submenu":1,
-								"id_menu":1,
-								"orden":1,
-								"url":"/muestreo/solicitudes",
-								"label":"Solicitud",
-								"activo":1
-							}
-						]
-					},
-					{
-						"id_menu":5,
-						"orden":5,
-						"url":"/#",
-						"label":"Reportes",
-						"activo":1,
-						"submenu":
-						[
-							{
-								"id_submenu":14,
-								"id_menu":5,
-								"orden":1,
-								"url":"/reporte/consulta",
-								"label":"Consultar",
-								"activo":1
-							}
-						]
-					},
-					{
-						"id_menu":6,
-						"orden":6,
-						"url":"/#",
-						"label":"Catálogos",
-						"activo":1,
-						"submenu":
-						[
-							{
-								"id_submenu":16,
-								"id_menu":6,
-								"orden":1,
-								"url":"/catalogo/puntos",
-								"label":"Puntos Muestreo",
-								"activo":1
-							},
-							{
-								"id_submenu":17,
-								"id_menu":6,
-								"orden":2,
-								"url":"/catalogo/clientes",
-								"label":"Clientes",
-								"activo":1
-							},
-							{
-								"id_submenu":18,
-								"id_menu":6,
-								"orden":3,
-								"url":"/catalogo/areas",
-								"label":"Áreas",
-								"activo":1
-							},
-							{
-								"id_submenu":19,
-								"id_menu":6,
-								"orden":4,
-								"url":"/catalogo/empleados",
-								"label":"Empleados",
-								"activo":1
-							},
-							{
-								"id_submenu":20,
-								"id_menu":6,
-								"orden":5,
-								"url":"/catalogo/normas",
-								"label":"Normas",
-								"activo":1
-							},
-							{
-								"id_submenu":21,
-								"id_menu":6,
-								"orden":6,
-								"url":"/catalogo/referencia",
-								"label":"Valores Referencia",
-								"activo":1
-							},
-							{
-								"id_submenu":22,
-								"id_menu":6,
-								"orden":7,
-								"url":"/catalogo/metodos",
-								"label":"Métodos análisis",
-								"activo":1
-							},
-							{
-								"id_submenu":23,
-								"id_menu":6,
-								"orden":8,
-								"url":"/catalogo/precios",
-								"label":"Precio análisis",
-								"activo":1
-							}
-						]
-					},
-					{
-						"id_menu":7,
-						"orden":7,
-						"url":"/#",
-						"label":"Administración",
-						"activo":1,
-						"submenu":
-						[
-							{
-								"id_submenu":25,
-								"id_menu":7,
-								"orden":2,
-								"url":"/sistema/perfil",
-								"label":"Ver Perfil",
-								"activo":1
-							},
-							{
-								"id_submenu":26,
-								"id_menu":7,
 								"orden":3,
 								"url":"/sistema/logout",
 								"label":"Cerrar sesión",

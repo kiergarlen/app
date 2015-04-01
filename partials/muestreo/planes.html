@@ -36,12 +36,17 @@
       <label for="planSearch" class="sr-only">
         Ingrese una búsqueda (Municipio, Localidad, Calle, etc.)
       </label>
-      <input type="text"
-        class="form-control"
-        placeholder="Ingrese una búsqueda (Municipio, Localidad, Calle, etc.)"
-        id="planSearch"
-        name="planSearch"
-        data-ng-model="plans.filter.$">
+      <div class="input-group">
+        <div class="input-group-addon">
+          <i class="glyphicon glyphicon-search"></i>
+        </div>
+        <input type="text"
+          class="form-control"
+          placeholder="Ingrese una búsqueda (Municipio, Localidad, Calle, etc.)"
+          id="planSearch"
+          name="planSearch"
+          data-ng-model="plans.filter.$">
+      </div>
       <br>
     </div>
   </div>
@@ -73,17 +78,16 @@
                 {{item.id_plan}}
               </td>
               <td>
-                <span class="label label-info"
-                  data-ng-show="item.validado > 0">Validado</span>
+                <span class="label label-success"
+                  data-ng-show="item.id_status == 2">Validado</span>
                 <span class="label label-default"
-                  data-ng-show="item.validado < 1">Sin Validar</span>
+                  data-ng-show="item.id_status < 2">Sin Validar</span>
+                <span class="label label-danger"
+                  data-ng-show="item.fecha_captura.length < 1">
+                  Falta info.
+                </span>
               </td>
               <td>
-                <!--
-                <span class="label label-default">
-                  {{item.id_municipio}}
-                </span><br>
-                -->
                 {{item.calle}}
                 {{item.numero}},
                 {{item.municipio}}

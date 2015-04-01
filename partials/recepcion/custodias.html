@@ -42,8 +42,8 @@
         id="custodieSearch"
         name="custodieSearch"
         data-ng-model="custodies.filter.$">
-      <br>
     </div>
+    <br>
   </div>
 </form>
 <div class="row">
@@ -74,17 +74,16 @@
                 {{item.id_custodia}}
               </td>
               <td>
-                <span class="label label-info"
-                  data-ng-show="item.validado > 0">Validada</span>
+                <span class="label label-success"
+                  data-ng-show="item.id_status == 2">Validado</span>
                 <span class="label label-default"
-                  data-ng-show="item.validado < 1">Sin Validar</span>
+                  data-ng-show="item.id_status < 2">Sin Validar</span>
+                <span class="label label-danger"
+                  data-ng-show="item.fecha_captura.length < 1">
+                  Falta info.
+                </span>
               </td>
               <td>
-                <!--
-                <span class="label label-default">
-                  {{item.id_municipio}}
-                </span><br>
-                -->
                 {{item.calle}}
                 {{item.numero}},
                 {{item.municipio}}

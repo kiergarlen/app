@@ -213,7 +213,6 @@
       startCollapsed: true
     });
   }
-
   angular
     .module('sislabApp')
     .config(
@@ -239,7 +238,6 @@
       controllerAs: 'menu'
     };
   }
-
   angular
     .module('sislabApp')
     .directive('sislabMenu', sislabMenu);
@@ -255,7 +253,6 @@
       templateUrl: 'partials/sistema/banner.html'
     };
   }
-
   angular
     .module('sislabApp')
     .directive('sislabBanner', sislabBanner);
@@ -271,7 +268,6 @@
       templateUrl: 'partials/sistema/footer.html'
     };
   }
-
   angular
     .module('sislabApp')
     .directive('sislabFooter', sislabFooter);
@@ -287,7 +283,6 @@
       templateUrl: 'partials/sistema/banner-bottom.html'
     };
   }
-
   angular
     .module('sislabApp')
     .directive('sislabBannerBottom', sislabBannerBottom);

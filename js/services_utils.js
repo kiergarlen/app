@@ -103,7 +103,6 @@
 
     return ArrayUtils;
   }
-
   angular
     .module('sislabApp')
     .factory('ArrayUtilsService',
@@ -116,7 +115,7 @@
   /**
    * @name DateUtilsService
    * @constructor
-   * @desc Proveedor para manejo de arreglos
+   * @desc Proveedor para manejo de fechas
    * @return {DateUtilsService} DateUtils - Métodos para manejo de fechas
    */
   function DateUtilsService() {
@@ -192,7 +191,6 @@
 
     return DateUtils;
   }
-
   angular
     .module('sislabApp')
     .factory('DateUtilsService',
@@ -208,7 +206,7 @@
    * @desc Proveedor para manejo de servicios REST
    * @return {RestUtilsService} RestUtils - Métodos para manejo de REST
    */
-  function RestUtilsService() {
+  function RestUtilsService($resource, $location) {
     var RestUtils = {};
 
     RestUtils.saveData = saveData;
@@ -227,16 +225,16 @@
         .save(JSON.stringify(data))
         .$promise
         .then(function success(response) {
-          vm.message = response[itemIdName];
           $location.path(returnPath);
+          return response[itemIdName];
         }, function error(response) {
           if (response.status === 404)
           {
-            vm.message = 'Recurso no encontrado';
+            return 'Recurso no encontrado';
           }
           else
           {
-            vm.message = 'Error no especificado';
+            return 'Error no especificado';
           }
         });
     }
@@ -254,27 +252,27 @@
         .update(JSON.stringify(data))
         .$promise
         .then(function success(response) {
-          vm.message = response[itemIdName];
           $location.path(returnPath + '/' + response[itemIdName]);
+          return response[itemIdName];
         }, function error(response) {
           if (response.status === 404)
           {
-            vm.message = 'Recurso no encontrado';
+            return 'Recurso no encontrado';
           }
           else
           {
-            vm.message = 'Error no especificado';
+            return 'Error no especificado';
           }
         });
     }
 
     return RestUtils;
   }
-
   angular
     .module('sislabApp')
     .factory('RestUtilsService',
       [
+        '$resource', '$location',
         RestUtilsService
       ]
     );
@@ -294,7 +292,7 @@
     cachedToken,
     Token = {};
 
-    Token.authenticated = authenticateUser;
+    Token.authenticateUser = authenticateUser;
     Token.isAuthenticated = isAuthenticated;
     Token.setToken = setToken;
     Token.getToken = getToken;
@@ -405,13 +403,52 @@
 
     return Token;
   }
-
   angular
     .module('sislabApp')
     .factory('TokenService',
       [
-        '$window', 'jwtHelper',
+        '$window', '$http', '$location', 'jwtHelper',
         TokenService
+      ]
+    );
+
+  // ValidationService.js
+  /**
+   * @name ValidationService
+   * @constructor
+   * @desc Proveedor para manejo de validación
+   * @param {Object} DateUtilsService - Proveedor para manejo de fechas
+   * @return {ArrayUtilsService} ArrayUtils - Métodos para manejo de validación
+   */
+  function ValidationService(DateUtilsService) {
+    var Validation = {};
+
+    Validation.approveItem = approveItem;
+    Validation.rejectItem = rejectItem;
+
+    function approveItem(item, user) {
+      item.id_status = 2;
+      item.status = 'Validado';
+      item.id_usuario_valida = user.id;
+      item.motivo_rechaza = '';
+      item.fecha_valida = DateUtilsService.dateToISOString(new Date()).slice(0,10);
+    }
+
+    function rejectItem(item, user) {
+      item.id_status = 3;
+      item.status = 'Rechazado';
+      item.id_usuario_valida = user.id;
+      item.fecha_rechaza = DateUtilsService.dateToISOString(new Date()).slice(0,10);
+    }
+
+    return Validation;
+  }
+  angular
+    .module('sislabApp')
+    .factory('ValidationService',
+      [
+        'DateUtilsService',
+        ValidationService
       ]
     );
 
@@ -436,7 +473,6 @@
       }
     });
   }
-
   angular
     .module('sislabApp')
     .factory('MenuService',
@@ -467,7 +503,6 @@
       }
     });
   }
-
   angular
     .module('sislabApp')
     .factory('TasksListService',

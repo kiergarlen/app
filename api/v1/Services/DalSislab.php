@@ -4649,7 +4649,7 @@ class DALSislab
 				{
 					"id_orden":1,
 					"id_estudio":1,
-					"id_solicitud":1
+					"id_solicitud":1,
 					"id_paquete_puntos":1,
 					"id_supervisor_muestreo":2,
 					"id_ejercicio":2015,
@@ -4675,7 +4675,36 @@ class DALSislab
 					"fecha_acepta":"2015-03-21",
 					"fecha_rechaza":"",
 					"motivo_rechaza":"",
-					"activo":1
+					"activo":1,
+					"estudio":
+					{
+						"id_estudio":1,
+						"id_cliente":13,
+						"id_origen_orden":1,
+						"id_ejercicio":2015,
+						"id_status":2,
+						"id_usuario_captura":20,
+						"id_usuario_valida":1,
+						"id_usuario_actualiza":1,
+						"numero_oficio":432,
+						"folio":"CEA-432/2015",
+						"origen_descripcion":"GP-001/2015",
+						"ubicacion":"Río Santiago",
+						"status":"Validado",
+						"fecha":"2015-03-21",
+						"fecha_captura":"2015-03-21",
+						"ip_captura":"[::1]",
+						"host_captura":"[::1]",
+						"fecha_valida":"2015-03-21",
+						"ip_valida":"[::1]",
+						"host_valida":"[::1]",
+						"fecha_actualiza":"2015-03-21",
+						"ip_actualiza":"[::1]",
+						"host_actualiza":"[::1]",
+						"fecha_rechaza":"2015-03-21",
+						"motivo_rechaza":"Error en datos cliente",
+						"activo":1
+					}
 				}
 			';
 		}
@@ -4685,7 +4714,7 @@ class DALSislab
 				{
 					"id_orden":2,
 					"id_estudio":1,
-					"id_solicitud":2
+					"id_solicitud":2,
 					"id_paquete_puntos":1,
 					"id_supervisor_muestreo":3,
 					"id_ejercicio":2015,
@@ -4711,7 +4740,36 @@ class DALSislab
 					"fecha_acepta":"2015-03-21",
 					"fecha_rechaza":"",
 					"motivo_rechaza":"",
-					"activo":1
+					"activo":1,
+					"estudio":
+					{
+						"id_estudio":1,
+						"id_cliente":13,
+						"id_origen_orden":1,
+						"id_ejercicio":2015,
+						"id_status":2,
+						"id_usuario_captura":20,
+						"id_usuario_valida":1,
+						"id_usuario_actualiza":1,
+						"numero_oficio":432,
+						"folio":"CEA-432/2015",
+						"origen_descripcion":"GP-001/2015",
+						"ubicacion":"Río Santiago",
+						"status":"Validado",
+						"fecha":"2015-03-21",
+						"fecha_captura":"2015-03-21",
+						"ip_captura":"[::1]",
+						"host_captura":"[::1]",
+						"fecha_valida":"2015-03-21",
+						"ip_valida":"[::1]",
+						"host_valida":"[::1]",
+						"fecha_actualiza":"2015-03-21",
+						"ip_actualiza":"[::1]",
+						"host_actualiza":"[::1]",
+						"fecha_rechaza":"2015-03-21",
+						"motivo_rechaza":"Error en datos cliente",
+						"activo":1
+					}
 				}
 			';
 		}
@@ -4721,7 +4779,7 @@ class DALSislab
 				{
 					"id_orden":0,
 					"id_estudio":0,
-					"id_solicitud":0
+					"id_solicitud":0,
 					"id_paquete_puntos":0,
 					"id_supervisor_muestreo":0,
 					"id_ejercicio":0,
@@ -4747,7 +4805,11 @@ class DALSislab
 					"fecha_acepta":"",
 					"fecha_rechaza":"",
 					"motivo_rechaza":"",
-					"activo":1
+					"activo":1,
+					"estudio":
+					{
+
+					}
 				}
 			';
 		}
@@ -4765,7 +4827,7 @@ class DALSislab
 				{
 					"id_orden":1,
 					"id_estudio":1,
-					"id_solicitud":1
+					"id_solicitud":1,
 					"id_paquete_puntos":1,
 					"id_supervisor_muestreo":2,
 					"id_ejercicio":2015,
@@ -4791,12 +4853,41 @@ class DALSislab
 					"fecha_acepta":"2015-03-21",
 					"fecha_rechaza":"",
 					"motivo_rechaza":"",
-					"activo":1
+					"activo":1,
+					"estudio":
+					{
+						"id_estudio":1,
+						"id_cliente":13,
+						"id_origen_orden":1,
+						"id_ejercicio":2015,
+						"id_status":2,
+						"id_usuario_captura":20,
+						"id_usuario_valida":1,
+						"id_usuario_actualiza":1,
+						"numero_oficio":432,
+						"folio":"CEA-432/2015",
+						"origen_descripcion":"GP-001/2015",
+						"ubicacion":"Río Santiago",
+						"status":"Validado",
+						"fecha":"2015-03-21",
+						"fecha_captura":"2015-03-21",
+						"ip_captura":"[::1]",
+						"host_captura":"[::1]",
+						"fecha_valida":"2015-03-21",
+						"ip_valida":"[::1]",
+						"host_valida":"[::1]",
+						"fecha_actualiza":"2015-03-21",
+						"ip_actualiza":"[::1]",
+						"host_actualiza":"[::1]",
+						"fecha_rechaza":"2015-03-21",
+						"motivo_rechaza":"Error en datos cliente",
+						"activo":1
+					}
 				},
 				{
 					"id_orden":2,
 					"id_estudio":1,
-					"id_solicitud":2
+					"id_solicitud":2,
 					"id_paquete_puntos":1,
 					"id_supervisor_muestreo":3,
 					"id_ejercicio":2015,
@@ -4822,7 +4913,36 @@ class DALSislab
 					"fecha_acepta":"2015-03-21",
 					"fecha_rechaza":"",
 					"motivo_rechaza":"",
-					"activo":1
+					"activo":1,
+					"estudio":
+					{
+						"id_estudio":1,
+						"id_cliente":13,
+						"id_origen_orden":1,
+						"id_ejercicio":2015,
+						"id_status":2,
+						"id_usuario_captura":20,
+						"id_usuario_valida":1,
+						"id_usuario_actualiza":1,
+						"numero_oficio":432,
+						"folio":"CEA-432/2015",
+						"origen_descripcion":"GP-001/2015",
+						"ubicacion":"Río Santiago",
+						"status":"Validado",
+						"fecha":"2015-03-21",
+						"fecha_captura":"2015-03-21",
+						"ip_captura":"[::1]",
+						"host_captura":"[::1]",
+						"fecha_valida":"2015-03-21",
+						"ip_valida":"[::1]",
+						"host_valida":"[::1]",
+						"fecha_actualiza":"2015-03-21",
+						"ip_actualiza":"[::1]",
+						"host_actualiza":"[::1]",
+						"fecha_rechaza":"2015-03-21",
+						"motivo_rechaza":"Error en datos cliente",
+						"activo":1
+					}
 				}
 			]
 		';

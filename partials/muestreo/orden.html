@@ -156,10 +156,9 @@
         name="samplingDate"
         placeholder="aaaa-mm-dd"
         required
-        data-ng-model="order.order.fecha_muestreo"
+        data-ng-model="order.order.fecha_muestra"
         data-date-format="yyyy-MM-dd"
         data-date-type="string"
-        data-min-date="01/01/2000"
         data-autoclose="1"
         date-use-native="true"
         data-bs-datepicker
@@ -201,7 +200,7 @@
         id="supervisorSelect"
         name="supervisorSelect"
         required
-        data-ng-model="order.id_supervisor_muestreo"
+        data-ng-model="order.order.id_supervisor_muestreo"
         >
         <option data-ng-repeat="supervisor in order.supervisors"
           value="{{supervisor.id_empleado}}">
@@ -226,8 +225,12 @@
         id="pointPackageSelect"
         name="pointPackageSelect"
         required
-        data-ng-model="order.id_grupo_puntos"
+        data-ng-model="order.order.id_paquete_puntos"
         >
+        <option data-ng-repeat="pointPackage in order.pointPackages"
+          value="{{pointPackage.id_paquete_punto}}">
+          {{pointPackage.paquete_punto}}
+        </option>
       </select>
     </div>
   </div>
@@ -237,20 +240,20 @@
       <h4>Validación</h4>
     </div>
     <div class="col-xs-12 col-sm-5 well wel-sm ">
-      <a class="btn btn-success"
+      <button class="btn btn-success"
         value="Validar" title="Validar"
-        data-ng-click="order.approveItem(order.order, order.user)"
+        data-ng-click="order.approveItem()"
         >
         <i class="glyphicon glyphicon-ok" aria-hidden="true"></i>
         Validar
-      </a>
-      <a class="btn btn-danger"
+      </button>
+      <button class="btn btn-danger"
         value="Rechazar" title="Rechazar"
-        data-ng-click="order.rejectItem(order.order, order.user)"
+        data-ng-click="order.rejectItem()"
         >
         <i class="glyphicon glyphicon-remove" aria-hidden="true"></i>
         Rechazar
-      </a>
+      </button>
     </div>
     <div class="col-xs-12 col-sm-7 well wel-sm ">
       <label class="sr-only" for="rejectText">
@@ -259,7 +262,7 @@
       <input type="text" class="form-control"
         id="rejectText"
         name="rejectText"
-        placeholder="Motivo rechazo"
+        placeholder="Especifique motivo rechazo"
         data-ng-disabled="order.order.id_status != 3"
         data-ng-model="order.order.motivo_rechaza"
         >

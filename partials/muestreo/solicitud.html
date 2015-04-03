@@ -226,20 +226,32 @@
         <h4>Aceptación Cliente</h4>
       </div>
       <div class="col-xs-12 col-sm-5">
-        <a class="btn btn-success"
-          value="Sí" title="Sí"
-          data-ng-click="quote.approveClientItem(quote.quote, quote.user)"
+        <button class="btn btn-success"
+          value="Aceptado" title="Aceptado"
+          data-ng-click="quote.approveClientItem()"
           >
           <i class="glyphicon glyphicon-ok" aria-hidden="true"></i>
-          Sí
-        </a>
-        <a class="btn btn-danger"
-          value="No" title="No"
-          data-ng-click="quote.rejectClientItem(quote.quote, quote.user)"
+          Aceptado
+        </button>
+        <button class="btn btn-danger"
+          value="No aceptado" title="No aceptado"
+          data-ng-click="quote.rejectClientItem()"
           >
           <i class="glyphicon glyphicon-remove" aria-hidden="true"></i>
-          No
-        </a>
+          No aceptado
+        </button>
+      </div>
+      <div class="col-xs-12 col-sm-7 well wel-sm ">
+        <label class="sr-only" for="rejectText">
+          Motivo rechazo
+        </label>
+        <input type="text" class="form-control"
+          id="rejectText"
+          name="rejectText"
+          placeholder="Especifique motivo rechazo"
+          data-ng-disabled="quote.quote.id_status_cliente != 3"
+          data-ng-model="quote.quote.motivo_rechaza_cliente"
+          >
       </div>
     </div>
   -->
@@ -249,20 +261,20 @@
       <h4>Validación</h4>
     </div>
     <div class="col-xs-12 col-sm-5 well wel-sm ">
-      <a class="btn btn-success"
+      <button class="btn btn-success"
         value="Validar" title="Validar"
-        data-ng-click="quote.approveItem(quote.quote, quote.user)"
+        data-ng-click="quote.approveItem()"
         >
         <i class="glyphicon glyphicon-ok" aria-hidden="true"></i>
         Validar
-      </a>
-      <a class="btn btn-danger"
+      </button>
+      <button class="btn btn-danger"
         value="Rechazar" title="Rechazar"
-        data-ng-click="quote.rejectItem(quote.quote, quote.user)"
+        data-ng-click="quote.rejectItem()"
         >
         <i class="glyphicon glyphicon-remove" aria-hidden="true"></i>
         Rechazar
-      </a>
+      </button>
     </div>
     <div class="col-xs-12 col-sm-7 well wel-sm ">
       <label class="sr-only" for="rejectText">
@@ -271,7 +283,7 @@
       <input type="text" class="form-control"
         id="rejectText"
         name="rejectText"
-        placeholder="Motivo rechazo"
+        placeholder="Especifique motivo rechazo"
         data-ng-disabled="quote.quote.id_status != 3"
         data-ng-model="quote.quote.motivo_rechaza"
         >

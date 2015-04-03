@@ -2,7 +2,7 @@
   /**
    * @name StudyService
    * @constructor
-   * @desc Proveedor de datos, Estudio
+   * @desc Proveedor de datos, Estudios
    * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @param {Object} TokenService - Proveedor de métodos para token
    * @return {Object} $resource - Acceso a recursos HTTP
@@ -43,7 +43,6 @@
       }
     });
   }
-
   angular
     .module('sislabApp')
     .factory('StudyService',
@@ -58,7 +57,7 @@
   /**
    * @name QuoteService
    * @constructor
-   * @desc Proveedor de datos, Cotizaciones
+   * @desc Proveedor de datos, Solicitudes
    * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @param {Object} TokenService - Proveedor de métodos para token
    * @return {Object} $resource - Acceso a recursos HTTP
@@ -86,7 +85,7 @@
         params: {quoteId:'id_solicitud'},
         isArray: false,
         headers: {
-          'Auth-Token': TokenService.POSTToken()
+          'Auth-Token': TokenService.getToken()
         }
       },
       save: {
@@ -99,7 +98,6 @@
       }
     });
   }
-
   angular
     .module('sislabApp')
     .factory('QuoteService',
@@ -154,7 +152,6 @@
       }
     });
   }
-
   angular
     .module('sislabApp')
     .factory('OrderService',
@@ -168,7 +165,7 @@
   /**
    * @name PlanService
    * @constructor
-   * @desc Proveedor de datos, Plan muestreo
+   * @desc Proveedor de datos, Planes de muestreo
    * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @param {Object} TokenService - Proveedor de métodos para token
    * @return {Object} $resource - Acceso a recursos HTTP
@@ -209,7 +206,6 @@
       }
     });
   }
-
   angular
     .module('sislabApp')
     .factory('PlanService',
@@ -264,7 +260,6 @@
       }
     });
   }
-
   angular
     .module('sislabApp')
     .factory('FieldSheetService',
@@ -278,7 +273,7 @@
   /**
    * @name ReceptionService
    * @constructor
-   * @desc Proveedor de datos, Recepción
+   * @desc Proveedor de datos, Recepciones de muestras
    * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @param {Object} TokenService - Proveedor de métodos para token
    * @return {Object} $resource - Acceso a recursos HTTP
@@ -319,7 +314,6 @@
       },
     });
   }
-
   angular
     .module('sislabApp')
     .factory('ReceptionService',
@@ -374,7 +368,6 @@
       }
     });
   }
-
   angular
     .module('sislabApp')
     .factory('CustodyService',

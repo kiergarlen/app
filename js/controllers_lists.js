@@ -1,166 +1,4 @@
-  // CONTROLLERS
-  // LoginController.js
-  /**
-   * @name LoginController
-   * @constructor
-   * @desc Controla la vista para Login
-   * @this {Object} $scope - Contenedor para el modelo [AngularJS]
-   * @param {Object} $http - Manejo de peticiones HTTP [AngularJS]
-   * @param {Object} $location - Manejo de URL [AngularJS]
-   * @param {Object} TokenService - Proveedor para manejo del token
-   */
-  function LoginController($scope, TokenService) {
-    var vm = this;
-    vm.message = '';
-    vm.user = {username: '', password: ''};
-    vm.submitForm = submitForm;
-
-    /**
-     * @function submitForm
-     * @desc Valida los datos de la forma y los envía al servicio
-     * @param {String} username - Nombre de usuario
-     * @param {String} password - Contraseña del usuario
-     */
-    function submitForm() {
-      vm.message = '';
-      if (!$scope.loginForm.$valid)
-      {
-        vm.message = 'Ingrese usuario y/o contraseña';
-        return;
-      }
-      vm.message = TokenService.authenticateUser(
-        vm.user.username,
-        vm.user.password
-      );
-    }
-  }
-
-  angular
-    .module('sislabApp')
-    .controller('LoginController',
-      [
-        '$scope', 'TokenService',
-        LoginController
-      ]
-    );
-
-  // MenuController.js
-  /**
-   * @name MenuController
-   * @constructor
-   * @desc Controla la directiva para el Menú principal
-   * @this {Object} $scope - Contenedor para el modelo [AngularJS]
-   * @param {Object} MenuService - Proveedor de datos, Menú
-   */
-  function MenuController(MenuService) {
-    var vm = this;
-    vm.menu = MenuService.query();
-  }
-
-  angular
-    .module('sislabApp')
-    .controller('MenuController',
-      [
-        'MenuService',
-        MenuController
-      ]
-    );
-
-  // TasksListController.js
-  /**
-   * @name TasksListController
-   * @constructor
-   * @desc Controla la vista para Tareas
-   * @this {Object} $scope - Contenedor para el modelo [AngularJS]
-   * @param {Object} TokenService - Proveedor para manejo del token
-   * @param {Object} TasksListService - Proveedor de datos, Tareas
-   */
-  function TasksListController(TokenService, TasksListService) {
-    var vm = this,
-    userData;
-    vm.userName = '';
-    vm.tasks = {};
-
-    if (TokenService.isAuthenticated())
-    {
-      userData = TokenService.getUserFromToken();
-      vm.userName = userData.name;
-      vm.tasks = TasksListService.query(userData.id);
-    }
-  }
-
-  angular
-    .module('sislabApp')
-    .controller('TasksListController',
-      [
-        'TokenService', 'TasksListService',
-        TasksListController
-      ]
-    );
-
-  // StudiesListController.js
-  /**
-   * @name StudiesListController
-   * @constructor
-   * @desc Controla la vista para el listado de Estudios
-   * @this {Object} $scope - Contenedor para el modelo [AngularJS]
-   * @param {Object} $location - Manejo de URL [AngularJS]
-   * @param {Object} StudyService - Proveedor de datos, Estudios
-   */
-  function StudiesListController($location, StudyService) {
-    var vm = this;
-    vm.studies = StudyService.get();
-    vm.addStudy = addStudy;
-    vm.viewStudy = viewStudy;
-
-    function addStudy() {
-      $location.path('/estudio/estudio/0');
-    }
-
-    function viewStudy(id) {
-      $location.path('/estudio/estudio/' + parseInt(id));
-    }
-  }
-
-  angular
-    .module('sislabApp')
-    .controller('StudiesListController',
-      [
-        '$location', 'StudyService',
-        StudiesListController
-      ]
-    );
-
-  // QuotesListController.js
-  /**
-   * @name QuotesListController
-   * @constructor
-   * @desc Controla la vista para el listado de Solicitudes/Cotizaciones
-   * @this {Object} $scope - Contenedor para el modelo [AngularJS]
-   * @param {Object} $location - Manejo de URL [AngularJS]
-   * @param {Object} QuoteService - Proveedor de datos, Solicitud
-   */
-  function QuotesListController($location, QuoteService) {
-    var vm = this;
-    vm.quotes = QuoteService.get();
-    vm.viewQuote = viewQuote;
-
-    function viewQuote(id) {
-      var itemId = parseInt(id);
-      $location.path('/muestreo/solicitud/' + itemId);
-    }
-  }
-
-  angular
-    .module('sislabApp')
-    .controller('QuotesListController',
-      [
-        '$location', 'QuoteService',
-        QuotesListController
-      ]
-    );
-
-  // OrdersListController.js
+  //OrdersListController.js
   /**
    * @name OrdersListController
    * @constructor
@@ -174,16 +12,15 @@
     vm.orders = OrderService.get();
     vm.addOrder = addOrder;
     vm.viewOrder = viewOrder;
-
+    /**/
     function addOrder() {
       $location.path('/muestreo/orden/0');
     }
-
+    /**/
     function viewOrder(id) {
       $location.path('/muestreo/orden/' + parseInt(id));
     }
   }
-
   angular
     .module('sislabApp')
     .controller('OrdersListController',
@@ -193,7 +30,7 @@
       ]
     );
 
-  // PlansListController.js
+  //PlansListController.js
   /**
    * @name PlansListController
    * @constructor
@@ -216,7 +53,6 @@
       $location.path('/muestreo/plan/' + parseInt(id));
     }
   }
-
   angular
     .module('sislabApp')
     .controller('PlansListController',
@@ -226,7 +62,7 @@
       ]
     );
 
-  // FieldSheetsListController.js
+  //FieldSheetsListController.js
   /**
    * @name FieldSheetsListController
    * @constructor
@@ -250,7 +86,6 @@
       $location.path('/recepcion/hoja/' + itemId);
     }
   }
-
   angular
     .module('sislabApp')
     .controller('FieldSheetsListController',
@@ -260,7 +95,7 @@
       ]
     );
 
-  // ReceptionsListController.js
+  //ReceptionsListController.js
   /**
    * @name ReceptionsListController
    * @constructor
@@ -284,7 +119,6 @@
       $location.path('/recepcion/recepcion/' + itemId);
     }
   }
-
   angular
     .module('sislabApp')
     .controller('ReceptionsListController',
@@ -317,7 +151,6 @@
       $location.path('/recepcion/custodia/' + itemId);
     }
   }
-
   angular
     .module('sislabApp')
     .controller('CustodiesListController',
@@ -327,7 +160,7 @@
       ]
     );
 
-  // SamplesListController.js
+  //SamplesListController.js
   /**
    * @name SamplesListController
    * @constructor
@@ -344,7 +177,6 @@
 
     }
   }
-
   angular
     .module('sislabApp')
     .controller('SamplesListController',
@@ -354,7 +186,7 @@
       ]
     );
 
-  // InstrumentsListController.js
+  //InstrumentsListController.js
   /**
    * @name InstrumentsListController
    * @constructor
@@ -371,7 +203,6 @@
 
     }
   }
-
   angular
     .module('sislabApp')
     .controller('InstrumentsListController',
@@ -381,7 +212,7 @@
       ]
     );
 
-  // ReactivesListController.js
+  //ReactivesListController.js
   /**
    * @name ReactivesListController
    * @constructor
@@ -398,7 +229,6 @@
 
     }
   }
-
   angular
     .module('sislabApp')
     .controller('ReactivesListController',
@@ -408,7 +238,7 @@
       ]
     );
 
-  // ContainersListController.js
+  //ContainersListController.js
   /**
    * @name ContainersListController
    * @constructor
@@ -425,7 +255,6 @@
 
     }
   }
-
   angular
     .module('sislabApp')
     .controller('ContainersListController',
@@ -435,7 +264,7 @@
       ]
     );
 
-  // AnalysisListController.js
+  //AnalysisListController.js
   /**
    * @name AnalysisListController
    * @constructor
@@ -453,7 +282,6 @@
       console.log('clicked in row');
     }
   }
-
   angular
     .module('sislabApp')
     .controller('AnalysisListController',
@@ -463,7 +291,7 @@
       ]
     );
 
-  // AnalysisController.js
+  //AnalysisController.js
   /**
    * @name AnalysisController
    * @constructor
@@ -502,7 +330,6 @@
 
     }
   }
-
   angular
     .module('sislabApp')
     .controller('AnalysisController',
@@ -513,7 +340,7 @@
       ]
     );
 
-  // ReportsListController.js
+  //ReportsListController.js
   /**
    * @name ReportsListController
    * @constructor
@@ -530,7 +357,6 @@
 
     }
   }
-
   angular
     .module('sislabApp')
     .controller('ReportsListController',
@@ -540,7 +366,7 @@
       ]
     );
 
-  // ReportController.js
+  //ReportController.js
   /**
    * @name ReportController
    * @constructor
@@ -564,7 +390,6 @@
 
     }
   }
-
   angular
     .module('sislabApp')
     .controller('ReportController',
@@ -574,7 +399,7 @@
       ]
     );
 
-  // PointsListController.js
+  //PointsListController.js
   /**
    * @name PointsListController
    * @constructor
@@ -591,7 +416,6 @@
 
     }
   }
-
   angular
     .module('sislabApp')
     .controller('PointsListController',
@@ -601,7 +425,7 @@
       ]
     );
 
-  // ClientsListController.js
+  //ClientsListController.js
   /**
    * @name ClientsListController
    * @constructor
@@ -619,7 +443,6 @@
       console.log(itemId);
     }
   }
-
   angular
     .module('sislabApp')
     .controller('ClientsListController',
@@ -629,7 +452,7 @@
       ]
     );
 
-  // DepartmentsListController.js
+  //DepartmentsListController.js
   /**
    * @name DepartmentsListController
    * @constructor
@@ -641,7 +464,6 @@
     var vm = this;
     vm.departments = DepartmentService.query();
   }
-
   angular
     .module('sislabApp')
     .controller('DepartmentsListController',
@@ -651,7 +473,7 @@
       ]
     );
 
-  // EmployeesListController.js
+  //EmployeesListController.js
   /**
    * @name EmployeesListController
    * @constructor
@@ -663,7 +485,6 @@
     var vm = this;
     vm.employees = EmployeeService.query();
   }
-
   angular
     .module('sislabApp')
     .controller('EmployeesListController',
@@ -673,7 +494,7 @@
       ]
     );
 
-  // NormsListController.js
+  //NormsListController.js
   /**
    * @name NormsListController
    * @constructor
@@ -690,7 +511,6 @@
 
     }
   }
-
   angular
     .module('sislabApp')
     .controller('NormsListController',
@@ -700,7 +520,7 @@
       ]
     );
 
-  // ReferencesListController.js
+  //ReferencesListController.js
   /**
    * @name ReferencesListController
    * @constructor
@@ -717,7 +537,6 @@
 
     }
   }
-
   angular
     .module('sislabApp')
     .controller('ReferencesListController',
@@ -727,7 +546,7 @@
       ]
     );
 
-  // MethodsListController.js
+  //MethodsListController.js
   /**
    * @name MethodsListController
    * @constructor
@@ -744,7 +563,6 @@
 
     }
   }
-
   angular
     .module('sislabApp')
     .controller('MethodsListController',
@@ -754,7 +572,7 @@
       ]
     );
 
-  // PricesListController.js
+  //PricesListController.js
   /**
    * @name PricesListController
    * @constructor
@@ -771,7 +589,6 @@
 
     }
   }
-
   angular
     .module('sislabApp')
     .controller('PricesListController',
@@ -781,7 +598,7 @@
       ]
     );
 
-  // UsersListController.js
+  //UsersListController.js
   /**
    * @name UsersListController
    * @constructor
@@ -793,7 +610,6 @@
     var vm = this;
     vm.users = UsersListService.query();
   }
-
   angular
     .module('sislabApp')
     .controller('UsersListController',
@@ -803,7 +619,7 @@
       ]
     );
 
-  // ProfileController.js
+  //ProfileController.js
   /**
    * @name ProfileController
    * @constructor
@@ -815,7 +631,6 @@
     var vm = this;
     vm.profile = UserProfileService.query();
   }
-
   angular
     .module('sislabApp')
     .controller('ProfileController',
@@ -825,7 +640,7 @@
       ]
     );
 
-  // LogoutController.js
+  //LogoutController.js
   /**
    * @name LogoutController
    * @constructor
@@ -843,7 +658,6 @@
       $location.path('sistema/login');
     }
   }
-
   angular
     .module('sislabApp')
     .controller('LogoutController',
@@ -853,7 +667,7 @@
       ]
     );
 
-  // ClientDetailController.js
+  //ClientDetailController.js
   /**
    * @name ClientDetailController
    * @constructor
@@ -865,7 +679,6 @@
     var vm = this;
     vm.clientDetail = ClientService.get();
   }
-
   angular
     .module('sislabApp')
     .controller('ClientDetailController',

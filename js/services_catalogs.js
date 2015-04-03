@@ -44,7 +44,6 @@
       }
     });
   }
-
   angular
     .module('sislabApp')
     .factory('ClientService',
@@ -100,7 +99,6 @@
 
     });
   }
-
   angular
     .module('sislabApp')
     .factory('PointService',
@@ -114,7 +112,7 @@
   /**
    * @name ParameterService
    * @constructor
-   * @desc Proveedor de datos, Parámetros análisis
+   * @desc Proveedor de datos, Parámetros de análisis
    * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @param {Object} TokenService - Proveedor de métodos para token
    * @return {Object} $resource - Acceso a recursos HTTP
@@ -131,7 +129,6 @@
       }
     });
   }
-
   angular
     .module('sislabApp')
     .factory('ParameterService',
@@ -162,7 +159,6 @@
       }
     });
   }
-
   angular
     .module('sislabApp')
     .factory('NormService',
@@ -176,7 +172,7 @@
   /**
    * @name SamplingTypeService
    * @constructor
-   * @desc Proveedor de datos, Tipo muestreo
+   * @desc Proveedor de datos, Tipos de muestreo
    * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @param {Object} TokenService - Proveedor de métodos para token
    * @return {Object} $resource - Acceso a recursos HTTP
@@ -193,7 +189,6 @@
       }
     });
   }
-
   angular
     .module('sislabApp')
     .factory('SamplingTypeService',
@@ -207,7 +202,7 @@
   /**
    * @name OrderSourceService
    * @constructor
-   * @desc Proveedor de datos, Orígenes orden
+   * @desc Proveedor de datos, Orígenes de orden
    * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @param {Object} TokenService - Proveedor de métodos para token
    * @return {Object} $resource - Acceso a recursos HTTP
@@ -224,7 +219,6 @@
       }
     });
   }
-
   angular
     .module('sislabApp')
     .factory('OrderSourceService',
@@ -255,7 +249,6 @@
       }
     });
   }
-
   angular
     .module('sislabApp')
     .factory('MatrixService',
@@ -286,7 +279,6 @@
       }
     });
   }
-
   angular
     .module('sislabApp')
     .factory('SamplingSupervisorService',
@@ -318,7 +310,6 @@
       }
     });
   }
-
   angular
     .module('sislabApp')
     .factory('PlanObjectivesService',
@@ -349,7 +340,6 @@
       }
     });
   }
-
   angular
     .module('sislabApp')
     .factory('PointKindsService',
@@ -380,7 +370,6 @@
       }
     });
   }
-
   angular
     .module('sislabApp')
     .factory('DistrictService',
@@ -411,7 +400,6 @@
       }
     });
   }
-
   angular
     .module('sislabApp')
     .factory('CityService',
@@ -442,7 +430,6 @@
       }
     });
   }
-
   angular
     .module('sislabApp')
     .factory('SamplingEmployeeService',
@@ -473,7 +460,6 @@
       }
     });
   }
-
   angular
     .module('sislabApp')
     .factory('PreservationService',
@@ -504,7 +490,6 @@
       }
     });
   }
-
   angular
     .module('sislabApp')
     .factory('ContainerKindsService',
@@ -535,7 +520,6 @@
       }
     });
   }
-
   angular
     .module('sislabApp')
     .factory('ReactivesListService',
@@ -566,7 +550,6 @@
       }
     });
   }
-
   angular
     .module('sislabApp')
     .factory('MaterialService',
@@ -597,7 +580,6 @@
       }
     });
   }
-
   angular
     .module('sislabApp')
     .factory('CoolerService',
@@ -628,7 +610,6 @@
       }
     });
   }
-
   angular
     .module('sislabApp')
     .factory('FieldParameterService',
@@ -660,7 +641,6 @@
       }
     });
   }
-
   angular
     .module('sislabApp')
     .factory('ReceptionistService',
@@ -692,7 +672,6 @@
       }
     });
   }
-
   angular
     .module('sislabApp')
     .factory('ExpirationService',
@@ -723,7 +702,6 @@
       }
     });
   }
-
   angular
     .module('sislabApp')
     .factory('RequiredVolumeService',
@@ -754,7 +732,6 @@
       }
     });
   }
-
   angular
     .module('sislabApp')
     .factory('CheckerService',
@@ -785,7 +762,6 @@
       }
     });
   }
-
   angular
     .module('sislabApp')
     .factory('SamplesListService',
@@ -816,7 +792,6 @@
       }
     });
   }
-
   angular
     .module('sislabApp')
     .factory('InstrumentsListService',
@@ -847,7 +822,6 @@
       }
     });
   }
-
   angular
     .module('sislabApp')
     .factory('ContainersListService',
@@ -878,7 +852,6 @@
       }
     });
   }
-
   angular
     .module('sislabApp')
     .factory('AnalysisListService',
@@ -909,7 +882,6 @@
       }
     });
   }
-
   angular
     .module('sislabApp')
     .factory('DepartmentService',
@@ -940,7 +912,6 @@
       }
     });
   }
-
   angular
     .module('sislabApp')
     .factory('AnalysisService',
@@ -971,7 +942,6 @@
       }
     });
   }
-
   angular
     .module('sislabApp')
     .factory('ReportsListService',
@@ -1002,7 +972,6 @@
       }
     });
   }
-
   angular
     .module('sislabApp')
     .factory('ReportService',
@@ -1033,7 +1002,6 @@
       }
     });
   }
-
   angular
     .module('sislabApp')
     .factory('PointsListService',
@@ -1064,7 +1032,6 @@
       }
     });
   }
-
   angular
     .module('sislabApp')
     .factory('EmployeeService',
@@ -1095,7 +1062,6 @@
       }
     });
   }
-
   angular
     .module('sislabApp')
     .factory('NormsListService',
@@ -1126,7 +1092,6 @@
       }
     });
   }
-
   angular
     .module('sislabApp')
     .factory('ReferencesListService',
@@ -1157,7 +1122,6 @@
       }
     });
   }
-
   angular
     .module('sislabApp')
     .factory('MethodsListService',
@@ -1188,7 +1152,6 @@
       }
     });
   }
-
   angular
     .module('sislabApp')
     .factory('PricesListService',
@@ -1219,7 +1182,6 @@
       }
     });
   }
-
   angular
     .module('sislabApp')
     .factory('UsersListService',
@@ -1250,7 +1212,6 @@
       }
     });
   }
-
   angular
     .module('sislabApp')
     .factory('UserProfileService',
@@ -1283,7 +1244,6 @@
       }
     });
   }
-
   angular
     .module('sislabApp')
     .factory('CloudService',
@@ -1314,7 +1274,6 @@
       }
     });
   }
-
   angular
     .module('sislabApp')
     .factory('WindService',
@@ -1345,7 +1304,6 @@
       }
     });
   }
-
   angular
     .module('sislabApp')
     .factory('WaveService',
@@ -1376,7 +1334,6 @@
       }
     });
   }
-
   angular
     .module('sislabApp')
     .factory('SamplingNormService',

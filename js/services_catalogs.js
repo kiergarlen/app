@@ -262,7 +262,7 @@
   /**
    * @name SamplingSupervisorService
    * @constructor
-   * @desc Proveedor de datos, Supervisores muestreo
+   * @desc Proveedor de datos, Supervisores de muestreo
    * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @param {Object} TokenService - Proveedor de métodos para token
    * @return {Object} $resource - Acceso a recursos HTTP

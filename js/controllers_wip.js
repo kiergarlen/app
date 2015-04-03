@@ -160,23 +160,24 @@
    * @param {Object} RestUtilsService - Proveedor para manejo de servicios REST
    * @param {Object} ArrayUtilsService - Proveedor para manejo de arreglos
    * @param {Object} DateUtilsService - Proveedor para manejo de fechas
+   * @param {Object} SamplingSupervisorService - Proveedor de datos, Supervisores de muestreo
 
 
 
+   * @param {Object} OrderService - Proveedor de datos, Órdenes de muestreo
    */
-  function OrderController($scope, $routeParams, TokenService, OrderSourceService,
-    MatrixService, SamplingSupervisorService, OrderService) {
+  function OrderController($scope, $routeParams, TokenService,
+    ValidationService, RestUtilsService, ArrayUtilsService,
+    DateUtilsService, SamplingSupervisorService,
+    OrderService) {
     var vm = this;
     vm.order = OrderService.query({orderId: $routeParams.orderId});
     vm.user = TokenService.getUserFromToken();
-    vm.orderSources = OrderSourceService.query();
-    vm.matrices = MatrixService.query();
     vm.supervisors = SamplingSupervisorService.query();
     vm.parametersDetailVisible = false;
 
     vm.message = '';
     vm.isDataSubmitted = false;
-    vm.toggleParametersDetail = toggleParametersDetail;
 
     vm.approveItem = approveItem;
     vm.rejectItem = rejectItem;
@@ -210,7 +211,7 @@
             .saveData(
               OrderService,
               vm.order,
-              'muestreo/ordenes',
+              'muestreo/orden',
               'id_orden'
             );
         }
@@ -222,7 +223,7 @@
               .updateData(
                 OrderService,
                 vm.order,
-                'muestreo/ordenes',
+                'muestreo/orden',
                 'id_orden'
               );
           }
@@ -234,8 +235,10 @@
     .module('sislabApp')
     .controller('OrderController',
       [
-        '$scope', '$routeParams', 'TokenService', 'OrderSourceService',
-        'MatrixService', 'SamplingSupervisorService', 'OrderService',
+        '$scope', '$routeParams', 'TokenService',
+        'ValidationService', 'RestUtilsService', 'ArrayUtilsService',
+        'DateUtilsService', 'SamplingSupervisorService',
+        'OrderService',
         OrderController
       ]
     );

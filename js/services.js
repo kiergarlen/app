@@ -175,7 +175,7 @@
       query: {
         method: 'GET',
         params: {planId: 'id_plan'},
-        isArray: true,
+        isArray: false,
         headers: {
           'Auth-Token': TokenService.getToken()
         }
@@ -183,7 +183,7 @@
       get: {
         method: 'GET',
         params: {},
-        isArray: false,
+        isArray: true,
         headers: {
           'Auth-Token': TokenService.getToken()
         }

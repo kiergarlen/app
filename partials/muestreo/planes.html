@@ -10,18 +10,6 @@
     <h2 class="page-header">Planes de muestreo</h2>
   </div>
 </div>
-<div class="row">
-  <div class="col-xs-12">
-    <button type="submit" class="btn btn-primary"
-      value="Nueva" title="Nueva"
-      data-ng-click="plans.addPlan()"
-      >
-      <i class="glyphicon glyphicon-plus" aria-hidden="true"></i>
-      Nuevo Plan
-    </button>
-    <br>
-  </div>
-</div>
 <form class="form" role="form"
   name="clientsForm"
   novalidate
@@ -63,19 +51,22 @@
           <thead>
             <tr>
               <th>Id Plan</th>
+              <th>Id Orden</th>
               <th>Status</th>
               <th>Ubicación</th>
-              <th>Fecha</th>
+              <th>Acciones</th>
             </tr>
           </thead>
           <tbody>
             <tr
               data-ng-repeat="item in plans.plans
               | filter:plans.filter.$"
-              id="planId{{item.id_plan}}"
-              data-ng-click="plans.selectRow($event)">
+              id="planId{{item.id_plan}}">
               <td>
                 {{item.id_plan}}
+              </td>
+              <td>
+                {{item.id_orden}}
               </td>
               <td>
                 <span class="label label-success"
@@ -93,7 +84,12 @@
                 {{item.municipio}}
               </td>
               <td>
-                {{item.fecha_plan}}
+                <button class="btn btn-default"
+                  value="Consultar" title="Consultar"
+                  data-ng-click="plans.viewPlan(item.id_plan)"
+                  >
+                  <i class="glyphicon glyphicon-eye-open" aria-hidden="true"></i>
+                </button>
               </td>
             </tr>
           </tbody>

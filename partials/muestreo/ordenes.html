@@ -10,20 +10,6 @@
     <h2 class="page-header">Órdenes de muestreo</h2>
   </div>
 </div>
-<!-- -->
-<div class="row">
-  <div class="col-xs-12">
-    <button type="submit" class="btn btn-primary"
-      value="Nuevo" title="Nuevo"
-      data-ng-click="orders.addOrder()"
-      >
-      <i class="glyphicon glyphicon-plus" aria-hidden="true"></i>
-      Nuevo
-    </button>
-    <br>
-  </div>
-</div>
-<!-- -->
 <form class="form" role="form"
   name="clientsForm"
   novalidate
@@ -75,8 +61,7 @@
             <tr
               data-ng-repeat="item in orders.orders
               | filter:orders.filter.$"
-              id="orderId{{item.id_orden}}"
-              data-ng-click="orders.selectRow($event)">
+              id="orderId{{item.id_orden}}">
               <td>
                 {{item.id_orden}}
               </td>

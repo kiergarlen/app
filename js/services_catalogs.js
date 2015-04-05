@@ -258,6 +258,36 @@
       ]
     );
 
+  // PointPackageService.js
+  /**
+   * @name PointPackageService
+   * @constructor
+   * @desc Proveedor de datos, Paquetes de puntos
+   * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
+   * @param {Object} TokenService - Proveedor de métodos para token
+   * @return {Object} $resource - Acceso a recursos HTTP
+   */
+  function PointPackageService($resource, TokenService) {
+    return $resource(API_BASE_URL + 'points/packages', {}, {
+      get: {
+        method: 'GET',
+        params: {},
+        isArray: true,
+        headers: {
+          'Auth-Token': TokenService.getToken()
+        }
+      }
+    });
+  }
+  angular
+    .module('sislabApp')
+    .factory('PointPackageService',
+      [
+        '$resource', 'TokenService',
+        PointPackageService
+      ]
+    );
+
   // SamplingSupervisorService.js
   /**
    * @name SamplingSupervisorService
@@ -269,7 +299,7 @@
    */
   function SamplingSupervisorService($resource, TokenService) {
     return $resource(API_BASE_URL + 'sampling/supervisors', {}, {
-      query: {
+      get: {
         method: 'GET',
         params: {},
         isArray: true,
@@ -420,7 +450,7 @@
    */
   function SamplingEmployeeService($resource, TokenService) {
     return $resource(API_BASE_URL + 'sampling/employees', {}, {
-      query: {
+      get: {
         method: 'GET',
         params: {},
         isArray: true,

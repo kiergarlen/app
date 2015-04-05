@@ -25,6 +25,8 @@
       </strong>
     </div>
   </div>
+</div>
+<div class="row">
   <div class="col-xs-12">
     <div class="alert alert-warning alert-dismissible item-z1" role="alert"
       data-ng-show="study.message.length > 0">
@@ -125,82 +127,82 @@
     </div>
   </div>
   <div class="row"
-    data-ng-repeat="req in study.study.solicitudes">
+    data-ng-repeat="row in study.study.solicitudes">
     <div class="col-xs-6 col-sm-4">
-      <label for="matrixSelectId{{req.id_solicitud}}">
+      <label for="matrixSelectId{{row.id_solicitud}}">
         Matriz
       </label>
       <select class="form-control"
-        id="matrixSelectId{{req.id_solicitud}}"
-        name="matrixSelectId{{req.id_solicitud}}"
+        id="matrixSelectId{{row.id_solicitud}}"
+        name="matrixSelectId{{row.id_solicitud}}"
         required
-        data-ng-model="req.id_matriz"
+        data-ng-model="row.id_matriz"
         >
         <option data-ng-repeat="matrix in study.matrices"
           value="{{matrix.id_matriz}}"
-          data-ng-selected="req.id_matriz == matrix.id_matriz"
+          data-ng-selected="row.id_matriz == matrix.id_matriz"
           >
           {{matrix.matriz}}
         </option>
       </select>
     </div>
     <div class="col-xs-6 col-sm-1">
-      <label for="sampleAmountTextId{{req.id_solicitud}}">
+      <label for="sampleAmountTextId{{row.id_solicitud}}">
         Muestras
       </label>
       <input type="text" class="form-control"
-        id="sampleAmountTextId{{req.id_solicitud}}"
-        name="sampleAmountTextId{{req.id_solicitud}}"
+        id="sampleAmountTextId{{row.id_solicitud}}"
+        name="sampleAmountTextId{{row.id_solicitud}}"
         title="Muestras"
         placeholder="Cant."
-        data-ng-model="req.cantidad_muestras"
+        data-ng-model="row.cantidad_muestras"
         >
     </div>
     <div class="col-xs-6 col-sm-3">
-      <label for="samplingSelectId{{req.id_solicitud}}">
+      <label for="samplingSelectId{{row.id_solicitud}}">
         Tipo muestreo
       </label>
       <select class="form-control"
-        id="samplingSelectId{{req.id_solicitud}}"
-        name="samplingSelectId{{req.id_solicitud}}"
+        id="samplingSelectId{{row.id_solicitud}}"
+        name="samplingSelectId{{row.id_solicitud}}"
         required
-        data-ng-model="req.id_tipo_muestreo"
+        data-ng-model="row.id_tipo_muestreo"
         >
         <option data-ng-repeat="samplingType in study.samplingTypes"
           value="{{samplingType.id_tipo_muestreo}}"
-          data-ng-selected="req.id_tipo_muestreo == samplingType.id_tipo_muestreo"
+          data-ng-selected="row.id_tipo_muestreo == samplingType.id_tipo_muestreo"
           >
           {{samplingType.tipo_muestreo}}
         </option>
       </select>
     </div>
     <div class="col-xs-6 col-sm-3">
-      <label for="normSelectId{{req.id_solicitud}}">
+      <label for="normSelectId{{row.id_solicitud}}">
         Norma
       </label>
       <select class="form-control"
-        id="normSelectId{{req.id_solicitud}}"
-        name="normSelectId{{req.id_solicitud}}"
+        id="normSelectId{{row.id_solicitud}}"
+        name="normSelectId{{row.id_solicitud}}"
         required
-        data-ng-model="req.id_norma"
+        data-ng-model="row.id_norma"
         >
         <option data-ng-repeat="norm in study.norms"
           value="{{norm.id_norma}}"
-          data-ng-selected="req.id_norma == norm.id_norma"
+          data-ng-selected="row.id_norma == norm.id_norma"
           >
           {{norm.norma}}
         </option>
       </select>
     </div>
     <div class="col-xs-1">
-      <label for="removeButtonId{{req.id_solicitud}}">
+      <label for="removeButtonId{{row.id_solicitud}}">
         Eliminar
       </label>
       <button class="btn btn-danger"
-        id="removeButtonId{{req.id_solicitud}}"
-        name="removeButtonId{{req.id_solicitud}}"
+        id="removeButtonId{{row.id_solicitud}}"
+        name="removeButtonId{{row.id_solicitud}}"
         value="Eliminar" title="Eliminar"
-        data-ng-click="study.getStudyScope().removeQuote(req)"
+        data-ng-click="study.getScope().removeQuote(row)"
         data-ng-disabled="study.study.solicitudes.length < 2"
         >
         <i class="glyphicon glyphicon-remove" aria-hidden="true"></i>

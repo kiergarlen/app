@@ -25,6 +25,8 @@
       </strong>
     </div>
   </div>
+</div>
+<div class="row">
   <div class="col-xs-12">
     <div class="alert alert-warning alert-dismissible item-z1" role="alert"
       data-ng-show="order.message.length > 0">
@@ -141,41 +143,79 @@
   -->
   <div class="row">
     <div class="col-xs-12">
-      <h4>Fecha y Hora probable de muestreo</h4>
+      <h4>Solicitar Plan de muestreo</h4>
     </div>
   </div>
-  <div class="row">
-    <div class="col-xs-12 col-sm-6 col-md-5">
-      <label for="samplingDate">
+  <div class="row"
+    data-ng-repeat="row in order.order.planes">
+    <div class="col-xs-6 col-sm-2">
+      <label for="packSelectId{{::row.id_plan}}">
+        Paquete puntos
+      </label>
+      <select class="form-control"
+        id="packSelectId{{::row.id_plan}}"
+        name="packSelectId{{::row.id_plan}}"
+        required
+        data-ng-model="row.id_paquete_puntos"
+        >
+        <option data-ng-repeat="package in order.packages"
+          value="{{package.id_paquete_puntos}}"
+          data-ng-selected="row.id_paquete_puntos == package.id_paquete_puntos"
+          >
+          {{package.paquete_puntos}}
+        </option>
+      </select>
+    </div>
+    <div class="col-xs-6 col-sm-3">
+      <label for="samplingSelectId{{::row.id_plan}}">
+        Responsable
+      </label>
+      <select class="form-control"
+        id="samplingSelectId{{::row.id_plan}}"
+        name="samplingSelectId{{::row.id_plan}}"
+        required
+        data-ng-model="row.id_supervisor_muestreo"
+        >
+        <option data-ng-repeat="supervisor in order.supervisors"
+          value="{{supervisor.id_empleado}}"
+          data-ng-selected="row.id_supervisor_muestreo == supervisor.id_empleado"
+          >
+          {{supervisor.nombres}}
+          {{supervisor.ap}}
+          {{supervisor.am}}
+        </option>
+      </select>
+    </div>
+    <div class="col-xs-6 col-sm-4">
+      <label for="samplingDateId{{::row.id_plan}}">
         <i class="glyphicon glyphicon-calendar"></i>
-        Fecha ({{order.order.fecha_muestreo}})
+        Fecha
       </label>
       <input type="text"
         class="form-control"
-        id="samplingDate"
-        name="samplingDate"
+        id="samplingDateId{{::row.id_plan}}"
+        name="samplingDateId{{::row.id_plan}}"
         placeholder="aaaa-mm-dd"
         required
-        data-ng-model="order.order.fecha_muestreo"
+        data-ng-model="row.fecha_probable"
         data-date-format="yyyy-MM-dd"
-        data-date-type="string"
         data-autoclose="1"
         date-use-native="true"
         data-bs-datepicker
         >
     </div>
-    <div class="col-xs-12 col-sm-6 col-md-5">
-      <label for="samplingTime">
+    <div class="col-xs-6 col-sm-2">
+      <label for="samplingTime{{::row.id_plan}}">
         <i class="glyphicon glyphicon-time"></i>
-        Hora ({{order.order.hora_muestreo}})
+        Hora
       </label>
       <input type="text"
         class="form-control"
-        id="samplingTime"
-        name="samplingTime"
+        id="samplingTime{{::row.id_plan}}"
+        name="samplingTime{{::row.id_plan}}"
         placeholder="HH:mm"
         required
-        data-ng-model="order.order.hora_muestreo"
+        data-ng-model="row.fecha_probable"
         data-time-format="HH:mm"
         data-length="1"
         data-hour-step="1"
@@ -185,53 +225,31 @@
         data-bs-timepicker
         >
     </div>
-  </div>
-  <div class="row">
-    <div class="col-xs-12">
-      <h4>Asignar Responsable de Muestreo ({{order.order.id_supervisor_muestreo}})</h4>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-xs-12 col-sm-6 col-md-5 col-lg-5">
-      <label for="supervisorSelect" class="sr-only">
-        Responsable de muestreo
+    <div class="col-xs-1">
+      <label for="removeButtonId{{::row.id_plan}}">
+        Eliminar
       </label>
-      <select class="form-control"
-        id="supervisorSelect"
-        name="supervisorSelect"
-        required
-        data-ng-model="order.order.id_supervisor_muestreo"
+      <button class="btn btn-danger"
+        id="removeButtonId{{::row.id_plan}}"
+        name="removeButtonId{{::row.id_plan}}"
+        value="Eliminar" title="Eliminar"
+        data-ng-click="order.getScope().removePlan(row)"
+        data-ng-disabled="order.order.planes.length < 2"
         >
-        <option data-ng-repeat="supervisor in order.supervisors"
-          value="{{supervisor.id_empleado}}">
-          {{supervisor.nombres}}
-          {{supervisor.ap}}
-          {{supervisor.am}}
-        </option>
-      </select>
+        <i class="glyphicon glyphicon-remove" aria-hidden="true"></i>
     </div>
   </div>
   <div class="row">
     <div class="col-xs-12">
-      <h4>Asignar Puntos de Muestreo ({{order.order.id_paquete_puntos}})</h4>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-xs-12 col-sm-6 col-md-5 col-lg-5">
-      <label for="pointPackageSelect" class="sr-only">
-        Paquete de puntos
-      </label>
-      <select class="form-control"
-        id="pointPackageSelect"
-        name="pointPackageSelect"
-        required
-        data-ng-model="order.order.id_paquete_puntos"
+      <br>
+      <a class="btn btn-success"
+        value="Agregar plan" title="Agregar plan"
+        data-ng-click="order.addPlan()"
         >
-        <option data-ng-repeat="pointPackage in order.pointPackages"
-          value="{{pointPackage.id_paquete_punto}}">
-          {{pointPackage.paquete_punto}}
-        </option>
-      </select>
+        <i class="glyphicon glyphicon-plus" aria-hidden="true"></i>
+        Agregar plan
+      </a>
+      <br><br>
     </div>
   </div>
   <div class="row"

@@ -9,49 +9,93 @@
    * @param {Object} TokenService - Proveedor para manejo del token
    * @param {Object} ArrayUtilsService - Proveedor para manejo de arreglos
    * @param {Object} PlanObjectivesService - Proveedor de datos, Objetivos Plan de muestreo
-   * @param {Object} PointKindsService - Proveedor de datos, tipos Punto
+   * @param {Object} PointsByPackageService - Proveedor de datos, Puntos de muestreo por paquete
    * @param {Object} DistrictService - Proveedor de datos, Municipios
    * @param {Object} CityService - Proveedor de datos, Localidades
    * @param {Object} SamplingSupervisorService - Proveedor de datos, Supervisores muestreo
    * @param {Object} SamplingEmployeeService - Proveedor de datos, Empleados muestreo
    * @param {Object} PreservationService - Proveedor de datos, Preservaciones
    * @param {Object} ContainerKindsService - Proveedor de datos, Clases recipientes
-   * @param {Object} ReactivesListService - Proveedor de datos, lista Reactivos
+   * @param {Object} ReactivesListService - Proveedor de datos, Reactivos
    * @param {Object} MaterialService - Proveedor de datos, Material
-   * @param {Object} CoolerService - Proveedor de datos, lista Hieleras
+   * @param {Object} CoolerService - Proveedor de datos, Hieleras
+   * @param {Object} SamplingInstrumentService - Proveedor de datos, Equipos de muestreo
    * @param {Object} PlanService - Proveedor de datos, Plan de muestreo
    */
-  function PlanController($routeParams, TokenService, ArrayUtilsService,
-    PlanObjectivesService, PointKindsService, DistrictService,
+  function PlanController($scope, $routeParams, TokenService, ArrayUtilsService,
+    PlanObjectivesService, PointsByPackageService, DistrictService,
     CityService, SamplingSupervisorService, SamplingEmployeeService,
     PreservationService, ContainerKindsService, ReactivesListService,
-    MaterialService, CoolerService, PlanService) {
+    MaterialService, CoolerService, SamplingInstrumentService,
+    PlanService) {
     var vm = this;
     vm.plan = PlanService.query({planId: $routeParams.planId});
     vm.user = TokenService.getUserFromToken();
-    vm.objectives = PlanObjectivesService.query();
-    vm.pointKinds = PointKindsService.query();
-    vm.districts = DistrictService.query();
+    vm.objectives = PlanObjectivesService.get();
+    //vm.points = PointsByPackageService.get();
+    vm.instruments = SamplingInstrumentService.get();
     vm.cities = [];
+    vm.districts = [];
     vm.samplingSupervisors = SamplingSupervisorService.get();
     vm.samplingEmployees = SamplingEmployeeService.get();
-    vm.preservations = PreservationService.query();
-    vm.reactives = ReactivesListService.query();
-    vm.containers = ContainerKindsService.query();
-    vm.materials = MaterialService.query();
-    vm.coolers = CoolerService.query();
+    vm.preservations = PreservationService.get();
+    vm.reactives = ReactivesListService.get();
+    vm.containers = ContainerKindsService.get();
+    vm.materials = MaterialService.get();
+    vm.coolers = CoolerService.get();
 
-    vm.countSelectedItems = countSelectedItems;
     vm.selectDistrict = selectDistrict;
+    vm.selectInstruments = selectInstruments;
     vm.addPoints = addPoints;
 
-    function countSelectedItems(collection) {
-      return ArrayUtilsService.countSelectedItems(collection);
+    DistrictService.get()
+      .$promise.then(function success(response) {
+        vm.districts = response;
+        if (vm.plan.id_municipio && vm.plan.id_municipio > 0)
+        {
+          ArrayUtilsService.selectItemFromCollection(
+            vm.districts,
+            'id_municipio',
+            parseInt(vm.plan.id_municipio)
+          );
+        }
+        CityService
+          .query({districtId: vm.plan.id_municipio})
+          .$promise
+          .then(function success(response) {
+            vm.cities = response;
+            if (vm.plan.id_localidad && vm.plan.id_localidad > 0)
+            {
+              ArrayUtilsService.selectItemFromCollection(
+                vm.cities,
+                'id_localidad',
+                parseInt(vm.plan.id_localidad)
+              );
+
+            }
+          });
+      });
+
+    function selectInstruments() {
+      if (vm.instruments && vm.plan.equipos)
+      {
+        if (vm.instruments.length && vm.plan.equipos.length && vm.instruments.length > 0)
+        {
+
+          console.log('coll: ' + vm.instruments.length + ', ' + ' selected: ' + vm.plan.equipos.length);
+
+        }
+      }
     }
 
     function selectDistrict() {
-      vm.plan.id_municipio = parseInt(vm.plan.id_municipio);
-      vm.cities = CityService.query({districtId: vm.plan.id_municipio});
+      vm.cities = CityService.query({districtId: parseInt(vm.plan.id_municipio)});
+      /*
+      if (vm.plan.id_localidad)
+      {
+
+      }
+      */
     }
 
     function addPoints() {
@@ -62,11 +106,13 @@
     .module('sislabApp')
     .controller('PlanController',
       [
+        '$scope',
         '$routeParams', 'TokenService', 'ArrayUtilsService',
-        'PlanObjectivesService', 'PointKindsService', 'DistrictService',
+        'PlanObjectivesService', 'PointsByPackageService', 'DistrictService',
         'CityService', 'SamplingSupervisorService', 'SamplingEmployeeService',
         'PreservationService', 'ContainerKindsService', 'ReactivesListService',
-        'MaterialService', 'CoolerService', 'PlanService',
+        'MaterialService', 'CoolerService', 'SamplingInstrumentService',
+        'PlanService',
         PlanController
       ]
     );
@@ -84,7 +130,7 @@
    * @param {Object} WindService - Proveedor de datos, Direcciones viento
    * @param {Object} WaveService - Proveedor de datos, Intensidades oleaje
    * @param {Object} SamplingNormService - Proveedor de datos, Normas muestreo
-   * @param {Object} PointService - Proveedor de datos, Puntos muestreo
+   * @param {Object} PointService - Proveedor de datos, Puntos de muestreo
    * @param {Object} FieldParameterService - Proveedor de datos, Parámetros campo
    * @param {Object} PreservationService - Proveedor de datos, Preservaciones
    * @param {Object} FieldSheetService - Proveedor de datos, Hojas de campo
@@ -96,13 +142,13 @@
     var vm = this;
     vm.fieldSheet = FieldSheetService.query({sheetId: $routeParams.sheetId});
     vm.user = TokenService.getUserFromToken();
-    vm.cloudCovers = CloudService.query();
-    vm.windDirections = WindService.query();
-    vm.waveIntensities = WaveService.query();
-    vm.samplingNorms = SamplingNormService.query();
-    vm.points = PointService.query();
-    vm.fieldParameters = FieldParameterService.query();
-    vm.preservations = PreservationService.query();
+    vm.cloudCovers = CloudService.get();
+    vm.windDirections = WindService.get();
+    vm.waveIntensities = WaveService.get();
+    vm.samplingNorms = SamplingNormService.get();
+    vm.points = PointService.get();
+    vm.fieldParameters = FieldParameterService.get();
+    vm.preservations = PreservationService.get();
 
     vm.temp1 = 0;
     vm.temp2 = 0;
@@ -271,7 +317,7 @@
   function ReceptionController($routeParams, ReceptionistService,
     ReceptionService) {
     var vm = this;
-    vm.receptionists = ReceptionistService.query();
+    vm.receptionists = ReceptionistService.get();
     vm.reception = ReceptionService.query({receptionId: $routeParams.sheetId});
 
     vm.selectReceptionist = selectReceptionist;
@@ -328,11 +374,11 @@
     ContainerKindsService, CheckerService, CustodyService) {
     var vm = this;
     vm.user = TokenService.getUserFromToken();
-    vm.preservations = PreservationService.query();
-    vm.expirations = ExpirationService.query();
-    vm.volumes = RequiredVolumeService.query();
-    vm.containers = ContainerKindsService.query();
-    vm.checkers = CheckerService.query();
+    vm.preservations = PreservationService.get();
+    vm.expirations = ExpirationService.get();
+    vm.volumes = RequiredVolumeService.get();
+    vm.containers = ContainerKindsService.get();
+    vm.checkers = CheckerService.get();
     vm.custody = CustodyService.query({custodyId: $routeParams.custodyId});
 
     vm.selectChecker = selectChecker;

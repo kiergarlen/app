@@ -10,17 +10,18 @@
     var ArrayUtils = {};
 
     ArrayUtils.selectItemFromCollection = selectItemFromCollection;
+    ArrayUtils.selectItemsFromCollection = selectItemsFromCollection;
     ArrayUtils.extractItemFromCollection = extractItemFromCollection;
     ArrayUtils.countSelectedItems = countSelectedItems;
     ArrayUtils.averageFromValues = averageFromValues;
 
     /**
      * @function selectItemFromCollection
-     * @desc Selecciona un ítem de un Array, empatando una propiedad y su valor
+     * @desc Obtiene un ítem de un Array, empatando una propiedad y su valor
      * @param {Array} collection - Array de objetos a seleccionar
      * @param {String} field - Nombre de la propiedad a empatar
      * @param {Object} value - Valor de la propiedad a empatar
-     * @return {Object} item - Item seleccionado
+     * @return {Object} item - Ítem seleccionado
      */
     function selectItemFromCollection(collection, field, value) {
       var i = 0,
@@ -34,6 +35,27 @@
         }
       }
       return item;
+    }
+
+    /**
+     * @function selectItemsFromCollection
+     * @desc Obtiene los ítems de un Array, empatando una propiedad y su valor
+     * @param {Array} collection - Array de objetos a seleccionar
+     * @param {String} field - Nombre de la propiedad a empatar
+     * @param {Object} value - Valor de la propiedad a empatar
+     * @return {Array} items - Array de ítems seleccionados
+     */
+    function selectItemsFromCollection(collection) {
+      var i = 0,
+      l = collection.length,
+      items = [];
+      for (i = 0; i < l; i += 1) {
+        if (collection[i][field] == value)
+        {
+          items.push(collection[i]);
+        }
+      }
+      return items;
     }
 
     /**
@@ -60,7 +82,7 @@
 
     /**
      * @function countSelectedItems
-     * @desc Cuenta los objetos de un Array con valor TRUE de la propiedad 'selected'
+     * @desc Cuenta los objetos de un Array con valor true de la propiedad selected
      * @param {Array} collection - Array de objetos a extraer
      * @return {Number} count - Cantidad de objetos que cumplen la condición
      */
@@ -463,7 +485,7 @@
    */
   function MenuService($resource, TokenService) {
     return $resource(API_BASE_URL + 'menu', {}, {
-      query: {
+      get: {
         method: 'GET',
         params: {},
         isArray: true,
@@ -493,7 +515,7 @@
    */
   function TasksListService($resource, TokenService) {
     return $resource(API_BASE_URL + 'tasks', {}, {
-      query: {
+      get: {
         method: 'GET',
         params: {},
         isArray: true,

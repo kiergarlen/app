@@ -22,7 +22,6 @@
         vm.message = 'Ingrese usuario y/o contraseña';
         return;
       }
-
       vm.message = TokenService.authenticateUser(
         vm.user.username,
         vm.user.password
@@ -48,7 +47,7 @@
    */
   function MenuController(MenuService) {
     var vm = this;
-    vm.menu = MenuService.query();
+    vm.menu = MenuService.get();
   }
   angular
     .module('sislabApp')
@@ -148,11 +147,11 @@
     var vm = this;
     vm.study = StudyService.query({studyId: $routeParams.studyId});
     vm.user = TokenService.getUserFromToken();
-    vm.clients = ClientService.query();
-    vm.matrices = MatrixService.query();
-    vm.samplingTypes = SamplingTypeService.query();
-    vm.norms = NormService.query();
-    vm.orderSources = OrderSourceService.query();
+    vm.clients = ClientService.get();
+    vm.matrices = MatrixService.get();
+    vm.samplingTypes = SamplingTypeService.get();
+    vm.norms = NormService.get();
+    vm.orderSources = OrderSourceService.get();
     vm.message = '';
     vm.isDataSubmitted = false;
     vm.selectClient = selectClient;
@@ -163,7 +162,6 @@
     vm.rejectItem = rejectItem;
     vm.isFormValid = isFormValid;
     vm.submitForm = submitForm;
-
 
     function selectClient() {
       vm.study.cliente = ArrayUtilsService.selectItemFromCollection(
@@ -250,7 +248,6 @@
     }
 
     function isFormValid() {
-
       vm.message = '';
       if (!DateUtilsService.isValidDate(new Date(vm.study.fecha)))
       {
@@ -386,7 +383,7 @@
     var vm = this;
     vm.quote = QuoteService.query({quoteId: $routeParams.quoteId});
     vm.user = TokenService.getUserFromToken();
-    vm.parameters = ParameterService.query();
+    vm.parameters = ParameterService.get();
     vm.allParametersSelected = false;
     vm.totalCost = 0;
     vm.message = '';
@@ -568,15 +565,11 @@
     vm.user = TokenService.getUserFromToken();
     vm.supervisors = SamplingSupervisorService.get();
     vm.packages = PointPackageService.get();
-    vm.parametersDetailVisible = false;
-
     vm.message = '';
     vm.isDataSubmitted = false;
-
     vm.getScope = getScope;
     vm.addPlan = addPlan;
     vm.removePlan = removePlan;
-
     vm.approveItem = approveItem;
     vm.rejectItem = rejectItem;
     vm.isFormValid = isFormValid;

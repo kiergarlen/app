@@ -570,6 +570,19 @@ $app->get("/materials", function() use ($app) {
 	}
 });
 
+$app->get("/instruments/sampling", function() use ($app) {
+	try {
+		$userId = validateTokenUser($app);
+		$result = \Service\DALSislab::getInstance()->getSamplingInstruments();
+		$app->response()->status(200);
+		$app->response()->header('Content-Type', 'application/json');
+		echo ")]}',\n" . $result;
+	} catch (Exception $e) {
+		$app->response()->status(400);
+		$app->response()->header('X-Status-Reason', $e->getMessage());
+	}
+});
+
 $app->get("/coolers", function() use ($app) {
 	try {
 		$userId = validateTokenUser($app);
@@ -649,6 +662,18 @@ $app->get("/points/:pointId", function($pointId) use ($app) {
 });
 */
 
+$app->get("/points", function() use ($app) {
+	try {
+		$userId = validateTokenUser($app);
+		$result = \Service\DALSislab::getInstance()->getPoints();
+		$app->response()->status(200);
+		$app->response()->header('Content-Type', 'application/json');
+		echo ")]}',\n" . $result;
+	} catch (Exception $e) {
+		$app->response()->status(400);
+		$app->response()->header('X-Status-Reason', $e->getMessage());
+	}
+});
 $app->get("/points", function() use ($app) {
 	try {
 		$userId = validateTokenUser($app);

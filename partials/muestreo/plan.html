@@ -99,9 +99,10 @@
                 <strong>{{::plan.plan.cliente.contacto}}</strong>
               </li>
             </ul>
+          </div>
         </div>
       </div>
-   </div>
+    </div>
   </div>
   <div class="row">
     <div class="col-xs-12">
@@ -109,14 +110,13 @@
     </div>
   </div>
   <div class="row">
-    <div class="col-xs-12 col-sm-6 col-md-5 col-lg-5">
+    <div class="col-xs-12 col-sm-6 col-md-5">
       <label for="objectiveSelect" class="sr-only">
         Objetivo de muestreo
       </label>
       <select class="form-control"
         id="objectiveSelect"
         name="objectiveSelect"
-        required
         data-ng-model="plan.plan.id_objetivo_plan"
         >
         <option data-ng-repeat="objective in plan.objectives"
@@ -125,7 +125,7 @@
         </option>
       </select>
     </div>
-    <div class="col-xs-12 col-sm-6 col-md-7 col-lg-7">
+    <div class="col-xs-12 col-sm-6 col-md-7">
       <label class="sr-only" for="objectiveText">
         En caso de otro, especificar
       </label>
@@ -183,12 +183,12 @@
       <select class="form-control"
         id="districtSelect"
         name="districtSelect"
-        required
         data-ng-model="plan.plan.id_municipio"
+        data-ng-change="plan.selectDistrict()"
         >
         <option data-ng-repeat="district in plan.districts"
           value="{{district.id_municipio}}">
-          {{district.id_municipio}} - {{district.municipio}}
+         {{district.municipio}}
         </option>
       </select>
     </div>
@@ -199,16 +199,16 @@
       <select class="form-control"
         id="citySelect"
         name="citySelect"
-        required
         data-ng-model="plan.plan.id_localidad"
         >
         <option data-ng-repeat="city in plan.cities"
           value="{{city.id_localidad}}">
-          {{city.id_localidad}} - {{city.localidad}}
+         {{city.localidad}}
         </option>
       </select>
     </div>
   </div>
+  <!-- -->
   <div class="row">
     <div class="col-xs-12">
       <h4>Puntos de muestreo</h4>
@@ -216,59 +216,99 @@
   </div>
   <div class="row">
     <div class="col-xs-12">
-      <button class="btn btn-default" type="button"
-        id="addPointsButton"
-        name="addPointsButton"
-        data-ng-click="plan.addPoints()"
-        >
-        Agregar puntos de muestreo</button>
+      Cantidad de puntos:
+      <strong>
+        {{plan.plan.puntos.length}}
+      </strong>
     </div>
   </div>
   <div class="row">
+    <div class="col-xs-12 col-sm-4"
+      data-ng-repeat="point in plan.plan.puntos">
+      <strong>{{point.punto}}</strong>
+      <br>
+      Lat:
+      {{point.lat}}
+      <br>
+      Long:
+      {{point.lng}}
+    </div>
+    <!--
+      <div class="col-xs-12 col-sm-4">
+        <label>Tipo de muestreo</label>
+        <div class="radio">
+          <label>
+            <input type="radio"
+              name="samplingTypeRadios{{point.id_punto_muestreo}}"
+              data-ng-model="point.id_tipo_muestreo"
+              value="1"
+              >
+              Simple
+          </label>
+          <label>
+            <input type="radio"
+              name="samplingTypeRadios{{point.id_punto_muestreo}}"
+              data-ng-model="point.id_tipo_muestreo"
+              value="2"
+              >
+              Compuesto
+          </label>
+        </div>
+      </div>
+      <div class="col-xs-12 col-sm-4">
+        <label for="samplingFrequency{{point.id_punto_muestreo}}">
+          Frecuencia (horas)
+        </label>
+        <select class="form-control"
+          id="samplingFrequency{{point.id_punto_muestreo}}"
+          name="samplingFrequency{{point.id_punto_muestreo}}"
+          data-ng-disabled="point.id_tipo_muestreo < 2"
+          data-ng-model="point.frecuencia"
+          >
+          <option value="2">
+            2
+          </option>
+          <option value="4">
+            4
+          </option>
+          <option value="6">
+            6
+          </option>
+        </select>
+      </div>
+    -->
+  </div>
+  <div class="row">
     <div class="col-xs-12">
-      Cantidad de puntos:
-      <strong>
-      {{plan.plan.puntos_muestreo.length}}
-      </strong>
-      <br>
-      <br>
+      <h4>Responsables</h4>
     </div>
   </div>
   <div class="row"
-    data-ng-repeat="point in plan.plan.puntos_muestreo">
-    <div class="col-xs-12 col-sm-4">
-      <strong>{{point.punto_muestreo}}</strong>
+    data-ng-show="plan.plan.supervisor_muestreo"
+    >
+    <div class="col-xs-12 col-sm-5">
+      <label>
+        Responsable muestreo
+      </label>
+      <p>
+        {{plan.plan.supervisor_muestreo.nombres}}
+        {{plan.plan.supervisor_muestreo.ap}}
+        {{plan.plan.supervisor_muestreo.am}}
+        <small>(por Orden de muestreo)</small>
+      </p>
+      Tipo muestreo:
+      <strong>{{plan.plan.solicitud.tipo_muestreo}}</strong>
     </div>
-    <div class="col-xs-12 col-sm-4">
-      <label>Tipo de muestreo</label>
-      <div class="radio">
-        <label>
-          <input type="radio"
-            name="samplingTypeRadios{{point.id_punto_muestreo}}"
-            data-ng-model="point.id_tipo_muestreo"
-            value="1"
-            >
-            Simple
-        </label>
-        <label>
-          <input type="radio"
-            name="samplingTypeRadios{{point.id_punto_muestreo}}"
-            data-ng-model="point.id_tipo_muestreo"
-            value="2"
-            >
-            Compuesto
-        </label>
-      </div>
-    </div>
-    <div class="col-xs-12 col-sm-4">
-      <label for="samplingFrequency{{point.id_punto_muestreo}}">
+    <div class="col-xs-12 col-sm-3"
+      data-ng-show="plan.plan.solicitud.id_tipo_muestreo > 1">
+      <label for="samplingFrequency">
         Frecuencia (horas)
       </label>
       <select class="form-control"
-        id="samplingFrequency{{point.id_punto_muestreo}}"
-        name="samplingFrequency{{point.id_punto_muestreo}}"
+        id="samplingFrequency"
+        name="samplingFrequency"
         data-ng-disabled="point.id_tipo_muestreo < 2"
-        data-ng-model="point.frecuencia"
+        data-ng-model="plan.plan.frecuencia_muestreo"
         >
         <option value="2">
           2
@@ -284,22 +324,6 @@
   </div>
   <div class="row">
     <div class="col-xs-12">
-      <h4>Responsables</h4>
-    </div>
-  </div>
-  <div class="row"
-    data-ng-show="plan.plan.supervisor_muestreo"
-    >
-    <div class="col-xs-12">
-      <h5>Responsable muestreo</h5>
-      {{plan.plan.supervisor_muestreo.nombres}}
-      {{plan.plan.supervisor_muestreo.ap}}
-      {{plan.plan.supervisor_muestreo.am}}
-      <small>(Orden de muestreo)</small>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-xs-12">
       <h5>Muestreo y entrega</h5>
     </div>
   </div>
@@ -311,7 +335,6 @@
       <select class="form-control"
         id="samplingSupervisorSelect"
         name="samplingSupervisorSelect"
-        required
         data-ng-model="plan.plan.id_supervisor_entrega"
         >
         <option
@@ -330,7 +353,6 @@
       <select class="form-control"
         id="samplingCompanion"
         name="samplingCompanion"
-        required
         data-ng-model="plan.plan.id_ayudante_entrega"
         >
         <option
@@ -343,6 +365,7 @@
       </select>
     </div>
   </div>
+
   <div class="row">
     <div class="col-xs-12">
       <h5>Recolección</h5>
@@ -356,7 +379,6 @@
       <select class="form-control"
         id="collectingSupervisorSelect"
         name="collectingSupervisorSelect"
-        required
         data-ng-model="plan.plan.id_supervisor_recoleccion"
         >
         <option
@@ -375,7 +397,6 @@
       <select class="form-control"
         id="collectingSupervisorCompanion"
         name="collectingSupervisorCompanion"
-        required
         data-ng-model="plan.plan.id_ayudante_recoleccion"
         >
         <option
@@ -401,7 +422,6 @@
       <select class="form-control"
         id="loggingSupervisorSelect"
         name="loggingSupervisorSelect"
-        required
         data-ng-model="plan.plan.id_supervisor_registro"
         >
         <option
@@ -420,7 +440,6 @@
       <select class="form-control"
         id="loggingCompanionSelect"
         name="loggingCompanionSelect"
-        required
         data-ng-model="plan.plan.id_ayudante_registro"
         >
         <option
@@ -444,15 +463,14 @@
     </div>
   </div>
   <div class="row">
-    <div class="col-xs-12 col-sm-6 col-md-7 col-lg-7">
-      <label for="calibratorSelect" class="sr-only">
-        Encargado de calibración
+    <div class="col-xs-12 col-sm-6">
+      <label for="calibratorSelect">
+        Responsable calibración
       </label>
       <select class="form-control"
         id="calibratorSelect"
         name="calibratorSelect"
-        required
-        data-ng-model="plan.plan.id_supervisor_calibracion"
+        data-ng-model="plan.plan.id_responsable_calibracion"
         >
         <option
           data-ng-repeat="calibratingSupervisor in plan.samplingEmployees"
@@ -463,44 +481,55 @@
         </option>
       </select>
     </div>
-  </div>
-  <div class="row">
     <div class="col-xs-12 col-sm-6">
       <label for="calibrationDate">
         Fecha de calibración
       </label>
-      <input type="text" class="form-control"
+      <input type="text"
+        class="form-control"
         id="calibrationDate"
         name="calibrationDate"
-        placeholder="aaaa-mm-dd"
+        placeholder="aaaa-MM-dd"
+        required
         data-ng-model="plan.plan.fecha_calibracion"
+        data-date-format="yyyy-MM-dd"
+        data-date-type="date"
+        data-autoclose="1"
+        date-use-native="true"
+        data-bs-datepicker
         >
       <br>
     </div>
   </div>
   <div class="row">
     <div class="col-xs-12">
-      <button class="btn btn-default" type="button"
-        id="addEquipmentButton"
-        name="addEquipmentButton"
-        data-ng-click="plan.addEquipment()"
-        >
-        Agregar Equipo</button>
+      <h4>Equipo {{plan.selectInstruments()}}</h4>
     </div>
   </div>
   <div class="row">
-    <div class="col-xs-12 col-sm-4"
-      data-ng-repeat="equipment in plan.equipments">
-      Equipo:
-      {{equipment.descripcion}}
-      <br>
-      Inventario:
-      {{equipment.inventario}}
-      Bitácora:
-      {{equipment.bitacora}}
-      Folio:
-      {{equipment.folio}}
-      <br>
+    <div class="col-xs-12 col-sm-6"
+      data-ng-repeat="equipment in plan.instruments">
+      <div class="row">
+        <div class="col-xs-12 col-sm-4">
+          <label>
+           <input type="checkbox"
+             value="{{equipment.selected}}"
+             >
+             {{equipment.inventario}}
+          </label>
+        </div>
+        <div class="col-xs-12 col-sm-8">
+          {{equipment.descripcion}}<br>
+          Bitácora:
+          <strong>
+            {{equipment.bitacora}}
+          </strong><br>
+          Folio:
+          <strong>
+            {{equipment.folio}}
+          </strong>
+        </div>
+      </div>
     </div>
   </div>
   <div class="row">
@@ -509,15 +538,14 @@
     </div>
   </div>
   <div class="row">
-    <div class="col-xs-12 col-sm-6 col-md-7 col-lg-7">
+    <div class="col-xs-12 col-sm-6">
       <label for="preparationSupervisorSelect" class="sr-only">
         Encargado de preparación
       </label>
       <select class="form-control"
         id="preparationSupervisorSelect"
         name="preparationSupervisorSelect"
-        required
-        data-ng-model="plan.id_supervisor_recipientes"
+        data-ng-model="plan.plan.id_responsable_recipientes"
         >
         <option
           data-ng-repeat="preparationSupervisor in plan.samplingEmployees"
@@ -567,15 +595,14 @@
     </div>
   </div>
   <div class="row">
-    <div class="col-xs-12 col-sm-6 col-md-7 col-lg-7">
+    <div class="col-xs-12 col-sm-6">
       <label for="reactiveSupervisorSelect" class="sr-only">
         Encargado de reactivos
       </label>
       <select class="form-control"
         id="reactiveSupervisorSelect"
         name="reactiveSupervisorSelect"
-        required
-        data-ng-model="plan.id_supervisor_reactivos"
+        data-ng-model="plan.plan.id_responsable_reactivos"
         >
         <option
           data-ng-repeat="reactiveSupervisor in plan.samplingEmployees"
@@ -633,22 +660,20 @@
       </div>
     </div>
   </div>
-
   <div class="row">
     <div class="col-xs-12">
       <h5>Preparación de material y equipo</h5>
     </div>
   </div>
   <div class="row">
-    <div class="col-xs-12 col-sm-6 col-md-7 col-lg-7">
+    <div class="col-xs-12 col-sm-6">
       <label for="materialsSupervisorSelect" class="sr-only">
         Encargado de preparación
       </label>
       <select class="form-control"
         id="materialsSupervisorSelect"
         name="materialsSupervisorSelect"
-        required
-        data-ng-model="plan.plan.id_supervisor_material"
+        data-ng-model="plan.plan.id_responsable_material"
         >
         <option
           data-ng-repeat="materialsSupervisor in plan.samplingEmployees"
@@ -661,7 +686,7 @@
     </div>
   </div>
   <div class="row">
-    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3"
+    <div class="col-xs-12 col-sm-6"
       data-ng-repeat="material in plan.materials"
       >
       <label>
@@ -677,15 +702,14 @@
     </div>
   </div>
   <div class="row">
-    <div class="col-xs-12 col-sm-6 col-md-7 col-lg-7">
+    <div class="col-xs-12 col-sm-6">
       <label for="coolersSupervisorSelect" class="sr-only">
         Encargado de hieleras
       </label>
       <select class="form-control"
         id="coolersSupervisorSelect"
         name="coolersSupervisorSelect"
-        required
-        data-ng-model="plan.plan.id_supervisor_hieleras"
+        data-ng-model="plan.plan.id_responsable_hieleras"
         >
         <option
           data-ng-repeat="coolersSupervisor in plan.samplingEmployees"
@@ -715,7 +739,7 @@
     <div class="col-xs-12">
       Cantidad de hieleras:
       <strong>
-      {{plan.countSelectedItems(plan.coolers)}}
+      {{plan.plan.hieleras.length}}
       </strong>
     </div>
   </div>
@@ -723,9 +747,10 @@
   <br>
   <button type="submit" class="btn btn-primary"
     value="Guardar" title="Guardar"
-    data-ng-click="plan.validatePlanForm()"
+    data-ng-click="plan.submitForm()"
     >
-    Guardar</button>
+    Guardar
+  </button>
 </form>
 
           </div>

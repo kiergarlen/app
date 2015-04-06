@@ -10,7 +10,7 @@
    */
   function FieldSheetsListController($location, FieldSheetService) {
     var vm = this;
-    vm.fieldSheets = FieldSheetService.query();
+    vm.fieldSheets = FieldSheetService.get();
     vm.addFieldSheet = addFieldSheet;
     vm.selectRow = selectRow;
 
@@ -43,7 +43,7 @@
    */
   function ReceptionsListController($location, ReceptionService) {
     var vm = this;
-    vm.receptions = ReceptionService.query();
+    vm.receptions = ReceptionService.get();
     vm.addReception = addReception;
     vm.selectRow = selectRow;
 
@@ -107,7 +107,7 @@
    */
   function SamplesListController(SamplesListService) {
     var vm = this;
-    vm.pricesList = SamplesListService.query();
+    vm.pricesList = SamplesListService.get();
     vm.selectRow = selectRow;
 
     function selectRow() {
@@ -133,7 +133,7 @@
    */
   function InstrumentsListController(InstrumentsListService) {
     var vm = this;
-    vm.clients = InstrumentsListService.query();
+    vm.clients = InstrumentsListService.get();
     vm.selectRow = selectRow;
 
     function selectRow() {
@@ -159,7 +159,7 @@
    */
   function ReactivesListController(ReactivesListService) {
     var vm = this;
-    vm.pricesList = ReactivesListService.query();
+    vm.pricesList = ReactivesListService.get();
     vm.selectRow = selectRow;
 
     function selectRow() {
@@ -185,7 +185,7 @@
    */
   function ContainersListController(ContainersListService) {
     var vm = this;
-    vm.pricesList = ContainersListService.query();
+    vm.pricesList = ContainersListService.get();
     vm.selectRow = selectRow;
 
     function selectRow() {
@@ -211,7 +211,7 @@
    */
   function AnalysisListController(AnalysisListService) {
     var vm = this;
-    vm.analysisList = AnalysisListService.query();
+    vm.analysisList = AnalysisListService.get();
 
     vm.selectRow = selectRow;
     function selectRow() {
@@ -241,9 +241,9 @@
   function AnalysisController(DepartmentService, ParameterService,
     AnalysisService) {
     var vm = this;
-    vm.areas = DepartmentService.query();
-    vm.parameters = ParameterService.query();
-    vm.analysis = AnalysisService.query();
+    vm.areas = DepartmentService.get();
+    vm.parameters = ParameterService.get();
+    vm.analysis = AnalysisService.get();
 
     vm.selectArea = selectArea;
     vm.selectParameter = selectParameter;
@@ -287,7 +287,7 @@
    */
   function ReportsListController(ReportsListService) {
     var vm = this;
-    vm.pricesList = ReportsListService.query();
+    vm.pricesList = ReportsListService.get();
     vm.selectRow = selectRow;
 
     function selectRow() {
@@ -314,7 +314,7 @@
    */
   function ReportController($routeParams, ReportService) {
     var vm = this;
-    vm.report = ReportService.query();
+    vm.report = ReportService.get();
 
     vm.validateReportForm = validateReportForm;
     vm.submitReportForm = submitReportForm;
@@ -346,7 +346,7 @@
    */
   function PointsListController(PointsListService) {
     var vm = this;
-    vm.points = PointsListService.query();
+    vm.points = PointsListService.get();
     vm.selectRow = selectRow;
 
     function selectRow() {
@@ -372,7 +372,7 @@
    */
   function ClientsListController(ClientService) {
     var vm = this;
-    vm.clients = ClientService.query();
+    vm.clients = ClientService.get();
     vm.selectRow = selectRow;
 
     function selectRow(e) {
@@ -399,7 +399,7 @@
    */
   function DepartmentsListController(DepartmentService) {
     var vm = this;
-    vm.departments = DepartmentService.query();
+    vm.departments = DepartmentService.get();
   }
   angular
     .module('sislabApp')
@@ -420,7 +420,7 @@
    */
   function EmployeesListController(EmployeeService) {
     var vm = this;
-    vm.employees = EmployeeService.query();
+    vm.employees = EmployeeService.get();
   }
   angular
     .module('sislabApp')
@@ -441,7 +441,7 @@
    */
   function NormsListController(NormsListService) {
     var vm = this;
-    vm.clients = NormsListService.query();
+    vm.clients = NormsListService.get();
     vm.selectRow = selectRow;
 
     function selectRow() {
@@ -467,7 +467,7 @@
    */
   function ReferencesListController(ReferencesListService) {
     var vm = this;
-    vm.ReferencesList = ReferencesListService.query();
+    vm.ReferencesList = ReferencesListService.get();
     vm.selectRow = selectRow;
 
     function selectRow() {
@@ -493,7 +493,7 @@
    */
   function MethodsListController(MethodsListService) {
     var vm = this;
-    vm.methodsList = MethodsListService.query();
+    vm.methodsList = MethodsListService.get();
 
     vm.selectRow = selectRow;
     function selectRow() {
@@ -519,7 +519,7 @@
    */
   function PricesListController(PricesListService) {
     var vm = this;
-    vm.pricesList = PricesListService.query();
+    vm.pricesList = PricesListService.get();
     vm.selectRow = selectRow;
 
     function selectRow() {
@@ -545,7 +545,7 @@
    */
   function UsersListController (UsersListService) {
     var vm = this;
-    vm.users = UsersListService.query();
+    vm.users = UsersListService.get();
   }
   angular
     .module('sislabApp')
@@ -566,7 +566,7 @@
    */
   function ProfileController(UserProfileService) {
     var vm = this;
-    vm.profile = UserProfileService.query();
+    vm.profile = UserProfileService.get();
   }
   angular
     .module('sislabApp')

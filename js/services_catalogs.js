@@ -96,7 +96,6 @@
           'Auth-Token': TokenService.getToken()
         }
       }
-
     });
   }
   angular
@@ -105,6 +104,36 @@
       [
         '$resource', 'TokenService',
         PointService
+      ]
+    );
+
+  // PointsByPackageService.js
+  /**
+   * @name PointsByPackageService
+   * @constructor
+   * @desc Proveedor de datos, Puntos de muestreo por aquete
+   * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
+   * @param {Object} TokenService - Proveedor de métodos para token
+   * @return {Object} $resource - Acceso a recursos HTTP
+   */
+  function PointsByPackageService($resource, TokenService) {
+    return $resource(API_BASE_URL + 'points/package', {}, {
+      get: {
+        method: 'GET',
+        params: {pointId: 'id_paquete_punto'},
+        isArray: true,
+        headers: {
+          'Auth-Token': TokenService.getToken()
+        }
+      }
+    });
+  }
+  angular
+    .module('sislabApp')
+    .factory('PointsByPackageService',
+      [
+        '$resource', 'TokenService',
+        PointsByPackageService
       ]
     );
 
@@ -119,7 +148,7 @@
    */
   function ParameterService($resource, TokenService) {
     return $resource(API_BASE_URL + 'parameters', {}, {
-      query: {
+      get: {
         method: 'GET',
         params: {},
         isArray: true,
@@ -149,7 +178,7 @@
    */
   function NormService($resource, TokenService) {
     return $resource(API_BASE_URL + 'norms', {}, {
-      query: {
+      get: {
         method: 'GET',
         params: {},
         isArray: true,
@@ -179,7 +208,7 @@
    */
   function SamplingTypeService($resource, TokenService) {
     return $resource(API_BASE_URL + 'sampling/types', {}, {
-      query: {
+      get: {
         method: 'GET',
         params: {},
         isArray: true,
@@ -209,7 +238,7 @@
    */
   function OrderSourceService($resource, TokenService) {
     return $resource(API_BASE_URL + 'order/sources', {}, {
-      query: {
+      get: {
         method: 'GET',
         params: {},
         isArray: true,
@@ -239,7 +268,7 @@
    */
   function MatrixService($resource, TokenService) {
     return $resource(API_BASE_URL + 'matrices', {}, {
-      query: {
+      get: {
         method: 'GET',
         params: {},
         isArray: true,
@@ -330,7 +359,7 @@
    */
   function PlanObjectivesService($resource, TokenService) {
     return $resource(API_BASE_URL + 'plan/objectives', {}, {
-      query: {
+      get: {
         method: 'GET',
         params: {},
         isArray: true,
@@ -360,7 +389,7 @@
    */
   function PointKindsService($resource, TokenService) {
     return $resource(API_BASE_URL + 'point/kinds', {}, {
-      query: {
+      get: {
         method: 'GET',
         params: {},
         isArray: true,
@@ -390,7 +419,7 @@
    */
   function DistrictService($resource, TokenService) {
     return $resource(API_BASE_URL + 'districts', {}, {
-      query: {
+      get: {
         method: 'GET',
         params: {},
         isArray: true,
@@ -480,7 +509,7 @@
    */
   function PreservationService($resource, TokenService) {
     return $resource(API_BASE_URL + 'preservations', {}, {
-      query: {
+      get: {
         method: 'GET',
         params: {},
         isArray: true,
@@ -510,7 +539,7 @@
    */
   function ContainerKindsService($resource, TokenService) {
     return $resource(API_BASE_URL + 'containers/kinds', {}, {
-      query: {
+      get: {
         method: 'GET',
         params: {},
         isArray: true,
@@ -533,14 +562,14 @@
   /**
    * @name ReactivesListService
    * @constructor
-   * @desc Proveedor de datos, lista Reactivos
+   * @desc Proveedor de datos, Reactivos
    * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @param {Object} TokenService - Proveedor de métodos para token
    * @return {Object} $resource - Acceso a recursos HTTP
    */
   function ReactivesListService($resource, TokenService) {
     return $resource(API_BASE_URL + 'reactives', {}, {
-      query: {
+      get: {
         method: 'GET',
         params: {},
         isArray: true,
@@ -570,7 +599,7 @@
    */
   function MaterialService($resource, TokenService) {
     return $resource(API_BASE_URL + 'materials', {}, {
-      query: {
+      get: {
         method: 'GET',
         params: {},
         isArray: true,
@@ -600,7 +629,7 @@
    */
   function CoolerService($resource, TokenService) {
     return $resource(API_BASE_URL + 'coolers', {}, {
-      query: {
+      get: {
         method: 'GET',
         params: {},
         isArray: true,
@@ -619,6 +648,36 @@
       ]
     );
 
+  // SamplingInstrumentService.js
+  /**
+   * @name SamplingInstrumentService
+   * @constructor
+   * @desc Proveedor de datos, Equipos de muestreo
+   * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
+   * @param {Object} TokenService - Proveedor de métodos para token
+   * @return {Object} $resource - Acceso a recursos HTTP
+   */
+  function SamplingInstrumentService($resource, TokenService) {
+    return $resource(API_BASE_URL + 'instruments/sampling', {}, {
+      get: {
+        method: 'GET',
+        params: {},
+        isArray: true,
+        headers: {
+          'Auth-Token': TokenService.getToken()
+        }
+      }
+    });
+  }
+  angular
+    .module('sislabApp')
+    .factory('SamplingInstrumentService',
+      [
+        '$resource', 'TokenService',
+        SamplingInstrumentService
+      ]
+    );
+
   // FieldParameterService.js
   /**
    * @name FieldParameterService
@@ -630,7 +689,7 @@
    */
   function FieldParameterService($resource, TokenService) {
     return $resource(API_BASE_URL + 'parameters/field', {}, {
-      query: {
+      get: {
         method: 'GET',
         params: {},
         isArray: true,
@@ -661,7 +720,7 @@
    */
   function ReceptionistService($resource, TokenService) {
     return $resource(API_BASE_URL + 'receptionists', {}, {
-      query: {
+      get: {
         method: 'GET',
         params: {},
         isArray: true,
@@ -692,7 +751,7 @@
    */
   function ExpirationService($resource, TokenService) {
     return $resource(API_BASE_URL + 'expirations', {}, {
-      query: {
+      get: {
         method: 'GET',
         params: {},
         isArray: true,
@@ -722,7 +781,7 @@
    */
   function RequiredVolumeService($resource, TokenService) {
     return $resource(API_BASE_URL + 'volumes', {}, {
-      query: {
+      get: {
         method: 'GET',
         params: {},
         isArray: true,
@@ -752,7 +811,7 @@
    */
   function CheckerService($resource, TokenService) {
     return $resource(API_BASE_URL + 'checkers', {}, {
-      query: {
+      get: {
         method: 'GET',
         params: {},
         isArray: true,
@@ -775,14 +834,14 @@
   /**
    * @name SamplesListService
    * @constructor
-   * @desc Proveedor de datos, lista Muestras
+   * @desc Proveedor de datos, Muestras
    * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @param {Object} TokenService - Proveedor de métodos para token
    * @return {Object} $resource - Acceso a recursos HTTP
    */
   function SamplesListService($resource, TokenService) {
     return $resource(API_BASE_URL + 'samples', {}, {
-      query: {
+      get: {
         method: 'GET',
         params: {},
         isArray: true,
@@ -805,14 +864,14 @@
   /**
    * @name InstrumentsListService
    * @constructor
-   * @desc Proveedor de datos, lista Equipos
+   * @desc Proveedor de datos, Equipos
    * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @param {Object} TokenService - Proveedor de métodos para token
    * @return {Object} $resource - Acceso a recursos HTTP
    */
   function InstrumentsListService($resource, TokenService) {
     return $resource(API_BASE_URL + 'instruments', {}, {
-      query: {
+      get: {
         method: 'GET',
         params: {},
         isArray: true,
@@ -835,14 +894,14 @@
   /**
    * @name ContainersListService
    * @constructor
-   * @desc Proveedor de datos, lista Recipients
+   * @desc Proveedor de datos, Recipientes
    * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @param {Object} TokenService - Proveedor de métodos para token
    * @return {Object} $resource - Acceso a recursos HTTP
    */
   function ContainersListService($resource, TokenService) {
     return $resource(API_BASE_URL + 'containers', {}, {
-      query: {
+      get: {
         method: 'GET',
         params: {},
         isArray: true,
@@ -872,7 +931,7 @@
    */
   function AnalysisListService($resource, TokenService) {
     return $resource(API_BASE_URL + 'analysis', {}, {
-      query: {
+      get: {
         method: 'GET',
         params: {},
         isArray: true,
@@ -902,7 +961,7 @@
    */
   function DepartmentService($resource, TokenService) {
     return $resource(API_BASE_URL + 'areas', {}, {
-      query: {
+      get: {
         method: 'GET',
         params: {},
         isArray: true,
@@ -932,7 +991,7 @@
    */
   function AnalysisService($resource, TokenService) {
     return $resource(API_BASE_URL + 'analysis/selections', {}, {
-      query: {
+      get: {
         method: 'GET',
         params: {},
         isArray: true,
@@ -955,14 +1014,14 @@
   /**
    * @name ReportsListService
    * @constructor
-   * @desc Proveedor de datos, lista Reportes
+   * @desc Proveedor de datos, Reportes
    * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @param {Object} TokenService - Proveedor de métodos para token
    * @return {Object} $resource - Acceso a recursos HTTP
    */
   function ReportsListService($resource, TokenService) {
     return $resource(API_BASE_URL + 'reports', {}, {
-      query: {
+      get: {
         method: 'GET',
         params: {},
         isArray: true,
@@ -1015,14 +1074,14 @@
   /**
    * @name PointsListService
    * @constructor
-   * @desc Proveedor de datos, lista Puntos
+   * @desc Proveedor de datos, Puntos
    * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @param {Object} TokenService - Proveedor de métodos para token
    * @return {Object} $resource - Acceso a recursos HTTP
    */
   function PointsListService($resource, TokenService) {
     return $resource(API_BASE_URL + 'points', {}, {
-      query: {
+      get: {
         method: 'GET',
         params: {},
         isArray: true,
@@ -1052,7 +1111,7 @@
    */
   function EmployeeService($resource, TokenService) {
     return $resource(API_BASE_URL + 'employees', {}, {
-      query: {
+      get: {
         method: 'GET',
         params: {},
         isArray: true,
@@ -1075,14 +1134,14 @@
   /**
    * @name NormsListService
    * @constructor
-   * @desc Proveedor de datos, lista Normas
+   * @desc Proveedor de datos, Normas
    * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @param {Object} TokenService - Proveedor de métodos para token
    * @return {Object} $resource - Acceso a recursos HTTP
    */
   function NormsListService($resource, TokenService) {
     return $resource(API_BASE_URL + 'norms', {}, {
-      query: {
+      get: {
         method: 'GET',
         params: {},
         isArray: true,
@@ -1105,14 +1164,14 @@
   /**
    * @name ReferencesListService
    * @constructor
-   * @desc Proveedor de datos, lista Referencias
+   * @desc Proveedor de datos, Referencias
    * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @param {Object} TokenService - Proveedor de métodos para token
    * @return {Object} $resource - Acceso a recursos HTTP
    */
   function ReferencesListService($resource, TokenService) {
     return $resource(API_BASE_URL + 'references', {}, {
-      query: {
+      get: {
         method: 'GET',
         params: {},
         isArray: true,
@@ -1142,7 +1201,7 @@
    */
   function MethodsListService($resource, TokenService) {
     return $resource(API_BASE_URL + 'methods', {}, {
-      query: {
+      get: {
         method: 'GET',
         params: {},
         isArray: true,
@@ -1165,14 +1224,14 @@
   /**
    * @name PricesListService
    * @constructor
-   * @desc Proveedor de datos, lista Precios
+   * @desc Proveedor de datos, Precios
    * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @param {Object} TokenService - Proveedor de métodos para token
    * @return {Object} $resource - Acceso a recursos HTTP
    */
   function PricesListService($resource, TokenService) {
     return $resource(API_BASE_URL + 'prices', {}, {
-      query: {
+      get: {
         method: 'GET',
         params: {},
         isArray: true,
@@ -1202,7 +1261,7 @@
    */
   function UsersListService($resource, TokenService) {
     return $resource(API_BASE_URL + 'users', {}, {
-      query: {
+      get: {
         method: 'GET',
         params: {},
         isArray: true,
@@ -1232,7 +1291,7 @@
    */
   function UserProfileService($resource, TokenService) {
     return $resource(API_BASE_URL + 'users/:userId', {}, {
-      query: {
+      get: {
         method: 'GET',
         params: {},
         isArray: true,
@@ -1264,7 +1323,7 @@
    */
   function CloudService($resource, TokenService) {
     return $resource(API_BASE_URL + 'clouds', {}, {
-      query: {
+      get: {
         method: 'GET',
         params: {},
         isArray: true,
@@ -1294,7 +1353,7 @@
    */
   function WindService($resource, TokenService) {
     return $resource(API_BASE_URL + 'winds', {}, {
-      query: {
+      get: {
         method: 'GET',
         params: {},
         isArray: true,
@@ -1324,7 +1383,7 @@
    */
   function WaveService($resource, TokenService) {
     return $resource(API_BASE_URL + 'waves', {}, {
-      query: {
+      get: {
         method: 'GET',
         params: {},
         isArray: true,
@@ -1354,7 +1413,7 @@
    */
   function SamplingNormService($resource, TokenService) {
     return $resource(API_BASE_URL + 'sampling/norms', {}, {
-      query: {
+      get: {
         method: 'GET',
         params: {},
         isArray: true,

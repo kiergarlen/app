@@ -5083,18 +5083,18 @@ class DALSislab
 					"id_supervisor_muestreo":3,
 					"id_objetivo_plan":2,
 
-					"id_supervisor_entrega":3,
-					"id_ayudante_entrega":3,
-					"id_supervisor_recoleccion":3,
-					"id_ayudante_recoleccion":3,
-					"id_supervisor_registro":3,
-					"id_ayudante_registro":3,
+					"id_supervisor_entrega":13,
+					"id_ayudante_entrega":13,
+					"id_supervisor_recoleccion":13,
+					"id_ayudante_recoleccion":13,
+					"id_supervisor_registro":13,
+					"id_ayudante_registro":13,
 
-					"id_responsable_calibracion":3,
-					"id_responsable_recipientes":3,
-					"id_responsable_reactivos":3,
-					"id_responsable_material":3,
-					"id_responsable_hieleras":3,
+					"id_responsable_calibracion":13,
+					"id_responsable_recipientes":13,
+					"id_responsable_reactivos":13,
+					"id_responsable_material":13,
+					"id_responsable_hieleras":13,
 
 					"id_estado":14,
 					"id_municipio":14039,
@@ -5119,11 +5119,12 @@ class DALSislab
 					"ip_actualiza":"[::1]",
 					"host_actualiza":"localhost",
 
-					"objetivo_otro":"",
+					"objetivo_otro":"esto es una prueba",
 					"calle":"Av. Brasilia",
 					"numero":"2970",
 					"colonia":"Col. Colomos Providencia",
 
+					"frecuencia_muestreo":2,
 					"matriz":"Agua residual",
 					"municipio":"Guadalajara",
 					"localidad":"Guadalajara",
@@ -5162,6 +5163,45 @@ class DALSislab
 						"interno":0,
 						"cea":0,
 						"tasa":1,
+						"activo":1
+					},
+					"solicitud":
+					{
+						"id_solicitud":1,
+						"id_estudio":1,
+						"id_cliente":13,
+						"id_matriz":1,
+						"id_tipo_muestreo":2,
+						"id_norma":1,
+						"id_cuerpo_receptor":1,
+						"id_tipo_cuerpo":3,
+						"id_ejercicio":2015,
+						"id_status":2,
+						"id_usuario_captura":20,
+						"id_usuario_valida":1,
+						"id_usuario_actualiza":1,
+						"numero_oficio":432,
+						"folio":"CEA-432/2015",
+						"matriz":"Agua residual",
+						"cantidad_muestras":15,
+						"tipo_muestreo":"Compuesto",
+						"costo_total":35850,
+						"cuerpo_receptor":"Río Santiago",
+						"tipo_cuerpo":"C",
+						"status":"Validado",
+						"fecha":"2015-03-21",
+						"fecha_captura":"2015-03-21",
+						"ip_captura":"[::1]",
+						"host_captura":"localhost",
+						"fecha_valida":"2015-03-21",
+						"ip_valida":"[::1]",
+						"host_valida":"localhost",
+						"fecha_actualiza":"2015-03-21",
+						"ip_actualiza":"[::1]",
+						"host_actualiza":"localhost",
+						"fecha_acepta":"2015-03-21",
+						"fecha_rechaza":"",
+						"motivo_rechaza":"",
 						"activo":1
 					},
 					"orden":
@@ -5211,9 +5251,194 @@ class DALSislab
 						"cert":1,
 						"activo":1
 					},
-					"puntos_muestreo":
+					"puntos":
 					[
-
+						{
+							"id_punto":1,
+							"id_paquete_puntos":1,
+							"id_cuerpo_receptor":1,
+							"id_clase_punto":1,
+							"id_reg_hid":12,
+							"id_cuenca":1,
+							"id_subcuenca":1,
+							"id_municipio":14063,
+							"id_localidad":140630001,
+							"id_usuario_captura":1,
+							"id_usuario_actualiza":1,
+							"punto":"Ocotlán",
+							"descripcion":"Ocotlán",
+							"lat":20.346928,
+							"lng":-102.779392,
+							"alt":0,
+							"municipio":"municipio 14063",
+							"localidad":"localidad 140630001",
+							"consecutivo":1,
+							"siglas":"RS",
+							"clave":"RS-01",
+							"fecha_captura":"2012-07-11T00:00-06:00",
+							"ip_captura":"[::1]",
+							"host_captura":"localhost",
+							"fecha_actualiza":"2012-07-11T00:00-06:00",
+							"ip_actualiza":"[::1]",
+							"host_actualiza":"localhost",
+							"comentarios":"",
+							"activo":1
+						},
+						{
+							"id_punto":2,
+							"id_paquete_puntos":1,
+							"id_cuerpo_receptor":1,
+							"id_clase_punto":1,
+							"id_reg_hid":0,
+							"id_cuenca":1,
+							"id_subcuenca":1,
+							"id_municipio":14030,
+							"id_localidad":140300038,
+							"id_usuario_captura":1,
+							"id_usuario_actualiza":1,
+							"punto":"Presa Corona",
+							"descripcion":"Cortina Presa Corona - Poncitlán",
+							"lat":20.399667,
+							"lng":-103.090619,
+							"alt":0,
+							"municipio":"municipio 14030",
+							"localidad":"localidad 140300038",
+							"consecutivo":2,
+							"siglas":"RS",
+							"clave":"RS-02",
+							"fecha_captura":"2013-01-31T12:44-06:00",
+							"ip_captura":"[::1]",
+							"host_captura":"localhost",
+							"fecha_actualiza":"2013-01-31T12:44-06:00",
+							"ip_actualiza":"[::1]",
+							"host_actualiza":"localhost",
+							"comentarios":"",
+							"activo":1
+						},
+						{
+							"id_punto":3,
+							"id_paquete_puntos":1,
+							"id_cuerpo_receptor":1,
+							"id_clase_punto":1,
+							"id_reg_hid":0,
+							"id_cuenca":1,
+							"id_subcuenca":1,
+							"id_municipio":14051,
+							"id_localidad":140510013,
+							"id_usuario_captura":1,
+							"id_usuario_actualiza":1,
+							"punto":"Ex-hacienda Zap.",
+							"descripcion":"Ex-hacienda de Zapotlanejo",
+							"lat":20.442003,
+							"lng":-103.143814,
+							"alt":0,
+							"municipio":"municipio 14051",
+							"localidad":"localidad 140510013",
+							"consecutivo":3,
+							"siglas":"RS",
+							"clave":"RS-03",
+							"fecha_captura":"2013-01-31T12:39-06:00",
+							"ip_captura":"[::1]",
+							"host_captura":"localhost",
+							"fecha_actualiza":"2013-01-31T12:39-06:00",
+							"ip_actualiza":"[::1]",
+							"host_actualiza":"localhost",
+							"comentarios":"",
+							"activo":1
+						},
+						{
+							"id_punto":4,
+							"id_paquete_puntos":1,
+							"id_cuerpo_receptor":1,
+							"id_clase_punto":1,
+							"id_reg_hid":12,
+							"id_cuenca":1,
+							"id_subcuenca":1,
+							"id_municipio":14051,
+							"id_localidad":140510001,
+							"id_usuario_captura":1,
+							"id_usuario_actualiza":1,
+							"punto":"Salto-Juanacatlán",
+							"descripcion":"Compuerta - Puente El Salto-Juanacatlán",
+							"lat":20.512825,
+							"lng":-103.174558,
+							"alt":0,
+							"municipio":"municipio 14051",
+							"localidad":"localidad 140510001",
+							"consecutivo":4,
+							"siglas":"RS",
+							"clave":"RS-04",
+							"fecha_captura":"2012-07-11T00:00-06:00",
+							"ip_captura":"[::1]",
+							"host_captura":"localhost",
+							"fecha_actualiza":"2012-07-11T00:00-06:00",
+							"ip_actualiza":"[::1]",
+							"host_actualiza":"localhost",
+							"comentarios":"",
+							"activo":1
+						},
+						{
+							"id_punto":5,
+							"id_paquete_puntos":1,
+							"id_cuerpo_receptor":1,
+							"id_clase_punto":1,
+							"id_reg_hid":12,
+							"id_cuenca":1,
+							"id_subcuenca":1,
+							"id_municipio":14101,
+							"id_localidad":141010026,
+							"id_usuario_captura":1,
+							"id_usuario_actualiza":1,
+							"punto":"Puente Grande",
+							"descripcion":"Puente Grande",
+							"lat":20.571036,
+							"lng":-103.147283,
+							"alt":0,
+							"municipio":"municipio 14101",
+							"localidad":"localidad 141010026",
+							"consecutivo":5,
+							"siglas":"RS",
+							"clave":"RS-05",
+							"fecha_captura":"2012-07-11T00:00-06:00",
+							"ip_captura":"[::1]",
+							"host_captura":"localhost",
+							"fecha_actualiza":"2012-07-11T00:00-06:00",
+							"ip_actualiza":"[::1]",
+							"host_actualiza":"localhost",
+							"comentarios":"",
+							"activo":1
+						},
+						{
+							"id_punto":6,
+							"id_paquete_puntos":1,
+							"id_cuerpo_receptor":1,
+							"id_clase_punto":1,
+							"id_reg_hid":12,
+							"id_cuenca":1,
+							"id_subcuenca":1,
+							"id_municipio":14101,
+							"id_localidad":141010009,
+							"id_usuario_captura":1,
+							"id_usuario_actualiza":1,
+							"punto":"Matatlán",
+							"descripcion":"Vertedero Controlado Matatlán",
+							"lat":20.668289,
+							"lng":-103.187169,
+							"alt":0,
+							"municipio":"municipio 14101",
+							"localidad":"localidad 141010009",
+							"consecutivo":6,
+							"siglas":"RS",
+							"clave":"RS-06",
+							"fecha_captura":"2012-07-11T00:00-06:00",
+							"ip_captura":"[::1]",
+							"host_captura":"localhost",
+							"fecha_actualiza":"2012-07-11T00:00-06:00",
+							"ip_actualiza":"[::1]",
+							"host_actualiza":"localhost",
+							"comentarios":"",
+							"activo":1
+						}
 					],
 					"equipos":
 					[
@@ -5222,6 +5447,7 @@ class DALSislab
 							"descripcion":"Descripcion equipo",
 							"inventario":"IE-MU-001",
 							"bitacora":"BU-AA-001",
+							"selected":true,
 							"numero_oficio":1,
 							"id_ejercicio":2015,
 							"folio":"CEA-1/2015",
@@ -5232,29 +5458,10 @@ class DALSislab
 							"descripcion":"Descripcion equipo",
 							"inventario":"IE-MU-002",
 							"bitacora":"BU-AA-002",
+							"selected":true,
 							"numero_oficio":2,
 							"id_ejercicio":2015,
 							"folio":"CEA-2/2015",
-							"activo":1
-						},
-						{
-							"id_equipo":3,
-							"descripcion":"Descripcion equipo",
-							"inventario":"IE-MU-003",
-							"bitacora":"BU-AA-003",
-							"numero_oficio":3,
-							"id_ejercicio":2015,
-							"folio":"CEA-3/2015",
-							"activo":1
-						},
-						{
-							"id_equipo":4,
-							"descripcion":"Descripcion equipo",
-							"inventario":"IE-MU-004",
-							"bitacora":"BU-AA-004",
-							"numero_oficio":4,
-							"id_ejercicio":2015,
-							"folio":"CEA-4/2015",
 							"activo":1
 						}
 					],
@@ -8060,6 +8267,60 @@ class DALSislab
 		';
 		return $result;
 	}
+
+	public function getSamplingInstruments() {
+		$result = '
+					[
+						{
+							"id_equipo":1,
+							"descripcion":"Descripcion equipo",
+							"inventario":"IE-MU-001",
+							"bitacora":"BU-AA-001",
+							"selected":false,
+							"numero_oficio":1,
+							"id_ejercicio":2015,
+							"folio":"CEA-1/2015",
+							"activo":1
+						},
+						{
+							"id_equipo":2,
+							"descripcion":"Descripcion equipo",
+							"inventario":"IE-MU-002",
+							"bitacora":"BU-AA-002",
+							"selected":false,
+							"numero_oficio":2,
+							"id_ejercicio":2015,
+							"folio":"CEA-2/2015",
+							"activo":1
+						},
+						{
+							"id_equipo":3,
+							"descripcion":"Descripcion equipo",
+							"inventario":"IE-MU-003",
+							"bitacora":"BU-AA-003",
+							"selected":false,
+							"numero_oficio":3,
+							"id_ejercicio":2015,
+							"folio":"CEA-3/2015",
+							"activo":1
+						},
+						{
+							"id_equipo":4,
+							"descripcion":"Descripcion equipo",
+							"inventario":"IE-MU-004",
+							"bitacora":"BU-AA-004",
+							"selected":false,
+							"numero_oficio":4,
+							"id_ejercicio":2015,
+							"folio":"CEA-4/2015",
+							"activo":1
+						}
+					]
+		';
+
+		return $result;
+	}
+
 
 	public function getCustodies() {
 		return '[]';
@@ -17685,12 +17946,12 @@ class DALSislab
 				},
 				{
 					"id_clase_punto":3,
-					"clase_punto":"De Interés General",
+					"clase_punto":"Interés General",
 					"activo":1
 				},
 				{
 					"id_clase_punto":4,
-					"clase_punto":"De Interés Particular",
+					"clase_punto":"Interés Particular",
 					"activo":1
 				}
 			]
@@ -17752,22 +18013,58 @@ class DALSislab
 				}
 			';
 		}
+		else if ($districtId == 14030)
+		{
+			$result = '
+				{
+					"id_municipio":14030,
+					"municipio":"Chapala"
+				}
+			';
+		}
 		else if ($districtId == 14039)
 		{
 			$result = '
 				{
 					"id_municipio":14039,
 					"municipio":"Guadalajara"
-				},
+				}
+			';
+		}
+		else if ($districtId == 14120)
+		{
+			$result = '
+				{
+					"id_municipio":14120,
+					"municipio":"Zapopan"
+				}
+			';
+		}
+		else if ($districtId == 14123)
+		{
+			$result = '
+				{
+					"id_municipio":14123,
+					"municipio":"Zapotlan El Grande"
+				}
+			';
+		}
+		else if ($districtId == 14124)
+		{
+			$result = '
+				{
+					"id_municipio":14124,
+					"municipio":"Zapotlanejo"
+				}
 			';
 		}
 		else
 		{
 			$result = '
-					{
-						"id_municipio":0,
-						"municipio":"0"
-					}
+				{
+					"id_municipio":0,
+					"municipio":"0"
+				}
 			';
 		}
 		return $result;
@@ -17788,7 +18085,7 @@ class DALSislab
 				[
 					{
 						"id_municipio":14001,
-						"id_localidad":14001001,
+						"id_localidad":140010001,
 						"localidad":"Acatic"
 					}
 				]
@@ -17800,7 +18097,7 @@ class DALSislab
 				[
 					{
 						"id_municipio":14030,
-						"id_localidad":14030001,
+						"id_localidad":140300001,
 						"localidad":"Chapala"
 					}
 				]
@@ -17812,8 +18109,44 @@ class DALSislab
 				[
 					{
 						"id_municipio":14039,
-						"id_localidad":14039001,
+						"id_localidad":140390001,
 						"localidad":"Guadalajara"
+					}
+				]
+			';
+		}
+		else if ($districtId == 14120)
+		{
+			$result = '
+				[
+					{
+						"id_municipio":14120,
+						"id_localidad":141200001,
+						"localidad":"Zapopan"
+					}
+				]
+			';
+		}
+		else if ($districtId == 14123)
+		{
+			$result = '
+				[
+					{
+						"id_municipio":14123,
+						"id_localidad":141230001,
+						"localidad":"Zapotlan El Grande"
+					}
+				]
+			';
+		}
+		else if ($districtId == 14124)
+		{
+			$result = '
+				[
+					{
+						"id_municipio":14124,
+						"id_localidad":141240001,
+						"localidad":"Zapotlanejo"
 					}
 				]
 			';
@@ -17821,11 +18154,13 @@ class DALSislab
 		else
 		{
 			$result = '
+				[
 					{
 						"id_municipio":0,
 						"id_localidad":0,
-						"localidad":"0"
+						"localidad":""
 					}
+				]
 			';
 		}
 		return $result;
@@ -20324,6 +20659,199 @@ class DALSislab
 		return $result;
 	}
 
+	public function getPointsByPackage($packageId) {
+		$result = '
+			[
+				{
+					"id_punto":1,
+					"id_paquete_puntos":1,
+					"id_cuerpo_receptor":1,
+					"id_clase_punto":1,
+					"id_reg_hid":12,
+					"id_cuenca":1,
+					"id_subcuenca":1,
+					"id_municipio":14063,
+					"id_localidad":140630001,
+					"id_usuario_captura":1,
+					"id_usuario_actualiza":1,
+					"punto":"Ocotlán",
+					"descripcion":"Ocotlán",
+					"lat":20.346928,
+					"lng":-102.779392,
+					"alt":0,
+					"municipio":"municipio 14063",
+					"localidad":"localidad 140630001",
+					"consecutivo":1,
+					"siglas":"RS",
+					"clave":"RS-01",
+					"fecha_captura":"2012-07-11T00:00-06:00",
+					"ip_captura":"[::1]",
+					"host_captura":"localhost",
+					"fecha_actualiza":"2012-07-11T00:00-06:00",
+					"ip_actualiza":"[::1]",
+					"host_actualiza":"localhost",
+					"comentarios":"",
+					"activo":1
+				},
+				{
+					"id_punto":2,
+					"id_paquete_puntos":1,
+					"id_cuerpo_receptor":1,
+					"id_clase_punto":1,
+					"id_reg_hid":0,
+					"id_cuenca":1,
+					"id_subcuenca":1,
+					"id_municipio":14030,
+					"id_localidad":140300038,
+					"id_usuario_captura":1,
+					"id_usuario_actualiza":1,
+					"punto":"Presa Corona",
+					"descripcion":"Cortina Presa Corona - Poncitlán",
+					"lat":20.399667,
+					"lng":-103.090619,
+					"alt":0,
+					"municipio":"municipio 14030",
+					"localidad":"localidad 140300038",
+					"consecutivo":2,
+					"siglas":"RS",
+					"clave":"RS-02",
+					"fecha_captura":"2013-01-31T12:44-06:00",
+					"ip_captura":"[::1]",
+					"host_captura":"localhost",
+					"fecha_actualiza":"2013-01-31T12:44-06:00",
+					"ip_actualiza":"[::1]",
+					"host_actualiza":"localhost",
+					"comentarios":"",
+					"activo":1
+				},
+				{
+					"id_punto":3,
+					"id_paquete_puntos":1,
+					"id_cuerpo_receptor":1,
+					"id_clase_punto":1,
+					"id_reg_hid":0,
+					"id_cuenca":1,
+					"id_subcuenca":1,
+					"id_municipio":14051,
+					"id_localidad":140510013,
+					"id_usuario_captura":1,
+					"id_usuario_actualiza":1,
+					"punto":"Ex-hacienda Zap.",
+					"descripcion":"Ex-hacienda de Zapotlanejo",
+					"lat":20.442003,
+					"lng":-103.143814,
+					"alt":0,
+					"municipio":"municipio 14051",
+					"localidad":"localidad 140510013",
+					"consecutivo":3,
+					"siglas":"RS",
+					"clave":"RS-03",
+					"fecha_captura":"2013-01-31T12:39-06:00",
+					"ip_captura":"[::1]",
+					"host_captura":"localhost",
+					"fecha_actualiza":"2013-01-31T12:39-06:00",
+					"ip_actualiza":"[::1]",
+					"host_actualiza":"localhost",
+					"comentarios":"",
+					"activo":1
+				},
+				{
+					"id_punto":4,
+					"id_paquete_puntos":1,
+					"id_cuerpo_receptor":1,
+					"id_clase_punto":1,
+					"id_reg_hid":12,
+					"id_cuenca":1,
+					"id_subcuenca":1,
+					"id_municipio":14051,
+					"id_localidad":140510001,
+					"id_usuario_captura":1,
+					"id_usuario_actualiza":1,
+					"punto":"Salto-Juanacatlán",
+					"descripcion":"Compuerta - Puente El Salto-Juanacatlán",
+					"lat":20.512825,
+					"lng":-103.174558,
+					"alt":0,
+					"municipio":"municipio 14051",
+					"localidad":"localidad 140510001",
+					"consecutivo":4,
+					"siglas":"RS",
+					"clave":"RS-04",
+					"fecha_captura":"2012-07-11T00:00-06:00",
+					"ip_captura":"[::1]",
+					"host_captura":"localhost",
+					"fecha_actualiza":"2012-07-11T00:00-06:00",
+					"ip_actualiza":"[::1]",
+					"host_actualiza":"localhost",
+					"comentarios":"",
+					"activo":1
+				},
+				{
+					"id_punto":5,
+					"id_paquete_puntos":1,
+					"id_cuerpo_receptor":1,
+					"id_clase_punto":1,
+					"id_reg_hid":12,
+					"id_cuenca":1,
+					"id_subcuenca":1,
+					"id_municipio":14101,
+					"id_localidad":141010026,
+					"id_usuario_captura":1,
+					"id_usuario_actualiza":1,
+					"punto":"Puente Grande",
+					"descripcion":"Puente Grande",
+					"lat":20.571036,
+					"lng":-103.147283,
+					"alt":0,
+					"municipio":"municipio 14101",
+					"localidad":"localidad 141010026",
+					"consecutivo":5,
+					"siglas":"RS",
+					"clave":"RS-05",
+					"fecha_captura":"2012-07-11T00:00-06:00",
+					"ip_captura":"[::1]",
+					"host_captura":"localhost",
+					"fecha_actualiza":"2012-07-11T00:00-06:00",
+					"ip_actualiza":"[::1]",
+					"host_actualiza":"localhost",
+					"comentarios":"",
+					"activo":1
+				},
+				{
+					"id_punto":6,
+					"id_paquete_puntos":1,
+					"id_cuerpo_receptor":1,
+					"id_clase_punto":1,
+					"id_reg_hid":12,
+					"id_cuenca":1,
+					"id_subcuenca":1,
+					"id_municipio":14101,
+					"id_localidad":141010009,
+					"id_usuario_captura":1,
+					"id_usuario_actualiza":1,
+					"punto":"Matatlán",
+					"descripcion":"Vertedero Controlado Matatlán",
+					"lat":20.668289,
+					"lng":-103.187169,
+					"alt":0,
+					"municipio":"municipio 14101",
+					"localidad":"localidad 141010009",
+					"consecutivo":6,
+					"siglas":"RS",
+					"clave":"RS-06",
+					"fecha_captura":"2012-07-11T00:00-06:00",
+					"ip_captura":"[::1]",
+					"host_captura":"localhost",
+					"fecha_actualiza":"2012-07-11T00:00-06:00",
+					"ip_actualiza":"[::1]",
+					"host_actualiza":"localhost",
+					"comentarios":"",
+					"activo":1
+				}
+			]
+		';
+		return $result;
+	}
 	public function getParametersField() {
 		//$sql = "SELECT
 		//		*

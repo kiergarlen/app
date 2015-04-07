@@ -71,11 +71,11 @@
    * @desc Controla la vista para el listado de Cadenas de custodia
    * @this {Object} $scope - Contenedor para el modelo [AngularJS]
    * @param {Object} $location - Manejo de URL [AngularJS]
-   * @param {Object} CustodiesService - Proveedor de datos, Cadenas custodia
+   * @param {Object} CustodyService - Proveedor de datos, Cadenas de custodia
    */
-  function CustodiesListController($location, CustodiesService) {
+  function CustodiesListController($location, CustodyService) {
     var vm = this;
-    vm.custodies = CustodiesService.get();
+    vm.custodies = CustodyService.get();
     vm.addCustody = addCustody;
     vm.selectRow = selectRow;
 
@@ -92,7 +92,7 @@
     .module('sislabApp')
     .controller('CustodiesListController',
       [
-        '$location', 'CustodiesService',
+        '$location', 'CustodyService',
         CustodiesListController
       ]
     );
@@ -103,11 +103,11 @@
    * @constructor
    * @desc Controla la vista para el listado de Muestras
    * @this {Object} $scope - Contenedor para el modelo [AngularJS]
-   * @param {Object} SamplesListService - Proveedor de datos, lista de Muestras
+   * @param {Object} SampleService - Proveedor de datos, Muestras
    */
-  function SamplesListController(SamplesListService) {
+  function SamplesListController(SampleService) {
     var vm = this;
-    vm.pricesList = SamplesListService.get();
+    vm.pricesList = SampleService.get();
     vm.selectRow = selectRow;
 
     function selectRow() {
@@ -118,7 +118,7 @@
     .module('sislabApp')
     .controller('SamplesListController',
       [
-        'SamplesListService',
+        'SampleService',
         SamplesListController
       ]
     );
@@ -129,11 +129,11 @@
    * @constructor
    * @desc Controla la vista para el listado de Equipos
    * @this {Object} $scope - Contenedor para el modelo [AngularJS]
-   * @param {Object} InstrumentsListService - Proveedor de datos, lista de Equipos
+   * @param {Object} InstrumentService - Proveedor de datos, Equipos
    */
-  function InstrumentsListController(InstrumentsListService) {
+  function InstrumentsListController(InstrumentService) {
     var vm = this;
-    vm.clients = InstrumentsListService.get();
+    vm.clients = InstrumentService.get();
     vm.selectRow = selectRow;
 
     function selectRow() {
@@ -144,7 +144,7 @@
     .module('sislabApp')
     .controller('InstrumentsListController',
       [
-        'InstrumentsListService',
+        'InstrumentService',
         InstrumentsListController
       ]
     );
@@ -155,11 +155,11 @@
    * @constructor
    * @desc Controla la vista para el listado de Reactivos
    * @this {Object} $scope - Contenedor para el modelo [AngularJS]
-   * @param {Object} ReactivesListService - Proveedor de datos, lista de Reactivos
+   * @param {Object} ReactiveService - Proveedor de datos, Reactivos
    */
-  function ReactivesListController(ReactivesListService) {
+  function ReactivesListController(ReactiveService) {
     var vm = this;
-    vm.pricesList = ReactivesListService.get();
+    vm.pricesList = ReactiveService.get();
     vm.selectRow = selectRow;
 
     function selectRow() {
@@ -170,7 +170,7 @@
     .module('sislabApp')
     .controller('ReactivesListController',
       [
-        'ReactivesListService',
+        'ReactiveService',
         ReactivesListController
       ]
     );
@@ -181,11 +181,11 @@
    * @constructor
    * @desc Controla la vista para el listado de Recipientes
    * @this {Object} $scope - Contenedor para el modelo [AngularJS]
-   * @param {Object} ContainersListService - Proveedor de datos, lista Recipientes
+   * @param {Object} ContainerService - Proveedor de datos, Recipientes
    */
-  function ContainersListController(ContainersListService) {
+  function ContainersListController(ContainerService) {
     var vm = this;
-    vm.pricesList = ContainersListService.get();
+    vm.pricesList = ContainerService.get();
     vm.selectRow = selectRow;
 
     function selectRow() {
@@ -196,7 +196,7 @@
     .module('sislabApp')
     .controller('ContainersListController',
       [
-        'ContainersListService',
+        'ContainerService',
         ContainersListController
       ]
     );
@@ -207,11 +207,11 @@
    * @constructor
    * @desc Controla la vista para la búsqueda de Análisis
    * @this {Object} $scope - Contenedor para el modelo [AngularJS]
-   * @param {Object} AnalysisListService - Proveedor de datos, Análisis
+   * @param {Object} AnalysisService - Proveedor de datos, Análisis
    */
-  function AnalysisListController(AnalysisListService) {
+  function AnalysisListController(AnalysisService) {
     var vm = this;
-    vm.analysisList = AnalysisListService.get();
+    vm.analysisList = AnalysisService.get();
 
     vm.selectRow = selectRow;
     function selectRow() {
@@ -223,7 +223,7 @@
     .module('sislabApp')
     .controller('AnalysisListController',
       [
-        'AnalysisListService',
+        'AnalysisService',
         AnalysisListController
       ]
     );
@@ -236,7 +236,7 @@
    * @this {Object} $scope - Contenedor para el modelo [AngularJS]
    * @param {Object} DepartmentService - Proveedor de datos, Áreas
    * @param {Object} ParameterService - Proveedor de datos, Parámetros
-   * @param {Object} AnalysisService - Proveedor de datos, selección de captura de Análisis
+   * @param {Object} AnalysisService - Proveedor de datos, Análisis
    */
   function AnalysisController(DepartmentService, ParameterService,
     AnalysisService) {
@@ -283,11 +283,11 @@
    * @constructor
    * @desc Controla la vista para el listado de Reportes
    * @this {Object} $scope - Contenedor para el modelo [AngularJS]
-   * @param {Object} ReportsListService - Proveedor de datos, lista de Reportes
+   * @param {Object} ReportService - Proveedor de datos, Reportes
    */
-  function ReportsListController(ReportsListService) {
+  function ReportsListController(ReportService) {
     var vm = this;
-    vm.pricesList = ReportsListService.get();
+    vm.pricesList = ReportService.get();
     vm.selectRow = selectRow;
 
     function selectRow() {
@@ -298,7 +298,7 @@
     .module('sislabApp')
     .controller('ReportsListController',
       [
-        'ReportsListService',
+        'ReportService',
         ReportsListController
       ]
     );
@@ -342,11 +342,11 @@
    * @constructor
    * @desc Controla la vista para el listado de Puntos
    * @this {Object} $scope - Contenedor para el modelo [AngularJS]
-   * @param {Object} PointsListService - Proveedor de datos, lista de Puntos
+   * @param {Object} PointService - Proveedor de datos, Puntos
    */
-  function PointsListController(PointsListService) {
+  function PointsListController(PointService) {
     var vm = this;
-    vm.points = PointsListService.get();
+    vm.points = PointService.get();
     vm.selectRow = selectRow;
 
     function selectRow() {
@@ -357,7 +357,7 @@
     .module('sislabApp')
     .controller('PointsListController',
       [
-        'PointsListService',
+        'PointService',
         PointsListController
       ]
     );
@@ -437,11 +437,11 @@
    * @constructor
    * @desc Controla la vista para el listado de Normas
    * @this {Object} $scope - Contenedor para el modelo [AngularJS]
-   * @param {Object} NormsListService - Proveedor de datos, lista Normas
+   * @param {Object} NormService - Proveedor de datos, Normas
    */
-  function NormsListController(NormsListService) {
+  function NormsListController(NormService) {
     var vm = this;
-    vm.clients = NormsListService.get();
+    vm.clients = NormService.get();
     vm.selectRow = selectRow;
 
     function selectRow() {
@@ -452,7 +452,7 @@
     .module('sislabApp')
     .controller('NormsListController',
       [
-        'NormsListService',
+        'NormService',
         NormsListController
       ]
     );
@@ -463,11 +463,11 @@
    * @constructor
    * @desc Controla la vista para el listado de Referencias
    * @this {Object} $scope - Contenedor para el modelo [AngularJS]
-   * @param {Object} ReferencesListService - Proveedor de datos, lista Referencias
+   * @param {Object} ReferenceService - Proveedor de datos, Referencias
    */
-  function ReferencesListController(ReferencesListService) {
+  function ReferencesListController(ReferenceService) {
     var vm = this;
-    vm.ReferencesList = ReferencesListService.get();
+    vm.ReferencesList = ReferenceService.get();
     vm.selectRow = selectRow;
 
     function selectRow() {
@@ -478,7 +478,7 @@
     .module('sislabApp')
     .controller('ReferencesListController',
       [
-        'ReferencesListService',
+        'ReferenceService',
         ReferencesListController
       ]
     );
@@ -489,11 +489,11 @@
    * @constructor
    * @desc Controla la vista para la búsqueda de Métodos
    * @this {Object} $scope - Contenedor para el modelo [AngularJS]
-   * @param {Object} MethodsListService - Proveedor de datos, Métodos
+   * @param {Object} MethodService - Proveedor de datos, Métodos
    */
-  function MethodsListController(MethodsListService) {
+  function MethodsListController(MethodService) {
     var vm = this;
-    vm.methodsList = MethodsListService.get();
+    vm.methodsList = MethodService.get();
 
     vm.selectRow = selectRow;
     function selectRow() {
@@ -504,7 +504,7 @@
     .module('sislabApp')
     .controller('MethodsListController',
       [
-        'MethodsListService',
+        'MethodService',
         MethodsListController
       ]
     );
@@ -515,11 +515,11 @@
    * @constructor
    * @desc Controla la vista para el listado de Precios
    * @this {Object} $scope - Contenedor para el modelo [AngularJS]
-   * @param {Object} PricesListService - Proveedor de datos, lista Precios
+   * @param {Object} PriceService - Proveedor de datos, Precios
    */
-  function PricesListController(PricesListService) {
+  function PricesListController(PriceService) {
     var vm = this;
-    vm.pricesList = PricesListService.get();
+    vm.pricesList = PriceService.get();
     vm.selectRow = selectRow;
 
     function selectRow() {
@@ -530,7 +530,7 @@
     .module('sislabApp')
     .controller('PricesListController',
       [
-        'PricesListService',
+        'PriceService',
         PricesListController
       ]
     );
@@ -541,17 +541,17 @@
    * @constructor
    * @desc Controla la vista para el listado de Usuarios
    * @this {Object} $scope - Contenedor para el modelo [AngularJS]
-   * @param {Object} UsersListService - Proveedor de datos, Usuarios
+   * @param {Object} UserService - Proveedor de datos, Usuarios
    */
-  function UsersListController (UsersListService) {
+  function UsersListController (UserService) {
     var vm = this;
-    vm.users = UsersListService.get();
+    vm.users = UserService.get();
   }
   angular
     .module('sislabApp')
     .controller('UsersListController',
       [
-        'UsersListService',
+        'UserService',
         UsersListController
       ]
     );

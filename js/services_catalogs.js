@@ -528,16 +528,16 @@
       ]
     );
 
-  // ContainerKindsService.js
+  // ContainerService.js
   /**
-   * @name ContainerKindsService
+   * @name ContainerService
    * @constructor
    * @desc Proveedor de datos, Recipientes
    * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @param {Object} TokenService - Proveedor de métodos para token
    * @return {Object} $resource - Acceso a recursos HTTP
    */
-  function ContainerKindsService($resource, TokenService) {
+  function ContainerService($resource, TokenService) {
     return $resource(API_BASE_URL + 'containers/kinds', {}, {
       get: {
         method: 'GET',
@@ -551,23 +551,23 @@
   }
   angular
     .module('sislabApp')
-    .factory('ContainerKindsService',
+    .factory('ContainerService',
       [
         '$resource', 'TokenService',
-        ContainerKindsService
+        ContainerService
       ]
     );
 
-  // ReactivesListService.js
+  // ReactiveService.js
   /**
-   * @name ReactivesListService
+   * @name ReactiveService
    * @constructor
    * @desc Proveedor de datos, Reactivos
    * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @param {Object} TokenService - Proveedor de métodos para token
    * @return {Object} $resource - Acceso a recursos HTTP
    */
-  function ReactivesListService($resource, TokenService) {
+  function ReactiveService($resource, TokenService) {
     return $resource(API_BASE_URL + 'reactives', {}, {
       get: {
         method: 'GET',
@@ -581,10 +581,10 @@
   }
   angular
     .module('sislabApp')
-    .factory('ReactivesListService',
+    .factory('ReactiveService',
       [
         '$resource', 'TokenService',
-        ReactivesListService
+        ReactiveService
       ]
     );
 

@@ -15,8 +15,8 @@
    * @param {Object} SamplingSupervisorService - Proveedor de datos, Supervisores muestreo
    * @param {Object} SamplingEmployeeService - Proveedor de datos, Empleados muestreo
    * @param {Object} PreservationService - Proveedor de datos, Preservaciones
-   * @param {Object} ContainerKindsService - Proveedor de datos, Clases recipientes
-   * @param {Object} ReactivesListService - Proveedor de datos, Reactivos
+   * @param {Object} ContainerService - Proveedor de datos, Recipientes
+   * @param {Object} ReactiveService - Proveedor de datos, Reactivos
    * @param {Object} MaterialService - Proveedor de datos, Material
    * @param {Object} CoolerService - Proveedor de datos, Hieleras
    * @param {Object} SamplingInstrumentService - Proveedor de datos, Equipos de muestreo
@@ -25,28 +25,39 @@
   function PlanController($scope, $routeParams, TokenService, ArrayUtilsService,
     PlanObjectivesService, PointsByPackageService, DistrictService,
     CityService, SamplingSupervisorService, SamplingEmployeeService,
-    PreservationService, ContainerKindsService, ReactivesListService,
+    PreservationService, ContainerService, ReactiveService,
     MaterialService, CoolerService, SamplingInstrumentService,
     PlanService) {
     var vm = this;
     vm.plan = PlanService.query({planId: $routeParams.planId});
     vm.user = TokenService.getUserFromToken();
     vm.objectives = PlanObjectivesService.get();
-    //vm.points = PointsByPackageService.get();
     vm.instruments = SamplingInstrumentService.get();
     vm.cities = [];
     vm.districts = [];
     vm.samplingSupervisors = SamplingSupervisorService.get();
     vm.samplingEmployees = SamplingEmployeeService.get();
     vm.preservations = PreservationService.get();
-    vm.reactives = ReactivesListService.get();
-    vm.containers = ContainerKindsService.get();
+    vm.containers = ContainerService.get();
+    vm.reactives = ReactiveService.get();
     vm.materials = MaterialService.get();
     vm.coolers = CoolerService.get();
-
+    vm.isInstrumentsListLoaded = false;
+    vm.isContainersListLoaded = false;
+    vm.isReactivesListLoaded = false;
+    vm.isMaterialsListLoaded = false;
+    vm.isCoolersListLoaded = false;
+    vm.isDataSubmitted = false;
     vm.selectDistrict = selectDistrict;
     vm.selectInstruments = selectInstruments;
-    vm.addPoints = addPoints;
+    vm.selectContainers = selectContainers;
+    vm.selectReactives = selectReactives;
+    vm.selectMaterials = selectMaterials;
+    vm.selectCoolers = selectCoolers;
+    vm.approveItem = approveItem;
+    vm.rejectItem = rejectItem;
+    vm.isFormValid = isFormValid;
+    vm.submitForm = submitForm;
 
     DistrictService.get()
       .$promise.then(function success(response) {
@@ -71,35 +82,201 @@
                 'id_localidad',
                 parseInt(vm.plan.id_localidad)
               );
-
             }
           });
       });
 
+    function selectDistrict() {
+      vm.cities = CityService.query({districtId: parseInt(vm.plan.id_municipio)});
+    }
+
     function selectInstruments() {
-      if (vm.instruments && vm.plan.equipos)
+      var items = [];
+      if (vm.instruments.length > 0 && vm.plan.equipos)
       {
-        if (vm.instruments.length && vm.plan.equipos.length && vm.instruments.length > 0)
+        if (vm.plan.equipos.length > 0 && !vm.isInstrumentsListLoaded)
         {
-
-          console.log('coll: ' + vm.instruments.length + ', ' + ' selected: ' + vm.plan.equipos.length);
-
+          ArrayUtilsService.seItemsFromReference(
+            vm.instruments,
+            vm.plan.equipos,
+            'id_equipo',
+            [
+              'selected'
+            ]
+          );
+          vm.isInstrumentsListLoaded = true;
+        }
+        else
+        {
+          vm.plan.equipos = [];
+          vm.plan.equipos = ArrayUtilsService.selectItemsFromCollection(
+            vm.instruments,
+            'selected',
+            true
+          ).slice();
         }
       }
     }
 
-    function selectDistrict() {
-      vm.cities = CityService.query({districtId: parseInt(vm.plan.id_municipio)});
-      /*
-      if (vm.plan.id_localidad)
+    function selectContainers() {
+      var items = [];
+      if (vm.containers.length > 0 && vm.plan.recipientes)
       {
-
+        if (vm.plan.recipientes.length > 0 && !vm.isContainersListLoaded)
+        {
+          ArrayUtilsService.seItemsFromReference(
+            vm.containers,
+            vm.plan.recipientes,
+            'id_clase_recipiente',
+            [
+              'selected',
+              'id_plan',
+              'cantidad'
+            ]
+          );
+          vm.isContainersListLoaded = true;
+        }
+        else
+        {
+          vm.plan.recipientes = [];
+          vm.plan.recipientes = ArrayUtilsService.selectItemsFromCollection(
+            vm.containers,
+            'selected',
+            true
+          ).slice();
+        }
       }
-      */
     }
 
-    function addPoints() {
+    function selectReactives() {
+      var items = [];
+      if (vm.reactives.length > 0 && vm.plan.reactivos)
+      {
+        if (vm.plan.reactivos.length > 0 && !vm.isReactivesListLoaded)
+        {
+          ArrayUtilsService.seItemsFromReference(
+            vm.reactives,
+            vm.plan.reactivos,
+            'id_reactivo',
+            [
+              'selected',
+              'id_plan',
+              'lote',
+              'cantidad'
+            ]
+          );
+          vm.isReactivesListLoaded = true;
+        }
+        else
+        {
+          vm.plan.reactivos = [];
+          vm.plan.reactivos = ArrayUtilsService.selectItemsFromCollection(
+            vm.reactives,
+            'selected',
+            true
+          ).slice();
+        }
+      }
+    }
 
+    function selectMaterials() {
+      var items = [];
+      if (vm.materials.length > 0 && vm.plan.materiales)
+      {
+        if (vm.plan.materiales.length > 0 && !vm.isMaterialsListLoaded)
+        {
+          ArrayUtilsService.seItemsFromReference(
+            vm.materials,
+            vm.plan.materiales,
+            'id_material',
+            [
+              'selected',
+              'id_plan'
+            ]
+          );
+          vm.isMaterialsListLoaded = true;
+        }
+        else
+        {
+          vm.plan.materiales = [];
+          vm.plan.materiales = ArrayUtilsService.selectItemsFromCollection(
+            vm.materials,
+            'selected',
+            true
+          ).slice();
+        }
+      }
+    }
+
+    function selectCoolers() {
+      var items = [];
+      if (vm.coolers.length > 0 && vm.plan.hieleras)
+      {
+        if (vm.plan.hieleras.length > 0 && !vm.isCoolersListLoaded)
+        {
+          ArrayUtilsService.seItemsFromReference(
+            vm.coolers,
+            vm.plan.hieleras,
+            'id_hielera',
+            [
+              'selected',
+              'id_plan'
+            ]
+          );
+          vm.isCoolersListLoaded = true;
+        }
+        else
+        {
+          vm.plan.hieleras = [];
+          vm.plan.hieleras = ArrayUtilsService.selectItemsFromCollection(
+            vm.coolers,
+            'selected',
+            true
+          ).slice();
+        }
+      }
+    }
+
+    function approveItem() {
+      ValidationService.approveItem(vm.study, vm.user);
+    }
+
+    function rejectItem() {
+      ValidationService.rejectItem(vm.study, vm.user);
+    }
+
+    function isFormValid() {
+      return true;
+    }
+
+    function submitForm() {
+      if (isFormValid() && !vm.isDataSubmitted)
+      {
+        vm.isDataSubmitted = true;
+        //if (vm.plan.id_estudio > 0)
+        //{
+        //  RestUtilsService
+        //    .saveData(
+        //      PlanService,
+        //      vm.plan,
+        //      'muestreo/plan',
+        //      'id_plan'
+        //    );
+        //}
+        //else
+        //{
+        //  if (vm.user.level < 3 || vm.plan.plan.id_status < 2)
+        //  {
+        //    RestUtilsService
+        //      .updateData(
+        //        PlanService,
+        //        vm.plan,
+        //        'muestreo/plan',
+        //        'id_plan'
+        //      );
+        //  }
+        //}
+      }
     }
   }
   angular
@@ -110,7 +287,7 @@
         '$routeParams', 'TokenService', 'ArrayUtilsService',
         'PlanObjectivesService', 'PointsByPackageService', 'DistrictService',
         'CityService', 'SamplingSupervisorService', 'SamplingEmployeeService',
-        'PreservationService', 'ContainerKindsService', 'ReactivesListService',
+        'PreservationService', 'ContainerService', 'ReactiveService',
         'MaterialService', 'CoolerService', 'SamplingInstrumentService',
         'PlanService',
         PlanController
@@ -365,19 +542,19 @@
    * @param {Object} PreservationService - Proveedor de datos, Preservaciones
    * @param {Object} ExpirationService - Proveedor de datos, Vigencias
    * @param {Object} RequiredVolumeService - Proveedor de datos, Volúmenes requeridos
-   * @param {Object} ContainerKindsService - Proveedor de datos, Clases recipientes
+   * @param {Object} ContainerService - Proveedor de datos, Recipientes
    * @param {Object} CheckerService - Proveedor de datos, Responsables verificación
-   * @param {Object} CustodyService - Proveedor de datos, Cadenas custodia
+   * @param {Object} CustodyService - Proveedor de datos, Cadenas de custodia
    */
   function CustodyController($routeParams, TokenService, ArrayUtilsService,
     PreservationService, ExpirationService, RequiredVolumeService,
-    ContainerKindsService, CheckerService, CustodyService) {
+    ContainerService, CheckerService, CustodyService) {
     var vm = this;
     vm.user = TokenService.getUserFromToken();
     vm.preservations = PreservationService.get();
     vm.expirations = ExpirationService.get();
     vm.volumes = RequiredVolumeService.get();
-    vm.containers = ContainerKindsService.get();
+    vm.containers = ContainerService.get();
     vm.checkers = CheckerService.get();
     vm.custody = CustodyService.query({custodyId: $routeParams.custodyId});
 
@@ -408,7 +585,7 @@
       [
         '$routeParams', 'TokenService', 'ArrayUtilsService',
         'PreservationService', 'ExpirationService', 'RequiredVolumeService',
-        'ContainerKindsService', 'CheckerService', 'CustodyService',
+        'ContainerService', 'CheckerService', 'CustodyService',
         CustodyController
       ]
     );

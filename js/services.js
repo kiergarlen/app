@@ -10,17 +10,19 @@
     var ArrayUtils = {};
 
     ArrayUtils.selectItemFromCollection = selectItemFromCollection;
+    ArrayUtils.selectItemsFromCollection = selectItemsFromCollection;
     ArrayUtils.extractItemFromCollection = extractItemFromCollection;
+    ArrayUtils.seItemsFromReference = seItemsFromReference;
     ArrayUtils.countSelectedItems = countSelectedItems;
     ArrayUtils.averageFromValues = averageFromValues;
 
     /**
      * @function selectItemFromCollection
-     * @desc Selecciona un ítem de un Array, empatando una propiedad y su valor
-     * @param {Array} collection - Array de objetos a seleccionar
-     * @param {String} field - Nombre de la propiedad a empatar
-     * @param {Object} value - Valor de la propiedad a empatar
-     * @return {Object} item - Item seleccionado
+     * @desc Obtiene un ítem de un Array, coincidiendo una propiedad y su valor
+     * @param {Array} collection - Array de ítems a seleccionar
+     * @param {String} field - Nombre de la propiedad a coincidir
+     * @param {Object} value - Valor de la propiedad a coincidir
+     * @return {Object} item - Ítem seleccionado
      */
     function selectItemFromCollection(collection, field, value) {
       var i = 0,
@@ -37,11 +39,32 @@
     }
 
     /**
+     * @function selectItemsFromCollection
+     * @desc Obtiene los ítems de un Array, coincidiendo una propiedad y su valor
+     * @param {Array} collection - Array de ítems a seleccionar
+     * @param {String} field - Nombre de la propiedad a coincidir
+     * @param {Object} value - Valor de la propiedad a coincidir
+     * @return {Array} items - Array de ítems seleccionados
+     */
+    function selectItemsFromCollection(collection, field, value) {
+      var i = 0,
+      l = collection.length,
+      items = [];
+      for (i = 0; i < l; i += 1) {
+        if (collection[i][field] == value)
+        {
+          items.push(collection[i]);
+        }
+      }
+      return items;
+    }
+
+    /**
      * @function extractItemFromCollection
-     * @desc Extrae un ítem de un Array, empatando una propiedad y su valor
-     * @param {Array} collection - Array de objetos a extraer
-     * @param {String} field - Nombre de la propiedad a empatar
-     * @param {Object} value - Valor de la propiedad a empatar
+     * @desc Extrae un ítem de un Array, coincidiendo una propiedad y su valor
+     * @param {Array} collection - Array de ítems a extraer
+     * @param {String} field - Nombre de la propiedad a coincidir
+     * @param {Object} value - Valor de la propiedad a coincidir
      * @return {Object} item - Item extraído
      */
     function extractItemFromCollection(collection, field, value) {
@@ -58,10 +81,43 @@
       return item;
     }
 
+
+    /**
+     * @function seItemsFromReference
+     * @desc Cambia el valor de una propiedad de ítem de un Array, coincidiendo una propiedad y su valor desde otro Array
+     * @param {Array} collection - Array de ítems a modificar
+     * @param {Array} referenceCollection - Array de referencia
+     * @param {String} matchField - Nombre de la propiedad a coincidir
+     * @param {Array} fields - Nombres de las propiedades a cambiar
+     * @return {Object} item - Ítem seleccionado
+     */
+    function seItemsFromReference(collection, referenceCollection, matchField, fields) {
+      var i, l, j, m, k, n, field = '';
+      l = collection.length;
+      n = fields.length;
+      for(i = 0; i < l; i += 1) {
+        if (referenceCollection !== undefined)
+        {
+          m = referenceCollection.length;
+          for (j = 0; j < m; j += 1) {
+            if (collection[i][matchField] ==
+              referenceCollection[j][matchField])
+            {
+              for (k = 0; k < n; k += 1) {
+                field = fields[k];
+                collection[i][field] = referenceCollection[j][field];
+              }
+            }
+          }
+        }
+      }
+      return collection;
+    }
+
     /**
      * @function countSelectedItems
-     * @desc Cuenta los objetos de un Array con valor TRUE de la propiedad 'selected'
-     * @param {Array} collection - Array de objetos a extraer
+     * @desc Cuenta los objetos de un Array con valor true de la propiedad selected
+     * @param {Array} collection - Array de ítems a extraer
      * @return {Number} count - Cantidad de objetos que cumplen la condición
      */
     function countSelectedItems(collection){
@@ -841,7 +897,7 @@
   /**
    * @name CustodyService
    * @constructor
-   * @desc Proveedor de datos, Cadenas custodia
+   * @desc Proveedor de datos, Cadenas de custodia
    * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @param {Object} TokenService - Proveedor de métodos para token
    * @return {Object} $resource - Acceso a recursos HTTP

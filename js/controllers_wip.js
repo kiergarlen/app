@@ -42,11 +42,11 @@
     vm.reactives = ReactiveService.get();
     vm.materials = MaterialService.get();
     vm.coolers = CoolerService.get();
-    vm.isInstrumentsListLoaded = false;
-    vm.isContainersListLoaded = false;
-    vm.isReactivesListLoaded = false;
-    vm.isMaterialsListLoaded = false;
-    vm.isCoolersListLoaded = false;
+    vm.isInstrumentListLoaded = false;
+    vm.isContainerListLoaded = false;
+    vm.isReactiveListLoaded = false;
+    vm.isMaterialListLoaded = false;
+    vm.isCoolerListLoaded = false;
     vm.isDataSubmitted = false;
     vm.selectDistrict = selectDistrict;
     vm.selectInstruments = selectInstruments;
@@ -54,6 +54,11 @@
     vm.selectReactives = selectReactives;
     vm.selectMaterials = selectMaterials;
     vm.selectCoolers = selectCoolers;
+    vm.isInstrumentListValid = isInstrumentListValid;
+    vm.isContainerListValid = isContainerListValid;
+    vm.isReactiveListValid = isReactiveListValid;
+    vm.isMaterialListValid = isMaterialListValid;
+    vm.isCoolerListValid = isCoolerListValid;
     vm.approveItem = approveItem;
     vm.rejectItem = rejectItem;
     vm.isFormValid = isFormValid;
@@ -94,7 +99,7 @@
       var items = [];
       if (vm.instruments.length > 0 && vm.plan.equipos)
       {
-        if (vm.plan.equipos.length > 0 && !vm.isInstrumentsListLoaded)
+        if (vm.plan.equipos.length > 0 && !vm.isInstrumentListLoaded)
         {
           ArrayUtilsService.seItemsFromReference(
             vm.instruments,
@@ -104,7 +109,7 @@
               'selected'
             ]
           );
-          vm.isInstrumentsListLoaded = true;
+          vm.isInstrumentListLoaded = true;
         }
         else
         {
@@ -122,7 +127,7 @@
       var items = [];
       if (vm.containers.length > 0 && vm.plan.recipientes)
       {
-        if (vm.plan.recipientes.length > 0 && !vm.isContainersListLoaded)
+        if (vm.plan.recipientes.length > 0 && !vm.isContainerListLoaded)
         {
           ArrayUtilsService.seItemsFromReference(
             vm.containers,
@@ -134,7 +139,7 @@
               'cantidad'
             ]
           );
-          vm.isContainersListLoaded = true;
+          vm.isContainerListLoaded = true;
         }
         else
         {
@@ -152,7 +157,7 @@
       var items = [];
       if (vm.reactives.length > 0 && vm.plan.reactivos)
       {
-        if (vm.plan.reactivos.length > 0 && !vm.isReactivesListLoaded)
+        if (vm.plan.reactivos.length > 0 && !vm.isReactiveListLoaded)
         {
           ArrayUtilsService.seItemsFromReference(
             vm.reactives,
@@ -165,7 +170,7 @@
               'cantidad'
             ]
           );
-          vm.isReactivesListLoaded = true;
+          vm.isReactiveListLoaded = true;
         }
         else
         {
@@ -183,7 +188,7 @@
       var items = [];
       if (vm.materials.length > 0 && vm.plan.materiales)
       {
-        if (vm.plan.materiales.length > 0 && !vm.isMaterialsListLoaded)
+        if (vm.plan.materiales.length > 0 && !vm.isMaterialListLoaded)
         {
           ArrayUtilsService.seItemsFromReference(
             vm.materials,
@@ -194,7 +199,7 @@
               'id_plan'
             ]
           );
-          vm.isMaterialsListLoaded = true;
+          vm.isMaterialListLoaded = true;
         }
         else
         {
@@ -212,7 +217,7 @@
       var items = [];
       if (vm.coolers.length > 0 && vm.plan.hieleras)
       {
-        if (vm.plan.hieleras.length > 0 && !vm.isCoolersListLoaded)
+        if (vm.plan.hieleras.length > 0 && !vm.isCoolerListLoaded)
         {
           ArrayUtilsService.seItemsFromReference(
             vm.coolers,
@@ -223,7 +228,7 @@
               'id_plan'
             ]
           );
-          vm.isCoolersListLoaded = true;
+          vm.isCoolerListLoaded = true;
         }
         else
         {
@@ -238,11 +243,73 @@
     }
 
     function approveItem() {
-      ValidationService.approveItem(vm.study, vm.user);
+      ValidationService.approveItem(vm.plan, vm.user);
     }
 
     function rejectItem() {
-      ValidationService.rejectItem(vm.study, vm.user);
+      ValidationService.rejectItem(vm.plan, vm.user);
+    }
+
+    function isInstrumentListValid() {
+      return true;
+      /*
+      var i = 0,
+      l = 0,
+      quotes = [];
+      if (vm.plan.instrumentos && vm.plan.instrumentos.length > 0)
+      {
+        quotes = vm.plan.instrumentos;
+        l = quotes.length;
+        for (i = 0; i < l; i += 1) {
+          if (quotes[i].id_matriz < 1)
+          {
+            vm.message += ' Seleccione una matriz, para la solicitud ';
+            vm.message += '(Ver fila ' + (i + 1) + ')';
+            return false;
+          }
+          if (isNaN(quotes[i].cantidad_muestras) || quotes[i].cantidad_muestras < 1)
+          {
+            vm.message += ' Ingrese cantidad de muestras, para la solicitud ';
+            vm.message += '(Ver fila ' + (i + 1) + ')';
+            return false;
+          }
+          if (quotes[i].id_tipo_muestreo < 1)
+          {
+            vm.message += ' Seleccione un tipo de muestreo, para la solicitud ';
+            vm.message += '(Ver fila ' + (i + 1) + ')';
+            return false;
+          }
+          if (quotes[i].id_norma < 1)
+          {
+            vm.message += ' Seleccione una norma, para la solicitud ';
+            vm.message += '(Ver fila ' + (i + 1) + ')';
+            return false;
+          }
+        }
+      }
+      else
+      {
+        vm.message += ' Agregue una solicitud ';
+        return false;
+      }
+      return true;
+      */
+    }
+
+    function isContainerListValid() {
+      return true;
+    }
+
+    function isReactiveListValid() {
+      return true;
+    }
+
+    function isMaterialListValid() {
+      return true;
+    }
+
+    function isCoolerListValid() {
+      return true;
     }
 
     function isFormValid() {
@@ -253,29 +320,31 @@
       if (isFormValid() && !vm.isDataSubmitted)
       {
         vm.isDataSubmitted = true;
-        //if (vm.plan.id_estudio > 0)
-        //{
-        //  RestUtilsService
-        //    .saveData(
-        //      PlanService,
-        //      vm.plan,
-        //      'muestreo/plan',
-        //      'id_plan'
-        //    );
-        //}
-        //else
-        //{
-        //  if (vm.user.level < 3 || vm.plan.plan.id_status < 2)
-        //  {
-        //    RestUtilsService
-        //      .updateData(
-        //        PlanService,
-        //        vm.plan,
-        //        'muestreo/plan',
-        //        'id_plan'
-        //      );
-        //  }
-        //}
+        /*
+        if (vm.plan.id_estudio > 0)
+        {
+          RestUtilsService
+            .saveData(
+              PlanService,
+              vm.plan,
+              'muestreo/plan',
+              'id_plan'
+            );
+        }
+        else
+        {
+          if (vm.user.level < 3 || vm.plan.plan.id_status < 2)
+          {
+            RestUtilsService
+              .updateData(
+                PlanService,
+                vm.plan,
+                'muestreo/plan',
+                'id_plan'
+              );
+          }
+        }
+        */
       }
     }
   }

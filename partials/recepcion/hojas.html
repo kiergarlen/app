@@ -34,7 +34,7 @@
   <div class="row">
     <div class="col-xs-12 col-sm-8">
       <label for="fieldSheetSearch" class="sr-only">
-        Ingrese una búsqueda (Municipio, Localidad, Calle, etc.)
+        Ingrese una búsqueda (Calle, Número, etc.)
       </label>
       <div class="input-group">
         <div class="input-group-addon">
@@ -42,7 +42,7 @@
         </div>
         <input type="text"
           class="form-control"
-          placeholder="Ingrese una búsqueda (Municipio, Localidad, Calle, etc.)"
+          placeholder="Ingrese una búsqueda (Calle, Número, etc.)"
           id="fieldSheetSearch"
           name="fieldSheetSearch"
           data-ng-model="fieldSheets.filter.$">
@@ -63,20 +63,24 @@
           <thead>
             <tr>
               <th>Id Hoja</th>
+              <th>Id Plan</th>
               <th>Status</th>
               <th>Ubicación</th>
-              <th>Fecha Ini.</th>
-              <th>Fecha Fin</th>
+              <th>Fecha Ini.-Fin</th>
+              <th>Acciones</th>
             </tr>
           </thead>
           <tbody>
             <tr
               data-ng-repeat="item in fieldSheets.fieldSheets
               | filter:fieldSheets.filter.$"
-              id="fieldSheetId{{item.id_hoja_campo}}"
+              id="fieldSheetId{{item.id_hoja}}"
               data-ng-click="fieldSheets.selectRow($event)">
               <td>
-                {{item.id_hoja_campo}}
+                {{item.id_hoja}}
+              </td>
+              <td>
+                {{item.id_plan}}
               </td>
               <td>
                 <span class="label label-success"
@@ -94,10 +98,17 @@
                 {{item.municipio}}
               </td>
               <td>
-                {{item.fecha_inicio}}
+                Inicio {{item.fecha_inicio}}
+                <br>
+                Fin {{item.fecha_fin}}
               </td>
               <td>
-                {{item.fecha_fin}}
+                <button class="btn btn-default"
+                  value="Consultar" title="Consultar"
+                  data-ng-click="fieldSheets.viewFieldSheet(item.id_hoja)"
+                  >
+                  <i class="glyphicon glyphicon-eye-open" aria-hidden="true"></i>
+                </button>
               </td>
             </tr>
           </tbody>

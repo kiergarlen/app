@@ -63,14 +63,9 @@
     vm.odAvg = odAvg;
     vm.crAvg = crAvg;
 
-    vm.selectCloudCover = selectCloudCover;
-    vm.selectWindDirection = selectWindDirection;
-    vm.selectWaveIntensity = selectWaveIntensity;
-    vm.selectSamplingNorm = selectSamplingNorm;
     vm.selectPoint = selectPoint;
 
-    vm.validateFieldSheetForm = validateFieldSheetForm;
-    vm.submitFieldSheetForm = submitFieldSheetForm;
+    vm.submitForm = submitForm;
 
     function tempAvg(){
       vm.temp = ArrayUtilsService.averageFromValues([
@@ -126,38 +121,6 @@
       return vm.cr;
     }
 
-    function selectCloudCover(idCloud) {
-      ArrayUtilsService.selectItemFromCollection(
-        vm.cloudCovers,
-        'id_cobertura_nubes',
-        idCloud
-      );
-    }
-
-    function selectWindDirection(idWind) {
-      ArrayUtilsService.selectItemFromCollection(
-        vm.windDirections,
-        'id_direccion_viento',
-        idWind
-      );
-    }
-
-    function selectWaveIntensity(idWave) {
-      ArrayUtilsService.selectItemFromCollection(
-        vm.waveIntensities,
-        'id_oleaje',
-        idWave
-      );
-    }
-
-    function selectSamplingNorm(idNorm) {
-      ArrayUtilsService.selectItemFromCollection(
-        vm.samplingNorms,
-        'id_metodo_muestreo',
-        idNorm
-      );
-    }
-
     function selectPoint(idPoint) {
       ArrayUtilsService.selectItemFromCollection(
         vm.points,
@@ -166,11 +129,11 @@
       );
     }
 
-    function validateFieldSheetForm() {
+    function isFormValid() {
 
     }
 
-    function submitFieldSheetForm() {
+    function submitForm() {
 
     }
   }

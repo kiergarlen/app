@@ -5066,7 +5066,8 @@ class DALSislab
 		//		plan
 		//	WHERE id_plan := $planId AND activo = 1";
 		//return \Service\Adapter\PDOAdapter::getInstance()->getAllRows($sql);
-		if ($planId == 1) {
+		if ($planId == 1)
+		{
 			$result = '
 				{
 					"id_plan":1,
@@ -5845,6 +5846,786 @@ class DALSislab
 				}
 			';
 		}
+		else if ($planId == 2)
+		{
+			$result = '
+				{
+					"id_plan":2,
+					"id_estudio":1,
+					"id_cliente":13,
+					"id_solicitud":1,
+					"id_orden":1,
+					"id_matriz":1,
+					"id_tipo_muestreo":2,
+					"id_norma":1,
+					"id_cuerpo_receptor":1,
+					"id_tipo_cuerpo":3,
+					"id_paquete_puntos":2,
+					"id_supervisor_muestreo":3,
+					"id_objetivo_plan":2,
+					"id_supervisor_entrega":13,
+					"id_ayudante_entrega":13,
+					"id_supervisor_recoleccion":13,
+					"id_ayudante_recoleccion":13,
+					"id_supervisor_registro":13,
+					"id_ayudante_registro":13,
+					"id_responsable_calibracion":13,
+					"id_responsable_recipientes":13,
+					"id_responsable_reactivos":13,
+					"id_responsable_material":13,
+					"id_responsable_hieleras":13,
+					"id_estado":14,
+					"id_municipio":14039,
+					"id_localidad":140390001,
+					"id_ejercicio":2015,
+					"id_status":1,
+					"numero_oficio":437,
+					"folio":"CEA-437/2014",
+					"fecha_probable":"2015-03-24T06:38-06:00",
+					"fecha_plan":"2015-03-23",
+					"fecha_calibracion":"2015-03-24T06:38-06:00",
+					"fecha_captura":"2015-03-24T06:38-06:00",
+					"ip_captura":"[::1]",
+					"host_captura":"localhost",
+					"fecha_valida":"2015-03-24T06:38-06:00",
+					"ip_valida":"[::1]",
+					"host_valida":"localhost",
+					"fecha_actualiza":"2015-03-24T06:38-06:00",
+					"ip_actualiza":"[::1]",
+					"host_actualiza":"localhost",
+					"objetivo_otro":"esto es una prueba 2",
+					"calle":"Av. Brasilia",
+					"numero":"2970",
+					"colonia":"Col. Colomos Providencia",
+					"frecuencia_muestreo":2,
+					"matriz":"Agua residual",
+					"municipio":"Guadalajara",
+					"localidad":"Guadalajara",
+					"asistente_muestreo":"",
+					"asistente_recoleccion":"",
+					"asistente_registro":"",
+					"tipo_muestreo":"Compuesto",
+					"fecha_rechaza":"",
+					"motivo_rechaza":"",
+					"activo":1,
+					"cliente":
+					{
+						"id_cliente":13,
+						"id_organismo":6,
+						"cliente":"Ayuntamiento de Cotija, Michoacan",
+						"area":"",
+						"rfc":"Registro Federal de Contribuyentes",
+						"calle":"Pino Suárez Pte.",
+						"numero":"100",
+						"colonia":"Col. Centro",
+						"cp":"59940",
+						"id_estado":16,
+						"estado":"Michoacán de Ocampo",
+						"id_municipio":16019,
+						"municipio":"Cotija",
+						"id_localidad":160190001,
+						"localidad":"Cotija de La Paz",
+						"tel":"045-35-4100-1836",
+						"fax":"",
+						"contacto":"Arq. Juan Jesús Zarate Barajas",
+						"puesto_contacto":"puesto contacto",
+						"email":"ooapascotija@hotmail.com",
+						"fecha_act":"23/11/2014",
+						"interno":0,
+						"cea":0,
+						"tasa":1,
+						"activo":1
+					},
+					"solicitud":
+					{
+						"id_solicitud":1,
+						"id_estudio":1,
+						"id_cliente":13,
+						"id_matriz":1,
+						"id_tipo_muestreo":2,
+						"id_norma":1,
+						"id_cuerpo_receptor":1,
+						"id_tipo_cuerpo":3,
+						"id_ejercicio":2015,
+						"id_status":2,
+						"id_usuario_captura":20,
+						"id_usuario_valida":1,
+						"id_usuario_actualiza":1,
+						"numero_oficio":432,
+						"folio":"CEA-432/2015",
+						"matriz":"Agua residual",
+						"cantidad_muestras":15,
+						"tipo_muestreo":"Compuesto",
+						"costo_total":35850,
+						"cuerpo_receptor":"Río Santiago",
+						"tipo_cuerpo":"C",
+						"status":"Validado",
+						"fecha":"2015-03-21",
+						"fecha_captura":"2015-03-21",
+						"ip_captura":"[::1]",
+						"host_captura":"localhost",
+						"fecha_valida":"2015-03-21",
+						"ip_valida":"[::1]",
+						"host_valida":"localhost",
+						"fecha_actualiza":"2015-03-21",
+						"ip_actualiza":"[::1]",
+						"host_actualiza":"localhost",
+						"fecha_acepta":"2015-03-21",
+						"fecha_rechaza":"",
+						"motivo_rechaza":"",
+						"activo":1
+					},
+					"orden":
+					{
+						"id_orden":1,
+						"id_estudio":1,
+						"id_solicitud":1,
+						"id_status":1,
+						"id_usuario_captura":1,
+						"id_usuario_valida":1,
+						"id_usuario_actualiza":1,
+						"numero_oficio":432,
+						"folio":"CEA-432/2015",
+						"status":"Validado",
+						"fecha_captura":"2015-03-21",
+						"ip_captura":"[::1]",
+						"host_captura":"localhost",
+						"fecha_valida":"2015-03-21",
+						"ip_valida":"[::1]",
+						"host_valida":"localhost",
+						"fecha_actualiza":"2015-03-21",
+						"ip_actualiza":"[::1]",
+						"host_actualiza":"localhost",
+						"fecha_acepta":"2015-03-21",
+						"fecha_rechaza":"",
+						"motivo_rechaza":"",
+						"activo":1
+					},
+					"supervisor_muestreo":
+					{
+						"id_empleado":3,
+						"id_nivel":3,
+						"id_area":2,
+						"area":"Metales Pesados",
+						"id_puesto":4,
+						"usr":"mgomar",
+						"pwd":"mgomar",
+						"puesto":"Supervisor (MP)",
+						"nombres":"Marín",
+						"ap":"Gomar",
+						"am":"Sosa",
+						"fecha_act":"2014-11-30",
+						"calidad":0,
+						"supervisa":1,
+						"analiza":1,
+						"muestrea":1,
+						"cert":1,
+						"activo":1
+					},
+					"puntos":
+					[
+						{
+							"id_punto":1,
+							"id_paquete_puntos":1,
+							"id_cuerpo_receptor":1,
+							"id_clase_punto":1,
+							"id_reg_hid":12,
+							"id_cuenca":1,
+							"id_subcuenca":1,
+							"id_municipio":14063,
+							"id_localidad":140630001,
+							"id_usuario_captura":1,
+							"id_usuario_actualiza":1,
+							"punto":"Ocotlán",
+							"descripcion":"Ocotlán",
+							"lat":20.346928,
+							"lng":-102.779392,
+							"alt":0,
+							"municipio":"municipio 14063",
+							"localidad":"localidad 140630001",
+							"consecutivo":1,
+							"siglas":"RS",
+							"clave":"RS-01",
+							"fecha_captura":"2012-07-11T00:00-06:00",
+							"ip_captura":"[::1]",
+							"host_captura":"localhost",
+							"fecha_actualiza":"2012-07-11T00:00-06:00",
+							"ip_actualiza":"[::1]",
+							"host_actualiza":"localhost",
+							"comentarios":"",
+							"activo":1
+						},
+						{
+							"id_punto":2,
+							"id_paquete_puntos":1,
+							"id_cuerpo_receptor":1,
+							"id_clase_punto":1,
+							"id_reg_hid":0,
+							"id_cuenca":1,
+							"id_subcuenca":1,
+							"id_municipio":14030,
+							"id_localidad":140300038,
+							"id_usuario_captura":1,
+							"id_usuario_actualiza":1,
+							"punto":"Presa Corona",
+							"descripcion":"Cortina Presa Corona - Poncitlán",
+							"lat":20.399667,
+							"lng":-103.090619,
+							"alt":0,
+							"municipio":"municipio 14030",
+							"localidad":"localidad 140300038",
+							"consecutivo":2,
+							"siglas":"RS",
+							"clave":"RS-02",
+							"fecha_captura":"2013-01-31T12:44-06:00",
+							"ip_captura":"[::1]",
+							"host_captura":"localhost",
+							"fecha_actualiza":"2013-01-31T12:44-06:00",
+							"ip_actualiza":"[::1]",
+							"host_actualiza":"localhost",
+							"comentarios":"",
+							"activo":1
+						},
+						{
+							"id_punto":3,
+							"id_paquete_puntos":1,
+							"id_cuerpo_receptor":1,
+							"id_clase_punto":1,
+							"id_reg_hid":0,
+							"id_cuenca":1,
+							"id_subcuenca":1,
+							"id_municipio":14051,
+							"id_localidad":140510013,
+							"id_usuario_captura":1,
+							"id_usuario_actualiza":1,
+							"punto":"Ex-hacienda Zap.",
+							"descripcion":"Ex-hacienda de Zapotlanejo",
+							"lat":20.442003,
+							"lng":-103.143814,
+							"alt":0,
+							"municipio":"municipio 14051",
+							"localidad":"localidad 140510013",
+							"consecutivo":3,
+							"siglas":"RS",
+							"clave":"RS-03",
+							"fecha_captura":"2013-01-31T12:39-06:00",
+							"ip_captura":"[::1]",
+							"host_captura":"localhost",
+							"fecha_actualiza":"2013-01-31T12:39-06:00",
+							"ip_actualiza":"[::1]",
+							"host_actualiza":"localhost",
+							"comentarios":"",
+							"activo":1
+						},
+						{
+							"id_punto":4,
+							"id_paquete_puntos":1,
+							"id_cuerpo_receptor":1,
+							"id_clase_punto":1,
+							"id_reg_hid":12,
+							"id_cuenca":1,
+							"id_subcuenca":1,
+							"id_municipio":14051,
+							"id_localidad":140510001,
+							"id_usuario_captura":1,
+							"id_usuario_actualiza":1,
+							"punto":"Salto-Juanacatlán",
+							"descripcion":"Compuerta - Puente El Salto-Juanacatlán",
+							"lat":20.512825,
+							"lng":-103.174558,
+							"alt":0,
+							"municipio":"municipio 14051",
+							"localidad":"localidad 140510001",
+							"consecutivo":4,
+							"siglas":"RS",
+							"clave":"RS-04",
+							"fecha_captura":"2012-07-11T00:00-06:00",
+							"ip_captura":"[::1]",
+							"host_captura":"localhost",
+							"fecha_actualiza":"2012-07-11T00:00-06:00",
+							"ip_actualiza":"[::1]",
+							"host_actualiza":"localhost",
+							"comentarios":"",
+							"activo":1
+						},
+						{
+							"id_punto":5,
+							"id_paquete_puntos":1,
+							"id_cuerpo_receptor":1,
+							"id_clase_punto":1,
+							"id_reg_hid":12,
+							"id_cuenca":1,
+							"id_subcuenca":1,
+							"id_municipio":14101,
+							"id_localidad":141010026,
+							"id_usuario_captura":1,
+							"id_usuario_actualiza":1,
+							"punto":"Puente Grande",
+							"descripcion":"Puente Grande",
+							"lat":20.571036,
+							"lng":-103.147283,
+							"alt":0,
+							"municipio":"municipio 14101",
+							"localidad":"localidad 141010026",
+							"consecutivo":5,
+							"siglas":"RS",
+							"clave":"RS-05",
+							"fecha_captura":"2012-07-11T00:00-06:00",
+							"ip_captura":"[::1]",
+							"host_captura":"localhost",
+							"fecha_actualiza":"2012-07-11T00:00-06:00",
+							"ip_actualiza":"[::1]",
+							"host_actualiza":"localhost",
+							"comentarios":"",
+							"activo":1
+						},
+						{
+							"id_punto":6,
+							"id_paquete_puntos":1,
+							"id_cuerpo_receptor":1,
+							"id_clase_punto":1,
+							"id_reg_hid":12,
+							"id_cuenca":1,
+							"id_subcuenca":1,
+							"id_municipio":14101,
+							"id_localidad":141010009,
+							"id_usuario_captura":1,
+							"id_usuario_actualiza":1,
+							"punto":"Matatlán",
+							"descripcion":"Vertedero Controlado Matatlán",
+							"lat":20.668289,
+							"lng":-103.187169,
+							"alt":0,
+							"municipio":"municipio 14101",
+							"localidad":"localidad 141010009",
+							"consecutivo":6,
+							"siglas":"RS",
+							"clave":"RS-06",
+							"fecha_captura":"2012-07-11T00:00-06:00",
+							"ip_captura":"[::1]",
+							"host_captura":"localhost",
+							"fecha_actualiza":"2012-07-11T00:00-06:00",
+							"ip_actualiza":"[::1]",
+							"host_actualiza":"localhost",
+							"comentarios":"",
+							"activo":1
+						}
+					],
+					"equipos":
+					[
+						{
+							"id_equipo":2,
+							"descripcion":"Descripcion equipo",
+							"inventario":"IE-MU-002",
+							"bitacora":"BU-AA-002",
+							"selected":true,
+							"numero_oficio":2,
+							"id_ejercicio":2015,
+							"folio":"CEA-2/2015",
+							"activo":1
+						},
+						{
+							"id_equipo":4,
+							"descripcion":"Descripcion equipo",
+							"inventario":"IE-MU-004",
+							"bitacora":"BU-AA-004",
+							"selected":true,
+							"numero_oficio":4,
+							"id_ejercicio":2015,
+							"folio":"CEA-4/2015",
+							"activo":1
+						}
+					],
+					"recipientes":
+					[
+						{
+							"id_recipiente":1,
+							"id_clase_recipiente":1,
+							"id_plan":1,
+							"id_preservacion":1,
+							"id_clase_parametro":1,
+							"clase_parametro":"Fisicoquímico",
+							"clase_param":"FQ",
+							"preservacion":"Hielo, 4°C",
+							"tipo_preservacion":"Fisicoquímico",
+							"descripcion":"Hielo, 4°C",
+							"cantidad":3,
+							"adecuado":0,
+							"preservado":0,
+							"selected":true,
+							"oficio":"",
+							"activo":1
+						},
+						{
+							"id_recipiente":3,
+							"id_clase_recipiente":3,
+							"id_preservacion":3,
+							"id_clase_parametro":3,
+							"id_plan":1,
+							"clase_parametro":"Sustancias activas al azul de metileno",
+							"clase_param":"SAAM",
+							"preservacion":"H2SO4, 4°C, pH<2",
+							"tipo_preservacion":"Sustancias activas al azul de metileno",
+							"descripcion":"H2SO4, 4°C, pH<2",
+							"cantidad":2,
+							"adecuado":0,
+							"preservado":0,
+							"selected":true,
+							"oficio":"",
+							"activo":1
+						},
+						{
+							"id_recipiente":5,
+							"id_clase_recipiente":5,
+							"id_plan":1,
+							"id_preservacion":5,
+							"id_clase_parametro":5,
+							"clase_parametro":"Dureza",
+							"clase_param":"DZA",
+							"preservacion":"HNO3, pH<2",
+							"tipo_preservacion":"Dureza",
+							"descripcion":"HNO3, pH<2",
+							"cantidad":1,
+							"adecuado":0,
+							"preservado":0,
+							"selected":true,
+							"oficio":"",
+							"activo":1
+						}
+					],
+					"reactivos":
+					[
+						{
+							"id_reactivo_plan":0,
+							"id_reactivo":1,
+							"id_plan":1,
+							"reactivo":"Solución pH 4",
+							"lote":"SOL-00-AA-01",
+							"volumen":0,
+							"selected":true,
+							"cantidad":10,
+							"activo":1
+						},
+						{
+							"id_reactivo_plan":0,
+							"id_reactivo":2,
+							"id_plan":1,
+							"reactivo":"Solución pH 7",
+							"lote":"SOL-00-AA-02",
+							"volumen":0,
+							"selected":true,
+							"cantidad":10,
+							"activo":1
+						},
+						{
+							"id_reactivo_plan":0,
+							"id_reactivo":3,
+							"id_plan":1,
+							"reactivo":"Solución pH 10",
+							"lote":"SOL-00-AA-03",
+							"volumen":0,
+							"selected":true,
+							"cantidad":10,
+							"activo":1
+						},
+						{
+							"id_reactivo_plan":0,
+							"id_reactivo":5,
+							"id_plan":1,
+							"reactivo":"Ácido clorhídrico",
+							"lote":"ÁCI-00-AA-05",
+							"volumen":0,
+							"selected":true,
+							"cantidad":10,
+							"activo":1
+						},
+						{
+							"id_reactivo_plan":0,
+							"id_reactivo":6,
+							"id_plan":1,
+							"reactivo":"Ácido sulfúrico",
+							"lote":"ÁCI-00-AA-06",
+							"volumen":0,
+							"selected":true,
+							"cantidad":10,
+							"activo":1
+						},
+						{
+							"id_reactivo_plan":0,
+							"id_reactivo":7,
+							"id_plan":1,
+							"reactivo":"Agua desionizada",
+							"lote":"AGU-00-AA-07",
+							"volumen":0,
+							"selected":true,
+							"cantidad":10,
+							"activo":1
+						},
+						{
+							"id_reactivo_plan":0,
+							"id_reactivo":8,
+							"id_plan":1,
+							"reactivo":"Ácido nítrico",
+							"lote":"ÁCI-00-AA-08",
+							"volumen":0,
+							"selected":true,
+							"cantidad":10,
+							"activo":1
+						},
+						{
+							"id_reactivo_plan":0,
+							"id_reactivo":9,
+							"id_plan":1,
+							"reactivo":"Ácido nítrico Instra",
+							"lote":"ÁCI-00-AA-09",
+							"volumen":0,
+							"selected":true,
+							"cantidad":10,
+							"activo":1
+						},
+						{
+							"id_reactivo_plan":0,
+							"id_reactivo":10,
+							"id_plan":1,
+							"reactivo":"Conductividad 1000",
+							"lote":"CON-00-AA-10",
+							"volumen":0,
+							"selected":true,
+							"cantidad":10,
+							"activo":1
+						},
+						{
+							"id_reactivo_plan":0,
+							"id_reactivo":11,
+							"id_plan":1,
+							"reactivo":"Conductividad 1200",
+							"lote":"CON-00-AA-11",
+							"volumen":0,
+							"selected":true,
+							"cantidad":10,
+							"activo":1
+						},
+						{
+							"id_reactivo_plan":0,
+							"id_reactivo":12,
+							"id_plan":1,
+							"reactivo":"Conductividad 1400",
+							"lote":"CON-00-AA-12",
+							"volumen":0,
+							"selected":true,
+							"cantidad":10,
+							"activo":1
+						},
+						{
+							"id_reactivo_plan":0,
+							"id_reactivo":17,
+							"id_plan":1,
+							"reactivo":"Hielo",
+							"lote":"HIE-00-AA-17",
+							"volumen":0,
+							"selected":true,
+							"cantidad":10,
+							"activo":1
+						}
+					],
+					"materiales":
+					[
+						{
+							"id_material_plan":0,
+							"id_plan":1,
+							"id_material":1,
+							"material":"Manual de Procedimientos",
+							"selected":true,
+							"activo":1
+						},
+						{
+							"id_material_plan":0,
+							"id_plan":1,
+							"id_material":2,
+							"material":"Hoja de campo",
+							"selected":true,
+							"activo":1
+						},
+						{
+							"id_material_plan":0,
+							"id_plan":1,
+							"id_material":3,
+							"material":"Bitácora",
+							"selected":true,
+							"activo":1
+						},
+						{
+							"id_material_plan":0,
+							"id_plan":1,
+							"id_material":4,
+							"material":"Disco Sechi",
+							"selected":true,
+							"activo":1
+						},
+						{
+							"id_material_plan":0,
+							"id_plan":1,
+							"id_material":5,
+							"material":"Draga",
+							"selected":true,
+							"activo":1
+						},
+						{
+							"id_material_plan":0,
+							"id_plan":1,
+							"id_material":6,
+							"material":"Tamiz",
+							"selected":true,
+							"activo":1
+						},
+						{
+							"id_material_plan":0,
+							"id_plan":1,
+							"id_material":7,
+							"material":"Termómetro",
+							"selected":true,
+							"activo":1
+						},
+						{
+							"id_material_plan":0,
+							"id_plan":1,
+							"id_material":8,
+							"material":"Geoposicionador",
+							"selected":true,
+							"activo":1
+						},
+						{
+							"id_material_plan":0,
+							"id_plan":1,
+							"id_material":9,
+							"material":"Tiras reactivas pH",
+							"selected":true,
+							"activo":1
+						},
+						{
+							"id_material_plan":0,
+							"id_plan":1,
+							"id_material":1,
+							"material":"Pipetas Pasteur",
+							"selected":true,
+							"activo":1
+						},
+						{
+							"id_material_plan":0,
+							"id_plan":1,
+							"id_material":1,
+							"material":"Termo",
+							"selected":true,
+							"activo":1
+						},
+						{
+							"id_material_plan":0,
+							"id_plan":1,
+							"id_material":1,
+							"material":"Cubeta",
+							"selected":true,
+							"activo":1
+						},
+						{
+							"id_material_plan":0,
+							"id_plan":1,
+							"id_material":1,
+							"material":"Pisetas",
+							"selected":true,
+							"activo":1
+						},
+						{
+							"id_material_plan":0,
+							"id_plan":1,
+							"id_material":1,
+							"material":"Camara",
+							"selected":true,
+							"activo":1
+						},
+						{
+							"id_material_plan":0,
+							"id_plan":1,
+							"id_material":1,
+							"material":"Guantes",
+							"selected":true,
+							"activo":1
+						},
+						{
+							"id_material_plan":0,
+							"id_plan":1,
+							"id_material":1,
+							"material":"Lentes de Protección",
+							"selected":true,
+							"activo":1
+						},
+						{
+							"id_material_plan":0,
+							"id_plan":1,
+							"id_material":1,
+							"material":"Chaleco salvavidas",
+							"selected":true,
+							"activo":1
+						},
+						{
+							"id_material_plan":0,
+							"id_plan":1,
+							"id_material":2,
+							"material":"Arnés",
+							"selected":true,
+							"activo":1
+						},
+						{
+							"id_material_plan":0,
+							"id_plan":1,
+							"id_material":2,
+							"material":"Cuerdas",
+							"selected":true,
+							"activo":1
+						},
+						{
+							"id_material_plan":0,
+							"id_plan":1,
+							"id_material":2,
+							"material":"Cubre bocas",
+							"selected":true,
+							"activo":1
+						},
+						{
+							"id_material_plan":0,
+							"id_plan":1,
+							"id_material":2,
+							"material":"Casco",
+							"selected":true,
+							"activo":1
+						}
+					],
+					"hieleras":
+					[
+						{
+							"id_hielera_plan":0,
+							"id_hielera":2,
+							"id_plan":1,
+							"hielera":"Hielera 2",
+							"selected":true
+						},
+						{
+							"id_hielera_plan":0,
+							"id_hielera":4,
+							"id_plan":1,
+							"hielera":"Hielera 4",
+							"selected":true
+						},
+						{
+							"id_hielera_plan":0,
+							"id_hielera":6,
+							"id_plan":1,
+							"hielera":"Hielera 6",
+							"selected":true
+						}
+					]
+				}
+			';
+		}
 		else {
 			$result = '
 				{
@@ -5874,11 +6655,11 @@ class DALSislab
 					"id_responsable_hieleras":0,
 					"id_estado":14,
 					"id_municipio":14039,
-					"id_localidad":140390000,
+					"id_localidad":140390001,
 					"id_ejercicio":2015,
-					"id_status":0,
+					"id_status":1,
 					"numero_oficio":0,
-					"folio":"CEA-00/2014",
+					"folio":"CEA-000/2015",
 					"fecha_probable":"",
 					"fecha_plan":"",
 					"fecha_calibracion":"",
@@ -5895,10 +6676,10 @@ class DALSislab
 					"calle":"",
 					"numero":"",
 					"colonia":"",
-					"frecuencia_muestreo":1,
+					"frecuencia_muestreo":0,
 					"matriz":"",
-					"municipio":"Guadalajara",
-					"localidad":"Guadalajara",
+					"municipio":"",
+					"localidad":"",
 					"asistente_muestreo":"",
 					"asistente_recoleccion":"",
 					"asistente_registro":"",
@@ -5906,37 +6687,16 @@ class DALSislab
 					"fecha_rechaza":"",
 					"motivo_rechaza":"",
 					"activo":1,
-					"cliente":
-					{
-					},
-					"solicitud":
-					{
-					},
-					"orden":
-					{
-					},
-					"supervisor_muestreo":
-					{
-					},
-					"puntos":
-					[
-					],
-					"equipos":
-					[
-					],
-					"recipientes":
-					[
-					],
-
-					"reactivos":
-					[
-					],
-					"materiales":
-					[
-					],
-					"hieleras":
-					[
-					]
+					"cliente":{},
+					"solicitud":{},
+					"orden":{},
+					"supervisor_muestreo":{},
+					"puntos":[],
+					"equipos":[],
+					"recipientes":[],
+					"reactivos":[],
+					"materiales":[],
+					"hieleras":[]
 				}
 			';
 		}
@@ -6725,6 +7485,781 @@ class DALSislab
 							"selected":true
 						}
 					]
+				},
+				{
+					"id_plan":2,
+					"id_estudio":1,
+					"id_cliente":13,
+					"id_solicitud":1,
+					"id_orden":1,
+					"id_matriz":1,
+					"id_tipo_muestreo":2,
+					"id_norma":1,
+					"id_cuerpo_receptor":1,
+					"id_tipo_cuerpo":3,
+					"id_paquete_puntos":2,
+					"id_supervisor_muestreo":3,
+					"id_objetivo_plan":2,
+					"id_supervisor_entrega":13,
+					"id_ayudante_entrega":13,
+					"id_supervisor_recoleccion":13,
+					"id_ayudante_recoleccion":13,
+					"id_supervisor_registro":13,
+					"id_ayudante_registro":13,
+					"id_responsable_calibracion":13,
+					"id_responsable_recipientes":13,
+					"id_responsable_reactivos":13,
+					"id_responsable_material":13,
+					"id_responsable_hieleras":13,
+					"id_estado":14,
+					"id_municipio":14039,
+					"id_localidad":140390001,
+					"id_ejercicio":2015,
+					"id_status":1,
+					"numero_oficio":437,
+					"folio":"CEA-437/2014",
+					"fecha_probable":"2015-03-24T06:38-06:00",
+					"fecha_plan":"2015-03-23",
+					"fecha_calibracion":"2015-03-24T06:38-06:00",
+					"fecha_captura":"2015-03-24T06:38-06:00",
+					"ip_captura":"[::1]",
+					"host_captura":"localhost",
+					"fecha_valida":"2015-03-24T06:38-06:00",
+					"ip_valida":"[::1]",
+					"host_valida":"localhost",
+					"fecha_actualiza":"2015-03-24T06:38-06:00",
+					"ip_actualiza":"[::1]",
+					"host_actualiza":"localhost",
+					"objetivo_otro":"esto es una prueba 2",
+					"calle":"Av. Brasilia",
+					"numero":"2970",
+					"colonia":"Col. Colomos Providencia",
+					"frecuencia_muestreo":2,
+					"matriz":"Agua residual",
+					"municipio":"Guadalajara",
+					"localidad":"Guadalajara",
+					"asistente_muestreo":"",
+					"asistente_recoleccion":"",
+					"asistente_registro":"",
+					"tipo_muestreo":"Compuesto",
+					"fecha_rechaza":"",
+					"motivo_rechaza":"",
+					"activo":1,
+					"cliente":
+					{
+						"id_cliente":13,
+						"id_organismo":6,
+						"cliente":"Ayuntamiento de Cotija, Michoacan",
+						"area":"",
+						"rfc":"Registro Federal de Contribuyentes",
+						"calle":"Pino Suárez Pte.",
+						"numero":"100",
+						"colonia":"Col. Centro",
+						"cp":"59940",
+						"id_estado":16,
+						"estado":"Michoacán de Ocampo",
+						"id_municipio":16019,
+						"municipio":"Cotija",
+						"id_localidad":160190001,
+						"localidad":"Cotija de La Paz",
+						"tel":"045-35-4100-1836",
+						"fax":"",
+						"contacto":"Arq. Juan Jesús Zarate Barajas",
+						"puesto_contacto":"puesto contacto",
+						"email":"ooapascotija@hotmail.com",
+						"fecha_act":"23/11/2014",
+						"interno":0,
+						"cea":0,
+						"tasa":1,
+						"activo":1
+					},
+					"solicitud":
+					{
+						"id_solicitud":1,
+						"id_estudio":1,
+						"id_cliente":13,
+						"id_matriz":1,
+						"id_tipo_muestreo":2,
+						"id_norma":1,
+						"id_cuerpo_receptor":1,
+						"id_tipo_cuerpo":3,
+						"id_ejercicio":2015,
+						"id_status":2,
+						"id_usuario_captura":20,
+						"id_usuario_valida":1,
+						"id_usuario_actualiza":1,
+						"numero_oficio":432,
+						"folio":"CEA-432/2015",
+						"matriz":"Agua residual",
+						"cantidad_muestras":15,
+						"tipo_muestreo":"Compuesto",
+						"costo_total":35850,
+						"cuerpo_receptor":"Río Santiago",
+						"tipo_cuerpo":"C",
+						"status":"Validado",
+						"fecha":"2015-03-21",
+						"fecha_captura":"2015-03-21",
+						"ip_captura":"[::1]",
+						"host_captura":"localhost",
+						"fecha_valida":"2015-03-21",
+						"ip_valida":"[::1]",
+						"host_valida":"localhost",
+						"fecha_actualiza":"2015-03-21",
+						"ip_actualiza":"[::1]",
+						"host_actualiza":"localhost",
+						"fecha_acepta":"2015-03-21",
+						"fecha_rechaza":"",
+						"motivo_rechaza":"",
+						"activo":1
+					},
+					"orden":
+					{
+						"id_orden":1,
+						"id_estudio":1,
+						"id_solicitud":1,
+						"id_status":1,
+						"id_usuario_captura":1,
+						"id_usuario_valida":1,
+						"id_usuario_actualiza":1,
+						"numero_oficio":432,
+						"folio":"CEA-432/2015",
+						"status":"Validado",
+						"fecha_captura":"2015-03-21",
+						"ip_captura":"[::1]",
+						"host_captura":"localhost",
+						"fecha_valida":"2015-03-21",
+						"ip_valida":"[::1]",
+						"host_valida":"localhost",
+						"fecha_actualiza":"2015-03-21",
+						"ip_actualiza":"[::1]",
+						"host_actualiza":"localhost",
+						"fecha_acepta":"2015-03-21",
+						"fecha_rechaza":"",
+						"motivo_rechaza":"",
+						"activo":1
+					},
+					"supervisor_muestreo":
+					{
+						"id_empleado":3,
+						"id_nivel":3,
+						"id_area":2,
+						"area":"Metales Pesados",
+						"id_puesto":4,
+						"usr":"mgomar",
+						"pwd":"mgomar",
+						"puesto":"Supervisor (MP)",
+						"nombres":"Marín",
+						"ap":"Gomar",
+						"am":"Sosa",
+						"fecha_act":"2014-11-30",
+						"calidad":0,
+						"supervisa":1,
+						"analiza":1,
+						"muestrea":1,
+						"cert":1,
+						"activo":1
+					},
+					"puntos":
+					[
+						{
+							"id_punto":1,
+							"id_paquete_puntos":1,
+							"id_cuerpo_receptor":1,
+							"id_clase_punto":1,
+							"id_reg_hid":12,
+							"id_cuenca":1,
+							"id_subcuenca":1,
+							"id_municipio":14063,
+							"id_localidad":140630001,
+							"id_usuario_captura":1,
+							"id_usuario_actualiza":1,
+							"punto":"Ocotlán",
+							"descripcion":"Ocotlán",
+							"lat":20.346928,
+							"lng":-102.779392,
+							"alt":0,
+							"municipio":"municipio 14063",
+							"localidad":"localidad 140630001",
+							"consecutivo":1,
+							"siglas":"RS",
+							"clave":"RS-01",
+							"fecha_captura":"2012-07-11T00:00-06:00",
+							"ip_captura":"[::1]",
+							"host_captura":"localhost",
+							"fecha_actualiza":"2012-07-11T00:00-06:00",
+							"ip_actualiza":"[::1]",
+							"host_actualiza":"localhost",
+							"comentarios":"",
+							"activo":1
+						},
+						{
+							"id_punto":2,
+							"id_paquete_puntos":1,
+							"id_cuerpo_receptor":1,
+							"id_clase_punto":1,
+							"id_reg_hid":0,
+							"id_cuenca":1,
+							"id_subcuenca":1,
+							"id_municipio":14030,
+							"id_localidad":140300038,
+							"id_usuario_captura":1,
+							"id_usuario_actualiza":1,
+							"punto":"Presa Corona",
+							"descripcion":"Cortina Presa Corona - Poncitlán",
+							"lat":20.399667,
+							"lng":-103.090619,
+							"alt":0,
+							"municipio":"municipio 14030",
+							"localidad":"localidad 140300038",
+							"consecutivo":2,
+							"siglas":"RS",
+							"clave":"RS-02",
+							"fecha_captura":"2013-01-31T12:44-06:00",
+							"ip_captura":"[::1]",
+							"host_captura":"localhost",
+							"fecha_actualiza":"2013-01-31T12:44-06:00",
+							"ip_actualiza":"[::1]",
+							"host_actualiza":"localhost",
+							"comentarios":"",
+							"activo":1
+						},
+						{
+							"id_punto":3,
+							"id_paquete_puntos":1,
+							"id_cuerpo_receptor":1,
+							"id_clase_punto":1,
+							"id_reg_hid":0,
+							"id_cuenca":1,
+							"id_subcuenca":1,
+							"id_municipio":14051,
+							"id_localidad":140510013,
+							"id_usuario_captura":1,
+							"id_usuario_actualiza":1,
+							"punto":"Ex-hacienda Zap.",
+							"descripcion":"Ex-hacienda de Zapotlanejo",
+							"lat":20.442003,
+							"lng":-103.143814,
+							"alt":0,
+							"municipio":"municipio 14051",
+							"localidad":"localidad 140510013",
+							"consecutivo":3,
+							"siglas":"RS",
+							"clave":"RS-03",
+							"fecha_captura":"2013-01-31T12:39-06:00",
+							"ip_captura":"[::1]",
+							"host_captura":"localhost",
+							"fecha_actualiza":"2013-01-31T12:39-06:00",
+							"ip_actualiza":"[::1]",
+							"host_actualiza":"localhost",
+							"comentarios":"",
+							"activo":1
+						},
+						{
+							"id_punto":4,
+							"id_paquete_puntos":1,
+							"id_cuerpo_receptor":1,
+							"id_clase_punto":1,
+							"id_reg_hid":12,
+							"id_cuenca":1,
+							"id_subcuenca":1,
+							"id_municipio":14051,
+							"id_localidad":140510001,
+							"id_usuario_captura":1,
+							"id_usuario_actualiza":1,
+							"punto":"Salto-Juanacatlán",
+							"descripcion":"Compuerta - Puente El Salto-Juanacatlán",
+							"lat":20.512825,
+							"lng":-103.174558,
+							"alt":0,
+							"municipio":"municipio 14051",
+							"localidad":"localidad 140510001",
+							"consecutivo":4,
+							"siglas":"RS",
+							"clave":"RS-04",
+							"fecha_captura":"2012-07-11T00:00-06:00",
+							"ip_captura":"[::1]",
+							"host_captura":"localhost",
+							"fecha_actualiza":"2012-07-11T00:00-06:00",
+							"ip_actualiza":"[::1]",
+							"host_actualiza":"localhost",
+							"comentarios":"",
+							"activo":1
+						},
+						{
+							"id_punto":5,
+							"id_paquete_puntos":1,
+							"id_cuerpo_receptor":1,
+							"id_clase_punto":1,
+							"id_reg_hid":12,
+							"id_cuenca":1,
+							"id_subcuenca":1,
+							"id_municipio":14101,
+							"id_localidad":141010026,
+							"id_usuario_captura":1,
+							"id_usuario_actualiza":1,
+							"punto":"Puente Grande",
+							"descripcion":"Puente Grande",
+							"lat":20.571036,
+							"lng":-103.147283,
+							"alt":0,
+							"municipio":"municipio 14101",
+							"localidad":"localidad 141010026",
+							"consecutivo":5,
+							"siglas":"RS",
+							"clave":"RS-05",
+							"fecha_captura":"2012-07-11T00:00-06:00",
+							"ip_captura":"[::1]",
+							"host_captura":"localhost",
+							"fecha_actualiza":"2012-07-11T00:00-06:00",
+							"ip_actualiza":"[::1]",
+							"host_actualiza":"localhost",
+							"comentarios":"",
+							"activo":1
+						},
+						{
+							"id_punto":6,
+							"id_paquete_puntos":1,
+							"id_cuerpo_receptor":1,
+							"id_clase_punto":1,
+							"id_reg_hid":12,
+							"id_cuenca":1,
+							"id_subcuenca":1,
+							"id_municipio":14101,
+							"id_localidad":141010009,
+							"id_usuario_captura":1,
+							"id_usuario_actualiza":1,
+							"punto":"Matatlán",
+							"descripcion":"Vertedero Controlado Matatlán",
+							"lat":20.668289,
+							"lng":-103.187169,
+							"alt":0,
+							"municipio":"municipio 14101",
+							"localidad":"localidad 141010009",
+							"consecutivo":6,
+							"siglas":"RS",
+							"clave":"RS-06",
+							"fecha_captura":"2012-07-11T00:00-06:00",
+							"ip_captura":"[::1]",
+							"host_captura":"localhost",
+							"fecha_actualiza":"2012-07-11T00:00-06:00",
+							"ip_actualiza":"[::1]",
+							"host_actualiza":"localhost",
+							"comentarios":"",
+							"activo":1
+						}
+					],
+					"equipos":
+					[
+						{
+							"id_equipo":2,
+							"descripcion":"Descripcion equipo",
+							"inventario":"IE-MU-002",
+							"bitacora":"BU-AA-002",
+							"selected":true,
+							"numero_oficio":2,
+							"id_ejercicio":2015,
+							"folio":"CEA-2/2015",
+							"activo":1
+						},
+						{
+							"id_equipo":4,
+							"descripcion":"Descripcion equipo",
+							"inventario":"IE-MU-004",
+							"bitacora":"BU-AA-004",
+							"selected":true,
+							"numero_oficio":4,
+							"id_ejercicio":2015,
+							"folio":"CEA-4/2015",
+							"activo":1
+						}
+					],
+					"recipientes":
+					[
+						{
+							"id_recipiente":1,
+							"id_clase_recipiente":1,
+							"id_plan":1,
+							"id_preservacion":1,
+							"id_clase_parametro":1,
+							"clase_parametro":"Fisicoquímico",
+							"clase_param":"FQ",
+							"preservacion":"Hielo, 4°C",
+							"tipo_preservacion":"Fisicoquímico",
+							"descripcion":"Hielo, 4°C",
+							"cantidad":3,
+							"adecuado":0,
+							"preservado":0,
+							"selected":true,
+							"oficio":"",
+							"activo":1
+						},
+						{
+							"id_recipiente":3,
+							"id_clase_recipiente":3,
+							"id_preservacion":3,
+							"id_clase_parametro":3,
+							"id_plan":1,
+							"clase_parametro":"Sustancias activas al azul de metileno",
+							"clase_param":"SAAM",
+							"preservacion":"H2SO4, 4°C, pH<2",
+							"tipo_preservacion":"Sustancias activas al azul de metileno",
+							"descripcion":"H2SO4, 4°C, pH<2",
+							"cantidad":2,
+							"adecuado":0,
+							"preservado":0,
+							"selected":true,
+							"oficio":"",
+							"activo":1
+						},
+						{
+							"id_recipiente":5,
+							"id_clase_recipiente":5,
+							"id_plan":1,
+							"id_preservacion":5,
+							"id_clase_parametro":5,
+							"clase_parametro":"Dureza",
+							"clase_param":"DZA",
+							"preservacion":"HNO3, pH<2",
+							"tipo_preservacion":"Dureza",
+							"descripcion":"HNO3, pH<2",
+							"cantidad":1,
+							"adecuado":0,
+							"preservado":0,
+							"selected":true,
+							"oficio":"",
+							"activo":1
+						}
+					],
+					"reactivos":
+					[
+						{
+							"id_reactivo_plan":0,
+							"id_reactivo":1,
+							"id_plan":1,
+							"reactivo":"Solución pH 4",
+							"lote":"SOL-00-AA-01",
+							"volumen":0,
+							"selected":true,
+							"cantidad":10,
+							"activo":1
+						},
+						{
+							"id_reactivo_plan":0,
+							"id_reactivo":2,
+							"id_plan":1,
+							"reactivo":"Solución pH 7",
+							"lote":"SOL-00-AA-02",
+							"volumen":0,
+							"selected":true,
+							"cantidad":10,
+							"activo":1
+						},
+						{
+							"id_reactivo_plan":0,
+							"id_reactivo":3,
+							"id_plan":1,
+							"reactivo":"Solución pH 10",
+							"lote":"SOL-00-AA-03",
+							"volumen":0,
+							"selected":true,
+							"cantidad":10,
+							"activo":1
+						},
+						{
+							"id_reactivo_plan":0,
+							"id_reactivo":5,
+							"id_plan":1,
+							"reactivo":"Ácido clorhídrico",
+							"lote":"ÁCI-00-AA-05",
+							"volumen":0,
+							"selected":true,
+							"cantidad":10,
+							"activo":1
+						},
+						{
+							"id_reactivo_plan":0,
+							"id_reactivo":6,
+							"id_plan":1,
+							"reactivo":"Ácido sulfúrico",
+							"lote":"ÁCI-00-AA-06",
+							"volumen":0,
+							"selected":true,
+							"cantidad":10,
+							"activo":1
+						},
+						{
+							"id_reactivo_plan":0,
+							"id_reactivo":7,
+							"id_plan":1,
+							"reactivo":"Agua desionizada",
+							"lote":"AGU-00-AA-07",
+							"volumen":0,
+							"selected":true,
+							"cantidad":10,
+							"activo":1
+						},
+						{
+							"id_reactivo_plan":0,
+							"id_reactivo":8,
+							"id_plan":1,
+							"reactivo":"Ácido nítrico",
+							"lote":"ÁCI-00-AA-08",
+							"volumen":0,
+							"selected":true,
+							"cantidad":10,
+							"activo":1
+						},
+						{
+							"id_reactivo_plan":0,
+							"id_reactivo":9,
+							"id_plan":1,
+							"reactivo":"Ácido nítrico Instra",
+							"lote":"ÁCI-00-AA-09",
+							"volumen":0,
+							"selected":true,
+							"cantidad":10,
+							"activo":1
+						},
+						{
+							"id_reactivo_plan":0,
+							"id_reactivo":10,
+							"id_plan":1,
+							"reactivo":"Conductividad 1000",
+							"lote":"CON-00-AA-10",
+							"volumen":0,
+							"selected":true,
+							"cantidad":10,
+							"activo":1
+						},
+						{
+							"id_reactivo_plan":0,
+							"id_reactivo":11,
+							"id_plan":1,
+							"reactivo":"Conductividad 1200",
+							"lote":"CON-00-AA-11",
+							"volumen":0,
+							"selected":true,
+							"cantidad":10,
+							"activo":1
+						},
+						{
+							"id_reactivo_plan":0,
+							"id_reactivo":12,
+							"id_plan":1,
+							"reactivo":"Conductividad 1400",
+							"lote":"CON-00-AA-12",
+							"volumen":0,
+							"selected":true,
+							"cantidad":10,
+							"activo":1
+						},
+						{
+							"id_reactivo_plan":0,
+							"id_reactivo":17,
+							"id_plan":1,
+							"reactivo":"Hielo",
+							"lote":"HIE-00-AA-17",
+							"volumen":0,
+							"selected":true,
+							"cantidad":10,
+							"activo":1
+						}
+					],
+					"materiales":
+					[
+						{
+							"id_material_plan":0,
+							"id_plan":1,
+							"id_material":1,
+							"material":"Manual de Procedimientos",
+							"selected":true,
+							"activo":1
+						},
+						{
+							"id_material_plan":0,
+							"id_plan":1,
+							"id_material":2,
+							"material":"Hoja de campo",
+							"selected":true,
+							"activo":1
+						},
+						{
+							"id_material_plan":0,
+							"id_plan":1,
+							"id_material":3,
+							"material":"Bitácora",
+							"selected":true,
+							"activo":1
+						},
+						{
+							"id_material_plan":0,
+							"id_plan":1,
+							"id_material":4,
+							"material":"Disco Sechi",
+							"selected":true,
+							"activo":1
+						},
+						{
+							"id_material_plan":0,
+							"id_plan":1,
+							"id_material":5,
+							"material":"Draga",
+							"selected":true,
+							"activo":1
+						},
+						{
+							"id_material_plan":0,
+							"id_plan":1,
+							"id_material":6,
+							"material":"Tamiz",
+							"selected":true,
+							"activo":1
+						},
+						{
+							"id_material_plan":0,
+							"id_plan":1,
+							"id_material":7,
+							"material":"Termómetro",
+							"selected":true,
+							"activo":1
+						},
+						{
+							"id_material_plan":0,
+							"id_plan":1,
+							"id_material":8,
+							"material":"Geoposicionador",
+							"selected":true,
+							"activo":1
+						},
+						{
+							"id_material_plan":0,
+							"id_plan":1,
+							"id_material":9,
+							"material":"Tiras reactivas pH",
+							"selected":true,
+							"activo":1
+						},
+						{
+							"id_material_plan":0,
+							"id_plan":1,
+							"id_material":1,
+							"material":"Pipetas Pasteur",
+							"selected":true,
+							"activo":1
+						},
+						{
+							"id_material_plan":0,
+							"id_plan":1,
+							"id_material":1,
+							"material":"Termo",
+							"selected":true,
+							"activo":1
+						},
+						{
+							"id_material_plan":0,
+							"id_plan":1,
+							"id_material":1,
+							"material":"Cubeta",
+							"selected":true,
+							"activo":1
+						},
+						{
+							"id_material_plan":0,
+							"id_plan":1,
+							"id_material":1,
+							"material":"Pisetas",
+							"selected":true,
+							"activo":1
+						},
+						{
+							"id_material_plan":0,
+							"id_plan":1,
+							"id_material":1,
+							"material":"Camara",
+							"selected":true,
+							"activo":1
+						},
+						{
+							"id_material_plan":0,
+							"id_plan":1,
+							"id_material":1,
+							"material":"Guantes",
+							"selected":true,
+							"activo":1
+						},
+						{
+							"id_material_plan":0,
+							"id_plan":1,
+							"id_material":1,
+							"material":"Lentes de Protección",
+							"selected":true,
+							"activo":1
+						},
+						{
+							"id_material_plan":0,
+							"id_plan":1,
+							"id_material":1,
+							"material":"Chaleco salvavidas",
+							"selected":true,
+							"activo":1
+						},
+						{
+							"id_material_plan":0,
+							"id_plan":1,
+							"id_material":2,
+							"material":"Arnés",
+							"selected":true,
+							"activo":1
+						},
+						{
+							"id_material_plan":0,
+							"id_plan":1,
+							"id_material":2,
+							"material":"Cuerdas",
+							"selected":true,
+							"activo":1
+						},
+						{
+							"id_material_plan":0,
+							"id_plan":1,
+							"id_material":2,
+							"material":"Cubre bocas",
+							"selected":true,
+							"activo":1
+						},
+						{
+							"id_material_plan":0,
+							"id_plan":1,
+							"id_material":2,
+							"material":"Casco",
+							"selected":true,
+							"activo":1
+						}
+					],
+					"hieleras":
+					[
+						{
+							"id_hielera_plan":0,
+							"id_hielera":2,
+							"id_plan":1,
+							"hielera":"Hielera 2",
+							"selected":true
+						},
+						{
+							"id_hielera_plan":0,
+							"id_hielera":4,
+							"id_plan":1,
+							"hielera":"Hielera 4",
+							"selected":true
+						},
+						{
+							"id_hielera_plan":0,
+							"id_hielera":6,
+							"id_plan":1,
+							"hielera":"Hielera 6",
+							"selected":true
+						}
+					]
 				}
 			]
 		';
@@ -6736,23 +8271,22 @@ class DALSislab
 			[
 				{
 					"id_hoja":1,
+					"id_estudio":1,
 					"id_cliente":1,
 					"id_solicitud":1,
 					"id_cotizacion":1,
 					"id_orden_muestreo":1,
 					"id_plan":1,
-					"id_punto":1,
 					"id_metodo_muestreo":2,
 					"id_responsable_muestreo":1,
 					"id_tipo_muestreo":1,
 					"id_matriz":1,
 					"id_metodo":156,
-					"id_cobertura_nubes":1,
+					"id_nubes":1,
 					"id_direccion_viento":1,
 					"id_oleaje":1,
 					"id_calibracion":1,
 					"id_verificacion":1,
-					"id_informe":1,
 					"id_estado":14,
 					"id_municipio":14124,
 					"id_localidad":1411240001,
@@ -6772,7 +8306,7 @@ class DALSislab
 					"validado":0,
 					"firmado":0,
 					"comentarios":"",
-					"cobertura_nubes_otra":"",
+					"nubes_otro":"",
 					"colonia":"Col. Colomos Providencia",
 					"calle":"Av. Brasilia",
 					"numero":"2970",
@@ -6780,328 +8314,33 @@ class DALSislab
 					"municipio":"Zapotlanejo",
 					"localidad":"Zapotlanejo",
 					"cliente":
-					{
-						"id_cliente":1,
-						"id_organismo":1,
-						"cliente":"CEA Jalisco",
-						"area":"Dirección de Operación de PTARS",
-						"contacto":"Biol. Luis Aceves Martínez"
-					},
+					{},
 					"orden_muestreo":
-					{
-						"id_orden_muestreo":1,
-						"numero_oficio":656,
-						"id_ejercicio":2014,
-						"folio":"CEA-656/2014",
-						"fecha_orden":"2014-11-01",
-						"id_responsable_muestreo":2,
-						"responsable_muestreo":
-						{
-							"id_responsable_muestreo":2,
-							"id_empleado":3,
-							"id_nivel":3,
-							"id_area":2,
-							"area":"Metales Pesados",
-							"id_puesto":4,
-							"puesto":"Supervisor (MP)",
-							"nombres":"Marín",
-							"ap":"Gomar",
-							"am":"Sosa",
-							"fecha_act":"2014-11-30",
-							"calidad":0,
-							"supervisa":1,
-							"analiza":1,
-							"muestrea":1,
-							"cert":1,
-							"activo":1
-						}
-					},
+					{},
 					"muestra":
-					{
-						"id_muestra":1,
-						"numero_oficio":1,
-						"id_ejercicio":2014,
-						"folio":"CEA-1/2014",
-						"muestra":"",
-						"fecha_muestra":"2014-12-10",
-						"hora_muestra":"12:45",
-						"parametros_campo":
-						[
-							{
-								"id_parametro":1,
-								"param":"color",
-								"parametro":"Color",
-								"id_tipo_parametro":1,
-								"id_clase_parametro":1,
-								"id_preservacion":1,
-								"id_unidad":1,
-								"id_metodo":1,
-								"tipo_parametro":"Físicoquímico",
-								"clase_parametro":"Campo",
-								"activo":1,
-								"valor":null,
-								"selected":false
-							},
-							{
-								"id_parametro":1,
-								"param":"olor",
-								"parametro":"Olor",
-								"id_tipo_parametro":1,
-								"id_clase_parametro":1,
-								"id_preservacion":1,
-								"id_unidad":1,
-								"id_metodo":1,
-								"tipo_parametro":"Físicoquímico",
-								"clase_parametro":"Campo",
-								"activo":1,
-								"valor":null,
-								"selected":false
-							},
-							{
-								"id_parametro":1,
-								"param":"gasto",
-								"parametro":"Gasto",
-								"id_tipo_parametro":1,
-								"id_clase_parametro":1,
-								"id_preservacion":1,
-								"id_unidad":1,
-								"id_metodo":1,
-								"tipo_parametro":"Físicoquímico",
-								"clase_parametro":"Campo",
-								"activo":1,
-								"valor":null,
-								"selected":false
-							},
-							{
-								"id_parametro":1,
-								"param":"profundidad",
-								"parametro":"Profundidad",
-								"id_tipo_parametro":1,
-								"id_clase_parametro":1,
-								"id_preservacion":1,
-								"id_unidad":1,
-								"id_metodo":1,
-								"tipo_parametro":"Físicoquímico",
-								"clase_parametro":"Campo",
-								"activo":1,
-								"valor":null,
-								"selected":false
-							},
-							{
-								"id_parametro":1,
-								"param":"olor",
-								"parametro":"Olor",
-								"id_tipo_parametro":1,
-								"id_clase_parametro":1,
-								"id_preservacion":1,
-								"id_unidad":1,
-								"id_metodo":1,
-								"tipo_parametro":"Físicoquímico",
-								"clase_parametro":"Campo",
-								"activo":1,
-								"valor":null,
-								"selected":false
-							},
-							{
-								"id_parametro":1,
-								"param":"temp_ambiente",
-								"parametro":"Temperatura ambiente",
-								"id_tipo_parametro":1,
-								"id_clase_parametro":1,
-								"id_preservacion":1,
-								"id_unidad":1,
-								"id_metodo":1,
-								"tipo_parametro":"Físicoquímico",
-								"clase_parametro":"Campo",
-								"activo":1,
-								"valor":null,
-								"selected":false
-							},
-							{
-								"id_parametro":1,
-								"param":"temperatura",
-								"parametro":"Temperatura",
-								"id_tipo_parametro":1,
-								"id_clase_parametro":1,
-								"id_preservacion":1,
-								"id_unidad":1,
-								"id_metodo":1,
-								"tipo_parametro":"Físicoquímico",
-								"clase_parametro":"Campo",
-								"activo":1,
-								"valor":null,
-								"selected":false
-							},
-							{
-								"id_parametro":1,
-								"param":"ph",
-								"parametro":"Ph",
-								"id_tipo_parametro":1,
-								"id_clase_parametro":1,
-								"id_preservacion":1,
-								"id_unidad":1,
-								"id_metodo":1,
-								"tipo_parametro":"Físicoquímico",
-								"clase_parametro":"Campo",
-								"activo":1,
-								"valor":null,
-								"selected":false
-							},
-							{
-								"id_parametro":1,
-								"param":"conductividad",
-								"parametro":"Conductividad",
-								"id_tipo_parametro":1,
-								"id_clase_parametro":1,
-								"id_preservacion":1,
-								"id_unidad":1,
-								"id_metodo":1,
-								"tipo_parametro":"Físicoquímico",
-								"clase_parametro":"Campo",
-								"activo":1,
-								"valor":null,
-								"selected":false
-							},
-							{
-								"id_parametro":1,
-								"param":"oxigeno_disuelto",
-								"parametro":"Oxigeno_disuelto",
-								"id_tipo_parametro":1,
-								"id_clase_parametro":1,
-								"id_preservacion":1,
-								"id_unidad":1,
-								"id_metodo":1,
-								"tipo_parametro":"Físicoquímico",
-								"clase_parametro":"Campo",
-								"activo":1,
-								"valor":null,
-								"selected":false
-							},
-							{
-								"id_parametro":1,
-								"param":"transparencia",
-								"parametro":"Transparencia",
-								"id_tipo_parametro":1,
-								"id_clase_parametro":1,
-								"id_preservacion":1,
-								"id_unidad":1,
-								"id_metodo":1,
-								"tipo_parametro":"Físicoquímico",
-								"clase_parametro":"Campo",
-								"activo":1,
-								"valor":null,
-								"selected":false
-							},
-							{
-								"id_parametro":1,
-								"param":"cloro_residual",
-								"parametro":"Cloro_residual",
-								"id_tipo_parametro":1,
-								"id_clase_parametro":1,
-								"id_preservacion":1,
-								"id_unidad":1,
-								"id_metodo":1,
-								"tipo_parametro":"Físicoquímico",
-								"clase_parametro":"Campo",
-								"activo":1,
-								"valor":null,
-								"selected":false
-							},
-							{
-								"id_parametro":1,
-								"param":"materia_flotante",
-								"parametro":"Materia_flotante",
-								"id_tipo_parametro":1,
-								"id_clase_parametro":1,
-								"id_preservacion":1,
-								"id_unidad":1,
-								"id_metodo":1,
-								"tipo_parametro":"Físicoquímico",
-								"clase_parametro":"Campo",
-								"activo":1,
-								"valor":null,
-								"selected":false
-							}
-						]
-					},
+					{},
 					"punto":
-					{
-						"id_punto":1,
-						"punto":"Punto muestreo Prueba",
-						"descripcion":"Descripción detallada del Punto de muestreo de Prueba",
-						"id_municipio":14124,
-						"municipio":"Zapotlanejo",
-						"id_localidad":141240001,
-						"localidad":"Zapotlanejo",
-						"lat":23.123456,
-						"lng":-103.654321
-					},
+					{},
 					"parametros_campo":
-					[
-
-					],
+					[],
 					"componentes":
-					{
-						"temp_1":0,
-						"temp_2":0,
-						"temp_3":0,
-						"temp":0,
-						"ph_1":0,
-						"ph_2":0,
-						"ph_3":0,
-						"ph":0,
-						"cond_1":0,
-						"cond_2":0,
-						"cond_3":0,
-						"cond":0,
-						"od_1":0,
-						"od_2":0,
-						"od_3":0,
-						"od":0
-					},
+					{},
 					"preservaciones":
-					[
-					],
+					[],
 					"validaciones":
-					[
-						{
-
-						}
-					],
-					"cobertura_nubes":
-					{
-							"id_cobertura_nubes":1,
-							"cobertura_nubes":"Despejado"
-					},
+					[],
+					"nubes":
+					{},
 					"direccion_viento":
-					{
-						"id_direccion_viento":1,
-						"direccion_viento":"Norte"
-					},
+					{},
 					"oleaje":
-					{
-						"id_oleaje":1,
-						"oleaje":"Nulo"
-					},
+					{},
 					"calibracion":
-					{
-						"id_calibracion":1,
-						"bitacora":"BT-00-AAA-2134",
-						"numero_oficio":1,
-						"id_ejercicio":"2014",
-						"folio":"CEA-1/2014"
-					},
+					{},
 					"verificacion":
-					{
-						"id_verificacion":1,
-						"bitacora":"BT-00-AAA-2134",
-						"numero_oficio":1,
-						"id_ejercicio":"2014",
-						"folio":"CEA-1/2014"
-					},
+					{},
 					"informe":
-					{
-					}
+					{}
 				}
 			]';
 		return $result;
@@ -7117,11 +8356,13 @@ class DALSislab
 					"id_solicitud":1,
 					"id_orden":1,
 					"id_plan":1,
-
-					"id_matriz":1,
-					"id_tipo_muestreo":1,
-					"id_norma":1,
-
+					"id_nubes":1,
+					"id_direccion_viento":1,
+					"id_oleaje":1,
+					"id_metodo_muestreo":2,
+					"id_status":1,
+					"fecha_inicio":"",
+					"fecha_fin":"",
 					"fecha_captura":"2015-03-23T08:25-06:00",
 					"ip_captura":"[::1]",
 					"host_captura":"localhost",
@@ -7131,306 +8372,222 @@ class DALSislab
 					"fecha_actualiza":"2015-03-23T08:25-06:00",
 					"ip_actualiza":"[::1]",
 					"host_actualiza":"localhost",
-
-
-					"id_cobertura_nubes":1,
-
-					"id_punto":1,
-					"id_metodo_muestreo":2,
-					"id_responsable_muestreo":1,
-					"id_metodo":156,
-					"id_direccion_viento":1,
-					"id_oleaje":1,
-					"id_calibracion":1,
-					"id_verificacion":1,
-					"id_informe":1,
-					"id_estado":14,
-					"id_municipio":14124,
-					"id_localidad":1411240001,
-					"fecha_captura":"",
-					"fecha_acepta":"",
-					"fecha_actualiza":"",
-					"fecha_valida":"",
-					"fecha_firmado":"",
-					"fecha_inicio":"",
-					"fecha_fin":"",
-					"hora_inicio":"",
-					"hora_fin":"",
-					"numero_oficio":1,
-					"id_ejercicio":2014,
-					"folio":"CEA-1/2014",
-					"aceptado":0,
-					"validado":0,
-					"firmado":0,
+					"fecha_rechaza":"",
+					"nubes_otro":"",
 					"comentarios":"",
-					"cobertura_nubes_otro":"",
-					"colonia":"Col. Colomos Providencia",
-					"calle":"Av. Brasilia",
-					"numero":"2970",
-					"estado":"Jalisco",
-					"municipio":"Zapotlanejo",
-					"localidad":"Zapotlanejo",
-					"cliente":
-					{
-						"id_cliente":1,
-						"id_organismo":1,
-						"cliente":"CEA Jalisco",
-						"area":"Dirección de Operación de PTARS",
-						"contacto":"Biol. Luis Aceves Martínez",
-					},
-					"orden_muestreo":
-					{
-						"id_orden_muestreo":1,
-						"numero_oficio":656,
-						"id_ejercicio":2014,
-						"folio":"CEA-656/2014",
-						"fecha_orden":"2014-11-01",
-						"id_responsable_muestreo":2,
-						"responsable_muestreo":
-						{
-							"id_responsable_muestreo":2,
-							"id_empleado":3,
-							"id_nivel":3,
-							"id_area":2,
-							"area":"Metales Pesados",
-							"id_puesto":4,
-							"puesto":"Supervisor (MP)",
-							"nombres":"Marín",
-							"ap":"Gomar",
-							"am":"Sosa",
-							"fecha_act":"2014-11-30",
-							"calidad":0,
-							"supervisa":1,
-							"analiza":1,
-							"muestrea":1,
-							"cert":1,
-							"activo":1
-						}
-					},
-					"muestra":
-					{
-						"id_muestra":1,
-						"numero_oficio":1,
-						"id_ejercicio":2014,
-						"folio":"CEA-1/2014",
-						"muestra":"",
-						"fecha_muestra":"2014-12-10",
-						"hora_muestra":"12:45",
-						"parametros_campo":
-						[
-							{
-								"id_parametro":1,
-								"param":"color",
-								"parametro":"Color",
-								"id_tipo_parametro":1,
-								"id_clase_parametro":1,
-								"id_preservacion":1,
-								"id_unidad":1,
-								"id_metodo":1,
-								"tipo_parametro":"Físicoquímico",
-								"clase_parametro":"Campo",
-								"activo":1,
-								"valor":null,
-								"selected":false
-							},
-							{
-								"id_parametro":1,
-								"param":"olor",
-								"parametro":"Olor",
-								"id_tipo_parametro":1,
-								"id_clase_parametro":1,
-								"id_preservacion":1,
-								"id_unidad":1,
-								"id_metodo":1,
-								"tipo_parametro":"Físicoquímico",
-								"clase_parametro":"Campo",
-								"activo":1,
-								"valor":null,
-								"selected":false
-							},
-							{
-								"id_parametro":1,
-								"param":"gasto",
-								"parametro":"Gasto",
-								"id_tipo_parametro":1,
-								"id_clase_parametro":1,
-								"id_preservacion":1,
-								"id_unidad":1,
-								"id_metodo":1,
-								"tipo_parametro":"Físicoquímico",
-								"clase_parametro":"Campo",
-								"activo":1,
-								"valor":null,
-								"selected":false
-							},
-							{
-								"id_parametro":1,
-								"param":"profundidad",
-								"parametro":"Profundidad",
-								"id_tipo_parametro":1,
-								"id_clase_parametro":1,
-								"id_preservacion":1,
-								"id_unidad":1,
-								"id_metodo":1,
-								"tipo_parametro":"Físicoquímico",
-								"clase_parametro":"Campo",
-								"activo":1,
-								"valor":null,
-								"selected":false
-							},
-							{
-								"id_parametro":1,
-								"param":"olor",
-								"parametro":"Olor",
-								"id_tipo_parametro":1,
-								"id_clase_parametro":1,
-								"id_preservacion":1,
-								"id_unidad":1,
-								"id_metodo":1,
-								"tipo_parametro":"Físicoquímico",
-								"clase_parametro":"Campo",
-								"activo":1,
-								"valor":null,
-								"selected":false
-							},
-							{
-								"id_parametro":1,
-								"param":"temp_ambiente",
-								"parametro":"Temperatura ambiente",
-								"id_tipo_parametro":1,
-								"id_clase_parametro":1,
-								"id_preservacion":1,
-								"id_unidad":1,
-								"id_metodo":1,
-								"tipo_parametro":"Físicoquímico",
-								"clase_parametro":"Campo",
-								"activo":1,
-								"valor":null,
-								"selected":false
-							},
-							{
-								"id_parametro":1,
-								"param":"temperatura",
-								"parametro":"Temperatura",
-								"id_tipo_parametro":1,
-								"id_clase_parametro":1,
-								"id_preservacion":1,
-								"id_unidad":1,
-								"id_metodo":1,
-								"tipo_parametro":"Físicoquímico",
-								"clase_parametro":"Campo",
-								"activo":1,
-								"valor":null,
-								"selected":false
-							},
-							{
-								"id_parametro":1,
-								"param":"ph",
-								"parametro":"Ph",
-								"id_tipo_parametro":1,
-								"id_clase_parametro":1,
-								"id_preservacion":1,
-								"id_unidad":1,
-								"id_metodo":1,
-								"tipo_parametro":"Físicoquímico",
-								"clase_parametro":"Campo",
-								"activo":1,
-								"valor":null,
-								"selected":false
-							},
-							{
-								"id_parametro":1,
-								"param":"conductividad",
-								"parametro":"Conductividad",
-								"id_tipo_parametro":1,
-								"id_clase_parametro":1,
-								"id_preservacion":1,
-								"id_unidad":1,
-								"id_metodo":1,
-								"tipo_parametro":"Físicoquímico",
-								"clase_parametro":"Campo",
-								"activo":1,
-								"valor":null,
-								"selected":false
-							},
-							{
-								"id_parametro":1,
-								"param":"oxigeno_disuelto",
-								"parametro":"Oxigeno_disuelto",
-								"id_tipo_parametro":1,
-								"id_clase_parametro":1,
-								"id_preservacion":1,
-								"id_unidad":1,
-								"id_metodo":1,
-								"tipo_parametro":"Físicoquímico",
-								"clase_parametro":"Campo",
-								"activo":1,
-								"valor":null,
-								"selected":false
-							},
-							{
-								"id_parametro":1,
-								"param":"transparencia",
-								"parametro":"Transparencia",
-								"id_tipo_parametro":1,
-								"id_clase_parametro":1,
-								"id_preservacion":1,
-								"id_unidad":1,
-								"id_metodo":1,
-								"tipo_parametro":"Físicoquímico",
-								"clase_parametro":"Campo",
-								"activo":1,
-								"valor":null,
-								"selected":false
-							},
-							{
-								"id_parametro":1,
-								"param":"cloro_residual",
-								"parametro":"Cloro_residual",
-								"id_tipo_parametro":1,
-								"id_clase_parametro":1,
-								"id_preservacion":1,
-								"id_unidad":1,
-								"id_metodo":1,
-								"tipo_parametro":"Físicoquímico",
-								"clase_parametro":"Campo",
-								"activo":1,
-								"valor":null,
-								"selected":false
-							},
-							{
-								"id_parametro":1,
-								"param":"materia_flotante",
-								"parametro":"Materia_flotante",
-								"id_tipo_parametro":1,
-								"id_clase_parametro":1,
-								"id_preservacion":1,
-								"id_unidad":1,
-								"id_metodo":1,
-								"tipo_parametro":"Físicoquímico",
-								"clase_parametro":"Campo",
-								"activo":1,
-								"valor":null,
-								"selected":false
-							}
-						]
-					},
-					"punto":
-					{
-						"id_punto":1,
-						"punto":"Punto muestreo Prueba",
-						"descripcion":"Descripción detallada del Punto de muestreo de Prueba",
-						"id_municipio":14124,
-						"municipio":"Zapotlanejo",
-						"id_localidad":141240001,
-						"localidad":"Zapotlanejo",
-						"lat":23.123456,
-						"lng":-103.654321
-					},
-					"parametros_campo":
+					"motivo_rechaza":"",
+					"activo":1,
+					"muestras":
 					[
-
+						{
+							"id_muestra":1,
+							"numero_oficio":1,
+							"id_ejercicio":2014,
+							"folio":"CEA-1/2014",
+							"muestra":"",
+							"fecha_muestra":"2014-12-10",
+							"hora_muestra":"12:45",
+							"parametros_campo":
+							[
+								{
+									"id_parametro":1,
+									"param":"color",
+									"parametro":"Color",
+									"id_tipo_parametro":1,
+									"id_clase_parametro":1,
+									"id_preservacion":1,
+									"id_unidad":1,
+									"id_metodo":1,
+									"tipo_parametro":"Físicoquímico",
+									"clase_parametro":"Campo",
+									"activo":1,
+									"valor":null,
+									"selected":false
+								},
+								{
+									"id_parametro":1,
+									"param":"olor",
+									"parametro":"Olor",
+									"id_tipo_parametro":1,
+									"id_clase_parametro":1,
+									"id_preservacion":1,
+									"id_unidad":1,
+									"id_metodo":1,
+									"tipo_parametro":"Físicoquímico",
+									"clase_parametro":"Campo",
+									"activo":1,
+									"valor":null,
+									"selected":false
+								},
+								{
+									"id_parametro":1,
+									"param":"gasto",
+									"parametro":"Gasto",
+									"id_tipo_parametro":1,
+									"id_clase_parametro":1,
+									"id_preservacion":1,
+									"id_unidad":1,
+									"id_metodo":1,
+									"tipo_parametro":"Físicoquímico",
+									"clase_parametro":"Campo",
+									"activo":1,
+									"valor":null,
+									"selected":false
+								},
+								{
+									"id_parametro":1,
+									"param":"profundidad",
+									"parametro":"Profundidad",
+									"id_tipo_parametro":1,
+									"id_clase_parametro":1,
+									"id_preservacion":1,
+									"id_unidad":1,
+									"id_metodo":1,
+									"tipo_parametro":"Físicoquímico",
+									"clase_parametro":"Campo",
+									"activo":1,
+									"valor":null,
+									"selected":false
+								},
+								{
+									"id_parametro":1,
+									"param":"olor",
+									"parametro":"Olor",
+									"id_tipo_parametro":1,
+									"id_clase_parametro":1,
+									"id_preservacion":1,
+									"id_unidad":1,
+									"id_metodo":1,
+									"tipo_parametro":"Físicoquímico",
+									"clase_parametro":"Campo",
+									"activo":1,
+									"valor":null,
+									"selected":false
+								},
+								{
+									"id_parametro":1,
+									"param":"temp_ambiente",
+									"parametro":"Temperatura ambiente",
+									"id_tipo_parametro":1,
+									"id_clase_parametro":1,
+									"id_preservacion":1,
+									"id_unidad":1,
+									"id_metodo":1,
+									"tipo_parametro":"Físicoquímico",
+									"clase_parametro":"Campo",
+									"activo":1,
+									"valor":null,
+									"selected":false
+								},
+								{
+									"id_parametro":1,
+									"param":"temperatura",
+									"parametro":"Temperatura",
+									"id_tipo_parametro":1,
+									"id_clase_parametro":1,
+									"id_preservacion":1,
+									"id_unidad":1,
+									"id_metodo":1,
+									"tipo_parametro":"Físicoquímico",
+									"clase_parametro":"Campo",
+									"activo":1,
+									"valor":null,
+									"selected":false
+								},
+								{
+									"id_parametro":1,
+									"param":"ph",
+									"parametro":"Ph",
+									"id_tipo_parametro":1,
+									"id_clase_parametro":1,
+									"id_preservacion":1,
+									"id_unidad":1,
+									"id_metodo":1,
+									"tipo_parametro":"Físicoquímico",
+									"clase_parametro":"Campo",
+									"activo":1,
+									"valor":null,
+									"selected":false
+								},
+								{
+									"id_parametro":1,
+									"param":"conductividad",
+									"parametro":"Conductividad",
+									"id_tipo_parametro":1,
+									"id_clase_parametro":1,
+									"id_preservacion":1,
+									"id_unidad":1,
+									"id_metodo":1,
+									"tipo_parametro":"Físicoquímico",
+									"clase_parametro":"Campo",
+									"activo":1,
+									"valor":null,
+									"selected":false
+								},
+								{
+									"id_parametro":1,
+									"param":"oxigeno_disuelto",
+									"parametro":"Oxigeno_disuelto",
+									"id_tipo_parametro":1,
+									"id_clase_parametro":1,
+									"id_preservacion":1,
+									"id_unidad":1,
+									"id_metodo":1,
+									"tipo_parametro":"Físicoquímico",
+									"clase_parametro":"Campo",
+									"activo":1,
+									"valor":null,
+									"selected":false
+								},
+								{
+									"id_parametro":1,
+									"param":"transparencia",
+									"parametro":"Transparencia",
+									"id_tipo_parametro":1,
+									"id_clase_parametro":1,
+									"id_preservacion":1,
+									"id_unidad":1,
+									"id_metodo":1,
+									"tipo_parametro":"Físicoquímico",
+									"clase_parametro":"Campo",
+									"activo":1,
+									"valor":null,
+									"selected":false
+								},
+								{
+									"id_parametro":1,
+									"param":"cloro_residual",
+									"parametro":"Cloro_residual",
+									"id_tipo_parametro":1,
+									"id_clase_parametro":1,
+									"id_preservacion":1,
+									"id_unidad":1,
+									"id_metodo":1,
+									"tipo_parametro":"Físicoquímico",
+									"clase_parametro":"Campo",
+									"activo":1,
+									"valor":null,
+									"selected":false
+								},
+								{
+									"id_parametro":1,
+									"param":"materia_flotante",
+									"parametro":"Materia_flotante",
+									"id_tipo_parametro":1,
+									"id_clase_parametro":1,
+									"id_preservacion":1,
+									"id_unidad":1,
+									"id_metodo":1,
+									"tipo_parametro":"Físicoquímico",
+									"clase_parametro":"Campo",
+									"activo":1,
+									"valor":null,
+									"selected":false
+								}
+							]
+						}
 					],
+					"muestra":
 					"componentes":
 					{
 						"temp_1":0,
@@ -7450,30 +8607,8 @@ class DALSislab
 						"od_3":0,
 						"od":0
 					},
-					"preservaciones":
-					[
-					],
-					"validaciones":
-					[
-						{
-
-						}
-					],
-					"cobertura_nubes":
-					{
-							"id_cobertura_nubes":1,
-							"cobertura_nubes":"Despejado"
-					},
-					"direccion_viento":
-					{
-						"id_direccion_viento":1,
-						"direccion_viento":"Norte"
-					},
-					"oleaje":
-					{
-						"id_oleaje":1,
-						"oleaje":"Nulo"
-					},
+					"preservaciones":[],
+					"validaciones":[],
 					"calibracion":
 					{
 						"id_calibracion":1,
@@ -7489,9 +8624,6 @@ class DALSislab
 						"numero_oficio":1,
 						"id_ejercicio":"2014",
 						"folio":"CEA-1/2014"
-					},
-					"informe":
-					{
 					}
 				}
 			';
@@ -7511,7 +8643,7 @@ class DALSislab
 					"id_tipo_muestreo":0,
 					"id_matriz":0,
 					"id_metodo":0,
-					"id_cobertura_nubes":0,
+					"id_nubes":0,
 					"id_direccion_viento":0,
 					"id_oleaje":0,
 					"id_calibracion":0,
@@ -7536,7 +8668,7 @@ class DALSislab
 					"validado":0,
 					"firmado":0,
 					"comentarios":"",
-					"cobertura_nubes_otra":"",
+					"nubes_otro":"",
 					"colonia":"",
 					"calle":"",
 					"numero":"",
@@ -18776,25 +19908,25 @@ class DALSislab
 		//$sql = "SELECT
 		//		*
 		//	FROM
-		//		cobertura_nubes";
+		//		nubes";
 		//return \Service\Adapter\PDOAdapter::getInstance()->getAllRows($sql);
 		$result = '
 			[
 				{
-					"id_cobertura_nubes":1,
-					"cobertura_nubes":"Despejado"
+					"id_nubes":1,
+					"nubes":"Despejado"
 				},
 				{
-					"id_cobertura_nubes":2,
-					"cobertura_nubes":"Nublado"
+					"id_nubes":2,
+					"nubes":"Nublado"
 				},
 				{
-					"id_cobertura_nubes":3,
-					"cobertura_nubes":"Lluvia"
+					"id_nubes":3,
+					"nubes":"Lluvia"
 				},
 				{
-					"id_cobertura_nubes":4,
-					"cobertura_nubes":"Otro"
+					"id_nubes":4,
+					"nubes":"Otro"
 				}
 			]
 		';
@@ -21971,5 +23103,43 @@ class DALSislab
 			]
 		';
 		return $result;
+	}
+
+	public function getAnalysisExpirations() {
+		$result = '
+			[
+				{
+					"id_caducidad":1,
+					"caducidad":"Instantáneo",
+					"horas":0,
+					"activo":1
+				},
+				{
+					"id_caducidad":2,
+					"caducidad":"6 horas",
+					"horas":0,
+					"activo":1
+				},
+				{
+					"id_caducidad":3,
+					"caducidad":"24 horas",
+					"horas":0,
+					"activo":1
+				},
+				{
+					"id_caducidad":4,
+					"caducidad":"48 horas",
+					"horas":0,
+					"activo":1
+				},
+				{
+					"id_caducidad":5,
+					"caducidad":"No aplica",
+					"horas":null,
+					"activo":1
+				}
+			]
+		';
+		return result;
 	}
 }

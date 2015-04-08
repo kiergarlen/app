@@ -43,63 +43,11 @@
 </div>
 <form class="form" role="form"
   name="fieldSheetForm"
-  data-ng-submit="fieldSheet.submitFieldSheetForm()"
   novalidate
   >
   <div class="row">
     <div class="col-xs-12">
       <h4>Datos de Referencia</h4>
-      <div class="well well-sm">
-        <ul class="list-inline">
-          <li>
-            Folio:
-            {{fieldSheet.fieldSheet.folio}}
-            /
-            {{fieldSheet.fieldSheet.ejercicio}}</li>
-          <li data-ng-show="fieldSheet.fieldSheet.fecha_captura.length > 0">
-            Fecha captura:
-            {{fieldSheet.fieldSheet.fecha_captura}}</li>
-          <li data-ng-show="fieldSheet.fieldSheet.fecha_valida.length > 0">
-            Fecha validación:
-            {{fieldSheet.fieldSheet.fecha_valida}}</li>
-          <li data-ng-show="fieldSheet.fieldSheet.fecha_acepta.length > 0">
-            Fecha aceptacion cliente:
-            {{fieldSheet.fieldSheet.fecha_acepta}}</li>
-          <li data-ng-show="fieldSheet.fieldSheet.fecha_actualizacion.length > 0">
-            Fecha actualización:
-            {{fieldSheet.fieldSheet.fecha_actualizacion}}</li>
-        </ul>
-        <span class="label label-success"
-          data-ng-show="fieldSheet.fieldSheet.validado > 0">Validado</span>
-      </div>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-xs-12 col-sm-6">
-      <h4>Cliente</h4>
-      <div class="well well-sm">
-        Cliente: {{fieldSheet.fieldSheet.cliente.cliente}}
-        {{fieldSheet.fieldSheet.cliente.area.length > 0 &&
-        ' - ' + fieldSheet.fieldSheet.cliente.area ||
-        ''}}
-        <br>
-        Contacto: {{fieldSheet.fieldSheet.cliente.contacto}}
-      </div>
-    </div>
-    <div class="col-xs-12 col-sm-6">
-      <h4>Orden de muestreo</h4>
-      <div class="well well-sm">
-        Folio:
-        {{fieldSheet.fieldSheet.orden.folio}}
-        /
-        {{fieldSheet.fieldSheet.orden.ejercicio}}
-        <br>Fecha:
-        {{fieldSheet.fieldSheet.orden.fecha_orden}}
-        <br>Responsable muestreo:
-        {{fieldSheet.fieldSheet.orden.responsable_muestreo.nombres}}
-        {{fieldSheet.fieldSheet.orden.responsable_muestreo.ap}}
-        {{fieldSheet.fieldSheet.orden.responsable_muestreo.am}}
-      </div>
     </div>
   </div>
   <div class="row">
@@ -116,15 +64,11 @@
         id="cloudCoverSelect"
         name="cloudCoverSelect"
         required
-        data-ng-model="fieldSheet.fieldSheet.id_cobertura_nubes"
-        data-ng-change="fieldSheet.selectCloudCover()"
+        data-ng-model="fieldSheet.fieldSheet.id_nubes"
         >
-        <option value="">
-          Seleccione una opción
-        </option>
         <option data-ng-repeat="cloudCover in fieldSheet.cloudCovers"
-          value="{{cloudCover.id_cobertura_nubes}}">
-          {{cloudCover.cobertura_nubes}}
+          value="{{cloudCover.id_nubes}}">
+          {{cloudCover.nubes}}
         </option>
       </select>
     </div>
@@ -136,7 +80,7 @@
         id="cloudCoverText"
         name="cloudCoverText"
         placeholder="Cobertura nubes"
-        data-ng-model="fieldSheet.fieldSheet.cobertura_nubes_otro"
+        data-ng-model="fieldSheet.fieldSheet.nubes_otro"
         >
     </div>
   </div>
@@ -150,11 +94,7 @@
         name="windDirectionSelect"
         required
         data-ng-model="fieldSheet.fieldSheet.id_direccion_viento"
-        data-ng-change="fieldSheet.selectWindDirection()"
         >
-        <option value="">
-          Seleccione una opción
-        </option>
         <option data-ng-repeat="windDirection in fieldSheet.windDirections"
           value="{{windDirection.id_direccion_viento}}">
           {{windDirection.direccion_viento}}
@@ -172,11 +112,7 @@
         name="waveIntensitySelect"
         required
         data-ng-model="fieldSheet.fieldSheet.id_oleaje"
-        data-ng-change="fieldSheet.selectWaveIntensity()"
         >
-        <option value="">
-          Seleccione una opción
-        </option>
         <option data-ng-repeat="waveIntensity in fieldSheet.waveIntensities"
           value="{{waveIntensity.id_oleaje}}">
           {{waveIntensity.oleaje}}
@@ -199,11 +135,7 @@
         name="samplingNormSelect"
         required
         data-ng-model="fieldSheet.fieldSheet.id_metodo_muestreo"
-        data-ng-change="fieldSheet.selectSamplingNorm()"
         >
-        <option value="">
-          Seleccione una opción
-        </option>
         <option data-ng-repeat="samplingNorm in fieldSheet.samplingNorms"
           value="{{samplingNorm.id_metodo_muestreo}}">
           {{samplingNorm.metodo_muestreo}}
@@ -217,48 +149,82 @@
     </div>
   </div>
   <div class="row">
-    <div class="col-xs-12 col-sm-6 col-md-3">
-      <label for="fieldSheetStartDate">Fecha Inicio</label>
+    <div class="col-xs-6 col-sm-4">
+      <label for="startDate">
+        <i class="glyphicon glyphicon-calendar"></i>
+        Fecha inicio
+      </label>
       <input type="text"
         class="form-control"
+        id="startDate"
+        name="startDate"
         placeholder="aaaa-mm-dd"
-        id="fieldSheetStartDate"
-        name="fieldSheetStartDate"
         required
-        data-ng-model="fieldSheet.fieldSheet.fecha_inicio"
+        data-ng-model="row.fecha_inicio"
+        data-date-format="yyyy-MM-dd"
+        data-autoclose="1"
+        date-use-native="true"
+        data-bs-datepicker
         >
     </div>
-    <div class="col-xs-12 col-sm-6 col-md-3">
-      <label for="fieldSheetStartTime">Hora Inicio</label>
+    <div class="col-xs-6 col-sm-2">
+      <label for="startTime">
+        <i class="glyphicon glyphicon-time"></i>
+        Hora inicio
+      </label>
       <input type="text"
         class="form-control"
-        placeholder="HH:mm:ss"
-        id="fieldSheetStartTime"
-        name="fieldSheetStartTime"
+        id="startTime"
+        name="startTime"
+        placeholder="HH:mm"
         required
-        data-ng-model="fieldSheet.fieldSheet.hora_inicio"
+        data-ng-model="row.fecha_inicio"
+        data-time-format="HH:mm"
+        data-length="1"
+        data-hour-step="1"
+        data-minute-step="1"
+        data-arrow-behavior="picker"
+        data-auto-close="1"
+        data-bs-timepicker
         >
     </div>
-    <div class="col-xs-12 col-sm-6 col-md-3">
-      <label for="fieldSheetEndDate">Fecha Término</label>
+    <div class="col-xs-6 col-sm-4">
+      <label for="endDate">
+        <i class="glyphicon glyphicon-calendar"></i>
+        Fecha fin
+      </label>
       <input type="text"
         class="form-control"
+        id="endDate"
+        name="endDate"
         placeholder="aaaa-mm-dd"
-        id="fieldSheetEndDate"
-        name="fieldSheetEndDate"
         required
-        data-ng-model="plan_fecha_fin"
+        data-ng-model="row.fecha_fin"
+        data-date-format="yyyy-MM-dd"
+        data-autoclose="1"
+        date-use-native="true"
+        data-bs-datepicker
         >
     </div>
-    <div class="col-xs-12 col-sm-6 col-md-3">
-      <label for="fieldSheetEndTime">Hora Término</label>
+    <div class="col-xs-6 col-sm-2">
+      <label for="endTime">
+        <i class="glyphicon glyphicon-time"></i>
+        Hora fin
+      </label>
       <input type="text"
         class="form-control"
-        placeholder="HH:mm:ss"
-        id="fieldSheetEndTime"
-        name="fieldSheetEndTime"
+        id="endTime"
+        name="endTime"
+        placeholder="HH:mm"
         required
-        data-ng-model="fieldSheet.fieldSheet.hora_fin"
+        data-ng-model="row.fecha_fin"
+        data-time-format="HH:mm"
+        data-length="1"
+        data-hour-step="1"
+        data-minute-step="1"
+        data-arrow-behavior="picker"
+        data-auto-close="1"
+        data-bs-timepicker
         >
     </div>
   </div>
@@ -271,16 +237,13 @@
         id="pointSelect"
         name="pointSelect"
         required
-        data-ng-model="fieldSheeet.fieldSheet.id_punto_muestreo"
+        data-ng-model="fieldSheeet.fieldSheet.id_punto"
         data-ng-change="fieldSheet.selectPoint()"
         >
-        <option value="">
-          Seleccione una opción
-        </option>
         <option
           data-ng-repeat="point in fieldSheet.points"
-          value="{{point.id_punto_muestreo}}">
-          {{point.punto_muestreo}}
+          value="{{point.id_punto}}">
+          {{point.punto}}
         </option>
       </select>
     </div>
@@ -288,13 +251,13 @@
   <div class="row">
     <div class="col-xs-12">
       <div class="well well-sm">
-        Punto: {{fieldSheet.fieldSheet.punto_muestreo.punto_muestreo}}
+        Punto: {{fieldSheet.fieldSheet.punto.punto}}
         <br>
-        Localidad: {{fieldSheet.fieldSheet.punto_muestreo.localidad}}
-        Municipio: {{fieldSheet.fieldSheet.punto_muestreo.municipio}}
+        Localidad: {{fieldSheet.fieldSheet.punto.localidad}}
+        Municipio: {{fieldSheet.fieldSheet.punto.municipio}}
         <br>
-        Latitud: {{fieldSheet.fieldSheet.punto_muestreo.lat}}
-        Longitud: {{fieldSheet.fieldSheet.punto_muestreo.lng}}
+        Latitud: {{fieldSheet.fieldSheet.punto.lat}}
+        Longitud: {{fieldSheet.fieldSheet.punto.lng}}
       </div>
     </div>
   </div>
@@ -636,7 +599,7 @@
     data-ng-click="fieldSheet.validateForm()"
     >
     Guardar
-    </button>
+  </button>
 </form>
 
           </div>

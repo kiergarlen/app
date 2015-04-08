@@ -10,6 +10,37 @@
     <h2 class="page-header">Hoja de campo</h2>
   </div>
 </div>
+<div class="row">
+  <div class="col-xs-12">
+    <div class="alert alert-danger item-z1" role="alert"
+      data-ng-show="plan.plan.id_status == 3">
+      <i class="glyphicon glyphicon-warning-sign"></i>
+      Motivo rechazo:
+      <strong>
+        {{plan.plan.motivo_rechaza}}
+        <span
+          data-ng-show="plan.plan.fecha_rechaza.length > 0">
+          ({{plan.plan.fecha_rechaza || date}})
+        </span>
+      </strong>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-xs-12">
+    <div class="alert alert-warning alert-dismissible item-z1" role="alert"
+      data-ng-show="plan.message.length > 0">
+      <button type="button" class="close" aria-label="Cerrar"
+        data-ng-click="plan.message = ''">
+        <span aria-hidden="true">&times;</span>
+      </button>
+      <i class="glyphicon glyphicon-warning-sign"></i>
+      <strong>
+        {{plan.message}}
+      </strong>
+    </div>
+  </div>
+</div>
 <form class="form" role="form"
   name="fieldSheetForm"
   data-ng-submit="fieldSheet.submitFieldSheetForm()"
@@ -590,8 +621,8 @@
     </div>
   </div>
   <div class="row">
-    <div class="col-xs-12 col-sm-8 col-lg-8 well well-sm item-z1">
-      <textarea rows="3" class="form-control"
+    <div class="col-xs-12 col-sm-8">
+      <textarea rows="3" class="form-control well well-sm item-z1"
         id="fieldSheetCommentsText"
         name="fieldSheetCommentsText"
         data-ng-model="fieldSheet.fieldSheet.comentarios"
@@ -602,9 +633,10 @@
   <br>
   <button type="submit" class="btn btn-primary"
     value="Guardar" title="Guardar"
-    data-ng-click="fieldSheet.validateFieldSheetForm()"
+    data-ng-click="fieldSheet.validateForm()"
     >
-    Guardar</button>
+    Guardar
+    </button>
 </form>
 
           </div>

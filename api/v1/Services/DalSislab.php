@@ -7112,11 +7112,12 @@ class DALSislab
 			$result = '
 				{
 					"id_hoja":1,
-					"id_plan":1,
 					"id_estudio":1,
 					"id_cliente":1,
 					"id_solicitud":1,
 					"id_orden":1,
+					"id_plan":1,
+
 					"id_matriz":1,
 					"id_tipo_muestreo":1,
 					"id_norma":1,
@@ -7132,12 +7133,12 @@ class DALSislab
 					"host_actualiza":"localhost",
 
 
+					"id_cobertura_nubes":1,
 
 					"id_punto":1,
 					"id_metodo_muestreo":2,
 					"id_responsable_muestreo":1,
 					"id_metodo":156,
-					"id_cobertura_nubes":1,
 					"id_direccion_viento":1,
 					"id_oleaje":1,
 					"id_calibracion":1,
@@ -7162,7 +7163,7 @@ class DALSislab
 					"validado":0,
 					"firmado":0,
 					"comentarios":"",
-					"cobertura_nubes_otra":"",
+					"cobertura_nubes_otro":"",
 					"colonia":"Col. Colomos Providencia",
 					"calle":"Av. Brasilia",
 					"numero":"2970",

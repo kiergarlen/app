@@ -538,16 +538,16 @@
       ]
     );
 
-  // TasksListService.js
+  // TaskService.js
   /**
-   * @name TasksListService
+   * @name TaskService
    * @constructor
    * @desc Proveedor de datos, Tareas
    * @param {Object} $resource- Acceso a recursos HTTP, AngularJS
    * @param {Object} TokenService - Proveedor de métodos para token
    * @return {Object} $resource - Acceso a recursos HTTP
    */
-  function TasksListService($resource, TokenService) {
+  function TaskService($resource, TokenService) {
     return $resource(API_BASE_URL + 'tasks', {}, {
       get: {
         method: 'GET',
@@ -561,10 +561,10 @@
   }
   angular
     .module('sislabApp')
-    .factory('TasksListService',
+    .factory('TaskService',
       [
         '$resource', 'TokenService',
-        TasksListService
+        TaskService
       ]
     );
 

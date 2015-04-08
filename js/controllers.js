@@ -65,9 +65,9 @@
    * @desc Controla la vista para Tareas
    * @this {Object} $scope - Contenedor para el modelo [AngularJS]
    * @param {Object} TokenService - Proveedor para manejo del token
-   * @param {Object} TasksListService - Proveedor de datos, Tareas
+   * @param {Object} TaskService - Proveedor de datos, Tareas
    */
-  function TasksListController(TokenService, TasksListService) {
+  function TasksListController(TokenService, TaskService) {
     var vm = this,
     userData;
     vm.userName = '';
@@ -76,14 +76,14 @@
     {
       userData = TokenService.getUserFromToken();
       vm.userName = userData.name;
-      vm.tasks = TasksListService.query(userData.id);
+      vm.tasks = TaskService.get(userData.id);
     }
   }
   angular
     .module('sislabApp')
     .controller('TasksListController',
       [
-        'TokenService', 'TasksListService',
+        'TokenService', 'TaskService',
         TasksListController
       ]
     );
@@ -384,7 +384,6 @@
     vm.quote = QuoteService.query({quoteId: $routeParams.quoteId});
     vm.user = TokenService.getUserFromToken();
     vm.parameters = ParameterService.get();
-    vm.allParametersSelected = false;
     vm.totalCost = 0;
     vm.message = '';
     vm.isDataSubmitted = false;
@@ -432,15 +431,6 @@
       }
     }
 
-    function selectAllParameters() {
-      var i, l, j, m;
-      l = vm.parameters.length;
-      vm.quote.allParametersSelected = !vm.quote.allParametersSelected;
-      for(i = 0; i < l; i += 1) {
-        vm.parameters[i].selected = vm.quote.allParametersSelected;
-      }
-    }
-
     function approveItem() {
       ValidationService.approveItem(vm.quote, vm.user);
     }
@@ -482,7 +472,7 @@
             .saveData(
               QuoteService,
               vm.quote,
-              'muestreo/solicitudes',
+              'muestreo/solicitud',
               'id_solicitud'
             );
         }
@@ -494,7 +484,7 @@
               .updateData(
                 QuoteService,
                 vm.quote,
-                'muestreo/solicitudes',
+                'muestreo/solicitud',
                 'id_solicitud'
               );
           }
@@ -730,3 +720,509 @@
         PlansListController
       ]
     );
+
+  // PlanController.js
+  /**
+   * @name PlanController
+   * @constructor
+   * @desc Controla la vista para capturar un Plan de muestreo
+   * @this {Object} $scope - Contenedor para el modelo [AngularJS]
+   * @param {Object} $routeParams - Proveedor de parámetros de ruta [AngularJS]
+   * @param {Object} TokenService - Proveedor para manejo del token
+   * @param {Object} ArrayUtilsService - Proveedor para manejo de arreglos
+   * @param {Object} PlanObjectivesService - Proveedor de datos, Objetivos Plan de muestreo
+   * @param {Object} PointsByPackageService - Proveedor de datos, Puntos de muestreo por paquete
+   * @param {Object} DistrictService - Proveedor de datos, Municipios
+   * @param {Object} CityService - Proveedor de datos, Localidades
+   * @param {Object} SamplingSupervisorService - Proveedor de datos, Supervisores muestreo
+   * @param {Object} SamplingEmployeeService - Proveedor de datos, Empleados muestreo
+   * @param {Object} PreservationService - Proveedor de datos, Preservaciones
+   * @param {Object} ContainerService - Proveedor de datos, Recipientes
+   * @param {Object} ReactiveService - Proveedor de datos, Reactivos
+   * @param {Object} MaterialService - Proveedor de datos, Material
+   * @param {Object} CoolerService - Proveedor de datos, Hieleras
+   * @param {Object} SamplingInstrumentService - Proveedor de datos, Equipos de muestreo
+   * @param {Object} PlanService - Proveedor de datos, Plan de muestreo
+   */
+  function PlanController($scope, $routeParams, TokenService, ArrayUtilsService,
+    PlanObjectivesService, PointsByPackageService, DistrictService,
+    CityService, SamplingSupervisorService, SamplingEmployeeService,
+    PreservationService, ContainerService, ReactiveService,
+    MaterialService, CoolerService, SamplingInstrumentService,
+    PlanService) {
+    var vm = this;
+    vm.plan = PlanService.query({planId: $routeParams.planId});
+    vm.user = TokenService.getUserFromToken();
+    vm.objectives = PlanObjectivesService.get();
+    vm.instruments = SamplingInstrumentService.get();
+    vm.cities = [];
+    vm.districts = [];
+    vm.samplingSupervisors = SamplingSupervisorService.get();
+    vm.samplingEmployees = SamplingEmployeeService.get();
+    vm.preservations = PreservationService.get();
+    vm.containers = ContainerService.get();
+    vm.reactives = ReactiveService.get();
+    vm.materials = MaterialService.get();
+    vm.coolers = CoolerService.get();
+    vm.isInstrumentListLoaded = false;
+    vm.isContainerListLoaded = false;
+    vm.isReactiveListLoaded = false;
+    vm.isMaterialListLoaded = false;
+    vm.isCoolerListLoaded = false;
+    vm.isDataSubmitted = false;
+    vm.selectDistrict = selectDistrict;
+    vm.selectInstruments = selectInstruments;
+    vm.selectContainers = selectContainers;
+    vm.selectReactives = selectReactives;
+    vm.selectMaterials = selectMaterials;
+    vm.selectCoolers = selectCoolers;
+    vm.isInstrumentListValid = isInstrumentListValid;
+    vm.isContainerListValid = isContainerListValid;
+    vm.isReactiveListValid = isReactiveListValid;
+    vm.isMaterialListValid = isMaterialListValid;
+    vm.isCoolerListValid = isCoolerListValid;
+    vm.approveItem = approveItem;
+    vm.rejectItem = rejectItem;
+    vm.isFormValid = isFormValid;
+    vm.submitForm = submitForm;
+
+    DistrictService.get()
+      .$promise.then(function success(response) {
+        vm.districts = response;
+        if (vm.plan.id_municipio && vm.plan.id_municipio > 0)
+        {
+          ArrayUtilsService.selectItemFromCollection(
+            vm.districts,
+            'id_municipio',
+            parseInt(vm.plan.id_municipio)
+          );
+        }
+        CityService
+          .query({districtId: vm.plan.id_municipio})
+          .$promise
+          .then(function success(response) {
+            vm.cities = response;
+            if (vm.plan.id_localidad && vm.plan.id_localidad > 0)
+            {
+              ArrayUtilsService.selectItemFromCollection(
+                vm.cities,
+                'id_localidad',
+                parseInt(vm.plan.id_localidad)
+              );
+            }
+          });
+      });
+
+    function selectDistrict() {
+      vm.cities = CityService.query({districtId: parseInt(vm.plan.id_municipio)});
+    }
+
+    function selectInstruments() {
+      var items = [];
+      if (vm.instruments.length > 0 && vm.plan.equipos)
+      {
+        if (vm.plan.equipos.length > 0 && !vm.isInstrumentListLoaded)
+        {
+          ArrayUtilsService.seItemsFromReference(
+            vm.instruments,
+            vm.plan.equipos,
+            'id_equipo',
+            [
+              'selected'
+            ]
+          );
+          vm.isInstrumentListLoaded = true;
+        }
+        else
+        {
+          vm.plan.equipos = [];
+          vm.plan.equipos = ArrayUtilsService.selectItemsFromCollection(
+            vm.instruments,
+            'selected',
+            true
+          ).slice();
+        }
+      }
+    }
+
+    function selectContainers() {
+      var items = [];
+      if (vm.containers.length > 0 && vm.plan.recipientes)
+      {
+        if (vm.plan.recipientes.length > 0 && !vm.isContainerListLoaded)
+        {
+          ArrayUtilsService.seItemsFromReference(
+            vm.containers,
+            vm.plan.recipientes,
+            'id_clase_recipiente',
+            [
+              'selected',
+              'id_plan',
+              'cantidad'
+            ]
+          );
+          vm.isContainerListLoaded = true;
+        }
+        else
+        {
+          vm.plan.recipientes = [];
+          vm.plan.recipientes = ArrayUtilsService.selectItemsFromCollection(
+            vm.containers,
+            'selected',
+            true
+          ).slice();
+        }
+      }
+    }
+
+    function selectReactives() {
+      var items = [];
+      if (vm.reactives.length > 0 && vm.plan.reactivos)
+      {
+        if (vm.plan.reactivos.length > 0 && !vm.isReactiveListLoaded)
+        {
+          ArrayUtilsService.seItemsFromReference(
+            vm.reactives,
+            vm.plan.reactivos,
+            'id_reactivo',
+            [
+              'selected',
+              'id_plan',
+              'lote',
+              'cantidad'
+            ]
+          );
+          vm.isReactiveListLoaded = true;
+        }
+        else
+        {
+          vm.plan.reactivos = [];
+          vm.plan.reactivos = ArrayUtilsService.selectItemsFromCollection(
+            vm.reactives,
+            'selected',
+            true
+          ).slice();
+        }
+      }
+    }
+
+    function selectMaterials() {
+      var items = [];
+      if (vm.materials.length > 0 && vm.plan.materiales)
+      {
+        if (vm.plan.materiales.length > 0 && !vm.isMaterialListLoaded)
+        {
+          ArrayUtilsService.seItemsFromReference(
+            vm.materials,
+            vm.plan.materiales,
+            'id_material',
+            [
+              'selected',
+              'id_plan'
+            ]
+          );
+          vm.isMaterialListLoaded = true;
+        }
+        else
+        {
+          vm.plan.materiales = [];
+          vm.plan.materiales = ArrayUtilsService.selectItemsFromCollection(
+            vm.materials,
+            'selected',
+            true
+          ).slice();
+        }
+      }
+    }
+
+    function selectCoolers() {
+      var items = [];
+      if (vm.coolers.length > 0 && vm.plan.hieleras)
+      {
+        if (vm.plan.hieleras.length > 0 && !vm.isCoolerListLoaded)
+        {
+          ArrayUtilsService.seItemsFromReference(
+            vm.coolers,
+            vm.plan.hieleras,
+            'id_hielera',
+            [
+              'selected',
+              'id_plan'
+            ]
+          );
+          vm.isCoolerListLoaded = true;
+        }
+        else
+        {
+          vm.plan.hieleras = [];
+          vm.plan.hieleras = ArrayUtilsService.selectItemsFromCollection(
+            vm.coolers,
+            'selected',
+            true
+          ).slice();
+        }
+      }
+    }
+
+    function approveItem() {
+      ValidationService.approveItem(vm.plan, vm.user);
+    }
+
+    function rejectItem() {
+      ValidationService.rejectItem(vm.plan, vm.user);
+    }
+
+    function isInstrumentListValid() {
+      if (vm.plan.id_responsable_calibracion < 1)
+      {
+        vm.message += ' Seleccione una Responsable de calibración ';
+        return false;
+      }
+      if (!DateUtilsService.isValidDate(new Date(vm.plan.fecha_calibracion)))
+      {
+        vm.message += ' Ingrese una fecha válida de calibración ';
+        return false;
+      }
+      if (vm.plan.equipos.length < 1)
+      {
+        vm.message += ' Seleccione al menos un equipo ';
+        return false;
+      }
+      return true;
+    }
+
+    function isContainerListValid() {
+      var i = 0,
+      l = 0,
+      containers = [];
+      if (vm.plan.id_responsable_recipientes < 1)
+      {
+        vm.message += ' Seleccione una Responsable de preparación de recipientes ';
+        return false;
+      }
+      if (vm.plan.recipientes && vm.plan.recipientes.length > 0)
+      {
+        containers = vm.plan.recipientes;
+        l = containers.length;
+        for (i = 0; i < l; i += 1) {
+          if (isNaN(containers[i].cantidad) || containers[i].cantidad < 1)
+          {
+            vm.message += ' Ingrese cantidad de recipientes, para la preservación ';
+            vm.message += '(Ver fila ' + (i + 1) + ')';
+            return false;
+          }
+        }
+      }
+      else
+      {
+        vm.message += ' Seleccione un recipiente ';
+        return false;
+      }
+      return true;
+    }
+
+    function isReactiveListValid() {
+      var i = 0,
+      l = 0,
+      reactives = [];
+      if (vm.plan.id_responsable_reactivos < 1)
+      {
+        vm.message += ' Seleccione una Responsable de reactivos ';
+        return false;
+      }
+      if (vm.plan.reactivos && vm.plan.reactivos.length > 0)
+      {
+        reactives = vm.plan.reactivos;
+        l = reactives.length;
+        for (i = 0; i < l; i += 1) {
+          if (isNaN(reactives[i].cantidad) || reactives[i].cantidad < 1)
+          {
+            vm.message += ' Ingrese cantidad, para el reactivo ';
+            vm.message += '(Ver fila ' + (i + 1) + ')';
+            return false;
+          }
+          if (isNaN(reactives[i].lote) || reactives[i].lote < 1)
+          {
+            vm.message += ' Ingrese lote, para el reactivo ';
+            vm.message += '(Ver fila ' + (i + 1) + ')';
+            return false;
+          }
+        }
+      }
+      else
+      {
+        vm.message += ' Seleccione un recipiente ';
+        return false;
+      }
+      return true;
+    }
+
+    function isMaterialListValid() {
+      var i = 0,
+      l = 0,
+      materials = [];
+      if (vm.plan.id_responsable_material < 1)
+      {
+        vm.message += ' Seleccione una Responsable de preparación de material ';
+        return false;
+      }
+      if (vm.plan.materiales.length < 1)
+      {
+        vm.message += ' Seleccione los materiales y equipos ';
+        return false;
+      }
+      return true;
+    }
+
+    function isCoolerListValid() {
+      var i = 0,
+      l = 0,
+      coolers = [];
+      if (vm.plan.id_responsable_hieleras < 1)
+      {
+        vm.message += ' Seleccione una Responsable de hieleras ';
+        return false;
+      }
+      if (vm.plan.hieleras.length < 1)
+      {
+        vm.message += ' Seleccione hieleras ';
+        return false;
+      }
+      return true;
+    }
+
+    function isFormValid() {
+      vm.message = '';
+      if (vm.plan.id_objetivo_plan < 1)
+      {
+        vm.message += ' Seleccione un objetivo ';
+        return false;
+      }
+      if (vm.plan.id_objetivo_plan == 5 && vm.plan.objetivo_otro.length < 1)
+      {
+        vm.message += ' Si selecciona otro objetivo debe ingresarlo ';
+        return false;
+      }
+      if (vm.plan.calle.length < 1)
+      {
+        vm.message += ' Ingrese una calle o ubicación ';
+        return false;
+      }
+      if (vm.plan.id_municipio < 1)
+      {
+        vm.message += ' Seleccione un municipio ';
+        return false;
+      }
+      if (vm.plan.id_localidad < 1)
+      {
+        vm.message += ' Seleccione una localidad ';
+        return false;
+      }
+      if (vm.plan.solicitud.id_tipo_muestreo > 1 && isNaN(vm.plab.frecuencia_muestreo))
+      {
+        vm.message += ' Seleccione una frecuencia de muestreo ';
+        return false;
+      }
+      if (vm.plan.id_supervisor_entrega < 1)
+      {
+        vm.message += ' Seleccione un Responsable de muestreo ';
+        return false;
+      }
+      if (vm.plan.id_ayudante_entrega < 1)
+      {
+        vm.message += ' Seleccione una Acompañante de muestreo ';
+        return false;
+      }
+      if (vm.plan.id_supervisor_recolecion < 1)
+      {
+        vm.message += ' Seleccione un Responsable de recolección ';
+        return false;
+      }
+      if (vm.plan.id_ayudante_recolecion < 1)
+      {
+        vm.message += ' Seleccione una Acompañante de recolección ';
+        return false;
+      }
+      if (vm.plan.id_supervisor_registro < 1)
+      {
+        vm.message += ' Seleccione un Responsable de registro de resultados ';
+        return false;
+      }
+      if (vm.plan.id_ayudante_registro < 1)
+      {
+        vm.message += ' Seleccione una Acompañante de registro de resultados ';
+        return false;
+      }
+      if (!isInstrumentListValid)
+      {
+        return false;
+      }
+      if (!isContainerListValid)
+      {
+        return false;
+      }
+      if (!isReactiveListValid)
+      {
+        return false;
+      }
+      if (!isCoolerListValid)
+      {
+        return false;
+      }
+      if (vm.user.level < 3)
+      {
+        if (vm.plan.id_status == 3 && vm.plan.motivo_rechaza.length < 1)
+        {
+          vm.message += ' Ingrese el motivo de rechazo del Informe ';
+          return false;
+        }
+      }
+      return true;
+    }
+
+    function submitForm() {
+      if (isFormValid() && !vm.isDataSubmitted)
+      {
+        console.log(vm.study);
+        vm.isDataSubmitted = true;
+        if (vm.plan.id_estudio > 0)
+        {
+          RestUtilsService
+            .saveData(
+              PlanService,
+              vm.plan,
+              'muestreo/plan',
+              'id_plan'
+            );
+        }
+        else
+        {
+          if (vm.user.level < 3 || vm.plan.plan.id_status < 2)
+          {
+            RestUtilsService
+              .updateData(
+                PlanService,
+                vm.plan,
+                'muestreo/plan',
+                'id_plan'
+              );
+          }
+        }
+      }
+    }
+  }
+  angular
+    .module('sislabApp')
+    .controller('PlanController',
+      [
+        '$scope',
+        '$routeParams', 'TokenService', 'ArrayUtilsService',
+        'PlanObjectivesService', 'PointsByPackageService', 'DistrictService',
+        'CityService', 'SamplingSupervisorService', 'SamplingEmployeeService',
+        'PreservationService', 'ContainerService', 'ReactiveService',
+        'MaterialService', 'CoolerService', 'SamplingInstrumentService',
+        'PlanService',
+        PlanController
+      ]
+    );
+

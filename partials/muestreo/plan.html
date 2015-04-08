@@ -187,7 +187,9 @@
         data-ng-change="plan.selectDistrict()"
         >
         <option data-ng-repeat="district in plan.districts"
-          value="{{district.id_municipio}}">
+          value="{{district.id_municipio}}"
+          data-ng-selected="district.id_municipio == plan.plan.id_municipio"
+          >
          {{district.municipio}}
         </option>
       </select>
@@ -307,7 +309,6 @@
       <select class="form-control"
         id="samplingFrequency"
         name="samplingFrequency"
-        data-ng-disabled="point.id_tipo_muestreo < 2"
         data-ng-model="plan.plan.frecuencia_muestreo"
         >
         <option value="2">

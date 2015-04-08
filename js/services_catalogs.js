@@ -13,7 +13,7 @@
       query: {
         method: 'GET',
         params: {clientId: 'id_cliente'},
-        isArray: true,
+        isArray: false,
         headers: {
           'Auth-Token': TokenService.getToken()
         }
@@ -21,7 +21,7 @@
       get: {
         method: 'GET',
         params: {},
-        isArray: false,
+        isArray: true,
         headers: {
           'Auth-Token': TokenService.getToken()
         }

@@ -80,13 +80,13 @@
       }).
       when('/recepcion/hoja', {
         templateUrl: 'partials/recepcion/hojas.html',
-        controller: 'FieldSheetsListController',
-        controllerAs: 'fieldSheets'
+        controller: 'SheetsListController',
+        controllerAs: 'sheets'
       }).
       when('/recepcion/hoja/:sheetId', {
         templateUrl: 'partials/recepcion/hoja.html',
-        controller: 'FieldSheetController',
-        controllerAs: 'fieldSheet'
+        controller: 'SheetController',
+        controllerAs: 'sheet'
       }).
       when('/recepcion/recepcion', {
         templateUrl: 'partials/recepcion/recepciones.html',

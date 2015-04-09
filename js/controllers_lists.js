@@ -1,20 +1,20 @@
 
-  //FieldSheetsListController.js
+  //SheetsListController.js
   /**
-   * @name FieldSheetsListController
+   * @name SheetsListController
    * @constructor
    * @desc Controla la vista para el listado de Hojas de campo
    * @this {Object} $scope - Contenedor para el modelo [AngularJS]
    * @param {Object} $location - Manejo de URL [AngularJS]
-   * @param {Object} FieldSheetService - Proveedor de datos, Hojas de campo
+   * @param {Object} SheetService - Proveedor de datos, Hojas de campo
    */
-  function FieldSheetsListController($location, FieldSheetService) {
+  function SheetsListController($location, SheetService) {
     var vm = this;
-    vm.fieldSheets = FieldSheetService.get();
-    vm.addFieldSheet = addFieldSheet;
+    vm.sheets = SheetService.get();
+    vm.addSheet = addSheet;
     vm.selectRow = selectRow;
 
-    function addFieldSheet() {
+    function addSheet() {
       $location.path('/recepcion/hoja/0');
     }
 
@@ -25,10 +25,10 @@
   }
   angular
     .module('sislabApp')
-    .controller('FieldSheetsListController',
+    .controller('SheetsListController',
       [
-        '$location', 'FieldSheetService',
-        FieldSheetsListController
+        '$location', 'SheetService',
+        SheetsListController
       ]
     );
 

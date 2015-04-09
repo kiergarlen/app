@@ -785,16 +785,16 @@
       ]
     );
 
-  // FieldSheetService.js
+  // SheetService.js
   /**
-   * @name FieldSheetService
+   * @name SheetService
    * @constructor
    * @desc  Proveedor de datos, Hojas de campo
    * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @param {Object} TokenService - Proveedor de métodos para token
    * @return {Object} $resource - Acceso a recursos HTTP
    */
-  function FieldSheetService($resource, TokenService) {
+  function SheetService($resource, TokenService) {
     return $resource(API_BASE_URL + 'sheets/:sheetId', {}, {
       query: {
         method: 'GET',
@@ -832,10 +832,10 @@
   }
   angular
     .module('sislabApp')
-    .factory('FieldSheetService',
+    .factory('SheetService',
       [
         '$resource', 'TokenService',
-        FieldSheetService
+        SheetService
       ]
     );
 

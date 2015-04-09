@@ -67,7 +67,7 @@
       query: {
         method: 'GET',
         params: {pointId: 'id_punto'},
-        isArray: true,
+        isArray: false,
         headers: {
           'Auth-Token': TokenService.getToken()
         }
@@ -75,7 +75,7 @@
       get: {
         method: 'GET',
         params: {},
-        isArray: false,
+        isArray: true,
         headers: {
           'Auth-Token': TokenService.getToken()
         }

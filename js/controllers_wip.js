@@ -1,6 +1,6 @@
-  // FieldSheetController.js
+  // SheetController.js
   /**
-   * @name FieldSheetController
+   * @name SheetController
    * @constructor
    * @desc Controla la vista para capturar la hoja de campo
    * @this {Object} $scope - Contenedor para el modelo [AngularJS]
@@ -14,22 +14,28 @@
    * @param {Object} PointService - Proveedor de datos, Puntos de muestreo
    * @param {Object} FieldParameterService - Proveedor de datos, Parámetros campo
    * @param {Object} PreservationService - Proveedor de datos, Preservaciones
-   * @param {Object} FieldSheetService - Proveedor de datos, Hojas de campo
+   * @param {Object} SheetService - Proveedor de datos, Hojas de campo
    */
-  function FieldSheetController($routeParams, TokenService, ArrayUtilsService,
+  function SheetController($routeParams, TokenService, ArrayUtilsService,
     CloudService, WindService, WaveService,
     SamplingNormService, PointService, FieldParameterService,
-    PreservationService, FieldSheetService) {
+    PreservationService, SheetService) {
     var vm = this;
-    vm.fieldSheet = FieldSheetService.query({sheetId: $routeParams.sheetId});
     vm.user = TokenService.getUserFromToken();
     vm.cloudCovers = CloudService.get();
     vm.windDirections = WindService.get();
     vm.waveIntensities = WaveService.get();
     vm.samplingNorms = SamplingNormService.get();
-    vm.points = PointService.get();
+    //vm.points = PointService.get();
     vm.fieldParameters = FieldParameterService.get();
     vm.preservations = PreservationService.get();
+    SheetService
+      .query({sheetId: $routeParams.sheetId})
+      .$promise
+      .then(function success(response) {
+        vm.sheet = response;
+        vm.points = vm.sheet.puntos;
+      });
 
     vm.temp1 = 0;
     vm.temp2 = 0;
@@ -139,13 +145,13 @@
   }
   angular
     .module('sislabApp')
-    .controller('FieldSheetController',
+    .controller('SheetController',
       [
         '$routeParams', 'TokenService', 'ArrayUtilsService',
         'CloudService', 'WindService', 'WaveService',
         'SamplingNormService', 'PointService', 'FieldParameterService',
-        'PreservationService', 'FieldSheetService',
-        FieldSheetController
+        'PreservationService', 'SheetService',
+        SheetController
       ]
     );
 

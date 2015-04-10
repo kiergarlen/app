@@ -161,8 +161,9 @@
         name="startDate"
         placeholder="aaaa-mm-dd"
         required
-        data-ng-model="row.fecha_inicio"
+        data-ng-model="sheet.sheet.fecha_inicio"
         data-date-format="yyyy-MM-dd"
+        data-date-type="date"
         data-autoclose="1"
         date-use-native="true"
         data-bs-datepicker
@@ -179,8 +180,9 @@
         name="startTime"
         placeholder="HH:mm"
         required
-        data-ng-model="row.fecha_inicio"
+        data-ng-model="sheet.sheet.fecha_inicio"
         data-time-format="HH:mm"
+        data-date-type="date"
         data-length="1"
         data-hour-step="1"
         data-minute-step="1"
@@ -200,8 +202,9 @@
         name="endDate"
         placeholder="aaaa-mm-dd"
         required
-        data-ng-model="row.fecha_fin"
+        data-ng-model="sheet.sheet.fecha_fin"
         data-date-format="yyyy-MM-dd"
+        data-date-type="date"
         data-autoclose="1"
         date-use-native="true"
         data-bs-datepicker
@@ -218,8 +221,9 @@
         name="endTime"
         placeholder="HH:mm"
         required
-        data-ng-model="row.fecha_fin"
+        data-ng-model="sheet.sheet.fecha_fin"
         data-time-format="HH:mm"
+        data-date-type="date"
         data-length="1"
         data-hour-step="1"
         data-minute-step="1"
@@ -591,12 +595,47 @@
   </div>
   <div class="row">
     <div class="col-xs-12">
-      <textarea rows="3" class="form-control well well-sm item-z1"
+      <textarea rows="3" class="form-control well well-sm"
         id="sheetCommentsText"
         name="sheetCommentsText"
         data-ng-model="sheet.sheet.comentarios"
         >
       </textarea>
+    </div>
+  </div>
+  <br>
+  <div class="row"
+    data-ng-show="sheet.user.level < 3">
+    <div class="col-xs-12">
+      <h4>Validación</h4>
+    </div>
+    <div class="col-xs-12 col-sm-5 well wel-sm ">
+      <button class="btn btn-success"
+        value="Validar" title="Validar"
+        data-ng-click="sheet.approveItem()"
+        >
+        <i class="glyphicon glyphicon-ok" aria-hidden="true"></i>
+        Validar
+      </button>
+      <button class="btn btn-danger"
+        value="Rechazar" title="Rechazar"
+        data-ng-click="sheet.rejectItem()"
+        >
+        <i class="glyphicon glyphicon-remove" aria-hidden="true"></i>
+        Rechazar
+      </button>
+    </div>
+    <div class="col-xs-12 col-sm-7 well wel-sm ">
+      <label class="sr-only" for="rejectText">
+        Motivo rechazo
+      </label>
+      <input type="text" class="form-control"
+        id="rejectText"
+        name="rejectText"
+        placeholder="Especifique motivo rechazo"
+        data-ng-disabled="sheet.sheet.id_status != 3"
+        data-ng-model="sheet.sheet.motivo_rechaza"
+        >
     </div>
   </div>
   <br>

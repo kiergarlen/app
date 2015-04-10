@@ -222,11 +222,11 @@ $app->get("/sheets(/)(:sheetId)", function($sheetId = -1) use ($app) {
 		$userId = validateTokenUser($app);
 		if ($sheetId > -1)
 		{
-			$result = \Service\DALSislab::getInstance()->getFieldsheet($sheetId);
+			$result = \Service\DALSislab::getInstance()->getSheet($sheetId);
 		}
 		else
 		{
-			$result = \Service\DALSislab::getInstance()->getFieldsheets();
+			$result = \Service\DALSislab::getInstance()->getSheets();
 		}
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');

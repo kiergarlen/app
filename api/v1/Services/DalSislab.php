@@ -8266,7 +8266,7 @@ class DALSislab
 		return $result;
 	}
 
-	public function getFieldSheets() {
+	public function getSheets() {
 		$result = '
 			[
 				{
@@ -8346,7 +8346,7 @@ class DALSislab
 		return $result;
 	}
 
-	public function getFieldSheet($sheetId) {
+	public function getSheet($sheetId) {
 		if ($sheetId == 1) {
 			$result = '
 				{

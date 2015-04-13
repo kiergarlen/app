@@ -16,364 +16,363 @@
   <![endif]-->
 </head>
 <body data-ng-app="sislabApp">
-
-
-  <div class="row">
-    <div class="col-xs-12">
-      <h4>Datos por punto muestreo</h4>
+  <div ng-controller="SheetController as sheet">
+    <div class="row">
+      <div class="col-xs-12">
+        <h4>Datos por punto muestreo</h4>
+      </div>
     </div>
-  </div>
-  <div class="row">
-    <div class="col-xs-12 col-sm-6 col-md-7 col-lg-7">
-      <label for="pointSelect">
-        Punto muestreo
-      </label>
-      <select class="form-control"
-        id="pointSelect"
-        name="pointSelect"
-        required
-        data-ng-model="fieldSheeet.sheet.id_punto"
-        data-ng-change="sheet.selectPoint()"
-        >
-        <option
-          data-ng-repeat="point in sheet.points"
-          value="{{point.id_punto}}">
-          {{point.punto}}
-        </option>
-      </select>
+    <div class="row">
+      <div class="col-xs-12 col-sm-6 col-md-7 col-lg-7">
+        <label for="pointSelect">
+          Punto muestreo
+        </label>
+        <select class="form-control"
+          id="pointSelect"
+          name="pointSelect"
+          required
+          data-ng-model="fieldSheeet.id_punto"
+          data-ng-change="sheet.selectPoint()"
+          >
+          <option
+            data-ng-repeat="point in sheet.points"
+            value="{{point.id_punto}}">
+            {{point.punto}}
+          </option>
+        </select>
+      </div>
     </div>
-  </div>
-  <div class="row">
-    <div class="col-xs-12">
-      <div class="well well-sm">
-        Punto: {{sheet.sheet.punto.punto}}
-        <br>
-        Localidad: {{sheet.sheet.punto.localidad}}
-        Municipio: {{sheet.sheet.punto.municipio}}
-        <br>
-        Latitud: {{sheet.sheet.punto.lat}}
-        Longitud: {{sheet.sheet.punto.lng}}
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="well well-sm">
+          Punto: {{sheet.sheet.punto.punto}}
+          <br>
+          Localidad: {{sheet.sheet.punto.localidad}}
+          Municipio: {{sheet.sheet.punto.municipio}}
+          <br>
+          Latitud: {{sheet.sheet.punto.lat}}
+          Longitud: {{sheet.sheet.punto.lng}}
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12">
+        <h4>Resultados Campo {{sheet.sheet.fieldParameters}}</h4>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12 col-sm-6 col-lg-4"
+        data-ng-repeat="fieldParameter in sheet.fieldParameters">
+        <label for="fieldParameter{{fieldParameter.id_parametro}}">
+          {{fieldParameter.parametro}}
+        </label>
+        <input type="text"
+          class="form-control"
+          placeholder="Ingrese un valor"
+          id="fieldParameter{{fieldParameter.id_parametro}}"
+          name="fieldParameter{{fieldParameter.id_parametro}}"
+          data-ng-model="fieldParameter.valor"
+          >
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12">
+        <h6>Temperatura ambiente</h6>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-6 col-sm-6 col-md-3">
+        <label for="param4">Temp. ambiente 1</label>
+        <input type="text"
+          class="form-control"
+          placeholder="0.0"
+          id="tempAmb1"
+          name="tempAmb1"
+          data-ng-model="sheet.tempAmb1"
+          >
+      </div>
+      <div class="col-xs-6 col-sm-6 col-md-3">
+        <label for="param5">Temp. ambiente 2</label>
+        <input type="text"
+          class="form-control"
+          placeholder="0.0"
+          id="tempAmb2"
+          name="tempAmb2"
+          data-ng-model="sheet.tempAmb2"
+          >
+      </div>
+      <div class="col-xs-6 col-sm-6 col-md-3">
+        <label for="param5">Temp. ambiente 3</label>
+        <input type="text"
+          class="form-control"
+          placeholder="0.0"
+          id="tempAmb3"
+          name="tempAmb3"
+          data-ng-model="sheet.tempAmb3"
+          >
+      </div>
+      <div class="col-xs-6 col-sm-6 col-md-3">
+        <label for="param6">Temp. ambiente</label>
+        <input type="text"
+          class="form-control"
+          placeholder="{{sheet.tempAmbAvg()}}"
+          id="tempAmb"
+          name="tempAmb"
+          readonly="readonly"
+          >
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12">
+        <h6>Temperatura</h6>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-6 col-sm-6 col-md-3">
+        <label for="param4">Temp. 1</label>
+        <input type="text"
+          class="form-control"
+          placeholder="0.0"
+          id="temp1"
+          name="temp1"
+          data-ng-model="sheet.temp1"
+          >
+      </div>
+      <div class="col-xs-6 col-sm-6 col-md-3">
+        <label for="param5">Temp. 2</label>
+        <input type="text"
+          class="form-control"
+          placeholder="0.0"
+          id="temp2"
+          name="temp2"
+          data-ng-model="sheet.temp2"
+          >
+      </div>
+      <div class="col-xs-6 col-sm-6 col-md-3">
+        <label for="param5">Temp. 3</label>
+        <input type="text"
+          class="form-control"
+          placeholder="0.0"
+          id="temp3"
+          name="temp3"
+          data-ng-model="sheet.temp3"
+          >
+      </div>
+      <div class="col-xs-6 col-sm-6 col-md-3">
+        <label for="param6">Temp. promedio</label>
+        <input type="text"
+          class="form-control"
+          placeholder="{{sheet.tempAvg()}}"
+          id="temp"
+          name="temp"
+          readonly="readonly"
+          >
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12">
+        <h6>Potencial hidrógeno</h6>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-6 col-sm-6 col-md-3">
+        <label for="param4">pH 1</label>
+        <input type="text"
+          class="form-control"
+          placeholder="0.0"
+          id="ph1"
+          name="ph1"
+          data-ng-model="sheet.ph1"
+          >
+      </div>
+      <div class="col-xs-6 col-sm-6 col-md-3">
+        <label for="param5">pH 2</label>
+        <input type="text"
+          class="form-control"
+          placeholder="0.0"
+          id="ph2"
+          name="ph2"
+          data-ng-model="sheet.ph2"
+          >
+      </div>
+      <div class="col-xs-6 col-sm-6 col-md-3">
+        <label for="param5">pH 3</label>
+        <input type="text"
+          class="form-control"
+          placeholder="0.0"
+          id="ph3"
+          name="ph3"
+          data-ng-model="sheet.ph3"
+          >
+      </div>
+      <div class="col-xs-6 col-sm-6 col-md-3">
+        <label for="param6">pH promedio</label>
+        <input type="text"
+          class="form-control"
+          placeholder="{{sheet.phAvg()}}"
+          id="ph"
+          name="ph"
+          readonly="readonly"
+          >
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12">
+        <h6>Conductividad</h6>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-6 col-sm-6 col-md-3">
+        <label for="param4">Cond. 1</label>
+        <input type="text"
+          class="form-control"
+          placeholder="0.0"
+          id="cond1"
+          name="cond1"
+          data-ng-model="sheet.cond1"
+          >
+      </div>
+      <div class="col-xs-6 col-sm-6 col-md-3">
+        <label for="param5">Cond. 2</label>
+        <input type="text"
+          class="form-control"
+          placeholder="0.0"
+          id="cond2"
+          name="cond2"
+          data-ng-model="sheet.cond2"
+          >
+      </div>
+      <div class="col-xs-6 col-sm-6 col-md-3">
+        <label for="param5">Cond. 3</label>
+        <input type="text"
+          class="form-control"
+          placeholder="0.0"
+          id="cond3"
+          name="cond3"
+          data-ng-model="sheet.cond3"
+          >
+      </div>
+      <div class="col-xs-6 col-sm-6 col-md-3">
+        <label for="param6">Cond. promedio</label>
+        <input type="text"
+          class="form-control"
+          placeholder="{{sheet.condAvg()}}"
+          id="cond"
+          name="cond"
+          readonly="readonly"
+          >
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12">
+        <h6>Oxígeno disuelto</h6>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-6 col-sm-6 col-md-3">
+        <label for="param4">O.D. 1</label>
+        <input type="text"
+          class="form-control"
+          placeholder="0.0"
+          id="od1"
+          name="od1"
+          data-ng-model="sheet.od1"
+          >
+      </div>
+      <div class="col-xs-6 col-sm-6 col-md-3">
+        <label for="param5">O.D. 2</label>
+        <input type="text"
+          class="form-control"
+          placeholder="0.0"
+          id="od2"
+          name="od2"
+          data-ng-model="sheet.od2"
+          >
+      </div>
+      <div class="col-xs-6 col-sm-6 col-md-3">
+        <label for="param5">O.D. 3</label>
+        <input type="text"
+          class="form-control"
+          placeholder="0.0"
+          id="od3"
+          name="od3"
+          data-ng-model="sheet.od3"
+          >
+      </div>
+      <div class="col-xs-6 col-sm-6 col-md-3">
+        <label for="param6">O.D. promedio</label>
+        <input type="text"
+          class="form-control"
+          placeholder="{{sheet.odAvg()}}"
+          id="od"
+          name="od"
+          readonly="readonly"
+          >
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12">
+        <h6>Cloro residual</h6>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-6 col-sm-6 col-md-3">
+        <label for="param4">Cl residual 1</label>
+        <input type="text"
+          class="form-control"
+          placeholder="0.0"
+          id="cr1"
+          name="cr1"
+          data-ng-model="sheet.cr1"
+          >
+      </div>
+      <div class="col-xs-6 col-sm-6 col-md-3">
+        <label for="param5">Cl residual 2</label>
+        <input type="text"
+          class="form-control"
+          placeholder="0.0"
+          id="cr2"
+          name="cr2"
+          data-ng-model="sheet.cr2"
+          >
+      </div>
+      <div class="col-xs-6 col-sm-6 col-md-3">
+        <label for="param5">Cl residual 3</label>
+        <input type="text"
+          class="form-control"
+          placeholder="0.0"
+          id="cr3"
+          name="cr3"
+          data-ng-model="sheet.cr3"
+          >
+      </div>
+      <div class="col-xs-6 col-sm-6 col-md-3">
+        <label for="param6">Cl residual</label>
+        <input type="text"
+          class="form-control"
+          placeholder="{{sheet.crAvg()}}"
+          id="cr"
+          name="cr"
+          readonly="readonly"
+          >
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12">
+        <h4>Preservación</h4>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12 col-sm-6"
+        data-ng-repeat="preservation in sheet.preservations">
+        <label>
+          <input type="checkbox"
+            value="{{preservation.selected}}">
+            {{preservation.preservacion}}
+        </label>
       </div>
     </div>
   </div>
-  <div class="row">
-    <div class="col-xs-12">
-      <h4>Resultados Campo {{sheet.sheet.fieldParameters}}</h4>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-xs-12 col-sm-6 col-lg-4"
-      data-ng-repeat="fieldParameter in sheet.fieldParameters">
-      <label for="fieldParameter{{fieldParameter.id_parametro}}">
-        {{fieldParameter.parametro}}
-      </label>
-      <input type="text"
-        class="form-control"
-        placeholder="Ingrese un valor"
-        id="fieldParameter{{fieldParameter.id_parametro}}"
-        name="fieldParameter{{fieldParameter.id_parametro}}"
-        data-ng-model="fieldParameter.valor"
-        >
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-xs-12">
-      <h6>Temperatura ambiente</h6>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-xs-6 col-sm-6 col-md-3">
-      <label for="param4">Temp. ambiente 1</label>
-      <input type="text"
-        class="form-control"
-        placeholder="0.0"
-        id="tempAmb1"
-        name="tempAmb1"
-        data-ng-model="sheet.tempAmb1"
-        >
-    </div>
-    <div class="col-xs-6 col-sm-6 col-md-3">
-      <label for="param5">Temp. ambiente 2</label>
-      <input type="text"
-        class="form-control"
-        placeholder="0.0"
-        id="tempAmb2"
-        name="tempAmb2"
-        data-ng-model="sheet.tempAmb2"
-        >
-    </div>
-    <div class="col-xs-6 col-sm-6 col-md-3">
-      <label for="param5">Temp. ambiente 3</label>
-      <input type="text"
-        class="form-control"
-        placeholder="0.0"
-        id="tempAmb3"
-        name="tempAmb3"
-        data-ng-model="sheet.tempAmb3"
-        >
-    </div>
-    <div class="col-xs-6 col-sm-6 col-md-3">
-      <label for="param6">Temp. ambiente</label>
-      <input type="text"
-        class="form-control"
-        placeholder="{{sheet.tempAmbAvg()}}"
-        id="tempAmb"
-        name="tempAmb"
-        readonly="readonly"
-        >
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-xs-12">
-      <h6>Temperatura</h6>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-xs-6 col-sm-6 col-md-3">
-      <label for="param4">Temp. 1</label>
-      <input type="text"
-        class="form-control"
-        placeholder="0.0"
-        id="temp1"
-        name="temp1"
-        data-ng-model="sheet.temp1"
-        >
-    </div>
-    <div class="col-xs-6 col-sm-6 col-md-3">
-      <label for="param5">Temp. 2</label>
-      <input type="text"
-        class="form-control"
-        placeholder="0.0"
-        id="temp2"
-        name="temp2"
-        data-ng-model="sheet.temp2"
-        >
-    </div>
-    <div class="col-xs-6 col-sm-6 col-md-3">
-      <label for="param5">Temp. 3</label>
-      <input type="text"
-        class="form-control"
-        placeholder="0.0"
-        id="temp3"
-        name="temp3"
-        data-ng-model="sheet.temp3"
-        >
-    </div>
-    <div class="col-xs-6 col-sm-6 col-md-3">
-      <label for="param6">Temp. promedio</label>
-      <input type="text"
-        class="form-control"
-        placeholder="{{sheet.tempAvg()}}"
-        id="temp"
-        name="temp"
-        readonly="readonly"
-        >
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-xs-12">
-      <h6>Potencial hidrógeno</h6>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-xs-6 col-sm-6 col-md-3">
-      <label for="param4">pH 1</label>
-      <input type="text"
-        class="form-control"
-        placeholder="0.0"
-        id="ph1"
-        name="ph1"
-        data-ng-model="sheet.ph1"
-        >
-    </div>
-    <div class="col-xs-6 col-sm-6 col-md-3">
-      <label for="param5">pH 2</label>
-      <input type="text"
-        class="form-control"
-        placeholder="0.0"
-        id="ph2"
-        name="ph2"
-        data-ng-model="sheet.ph2"
-        >
-    </div>
-    <div class="col-xs-6 col-sm-6 col-md-3">
-      <label for="param5">pH 3</label>
-      <input type="text"
-        class="form-control"
-        placeholder="0.0"
-        id="ph3"
-        name="ph3"
-        data-ng-model="sheet.ph3"
-        >
-    </div>
-    <div class="col-xs-6 col-sm-6 col-md-3">
-      <label for="param6">pH promedio</label>
-      <input type="text"
-        class="form-control"
-        placeholder="{{sheet.phAvg()}}"
-        id="ph"
-        name="ph"
-        readonly="readonly"
-        >
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-xs-12">
-      <h6>Conductividad</h6>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-xs-6 col-sm-6 col-md-3">
-      <label for="param4">Cond. 1</label>
-      <input type="text"
-        class="form-control"
-        placeholder="0.0"
-        id="cond1"
-        name="cond1"
-        data-ng-model="sheet.cond1"
-        >
-    </div>
-    <div class="col-xs-6 col-sm-6 col-md-3">
-      <label for="param5">Cond. 2</label>
-      <input type="text"
-        class="form-control"
-        placeholder="0.0"
-        id="cond2"
-        name="cond2"
-        data-ng-model="sheet.cond2"
-        >
-    </div>
-    <div class="col-xs-6 col-sm-6 col-md-3">
-      <label for="param5">Cond. 3</label>
-      <input type="text"
-        class="form-control"
-        placeholder="0.0"
-        id="cond3"
-        name="cond3"
-        data-ng-model="sheet.cond3"
-        >
-    </div>
-    <div class="col-xs-6 col-sm-6 col-md-3">
-      <label for="param6">Cond. promedio</label>
-      <input type="text"
-        class="form-control"
-        placeholder="{{sheet.condAvg()}}"
-        id="cond"
-        name="cond"
-        readonly="readonly"
-        >
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-xs-12">
-      <h6>Oxígeno disuelto</h6>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-xs-6 col-sm-6 col-md-3">
-      <label for="param4">O.D. 1</label>
-      <input type="text"
-        class="form-control"
-        placeholder="0.0"
-        id="od1"
-        name="od1"
-        data-ng-model="sheet.od1"
-        >
-    </div>
-    <div class="col-xs-6 col-sm-6 col-md-3">
-      <label for="param5">O.D. 2</label>
-      <input type="text"
-        class="form-control"
-        placeholder="0.0"
-        id="od2"
-        name="od2"
-        data-ng-model="sheet.od2"
-        >
-    </div>
-    <div class="col-xs-6 col-sm-6 col-md-3">
-      <label for="param5">O.D. 3</label>
-      <input type="text"
-        class="form-control"
-        placeholder="0.0"
-        id="od3"
-        name="od3"
-        data-ng-model="sheet.od3"
-        >
-    </div>
-    <div class="col-xs-6 col-sm-6 col-md-3">
-      <label for="param6">O.D. promedio</label>
-      <input type="text"
-        class="form-control"
-        placeholder="{{sheet.odAvg()}}"
-        id="od"
-        name="od"
-        readonly="readonly"
-        >
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-xs-12">
-      <h6>Cloro residual</h6>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-xs-6 col-sm-6 col-md-3">
-      <label for="param4">Cl residual 1</label>
-      <input type="text"
-        class="form-control"
-        placeholder="0.0"
-        id="cr1"
-        name="cr1"
-        data-ng-model="sheet.cr1"
-        >
-    </div>
-    <div class="col-xs-6 col-sm-6 col-md-3">
-      <label for="param5">Cl residual 2</label>
-      <input type="text"
-        class="form-control"
-        placeholder="0.0"
-        id="cr2"
-        name="cr2"
-        data-ng-model="sheet.cr2"
-        >
-    </div>
-    <div class="col-xs-6 col-sm-6 col-md-3">
-      <label for="param5">Cl residual 3</label>
-      <input type="text"
-        class="form-control"
-        placeholder="0.0"
-        id="cr3"
-        name="cr3"
-        data-ng-model="sheet.cr3"
-        >
-    </div>
-    <div class="col-xs-6 col-sm-6 col-md-3">
-      <label for="param6">Cl residual</label>
-      <input type="text"
-        class="form-control"
-        placeholder="{{sheet.crAvg()}}"
-        id="cr"
-        name="cr"
-        readonly="readonly"
-        >
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-xs-12">
-      <h4>Preservación</h4>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-xs-12 col-sm-6"
-      data-ng-repeat="preservation in sheet.preservations">
-      <label>
-        <input type="checkbox"
-          value="{{preservation.selected}}">
-          {{preservation.preservacion}}
-      </label>
-    </div>
-  </div>
-
   <script src="js/jquery/jquery.min.js"></script>
   <script src="js/bootstrap.min.js"></script>
   <script src="js/angular/angular.min.js"></script>
@@ -384,14 +383,7 @@
   <script src="js/angular-resource/angular-resource.min.js"></script>
   <script src="js/angular-animate/angular-animate.min.js"></script>
   <script src="js/angular-jwt/angular-jwt.min.js"></script>
-  <!--
-  <script src="js/sislab.min.js"></script>
-  -->
-  <script src="js/app.js"></script>
-  <script src="js/controllers.js"></script>
-  <script src="js/controllers_wip.js"></script>
-  <script src="js/controllers_lists.js"></script>
-  <script src="js/services.js"></script>
-  <script src="js/services_catalogs.js"></script>
+
+  <script src="js/test.js"></script>
 </body>
 </html>

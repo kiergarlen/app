@@ -798,7 +798,7 @@
     return $resource(API_BASE_URL + 'sheets/:sheetId', {}, {
       query: {
         method: 'GET',
-        params: {sheetId: 'id_hoja_campo'},
+        params: {sheetId: 'id_hoja'},
         isArray: false,
         headers: {
           'Auth-Token': TokenService.getToken()
@@ -814,7 +814,7 @@
       },
       update: {
         method: 'POST',
-        params: {sheetId: 'id_hoja_campo'},
+        params: {sheetId: 'id_hoja'},
         isArray: false,
         headers: {
           'Auth-Token': TokenService.getToken()

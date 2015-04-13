@@ -219,7 +219,8 @@ $app->post("/plans", function() use ($app) {
 
 $app->get("/sheets(/)(:sheetId)", function($sheetId = -1) use ($app) {
 	try {
-		$userId = validateTokenUser($app);
+		//$userId = validateTokenUser($app);
+		$userId = 1;
 		if ($sheetId > -1)
 		{
 			$result = \Service\DALSislab::getInstance()->getSheet($sheetId);

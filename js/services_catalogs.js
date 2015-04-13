@@ -1070,36 +1070,6 @@
       ]
     );
 
-  // PointsListService.js
-  /**
-   * @name PointsListService
-   * @constructor
-   * @desc Proveedor de datos, Puntos
-   * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
-   * @param {Object} TokenService - Proveedor de métodos para token
-   * @return {Object} $resource - Acceso a recursos HTTP
-   */
-  function PointsListService($resource, TokenService) {
-    return $resource(API_BASE_URL + 'points', {}, {
-      get: {
-        method: 'GET',
-        params: {},
-        isArray: true,
-        headers: {
-          'Auth-Token': TokenService.getToken()
-        }
-      }
-    });
-  }
-  angular
-    .module('sislabApp')
-    .factory('PointsListService',
-      [
-        '$resource', 'TokenService',
-        PointsListService
-      ]
-    );
-
   // EmployeeService.js
   /**
    * @name EmployeeService

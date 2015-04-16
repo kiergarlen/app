@@ -29,6 +29,7 @@
     //vm.points = PointService.get();
     vm.fieldParameters = FieldParameterService.get();
     vm.preservations = PreservationService.get();
+
     SheetService
       .query({sheetId: $routeParams.sheetId})
       .$promise
@@ -36,87 +37,18 @@
         vm.sheet = response;
         vm.points = vm.sheet.puntos;
       });
-
-    vm.temp1 = 0;
-    vm.temp2 = 0;
-    vm.temp3 = 0;
-    vm.temp = 0;
-    vm.tempAmb1 = 0;
-    vm.tempAmb2 = 0;
-    vm.tempAmb3 = 0;
-    vm.tempAmb = 0;
-    vm.ph1 = 0;
-    vm.ph2 = 0;
-    vm.ph3 = 0;
-    vm.ph = 0;
-    vm.cond1 = 0;
-    vm.cond2 = 0;
-    vm.cond3 = 0;
-    vm.cond = 0;
-    vm.od1 = 0;
-    vm.od2 = 0;
-    vm.od3 = 0;
-    vm.od = 0;
-    vm.cr1 = 0;
-    vm.cr2 = 0;
-    vm.cr3 = 0;
-    vm.cr = 0;
-
-    vm.tempAvg = tempAvg;
-    vm.tempAmbAvg = tempAmbAvg;
-    vm.phAvg = phAvg;
-    vm.condAvg = condAvg;
-    vm.odAvg = odAvg;
-    vm.crAvg = crAvg;
-
+    //vm.tempAvg = tempAvg;
     vm.selectPoint = selectPoint;
-
     vm.submitForm = submitForm;
 
-    function tempAvg(){
-      vm.temp = ArrayUtilsService.averageFromValues([
-        vm.temp1,
-        vm.temp2,
-        vm.temp3
-      ]);
-      return vm.temp;
-    }
-
-    function tempAmbAvg(){
-      vm.tempAmb = ArrayUtilsService.averageFromValues([
-        vm.tempAmb1,
-        vm.tempAmb2,
-        vm.tempAmb3
-      ]);
-      return vm.tempAmb;
-    }
-
-    function phAvg() {
-      vm.ph = ArrayUtilsService.averageFromValues([
-        vm.ph1,
-        vm.ph2,
-        vm.ph3
-      ]);
-      return vm.ph;
-    }
-
-    function condAvg() {
-      vm.cond = ArrayUtilsService.averageFromValues([
-        vm.cond1,
-        vm.cond2,
-        vm.cond3
-      ]);
-      return vm.cond;
-    }
-
-    function odAvg() {
-      vm.od = ArrayUtilsService.averageFromValues([
-        vm.od1,
-        vm.od2,
-        vm.od3
-      ]);
-      return vm.od;
-    }
+    //function tempAvg(){
+    //  vm.temp = ArrayUtilsService.averageFromValues([
+    //    vm.temp1,
+    //    vm.temp2,
+    //    vm.temp3
+    //  ]);
+    //  return vm.temp;
+    //}
 
     function crAvg() {
       vm.cr = ArrayUtilsService.averageFromValues([

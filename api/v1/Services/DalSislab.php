@@ -23024,7 +23024,7 @@ class DALSislab
 						"numero":1,
 						"siglas":"RYT",
 						"punto":"Punto muestreo prueba",
-						"descripcion":"Descripción del entorno del punto de muestreo",
+						"descripcion":"Descripción del punto de muestreo",
 						"lat":20.123456,
 						"lng":-102.654321,
 						"alt":0,

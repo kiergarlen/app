@@ -651,7 +651,7 @@ $app->get("/clouds", function() use ($app) {
 $app->get("/winds", function() use ($app) {
 	try {
 		$userId = validateTokenUser($app);
-		$result = \Service\DALSislab::getInstance()->getWinds();
+		$result = \Service\DALSislab::getInstance()->getCurrentDirections();
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
 		//echo ")]}',\n" . $result;

@@ -27,6 +27,11 @@
     vm.waveIntensities = WaveService.get();
     vm.samplingNorms = SamplingNormService.get();
     //vm.points = PointService.get();
+    vm.results = [];
+    vm.currentSample = {};
+    vm.currentPoint = {};
+    vm.samples = [];
+    vm.currentFieldResults = {};
     vm.fieldParameters = FieldParameterService.get();
     vm.preservations = PreservationService.get();
 
@@ -35,35 +40,38 @@
       .$promise
       .then(function success(response) {
         vm.sheet = response;
-        vm.points = vm.sheet.puntos;
+        vm.results = vm.sheet.resultados;
+        vm.currentSample = {};
+          /*
+        if (vm.sheet.muestras.length > 0)
+        {
+          vm.samples = vm.sheet.muestras;
+          vm.currentFieldResults = ArrayUtilsService.selectItemFromCollection(
+           vm.samples,
+           'id_muestra',
+           vm.currentSample.id_muestra
+          ).resultados;
+          vm.currentPoint = ArrayUtilsService.selectItemFromCollection(
+           vm.points,
+           'id_punto',
+           vm.currentSample.id_punto
+          );
+        }
+          */
       });
-    //vm.tempAvg = tempAvg;
     vm.selectPoint = selectPoint;
     vm.submitForm = submitForm;
-
-    //function tempAvg(){
-    //  vm.temp = ArrayUtilsService.averageFromValues([
-    //    vm.temp1,
-    //    vm.temp2,
-    //    vm.temp3
-    //  ]);
-    //  return vm.temp;
-    //}
-
-    function crAvg() {
-      vm.cr = ArrayUtilsService.averageFromValues([
-        vm.cr1,
-        vm.cr2,
-        vm.cr3
-      ]);
-      return vm.cr;
-    }
 
     function selectPoint(idPoint) {
       ArrayUtilsService.selectItemFromCollection(
         vm.points,
-        'id_punto_muestreo',
+        'id_punto',
         idPoint
+      );
+      vm.currentSample = ArrayUtilsService.selectItemFromCollection(
+       vm.samples,
+       'id_punto',
+       idPoint
       );
     }
 

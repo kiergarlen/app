@@ -46,81 +46,53 @@
   novalidate
   >
   <div class="row">
-    <div class="col-xs-12">
-      <h4>Datos de Referencia</h4>
+    <div class="col-xs-12" data-bs-collapse>
+      <h4 data-bs-collapse-toggle>
+        <a class="btn btn-default">
+          <i class="glyphicon glyphicon-chevron-down"
+            aria-hidden="true"></i>
+        </a>
+        Datos de Referencia
+      </h4>
+      <div class="row well wel-sm item-z1"
+        data-bs-collapse-target
+        >
+        <div class="col-xs-12 col-sm-6">
+          <h6>Plan</h6>
+          <ul class="list-inline">
+            <li>
+              Folio:
+              <strong>{{::sheet.sheet.plan.folio}}</strong>
+            </li>
+            <li data-ng-show="sheet.sheet.plan.fecha_plan.length > 0">
+              Fecha:
+              <strong>{{sheet.sheet.plan.fecha_plan || date}}</strong>
+            </li>
+          </ul>
+        </div>
+        <div class="col-xs-12 col-sm-6">
+          <div class="well well-sm">
+            <h6>Cliente</h6>
+            <ul class="list-inline">
+              <li>
+                Cliente:
+                <strong>{{::sheet.sheet.plan.cliente.cliente}}</strong>
+                {{::sheet.sheet.plan.cliente.area}}
+              </li>
+              <li>
+                Contacto:
+                <strong>{{::sheet.sheet.plan.cliente.contacto}}</strong>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
+
+
+
   <!-- DATOS REFERENCIA -->
-
-
-  <div class="row">
-    <div class="col-xs-12">
-      <h4>Condiciones ambientales</h4>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-xs-12 col-sm-6">
-      <label for="cloudCoverSelect">
-        Cobertura de nubes
-      </label>
-      <select class="form-control"
-        id="cloudCoverSelect"
-        name="cloudCoverSelect"
-        required
-        data-ng-model="sheet.sheet.id_nubes"
-        >
-        <option data-ng-repeat="cloudCover in sheet.cloudCovers"
-          value="{{cloudCover.id_nubes}}">
-          {{cloudCover.nubes}}
-        </option>
-      </select>
-    </div>
-    <div class="col-xs-12 col-sm-6">
-      <label for="cloudCoverText">
-        En caso de otra, especificar
-      </label>
-      <input type="text" class="form-control"
-        id="cloudCoverText"
-        name="cloudCoverText"
-        placeholder="Cobertura nubes"
-        data-ng-model="sheet.sheet.nubes_otro"
-        >
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-xs-12 col-sm-6">
-      <label for="windDirectionSelect">
-        Dirección del viento
-      </label>
-      <select class="form-control"
-        id="windDirectionSelect"
-        name="windDirectionSelect"
-        required
-        data-ng-model="sheet.sheet.id_direccion_viento"
-        >
-        <option data-ng-repeat="windDirection in sheet.windDirections"
-          value="{{windDirection.id_direccion_viento}}">
-          {{windDirection.direccion_viento}}
-        </option>
-      </select>
-    </div>
-    <div class="col-xs-12 col-sm-6">
-      <label for="waveIntensitySelect">
-        Intensidad del oleaje
-      </label>
-      <select class="form-control"
-        id="waveIntensitySelect"
-        name="waveIntensitySelect"
-        required
-        data-ng-model="sheet.sheet.id_oleaje"
-        >
-        <option data-ng-repeat="waveIntensity in sheet.waveIntensities"
-          value="{{waveIntensity.id_oleaje}}">
-          {{waveIntensity.oleaje}}
-        </option>
-      </select>
-    </div>
-  </div>
   <div class="row">
     <div class="col-xs-12">
       <h4>Referencia del muestreo</h4>
@@ -234,70 +206,223 @@
     </div>
   </div>
   <!-- PUNTOS Y RESULTADOS -->
-
-<!doctype html>
-<html lang="es">
-<head>
-  <meta charset="utf-8"/>
-  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes"/>
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <title>SISLAB</title>
-  <link rel="icon" type="image/png" href="img/favicon.png"/>
-  <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
-  <link rel="stylesheet" href="css/bootstrap.material-red.css">
-  <link rel="stylesheet" href="css/sislab.css">
-  <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-  <![endif]-->
-</head>
-<body data-ng-app="sislabApp">
-
-
   <div class="row">
     <div class="col-xs-12">
-      <h4>Datos por punto muestreo</h4>
+      <h4>Resultados por punto</h4>
     </div>
   </div>
-  <div class="row">
-    <div class="col-xs-12 col-sm-6 col-md-7 col-lg-7">
-      <label for="pointSelect">
-        Punto muestreo
-      </label>
-      <select class="form-control"
-        id="pointSelect"
-        name="pointSelect"
-        required
-        data-ng-model="fieldSheeet.sheet.id_punto"
-        data-ng-change="sheet.selectPoint()"
-        >
-        <option
-          data-ng-repeat="point in sheet.points"
-          value="{{point.id_punto}}">
-          {{point.punto}}
-        </option>
-      </select>
-    </div>
-  </div>
-  <div class="row">
+  <div class="row"
+    data-ng-repeat="result in sheet.results">
     <div class="col-xs-12">
-      <div class="well well-sm">
-        Punto: {{sheet.sheet.punto.punto}}
-        <br>
-        Localidad: {{sheet.sheet.punto.localidad}}
-        Municipio: {{sheet.sheet.punto.municipio}}
-        <br>
-        Latitud: {{sheet.sheet.punto.lat}}
-        Longitud: {{sheet.sheet.punto.lng}}
+      <div class="row">
+        <div class="col-xs-12">
+          <h5>Punto: {{result.punto}}</h5>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="well well-sm">
+            Localidad:
+            <strong>{{result.localidad}}</strong>
+            Municipio:
+            <strong>{{result.municipio}}</strong>
+            <br>
+            Latitud:
+            <strong>{{result.lat}}</strong>
+            Longitud:
+            <strong>{{result.lng}}</strong>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+          <label for="sampleTime{{result.id_punto}}">
+            <i class="glyphicon glyphicon-time"></i>
+            Hora muestreo
+          </label>
+          <input type="text"
+            class="form-control"
+            id="sampleTime{{result.id_punto}}"
+            name="sampleTime{{result.id_punto}}"
+            placeholder="HH:mm"
+            required
+            data-ng-model="result.hora"
+            data-time-format="HH:mm"
+            data-date-type="date"
+            data-length="1"
+            data-hour-step="1"
+            data-minute-step="1"
+            data-arrow-behavior="picker"
+            data-auto-close="1"
+            data-bs-timepicker
+            >
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+          <label for="color{{result.id_punto}}">
+            Color
+          </label>
+          <input type="text"
+            class="form-control"
+            placeholder="Color"
+            id="color{{result.id_punto}}"
+            name="color{{result.id_punto}}"
+            data-ng-model="result.color"
+            >
+        </div>
+        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+          <label for="olor{{result.id_punto}}">
+            Olor
+          </label>
+          <input type="text"
+            class="form-control"
+            placeholder="Olor"
+            id="olor{{result.id_punto}}"
+            name="olor{{result.id_punto}}"
+            data-ng-model="result.olor"
+            >
+        </div>
+        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+          <label for="gasto{{result.id_punto}}">
+            Gasto
+          </label>
+          <input type="number"
+            class="form-control"
+            placeholder="Gasto"
+            id="gasto{{result.id_punto}}"
+            name="gasto{{result.id_punto}}"
+            data-ng-model="result.gasto"
+            >
+        </div>
+        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+          <label for="temp_amb{{result.id_punto}}">
+            Temp. Ambiente
+          </label>
+          <input type="number"
+            class="form-control"
+            placeholder="Temp. Ambiente"
+            id="temp_amb{{result.id_punto}}"
+            name="temp_amb{{result.id_punto}}"
+            data-ng-model="result.temp_amb"
+            >
+        </div>
+        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+          <label for="temp{{result.id_punto}}">
+            Temperatura
+          </label>
+          <input type="number"
+            class="form-control"
+            placeholder="Temperatura"
+            id="temp{{result.id_punto}}"
+            name="temp{{result.id_punto}}"
+            data-ng-model="result.temp"
+            >
+        </div>
+        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+          <label for="oxigeno{{result.id_punto}}">
+            Oxígeno
+          </label>
+          <input type="number"
+            class="form-control"
+            placeholder="Oxígeno"
+            id="oxigeno{{result.id_punto}}"
+            name="oxigeno{{result.id_punto}}"
+            data-ng-model="result.oxigeno"
+            >
+        </div>
+        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+          <label for="ph{{result.id_punto}}">
+            pH
+          </label>
+          <input type="number"
+            class="form-control"
+            placeholder="pH"
+            id="ph{{result.id_punto}}"
+            name="ph{{result.id_punto}}"
+            data-ng-model="result.ph"
+            >
+        </div>
+        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+          <label for="cond{{result.id_punto}}">
+            Conductividad
+          </label>
+          <input type="number"
+            class="form-control"
+            placeholder="Conductividad"
+            id="cond{{result.id_punto}}"
+            name="cond{{result.id_punto}}"
+            data-ng-model="result.cond"
+            >
+        </div>
+        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+          <label for="materia{{result.id_punto}}">
+            Materia flotante
+          </label>
+          <input type="text"
+            class="form-control"
+            placeholder="Materia flotante"
+            id="materia{{result.id_punto}}"
+            name="materia{{result.id_punto}}"
+            data-ng-model="result.materia"
+            >
+        </div>
+        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+          <label for="cloro{{result.id_punto}}">
+            Cloro residual
+          </label>
+          <input type="number"
+            class="form-control"
+            placeholder="Cloro residual"
+            id="cloro{{result.id_punto}}"
+            name="cloro{{result.id_punto}}"
+            data-ng-model="result.cloro"
+            >
+        </div>
+        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+          <label for="secchi{{result.id_punto}}">
+            Disco Secchi
+          </label>
+          <input type="number"
+            class="form-control"
+            placeholder="Disco Secchi"
+            id="secchi{{result.id_punto}}"
+            name="secchi{{result.id_punto}}"
+            data-ng-model="result.secchi"
+            >
+        </div>
+        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+          <label for="profundidad{{result.id_punto}}">
+            Profundidad
+          </label>
+          <input type="number"
+            class="form-control"
+            placeholder="Profundidad"
+            id="profundidad{{result.id_punto}}"
+            name="profundidad{{result.id_punto}}"
+            data-ng-model="result.profundidad"
+            >
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12">
+          <h5>Comentarios</h5>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-6">
+          <textarea rows="3" class="form-control well well-sm"
+            id="sheetComments{{result.id_punto}}"
+            name="sheetComments{{result.id_punto}}"
+            data-ng-model="result.comentarios"
+            >
+          </textarea>
+        </div>
       </div>
     </div>
   </div>
-  <div class="row">
-    <div class="col-xs-12">
-      <h4>Resultados Campo {{sheet.sheet.fieldParameters}}</h4>
-    </div>
-  </div>
+
+  <!--
   <div class="row">
     <div class="col-xs-12 col-sm-6 col-lg-4"
       data-ng-repeat="fieldParameter in sheet.fieldParameters">
@@ -313,286 +438,60 @@
         >
     </div>
   </div>
+  -->
   <div class="row">
     <div class="col-xs-12">
-      <h6>Temperatura ambiente</h6>
+      <h4>Condiciones ambientales</h4>
     </div>
   </div>
   <div class="row">
-    <div class="col-xs-6 col-sm-6 col-md-3">
-      <label for="param4">Temp. ambiente 1</label>
-      <input type="text"
-        class="form-control"
-        placeholder="0.0"
-        id="tempAmb1"
-        name="tempAmb1"
-        data-ng-model="sheet.tempAmb1"
+    <div class="col-xs-12 col-sm-6">
+      <label for="cloudCoverSelect">
+        Cobertura de nubes
+      </label>
+      <select class="form-control"
+        id="cloudCoverSelect"
+        name="cloudCoverSelect"
+        required
+        data-ng-model="sheet.sheet.id_nubes"
         >
+        <option data-ng-repeat="cloudCover in sheet.cloudCovers"
+          value="{{cloudCover.id_nubes}}">
+          {{cloudCover.nubes}}
+        </option>
+      </select>
     </div>
-    <div class="col-xs-6 col-sm-6 col-md-3">
-      <label for="param5">Temp. ambiente 2</label>
-      <input type="text"
-        class="form-control"
-        placeholder="0.0"
-        id="tempAmb2"
-        name="tempAmb2"
-        data-ng-model="sheet.tempAmb2"
+    <div class="col-xs-12 col-sm-6">
+      <label for="windDirectionSelect">
+        Dirección de la corriente
+      </label>
+      <select class="form-control"
+        id="windDirectionSelect"
+        name="windDirectionSelect"
+        required
+        data-ng-model="sheet.sheet.id_direccion_corriente"
         >
+        <option data-ng-repeat="windDirection in sheet.windDirections"
+          value="{{windDirection.id_direccion_corriente}}">
+          {{windDirection.direccion_corriente}}
+        </option>
+      </select>
     </div>
-    <div class="col-xs-6 col-sm-6 col-md-3">
-      <label for="param5">Temp. ambiente 3</label>
-      <input type="text"
-        class="form-control"
-        placeholder="0.0"
-        id="tempAmb3"
-        name="tempAmb3"
-        data-ng-model="sheet.tempAmb3"
+    <div class="col-xs-12 col-sm-6">
+      <label for="waveIntensitySelect">
+        Intensidad del oleaje
+      </label>
+      <select class="form-control"
+        id="waveIntensitySelect"
+        name="waveIntensitySelect"
+        required
+        data-ng-model="sheet.sheet.id_oleaje"
         >
-    </div>
-    <div class="col-xs-6 col-sm-6 col-md-3">
-      <label for="param6">Temp. ambiente</label>
-      <input type="text"
-        class="form-control"
-        placeholder="{{sheet.tempAmbAvg()}}"
-        id="tempAmb"
-        name="tempAmb"
-        readonly="readonly"
-        >
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-xs-12">
-      <h6>Temperatura</h6>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-xs-6 col-sm-6 col-md-3">
-      <label for="param4">Temp. 1</label>
-      <input type="text"
-        class="form-control"
-        placeholder="0.0"
-        id="temp1"
-        name="temp1"
-        data-ng-model="sheet.temp1"
-        >
-    </div>
-    <div class="col-xs-6 col-sm-6 col-md-3">
-      <label for="param5">Temp. 2</label>
-      <input type="text"
-        class="form-control"
-        placeholder="0.0"
-        id="temp2"
-        name="temp2"
-        data-ng-model="sheet.temp2"
-        >
-    </div>
-    <div class="col-xs-6 col-sm-6 col-md-3">
-      <label for="param5">Temp. 3</label>
-      <input type="text"
-        class="form-control"
-        placeholder="0.0"
-        id="temp3"
-        name="temp3"
-        data-ng-model="sheet.temp3"
-        >
-    </div>
-    <div class="col-xs-6 col-sm-6 col-md-3">
-      <label for="param6">Temp. promedio</label>
-      <input type="text"
-        class="form-control"
-        placeholder="{{sheet.tempAvg()}}"
-        id="temp"
-        name="temp"
-        readonly="readonly"
-        >
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-xs-12">
-      <h6>Potencial hidrógeno</h6>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-xs-6 col-sm-6 col-md-3">
-      <label for="param4">pH 1</label>
-      <input type="text"
-        class="form-control"
-        placeholder="0.0"
-        id="ph1"
-        name="ph1"
-        data-ng-model="sheet.ph1"
-        >
-    </div>
-    <div class="col-xs-6 col-sm-6 col-md-3">
-      <label for="param5">pH 2</label>
-      <input type="text"
-        class="form-control"
-        placeholder="0.0"
-        id="ph2"
-        name="ph2"
-        data-ng-model="sheet.ph2"
-        >
-    </div>
-    <div class="col-xs-6 col-sm-6 col-md-3">
-      <label for="param5">pH 3</label>
-      <input type="text"
-        class="form-control"
-        placeholder="0.0"
-        id="ph3"
-        name="ph3"
-        data-ng-model="sheet.ph3"
-        >
-    </div>
-    <div class="col-xs-6 col-sm-6 col-md-3">
-      <label for="param6">pH promedio</label>
-      <input type="text"
-        class="form-control"
-        placeholder="{{sheet.phAvg()}}"
-        id="ph"
-        name="ph"
-        readonly="readonly"
-        >
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-xs-12">
-      <h6>Conductividad</h6>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-xs-6 col-sm-6 col-md-3">
-      <label for="param4">Cond. 1</label>
-      <input type="text"
-        class="form-control"
-        placeholder="0.0"
-        id="cond1"
-        name="cond1"
-        data-ng-model="sheet.cond1"
-        >
-    </div>
-    <div class="col-xs-6 col-sm-6 col-md-3">
-      <label for="param5">Cond. 2</label>
-      <input type="text"
-        class="form-control"
-        placeholder="0.0"
-        id="cond2"
-        name="cond2"
-        data-ng-model="sheet.cond2"
-        >
-    </div>
-    <div class="col-xs-6 col-sm-6 col-md-3">
-      <label for="param5">Cond. 3</label>
-      <input type="text"
-        class="form-control"
-        placeholder="0.0"
-        id="cond3"
-        name="cond3"
-        data-ng-model="sheet.cond3"
-        >
-    </div>
-    <div class="col-xs-6 col-sm-6 col-md-3">
-      <label for="param6">Cond. promedio</label>
-      <input type="text"
-        class="form-control"
-        placeholder="{{sheet.condAvg()}}"
-        id="cond"
-        name="cond"
-        readonly="readonly"
-        >
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-xs-12">
-      <h6>Oxígeno disuelto</h6>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-xs-6 col-sm-6 col-md-3">
-      <label for="param4">O.D. 1</label>
-      <input type="text"
-        class="form-control"
-        placeholder="0.0"
-        id="od1"
-        name="od1"
-        data-ng-model="sheet.od1"
-        >
-    </div>
-    <div class="col-xs-6 col-sm-6 col-md-3">
-      <label for="param5">O.D. 2</label>
-      <input type="text"
-        class="form-control"
-        placeholder="0.0"
-        id="od2"
-        name="od2"
-        data-ng-model="sheet.od2"
-        >
-    </div>
-    <div class="col-xs-6 col-sm-6 col-md-3">
-      <label for="param5">O.D. 3</label>
-      <input type="text"
-        class="form-control"
-        placeholder="0.0"
-        id="od3"
-        name="od3"
-        data-ng-model="sheet.od3"
-        >
-    </div>
-    <div class="col-xs-6 col-sm-6 col-md-3">
-      <label for="param6">O.D. promedio</label>
-      <input type="text"
-        class="form-control"
-        placeholder="{{sheet.odAvg()}}"
-        id="od"
-        name="od"
-        readonly="readonly"
-        >
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-xs-12">
-      <h6>Cloro residual</h6>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-xs-6 col-sm-6 col-md-3">
-      <label for="param4">Cl residual 1</label>
-      <input type="text"
-        class="form-control"
-        placeholder="0.0"
-        id="cr1"
-        name="cr1"
-        data-ng-model="sheet.cr1"
-        >
-    </div>
-    <div class="col-xs-6 col-sm-6 col-md-3">
-      <label for="param5">Cl residual 2</label>
-      <input type="text"
-        class="form-control"
-        placeholder="0.0"
-        id="cr2"
-        name="cr2"
-        data-ng-model="sheet.cr2"
-        >
-    </div>
-    <div class="col-xs-6 col-sm-6 col-md-3">
-      <label for="param5">Cl residual 3</label>
-      <input type="text"
-        class="form-control"
-        placeholder="0.0"
-        id="cr3"
-        name="cr3"
-        data-ng-model="sheet.cr3"
-        >
-    </div>
-    <div class="col-xs-6 col-sm-6 col-md-3">
-      <label for="param6">Cl residual</label>
-      <input type="text"
-        class="form-control"
-        placeholder="{{sheet.crAvg()}}"
-        id="cr"
-        name="cr"
-        readonly="readonly"
-        >
+        <option data-ng-repeat="waveIntensity in sheet.waveIntensities"
+          value="{{waveIntensity.id_oleaje}}">
+          {{waveIntensity.oleaje}}
+        </option>
+      </select>
     </div>
   </div>
   <div class="row">
@@ -610,10 +509,6 @@
       </label>
     </div>
   </div>
-
-
-
-  <!-- PUNTOS Y RESULTADOS -->
   <div class="row">
     <div class="col-xs-12">
       <h4>Comentarios</h4>

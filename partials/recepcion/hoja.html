@@ -66,9 +66,15 @@
             </li>
             <li data-ng-show="sheet.sheet.plan.fecha_plan.length > 0">
               Fecha:
-              <strong>{{sheet.sheet.plan.fecha_plan || date}}</strong>
+              <strong>{{::sheet.sheet.plan.fecha_plan || date}}</strong>
             </li>
           </ul>
+          Responsable Muestreo:
+          <strong>
+            {{::sheet.sheet.plan.supervisor_muestreo.nombres}}
+            {{::sheet.sheet.plan.supervisor_muestreo.ap}}
+            {{::sheet.sheet.plan.supervisor_muestreo.am}}
+          </strong>
         </div>
         <div class="col-xs-12 col-sm-6">
           <div class="well well-sm">
@@ -89,10 +95,6 @@
       </div>
     </div>
   </div>
-
-
-
-  <!-- DATOS REFERENCIA -->
   <div class="row">
     <div class="col-xs-12">
       <h4>Referencia del muestreo</h4>
@@ -118,14 +120,14 @@
   </div>
   <div class="row">
     <div class="col-xs-12">
-      <h4>Inicio / Término de muestreo</h4>
+      <h4>Fecha / hora de muestreo</h4>
     </div>
   </div>
   <div class="row">
     <div class="col-xs-6 col-sm-4">
       <label for="startDate">
         <i class="glyphicon glyphicon-calendar"></i>
-        Fecha inicio
+        Fecha
       </label>
       <input type="text"
         class="form-control"
@@ -144,7 +146,7 @@
     <div class="col-xs-6 col-sm-2">
       <label for="startTime">
         <i class="glyphicon glyphicon-time"></i>
-        Hora inicio
+        Hora
       </label>
       <input type="text"
         class="form-control"
@@ -163,6 +165,7 @@
         data-bs-timepicker
         >
     </div>
+    <!--
     <div class="col-xs-6 col-sm-4">
       <label for="endDate">
         <i class="glyphicon glyphicon-calendar"></i>
@@ -204,13 +207,95 @@
         data-bs-timepicker
         >
     </div>
+    -->
   </div>
   <!-- PUNTOS Y RESULTADOS -->
   <div class="row">
     <div class="col-xs-12">
-      <h4>Resultados por punto</h4>
+      <h3>Resultados por punto</h3>
     </div>
   </div>
+  <div class="row"
+    data-ng-repeat="row in sheet.sheet.muestras">
+    <div class="col-xs-12">
+      <div class="row">
+        <div class="col-xs-12">
+          <h5>Punto: {{row.punto}}</h5>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="well well-sm">
+            Localidad:
+            <strong>{{row.localidad}}</strong>
+            Municipio:
+            <strong>{{row.municipio}}</strong>
+            <br>
+            Latitud:
+            <strong>{{row.lat}}</strong>
+            Longitud:
+            <strong>{{row.lng}}</strong>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+          <label for="sampleTime{{row.id_punto}}">
+            <i class="glyphicon glyphicon-time"></i>
+            Hora muestreo
+          </label>
+          <input type="text"
+            class="form-control"
+            id="sampleTime{{row.id_punto}}"
+            name="sampleTime{{row.id_punto}}"
+            placeholder="HH:mm"
+            required
+            data-ng-model="row.fecha_muestreo"
+            data-time-format="HH:mm"
+            data-date-type="date"
+            data-length="1"
+            data-hour-step="1"
+            data-minute-step="1"
+            data-arrow-behavior="picker"
+            data-auto-close="1"
+            data-bs-timepicker
+            >
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3"
+          data-ng-repeat="resultado in row.resultados"
+          >
+          <label for="result{{row.id_punto}}{{resultado.id_resultado}}">
+            {{resultado.parametro}}
+          </label>
+          <input type="text"
+            class="form-control"
+            placeholder="Ingrese un valor"
+            id="result{{row.id_punto}}{{resultado.id_resultado}}"
+            name="result{{row.id_punto}}{{resultado.id_resultado}}"
+            data-ng-model="resultado.valor_texto"
+            >
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12">
+          <h5>Comentarios muestra</h5>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-6">
+          <textarea rows="3" class="form-control well well-sm"
+            id="sheetComments{{row.id_punto}}"
+            name="sheetComments{{row.id_punto}}"
+            data-ng-model="row.comentarios_muestreo"
+            >
+          </textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--
   <div class="row"
     data-ng-repeat="result in sheet.results">
     <div class="col-xs-12">
@@ -421,23 +506,6 @@
       </div>
     </div>
   </div>
-
-  <!--
-  <div class="row">
-    <div class="col-xs-12 col-sm-6 col-lg-4"
-      data-ng-repeat="fieldParameter in sheet.fieldParameters">
-      <label for="fieldParameter{{fieldParameter.id_parametro}}">
-        {{fieldParameter.parametro}}
-      </label>
-      <input type="text"
-        class="form-control"
-        placeholder="Ingrese un valor"
-        id="fieldParameter{{fieldParameter.id_parametro}}"
-        name="fieldParameter{{fieldParameter.id_parametro}}"
-        data-ng-model="fieldParameter.valor"
-        >
-    </div>
-  </div>
   -->
   <div class="row">
     <div class="col-xs-12">
@@ -496,7 +564,7 @@
   </div>
   <div class="row">
     <div class="col-xs-12">
-      <h4>Preservación</h4>
+      <h4>Preservaciones  {{sheet.selectPreservations()}}</h4>
     </div>
   </div>
   <div class="row">
@@ -504,7 +572,9 @@
       data-ng-repeat="preservation in sheet.preservations">
       <label>
         <input type="checkbox"
-          value="{{preservation.selected}}">
+          value="{{preservation.selected}}"
+          data-ng-model="preservation.selected"
+          >
           {{preservation.preservacion}}
       </label>
     </div>

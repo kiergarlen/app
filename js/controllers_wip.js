@@ -22,57 +22,52 @@
     PreservationService, SheetService) {
     var vm = this;
     vm.user = TokenService.getUserFromToken();
+    vm.sheet = SheetService.query({sheetId: $routeParams.sheetId});
     vm.cloudCovers = CloudService.get();
     vm.windDirections = WindService.get();
     vm.waveIntensities = WaveService.get();
     vm.samplingNorms = SamplingNormService.get();
-    //vm.points = PointService.get();
-    vm.results = [];
-    vm.currentSample = {};
-    vm.currentPoint = {};
-    vm.samples = [];
-    vm.currentFieldResults = {};
-    vm.fieldParameters = FieldParameterService.get();
     vm.preservations = PreservationService.get();
-
+    vm.isPreservationListLoaded = false;
+    /*
     SheetService
       .query({sheetId: $routeParams.sheetId})
       .$promise
       .then(function success(response) {
         vm.sheet = response;
-        vm.results = vm.sheet.resultados;
-        vm.currentSample = {};
-          /*
-        if (vm.sheet.muestras.length > 0)
-        {
-          vm.samples = vm.sheet.muestras;
-          vm.currentFieldResults = ArrayUtilsService.selectItemFromCollection(
-           vm.samples,
-           'id_muestra',
-           vm.currentSample.id_muestra
-          ).resultados;
-          vm.currentPoint = ArrayUtilsService.selectItemFromCollection(
-           vm.points,
-           'id_punto',
-           vm.currentSample.id_punto
-          );
-        }
-          */
       });
-    vm.selectPoint = selectPoint;
+    */
+    vm.selectPreservations = selectPreservations;
+    vm.isFormValid = isFormValid;
     vm.submitForm = submitForm;
 
-    function selectPoint(idPoint) {
-      ArrayUtilsService.selectItemFromCollection(
-        vm.points,
-        'id_punto',
-        idPoint
-      );
-      vm.currentSample = ArrayUtilsService.selectItemFromCollection(
-       vm.samples,
-       'id_punto',
-       idPoint
-      );
+    function selectPreservations() {
+      var items = [];
+      if (vm.preservations.length > 0 && vm.sheet.preservaciones)
+      {
+        if (vm.sheet.preservaciones.length > 0 && !vm.isPreservationListLoaded)
+        {
+          console.log('forst');
+          ArrayUtilsService.seItemsFromReference(
+            vm.preservations,
+            vm.sheet.preservaciones,
+            'id_preservacion',
+            [
+              'selected'
+            ]
+          );
+          vm.isPreservationListLoaded = true;
+        }
+        else
+        {
+          vm.sheet.preservaciones = [];
+          vm.sheet.preservaciones = ArrayUtilsService.selectItemsFromCollection(
+            vm.preservations,
+            'selected',
+            true
+          ).slice();
+        }
+      }
     }
 
     function isFormValid() {

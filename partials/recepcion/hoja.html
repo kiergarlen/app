@@ -62,11 +62,15 @@
           <ul class="list-inline">
             <li>
               Folio:
-              <strong>{{::sheet.sheet.plan.folio}}</strong>
+              <strong>
+                {{::sheet.sheet.plan.folio}}
+              </strong>
             </li>
             <li data-ng-show="sheet.sheet.plan.fecha_plan.length > 0">
               Fecha:
-              <strong>{{::sheet.sheet.plan.fecha_plan || date}}</strong>
+              <strong>
+                {{::sheet.sheet.plan.fecha_plan || date}}
+              </strong>
             </li>
           </ul>
           Responsable Muestreo:
@@ -82,12 +86,16 @@
             <ul class="list-inline">
               <li>
                 Cliente:
-                <strong>{{::sheet.sheet.plan.cliente.cliente}}</strong>
+                <strong>
+                  {{::sheet.sheet.plan.cliente.cliente}}
+                </strong>
                 {{::sheet.sheet.plan.cliente.area}}
               </li>
               <li>
                 Contacto:
-                <strong>{{::sheet.sheet.plan.cliente.contacto}}</strong>
+                <strong>
+                  {{::sheet.sheet.plan.cliente.contacto}}
+                </strong>
               </li>
             </ul>
           </div>
@@ -564,7 +572,7 @@
   </div>
   <div class="row">
     <div class="col-xs-12">
-      <h4>Preservaciones  {{sheet.selectPreservations()}}</h4>
+      <h4>Preservaciones {{sheet.selectPreservations()}}</h4>
     </div>
   </div>
   <div class="row">
@@ -632,7 +640,7 @@
   <br>
   <button type="submit" class="btn btn-primary"
     value="Guardar" title="Guardar"
-    data-ng-click="sheet.validateForm()"
+    data-ng-click="sheet.submitForm()"
     >
     Guardar
   </button>

@@ -729,7 +729,10 @@
    * @this {Object} $scope - Contenedor para el modelo [AngularJS]
    * @param {Object} $routeParams - Proveedor de parámetros de ruta [AngularJS]
    * @param {Object} TokenService - Proveedor para manejo del token
+   * @param {Object} ValidationService - Proveedor para manejo de validación
+   * @param {Object} RestUtilsService - Proveedor para manejo de servicios REST
    * @param {Object} ArrayUtilsService - Proveedor para manejo de arreglos
+   * @param {Object} DateUtilsService - Proveedor para manejo de fechas
    * @param {Object} PlanObjectivesService - Proveedor de datos, Objetivos Plan de muestreo
    * @param {Object} PointsByPackageService - Proveedor de datos, Puntos de muestreo por paquete
    * @param {Object} DistrictService - Proveedor de datos, Municipios
@@ -744,12 +747,13 @@
    * @param {Object} SamplingInstrumentService - Proveedor de datos, Equipos de muestreo
    * @param {Object} PlanService - Proveedor de datos, Plan de muestreo
    */
-  function PlanController($scope, $routeParams, TokenService, ArrayUtilsService,
-    PlanObjectivesService, PointsByPackageService, DistrictService,
-    CityService, SamplingSupervisorService, SamplingEmployeeService,
-    PreservationService, ContainerService, ReactiveService,
-    MaterialService, CoolerService, SamplingInstrumentService,
-    PlanService) {
+  function PlanController($scope, $routeParams, TokenService,
+    ValidationSevice, RestUtilsService, ArrayUtilsService,
+    DateUtilsService, PlanObjectivesService, PointsByPackageService,
+    DistrictService, CityService, SamplingSupervisorService,
+    SamplingEmployeeService, PreservationService, ContainerService,
+    ReactiveService, MaterialService, CoolerService,
+    SamplingInstrumentService, PlanService) {
     var vm = this;
     vm.plan = PlanService.query({planId: $routeParams.planId});
     vm.user = TokenService.getUserFromToken();
@@ -1215,12 +1219,13 @@
     .module('sislabApp')
     .controller('PlanController',
       [
-        '$scope',
-        '$routeParams', 'TokenService', 'ArrayUtilsService',
-        'PlanObjectivesService', 'PointsByPackageService', 'DistrictService',
-        'CityService', 'SamplingSupervisorService', 'SamplingEmployeeService',
-        'PreservationService', 'ContainerService', 'ReactiveService',
-        'MaterialService', 'CoolerService', 'SamplingInstrumentService',
+        '$scope', '$routeParams', 'TokenService',
+        'ValidationSevice', 'RestUtilsService', 'ArrayUtilsService',
+        'DateUtilsService', 'PlanObjectivesService', 'PointsByPackageService',
+        'DistrictService', 'CityService', 'SamplingSupervisorService',
+        'SamplingEmployeeService', 'PreservationService', 'ContainerService',
+        'ReactiveService', 'MaterialService', 'CoolerService',
+        'SamplingInstrumentService', 'PlanService',
         'PlanService',
         PlanController
       ]

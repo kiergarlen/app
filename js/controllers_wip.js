@@ -14,15 +14,13 @@
    * @param {Object} WindService - Proveedor de datos, Direcciones viento
    * @param {Object} WaveService - Proveedor de datos, Intensidades oleaje
    * @param {Object} SamplingNormService - Proveedor de datos, Normas muestreo
-   * @param {Object} PointService - Proveedor de datos, Puntos de muestreo
-   * @param {Object} FieldParameterService - Proveedor de datos, Parámetros campo
    * @param {Object} PreservationService - Proveedor de datos, Preservaciones
    * @param {Object} SheetService - Proveedor de datos, Hojas de campo
    */
-  function SheetController($routeParams, TokenService, ValidationService,
-    ArrayUtilsService, DateUtilsService, CloudService,
-    WindService, WaveService, SamplingNormService,
-    PointService, FieldParameterService, PreservationService,
+  function SheetController($scope, $routeParams, TokenService,
+    ValidationService, RestUtilsService, ArrayUtilsService,
+    DateUtilsService, CloudService, WindService,
+    WaveService, SamplingNormService, PreservationService,
     SheetService) {
     var vm = this;
     vm.user = TokenService.getUserFromToken();
@@ -92,6 +90,7 @@
       m = 0,
       samples = [],
       results = [];
+      /*
       if (vm.sheet.muestras && vm.sheet.muestras.length > 0)
       {
         samples = vm.sheet.muestras;
@@ -103,26 +102,32 @@
             vm.message += samples[i].punto + ' ';
             return false;
           }
-          console.log(samples[i].resultados.slice());
-          break;
-            /*
           results = samples[i].resultados.slice();
           m = results.length;
           for (j = 0; j < m; j += 1) {
-            if (isNaN(samples[i].cantidad) || samples[i].cantidad < 1)
+            if (results[j].id_tipo_valor != 1)
             {
-              vm.message += ' Ingrese cantidad, para el reactivo ';
-              vm.message += '(Ver fila ' + (i + 1) + ')';
-              return false;
+              if (results[j].valor_texto.length > 0 && results[j].valor_texto.length < 2)
+              {
+                vm.message += ' Ingrese un valor para el parámetro ';
+                vm.message += results[j].parametro + ' ';
+                vm.message += samples[i].punto + ' ';
+                return false;
+              }
             }
-            if (isNaN(samples[i].lote) || samples[i].lote < 1)
+            else
             {
-              vm.message += ' Ingrese lote, para el reactivo ';
-              vm.message += '(Ver fila ' + (i + 1) + ')';
-              return false;
+              if (isNaN(results[j].valor) || results[j].valor < 0)
+              {
+                vm.message += ' Ingrese un valor para el parámetro ';
+                vm.message += results[j].parametro + ' ';
+                vm.message += samples[i].punto + ' ';
+                return false;
+              }
             }
+            if (isNaN(results[j].valor))
+            console.log(results[j].parametro + ': ' + results[j].valor_texto + ' [' + results[j].id_tipo_valor + ']');
           }
-            */
         }
       }
       else
@@ -130,6 +135,7 @@
         vm.message += ' No hay resultados ';
         return false;
       }
+      */
       return true;
     }
 
@@ -142,14 +148,13 @@
       }
       if (!DateUtilsService.isValidDate(new Date(vm.sheet.fecha_inicio)))
       {
-        vm.message += ' Ingrese una fecha/hora válida de muestreo ';
+        vm.message += ' Ingrese una fecha/hora de muestreo válida ';
         return false;
       }
-      if (!vm.isResultListValid)
+      if (!isResultListValid())
       {
         return false;
       }
-      /*
       if (vm.sheet.id_nubes < 1)
       {
         vm.message += ' Seleccione una cobertura de nubes ';
@@ -178,36 +183,34 @@
           return false;
         }
       }
-      */
       return true;
     }
 
     function submitForm() {
       if (isFormValid() && !vm.isDataSubmitted)
       {
-        console.log(vm.sheet);
         vm.isDataSubmitted = true;
-        if (vm.sheet.id_hoja > 0)
+        if (vm.sheet.id_hoja < 1)
         {
-          RestUtilsService
-            .saveData(
-              SheetService,
-              vm.sheet,
-              'recepcion/hoja',
-              'id_hoja'
-            );
+          //RestUtilsService
+          //  .saveData(
+          //    SheetService,
+          //    vm.sheet,
+          //    'recepcion/hoja',
+          //    'id_hoja'
+          //  );
         }
         else
         {
           if (vm.user.level < 3 || vm.sheet.sheet.id_status < 2)
           {
-            RestUtilsService
-              .updateData(
-                SheetService,
-                vm.sheet,
-                'recepcion/hoja',
-                'id_hoja'
-              );
+            //RestUtilsService
+            //  .updateData(
+            //    SheetService,
+            //    vm.sheet,
+            //    'recepcion/hoja',
+            //    'id_hoja'
+            //  );
           }
         }
       }
@@ -217,119 +220,11 @@
     .module('sislabApp')
     .controller('SheetController',
       [
-        '$routeParams', 'TokenService', 'ValidationService',
-        'ArrayUtilsService', 'DateUtilsService', 'CloudService',
-        'WindService', 'WaveService', 'SamplingNormService',
-        'PointService', 'FieldParameterService', 'PreservationService',
+        '$scope', '$routeParams', 'TokenService',
+        'ValidationService', 'RestUtilsService', 'ArrayUtilsService',
+        'DateUtilsService', 'CloudService', 'WindService',
+        'WaveService', 'SamplingNormService', 'PreservationService',
         'SheetService',
         SheetController
-      ]
-    );
-
-  // ReceptionController.js
-  /**
-   * @name ReceptionController
-   * @constructor
-   * @desc Controla la vista para capturar la recepción de muestras
-   * @this {Object} $scope - Contenedor para el modelo [AngularJS]
-   * @param {Object} ReceptionistService - Proveedor de datos, Recepcionistas
-   * @param {Object} ReceptionService - Proveedor de datos, Recepción muestras
-   */
-  function ReceptionController($routeParams, ReceptionistService,
-    ReceptionService) {
-    var vm = this;
-    vm.receptionists = ReceptionistService.get();
-    vm.reception = ReceptionService.query({receptionId: $routeParams.sheetId});
-
-    vm.selectReceptionist = selectReceptionist;
-    vm.validateForm = validateForm;
-    vm.submitReceptionForm = submitReceptionForm;
-
-    function selectReceptionist(idRecepcionist) {
-      var i = 0, l = vm.receptionists.length;
-      vm.reception.recepcionista = {};
-      for (i = 0; i < l; i += 1) {
-        if (vm.receptionists[i].id_empleado == idRecepcionist)
-        {
-          vm.reception.recepcionista = vm.receptionists[i];
-          break;
-        }
-      }
-      return vm.reception.recepcionista;
-    }
-
-    function validateForm() {
-
-    }
-
-    function submitReceptionForm() {
-      //send to verification service
-    }
-  }
-  angular
-    .module('sislabApp')
-    .controller('ReceptionController',
-      [
-        '$routeParams', 'ReceptionistService', 'ReceptionService',
-        ReceptionController
-      ]
-    );
-
-  // CustodyController.js
-  /**
-   * @name CustodyController
-   * @constructor
-   * @desc Controla la vista para capturar las Hojas de custodia
-   * @this {Object} $scope - Contenedor para el modelo [AngularJS]
-   * @param {Object} TokenService - Proveedor para manejo del token
-   * @param {Object} ArrayUtilsService - Proveedor para manejo de arreglos
-   * @param {Object} PreservationService - Proveedor de datos, Preservaciones
-   * @param {Object} ExpirationService - Proveedor de datos, Vigencias
-   * @param {Object} RequiredVolumeService - Proveedor de datos, Volúmenes requeridos
-   * @param {Object} ContainerService - Proveedor de datos, Recipientes
-   * @param {Object} CheckerService - Proveedor de datos, Responsables verificación
-   * @param {Object} CustodyService - Proveedor de datos, Cadenas de custodia
-   */
-  function CustodyController($routeParams, TokenService, ArrayUtilsService,
-    PreservationService, ExpirationService, RequiredVolumeService,
-    ContainerService, CheckerService, CustodyService) {
-    var vm = this;
-    vm.user = TokenService.getUserFromToken();
-    vm.preservations = PreservationService.get();
-    vm.expirations = ExpirationService.get();
-    vm.volumes = RequiredVolumeService.get();
-    vm.containers = ContainerService.get();
-    vm.checkers = CheckerService.get();
-    vm.custody = CustodyService.query({custodyId: $routeParams.custodyId});
-
-    vm.selectChecker = selectChecker;
-
-    vm.validateCustodyForm = validateCustodyForm;
-    vm.submitCustodyForm = submitCustodyForm;
-
-    function selectChecker(idChecker) {
-      ArrayUtilsService.selectItemFromCollection(
-        vm.checkers,
-        'id_responsable_verificacion',
-        idChecker
-      );
-    }
-
-    function validateCustodyForm() {
-
-    }
-
-    function submitCustodyForm () {
-
-    }
-  }
-  angular
-    .module('sislabApp')
-    .controller('CustodyController',
-      [
-        '$routeParams', 'TokenService', 'ArrayUtilsService',
-        'PreservationService', 'ExpirationService', 'RequiredVolumeService',
-        'ContainerService', 'CheckerService', 'CustodyService',
-        CustodyController
       ]
     );

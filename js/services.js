@@ -296,7 +296,7 @@
     }
 
     /**
-     * @function saveData
+     * @function updateData
      * @desc Envía los datos vía POST para actualizar un recurso en el servicio
      * @param {Object} service - Proveedor de datos a usar
      * @param {String} data - JSON a enviar al servicio

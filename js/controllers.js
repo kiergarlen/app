@@ -58,16 +58,16 @@
       ]
     );
 
-  //TasksListController.js
+  //TaskListController.js
   /**
-   * @name TasksListController
+   * @name TaskListController
    * @constructor
    * @desc Controla la vista para Tareas
    * @this {Object} $scope - Contenedor para el modelo [AngularJS]
    * @param {Object} TokenService - Proveedor para manejo del token
    * @param {Object} TaskService - Proveedor de datos, Tareas
    */
-  function TasksListController(TokenService, TaskService) {
+  function TaskListController(TokenService, TaskService) {
     var vm = this,
     userData;
     vm.userName = '';
@@ -81,23 +81,23 @@
   }
   angular
     .module('sislabApp')
-    .controller('TasksListController',
+    .controller('TaskListController',
       [
         'TokenService', 'TaskService',
-        TasksListController
+        TaskListController
       ]
     );
 
-  //StudiesListController.js
+  //StudyListController.js
   /**
-   * @name StudiesListController
+   * @name StudyListController
    * @constructor
    * @desc Controla la vista para el listado de Estudios
    * @this {Object} $scope - Contenedor para el modelo [AngularJS]
    * @param {Object} $location - Manejo de URL [AngularJS]
    * @param {Object} StudyService - Proveedor de datos, Estudios
    */
-  function StudiesListController($location, StudyService) {
+  function StudyListController($location, StudyService) {
     var vm = this;
     vm.studies = StudyService.get();
     vm.addStudy = addStudy;
@@ -113,10 +113,10 @@
   }
   angular
     .module('sislabApp')
-    .controller('StudiesListController',
+    .controller('StudyListController',
       [
         '$location', 'StudyService',
-        StudiesListController
+        StudyListController
       ]
     );
 
@@ -335,16 +335,16 @@
       ]
     );
 
-  //QuotesListController.js
+  //QuoteListController.js
   /**
-   * @name QuotesListController
+   * @name QuoteListController
    * @constructor
    * @desc Controla la vista para el listado de Solicitudes/Cotizaciones
    * @this {Object} $scope - Contenedor para el modelo [AngularJS]
    * @param {Object} $location - Manejo de URL [AngularJS]
    * @param {Object} QuoteService - Proveedor de datos, Solicitud
    */
-  function QuotesListController($location, QuoteService) {
+  function QuoteListController($location, QuoteService) {
     var vm = this;
     vm.quotes = QuoteService.get();
     vm.viewQuote = viewQuote;
@@ -356,10 +356,10 @@
   }
   angular
     .module('sislabApp')
-    .controller('QuotesListController',
+    .controller('QuoteListController',
       [
         '$location', 'QuoteService',
-        QuotesListController
+        QuoteListController
       ]
     );
 
@@ -503,16 +503,16 @@
       ]
     );
 
-  //OrdersListController.js
+  //OrderListController.js
   /**
-   * @name OrdersListController
+   * @name OrderListController
    * @constructor
    * @desc Controla la vista para el listado de Órdenes muestreo
    * @this {Object} $scope - Contenedor para el modelo [AngularJS]
    * @param {Object} $location - Manejo de URL [AngularJS]
    * @param {Object} OrderService - Proveedor de datos, Órdenes de muestreo
    */
-  function OrdersListController($location, OrderService) {
+  function OrderListController($location, OrderService) {
     var vm = this;
     vm.orders = OrderService.get();
     vm.viewOrder = viewOrder;
@@ -523,10 +523,10 @@
   }
   angular
     .module('sislabApp')
-    .controller('OrdersListController',
+    .controller('OrderListController',
       [
         '$location', 'OrderService',
-        OrdersListController
+        OrderListController
       ]
     );
 
@@ -694,16 +694,16 @@
       ]
     );
 
-  //PlansListController.js
+  //PlanListController.js
   /**
-   * @name PlansListController
+   * @name PlanListController
    * @constructor
    * @desc Controla la vista para el listado de Planes de muestreo
    * @this {Object} $scope - Contenedor para el modelo [AngularJS]
    * @param {Object} $location - Manejo de URL [AngularJS]
    * @param {Object} PlanService - Proveedor de datos, Planes de muestreo
    */
-  function PlansListController($location, PlanService) {
+  function PlanListController($location, PlanService) {
     var vm = this;
     vm.plans = PlanService.get();
     vm.viewPlan = viewPlan;
@@ -714,10 +714,10 @@
   }
   angular
     .module('sislabApp')
-    .controller('PlansListController',
+    .controller('PlanListController',
       [
         '$location', 'PlanService',
-        PlansListController
+        PlanListController
       ]
     );
 
@@ -734,12 +734,9 @@
    * @param {Object} ArrayUtilsService - Proveedor para manejo de arreglos
    * @param {Object} DateUtilsService - Proveedor para manejo de fechas
    * @param {Object} PlanObjectivesService - Proveedor de datos, Objetivos Plan de muestreo
-   * @param {Object} PointsByPackageService - Proveedor de datos, Puntos de muestreo por paquete
    * @param {Object} DistrictService - Proveedor de datos, Municipios
    * @param {Object} CityService - Proveedor de datos, Localidades
-   * @param {Object} SamplingSupervisorService - Proveedor de datos, Supervisores muestreo
    * @param {Object} SamplingEmployeeService - Proveedor de datos, Empleados muestreo
-   * @param {Object} PreservationService - Proveedor de datos, Preservaciones
    * @param {Object} ContainerService - Proveedor de datos, Recipientes
    * @param {Object} ReactiveService - Proveedor de datos, Reactivos
    * @param {Object} MaterialService - Proveedor de datos, Material
@@ -747,13 +744,12 @@
    * @param {Object} SamplingInstrumentService - Proveedor de datos, Equipos de muestreo
    * @param {Object} PlanService - Proveedor de datos, Plan de muestreo
    */
-  function PlanController($scope, $routeParams, TokenService,
-    ValidationSevice, RestUtilsService, ArrayUtilsService,
-    DateUtilsService, PlanObjectivesService, PointsByPackageService,
-    DistrictService, CityService, SamplingSupervisorService,
-    SamplingEmployeeService, PreservationService, ContainerService,
-    ReactiveService, MaterialService, CoolerService,
-    SamplingInstrumentService, PlanService) {
+  function PlanController($scope,$routeParams,TokenService,
+    ValidationService,RestUtilsService,ArrayUtilsService,
+    DateUtilsService,PlanObjectivesService,DistrictService,
+    CityService,SamplingEmployeeService,ContainerService,
+    ReactiveService,MaterialService,CoolerService,
+    SamplingInstrumentService,PlanService,) {
     var vm = this;
     vm.plan = PlanService.query({planId: $routeParams.planId});
     vm.user = TokenService.getUserFromToken();
@@ -761,9 +757,7 @@
     vm.instruments = SamplingInstrumentService.get();
     vm.cities = [];
     vm.districts = [];
-    vm.samplingSupervisors = SamplingSupervisorService.get();
     vm.samplingEmployees = SamplingEmployeeService.get();
-    vm.preservations = PreservationService.get();
     vm.containers = ContainerService.get();
     vm.reactives = ReactiveService.get();
     vm.materials = MaterialService.get();
@@ -780,14 +774,8 @@
     vm.selectReactives = selectReactives;
     vm.selectMaterials = selectMaterials;
     vm.selectCoolers = selectCoolers;
-    vm.isInstrumentListValid = isInstrumentListValid;
-    vm.isContainerListValid = isContainerListValid;
-    vm.isReactiveListValid = isReactiveListValid;
-    vm.isMaterialListValid = isMaterialListValid;
-    vm.isCoolerListValid = isCoolerListValid;
     vm.approveItem = approveItem;
     vm.rejectItem = rejectItem;
-    vm.isFormValid = isFormValid;
     vm.submitForm = submitForm;
 
     DistrictService.get()
@@ -1219,15 +1207,291 @@
     .module('sislabApp')
     .controller('PlanController',
       [
-        '$scope', '$routeParams', 'TokenService',
-        'ValidationSevice', 'RestUtilsService', 'ArrayUtilsService',
-        'DateUtilsService', 'PlanObjectivesService', 'PointsByPackageService',
-        'DistrictService', 'CityService', 'SamplingSupervisorService',
-        'SamplingEmployeeService', 'PreservationService', 'ContainerService',
-        'ReactiveService', 'MaterialService', 'CoolerService',
-        'SamplingInstrumentService', 'PlanService',
-        'PlanService',
+        '$scope','$routeParams','TokenService',
+        'ValidationService','RestUtilsService','ArrayUtilsService',
+        'DateUtilsService','PlanObjectivesService','DistrictService',
+        'CityService','SamplingEmployeeService','ContainerService',
+        'ReactiveService','MaterialService','CoolerService',
+        'SamplingInstrumentService','PlanService',
         PlanController
       ]
     );
 
+  //SheetListController.js
+  /**
+   * @name SheetListController
+   * @constructor
+   * @desc Controla la vista para el listado de Hojas de campo
+   * @this {Object} $scope - Contenedor para el modelo [AngularJS]
+   * @param {Object} $location - Manejo de URL [AngularJS]
+   * @param {Object} SheetService - Proveedor de datos, Hoja de campo
+   */
+  function SheetListController($location, SheetService) {
+    var vm = this;
+    vm.sheets = SheetService.get();
+    vm.viewFieldSheet = viewFieldSheet;
+
+    function viewFieldSheet(id) {
+      $location.path('/recepcion/hoja/' + parseInt(id));
+    }
+  }
+  angular
+    .module('sislabApp')
+    .controller('SheetListController',
+      [
+        '$location', 'SheetService',
+        SheetListController
+      ]
+    );
+
+  // SheetController.js
+  /**
+   * @name SheetController
+   * @constructor
+   * @desc Controla la vista para capturar la hoja de campo
+   * @this {Object} $scope - Contenedor para el modelo [AngularJS]
+   * @param {Object} $routeParams - Proveedor de parámetros de ruta [AngularJS]
+   * @param {Object} TokenService - Proveedor para manejo del token
+   * @param {Object} ValidationService - Proveedor para manejo de validación
+   * @param {Object} RestUtilsService - Proveedor para manejo de servicios REST
+   * @param {Object} ArrayUtilsService - Proveedor para manejo de arreglos
+   * @param {Object} DateUtilsService - Proveedor para manejo de fechas
+   * @param {Object} CloudService - Proveedor de datos, Coberturas nubes
+   * @param {Object} WindService - Proveedor de datos, Direcciones viento
+   * @param {Object} WaveService - Proveedor de datos, Intensidades oleaje
+   * @param {Object} SamplingNormService - Proveedor de datos, Normas muestreo
+   * @param {Object} PreservationService - Proveedor de datos, Preservaciones
+   * @param {Object} SheetService - Proveedor de datos, Hojas de campo
+   */
+  function SheetController($scope, $routeParams, TokenService,
+    ValidationService, RestUtilsService, ArrayUtilsService,
+    DateUtilsService, CloudService, WindService,
+    WaveService, SamplingNormService, PreservationService,
+    SheetService) {
+    var vm = this;
+    vm.user = TokenService.getUserFromToken();
+    vm.sheet = SheetService.query({sheetId: $routeParams.sheetId});
+    vm.cloudCovers = CloudService.get();
+    vm.windDirections = WindService.get();
+    vm.waveIntensities = WaveService.get();
+    vm.samplingNorms = SamplingNormService.get();
+    vm.preservations = PreservationService.get();
+    //SheetService
+    //  .query({sheetId: $routeParams.sheetId})
+    //  .$promise
+    //  .then(function success(response) {
+    //    vm.sheet = response;
+    //  });
+    vm.isPreservationListLoaded = false;
+    vm.isDataSubmitted = false;
+    vm.selectPreservations = selectPreservations;
+    vm.approveItem = approveItem;
+    vm.rejectItem = rejectItem;
+    vm.submitForm = submitForm;
+
+    function selectPreservations() {
+      var items = [];
+      if (vm.preservations.length > 0 && vm.sheet.preservaciones)
+      {
+        if (vm.sheet.preservaciones.length > 0 && !vm.isPreservationListLoaded)
+        {
+          ArrayUtilsService.seItemsFromReference(
+            vm.preservations,
+            vm.sheet.preservaciones,
+            'id_preservacion',
+            [
+              'selected'
+            ]
+          );
+          vm.isPreservationListLoaded = true;
+        }
+        else
+        {
+          vm.sheet.preservaciones = [];
+          vm.sheet.preservaciones = ArrayUtilsService
+            .selectItemsFromCollection(
+              vm.preservations,
+              'selected',
+              true
+            ).slice();
+        }
+      }
+    }
+
+    function approveItem() {
+      ValidationService.approveItem(vm.sheet, vm.user);
+    }
+
+    function rejectItem() {
+      ValidationService.rejectItem(vm.sheet, vm.user);
+    }
+
+    function isResultListValid(sample, sampleResults) {
+      var i = 0,
+      l = 0,
+      results = sampleResults.slice();
+      l = results.length;
+      for (i = 0; i < l; i += 1) {
+        if (results[i].valor_texto.length > 0)
+        {
+          if (results[i].id_tipo_valor == 2 && results[i].valor_texto.length < 2)
+          {
+            vm.message += ' Ingrese un valor para el parámetro ';
+            vm.message += results[i].parametro + ' ';
+            vm.message += sample.punto + ' ';
+            return false;
+          }
+          if (results[i].id_tipo_valor == 1 && isNaN(results[i].valor))
+          {
+            vm.message += ' Ingrese un valor numérico para el parámetro ';
+            vm.message += results[i].parametro + ' ';
+            vm.message += sample.punto + ' ';
+            return false;
+          }
+        }
+      }
+      return true;
+    }
+
+    function isSampleListValid() {
+      var i = 0,
+      l = 0,
+      samples = [];
+      if (vm.sheet.muestras && vm.sheet.muestras.length > 0)
+      {
+        samples = vm.sheet.muestras;
+        l = samples.length;
+        for (i = 0; i < l; i += 1) {
+          if (!DateUtilsService.isValidDate(new Date(samples[i].fecha_muestreo)))
+          {
+            vm.message += ' Ingrese una fecha/hora válida para el punto ';
+            vm.message += samples[i].punto + ' ';
+            return false;
+          }
+          isResultListValid(samples[i], samples[i].resultados);
+        }
+      }
+      else
+      {
+        vm.message += ' Sin resultados ';
+        return false;
+      }
+      return true;
+    }
+
+    function isFormValid() {
+      vm.message = '';
+      if (vm.sheet.id_metodo_muestreo < 1)
+      {
+        vm.message += ' Seleccione una Norma de referencia ';
+        return false;
+      }
+      if (!DateUtilsService.isValidDate(new Date(vm.sheet.fecha_inicio)))
+      {
+        vm.message += ' Ingrese una fecha/hora de muestreo válida ';
+        return false;
+      }
+      if (!isSampleListValid())
+      {
+        return false;
+      }
+      if (vm.sheet.id_nubes < 1)
+      {
+        vm.message += ' Seleccione una cobertura de nubes ';
+        return false;
+      }
+      if (vm.sheet.id_direccion_corriente < 1)
+      {
+        vm.message += ' Seleccione una dirección de corriente ';
+        return false;
+      }
+      if (vm.sheet.id_oleaje < 1)
+      {
+        vm.message += ' Seleccione una intensidad del oleaje ';
+        return false;
+      }
+      if (vm.sheet.preservaciones.length < 1)
+      {
+        vm.message += ' Seleccione al menos un tipo de preservación ';
+        return false;
+      }
+      if (vm.user.level < 3)
+      {
+        if (vm.sheet.id_status == 3 && vm.sheet.motivo_rechaza.length < 1)
+        {
+          vm.message += ' Ingrese el motivo de rechazo del Informe ';
+          return false;
+        }
+      }
+      return true;
+    }
+
+    function submitForm() {
+      if (isFormValid() && !vm.isDataSubmitted)
+      {
+        vm.isDataSubmitted = true;
+        if (vm.sheet.id_hoja < 1)
+        {
+          RestUtilsService
+            .saveData(
+              SheetService,
+              vm.sheet,
+              'recepcion/hoja',
+              'id_hoja'
+            );
+        }
+        else
+        {
+          if (vm.user.level < 3 || vm.sheet.sheet.id_status < 2)
+          {
+            RestUtilsService
+              .updateData(
+                SheetService,
+                vm.sheet,
+                'recepcion/hoja',
+                'id_hoja'
+              );
+          }
+        }
+      }
+    }
+  }
+  angular
+    .module('sislabApp')
+    .controller('SheetController',
+      [
+        '$scope', '$routeParams', 'TokenService',
+        'ValidationService', 'RestUtilsService', 'ArrayUtilsService',
+        'DateUtilsService', 'CloudService', 'WindService',
+        'WaveService', 'SamplingNormService', 'PreservationService',
+        'SheetService',
+        SheetController
+      ]
+    );
+
+  //ReceptionListController.js
+  /**
+   * @name ReceptionListController
+   * @constructor
+   * @desc Controla la vista para el listado de Recepciones
+   * @this {Object} $scope - Contenedor para el modelo [AngularJS]
+   * @param {Object} $location - Manejo de URL [AngularJS]
+   * @param {Object} ReceptionService - Proveedor de datos, Recepción muestras
+   */
+  function ReceptionListController($location, ReceptionService) {
+    var vm = this;
+    vm.receptions = ReceptionService.get();
+    vm.viewReception = viewReception;
+
+    function viewReception(id) {
+      $location.path('/recepcion/recepcion/' + parseInt(id));
+    }
+  }
+  angular
+    .module('sislabApp')
+    .controller('ReceptionListController',
+      [
+        '$location', 'ReceptionService',
+        ReceptionListController
+      ]
+    );

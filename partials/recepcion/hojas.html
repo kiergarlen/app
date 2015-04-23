@@ -54,7 +54,7 @@
               <th>Id Plan</th>
               <th>Status</th>
               <th>Ubicación</th>
-              <th>Fecha Inicio-Fin</th>
+              <th>Fecha</th>
               <th>Acciones</th>
             </tr>
           </thead>
@@ -86,14 +86,12 @@
                 {{item.municipio}}
               </td>
               <td>
-                Inicio {{item.fecha_inicio}}
-                <br>
-                Fin {{item.fecha_fin}}
+                {{item.fecha_inicio}}
               </td>
               <td>
                 <button class="btn btn-default"
                   value="Consultar" title="Consultar"
-                  data-ng-click="sheets.viewFieldSheet(item.id_hoja)"
+                  data-ng-click="sheets.viewSheet(item.id_hoja)"
                   >
                   <i class="glyphicon glyphicon-eye-open" aria-hidden="true"></i>
                 </button>

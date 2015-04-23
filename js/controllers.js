@@ -749,7 +749,7 @@
     DateUtilsService,PlanObjectivesService,DistrictService,
     CityService,SamplingEmployeeService,ContainerService,
     ReactiveService,MaterialService,CoolerService,
-    SamplingInstrumentService,PlanService,) {
+    SamplingInstrumentService,PlanService) {
     var vm = this;
     vm.plan = PlanService.query({planId: $routeParams.planId});
     vm.user = TokenService.getUserFromToken();

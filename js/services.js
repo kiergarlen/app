@@ -149,7 +149,7 @@
       avg = 0;
       if (l > 0)
       {
-        for (i; i < l; i++) {
+        for (i = 0; i < l; i++) {
           sum += parseFloat(collection[i]);
         }
         avg = Math.round((sum / l) * 1000 * 1000) / (1000 * 1000);
@@ -881,7 +881,7 @@
         headers: {
           'Auth-Token': TokenService.getToken()
         }
-      },
+      }
     });
   }
   angular

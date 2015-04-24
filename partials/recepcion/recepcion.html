@@ -58,29 +58,29 @@
         data-bs-collapse-target
         >
         <div class="col-xs-12 col-sm-6">
-          <h6>Plan</h6>
+          <h6>Recepción Muestras</h6>
         </div>
         <div class="col-xs-12 col-sm-6">
 
           <div class="row">
             <div class="col-xs-12">
-              <h4>Datos de Referencia</h4>
+              <h4>Datos de Referencia [hoja, plan] </h4>
               <div class="well well-sm">
                 <ul class="list-inline">
                   <li>
                     Folio:
-                    {{reception.reception.folio}}
+                    {{::reception.reception.folio}}
                     /
-                    {{reception.reception.ejercicio}}</li>
+                    {{::reception.reception.ejercicio}}</li>
                   <li data-ng-show="reception.reception.fecha_captura.length > 0">
                     Fecha captura:
-                    {{reception.reception.fecha_captura}}</li>
+                    {{::reception.reception.fecha_captura}}</li>
                   <li data-ng-show="reception.reception.fecha_valida.length > 0">
                     Fecha validación:
-                    {{reception.reception.fecha_valida}}</li>
+                    {{::reception.reception.fecha_valida}}</li>
                   <li data-ng-show="reception.reception.fecha_actualizacion.length > 0">
                     Fecha actualización:
-                    {{reception.reception.fecha_actualizacion}}</li>
+                    {{::reception.reception.fecha_actualizacion}}</li>
                 </ul>
                 <span class="label label-success"
                   data-ng-show="reception.reception.validado > 0">Validado</span>

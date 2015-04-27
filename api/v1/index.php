@@ -1113,7 +1113,7 @@ $validateAccessToken = function($app) {
 //		$app->response()->status(200);
 //		$app->response()->header('Content-Type', 'application/json');
 //		//echo ")]}',\n" . $result;
-echo $result;
+//echo $result;
 //	} catch (Exception $e) {
 //		$app->response()->status(400);
 //		$app->response()->header('X-Status-Reason', $e->getMessage());

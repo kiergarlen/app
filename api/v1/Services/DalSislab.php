@@ -11082,6 +11082,7 @@ class DALSislab
 					"fecha_recibe":"2015-03-23T13:05-06:00",
 					"fecha_verifica":"2015-03-23T13:06-06:00",
 					"fecha_captura":"2015-03-23T14:25-06:00",
+					"comentarios":"Sin observaciones",
 					"hoja":
 					{
 						"id_hoja":1,
@@ -11103,8 +11104,11 @@ class DALSislab
 							"id_custodia":0,
 							"id_paquete_puntos":1,
 							"id_punto":1,
+							"id_status":1,
+							"id_ejercicio":2015,
 							"id_municipio":14063,
 							"id_localidad":140630001,
+							"folio":"0419/2015",
 							"punto":"Ocotlán",
 							"descripcion":"Ocotlán",
 							"lat":20.346928,
@@ -11113,6 +11117,7 @@ class DALSislab
 							"municipio":"municipio 14063",
 							"localidad":"localidad 140630001",
 							"fecha_muestreo":"2015-03-23T09:00-06:00",
+							"selected":false,
 							"comentarios_muestreo":""
 						},
 						{
@@ -11128,8 +11133,11 @@ class DALSislab
 							"id_custodia":0,
 							"id_paquete_puntos":1,
 							"id_punto":2,
+							"id_status":1,
+							"id_ejercicio":2015,
 							"id_municipio":14030,
 							"id_localidad":140300038,
+							"folio":"0419/2015",
 							"punto":"Presa Corona",
 							"descripcion":"Cortina Presa Corona - Poncitlán",
 							"lat":20.399667,
@@ -11138,6 +11146,7 @@ class DALSislab
 							"municipio":"municipio 14030",
 							"localidad":"localidad 140300038",
 							"fecha_muestreo":"2015-03-23T10:40-06:00",
+							"selected":false,
 							"comentarios_muestreo":""
 						},
 						{
@@ -11153,8 +11162,11 @@ class DALSislab
 							"id_custodia":0,
 							"id_paquete_puntos":1,
 							"id_punto":3,
+							"id_status":1,
+							"id_ejercicio":2015,
 							"id_municipio":14051,
 							"id_localidad":140510013,
+							"folio":"0419/2015",
 							"punto":"Ex-hacienda Zap.",
 							"descripcion":"Ex-hacienda de Zapotlanejo",
 							"lat":20.442003,
@@ -11163,6 +11175,7 @@ class DALSislab
 							"municipio":"municipio 14051",
 							"localidad":"localidad 140510013",
 							"fecha_muestreo":"2015-03-23T11:23-06:00",
+							"selected":false,
 							"comentarios_muestreo":""
 						},
 						{
@@ -11178,8 +11191,11 @@ class DALSislab
 							"id_custodia":0,
 							"id_paquete_puntos":1,
 							"id_punto":4,
+							"id_status":1,
+							"id_ejercicio":2015,
 							"id_municipio":14051,
 							"id_localidad":140510001,
+							"folio":"0419/2015",
 							"punto":"Salto-Juanacatlán",
 							"descripcion":"Compuerta - Puente El Salto-Juanacatlán",
 							"lat":20.512825,
@@ -11188,6 +11204,7 @@ class DALSislab
 							"municipio":"municipio 14051",
 							"localidad":"localidad 140510001",
 							"fecha_muestreo":"2015-03-23T12:40-06:00",
+							"selected":false,
 							"comentarios_muestreo":""
 						},
 						{
@@ -11203,8 +11220,11 @@ class DALSislab
 							"id_custodia":0,
 							"id_paquete_puntos":1,
 							"id_punto":5,
+							"id_status":1,
+							"id_ejercicio":2015,
 							"id_municipio":14101,
 							"id_localidad":141010026,
+							"folio":"0419/2015",
 							"punto":"Puente Grande",
 							"descripcion":"Puente Grande",
 							"lat":20.571036,
@@ -11213,6 +11233,7 @@ class DALSislab
 							"municipio":"municipio 14101",
 							"localidad":"localidad 141010026",
 							"fecha_muestreo":"2015-03-23T13:14-06:00",
+							"selected":false,
 							"comentarios_muestreo":""
 						},
 						{
@@ -11228,8 +11249,11 @@ class DALSislab
 							"id_custodia":0,
 							"id_paquete_puntos":1,
 							"id_punto":6,
+							"id_status":1,
+							"id_ejercicio":2015,
 							"id_municipio":14101,
 							"id_localidad":141010009,
+							"folio":"0419/2015",
 							"punto":"Matatlán",
 							"descripcion":"Vertedero Controlado Matatlán",
 							"lat":20.668289,
@@ -11238,97 +11262,149 @@ class DALSislab
 							"municipio":"municipio 14101",
 							"localidad":"localidad 141010009",
 							"fecha_muestreo":"2015-03-23T13:51-06:00",
+							"selected":false,
 							"comentarios_muestreo":""
 						}
 					],
-					"verificacion":
+					"validacion_preservaciones":
 					[
 						{
-							"id_verificacion_muestra":1,
+							"id_validacion_preservacion":1,
+							"id_recepcion":1,
+							"id_preservacion":1,
+							"id_clase_parametro":1,
+							"clase_parametro":"Fisicoquímico",
+							"clase_param":"FQ",
+							"preservacion":"Hielo, 4°C",
+							"tipo_preservacion":"Fisicoquímico",
+							"descripcion":"Hielo, 4°C",
+							"preservado":true,
+							"selected":true,
+							"cantidad":0,
+							"activo":1
+						},
+						{
+							"id_validacion_preservacion":2,
+							"id_recepcion":1,
+							"id_preservacion":2,
+							"id_clase_parametro":2,
+							"clase_parametro":"Oxígeno disuelto",
+							"clase_param":"OD",
+							"preservacion":"2 ml MnSo4 + 2 ml Álcali Ioduro + 2 ml H2So4",
+							"tipo_preservacion":"Oxígeno disuelto",
+							"descripcion":"2 ml MnSo4 + 2 ml Álcali Ioduro + 2 ml H2So4",
+							"preservado":true,
+							"selected":true,
+							"cantidad":0,
+							"activo":1
+						},
+						{
+							"id_validacion_preservacion":3,
+							"id_recepcion":1,
+							"id_preservacion":3,
+							"id_clase_parametro":3,
+							"clase_parametro":"Sustancias activas al azul de metileno",
+							"clase_param":"SAAM",
+							"preservacion":"H2SO4, 4°C, pH<2",
+							"tipo_preservacion":"Sustancias activas al azul de metileno",
+							"descripcion":"H2SO4, 4°C, pH<2",
+							"preservado":true,
+							"selected":true,
+							"cantidad":0,
+							"activo":1
+						},
+						{
+							"id_validacion_preservacion":4,
+							"id_recepcion":1,
+							"id_preservacion":4,
+							"id_clase_parametro":4,
+							"clase_parametro":"Fenoles",
+							"clase_param":"FEN",
+							"preservacion":"5ml H2SO4 + CuSO4, 4°C, pH<2",
+							"tipo_preservacion":"Fenoles",
+							"descripcion":"5ml H2SO4 + CuSO4, 4°C, pH<2",
+							"preservado":false,
+							"selected":false,
+							"cantidad":0,
+							"activo":1
+						},
+						{
+							"id_validacion_preservacion":5,
+							"id_recepcion":1,
+							"id_preservacion":5,
+							"id_clase_parametro":5,
+							"clase_parametro":"Dureza",
+							"clase_param":"DZA",
+							"preservacion":"HNO3, pH<2",
+							"tipo_preservacion":"Dureza",
+							"descripcion":"HNO3, pH<2",
+							"preservado":false,
+							"selected":true,
+							"cantidad":0,
+							"activo":1
+						},
+						{
+							"id_validacion_preservacion":6,
+							"id_recepcion":1,
+							"id_preservacion":6,
+							"id_clase_parametro":6,
+							"clase_parametro":"Sulfuros",
+							"clase_param":"Sulfuros",
+							"preservacion":"6.5 ml de Acetato de Zn 2N, NaOH 6N pH≥9, 4°C",
+							"tipo_preservacion":"Sulfuros",
+							"descripcion":"6.5 ml de Acetato de Zn 2N, NaOH 6N pH≥9, 4°C",
+							"preservado":false,
+							"selected":false,
+							"cantidad":0,
+							"activo":1
+						},
+						{
+							"id_validacion_preservacion":8,
+							"id_recepcion":1,
+							"id_preservacion":8,
+							"id_clase_parametro":8,
+							"clase_parametro":"Grasas y aceites",
+							"clase_param":"GyA",
+							"preservacion":"HCL 1:1, 4°C, pH<2",
+							"tipo_preservacion":"Grasas y aceites",
+							"descripcion":"HCL1:1, 4°C, pH<2",
+							"preservado":false,
+							"selected":true,
+							"cantidad":0,
+							"activo":1
+						}
+					],
+					"validacion_contenedores":
+					[
+						{
+							"id_validacion_contenedor":1,
+							"id_recepcion":1,
 							"id_muestra":5,
-							"comentarios":"",
-							"preservaciones":
-							[
-								{
-									"id_preservacion":1,
-									"valido":1,
-									"selected":false
-								},
-								{
-									"id_preservacion":2,
-									"valido":1,
-									"selected":false
-								},
-								{
-									"id_preservacion":3,
-									"valido":1,
-									"selected":false
-								},
-								{
-									"id_preservacion":4,
-									"valido":1,
-									"selected":false
-								},
-								{
-									"id_preservacion":5,
-									"valido":1,
-									"selected":false
-								}
-							],
-							"volumenes":
-							[
-								{
-									"id_area":1,
-									"valido":1,
-									"selected":false
-								},
-								{
-									"id_area":2,
-									"valido":1,
-									"selected":false
-								},
-								{
-									"id_area":3,
-									"valido":1,
-									"selected":false
-								}
-							],
-							"vigencias":
-							[
-								{
-									"id_area":1,
-									"valido":1,
-									"selected":false
-								},
-								{
-									"id_area":2,
-									"valido":1,
-									"selected":false
-								},
-								{
-									"id_area":3,
-									"valido":1,
-									"selected":false
-								}
-							],
-							"contenedores":
-							[
-								{
-									"id_area":1,
-									"valido":1,
-									"selected":false
-								},
-								{
-									"id_area":2,
-									"valido":1,
-									"selected":false
-								},
-								{
-									"id_area":3,
-									"valido":1,
-									"selected":false
-								}
-							]
+							"id_area":1,
+							"volumen":true,
+							"vigencia":true,
+							"contenedor":true,
+							"selected":true
+						},
+						{
+							"id_validacion_contenedor":2,
+							"id_recepcion":1,
+							"id_muestra":5,
+							"id_area":2,
+							"volumen":true,
+							"vigencia":true,
+							"contenedor":true,
+							"selected":true
+						},
+						{
+							"id_validacion_contenedor":3,
+							"id_recepcion":1,
+							"id_muestra":5,
+							"id_area":3,
+							"volumen":true,
+							"vigencia":true,
+							"contenedor":true,
+							"selected":true
 						}
 					]
 				}
@@ -11348,6 +11424,7 @@ class DALSislab
 					"fecha_recibe":"2015-03-23T13:05-06:00",
 					"fecha_verifica":"2015-03-23T13:06-06:00",
 					"fecha_captura":"2015-03-23T14:25-06:00",
+					"comentarios":"Sin observaciones",
 					"hoja":
 					{
 						"id_hoja":1,
@@ -11531,94 +11608,145 @@ class DALSislab
 							"comentarios_muestreo":""
 						}
 					],
-					"verificacion":
+					"validacion_preservaciones":
 					[
 						{
-							"id_verificacion_muestra":1,
+							"id_validacion_preservacion":1,
+							"id_recepcion":1,
+							"id_preservacion":1,
+							"id_clase_parametro":1,
+							"clase_parametro":"Fisicoquímico",
+							"clase_param":"FQ",
+							"preservacion":"Hielo, 4°C",
+							"tipo_preservacion":"Fisicoquímico",
+							"descripcion":"Hielo, 4°C",
+							"preservado":true,
+							"selected":true,
+							"cantidad":0,
+							"activo":1
+						},
+						{
+							"id_validacion_preservacion":2,
+							"id_recepcion":1,
+							"id_preservacion":2,
+							"id_clase_parametro":2,
+							"clase_parametro":"Oxígeno disuelto",
+							"clase_param":"OD",
+							"preservacion":"2 ml MnSo4 + 2 ml Álcali Ioduro + 2 ml H2So4",
+							"tipo_preservacion":"Oxígeno disuelto",
+							"descripcion":"2 ml MnSo4 + 2 ml Álcali Ioduro + 2 ml H2So4",
+							"preservado":true,
+							"selected":true,
+							"cantidad":0,
+							"activo":1
+						},
+						{
+							"id_validacion_preservacion":3,
+							"id_recepcion":1,
+							"id_preservacion":3,
+							"id_clase_parametro":3,
+							"clase_parametro":"Sustancias activas al azul de metileno",
+							"clase_param":"SAAM",
+							"preservacion":"H2SO4, 4°C, pH<2",
+							"tipo_preservacion":"Sustancias activas al azul de metileno",
+							"descripcion":"H2SO4, 4°C, pH<2",
+							"preservado":true,
+							"selected":true,
+							"cantidad":0,
+							"activo":1
+						},
+						{
+							"id_validacion_preservacion":4,
+							"id_recepcion":1,
+							"id_preservacion":4,
+							"id_clase_parametro":4,
+							"clase_parametro":"Fenoles",
+							"clase_param":"FEN",
+							"preservacion":"5ml H2SO4 + CuSO4, 4°C, pH<2",
+							"tipo_preservacion":"Fenoles",
+							"descripcion":"5ml H2SO4 + CuSO4, 4°C, pH<2",
+							"preservado":false,
+							"selected":false,
+							"cantidad":0,
+							"activo":1
+						},
+						{
+							"id_validacion_preservacion":5,
+							"id_recepcion":1,
+							"id_preservacion":5,
+							"id_clase_parametro":5,
+							"clase_parametro":"Dureza",
+							"clase_param":"DZA",
+							"preservacion":"HNO3, pH<2",
+							"tipo_preservacion":"Dureza",
+							"descripcion":"HNO3, pH<2",
+							"preservado":false,
+							"selected":true,
+							"cantidad":0,
+							"activo":1
+						},
+						{
+							"id_validacion_preservacion":6,
+							"id_recepcion":1,
+							"id_preservacion":6,
+							"id_clase_parametro":6,
+							"clase_parametro":"Sulfuros",
+							"clase_param":"Sulfuros",
+							"preservacion":"6.5 ml de Acetato de Zn 2N, NaOH 6N pH≥9, 4°C",
+							"tipo_preservacion":"Sulfuros",
+							"descripcion":"6.5 ml de Acetato de Zn 2N, NaOH 6N pH≥9, 4°C",
+							"preservado":false,
+							"selected":false,
+							"cantidad":0,
+							"activo":1
+						},
+						{
+							"id_validacion_preservacion":8,
+							"id_recepcion":1,
+							"id_preservacion":8,
+							"id_clase_parametro":8,
+							"clase_parametro":"Grasas y aceites",
+							"clase_param":"GyA",
+							"preservacion":"HCL 1:1, 4°C, pH<2",
+							"tipo_preservacion":"Grasas y aceites",
+							"descripcion":"HCL1:1, 4°C, pH<2",
+							"preservado":false,
+							"selected":true,
+							"cantidad":0,
+							"activo":1
+						}
+					],
+					"validacion_contenedores":
+					[
+						{
+							"id_validacion_contenedor":1,
+							"id_recepcion":1,
 							"id_muestra":5,
-							"comentarios":"",
-							"preservaciones":
-							[
-								{
-									"id_preservacion":1,
-									"valido":1,
-									"selected":false
-								},
-								{
-									"id_preservacion":2,
-									"valido":1,
-									"selected":false
-								},
-								{
-									"id_preservacion":3,
-									"valido":1,
-									"selected":false
-								},
-								{
-									"id_preservacion":4,
-									"valido":1,
-									"selected":false
-								},
-								{
-									"id_preservacion":5,
-									"valido":1,
-									"selected":false
-								}
-							],
-							"volumenes":
-							[
-								{
-									"id_area":1,
-									"valido":1,
-									"selected":false
-								},
-								{
-									"id_area":2,
-									"valido":1,
-									"selected":false
-								},
-								{
-									"id_area":3,
-									"valido":1,
-									"selected":false
-								}
-							],
-							"vigencias":
-							[
-								{
-									"id_area":1,
-									"valido":1,
-									"selected":false
-								},
-								{
-									"id_area":2,
-									"valido":1,
-									"selected":false
-								},
-								{
-									"id_area":3,
-									"valido":1,
-									"selected":false
-								}
-							],
-							"contenedores":
-							[
-								{
-									"id_area":1,
-									"valido":1,
-									"selected":false
-								},
-								{
-									"id_area":2,
-									"valido":1,
-									"selected":false
-								},
-								{
-									"id_area":3,
-									"valido":1,
-									"selected":false
-								}
-							]
+							"id_area":1,
+							"volumen":true,
+							"vigencia":true,
+							"contenedor":true,
+							"selected":true
+						},
+						{
+							"id_validacion_contenedor":2,
+							"id_recepcion":1,
+							"id_muestra":5,
+							"id_area":2,
+							"volumen":true,
+							"vigencia":true,
+							"contenedor":true,
+							"selected":true
+						},
+						{
+							"id_validacion_contenedor":3,
+							"id_recepcion":1,
+							"id_muestra":5,
+							"id_area":3,
+							"volumen":true,
+							"vigencia":true,
+							"contenedor":true,
+							"selected":true
 						}
 					]
 				}
@@ -23513,7 +23641,7 @@ class DALSislab
 					"preservacion":"Hielo, 4°C",
 					"tipo_preservacion":"Fisicoquímico",
 					"descripcion":"Hielo, 4°C",
-					"preservado":0,
+					"preservado":false,
 					"selected":false,
 					"cantidad":0,
 					"activo":1
@@ -23526,7 +23654,7 @@ class DALSislab
 					"preservacion":"2 ml MnSo4 + 2 ml Álcali Ioduro + 2 ml H2So4",
 					"tipo_preservacion":"Oxígeno disuelto",
 					"descripcion":"2 ml MnSo4 + 2 ml Álcali Ioduro + 2 ml H2So4",
-					"preservado":0,
+					"preservado":false,
 					"selected":false,
 					"cantidad":0,
 					"activo":1
@@ -23539,7 +23667,7 @@ class DALSislab
 					"preservacion":"H2SO4, 4°C, pH<2",
 					"tipo_preservacion":"Sustancias activas al azul de metileno",
 					"descripcion":"H2SO4, 4°C, pH<2",
-					"preservado":0,
+					"preservado":false,
 					"selected":false,
 					"cantidad":0,
 					"activo":1
@@ -23552,7 +23680,7 @@ class DALSislab
 					"preservacion":"5ml H2SO4 + CuSO4, 4°C, pH<2",
 					"tipo_preservacion":"Fenoles",
 					"descripcion":"5ml H2SO4 + CuSO4, 4°C, pH<2",
-					"preservado":0,
+					"preservado":false,
 					"selected":false,
 					"cantidad":0,
 					"activo":1
@@ -23565,7 +23693,7 @@ class DALSislab
 					"preservacion":"HNO3, pH<2",
 					"tipo_preservacion":"Dureza",
 					"descripcion":"HNO3, pH<2",
-					"preservado":0,
+					"preservado":false,
 					"selected":false,
 					"cantidad":0,
 					"activo":1
@@ -23578,7 +23706,7 @@ class DALSislab
 					"preservacion":"6.5 ml de Acetato de Zn 2N, NaOH 6N pH≥9, 4°C",
 					"tipo_preservacion":"Sulfuros",
 					"descripcion":"6.5 ml de Acetato de Zn 2N, NaOH 6N pH≥9, 4°C",
-					"preservado":0,
+					"preservado":false,
 					"selected":false,
 					"cantidad":0,
 					"activo":1
@@ -23591,7 +23719,7 @@ class DALSislab
 					"preservacion":"HCL 1:1, 4°C, pH<2",
 					"tipo_preservacion":"Grasas y aceites",
 					"descripcion":"HCL1:1, 4°C, pH<2",
-					"preservado":0,
+					"preservado":false,
 					"selected":false,
 					"cantidad":0,
 					"activo":1

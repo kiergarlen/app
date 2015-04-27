@@ -1229,9 +1229,9 @@
   function SheetListController($location, SheetService) {
     var vm = this;
     vm.sheets = SheetService.get();
-    vm.viewFieldSheet = viewFieldSheet;
+    vm.viewSheet = viewSheet;
 
-    function viewFieldSheet(id) {
+    function viewSheet(id) {
       $location.path('/recepcion/hoja/' + parseInt(id));
     }
   }

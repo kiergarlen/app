@@ -10,18 +10,6 @@
     <h2 class="page-header">Recepciones de muestras</h2>
   </div>
 </div>
-<div class="row">
-  <div class="col-xs-12">
-    <button type="submit" class="btn btn-primary"
-      value="Nueva" title="Nueva"
-      data-ng-click="receptions.addReception()"
-      >
-      <i class="glyphicon glyphicon-plus" aria-hidden="true"></i>
-      Nueva Recepción Muestra
-    </button>
-    <br>
-  </div>
-</div>
 <form class="form" role="form"
   name="clientsForm"
   novalidate
@@ -34,7 +22,7 @@
   <div class="row">
     <div class="col-xs-12 col-sm-8">
       <label for="receptionSearch" class="sr-only">
-        Ingrese una búsqueda (Municipio, Localidad, Calle, etc.)
+        Ingrese una búsqueda
       </label>
       <div class="input-group">
         <div class="input-group-addon">
@@ -42,7 +30,7 @@
         </div>
         <input type="text"
           class="form-control"
-          placeholder="Ingrese una búsqueda (Municipio, Localidad, Calle, etc.)"
+          placeholder="Ingrese una búsqueda"
           id="receptionSearch"
           name="receptionSearch"
           data-ng-model="receptions.filter.$">
@@ -62,11 +50,12 @@
           id="receptionsList">
           <thead>
             <tr>
+              <th>Id Hoja Campo</th>
               <th>Id Recepción</th>
               <th>Status</th>
-              <th>Muestra</th>
               <th>Fecha Muestreo</th>
               <th>Fecha Recepción</th>
+              <th>Acciones</th>
             </tr>
           </thead>
           <tbody>
@@ -75,6 +64,9 @@
               | filter:receptions.filter.$"
               id="receptionId{{item.id_recepcion}}"
               data-ng-click="receptions.selectRow($event)">
+              <td>
+                {{item.id_hoja}}
+              </td>
               <td>
                 {{item.id_recepcion}}
               </td>
@@ -89,13 +81,18 @@
                 </span>
               </td>
               <td>
-                {{item.calle}}
+                {{item.hoja.fecha_muestreo | date: 'yyyy-MM-dd'}}
               </td>
               <td>
-                {{item.fecha_muestreo}}
+                {{item.fecha_recepcion | date: 'yyyy-MM-dd'}}
               </td>
               <td>
-                {{item.fecha_recepcion}}
+                <button class="btn btn-default"
+                  value="Consultar" title="Consultar"
+                  data-ng-click="receptions.viewReception(item.id_recepcion)"
+                  >
+                  <i class="glyphicon glyphicon-eye-open" aria-hidden="true"></i>
+                </button>
               </td>
             </tr>
           </tbody>

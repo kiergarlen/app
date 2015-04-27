@@ -136,19 +136,6 @@
     </div>
   </div>
   <div class="row">
-    <div class="col-xs-12 col-sm-6 col-md-3">
-      <label for="sampleNumber">Número muestra</label>
-      <input type="text"
-        class="form-control"
-        placeholder=""
-        id="sampleNumber"
-        name="sampleNumber"
-        required
-        data-ng-model="reception.muestra.folio"
-        >
-    </div>
-  </div>
-  <div class="row">
     <div class="col-xs-12">
       <h4>Muestreo</h4>
     </div>
@@ -165,7 +152,7 @@
         name="samplingDate"
         placeholder="aaaa-mm-dd"
         required
-        data-ng-model="reception.reception.fecha_muestreo"
+        data-ng-model="reception.reception.hoja.fecha_muestreo"
         data-date-format="yyyy-MM-dd"
         data-date-type="date"
         data-autoclose="1"
@@ -184,7 +171,7 @@
         name="samplingTime"
         placeholder="HH:mm"
         required
-        data-ng-model="reception.reception.fecha_muestreo"
+        data-ng-model="reception.reception.hoja.fecha_muestreo"
         data-time-format="HH:mm"
         data-date-type="date"
         data-length="1"
@@ -213,7 +200,7 @@
         name="receptionDate"
         placeholder="aaaa-mm-dd"
         required
-        data-ng-model="reception.reception.fecha_recepcion"
+        data-ng-model="reception.reception.fecha_recibe"
         data-date-format="yyyy-MM-dd"
         data-date-type="date"
         data-autoclose="1"
@@ -232,7 +219,7 @@
         name="receptionTime"
         placeholder="HH:mm"
         required
-        data-ng-model="reception.reception.fecha_recepcion"
+        data-ng-model="reception.reception.fecha_recibe"
         data-time-format="HH:mm"
         data-date-type="date"
         data-length="1"
@@ -265,6 +252,27 @@
       </select>
     </div>
   </div>
+
+  <div class="row">
+    <div class="col-xs-12 col-sm-6 col-md-3">
+      <label for="sampleNumber">Número muestra</label>
+      <input type="text"
+        class="form-control"
+        placeholder=""
+        id="sampleNumber"
+        name="sampleNumber"
+        required
+        data-ng-model="reception.muestra.folio"
+        >
+    </div>
+  </div>
+
+
+
+
+
+
+
   <div class="row">
     <div class="col-xs-12">
       <label for="sampleDescriptionText">
@@ -290,7 +298,7 @@
   </div>
   <div class="row">
     <div class="col-xs-12 col-sm-6 col-md-4"
-      data-ng-repeat="preservation in custody.preservations">
+      data-ng-repeat="preservation in reception.preservations">
       <label>
         <input type="checkbox"
           value="{{preservation.selected}}">
@@ -305,7 +313,7 @@
   </div>
   <div class="row">
     <div class="col-xs-12 col-sm-6 col-md-4"
-      data-ng-repeat="expiration in custody.expirations">
+      data-ng-repeat="expiration in reception.expirations">
       <label>
         <input type="checkbox"
           value="{{expiration.selected}}">
@@ -320,7 +328,7 @@
   </div>
   <div class="row">
     <div class="col-xs-12 col-sm-6 col-md-4"
-      data-ng-repeat="volume in custody.volumes">
+      data-ng-repeat="volume in reception.volumes">
       <label>
         <input type="checkbox"
           value="{{volume.selected}}">
@@ -335,7 +343,7 @@
   </div>
   <div class="row">
     <div class="col-xs-12 col-sm-6 col-md-4"
-      data-ng-repeat="container in custody.containers">
+      data-ng-repeat="container in reception.containers">
       <label>
         <input type="checkbox"
           value="{{container.selected}}">
@@ -352,13 +360,14 @@
         id="checkerSelect"
         name="checkerSelect"
         required
-        data-ng-model="custody.custody.id_responsable_verificacion"
+        data-ng-model="reception.reception.id_verificador"
         >
-        <option data-ng-repeat="checker in custody.checkers"
-          value="{{checker.id_empleado}}">
-          {{checker.nombres}}
-          {{checker.ap}}
-          {{checker.am}}
+        <option
+          data-ng-repeat="receptionist in reception.receptionists"
+          value="{{receptionist.id_empleado}}">
+          {{receptionist.nombres}}
+          {{receptionist.ap}}
+          {{receptionist.am}}
         </option>
       </select>
     </div>
@@ -375,7 +384,7 @@
         name="verifyDate"
         placeholder="aaaa-mm-dd"
         required
-        data-ng-model="reception.reception.fecha_verificacion"
+        data-ng-model="reception.reception.fecha_verifica"
         data-date-format="yyyy-MM-dd"
         data-date-type="date"
         data-autoclose="1"

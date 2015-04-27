@@ -10,22 +10,21 @@
    * @param {Object} RestUtilsService - Proveedor para manejo de servicios REST
    * @param {Object} ArrayUtilsService - Proveedor para manejo de arreglos
    * @param {Object} DateUtilsService - Proveedor para manejo de fechas
-   * @param {Object} ReceptionistService - Proveedor de datos, Recepcionistas
+   * @param {Object} SamplingEmployeeService - Proveedor de datos, Empleados muestreo
    * @param {Object} ReceptionService - Proveedor de datos, Recepción muestras
    */
   function ReceptionController($scope, $routeParams, TokenService,
     ValidationService, RestUtilsService, ArrayUtilsService,
-    DateUtilsService, ReceptionistService, ReceptionService) {
+    DateUtilsService, SamplingEmployeeService, ReceptionService) {
     var vm = this;
     vm.user = TokenService.getUserFromToken();
-    vm.receptionists = ReceptionistService.get();
-    vm.reception = ReceptionService.query({receptionId: $routeParams.sheetId});
+    vm.receptionists = SamplingEmployeeService.get();
+    vm.reception = ReceptionService.query({receptionId: $routeParams.receptionId});
 
-    vm.selectReceptionist = selectReceptionist;
     vm.approveItem = approveItem;
     vm.rejectItem = rejectItem;
     vm.submitForm = submitForm;
-
+    /*
     function selectReceptionist(idRecepcionist) {
       var i = 0, l = vm.receptionists.length;
       vm.reception.recepcionista = {};
@@ -38,12 +37,20 @@
       }
       return vm.reception.recepcionista;
     }
+    */
+    function approveItem() {
+      ValidationService.approveItem(vm.sheet, vm.user);
+    }
 
-    function validateForm() {
+    function rejectItem() {
+      ValidationService.rejectItem(vm.sheet, vm.user);
+    }
+
+    function isFormValid() {
 
     }
 
-    function submitReceptionForm() {
+    function submitForm() {
       //send to verification service
     }
   }
@@ -53,7 +60,7 @@
       [
         '$scope', '$routeParams', 'TokenService',
         'ValidationService', 'RestUtilsService', 'ArrayUtilsService',
-        'DateUtilsService','ReceptionistService', 'ReceptionService',
+        'DateUtilsService','SamplingEmployeeService', 'ReceptionService',
         ReceptionController
       ]
     );

@@ -11251,68 +11251,82 @@ class DALSislab
 							[
 								{
 									"id_preservacion":1,
-									"conforme":1
+									"valido":1,
+									"selected":false
 								},
 								{
 									"id_preservacion":2,
-									"conforme":1
+									"valido":1,
+									"selected":false
 								},
 								{
 									"id_preservacion":3,
-									"conforme":1
+									"valido":1,
+									"selected":false
 								},
 								{
 									"id_preservacion":4,
-									"conforme":1
+									"valido":1,
+									"selected":false
 								},
 								{
 									"id_preservacion":5,
-									"conforme":1
+									"valido":1,
+									"selected":false
 								}
 							],
 							"volumenes":
 							[
 								{
 									"id_area":1,
-									"conforme":1
+									"valido":1,
+									"selected":false
 								},
 								{
 									"id_area":2,
-									"conforme":1
+									"valido":1,
+									"selected":false
 								},
 								{
 									"id_area":3,
-									"conforme":1
+									"valido":1,
+									"selected":false
 								}
 							],
 							"vigencias":
 							[
 								{
 									"id_area":1,
-									"conforme":1
+									"valido":1,
+									"selected":false
 								},
 								{
 									"id_area":2,
-									"conforme":1
+									"valido":1,
+									"selected":false
 								},
 								{
 									"id_area":3,
-									"conforme":1
+									"valido":1,
+									"selected":false
 								}
 							],
 							"contenedores":
 							[
 								{
 									"id_area":1,
-									"conforme":1
+									"valido":1,
+									"selected":false
 								},
 								{
 									"id_area":2,
-									"conforme":1
+									"valido":1,
+									"selected":false
 								},
 								{
 									"id_area":3,
-									"conforme":1
+									"valido":1,
+									"selected":false
 								}
 							]
 						}
@@ -11355,8 +11369,11 @@ class DALSislab
 							"id_custodia":0,
 							"id_paquete_puntos":1,
 							"id_punto":1,
+							"id_status":1,
+							"id_ejercicio":2015,
 							"id_municipio":14063,
 							"id_localidad":140630001,
+							"folio":"0419/2015",
 							"punto":"Ocotlán",
 							"descripcion":"Ocotlán",
 							"lat":20.346928,
@@ -11365,6 +11382,7 @@ class DALSislab
 							"municipio":"municipio 14063",
 							"localidad":"localidad 140630001",
 							"fecha_muestreo":"2015-03-23T09:00-06:00",
+							"selected":false,
 							"comentarios_muestreo":""
 						},
 						{
@@ -11380,8 +11398,11 @@ class DALSislab
 							"id_custodia":0,
 							"id_paquete_puntos":1,
 							"id_punto":2,
+							"id_status":1,
+							"id_ejercicio":2015,
 							"id_municipio":14030,
 							"id_localidad":140300038,
+							"folio":"0419/2015",
 							"punto":"Presa Corona",
 							"descripcion":"Cortina Presa Corona - Poncitlán",
 							"lat":20.399667,
@@ -11390,6 +11411,7 @@ class DALSislab
 							"municipio":"municipio 14030",
 							"localidad":"localidad 140300038",
 							"fecha_muestreo":"2015-03-23T10:40-06:00",
+							"selected":false,
 							"comentarios_muestreo":""
 						},
 						{
@@ -11405,8 +11427,11 @@ class DALSislab
 							"id_custodia":0,
 							"id_paquete_puntos":1,
 							"id_punto":3,
+							"id_status":1,
+							"id_ejercicio":2015,
 							"id_municipio":14051,
 							"id_localidad":140510013,
+							"folio":"0419/2015",
 							"punto":"Ex-hacienda Zap.",
 							"descripcion":"Ex-hacienda de Zapotlanejo",
 							"lat":20.442003,
@@ -11415,6 +11440,7 @@ class DALSislab
 							"municipio":"municipio 14051",
 							"localidad":"localidad 140510013",
 							"fecha_muestreo":"2015-03-23T11:23-06:00",
+							"selected":false,
 							"comentarios_muestreo":""
 						},
 						{
@@ -11430,8 +11456,11 @@ class DALSislab
 							"id_custodia":0,
 							"id_paquete_puntos":1,
 							"id_punto":4,
+							"id_status":1,
+							"id_ejercicio":2015,
 							"id_municipio":14051,
 							"id_localidad":140510001,
+							"folio":"0419/2015",
 							"punto":"Salto-Juanacatlán",
 							"descripcion":"Compuerta - Puente El Salto-Juanacatlán",
 							"lat":20.512825,
@@ -11440,6 +11469,7 @@ class DALSislab
 							"municipio":"municipio 14051",
 							"localidad":"localidad 140510001",
 							"fecha_muestreo":"2015-03-23T12:40-06:00",
+							"selected":false,
 							"comentarios_muestreo":""
 						},
 						{
@@ -11455,8 +11485,11 @@ class DALSislab
 							"id_custodia":0,
 							"id_paquete_puntos":1,
 							"id_punto":5,
+							"id_status":1,
+							"id_ejercicio":2015,
 							"id_municipio":14101,
 							"id_localidad":141010026,
+							"folio":"0419/2015",
 							"punto":"Puente Grande",
 							"descripcion":"Puente Grande",
 							"lat":20.571036,
@@ -11465,6 +11498,7 @@ class DALSislab
 							"municipio":"municipio 14101",
 							"localidad":"localidad 141010026",
 							"fecha_muestreo":"2015-03-23T13:14-06:00",
+							"selected":false,
 							"comentarios_muestreo":""
 						},
 						{
@@ -11480,8 +11514,11 @@ class DALSislab
 							"id_custodia":0,
 							"id_paquete_puntos":1,
 							"id_punto":6,
+							"id_status":1,
+							"id_ejercicio":2015,
 							"id_municipio":14101,
 							"id_localidad":141010009,
+							"folio":"0419/2015",
 							"punto":"Matatlán",
 							"descripcion":"Vertedero Controlado Matatlán",
 							"lat":20.668289,
@@ -11490,6 +11527,7 @@ class DALSislab
 							"municipio":"municipio 14101",
 							"localidad":"localidad 141010009",
 							"fecha_muestreo":"2015-03-23T13:51-06:00",
+							"selected":false,
 							"comentarios_muestreo":""
 						}
 					],
@@ -11503,68 +11541,82 @@ class DALSislab
 							[
 								{
 									"id_preservacion":1,
-									"conforme":1
+									"valido":1,
+									"selected":false
 								},
 								{
 									"id_preservacion":2,
-									"conforme":1
+									"valido":1,
+									"selected":false
 								},
 								{
 									"id_preservacion":3,
-									"conforme":1
+									"valido":1,
+									"selected":false
 								},
 								{
 									"id_preservacion":4,
-									"conforme":1
+									"valido":1,
+									"selected":false
 								},
 								{
 									"id_preservacion":5,
-									"conforme":1
+									"valido":1,
+									"selected":false
 								}
 							],
 							"volumenes":
 							[
 								{
 									"id_area":1,
-									"conforme":1
+									"valido":1,
+									"selected":false
 								},
 								{
 									"id_area":2,
-									"conforme":1
+									"valido":1,
+									"selected":false
 								},
 								{
 									"id_area":3,
-									"conforme":1
+									"valido":1,
+									"selected":false
 								}
 							],
 							"vigencias":
 							[
 								{
 									"id_area":1,
-									"conforme":1
+									"valido":1,
+									"selected":false
 								},
 								{
 									"id_area":2,
-									"conforme":1
+									"valido":1,
+									"selected":false
 								},
 								{
 									"id_area":3,
-									"conforme":1
+									"valido":1,
+									"selected":false
 								}
 							],
 							"contenedores":
 							[
 								{
 									"id_area":1,
-									"conforme":1
+									"valido":1,
+									"selected":false
 								},
 								{
 									"id_area":2,
-									"conforme":1
+									"valido":1,
+									"selected":false
 								},
 								{
 									"id_area":3,
-									"conforme":1
+									"valido":1,
+									"selected":false
 								}
 							]
 						}

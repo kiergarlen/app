@@ -132,11 +132,6 @@
   </div>
   <div class="row">
     <div class="col-xs-12">
-      <h4>Muestra</h4>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-xs-12">
       <h4>Muestreo</h4>
     </div>
   </div>
@@ -254,41 +249,84 @@
   </div>
 
   <div class="row">
-    <div class="col-xs-12 col-sm-6 col-md-3">
-      <label for="sampleNumber">Número muestra</label>
-      <input type="text"
-        class="form-control"
-        placeholder=""
-        id="sampleNumber"
-        name="sampleNumber"
-        required
-        data-ng-model="reception.muestra.folio"
-        >
+    <div class="col-xs-12">
+      <h4>Muestras <small>(Plan Muestreo)</small></h4>
     </div>
   </div>
-
-
-
-
-
-
-
   <div class="row">
     <div class="col-xs-12">
-      <label for="sampleDescriptionText">
-        Descripción de la muestra
-      </label>
-      <textarea rows="2" class="form-control well well-sm"
-        id="sampleDescriptionText"
-        name="sampleDescriptionText"
-        data-ng-model="reception.reception.descripcion"
-        >
-      </textarea>
+      <div class="row">
+        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3"
+          data-ng-repeat="sample in reception.reception.muestras"
+          >
+          <label>
+            <input type="checkbox"
+              data-ng-model="sample.selected"
+              name="{{sample.id_muestra}}"
+              title="{{sample.punto}}"
+              />
+              [{{sample.id_muestra}}]
+              {{sample.punto}}
+          </label>
+        </div>
+      </div>
     </div>
   </div>
+  <!--
+      <div class="row">
+        <div class="col-xs-12">
+          <h5>Comentarios muestra</h5>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-6">
+          <textarea rows="3" class="form-control well well-sm"
+            id="sample"
+            name="sample"
+            data-ng-model="sample.comentarios_muestreo"
+            >
+          </textarea>
+        </div>
+      </div>
+  -->
+  <!--
+      <div class="row">
+        <div class="col-xs-12 col-sm-6 col-md-3">
+          <label for="sampleNumber">
+            Folio muestra
+          </label>
+          <input type="text" class="form-control"
+            id¨="sampleKey{{sample.id_muestra}}"
+            name¨="sampleKey{{sample.id_muestra}}"
+            placeholder="Folio muestra"
+            required
+            data-ng-model="sample.folio"
+            >
+        </div>
+      </div>
+  -->
   <div class="row">
     <div class="col-xs-12">
       <h4>Verificación</h4>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12 col-sm-6">
+      <label for="sampleSelect">
+        Muestra a verificar
+      </label>
+      <select class="form-control"
+        id="sampleSelect"
+        name="sampleSelect"
+        required
+        data-ng-model="sheet.sheet.verificacion.id_muestra"
+        >
+        <option data-ng-repeat="point in reception.reception.muestras"
+          value="{{point.id_muestra}}">
+          {{point.punto}}
+        </option>
+      </select>
+    </div>
     </div>
   </div>
   <div class="row">
@@ -406,20 +444,39 @@
       </textarea>
     </div>
   </div>
-  <div class="row">
+  <br>
+  <div class="row"
+    data-ng-show="reception.user.level < 3">
     <div class="col-xs-12">
-      <h4>Áreas receptoras</h4>
+      <h4>Validación</h4>
     </div>
-  </div>
-  <div class="row">
-    <div class="col-xs-12"
-      data-ng-repeat="area in reception.reception.areas_seleccionadas">
-      <label>
-        <input type="checkbox"
-          data-ng-model="area.selected"
-          name="{{area.area}}" />
-        {{area.area}}
+    <div class="col-xs-12 col-sm-5 well wel-sm ">
+      <button class="btn btn-success"
+        value="Validar" title="Validar"
+        data-ng-click="reception.approveItem()"
+        >
+        <i class="glyphicon glyphicon-ok" aria-hidden="true"></i>
+        Validar
+      </button>
+      <button class="btn btn-danger"
+        value="Rechazar" title="Rechazar"
+        data-ng-click="reception.rejectItem()"
+        >
+        <i class="glyphicon glyphicon-remove" aria-hidden="true"></i>
+        Rechazar
+      </button>
+    </div>
+    <div class="col-xs-12 col-sm-7 well wel-sm ">
+      <label class="sr-only" for="rejectText">
+        Motivo rechazo
       </label>
+      <input type="text" class="form-control"
+        id="rejectText"
+        name="rejectText"
+        placeholder="Especifique motivo rechazo"
+        data-ng-disabled="reception.reception.id_status != 3"
+        data-ng-model="reception.reception.motivo_rechaza"
+        >
     </div>
   </div>
   <br>

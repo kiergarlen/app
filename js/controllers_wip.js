@@ -20,12 +20,12 @@
     vm.user = TokenService.getUserFromToken();
     vm.receptionists = SamplingEmployeeService.get();
     vm.reception = ReceptionService.query({receptionId: $routeParams.receptionId});
-
+    vm.isDataSubmitted = false;
     vm.approveItem = approveItem;
     vm.rejectItem = rejectItem;
     vm.submitForm = submitForm;
-    /*
-    function selectReceptionist(idRecepcionist) {
+    function selectSample() {
+      /*
       var i = 0, l = vm.receptionists.length;
       vm.reception.recepcionista = {};
       for (i = 0; i < l; i += 1) {
@@ -36,22 +36,55 @@
         }
       }
       return vm.reception.recepcionista;
+      */
     }
-    */
     function approveItem() {
-      ValidationService.approveItem(vm.sheet, vm.user);
+      ValidationService.approveItem(vm.reception, vm.user);
     }
 
     function rejectItem() {
-      ValidationService.rejectItem(vm.sheet, vm.user);
+      ValidationService.rejectItem(vm.reception, vm.user);
     }
 
     function isFormValid() {
-
+      vm.message = '';
+      if (vm.sheet.id_metodo_muestreo < 1)
+      {
+        vm.message += ' Seleccione una Norma de referencia ';
+        return false;
+      }
+      return true;
     }
 
+
     function submitForm() {
-      //send to verification service
+      if (isFormValid() && !vm.isDataSubmitted)
+      {
+        vm.isDataSubmitted = true;
+        if (vm.reception.id_recepcion < 1)
+        {
+          RestUtilsService
+            .saveData(
+              ReceptionService,
+              vm.reception,
+              'recepcion/recepcion',
+              'id_recepcion'
+            );
+        }
+        else
+        {
+          if (vm.user.level < 3 || vm.reception.reception.id_status < 2)
+          {
+            RestUtilsService
+              .updateData(
+                ReceptionService,
+                vm.reception,
+                'recepcion/recepcion',
+                'id_recepcion'
+              );
+          }
+        }
+      }
     }
   }
   angular

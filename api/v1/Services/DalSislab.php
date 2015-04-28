@@ -11078,6 +11078,7 @@ class DALSislab
 					"id_hoja":1,
 					"id_recepcionista":13,
 					"id_verificador":13,
+					"id_validacion_muestra":5,
 					"id_status":1,
 					"fecha_recibe":"2015-03-24T13:05-06:00",
 					"fecha_verifica":"2015-03-23T13:06-06:00",
@@ -11281,6 +11282,7 @@ class DALSislab
 						{
 							"id_validacion_preservacion":1,
 							"id_recepcion":1,
+							"id_muestra":5,
 							"id_preservacion":1,
 							"id_clase_parametro":1,
 							"clase_parametro":"Fisicoquímico",
@@ -11296,6 +11298,7 @@ class DALSislab
 						{
 							"id_validacion_preservacion":2,
 							"id_recepcion":1,
+							"id_muestra":5,
 							"id_preservacion":2,
 							"id_clase_parametro":2,
 							"clase_parametro":"Oxígeno disuelto",
@@ -11311,6 +11314,7 @@ class DALSislab
 						{
 							"id_validacion_preservacion":3,
 							"id_recepcion":1,
+							"id_muestra":5,
 							"id_preservacion":3,
 							"id_clase_parametro":3,
 							"clase_parametro":"Sustancias activas al azul de metileno",
@@ -11326,6 +11330,7 @@ class DALSislab
 						{
 							"id_validacion_preservacion":4,
 							"id_recepcion":1,
+							"id_muestra":5,
 							"id_preservacion":4,
 							"id_clase_parametro":4,
 							"clase_parametro":"Fenoles",
@@ -11341,6 +11346,7 @@ class DALSislab
 						{
 							"id_validacion_preservacion":5,
 							"id_recepcion":1,
+							"id_muestra":5,
 							"id_preservacion":5,
 							"id_clase_parametro":5,
 							"clase_parametro":"Dureza",
@@ -11356,6 +11362,7 @@ class DALSislab
 						{
 							"id_validacion_preservacion":6,
 							"id_recepcion":1,
+							"id_muestra":5,
 							"id_preservacion":6,
 							"id_clase_parametro":6,
 							"clase_parametro":"Sulfuros",
@@ -11371,6 +11378,7 @@ class DALSislab
 						{
 							"id_validacion_preservacion":8,
 							"id_recepcion":1,
+							"id_muestra":5,
 							"id_preservacion":8,
 							"id_clase_parametro":8,
 							"clase_parametro":"Grasas y aceites",
@@ -11433,6 +11441,7 @@ class DALSislab
 					"id_hoja":1,
 					"id_recepcionista":13,
 					"id_verificador":13,
+					"id_validacion_muestra":5,
 					"id_status":1,
 					"fecha_recibe":"2015-03-24T13:05-06:00",
 					"fecha_verifica":"2015-03-23T13:06-06:00",
@@ -11636,6 +11645,7 @@ class DALSislab
 						{
 							"id_validacion_preservacion":1,
 							"id_recepcion":1,
+							"id_muestra":5,
 							"id_preservacion":1,
 							"id_clase_parametro":1,
 							"clase_parametro":"Fisicoquímico",
@@ -11651,6 +11661,7 @@ class DALSislab
 						{
 							"id_validacion_preservacion":2,
 							"id_recepcion":1,
+							"id_muestra":5,
 							"id_preservacion":2,
 							"id_clase_parametro":2,
 							"clase_parametro":"Oxígeno disuelto",
@@ -11666,6 +11677,7 @@ class DALSislab
 						{
 							"id_validacion_preservacion":3,
 							"id_recepcion":1,
+							"id_muestra":5,
 							"id_preservacion":3,
 							"id_clase_parametro":3,
 							"clase_parametro":"Sustancias activas al azul de metileno",
@@ -11681,6 +11693,7 @@ class DALSislab
 						{
 							"id_validacion_preservacion":4,
 							"id_recepcion":1,
+							"id_muestra":5,
 							"id_preservacion":4,
 							"id_clase_parametro":4,
 							"clase_parametro":"Fenoles",
@@ -11696,6 +11709,7 @@ class DALSislab
 						{
 							"id_validacion_preservacion":5,
 							"id_recepcion":1,
+							"id_muestra":5,
 							"id_preservacion":5,
 							"id_clase_parametro":5,
 							"clase_parametro":"Dureza",
@@ -11711,6 +11725,7 @@ class DALSislab
 						{
 							"id_validacion_preservacion":6,
 							"id_recepcion":1,
+							"id_muestra":5,
 							"id_preservacion":6,
 							"id_clase_parametro":6,
 							"clase_parametro":"Sulfuros",
@@ -11726,6 +11741,7 @@ class DALSislab
 						{
 							"id_validacion_preservacion":8,
 							"id_recepcion":1,
+							"id_muestra":5,
 							"id_preservacion":8,
 							"id_clase_parametro":8,
 							"clase_parametro":"Grasas y aceites",

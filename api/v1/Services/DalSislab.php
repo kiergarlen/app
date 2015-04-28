@@ -11079,7 +11079,7 @@ class DALSislab
 					"id_recepcionista":13,
 					"id_verificador":13,
 					"id_status":1,
-					"fecha_recibe":"2015-03-23T13:05-06:00",
+					"fecha_recibe":"2015-03-24T13:05-06:00",
 					"fecha_verifica":"2015-03-23T13:06-06:00",
 					"fecha_captura":"2015-03-23T14:25-06:00",
 					"comentarios":"Sin observaciones",
@@ -11087,7 +11087,7 @@ class DALSislab
 					{
 						"id_hoja":1,
 						"fecha_muestreo":"2015-03-24T08:12-06:00",
-						"fecha_recibe":"2015-03-23T13:05-06:00"
+						"fecha_recibe":"2015-03-24T13:05-06:00"
 					},
 					"muestras":
 					[
@@ -11323,8 +11323,8 @@ class DALSislab
 							"preservacion":"5ml H2SO4 + CuSO4, 4°C, pH<2",
 							"tipo_preservacion":"Fenoles",
 							"descripcion":"5ml H2SO4 + CuSO4, 4°C, pH<2",
-							"preservado":false,
-							"selected":false,
+							"preservado":true,
+							"selected":true,
 							"cantidad":0,
 							"activo":1
 						},
@@ -11381,6 +11381,7 @@ class DALSislab
 							"id_recepcion":1,
 							"id_muestra":5,
 							"id_area":1,
+							"area":"Fisicoquímicos",
 							"volumen":true,
 							"vigencia":true,
 							"contenedor":true,
@@ -11391,16 +11392,18 @@ class DALSislab
 							"id_recepcion":1,
 							"id_muestra":5,
 							"id_area":2,
+							"area":"Metales Pesados",
 							"volumen":true,
 							"vigencia":true,
 							"contenedor":true,
-							"selected":true
+							"selected":false
 						},
 						{
 							"id_validacion_contenedor":3,
 							"id_recepcion":1,
 							"id_muestra":5,
 							"id_area":3,
+							"area":"Microbiología",
 							"volumen":true,
 							"vigencia":true,
 							"contenedor":true,
@@ -11421,7 +11424,7 @@ class DALSislab
 					"id_recepcionista":13,
 					"id_verificador":13,
 					"id_status":1,
-					"fecha_recibe":"2015-03-23T13:05-06:00",
+					"fecha_recibe":"2015-03-24T13:05-06:00",
 					"fecha_verifica":"2015-03-23T13:06-06:00",
 					"fecha_captura":"2015-03-23T14:25-06:00",
 					"comentarios":"Sin observaciones",
@@ -11429,7 +11432,7 @@ class DALSislab
 					{
 						"id_hoja":1,
 						"fecha_muestreo":"2015-03-24T08:12-06:00",
-						"fecha_recibe":"2015-03-23T13:05-06:00"
+						"fecha_recibe":"2015-03-24T13:05-06:00"
 					},
 					"muestras":
 					[
@@ -11665,7 +11668,7 @@ class DALSislab
 							"preservacion":"5ml H2SO4 + CuSO4, 4°C, pH<2",
 							"tipo_preservacion":"Fenoles",
 							"descripcion":"5ml H2SO4 + CuSO4, 4°C, pH<2",
-							"preservado":false,
+							"preservado":true,
 							"selected":false,
 							"cantidad":0,
 							"activo":1
@@ -11723,6 +11726,7 @@ class DALSislab
 							"id_recepcion":1,
 							"id_muestra":5,
 							"id_area":1,
+							"area":"Fisicoquímicos",
 							"volumen":true,
 							"vigencia":true,
 							"contenedor":true,
@@ -11733,6 +11737,7 @@ class DALSislab
 							"id_recepcion":1,
 							"id_muestra":5,
 							"id_area":2,
+							"area":"Metales Pesados",
 							"volumen":true,
 							"vigencia":true,
 							"contenedor":true,
@@ -11743,6 +11748,7 @@ class DALSislab
 							"id_recepcion":1,
 							"id_muestra":5,
 							"id_area":3,
+							"area":"Microbiología",
 							"volumen":true,
 							"vigencia":true,
 							"contenedor":true,

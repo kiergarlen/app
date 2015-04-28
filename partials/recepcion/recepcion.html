@@ -130,6 +130,10 @@
       </div>
     </div>
   </div>
+
+
+
+
   <div class="row">
     <div class="col-xs-12">
       <h4>Muestreo</h4>
@@ -250,7 +254,7 @@
 
   <div class="row">
     <div class="col-xs-12">
-      <h4>Muestras <small>(Plan Muestreo)</small></h4>
+      <h4>Muestras recibidas</h4>
     </div>
   </div>
   <div class="row">
@@ -265,9 +269,9 @@
               name="{{sample.id_muestra}}"
               title="{{sample.punto}}"
               />
-              [{{sample.id_muestra}}]
-              {{sample.punto}}
+              ({{sample.id_muestra}})
           </label>
+          {{sample.punto}}
         </div>
       </div>
     </div>
@@ -331,104 +335,67 @@
   </div>
   <div class="row">
     <div class="col-xs-12">
-      <h5>Preservación</h5>
+      <h5>Conformidad por preservación</h5>
     </div>
   </div>
   <div class="row">
-    <div class="col-xs-12 col-sm-6 col-md-4"
-      data-ng-repeat="preservation in reception.preservations">
+    <div class="col-xs-12 col-sm-6"
+      data-ng-repeat="preservation in reception.reception.validacion_preservaciones">
       <label>
         <input type="checkbox"
-          value="{{preservation.selected}}">
-          {{preservation.clase_parametro}}
+          data-ng-model="preservation.preservado"
+          data-ng-disabled="!preservation.selected">
+          {{preservation.preservacion}}
       </label>
     </div>
   </div>
   <div class="row">
     <div class="col-xs-12">
-      <h5>Vigencia</h5>
+      <h5>Conformidad por tipo análisis</h5>
     </div>
   </div>
   <div class="row">
-    <div class="col-xs-12 col-sm-6 col-md-4"
-      data-ng-repeat="expiration in reception.expirations">
+    <div class="col-xs-3">
+      <strong>Tipo análisis</strong>
+    </div>
+    <div class="col-xs-3">
+      <strong>Volumen</strong>
+    </div>
+    <div class="col-xs-3">
+      <strong>Vigencia</strong>
+    </div>
+    <div class="col-xs-3">
+      <strong>Contenedor</strong>
+    </div>
+  </div>
+  <div class="row"
+    data-ng-repeat="container in reception.reception.validacion_contenedores">
+    <div class="col-xs-12 col-sm-3">
+      {{container.area}}
+    </div>
+    <div class="col-xs-12 col-sm-3">
       <label>
         <input type="checkbox"
-          value="{{expiration.selected}}">
-          {{expiration.clase_parametro}}
+          data-ng-model="container.volumen"
+          data-ng-disabled="!container.selected">
+          Conforme
       </label>
     </div>
-  </div>
-  <div class="row">
-    <div class="col-xs-12">
-      <h5>Volúmenes requeridos</h5>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-xs-12 col-sm-6 col-md-4"
-      data-ng-repeat="volume in reception.volumes">
+    <div class="col-xs-12 col-sm-3">
       <label>
         <input type="checkbox"
-          value="{{volume.selected}}">
-          {{volume.clase_parametro}}
+          data-ng-model="container.vigencia"
+          data-ng-disabled="!container.selected">
+          Conforme
       </label>
     </div>
-  </div>
-  <div class="row">
-    <div class="col-xs-12">
-      <h5>Recipientes adecuados</h5>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-xs-12 col-sm-6 col-md-4"
-      data-ng-repeat="container in reception.containers">
+    <div class="col-xs-12 col-sm-3">
       <label>
         <input type="checkbox"
-          value="{{container.selected}}">
-          {{container.clase_parametro}}
+          data-ng-model="container.contenedor"
+          data-ng-disabled="!container.selected">
+          Conforme
       </label>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-xs-12 col-sm-6 col-md-5 col-lg-5">
-      <label for="checkerSelect">
-        Responsable verificación
-      </label>
-      <select class="form-control"
-        id="checkerSelect"
-        name="checkerSelect"
-        required
-        data-ng-model="reception.reception.id_verificador"
-        >
-        <option
-          data-ng-repeat="receptionist in reception.receptionists"
-          value="{{receptionist.id_empleado}}">
-          {{receptionist.nombres}}
-          {{receptionist.ap}}
-          {{receptionist.am}}
-        </option>
-      </select>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-xs-6 col-sm-4">
-      <label for="verifyDate">
-        <i class="glyphicon glyphicon-calendar"></i>
-        Fecha verificación
-      </label>
-      <input type="text"
-        class="form-control"
-        id="verifyDate"
-        name="verifyDate"
-        placeholder="aaaa-mm-dd"
-        required
-        data-ng-model="reception.reception.fecha_verifica"
-        data-date-format="yyyy-MM-dd"
-        data-date-type="date"
-        data-autoclose="1"
-        date-use-native="true"
-        data-bs-datepicker
-        >
     </div>
   </div>
   <div class="row">

@@ -58,7 +58,7 @@
         data-bs-collapse-target
         >
         <div class="col-xs-12 col-sm-6">
-          <h6>Recepción Muestras</h6>
+          <h6>Hoja Campo</h6>
         </div>
         <div class="col-xs-12 col-sm-6">
 
@@ -70,8 +70,7 @@
                   <li>
                     Folio:
                     {{::reception.reception.folio}}
-                    /
-                    {{::reception.reception.ejercicio}}</li>
+                  </li>
                   <li data-ng-show="reception.reception.fecha_captura.length > 0">
                     Fecha captura:
                     {{::reception.reception.fecha_captura}}</li>
@@ -80,7 +79,7 @@
                     {{::reception.reception.fecha_valida}}</li>
                   <li data-ng-show="reception.reception.fecha_actualizacion.length > 0">
                     Fecha actualización:
-                    {{::reception.reception.fecha_actualizacion}}</li>
+                    {{::reception.reception.fecha_actualiza}}</li>
                 </ul>
                 <span class="label label-success"
                   data-ng-show="reception.reception.validado > 0">Validado</span>
@@ -130,10 +129,6 @@
       </div>
     </div>
   </div>
-
-
-
-
   <div class="row">
     <div class="col-xs-12">
       <h4>Muestreo</h4>
@@ -251,7 +246,6 @@
       </select>
     </div>
   </div>
-
   <div class="row">
     <div class="col-xs-12">
       <h4>Muestras recibidas</h4>

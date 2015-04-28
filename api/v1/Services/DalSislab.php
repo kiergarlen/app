@@ -11082,7 +11082,18 @@ class DALSislab
 					"fecha_recibe":"2015-03-24T13:05-06:00",
 					"fecha_verifica":"2015-03-23T13:06-06:00",
 					"fecha_captura":"2015-03-23T14:25-06:00",
+					"ip_captura":"[::1]",
+					"host_captura":"localhost",
+					"fecha_valida":"2015-03-23T14:25-06:00",
+					"ip_valida":"[::1]",
+					"host_valida":"localhost",
+					"fecha_actualiza":"2015-03-23T14:25-06:00",
+					"ip_actualiza":"[::1]",
+					"host_actualiza":"localhost",
+					"fecha_rechaza":"",
 					"comentarios":"Sin observaciones",
+					"motivo_rechaza":"",
+					"activo":1,
 					"hoja":
 					{
 						"id_hoja":1,
@@ -11100,7 +11111,6 @@ class DALSislab
 							"id_plan":1,
 							"id_hoja":1,
 							"id_recepcion":1,
-							"id_recepcion":0,
 							"id_custodia":0,
 							"id_paquete_puntos":1,
 							"id_punto":1,
@@ -11427,7 +11437,18 @@ class DALSislab
 					"fecha_recibe":"2015-03-24T13:05-06:00",
 					"fecha_verifica":"2015-03-23T13:06-06:00",
 					"fecha_captura":"2015-03-23T14:25-06:00",
+					"ip_captura":"[::1]",
+					"host_captura":"localhost",
+					"fecha_valida":"2015-03-23T14:25-06:00",
+					"ip_valida":"[::1]",
+					"host_valida":"localhost",
+					"fecha_actualiza":"2015-03-23T14:25-06:00",
+					"ip_actualiza":"[::1]",
+					"host_actualiza":"localhost",
+					"fecha_rechaza":"",
 					"comentarios":"Sin observaciones",
+					"motivo_rechaza":"",
+					"activo":1,
 					"hoja":
 					{
 						"id_hoja":1,
@@ -11445,7 +11466,6 @@ class DALSislab
 							"id_plan":1,
 							"id_hoja":1,
 							"id_recepcion":1,
-							"id_recepcion":0,
 							"id_custodia":0,
 							"id_paquete_puntos":1,
 							"id_punto":1,
@@ -11669,7 +11689,7 @@ class DALSislab
 							"tipo_preservacion":"Fenoles",
 							"descripcion":"5ml H2SO4 + CuSO4, 4°C, pH<2",
 							"preservado":true,
-							"selected":false,
+							"selected":true,
 							"cantidad":0,
 							"activo":1
 						},
@@ -11741,7 +11761,7 @@ class DALSislab
 							"volumen":true,
 							"vigencia":true,
 							"contenedor":true,
-							"selected":true
+							"selected":false
 						},
 						{
 							"id_validacion_contenedor":3,

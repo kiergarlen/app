@@ -5102,7 +5102,7 @@ class DALSislab
 					"numero_oficio":437,
 					"folio":"CEA-437/2014",
 					"fecha_probable":"2015-03-23T08:25-06:00",
-					"fecha_plan":"2015-03-23",
+					"fecha_plan":"2015-03-23T09:12-06:00",
 					"fecha_calibracion":"2015-03-23T08:25-06:00",
 					"fecha_captura":"2015-03-23T08:25-06:00",
 					"ip_captura":"[::1]",
@@ -11078,7 +11078,7 @@ class DALSislab
 					"id_hoja":1,
 					"id_recepcionista":13,
 					"id_verificador":13,
-					"id_validacion_muestra":5,
+					"id_validacion_muestra":1,
 					"id_status":1,
 					"fecha_recibe":"2015-03-24T13:05-06:00",
 					"fecha_verifica":"2015-03-23T13:06-06:00",
@@ -11095,6 +11095,12 @@ class DALSislab
 					"comentarios":"Sin observaciones",
 					"motivo_rechaza":"",
 					"activo":1,
+					"plan":
+					{
+						"id_plan":1,
+						"folio":"CEA-437/2014",
+						"fecha_plan":"2015-03-23T09:12-06:00"
+					},
 					"hoja":
 					{
 						"id_hoja":1,
@@ -11104,6 +11110,7 @@ class DALSislab
 					"muestras":
 					[
 						{
+							"id_validacion_muestra":1,
 							"id_muestra":1,
 							"id_estudio":1,
 							"id_cliente":1,
@@ -11128,10 +11135,11 @@ class DALSislab
 							"municipio":"municipio 14063",
 							"localidad":"localidad 140630001",
 							"fecha_muestreo":"2015-03-23T09:00-06:00",
-							"selected":false,
+							"selected":true,
 							"comentarios_muestreo":""
 						},
 						{
+							"id_validacion_muestra":2,
 							"id_muestra":2,
 							"id_estudio":1,
 							"id_cliente":1,
@@ -11148,7 +11156,7 @@ class DALSislab
 							"id_ejercicio":2015,
 							"id_municipio":14030,
 							"id_localidad":140300038,
-							"folio":"0419/2015",
+							"folio":"0420/2015",
 							"punto":"Presa Corona",
 							"descripcion":"Cortina Presa Corona - Poncitlán",
 							"lat":20.399667,
@@ -11157,10 +11165,11 @@ class DALSislab
 							"municipio":"municipio 14030",
 							"localidad":"localidad 140300038",
 							"fecha_muestreo":"2015-03-23T10:40-06:00",
-							"selected":false,
+							"selected":true,
 							"comentarios_muestreo":""
 						},
 						{
+							"id_validacion_muestra":3,
 							"id_muestra":3,
 							"id_estudio":1,
 							"id_cliente":1,
@@ -11177,7 +11186,7 @@ class DALSislab
 							"id_ejercicio":2015,
 							"id_municipio":14051,
 							"id_localidad":140510013,
-							"folio":"0419/2015",
+							"folio":"0421/2015",
 							"punto":"Ex-hacienda Zap.",
 							"descripcion":"Ex-hacienda de Zapotlanejo",
 							"lat":20.442003,
@@ -11186,10 +11195,11 @@ class DALSislab
 							"municipio":"municipio 14051",
 							"localidad":"localidad 140510013",
 							"fecha_muestreo":"2015-03-23T11:23-06:00",
-							"selected":false,
+							"selected":true,
 							"comentarios_muestreo":""
 						},
 						{
+							"id_validacion_muestra":4,
 							"id_muestra":4,
 							"id_estudio":1,
 							"id_cliente":1,
@@ -11206,7 +11216,7 @@ class DALSislab
 							"id_ejercicio":2015,
 							"id_municipio":14051,
 							"id_localidad":140510001,
-							"folio":"0419/2015",
+							"folio":"0422/2015",
 							"punto":"Salto-Juanacatlán",
 							"descripcion":"Compuerta - Puente El Salto-Juanacatlán",
 							"lat":20.512825,
@@ -11215,10 +11225,11 @@ class DALSislab
 							"municipio":"municipio 14051",
 							"localidad":"localidad 140510001",
 							"fecha_muestreo":"2015-03-23T12:40-06:00",
-							"selected":false,
+							"selected":true,
 							"comentarios_muestreo":""
 						},
 						{
+							"id_validacion_muestra":5,
 							"id_muestra":5,
 							"id_estudio":1,
 							"id_cliente":1,
@@ -11235,7 +11246,7 @@ class DALSislab
 							"id_ejercicio":2015,
 							"id_municipio":14101,
 							"id_localidad":141010026,
-							"folio":"0419/2015",
+							"folio":"0423/2015",
 							"punto":"Puente Grande",
 							"descripcion":"Puente Grande",
 							"lat":20.571036,
@@ -11244,10 +11255,11 @@ class DALSislab
 							"municipio":"municipio 14101",
 							"localidad":"localidad 141010026",
 							"fecha_muestreo":"2015-03-23T13:14-06:00",
-							"selected":false,
+							"selected":true,
 							"comentarios_muestreo":""
 						},
 						{
+							"id_validacion_muestra":6,
 							"id_muestra":6,
 							"id_estudio":1,
 							"id_cliente":1,
@@ -11264,7 +11276,7 @@ class DALSislab
 							"id_ejercicio":2015,
 							"id_municipio":14101,
 							"id_localidad":141010009,
-							"folio":"0419/2015",
+							"folio":"0424/2015",
 							"punto":"Matatlán",
 							"descripcion":"Vertedero Controlado Matatlán",
 							"lat":20.668289,
@@ -11273,7 +11285,7 @@ class DALSislab
 							"municipio":"municipio 14101",
 							"localidad":"localidad 141010009",
 							"fecha_muestreo":"2015-03-23T13:51-06:00",
-							"selected":false,
+							"selected":true,
 							"comentarios_muestreo":""
 						}
 					],
@@ -11282,7 +11294,6 @@ class DALSislab
 						{
 							"id_validacion_preservacion":1,
 							"id_recepcion":1,
-							"id_muestra":5,
 							"id_preservacion":1,
 							"id_clase_parametro":1,
 							"clase_parametro":"Fisicoquímico",
@@ -11298,7 +11309,6 @@ class DALSislab
 						{
 							"id_validacion_preservacion":2,
 							"id_recepcion":1,
-							"id_muestra":5,
 							"id_preservacion":2,
 							"id_clase_parametro":2,
 							"clase_parametro":"Oxígeno disuelto",
@@ -11314,7 +11324,6 @@ class DALSislab
 						{
 							"id_validacion_preservacion":3,
 							"id_recepcion":1,
-							"id_muestra":5,
 							"id_preservacion":3,
 							"id_clase_parametro":3,
 							"clase_parametro":"Sustancias activas al azul de metileno",
@@ -11330,7 +11339,6 @@ class DALSislab
 						{
 							"id_validacion_preservacion":4,
 							"id_recepcion":1,
-							"id_muestra":5,
 							"id_preservacion":4,
 							"id_clase_parametro":4,
 							"clase_parametro":"Fenoles",
@@ -11346,7 +11354,6 @@ class DALSislab
 						{
 							"id_validacion_preservacion":5,
 							"id_recepcion":1,
-							"id_muestra":5,
 							"id_preservacion":5,
 							"id_clase_parametro":5,
 							"clase_parametro":"Dureza",
@@ -11355,14 +11362,13 @@ class DALSislab
 							"tipo_preservacion":"Dureza",
 							"descripcion":"HNO3, pH<2",
 							"preservado":false,
-							"selected":true,
+							"selected":false,
 							"cantidad":0,
 							"activo":1
 						},
 						{
 							"id_validacion_preservacion":6,
 							"id_recepcion":1,
-							"id_muestra":5,
 							"id_preservacion":6,
 							"id_clase_parametro":6,
 							"clase_parametro":"Sulfuros",
@@ -11378,7 +11384,6 @@ class DALSislab
 						{
 							"id_validacion_preservacion":8,
 							"id_recepcion":1,
-							"id_muestra":5,
 							"id_preservacion":8,
 							"id_clase_parametro":8,
 							"clase_parametro":"Grasas y aceites",
@@ -11387,7 +11392,7 @@ class DALSislab
 							"tipo_preservacion":"Grasas y aceites",
 							"descripcion":"HCL1:1, 4°C, pH<2",
 							"preservado":false,
-							"selected":true,
+							"selected":false,
 							"cantidad":0,
 							"activo":1
 						}
@@ -11414,7 +11419,7 @@ class DALSislab
 							"volumen":true,
 							"vigencia":true,
 							"contenedor":true,
-							"selected":false
+							"selected":true
 						},
 						{
 							"id_validacion_contenedor":3,
@@ -11441,7 +11446,7 @@ class DALSislab
 					"id_hoja":1,
 					"id_recepcionista":13,
 					"id_verificador":13,
-					"id_validacion_muestra":5,
+					"id_validacion_muestra":1,
 					"id_status":1,
 					"fecha_recibe":"2015-03-24T13:05-06:00",
 					"fecha_verifica":"2015-03-23T13:06-06:00",
@@ -11458,6 +11463,12 @@ class DALSislab
 					"comentarios":"Sin observaciones",
 					"motivo_rechaza":"",
 					"activo":1,
+					"plan":
+					{
+						"id_plan":1,
+						"folio":"CEA-437/2014",
+						"fecha_plan":"2015-03-23T09:12-06:00"
+					},
 					"hoja":
 					{
 						"id_hoja":1,
@@ -11467,6 +11478,7 @@ class DALSislab
 					"muestras":
 					[
 						{
+							"id_validacion_muestra":1,
 							"id_muestra":1,
 							"id_estudio":1,
 							"id_cliente":1,
@@ -11491,10 +11503,11 @@ class DALSislab
 							"municipio":"municipio 14063",
 							"localidad":"localidad 140630001",
 							"fecha_muestreo":"2015-03-23T09:00-06:00",
-							"selected":false,
+							"selected":true,
 							"comentarios_muestreo":""
 						},
 						{
+							"id_validacion_muestra":2,
 							"id_muestra":2,
 							"id_estudio":1,
 							"id_cliente":1,
@@ -11511,7 +11524,7 @@ class DALSislab
 							"id_ejercicio":2015,
 							"id_municipio":14030,
 							"id_localidad":140300038,
-							"folio":"0419/2015",
+							"folio":"0420/2015",
 							"punto":"Presa Corona",
 							"descripcion":"Cortina Presa Corona - Poncitlán",
 							"lat":20.399667,
@@ -11520,10 +11533,11 @@ class DALSislab
 							"municipio":"municipio 14030",
 							"localidad":"localidad 140300038",
 							"fecha_muestreo":"2015-03-23T10:40-06:00",
-							"selected":false,
+							"selected":true,
 							"comentarios_muestreo":""
 						},
 						{
+							"id_validacion_muestra":3,
 							"id_muestra":3,
 							"id_estudio":1,
 							"id_cliente":1,
@@ -11540,7 +11554,7 @@ class DALSislab
 							"id_ejercicio":2015,
 							"id_municipio":14051,
 							"id_localidad":140510013,
-							"folio":"0419/2015",
+							"folio":"0421/2015",
 							"punto":"Ex-hacienda Zap.",
 							"descripcion":"Ex-hacienda de Zapotlanejo",
 							"lat":20.442003,
@@ -11549,10 +11563,11 @@ class DALSislab
 							"municipio":"municipio 14051",
 							"localidad":"localidad 140510013",
 							"fecha_muestreo":"2015-03-23T11:23-06:00",
-							"selected":false,
+							"selected":true,
 							"comentarios_muestreo":""
 						},
 						{
+							"id_validacion_muestra":4,
 							"id_muestra":4,
 							"id_estudio":1,
 							"id_cliente":1,
@@ -11569,7 +11584,7 @@ class DALSislab
 							"id_ejercicio":2015,
 							"id_municipio":14051,
 							"id_localidad":140510001,
-							"folio":"0419/2015",
+							"folio":"0422/2015",
 							"punto":"Salto-Juanacatlán",
 							"descripcion":"Compuerta - Puente El Salto-Juanacatlán",
 							"lat":20.512825,
@@ -11578,10 +11593,11 @@ class DALSislab
 							"municipio":"municipio 14051",
 							"localidad":"localidad 140510001",
 							"fecha_muestreo":"2015-03-23T12:40-06:00",
-							"selected":false,
+							"selected":true,
 							"comentarios_muestreo":""
 						},
 						{
+							"id_validacion_muestra":5,
 							"id_muestra":5,
 							"id_estudio":1,
 							"id_cliente":1,
@@ -11598,7 +11614,7 @@ class DALSislab
 							"id_ejercicio":2015,
 							"id_municipio":14101,
 							"id_localidad":141010026,
-							"folio":"0419/2015",
+							"folio":"0423/2015",
 							"punto":"Puente Grande",
 							"descripcion":"Puente Grande",
 							"lat":20.571036,
@@ -11607,10 +11623,11 @@ class DALSislab
 							"municipio":"municipio 14101",
 							"localidad":"localidad 141010026",
 							"fecha_muestreo":"2015-03-23T13:14-06:00",
-							"selected":false,
+							"selected":true,
 							"comentarios_muestreo":""
 						},
 						{
+							"id_validacion_muestra":6,
 							"id_muestra":6,
 							"id_estudio":1,
 							"id_cliente":1,
@@ -11627,7 +11644,7 @@ class DALSislab
 							"id_ejercicio":2015,
 							"id_municipio":14101,
 							"id_localidad":141010009,
-							"folio":"0419/2015",
+							"folio":"0424/2015",
 							"punto":"Matatlán",
 							"descripcion":"Vertedero Controlado Matatlán",
 							"lat":20.668289,
@@ -11636,7 +11653,7 @@ class DALSislab
 							"municipio":"municipio 14101",
 							"localidad":"localidad 141010009",
 							"fecha_muestreo":"2015-03-23T13:51-06:00",
-							"selected":false,
+							"selected":true,
 							"comentarios_muestreo":""
 						}
 					],
@@ -11645,7 +11662,6 @@ class DALSislab
 						{
 							"id_validacion_preservacion":1,
 							"id_recepcion":1,
-							"id_muestra":5,
 							"id_preservacion":1,
 							"id_clase_parametro":1,
 							"clase_parametro":"Fisicoquímico",
@@ -11661,7 +11677,6 @@ class DALSislab
 						{
 							"id_validacion_preservacion":2,
 							"id_recepcion":1,
-							"id_muestra":5,
 							"id_preservacion":2,
 							"id_clase_parametro":2,
 							"clase_parametro":"Oxígeno disuelto",
@@ -11677,7 +11692,6 @@ class DALSislab
 						{
 							"id_validacion_preservacion":3,
 							"id_recepcion":1,
-							"id_muestra":5,
 							"id_preservacion":3,
 							"id_clase_parametro":3,
 							"clase_parametro":"Sustancias activas al azul de metileno",
@@ -11693,7 +11707,6 @@ class DALSislab
 						{
 							"id_validacion_preservacion":4,
 							"id_recepcion":1,
-							"id_muestra":5,
 							"id_preservacion":4,
 							"id_clase_parametro":4,
 							"clase_parametro":"Fenoles",
@@ -11709,7 +11722,6 @@ class DALSislab
 						{
 							"id_validacion_preservacion":5,
 							"id_recepcion":1,
-							"id_muestra":5,
 							"id_preservacion":5,
 							"id_clase_parametro":5,
 							"clase_parametro":"Dureza",
@@ -11718,14 +11730,13 @@ class DALSislab
 							"tipo_preservacion":"Dureza",
 							"descripcion":"HNO3, pH<2",
 							"preservado":false,
-							"selected":true,
+							"selected":false,
 							"cantidad":0,
 							"activo":1
 						},
 						{
 							"id_validacion_preservacion":6,
 							"id_recepcion":1,
-							"id_muestra":5,
 							"id_preservacion":6,
 							"id_clase_parametro":6,
 							"clase_parametro":"Sulfuros",
@@ -11741,7 +11752,6 @@ class DALSislab
 						{
 							"id_validacion_preservacion":8,
 							"id_recepcion":1,
-							"id_muestra":5,
 							"id_preservacion":8,
 							"id_clase_parametro":8,
 							"clase_parametro":"Grasas y aceites",
@@ -11750,7 +11760,7 @@ class DALSislab
 							"tipo_preservacion":"Grasas y aceites",
 							"descripcion":"HCL1:1, 4°C, pH<2",
 							"preservado":false,
-							"selected":true,
+							"selected":false,
 							"cantidad":0,
 							"activo":1
 						}
@@ -11777,7 +11787,7 @@ class DALSislab
 							"volumen":true,
 							"vigencia":true,
 							"contenedor":true,
-							"selected":false
+							"selected":true
 						},
 						{
 							"id_validacion_contenedor":3,

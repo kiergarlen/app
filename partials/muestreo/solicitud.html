@@ -20,7 +20,7 @@
         {{quote.quote.motivo_rechaza}}
         <span
           data-ng-show="quote.quote.fecha_rechaza.length > 0">
-          ({{quote.quote.fecha_rechaza || date}})
+          ({{quote.quote.fecha_rechaza | date: 'yyyy-MM-dd'}})
         </span>
       </strong>
     </div>

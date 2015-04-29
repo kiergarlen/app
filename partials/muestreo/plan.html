@@ -20,7 +20,7 @@
         {{plan.plan.motivo_rechaza}}
         <span
           data-ng-show="plan.plan.fecha_rechaza.length > 0">
-          ({{plan.plan.fecha_rechaza || date}})
+          ({{plan.plan.fecha_rechaza | date: 'yyyy-MM-dd'}})
         </span>
       </strong>
     </div>

@@ -20,7 +20,7 @@
         {{reception.reception.motivo_rechaza}}
         <span
           data-ng-show="reception.reception.fecha_rechaza.length > 0">
-          ({{reception.reception.fecha_rechaza || date}})
+          ({{reception.reception.fecha_rechaza | date: 'yyyy-MM-dd'}})
         </span>
       </strong>
     </div>
@@ -54,77 +54,34 @@
         </a>
         Datos de Referencia
       </h4>
-      <div class="row well well-sm item-z1"
+      <div class="row well wel-sm item-z1"
         data-bs-collapse-target
         >
         <div class="col-xs-12 col-sm-6">
           <h6>Hoja Campo</h6>
+          <ul class="list-inline">
+            <li>
+              Id hoja:
+              <strong>{{::reception.reception.hoja.id_hoja}}</strong>
+            </li>
+            <li>
+              Fecha:
+              <strong>{{::reception.reception.hoja.fecha_muestreo | date: 'yyyy-MM-dd'}}</strong>
+            </li>
+          </ul>
         </div>
         <div class="col-xs-12 col-sm-6">
-
-          <div class="row">
-            <div class="col-xs-12">
-              <h4>Datos de Referencia [hoja, plan] </h4>
-              <div class="well well-sm">
-                <ul class="list-inline">
-                  <li>
-                    Folio:
-                    {{::reception.reception.folio}}
-                  </li>
-                  <li data-ng-show="reception.reception.fecha_captura.length > 0">
-                    Fecha captura:
-                    {{::reception.reception.fecha_captura}}</li>
-                  <li data-ng-show="reception.reception.fecha_valida.length > 0">
-                    Fecha validación:
-                    {{::reception.reception.fecha_valida}}</li>
-                  <li data-ng-show="reception.reception.fecha_actualizacion.length > 0">
-                    Fecha actualización:
-                    {{::reception.reception.fecha_actualiza}}</li>
-                </ul>
-                <span class="label label-success"
-                  data-ng-show="reception.reception.validado > 0">Validado</span>
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-xs-12 col-sm-6">
-              <h4>Cliente</h4>
-              <div class="well well-sm">
-                Cliente: {{reception.reception.cliente.cliente}}
-                {{reception.reception.cliente.area.length > 0 &&
-                ' - ' + reception.reception.cliente.area ||
-                ''}}
-                <br>
-                Contacto: {{reception.reception.cliente.contacto}}
-              </div>
-            </div>
-            <div class="col-xs-12 col-sm-6">
-              <h4>Orden de muestreo</h4>
-              <div class="well well-sm">
-                Folio:
-                {{reception.reception.orden.folio}}
-                /
-                {{reception.reception.orden.ejercicio}}
-                <br>Fecha:
-                {{reception.reception.orden.fecha_orden}}
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-xs-12">
-              <h4>Punto de muestreo</h4>
-              <div class="well well-sm">
-                Punto: {{reception.reception.punto_muestreo.punto_muestreo}}
-                <br>
-                Localidad: {{reception.reception.punto_muestreo.localidad}}
-                Municipio: {{reception.reception.punto_muestreo.municipio}}
-                <br>
-                Latitud: {{reception.reception.punto_muestreo.lat}}
-                Longitud: {{reception.reception.punto_muestreo.lng}}
-              </div>
-            </div>
-          </div>
-
+          <h6>Plan</h6>
+          <ul class="list-inline">
+            <li>
+              Folio:
+              <strong>{{::reception.reception.plan.folio}}</strong>
+            </li>
+            <li data-ng-show="reception.reception.plan.fecha_plan.length > 0">
+              Fecha:
+              <strong>{{::reception.reception.plan.fecha_plan | date: 'yyyy-MM-dd'}}</strong>
+            </li>
+          </ul>
         </div>
       </div>
     </div>
@@ -263,29 +220,14 @@
               name="{{sample.id_muestra}}"
               title="{{sample.punto}}"
               />
-              ({{sample.id_muestra}})
+              {{sample.folio}}
           </label>
-          {{sample.punto}}
+          <br>
+          ({{sample.punto}})
         </div>
       </div>
     </div>
   </div>
-  <!--
-      <div class="row">
-        <div class="col-xs-12 col-sm-6 col-md-3">
-          <label for="sampleNumber">
-            Folio muestra
-          </label>
-          <input type="text" class="form-control"
-            id¨="sampleKey{{sample.id_muestra}}"
-            name¨="sampleKey{{sample.id_muestra}}"
-            placeholder="Folio muestra"
-            required
-            data-ng-model="sample.folio"
-            >
-        </div>
-      </div>
-  -->
   <div class="row">
     <div class="col-xs-12">
       <h4>Verificación</h4>
@@ -299,12 +241,12 @@
       <select class="form-control"
         id="sampleSelect"
         name="sampleSelect"
-        required
-        data-ng-model="sheet.sheet.id_validacion_muestra"
+        data-ng-model="reception.reception.id_validacion_muestra"
         >
-        <option data-ng-repeat="point in reception.reception.muestras"
-          value="{{point.id_muestra}}">
-          {{point.punto}}
+        <option
+          data-ng-repeat="sample in reception.reception.muestras"
+          value="{{sample.id_validacion_muestra}}">
+          {{sample.descripcion}}
         </option>
       </select>
     </div>
@@ -373,6 +315,11 @@
           data-ng-disabled="!container.selected">
           Conforme
       </label>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12">
+      <h4>Comentarios</h4>
     </div>
   </div>
   <div class="row">

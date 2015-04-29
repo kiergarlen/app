@@ -20,7 +20,7 @@
         {{sheet.sheet.motivo_rechaza}}
         <span
           data-ng-show="sheet.sheet.fecha_rechaza.length > 0">
-          ({{sheet.sheet.fecha_rechaza || date}})
+          ({{sheet.sheet.fecha_rechaza | date: 'yyyy-MM-dd'}})
         </span>
       </strong>
     </div>

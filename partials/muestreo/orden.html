@@ -20,7 +20,7 @@
         {{order.order.motivo_rechaza}}
         <span
           data-ng-show="order.order.fecha_rechaza.length > 0">
-          ({{order.order.fecha_rechaza || date}})
+          ({{order.order.fecha_rechaza | date: 'yyyy-MM-dd'}})
         </span>
       </strong>
     </div>

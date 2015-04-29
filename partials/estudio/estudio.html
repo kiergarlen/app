@@ -20,7 +20,7 @@
         {{study.study.motivo_rechaza}}
         <span
           data-ng-show="study.study.fecha_rechaza.length > 0">
-          ({{study.study.fecha_rechaza || date}})
+          ({{study.study.fecha_rechaza | date: 'yyyy-MM-dd'}})
         </span>
       </strong>
     </div>

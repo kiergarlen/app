@@ -1637,3 +1637,102 @@
       ]
     );
 
+  /**
+   * @name CustodyListController
+   * @constructor
+   * @desc Controla la vista para el listado de Cadenas de custodia
+   * @this {Object} $scope - Contenedor para el modelo [AngularJS]
+   * @param {Object} $location - Manejo de URL [AngularJS]
+   * @param {Object} CustodyService - Proveedor de datos, Cadenas de custodia
+   */
+  function CustodyListController($location, CustodyService) {
+    var vm = this;
+    vm.custodies = CustodyService.get();
+    vm.viewCustody = viewCustody;
+
+    function viewCustody(id) {
+      $location.path('/recepcion/custodia/' + parseInt(id));
+    }
+  }
+  angular
+    .module('sislabApp')
+    .controller('CustodyListController',
+      [
+        '$location', 'CustodyService',
+        CustodyListController
+      ]
+    );
+
+  // CustodyController.js
+  /**
+   * @name CustodyController
+   * @constructor
+   * @desc Controla la vista para capturar las Hojas de custodia
+   * @this {Object} $scope - Contenedor para el modelo [AngularJS]
+   * @param {Object} $routeParams - Proveedor de parámetros de ruta [AngularJS]
+   * @param {Object} TokenService - Proveedor para manejo del token
+   * @param {Object} CustodyService - Proveedor de datos, Cadenas de custodia
+   */
+  function CustodyController($scope, $routeParams, TokenService,
+    ValidationService, RestUtilsService, ArrayUtilsService,
+    DateUtilsService, CustodyService) {
+    var vm = this;
+    vm.user = TokenService.getUserFromToken();
+    vm.custody = CustodyService.query({custodyId: $routeParams.custodyId});
+    vm.isDataSubmitted = false;
+    vm.approveItem = approveItem;
+    vm.rejectItem = rejectItem;
+    vm.submitForm = submitForm;
+
+    function approveItem() {
+      ValidationService.approveItem(vm.custody, vm.user);
+    }
+
+    function rejectItem() {
+      ValidationService.rejectItem(vm.custody, vm.user);
+    }
+
+    function isFormValid() {
+      return true;
+    }
+
+    function submitForm() {
+      if (isFormValid() && !vm.isDataSubmitted)
+      {
+        vm.isDataSubmitted = true;
+        if (vm.custody.id_custodia < 1)
+        {
+          RestUtilsService
+            .saveData(
+              CustodyService,
+              vm.custody,
+              'recepcion/custodia',
+              'id_custodia'
+            );
+        }
+        else
+        {
+          if (vm.user.level < 3 || vm.custody.custody.id_status < 2)
+          {
+            RestUtilsService
+              .updateData(
+                CustodyService,
+                vm.custody,
+                'recepcion/custodia',
+                'id_custodia'
+              );
+          }
+        }
+      }
+    }
+  }
+  angular
+    .module('sislabApp')
+    .controller('CustodyController',
+      [
+        '$scope', '4routeParams', 'TokenService',
+        'ValidationService', 'RestUtilsService', 'ArrayUtilsService',
+        'DateUtilsService', 'CustodyService',
+        CustodyController
+      ]
+    );

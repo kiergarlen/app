@@ -10,20 +10,8 @@
     <h2 class="page-header">Cadenas de custodia</h2>
   </div>
 </div>
-<div class="row">
-  <div class="col-xs-12">
-    <button type="submit" class="btn btn-primary"
-      value="Nueva" title="Nueva"
-      data-ng-click="custodies.addCustody()"
-      >
-      <i class="glyphicon glyphicon-plus" aria-hidden="true"></i>
-      Nueva Cadena Custodia
-    </button>
-    <br>
-  </div>
-</div>
 <form class="form" role="form"
-  name="clientsForm"
+  name="custodiesForm"
   novalidate
   >
   <div class="row">
@@ -33,14 +21,14 @@
   </div>
   <div class="row">
     <div class="col-xs-12 col-sm-8">
-      <label for="custodieSearch" class="sr-only">
-        Ingrese una búsqueda (Municipio, Localidad, Calle, etc.)
+      <label for="custodySearch" class="sr-only">
+        Ingrese una búsqueda (Recepción, Fecha, Calle, etc.)
       </label>
       <input type="text"
         class="form-control"
-        placeholder="Ingrese una búsqueda (Municipio, Localidad, Calle, etc.)"
-        id="custodieSearch"
-        name="custodieSearch"
+        placeholder="Ingrese una búsqueda (Recepción, Fecha, Calle, etc.)"
+        id="custodySearch"
+        name="custodySearch"
         data-ng-model="custodies.filter.$">
     </div>
     <br>
@@ -57,9 +45,9 @@
           id="custodiesList">
           <thead>
             <tr>
+              <th>Id Informe</th>
               <th>Id Custodia</th>
               <th>Status</th>
-              <th>Ubicación</th>
               <th>Fecha Ini.</th>
               <th>Fecha Fin</th>
             </tr>
@@ -70,6 +58,9 @@
               | filter:custodies.filter.$"
               id="custodyId{{item.id_custodia}}"
               data-ng-click="custodies.selectRow($event)">
+              <td>
+                {{item.id_estudio}}
+              </td>
               <td>
                 {{item.id_custodia}}
               </td>
@@ -84,15 +75,18 @@
                 </span>
               </td>
               <td>
-                {{item.calle}}
-                {{item.numero}},
-                {{item.municipio}}
+                {{item.fecha_inicio | date: 'yyyy-MM-dd'}}
               </td>
               <td>
-                {{item.fecha_inicio}}
+                {{item.fecha_fin | date: 'yyyy-MM-dd'}}
               </td>
               <td>
-                {{item.fecha_fin}}
+                <button class="btn btn-default"
+                  value="Consultar" title="Consultar"
+                  data-ng-click="receptions.viewCustody(item.id_custodia)"
+                  >
+                  <i class="glyphicon glyphicon-eye-open" aria-hidden="true"></i>
+                </button>
               </td>
             </tr>
           </tbody>

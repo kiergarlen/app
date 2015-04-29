@@ -1,28 +1,3 @@
-  /**
-   * @name CustodyListController
-   * @constructor
-   * @desc Controla la vista para el listado de Cadenas de custodia
-   * @this {Object} $scope - Contenedor para el modelo [AngularJS]
-   * @param {Object} $location - Manejo de URL [AngularJS]
-   * @param {Object} CustodyService - Proveedor de datos, Cadenas de custodia
-   */
-  function CustodyListController($location, CustodyService) {
-    var vm = this;
-    vm.custodies = CustodyService.get();
-    vm.viewCustody = viewCustody;
-
-    function viewCustody(id) {
-      $location.path('/recepcion/custodia/' + parseInt(id));
-    }
-  }
-  angular
-    .module('sislabApp')
-    .controller('CustodyListController',
-      [
-        '$location', 'CustodyService',
-        CustodyListController
-      ]
-    );
 
   //SampleListController.js
   /**

@@ -46,7 +46,7 @@ class DALSislab
 						"id_menu":1,
 						"orden":1,
 						"url":"/#",
-						"label":"Informe",
+						"menu":"Informe",
 						"activo":1,
 						"submenu":
 						[
@@ -55,7 +55,7 @@ class DALSislab
 								"id_menu":1,
 								"orden":1,
 								"url":"/estudio/estudio",
-								"label":"Informe",
+								"menu":"Informe",
 								"activo":1
 							}
 						]
@@ -64,7 +64,7 @@ class DALSislab
 						"id_menu":2,
 						"orden":2,
 						"url":"/#",
-						"label":"Muestreo",
+						"menu":"Muestreo",
 						"activo":1,
 						"submenu":
 						[
@@ -73,7 +73,7 @@ class DALSislab
 								"id_menu":2,
 								"orden":1,
 								"url":"/muestreo/solicitud",
-								"label":"Solicitud",
+								"menu":"Solicitud",
 								"activo":1
 							},
 							{
@@ -81,7 +81,7 @@ class DALSislab
 								"id_menu":2,
 								"orden":2,
 								"url":"/muestreo/orden",
-								"label":"Orden Muestreo",
+								"menu":"Orden Muestreo",
 								"activo":1
 							},
 							{
@@ -89,7 +89,7 @@ class DALSislab
 								"id_menu":2,
 								"orden":3,
 								"url":"/muestreo/plan",
-								"label":"Plan Muestreo",
+								"menu":"Plan Muestreo",
 								"activo":1
 							}
 						]
@@ -98,7 +98,7 @@ class DALSislab
 						"id_menu":3,
 						"orden":3,
 						"url":"/#",
-						"label":"Recepción",
+						"menu":"Recepción",
 						"activo":1,
 						"submenu":
 						[
@@ -107,7 +107,7 @@ class DALSislab
 								"id_menu":3,
 								"orden":1,
 								"url":"/recepcion/hoja",
-								"label":"Hoja Campo",
+								"menu":"Hoja Campo",
 								"activo":1
 							},
 							{
@@ -115,7 +115,7 @@ class DALSislab
 								"id_menu":3,
 								"orden":1,
 								"url":"/recepcion/recepcion",
-								"label":"Recepción Muestras",
+								"menu":"Recepción Muestras",
 								"activo":1
 							},
 							{
@@ -123,7 +123,7 @@ class DALSislab
 								"id_menu":3,
 								"orden":4,
 								"url":"/recepcion/custodia",
-								"label":"Cadena Custodia",
+								"menu":"Cadena Custodia",
 								"activo":1
 							}
 						]
@@ -132,7 +132,7 @@ class DALSislab
 						"id_menu":4,
 						"orden":4,
 						"url":"/#",
-						"label":"Inventario",
+						"menu":"Inventario",
 						"activo":1,
 						"submenu":
 						[
@@ -141,7 +141,7 @@ class DALSislab
 								"id_menu":4,
 								"orden":1,
 								"url":"/inventario/muestra",
-								"label":"Inventario Muestras",
+								"menu":"Inventario Muestras",
 								"activo":1
 							},
 							{
@@ -149,7 +149,7 @@ class DALSislab
 								"id_menu":4,
 								"orden":2,
 								"url":"/inventario/equipo",
-								"label":"Equipos",
+								"menu":"Equipos",
 								"activo":1
 							},
 							{
@@ -157,7 +157,7 @@ class DALSislab
 								"id_menu":4,
 								"orden":3,
 								"url":"/inventario/reactivo",
-								"label":"Reactivos",
+								"menu":"Reactivos",
 								"activo":1
 							},
 							{
@@ -165,7 +165,7 @@ class DALSislab
 								"id_menu":4,
 								"orden":4,
 								"url":"/inventario/recipiente",
-								"label":"Recipientes",
+								"menu":"Recipientes",
 								"activo":1
 							}
 						]
@@ -174,7 +174,7 @@ class DALSislab
 						"id_menu":5,
 						"orden":5,
 						"url":"/#",
-						"label":"Análisis",
+						"menu":"Análisis",
 						"activo":1,
 						"submenu":
 						[
@@ -183,7 +183,7 @@ class DALSislab
 								"id_menu":5,
 								"orden":1,
 								"url":"/analisis/analisis",
-								"label":"Análisis",
+								"menu":"Análisis",
 								"activo":1
 							}
 						]
@@ -192,7 +192,7 @@ class DALSislab
 						"id_menu":6,
 						"orden":6,
 						"url":"/#",
-						"label":"Reportes",
+						"menu":"Reportes",
 						"activo":1,
 						"submenu":
 						[
@@ -201,7 +201,7 @@ class DALSislab
 								"id_menu":6,
 								"orden":1,
 								"url":"/reporte/reporte",
-								"label":"Reportes",
+								"menu":"Reportes",
 								"activo":1
 							}
 						]
@@ -210,7 +210,7 @@ class DALSislab
 						"id_menu":7,
 						"orden":7,
 						"url":"/#",
-						"label":"Catálogos",
+						"menu":"Catálogos",
 						"activo":1,
 						"submenu":
 						[
@@ -219,7 +219,7 @@ class DALSislab
 								"id_menu":7,
 								"orden":1,
 								"url":"/catalogo/punto",
-								"label":"Puntos Muestreo",
+								"menu":"Puntos Muestreo",
 								"activo":1
 							},
 							{
@@ -227,7 +227,7 @@ class DALSislab
 								"id_menu":7,
 								"orden":2,
 								"url":"/catalogo/cliente",
-								"label":"Clientes",
+								"menu":"Clientes",
 								"activo":1
 							},
 							{
@@ -235,7 +235,7 @@ class DALSislab
 								"id_menu":7,
 								"orden":3,
 								"url":"/catalogo/area",
-								"label":"Áreas",
+								"menu":"Áreas",
 								"activo":1
 							},
 							{
@@ -243,7 +243,7 @@ class DALSislab
 								"id_menu":7,
 								"orden":4,
 								"url":"/catalogo/empleado",
-								"label":"Empleados",
+								"menu":"Empleados",
 								"activo":1
 							},
 							{
@@ -251,7 +251,7 @@ class DALSislab
 								"id_menu":7,
 								"orden":5,
 								"url":"/catalogo/norma",
-								"label":"Normas",
+								"menu":"Normas",
 								"activo":1
 							},
 							{
@@ -259,7 +259,7 @@ class DALSislab
 								"id_menu":7,
 								"orden":6,
 								"url":"/catalogo/referencia",
-								"label":"Valores Referencia",
+								"menu":"Valores Referencia",
 								"activo":1
 							},
 							{
@@ -267,7 +267,7 @@ class DALSislab
 								"id_menu":7,
 								"orden":7,
 								"url":"/catalogo/metodo",
-								"label":"Métodos análisis",
+								"menu":"Métodos análisis",
 								"activo":1
 							},
 							{
@@ -275,7 +275,7 @@ class DALSislab
 								"id_menu":7,
 								"orden":8,
 								"url":"/catalogo/precio",
-								"label":"Precio análisis",
+								"menu":"Precio análisis",
 								"activo":1
 							}
 						]
@@ -284,7 +284,7 @@ class DALSislab
 						"id_menu":8,
 						"orden":8,
 						"url":"/#",
-						"label":"Administración",
+						"menu":"Administración",
 						"activo":1,
 						"submenu":
 						[
@@ -293,7 +293,7 @@ class DALSislab
 								"id_menu":8,
 								"orden":1,
 								"url":"/sistema/usuario",
-								"label":"Usuarios",
+								"menu":"Usuarios",
 								"activo":1
 							},
 							{
@@ -301,7 +301,7 @@ class DALSislab
 								"id_menu":8,
 								"orden":2,
 								"url":"/sistema/perfil",
-								"label":"Ver Perfil",
+								"menu":"Ver Perfil",
 								"activo":1
 							},
 							{
@@ -309,7 +309,7 @@ class DALSislab
 								"id_menu":8,
 								"orden":3,
 								"url":"/sistema/logout",
-								"label":"Cerrar sesión",
+								"menu":"Cerrar sesión",
 								"activo":1
 							}
 						]
@@ -325,7 +325,7 @@ class DALSislab
 						"id_menu":7,
 						"orden":7,
 						"url":"/#",
-						"label":"Administración",
+						"menu":"Administración",
 						"activo":1,
 						"submenu":
 						[
@@ -334,7 +334,7 @@ class DALSislab
 								"id_menu":7,
 								"orden":3,
 								"url":"/sistema/logout",
-								"label":"Cerrar sesión",
+								"menu":"Cerrar sesión",
 								"activo":1
 							}
 						]
@@ -20511,6 +20511,275 @@ class DALSislab
 					]
 				},
 				{
+					"id_norma":4,
+					"id_tipo_matriz":1,
+					"norma":"NOM-004-SEMARNAT-2002",
+					"desc":"Norma Oficial Mexicana",
+					"parametros":
+					[
+						{
+							"id_parametro":53,
+							"id_tipo_parametro":2,
+							"id_area":2,
+							"id_unidad":1,
+							"id_metodo":39,
+							"id_tipo_matriz":1,
+							"tipo_matriz":"Agua",
+							"param":"Arsénico",
+							"parametro":"Arsénico",
+							"metodo":"NMX-AA-051-SCFI-2001",
+							"caducidad":-1,
+							"area":"Metales pesados",
+							"unidad":"mg\/l",
+							"descripcion_unidad":"mg\/l",
+							"acreditado":1,
+							"limite_entrega":144,
+							"precio":170,
+							"selected":false
+						},
+						{
+							"id_parametro":55,
+							"id_tipo_parametro":2,
+							"id_area":2,
+							"id_unidad":1,
+							"id_metodo":39,
+							"id_tipo_matriz":1,
+							"tipo_matriz":"Agua",
+							"param":"Cadmio",
+							"parametro":"Cadmio",
+							"metodo":"NMX-AA-051-SCFI-2001",
+							"caducidad":-1,
+							"area":"Metales pesados",
+							"unidad":"mg\/l",
+							"descripcion_unidad":"mg\/l",
+							"acreditado":1,
+							"limite_entrega":144,
+							"precio":170,
+							"selected":false
+						},
+						{
+							"id_parametro":56,
+							"id_tipo_parametro":2,
+							"id_area":2,
+							"id_unidad":1,
+							"id_metodo":39,
+							"id_tipo_matriz":1,
+							"tipo_matriz":"Agua",
+							"param":"Cobre",
+							"parametro":"Cobre",
+							"metodo":"NMX-AA-051-SCFI-2001",
+							"caducidad":-1,
+							"area":"Metales pesados",
+							"unidad":"mg\/l",
+							"descripcion_unidad":"mg\/l",
+							"acreditado":1,
+							"limite_entrega":144,
+							"precio":150,
+							"selected":false
+						},
+						{
+							"id_parametro":78,
+							"id_tipo_parametro":3,
+							"id_area":3,
+							"id_unidad":8,
+							"id_metodo":41,
+							"id_tipo_matriz":1,
+							"tipo_matriz":"Agua",
+							"param":"Coliformes Fecales",
+							"parametro":"Coliformes Fecales",
+							"metodo":"NMX-AA-042-1987",
+							"caducidad":6,
+							"area":"Microbiología",
+							"unidad":"NMP\/100 ml",
+							"descripcion_unidad":"NMP\/100 ml",
+							"acreditado":1,
+							"limite_entrega":120,
+							"precio":160,
+							"selected":false
+						},
+						{
+							"id_parametro":57,
+							"id_tipo_parametro":2,
+							"id_area":2,
+							"id_unidad":1,
+							"id_metodo":39,
+							"id_tipo_matriz":1,
+							"tipo_matriz":"Agua",
+							"param":"Cromo",
+							"parametro":"Cromo",
+							"metodo":"NMX-AA-051-SCFI-2001",
+							"caducidad":-1,
+							"area":"Metales pesados",
+							"unidad":"mg\/l",
+							"descripcion_unidad":"mg\/l",
+							"acreditado":1,
+							"limite_entrega":144,
+							"precio":150,
+							"selected":false
+						},
+						{
+							"id_parametro":17,
+							"id_tipo_parametro":1,
+							"id_area":1,
+							"id_unidad":1,
+							"id_metodo":15,
+							"id_tipo_matriz":1,
+							"tipo_matriz":"Agua",
+							"param":"DBO",
+							"parametro":"Demanda Bioquímica de Oxígeno",
+							"metodo":"NMX-AA-028-SCFI-2001",
+							"caducidad":24,
+							"area":"Gravimetría y Fisicoquímicos",
+							"unidad":"mg\/l",
+							"descripcion_unidad":"mg\/l",
+							"acreditado":1,
+							"limite_entrega":144,
+							"precio":150,
+							"selected":false
+						},
+						{
+							"id_parametro":3,
+							"id_tipo_parametro":1,
+							"id_area":1,
+							"id_unidad":6,
+							"id_metodo":1,
+							"id_tipo_matriz":1,
+							"tipo_matriz":"Agua",
+							"param":"Alc. Total",
+							"parametro":"Alcalinidad Total",
+							"metodo":"NMX-AA-036-SCFI-2001",
+							"caducidad":24,
+							"area":"Gravimetría y Fisicoquímicos",
+							"unidad":"mg CaCO₃\/l",
+							"descripcion_unidad":"mg CaCO₃\/l",
+							"acreditado":1,
+							"limite_entrega":144,
+							"precio":110,
+							"selected":false
+						},
+						{
+							"id_parametro":14,
+							"id_tipo_parametro":1,
+							"id_area":1,
+							"id_unidad":1,
+							"id_metodo":12,
+							"id_tipo_matriz":1,
+							"tipo_matriz":"Agua",
+							"param":"Grasas y Aceites",
+							"parametro":"Grasas y Aceites",
+							"metodo":"NMX-AA-005-SCFI-2013",
+							"caducidad":-1,
+							"area":"Gravimetría y Fisicoquímicos",
+							"unidad":"mg\/l",
+							"descripcion_unidad":"mg\/l",
+							"acreditado":1,
+							"limite_entrega":144,
+							"precio":150,
+							"selected":false
+						},
+						{
+							"id_parametro":60,
+							"id_tipo_parametro":2,
+							"id_area":2,
+							"id_unidad":1,
+							"id_metodo":39,
+							"id_tipo_matriz":1,
+							"tipo_matriz":"Agua",
+							"param":"Mercurio",
+							"parametro":"Mercurio",
+							"metodo":"NMX-AA-051-SCFI-2001",
+							"caducidad":-1,
+							"area":"Metales pesados",
+							"unidad":"mg\/l",
+							"descripcion_unidad":"mg\/l",
+							"acreditado":1,
+							"limite_entrega":144,
+							"precio":170,
+							"selected":false
+						},
+						{
+							"id_parametro":61,
+							"id_tipo_parametro":2,
+							"id_area":2,
+							"id_unidad":1,
+							"id_metodo":39,
+							"id_tipo_matriz":1,
+							"tipo_matriz":"Agua",
+							"param":"Níquel",
+							"parametro":"Níquel",
+							"metodo":"NMX-AA-051-SCFI-2001",
+							"caducidad":-1,
+							"area":"Metales pesados",
+							"unidad":"mg\/l",
+							"descripcion_unidad":"mg\/l",
+							"acreditado":1,
+							"limite_entrega":144,
+							"precio":150,
+							"selected":false
+						},
+						{
+							"id_parametro":62,
+							"id_tipo_parametro":2,
+							"id_area":2,
+							"id_unidad":1,
+							"id_metodo":39,
+							"id_tipo_matriz":1,
+							"tipo_matriz":"Agua",
+							"param":"Plomo",
+							"parametro":"Plomo",
+							"metodo":"NMX-AA-051-SCFI-2001",
+							"caducidad":-1,
+							"area":"Metales pesados",
+							"unidad":"mg\/l",
+							"descripcion_unidad":"mg\/l",
+							"acreditado":1,
+							"limite_entrega":144,
+							"precio":170,
+							"selected":false
+						},
+						{
+							"id_parametro":36,
+							"id_tipo_parametro":1,
+							"id_area":1,
+							"id_unidad":1,
+							"id_metodo":27,
+							"id_tipo_matriz":1,
+							"tipo_matriz":"Agua",
+							"param":"SS Totales",
+							"parametro":"Sólidos Suspendidos Totales",
+							"metodo":"NMX-AA-034-SCFI-2001",
+							"caducidad":-1,
+							"area":"Gravimetría y Fisicoquímicos",
+							"unidad":"mg\/l",
+							"descripcion_unidad":"mg\/l",
+							"acreditado":1,
+							"limite_entrega":144,
+							"precio":110,
+							"selected":false
+						},
+						{
+							"id_parametro":67,
+							"id_tipo_parametro":2,
+							"id_area":2,
+							"id_unidad":1,
+							"id_metodo":39,
+							"id_tipo_matriz":1,
+							"tipo_matriz":"Agua",
+							"param":"Zinc",
+							"parametro":"Zinc",
+							"metodo":"NMX-AA-051-SCFI-2001",
+							"caducidad":-1,
+							"area":"Metales pesados",
+							"unidad":"mg\/l",
+							"descripcion_unidad":"mg\/l",
+							"acreditado":1,
+							"limite_entrega":144,
+							"precio":150,
+							"selected":false
+						}
+					]
+				},
+				{
 					"id_norma":5,
 					"id_tipo_matriz":1,
 					"norma":"NOM-127-SSA1-1994",
@@ -23157,35 +23426,41 @@ class DALSislab
 				{
 					"id_matriz":1,
 					"id_tipo_matriz":1,
+					"id_norma_muestreo":2,
 					"matriz":"Agua Residual",
 					"clave":"AR"
 				},
 				{
 					"id_matriz":2,
 					"id_tipo_matriz":1,
+					"id_norma_muestreo":2,
 					"matriz":"Agua Residual Tratada",
 					"clave":"ART"
 				},
 				{
 					"id_matriz":3,
 					"id_tipo_matriz":1,
+					"id_norma_muestreo":3,
 					"matriz":"Agua Potable",
 					"clave":"AP"
 				},
 				{
 					"id_matriz":4,
 					"id_tipo_matriz":1,
+					"id_norma_muestreo":1,
 					"matriz":"Agua Superficial",
 					"clave":"AS"
 				},
 				{
 					"id_matriz":5,
 					"id_tipo_matriz":1,
+					"id_norma_muestreo":1,
 					"matriz":"Agua Subterránea",
 					"clave":"ASb"
 				},
 				{
 					"id_matriz":6,
+					"id_norma_muestreo":4,
 					"id_tipo_matriz":2,
 					"matriz":"Lodos",
 					"clave":"LD"
@@ -23193,11 +23468,13 @@ class DALSislab
 				{
 					"id_matriz":7,
 					"id_tipo_matriz":1,
+					"id_norma_muestreo":3,
 					"matriz":"Planta Potabilizadora",
 					"clave":"PPt"
 				},
 				{
 					"id_matriz":8,
+					"id_norma_muestreo":1,
 					"id_tipo_matriz":1,
 					"matriz":"Otra",
 					"clave":"OTR"
@@ -24497,16 +24774,49 @@ class DALSislab
 		$result = '
 			[
 				{
-					"id_metodo_muestreo":234,
-					"metodo_muestreo":"NMX-AA-003-1980"
+					"id_norma_muestreo":1,
+					"id_usuario_captura":20,
+					"id_usuario_actualiza":1,
+					"norma_muestreo":"NMX-AA-014-1980",
+					"descripcion":"Norma Oficial Mexicana",
+					"fecha_actualiza":"2015-03-23T08:25-06:00",
+					"ip_actualiza":"[::1]",
+					"host_actualiza":"localhost",
+					"activo":1
 				},
 				{
-					"id_metodo_muestreo":235,
-					"metodo_muestreo":"NMX-AA-014-1980"
+					"id_norma_muestreo":2,
+					"id_usuario_captura":20,
+					"id_usuario_actualiza":1,
+					"norma_muestreo":"NMX-AA-003-1980",
+					"descripcion":"Norma Oficial Mexicana",
+					"fecha_actualiza":"2015-03-23T08:25-06:00",
+					"ip_actualiza":"[::1]",
+					"host_actualiza":"localhost",
+					"activo":1
+
 				},
 				{
-					"id_metodo_muestreo":236,
-					"metodo_muestreo":"NOM-230-SSA1-2001"
+					"id_norma_muestreo":3,
+					"id_usuario_captura":20,
+					"id_usuario_actualiza":1,
+					"norma_muestreo":"NOM-230-SSA1-2003"
+					"descripcion":"Norma Oficial Mexicana",
+					"fecha_actualiza":"2015-03-23T08:25-06:00",
+					"ip_actualiza":"[::1]",
+					"host_actualiza":"localhost",
+					"activo":1
+				},
+				{
+					"id_norma_muestreo":4,
+					"id_usuario_captura":20,
+					"id_usuario_actualiza":1,
+					"norma_muestreo":"NOM-004-SEMARNAT-2002"
+					"descripcion":"Norma Oficial Mexicana",
+					"fecha_actualiza":"2015-03-23T08:25-06:00",
+					"ip_actualiza":"[::1]",
+					"host_actualiza":"localhost",
+					"activo":1
 				}
 			]
 		';

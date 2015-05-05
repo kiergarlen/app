@@ -348,6 +348,7 @@
     cachedToken,
     Token = {};
 
+    Token.hashMessage = hashMessage;
     Token.authenticateUser = authenticateUser;
     Token.isAuthenticated = isAuthenticated;
     Token.setToken = setToken;
@@ -355,6 +356,17 @@
     Token.clearToken = clearToken;
     Token.decodeToken = decodeToken;
     Token.getUserFromToken = getUserFromToken;
+
+    /**
+     * @function hashMessage
+     * @desc Codifica un mensaje usando SHA-256
+     * @param {String} message - Mensaje a codificar
+     * @return {String} hash - Mensaje codificado
+     */
+    function hashMessage(message) {
+      var hash = CryptoJS.SHA256(message);
+      return hash;
+    }
 
     /**
      * @function authenticateUser

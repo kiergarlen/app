@@ -24,7 +24,7 @@
       }
       vm.message = TokenService.authenticateUser(
         vm.user.username,
-        vm.user.password
+        String(TokenService.hashMessage(vm.user.password))
       );
     }
   }

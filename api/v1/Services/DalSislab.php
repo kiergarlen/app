@@ -24833,7 +24833,7 @@ class DALSislab
 					"id_norma_muestreo":3,
 					"id_usuario_captura":20,
 					"id_usuario_actualiza":1,
-					"norma_muestreo":"NOM-230-SSA1-2003"
+					"norma_muestreo":"NOM-230-SSA1-2003",
 					"descripcion":"Norma Oficial Mexicana",
 					"fecha_actualiza":"2015-03-23T08:25-06:00",
 					"ip_actualiza":"[::1]",
@@ -24844,7 +24844,7 @@ class DALSislab
 					"id_norma_muestreo":4,
 					"id_usuario_captura":20,
 					"id_usuario_actualiza":1,
-					"norma_muestreo":"NOM-004-SEMARNAT-2002"
+					"norma_muestreo":"NOM-004-SEMARNAT-2002",
 					"descripcion":"Norma Oficial Mexicana",
 					"fecha_actualiza":"2015-03-23T08:25-06:00",
 					"ip_actualiza":"[::1]",

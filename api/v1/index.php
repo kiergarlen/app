@@ -2,7 +2,7 @@
 require "../libs/Slim/Slim.php";
 require "../libs/JWT/JWT.php";
 require "./Services/DALSislab.php";
-
+//TODO: test me
 define("KEY", "m0oxUT7L8Unn93hXMUGHpwq_jTSKVBjQfEVCUe8jZ38KUU4VSAfmsNk4JJYcJl7CukrY6QMlixxwat7AZSpDcSQ");
 
 \Slim\Slim::registerAutoloader();

@@ -5,22 +5,23 @@
    * @constructor
    * @desc Controla la vista para el listado de Muestras
    * @this {Object} $scope - Contenedor para el modelo [AngularJS]
+   * @param {Object} $location - Manejo de URL [AngularJS]
    * @param {Object} SampleService - Proveedor de datos, Muestras
    */
-  function SampleListController(SampleService) {
+  function SampleListController($location, SampleService) {
     var vm = this;
-    vm.pricesList = SampleService.get();
-    vm.selectRow = selectRow;
+    vm.samples = SampleService.get();
+    vm.viewSample = viewSample;
 
-    function selectRow() {
-
+    function viewSample(id) {
+      $location.path('/inventario/muestra/' + parseInt(id));
     }
   }
   angular
     .module('sislabApp')
     .controller('SampleListController',
       [
-        'SampleService',
+        '$location', 'SampleService',
         SampleListController
       ]
     );

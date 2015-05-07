@@ -1381,7 +1381,7 @@
 
     function isFormValid() {
       vm.message = '';
-      if (vm.sheet.id_metodo_muestreo < 1)
+      if (vm.sheet.id_norma_muestreo < 1)
       {
         vm.message += ' Seleccione una Norma de referencia ';
         return false;

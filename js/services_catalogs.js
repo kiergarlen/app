@@ -830,17 +830,25 @@
       ]
     );
 
-  // SamplesListService.js
+  // SampleService.js
   /**
-   * @name SamplesListService
+   * @name SampleService
    * @constructor
    * @desc Proveedor de datos, Muestras
    * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @param {Object} TokenService - Proveedor de métodos para token
    * @return {Object} $resource - Acceso a recursos HTTP
    */
-  function SamplesListService($resource, TokenService) {
-    return $resource(API_BASE_URL + 'samples', {}, {
+  function SampleService($resource, TokenService) {
+    return $resource(API_BASE_URL + 'samples/:sampleId', {}, {
+      query: {
+        method: 'GET',
+        params: {sampleId: 'id_muestra'},
+        isArray: false,
+        headers: {
+          'Auth-Token': TokenService.getToken()
+        }
+      },
       get: {
         method: 'GET',
         params: {},
@@ -853,10 +861,10 @@
   }
   angular
     .module('sislabApp')
-    .factory('SamplesListService',
+    .factory('SampleService',
       [
         '$resource', 'TokenService',
-        SamplesListService
+        SampleService
       ]
     );
 

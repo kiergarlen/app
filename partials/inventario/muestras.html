@@ -11,7 +11,7 @@
   </div>
 </div>
 <form class="form" role="form"
-  name="samplesListForm"
+  name="samplesForm"
   novalidate
   >
   <div class="row">
@@ -21,17 +21,20 @@
   </div>
   <div class="row">
     <div class="col-xs-12 col-sm-8">
-      <label for="sampleName" class="sr-only">
+      <label for="sampleSearch" class="sr-only">
         Ingrese una búsqueda (Clave, Matriz, etc.)
       </label>
-      <input type="text"
-        class="form-control"
-        placeholder="Ingrese una búsqueda (Clave, Matriz,
-        etc.)"
-        id="sampleName"
-        name="sampleName"
-        data-ng-model="samplesList.filter.$"
-        >
+      <div class="input-group">
+        <div class="input-group-addon">
+          <i class="glyphicon glyphicon-search"></i>
+        </div>
+        <input type="text"
+          class="form-control"
+          placeholder="Ingrese una búsqueda (Clave, Matriz, etc.)"
+          id="sampleSearch"
+          name="sampleSearch"
+          data-ng-model="samlpes.filter.$">
+      </div>
       <br>
     </div>
   </div>
@@ -47,26 +50,39 @@
           id="samplesList">
           <thead>
             <tr>
+              <th>Id Muestra</th>
               <th>Clave</th>
               <th>Matriz</th>
               <th>Fecha</th>
+              <th>Acciones</th>
             </tr>
           </thead>
           <tbody>
             <tr
-              data-ng-repeat="item in samplesList.samples |
-              filter:samplesList.filter.$"
+              data-ng-repeat="item in samples.samples |
+              filter:samples.filter.$"
               id="sampleId{{item.id_muestra}}"
-              data-ng-click="samplesList.selectRow()"
+              data-ng-click="samples.selectRow($event)"
               >
               <td>
-               {{item.folio}} / {{item.ejercicio}}
+                {{item.id_muestra}}
+              </td>
+              <td>
+               {{item.folio}}
               </td>
               <td>
                 {{item.matriz}}
               </td>
               <td>
                 {{item.fecha}}
+              </td>
+              <td>
+                <button class="btn btn-default"
+                  value="Consultar" title="Consultar"
+                  data-ng-click="sample.viewSample(item.id_muestra)"
+                  >
+                  <i class="glyphicon glyphicon-eye-open" aria-hidden="true"></i>
+                </button>
               </td>
             </tr>
           </tbody>

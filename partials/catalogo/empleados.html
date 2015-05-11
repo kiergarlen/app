@@ -60,13 +60,13 @@
               data-ng-click="employeesList.selectRow()"
               >
               <td>
-                <strong>{{item.nombres}}</strong> {{item.ap}} {{item.am}}
+                <strong>{{::item.nombres}}</strong> {{::item.apellido_paterno}} {{::item.apellido_materno}}
               </td>
               <td>
-                {{item.puesto}}
+                {{::item.puesto}}
               </td>
               <td>
-                {{item.area}}
+                {{::item.area}}
               </td>
               <td>
                 <span

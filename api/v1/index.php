@@ -44,6 +44,21 @@ $app->post("/login", function() use ($app) {
 	}
 });
 
+$app->get("/users", function() use ($app) {
+	try {
+		$userId = validateTokenUser($app);
+		$result = \Service\DALSislab::getInstance()->getUsers();
+		//$result = getUsers();
+		$app->response()->status(200);
+		$app->response()->header('Content-Type', 'application/json');
+		//$result = ")]}',\n" . $result;
+		echo $result;
+	} catch (Exception $e) {
+		$app->response()->status(400);
+		$app->response()->header('X-Status-Reason', $e->getMessage());
+	}
+});
+
 $app->get("/menu", function() use ($app) {
 	try {
 		$userId = validateTokenUser($app);
@@ -1082,7 +1097,10 @@ function processResultToJson($items, $isArrayOutputExpected) {
 					$v = '"' . utf8_encode($value) .'"';
 				}
 				$output .= $v;
-				$output .= ",";
+				if ($j < $m)
+				{
+					$output .= ",";
+				}
 			}
 			$output .= "}";
 			if ($isArrayOutputExpected && $i < $l)

@@ -293,8 +293,8 @@
       </label>
       <p>
         {{plan.plan.supervisor_muestreo.nombres}}
-        {{plan.plan.supervisor_muestreo.ap}}
-        {{plan.plan.supervisor_muestreo.am}}
+        {{plan.plan.supervisor_muestreo.apellido_paterno}}
+        {{plan.plan.supervisor_muestreo.apellido_materno}}
         <small>(por Orden de muestreo)</small>
       </p>
       Tipo muestreo:
@@ -341,8 +341,8 @@
           data-ng-repeat="samplingSupervisor in plan.samplingEmployees"
           value="{{samplingSupervisor.id_empleado}}">
           {{samplingSupervisor.nombres}}
-          {{samplingSupervisor.ap}}
-          {{samplingSupervisor.am}}
+          {{samplingSupervisor.apellido_paterno}}
+          {{samplingSupervisor.apellido_materno}}
         </option>
       </select>
     </div>
@@ -359,8 +359,8 @@
           data-ng-repeat="samplingCompanion in plan.samplingEmployees"
           value="{{samplingCompanion.id_empleado}}">
           {{samplingCompanion.nombres}}
-          {{samplingCompanion.ap}}
-          {{samplingCompanion.am}}
+          {{samplingCompanion.apellido_paterno}}
+          {{samplingCompanion.apellido_materno}}
         </option>
       </select>
     </div>
@@ -384,8 +384,8 @@
           data-ng-repeat="collectingSupervisor in plan.samplingEmployees"
           value="{{collectingSupervisor.id_empleado}}">
           {{collectingSupervisor.nombres}}
-          {{collectingSupervisor.ap}}
-          {{collectingSupervisor.am}}
+          {{collectingSupervisor.apellido_paterno}}
+          {{collectingSupervisor.apellido_materno}}
         </option>
       </select>
     </div>
@@ -402,8 +402,8 @@
           data-ng-repeat="collectingCompanion in plan.samplingEmployees"
           value="{{collectingCompanion.id_empleado}}">
           {{collectingCompanion.nombres}}
-          {{collectingCompanion.ap}}
-          {{collectingCompanion.am}}
+          {{collectingCompanion.apellido_paterno}}
+          {{collectingCompanion.apellido_materno}}
         </option>
       </select>
     </div>
@@ -427,8 +427,8 @@
           data-ng-repeat="loggingSupervisor in plan.samplingEmployees"
           value="{{loggingSupervisor.id_empleado}}">
           {{loggingSupervisor.nombres}}
-          {{loggingSupervisor.ap}}
-          {{loggingSupervisor.am}}
+          {{loggingSupervisor.apellido_paterno}}
+          {{loggingSupervisor.apellido_materno}}
         </option>
       </select>
     </div>
@@ -445,8 +445,8 @@
           data-ng-repeat="loggingCompanion in plan.samplingEmployees"
           value="{{loggingCompanion.id_empleado}}">
           {{loggingCompanion.nombres}}
-          {{loggingCompanion.ap}}
-          {{loggingCompanion.am}}
+          {{loggingCompanion.apellido_paterno}}
+          {{loggingCompanion.apellido_materno}}
         </option>
       </select>
     </div>
@@ -475,8 +475,8 @@
           data-ng-repeat="calibratingSupervisor in plan.samplingEmployees"
           value="{{calibratingSupervisor.id_empleado}}">
           {{calibratingSupervisor.nombres}}
-          {{calibratingSupervisor.ap}}
-          {{calibratingSupervisor.am}}
+          {{calibratingSupervisor.apellido_paterno}}
+          {{calibratingSupervisor.apellido_materno}}
         </option>
       </select>
     </div>
@@ -551,8 +551,8 @@
           data-ng-repeat="preparationSupervisor in plan.samplingEmployees"
           value="{{preparationSupervisor.id_empleado}}">
           {{preparationSupervisor.nombres}}
-          {{preparationSupervisor.ap}}
-          {{preparationSupervisor.am}}
+          {{preparationSupervisor.apellido_paterno}}
+          {{preparationSupervisor.apellido_materno}}
         </option>
       </select>
     </div>
@@ -611,8 +611,8 @@
           data-ng-repeat="reactiveSupervisor in plan.samplingEmployees"
           value="{{reactiveSupervisor.id_empleado}}">
           {{reactiveSupervisor.nombres}}
-          {{reactiveSupervisor.ap}}
-          {{reactiveSupervisor.am}}
+          {{reactiveSupervisor.apellido_paterno}}
+          {{reactiveSupervisor.apellido_materno}}
         </option>
       </select>
     </div>
@@ -682,8 +682,8 @@
           data-ng-repeat="materialsSupervisor in plan.samplingEmployees"
           value="{{materialsSupervisor.id_empleado}}">
           {{materialsSupervisor.nombres}}
-          {{materialsSupervisor.ap}}
-          {{materialsSupervisor.am}}
+          {{materialsSupervisor.apellido_paterno}}
+          {{materialsSupervisor.apellido_materno}}
         </option>
       </select>
     </div>
@@ -720,10 +720,8 @@
           data-ng-repeat="coolersSupervisor in plan.samplingEmployees"
           value="{{coolersSupervisor.id_empleado}}">
           {{coolersSupervisor.nombres}}
-          {{coolersSupervisor.ap}}
-          {{coolersSupervisor.am}}
-          {{coolersSupervisor.ap}}
-          {{coolersSupervisor.am}}
+          {{coolersSupervisor.apellido_paterno}}
+          {{coolersSupervisor.apellido_materno}}
         </option>
       </select>
     </div>

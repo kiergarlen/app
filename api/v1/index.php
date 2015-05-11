@@ -2,8 +2,21 @@
 require "../libs/Slim/Slim.php";
 require "../libs/JWT/JWT.php";
 require "./Services/DALSislab.php";
-//TODO: test me
+// cd372fb85148700fa88095e3492d3f9f5beb43e555e5ff26d95f5a6adc36f8e6
 define("KEY", "m0oxUT7L8Unn93hXMUGHpwq_jTSKVBjQfEVCUe8jZ38KUU4VSAfmsNk4JJYcJl7CukrY6QMlixxwat7AZSpDcSQ");
+define("DB_DRIVER", "mysql");
+//define("DB_DRIVER", "sqlsrv");
+define("DB_HOST", "localhost");
+define("DB_PORT", "8889");
+//define("DB_PORT", "");
+define("DB_USER", "root");
+define("DB_PASSWORD", "root");
+define("DB_DATA_BASE", "sislab");
+/*
+define("DB_USER", "sislab");
+define("DB_PASSWORD", "sislab@12#");
+define("DB_DATA_BASE", "Sislab");
+*/
 
 \Slim\Slim::registerAutoloader();
 $app = new \Slim\Slim();
@@ -12,13 +25,19 @@ $app->post("/login", function() use ($app) {
 	try {
 		$jwt = processUserJwt($app);
 		$result = json_encode($jwt);
-		////debugging only
-		//$jwt = $token;
-		//$decodedToken = decodeToken($jwt);
+		//////debugging only
+		////$jwt = $token;
+		////$decodedToken = decodeToken($jwt);
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
-		//echo ")]}',\n" . $result;
-		echo $result;
+		////$result = ")]}',\n" . $result;
+		//// support for JSONP requests
+		//if (!isset($_GET['callback'])) {
+		//	echo json_encode($result);
+		//} else {
+		//	echo $_GET['callback'] . '(' . json_encode($result) . ');';
+		//}
+		print_r($result);
 	} catch (Exception $e) {
 		$app->response()->status(400);
 		$app->response()->header('X-Status-Reason', $e->getMessage());
@@ -31,7 +50,7 @@ $app->get("/menu", function() use ($app) {
 		$result = \Service\DALSislab::getInstance()->getMenu($userId);
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
-		//echo ")]}',\n" . $result;
+		//$result = ")]}',\n" . $result;
 		echo $result;
 	} catch (Exception $e) {
 		$app->response()->status(400);
@@ -45,7 +64,7 @@ $app->get("/tasks", function() use ($app) {
 		$result = \Service\DALSislab::getInstance()->getTasks($userId);
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
-		//echo ")]}',\n" . $result;
+		//$result = ")]}',\n" . $result;
 		echo $result;
 	} catch (Exception $e) {
 		$app->response()->status(400);
@@ -66,7 +85,7 @@ $app->get("/studies(/)(:studyId)", function($studyId = -1) use ($app) {
 		}
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
-		//echo ")]}',\n" . $result;
+		//$result = ")]}',\n" . $result;
 		echo $result;
 	} catch (Exception $e) {
 		$app->response()->status(400);
@@ -86,7 +105,7 @@ $app->post("/studies", function() use ($app) {
 		//$result = \Service\DALSislab::getInstance()->insertStudy();
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
-		//echo ")]}',\n" . $result;
+		//$result = ")]}',\n" . $result;
 		echo $result;
 	} catch (Exception $e) {
 		$app->response()->status(400);
@@ -107,7 +126,7 @@ $app->get("/quotes(/)(:quoteId)", function($quoteId = -1) use ($app) {
 		}
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
-		//echo ")]}',\n" . $result;
+		//$result = ")]}',\n" . $result;
 		echo $result;
 	} catch (Exception $e) {
 		$app->response()->status(400);
@@ -127,7 +146,7 @@ $app->post("/quotes", function() use ($app) {
 		//$result = \Service\DALSislab::getInstance()->insertStudy();
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
-		//echo ")]}',\n" . $result;
+		//$result = ")]}',\n" . $result;
 		echo $result;
 	} catch (Exception $e) {
 		$app->response()->status(400);
@@ -148,7 +167,7 @@ $app->get("/orders(/)(:orderId)", function($orderId = -1) use ($app) {
 		}
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
-		//echo ")]}',\n" . $result;
+		//$result = ")]}',\n" . $result;
 		echo $result;
 	} catch (Exception $e) {
 		$app->response()->status(400);
@@ -168,7 +187,7 @@ $app->post("/orders", function() use ($app) {
 		//$result = \Service\DALSislab::getInstance()->insertStudy();
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
-		//echo ")]}',\n" . $result;
+		//$result = ")]}',\n" . $result;
 		echo $result;
 	} catch (Exception $e) {
 		$app->response()->status(400);
@@ -189,7 +208,7 @@ $app->get("/plans(/)(:planId)", function($planId = -1) use ($app) {
 		}
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
-		//echo ")]}',\n" . $result;
+		//$result = ")]}',\n" . $result;
 		echo $result;
 	} catch (Exception $e) {
 		$app->response()->status(400);
@@ -209,7 +228,7 @@ $app->post("/plans", function() use ($app) {
 		//$result = \Service\DALSislab::getInstance()->insertStudy();
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
-		//echo ")]}',\n" . $result;
+		//$result = ")]}',\n" . $result;
 		echo $result;
 	} catch (Exception $e) {
 		$app->response()->status(400);
@@ -231,7 +250,7 @@ $app->get("/sheets(/)(:sheetId)", function($sheetId = -1) use ($app) {
 		}
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
-		//echo ")]}',\n" . $result;
+		//$result = ")]}',\n" . $result;
 		echo $result;
 	} catch (Exception $e) {
 		$app->response()->status(400);
@@ -251,7 +270,7 @@ $app->post("/sheets", function() use ($app) {
 		//$result = \Service\DALSislab::getInstance()->insertStudy();
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
-		//echo ")]}',\n" . $result;
+		//$result = ")]}',\n" . $result;
 		echo $result;
 	} catch (Exception $e) {
 		$app->response()->status(400);
@@ -272,7 +291,7 @@ $app->get("/receptions(/)(:receptionId)", function($receptionId = -1) use ($app)
 		}
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
-		//echo ")]}',\n" . $result;
+		//$result = ")]}',\n" . $result;
 		echo $result;
 	} catch (Exception $e) {
 		$app->response()->status(400);
@@ -292,7 +311,7 @@ $app->post("/receptions", function() use ($app) {
 		//$result = \Service\DALSislab::getInstance()->insertStudy();
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
-		//echo ")]}',\n" . $result;
+		//$result = ")]}',\n" . $result;
 		echo $result;
 	} catch (Exception $e) {
 		$app->response()->status(400);
@@ -313,7 +332,7 @@ $app->get("/custodies(/)(:custodyId)", function($custodyId = -1) use ($app) {
 		}
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
-		//echo ")]}',\n" . $result;
+		//$result = ")]}',\n" . $result;
 		echo $result;
 	} catch (Exception $e) {
 		$app->response()->status(400);
@@ -333,7 +352,7 @@ $app->post("/custodies", function() use ($app) {
 		//$result = \Service\DALSislab::getInstance()->insertStudy();
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
-		//echo ")]}',\n" . $result;
+		//$result = ")]}',\n" . $result;
 		echo $result;
 	} catch (Exception $e) {
 		$app->response()->status(400);
@@ -347,7 +366,7 @@ $app->get("/clients", function() use ($app) {
 		$result = \Service\DALSislab::getInstance()->getClients();
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
-		//echo ")]}',\n" . $result;
+		//$result = ")]}',\n" . $result;
 		echo $result;
 	} catch (Exception $e) {
 		$app->response()->status(400);
@@ -361,7 +380,7 @@ $app->get("/parameters", function() use ($app) {
 		$result = \Service\DALSislab::getInstance()->getParameters();
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
-		//echo ")]}',\n" . $result;
+		//$result = ")]}',\n" . $result;
 		echo $result;
 	} catch (Exception $e) {
 		$app->response()->status(400);
@@ -375,7 +394,7 @@ $app->get("/norms", function() use ($app) {
 		$result = \Service\DALSislab::getInstance()->getNorms();
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
-		//echo ")]}',\n" . $result;
+		//$result = ")]}',\n" . $result;
 		echo $result;
 	} catch (Exception $e) {
 		$app->response()->status(400);
@@ -389,7 +408,7 @@ $app->get("/sampling/types", function() use ($app) {
 		$result = \Service\DALSislab::getInstance()->getSamplingTypes();
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
-		//echo ")]}',\n" . $result;
+		//$result = ")]}',\n" . $result;
 		echo $result;
 	} catch (Exception $e) {
 		$app->response()->status(400);
@@ -403,7 +422,7 @@ $app->get("/order/sources", function() use ($app) {
 		$result = \Service\DALSislab::getInstance()->getOrderSources();
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
-		//echo ")]}',\n" . $result;
+		//$result = ")]}',\n" . $result;
 		echo $result;
 	} catch (Exception $e) {
 		$app->response()->status(400);
@@ -417,7 +436,7 @@ $app->get("/matrices", function() use ($app) {
 		$result = \Service\DALSislab::getInstance()->getMatrices();
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
-		//echo ")]}',\n" . $result;
+		//$result = ")]}',\n" . $result;
 		echo $result;
 	} catch (Exception $e) {
 		$app->response()->status(400);
@@ -431,7 +450,7 @@ $app->get("/points/packages", function() use ($app) {
 		$result = \Service\DALSislab::getInstance()->getPointPackages();
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
-		//echo ")]}',\n" . $result;
+		//$result = ")]}',\n" . $result;
 		echo $result;
 	} catch (Exception $e) {
 		$app->response()->status(400);
@@ -458,7 +477,7 @@ $app->get("/sampling/employees", function() use ($app) {
 		$result = \Service\DALSislab::getInstance()->getSamplingEmployees();
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
-		//echo ")]}',\n" . $result;
+		//$result = ")]}',\n" . $result;
 		echo $result;
 	} catch (Exception $e) {
 		$app->response()->status(400);
@@ -472,7 +491,7 @@ $app->get("/plan/objectives", function() use ($app) {
 		$result = \Service\DALSislab::getInstance()->getPlanObjectives();
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
-		//echo ")]}',\n" . $result;
+		//$result = ")]}',\n" . $result;
 		echo $result;
 	} catch (Exception $e) {
 		$app->response()->status(400);
@@ -486,7 +505,7 @@ $app->get("/point/kinds", function() use ($app) {
 		$result = \Service\DALSislab::getInstance()->getPointKinds();
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
-		//echo ")]}',\n" . $result;
+		//$result = ")]}',\n" . $result;
 		echo $result;
 	} catch (Exception $e) {
 		$app->response()->status(400);
@@ -500,7 +519,7 @@ $app->get("/districts/:districtId", function($districtId) use ($app) {
 		$result = \Service\DALSislab::getInstance()->getDistrict($districtId);
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
-		//echo ")]}',\n" . $result;
+		//$result = ")]}',\n" . $result;
 		echo $result;
 	} catch (Exception $e) {
 		$app->response()->status(400);
@@ -514,7 +533,7 @@ $app->get("/districts", function() use ($app) {
 		$result = \Service\DALSislab::getInstance()->getDistricts();
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
-		//echo ")]}',\n" . $result;
+		//$result = ")]}',\n" . $result;
 		echo $result;
 	} catch (Exception $e) {
 		$app->response()->status(400);
@@ -528,7 +547,7 @@ $app->get("/districts/cities/:districtId", function($districtId) use ($app) {
 		$result = \Service\DALSislab::getInstance()->getCitiesByDistrictId($districtId);
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
-		//echo ")]}',\n" . $result;
+		//$result = ")]}',\n" . $result;
 		echo $result;
 	} catch (Exception $e) {
 		$app->response()->status(400);
@@ -542,7 +561,7 @@ $app->get("/districts", function() use ($app) {
 		$result = \Service\DALSislab::getInstance()->getDistricts();
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
-		//echo ")]}',\n" . $result;
+		//$result = ")]}',\n" . $result;
 		echo $result;
 	} catch (Exception $e) {
 		$app->response()->status(400);
@@ -556,7 +575,7 @@ $app->get("/preservations", function() use ($app) {
 		$result = \Service\DALSislab::getInstance()->getPreservations();
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
-		//echo ")]}',\n" . $result;
+		//$result = ")]}',\n" . $result;
 		echo $result;
 	} catch (Exception $e) {
 		$app->response()->status(400);
@@ -570,7 +589,7 @@ $app->get("/containers/kinds", function() use ($app) {
 		$result = \Service\DALSislab::getInstance()->getContainerKinds();
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
-		//echo ")]}',\n" . $result;
+		//$result = ")]}',\n" . $result;
 		echo $result;
 	} catch (Exception $e) {
 		$app->response()->status(400);
@@ -584,7 +603,7 @@ $app->get("/reactives", function() use ($app) {
 		$result = \Service\DALSislab::getInstance()->getReactives();
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
-		//echo ")]}',\n" . $result;
+		//$result = ")]}',\n" . $result;
 		echo $result;
 	} catch (Exception $e) {
 		$app->response()->status(400);
@@ -598,7 +617,7 @@ $app->get("/materials", function() use ($app) {
 		$result = \Service\DALSislab::getInstance()->getMaterials();
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
-		//echo ")]}',\n" . $result;
+		//$result = ")]}',\n" . $result;
 		echo $result;
 	} catch (Exception $e) {
 		$app->response()->status(400);
@@ -612,7 +631,7 @@ $app->get("/instruments/sampling", function() use ($app) {
 		$result = \Service\DALSislab::getInstance()->getSamplingInstruments();
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
-		//echo ")]}',\n" . $result;
+		//$result = ")]}',\n" . $result;
 		echo $result;
 	} catch (Exception $e) {
 		$app->response()->status(400);
@@ -626,7 +645,7 @@ $app->get("/coolers", function() use ($app) {
 		$result = \Service\DALSislab::getInstance()->getCoolers();
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
-		//echo ")]}',\n" . $result;
+		//$result = ")]}',\n" . $result;
 		echo $result;
 	} catch (Exception $e) {
 		$app->response()->status(400);
@@ -640,7 +659,7 @@ $app->get("/clouds", function() use ($app) {
 		$result = \Service\DALSislab::getInstance()->getClouds();
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
-		//echo ")]}',\n" . $result;
+		//$result = ")]}',\n" . $result;
 		echo $result;
 	} catch (Exception $e) {
 		$app->response()->status(400);
@@ -654,7 +673,7 @@ $app->get("/winds", function() use ($app) {
 		$result = \Service\DALSislab::getInstance()->getCurrentDirections();
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
-		//echo ")]}',\n" . $result;
+		//$result = ")]}',\n" . $result;
 		echo $result;
 	} catch (Exception $e) {
 		$app->response()->status(400);
@@ -668,7 +687,7 @@ $app->get("/waves", function() use ($app) {
 		$result = \Service\DALSislab::getInstance()->getWaves();
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
-		//echo ")]}',\n" . $result;
+		//$result = ")]}',\n" . $result;
 		echo $result;
 	} catch (Exception $e) {
 		$app->response()->status(400);
@@ -682,7 +701,7 @@ $app->get("/sampling/norms", function() use ($app) {
 		$result = \Service\DALSislab::getInstance()->getSamplingNorms();
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
-		//echo ")]}',\n" . $result;
+		//$result = ")]}',\n" . $result;
 		echo $result;
 	} catch (Exception $e) {
 		$app->response()->status(400);
@@ -703,7 +722,7 @@ $app->get("/points(/)(:pointid)", function($pointId = -1) use ($app) {
 		}
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
-		//echo ")]}',\n" . $result;
+		//$result = ")]}',\n" . $result;
 		echo $result;
 	} catch (Exception $e) {
 		$app->response()->status(400);
@@ -717,7 +736,7 @@ $app->get("/parameters/field", function() use ($app) {
 		$result = \Service\DALSislab::getInstance()->getParametersField();
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
-		//echo ")]}',\n" . $result;
+		//$result = ")]}',\n" . $result;
 		echo $result;
 	} catch (Exception $e) {
 		$app->response()->status(400);
@@ -731,7 +750,7 @@ $app->get("/receptionists", function() use ($app) {
 		$result = \Service\DALSislab::getInstance()->getReceptionists();
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
-		//echo ")]}',\n" . $result;
+		//$result = ")]}',\n" . $result;
 		echo $result;
 	} catch (Exception $e) {
 		$app->response()->status(400);
@@ -745,7 +764,7 @@ $app->get("/expirations", function() use ($app) {
 		$result = \Service\DALSislab::getInstance()->getExpirations();
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
-		//echo ")]}',\n" . $result;
+		//$result = ")]}',\n" . $result;
 		echo $result;
 	} catch (Exception $e) {
 		$app->response()->status(400);
@@ -759,7 +778,7 @@ $app->get("/volumes", function() use ($app) {
 		$result = \Service\DALSislab::getInstance()->getVolumes();
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
-		//echo ")]}',\n" . $result;
+		//$result = ")]}',\n" . $result;
 		echo $result;
 	} catch (Exception $e) {
 		$app->response()->status(400);
@@ -773,7 +792,7 @@ $app->get("/checkers", function() use ($app) {
 		$result = \Service\DALSislab::getInstance()->getCheckers();
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
-		//echo ")]}',\n" . $result;
+		//$result = ")]}',\n" . $result;
 		echo $result;
 	} catch (Exception $e) {
 		$app->response()->status(400);
@@ -787,7 +806,7 @@ $app->get("/samples", function() use ($app) {
 		$result = \Service\DALSislab::getInstance()->getSamples();
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
-		//echo ")]}',\n" . $result;
+		//$result = ")]}',\n" . $result;
 		echo $result;
 	} catch (Exception $e) {
 		$app->response()->status(400);
@@ -801,7 +820,7 @@ $app->get("/instruments", function() use ($app) {
 		$result = \Service\DALSislab::getInstance()->getInstruments();
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
-		//echo ")]}',\n" . $result;
+		//$result = ")]}',\n" . $result;
 		echo $result;
 	} catch (Exception $e) {
 		$app->response()->status(400);
@@ -815,7 +834,7 @@ $app->get("/containers", function() use ($app) {
 		$result = \Service\DALSislab::getInstance()->getContainers();
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
-		//echo ")]}',\n" . $result;
+		//$result = ")]}',\n" . $result;
 		echo $result;
 	} catch (Exception $e) {
 		$app->response()->status(400);
@@ -829,7 +848,7 @@ $app->get("/analysis", function() use ($app) {
 		$result = \Service\DALSislab::getInstance()->getAnalysis();
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
-		//echo ")]}',\n" . $result;
+		//$result = ")]}',\n" . $result;
 		echo $result;
 	} catch (Exception $e) {
 		$app->response()->status(400);
@@ -843,7 +862,7 @@ $app->get("/areas", function() use ($app) {
 		$result = \Service\DALSislab::getInstance()->getAreas();
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
-		//echo ")]}',\n" . $result;
+		//$result = ")]}',\n" . $result;
 		echo $result;
 	} catch (Exception $e) {
 		$app->response()->status(400);
@@ -857,7 +876,7 @@ $app->get("/analysis/selections", function() use ($app) {
 		$result = \Service\DALSislab::getInstance()->getAnalysisSelections();
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
-		//echo ")]}',\n" . $result;
+		//$result = ")]}',\n" . $result;
 		echo $result;
 	} catch (Exception $e) {
 		$app->response()->status(400);
@@ -871,7 +890,7 @@ $app->get("/reports", function() use ($app) {
 		$result = \Service\DALSislab::getInstance()->getReports();
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
-		//echo ")]}',\n" . $result;
+		//$result = ")]}',\n" . $result;
 		echo $result;
 	} catch (Exception $e) {
 		$app->response()->status(400);
@@ -885,7 +904,7 @@ $app->get("/reports/:reportId", function($reportId) use ($app) {
 		$result = \Service\DALSislab::getInstance()->getReport($reportId);
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
-		//echo ")]}',\n" . $result;
+		//$result = ")]}',\n" . $result;
 		echo $result;
 	} catch (Exception $e) {
 		$app->response()->status(400);
@@ -899,7 +918,7 @@ $app->get("/reports/:reportId", function() use ($app) {
 		$result = \Service\DALSislab::getInstance()->getReports();
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
-		//echo ")]}',\n" . $result;
+		//$result = ")]}',\n" . $result;
 		echo $result;
 	} catch (Exception $e) {
 		$app->response()->status(400);
@@ -913,7 +932,7 @@ $app->get("/employees", function() use ($app) {
 		$result = \Service\DALSislab::getInstance()->getEmployees();
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
-		//echo ")]}',\n" . $result;
+		//$result = ")]}',\n" . $result;
 		echo $result;
 	} catch (Exception $e) {
 		$app->response()->status(400);
@@ -927,7 +946,7 @@ $app->get("/references", function() use ($app) {
 		$result = \Service\DALSislab::getInstance()->getReferences();
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
-		//echo ")]}',\n" . $result;
+		//$result = ")]}',\n" . $result;
 		echo $result;
 	} catch (Exception $e) {
 		$app->response()->status(400);
@@ -941,7 +960,7 @@ $app->get("/methods", function() use ($app) {
 		$result = \Service\DALSislab::getInstance()->getMethods();
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
-		//echo ")]}',\n" . $result;
+		//$result = ")]}',\n" . $result;
 		echo $result;
 	} catch (Exception $e) {
 		$app->response()->status(400);
@@ -955,7 +974,7 @@ $app->get("/prices", function() use ($app) {
 		$result = \Service\DALSislab::getInstance()->getPrices();
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
-		//echo ")]}',\n" . $result;
+		//$result = ")]}',\n" . $result;
 		echo $result;
 	} catch (Exception $e) {
 		$app->response()->status(400);
@@ -969,7 +988,7 @@ $app->get("/users", function() use ($app) {
 		$result = \Service\DALSislab::getInstance()->getUsers();
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
-		//echo ")]}',\n" . $result;
+		//$result = ")]}',\n" . $result;
 		echo $result;
 	} catch (Exception $e) {
 		$app->response()->status(400);
@@ -983,7 +1002,7 @@ $app->get("/users/:userId", function() use ($app) {
 		$result = \Service\DALSislab::getInstance()->getUser($userId);
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
-		//echo ")]}',\n" . $result;
+		//$result = ")]}',\n" . $result;
 		echo $result;
 	} catch (Exception $e) {
 		$app->response()->status(400);
@@ -998,7 +1017,7 @@ $app->get("/clients/:clientId", function() use ($app) {
 		$result = \Service\DALSislab::getInstance()->getClient($clientId);
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
-		//echo ")]}',\n" . $result;
+		//$result = ")]}',\n" . $result;
 		echo $result;
 	} catch (Exception $e) {
 		$app->response()->status(400);
@@ -1014,46 +1033,6 @@ function decodeJwt($jwt) {
 	$decoded_array = (array) $decoded;
 	//print_r($decoded_array);
 	return $decoded_array;
-}
-
-function processUserJwt($app) {
-	$request = $app->request();
-	$input = json_decode($request->getBody());
-	$name = "";
-	$userId = 1;
-	$userLv = 0;
-	$usr = $input->username;
-	$pwd = $input->password;
-
-	$userData = \Service\DALSislab::getInstance()->getUserByCredentials($usr, $pwd);
-	$userInfo = json_decode($userData);
-
-	$userId = $userInfo->id_usuario;
-	$userLv = $userInfo->id_nivel;
-	$name = $userInfo->nombres . " ";
-	$name .= $userInfo->ap . " ";
-	$name .= $userInfo->am . " ";
-
-	$userPass = $usr . ".";
-	$userPass .= $pwd . ".";
-	$userPass .= $userId . "." . $userLv;
-	$userPass = bin2hex($userPass);
-
-	$token = array();
-	//$token["usr"] = $input->username;
-	//$token["pwd"] = $input->password;
-	$token["nam"] = $name;
-	$token["upt"] = $userPass;
-	$token["uid"] = $userId;
-	$token["ulv"] = $userLv;
-	$token["cip"] = $request->getIp() . "";
-	$token["iss"] = $request->getUrl();
-	$token["aud"] = "sislab.ceajalisco.gob.mx";
-	$token["iat"] = time();
-	/// Token expires 3 hours from now
-	$token["exp"] = time() + (3 * 60 * 60);
-	$jwt = JWT::encode($token, KEY);
-	return $jwt;
 }
 
 function extractDataFromRequest($app) {
@@ -1078,239 +1057,123 @@ function validateTokenUser($app) {
 	}
 }
 
-
-
-/*
-$validateAccessToken = function($app) {
-   return function () use ($app) {
-		$request = $app->request();
-		$headers = $request->headers();
-
-		$jwt = $headers["Auth-Token"];
-		$decoded = JWT::decode($jwt, KEY);
-		$userPass = hex2bin($decoded->upt);
-		$userPassArray = explode (".", $userPass);
-		$userId = 0;
-		if ($userPassArray[0] === "rgarcia" && $userPassArray[1] === "rgarcia")
-		{
-			$userId = 1;
-		}
-		else
-		{
-		   //$app->redirect("/errorpage");
-		}
-	};
-};
-*/
-//$app->get("/tasks", $validateAccessToken($app), function() use ($app) {
-//	try {
-//		$request = $app->request();
-//		$headers = $request->headers();
-//
-//		$userId = validateTokenUser($headers);
-//
-//		$result = DALSislab::getInstance()->getTasks($userId);
-//		$app->response()->status(200);
-//		$app->response()->header('Content-Type', 'application/json');
-//		//echo ")]}',\n" . $result;
-//echo $result;
-//	} catch (Exception $e) {
-//		$app->response()->status(400);
-//		$app->response()->header('X-Status-Reason', $e->getMessage());
-//	}
-//});
-/*
-$app->get('/acciones/:id', 'getAccion');
-*/
-/*
-function addWine() {
-	$request = Slim::getInstance()->request();
-	$wine = json_decode($request->getBody());
-	$sql = "INSERT INTO wine (name, grapes, country, region, year, description) VALUES (:name, :grapes, :country, :region, :year, :description)";
+function processResultToJson($items, $isArrayOutputExpected) {
+	$output = "";
 	try {
-		$db = getConnection();
-		$stmt = $db->prepare($sql);
-		$stmt->bindParam("name", $wine->name);
-		$stmt->bindParam("grapes", $wine->grapes);
-		$stmt->bindParam("country", $wine->country);
-		$stmt->bindParam("region", $wine->region);
-		$stmt->bindParam("year", $wine->year);
-		$stmt->bindParam("description", $wine->description);
-		$stmt->execute();
-		$wine->id = $db->lastInsertId();
-		$db = null;
-		echo json_encode($wine);
-	} catch(PDOException $e) {
-		echo '{"error":{"text":'. $e->getMessage() .'}}';
-	}
-}
-*/
-/*
-function getAccion($id) {
-	$sql = "SELECT idaccion, idlicitacion, idcontrato, idprograma, idsubprograma, idtipoaccion, idcategoria, idsubcategoria, idejercicio, idcobertura, idpertenece, idsituacion,
-		idstatusanexo, idobserobras, idconveniotrans, idsicpro, idresponsable, idclasificador, idagrupador, elabcontrato, ptars, DescAnexo, NombreObra, montoprogramado,
-		montopreprogramado, montoorigenprogramado, obserpreprog, costobase, porcfederal, porcestatal, porcmunicipal, porcotros, porcindirecto, numaccionanexo,
-		ctacontable, credito, contraparte, codigoBID, fichaSIIF, obraSIIF, [status], status1, poblacionbene, abona_cobertura, hab_bene, user_updt, validar, validarconceptos,
-		observaciones, cob_abona, fecha_updt
-		FROM Acciones
-		WHERE idaccion=:id";
-	try {
-		$db = getConnection();
-		$stmt = $db->prepare($sql);
-		$stmt->bindParam("id", $id);
-		$stmt->execute();
-		$result = $stmt->fetchObject();
-		$db = null;
-		// Include support for JSONP requests
-		if (!isset($_GET['callback'])) {
-			echo json_encode($result);
-		} else {
-			echo $_GET['callback'] . '(' . json_encode($result) . ');';
+		if ($isArrayOutputExpected)
+		{
+			$output .= "[";
+		}
+		$i = 0;
+		$l = count($items);
+		foreach ($items as $item) {
+			$i++;
+			$j = 0;
+			$item = (array)$item;
+			$m = count($item);
+			$output .= "{";
+			foreach ($item as $key => $value) {
+				$j++;
+				$output .= '"' . $key . '":';
+				$v = $value;
+				if (!is_numeric($v))
+				{
+					//TODO: format string for dates
+					$v = '"' . utf8_encode($value) .'"';
+				}
+				$output .= $v;
+				$output .= ",";
+			}
+			$output .= "}";
+			if ($isArrayOutputExpected && $i < $l)
+			{
+				$output .= ",";
+			}
+		}
+		if ($isArrayOutputExpected)
+		{
+			$output .= "]";
 		}
 	} catch(PDOException $e) {
-		echo '{"error":{"text":'. $e->getMessage() .'}}';
+		//error_log($e->getMessage(), 3, '/var/tmp/php.log');
+		//echo '{"error":{"text":'. $e->getMessage() .'}}';
+		$output = '{"error":"' . $e->getMessage() . '"}';
 	}
+	return $output;
 }
-*/
-/*
+
 function getConnection() {
-	$dbhost = "SQLDESARROLLO";
-	$dbuser= "obras";
-	$dbpass= "0bra$@12#";
-	$dbname= "CTRLOBRA";
-	$dbh = new PDO("sqlsrv:server = $dbhost; Database = $dbname", $dbuser, $dbpass);
-	$dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-	return $dbh;
-}
-*/
-
-
-/*
-<?php
-function getDB() {
-	$dbhost="localhost";
-	$dbuser="root";
-	$dbpass="";
-	$dbname="socialproject";
-	$dbConnection = new PDO("mysql:host=$dbhost;dbname=$dbname", $dbuser, $dbpass);
+	$dsn = DB_DRIVER . ":";
+	$dsn .= "host=" . DB_HOST . ";";
+	if (strlen(DB_PORT) > 0)
+	{
+		$dsn .= "port=" . DB_PORT . ";";
+	}
+	$dsn .= "dbname=" . DB_DATA_BASE;
+	$dbConnection = new PDO($dsn, DB_USER, DB_PASSWORD);
 	$dbConnection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 	return $dbConnection;
 }
 
-require 'Slim/Slim.php';
-\Slim\Slim::registerAutoloader();
-
-$app = new \Slim\Slim();
-
-$app->get('/users','getUsers');
-$app->get('/updates','getUserUpdates');
-$app->post('/updates', 'insertUpdate');
-$app->delete('/updates/delete/:update_id','deleteUpdate');
-$app->get('/users/search/:query','getUserSearch');
-
-$app->run();
+function getUserByCredentials($userName, $userPassword) {
+	//$userName = "rgarcia";
+	//$userPassword = "8493a161f70fffc0dcd4732ae4f6c4667f373688fff802ea13c71bd0fce41cb1";
+	$sql = "SELECT id_usuario, id_nivel, id_rol, id_area, id_puesto, interno, cea, laboratorio, supervisa, analiza, muestrea, nombres, apellido_paterno, apellido_materno, usr, pwd, fecha_captura, fecha_actualiza, ip_captura, ip_actualiza, host_captura, host_actualiza, activo FROM Usuario WHERE usr = :userName AND pwd = :userPassword AND activo = 1";
+	$db = getConnection();
+	$stmt = $db->prepare($sql);
+	$stmt->bindParam("userName", $userName);
+	$stmt->bindParam("userPassword", $userPassword);
+	$stmt->execute();
+	return $stmt->fetchAll(PDO::FETCH_OBJ);
+}
 
 function getUsers() {
-	$sql = "SELECT user_id,username,name,profile_pic FROM users ORDER BY user_id";
-	try {
-		$db = getDB();
-		$stmt = $db->query($sql);
-		$users = $stmt->fetchAll(PDO::FETCH_OBJ);
-		$db = null;
-		echo '{"users": ' . json_encode($users) . '}';
-	} catch(PDOException $e) {
-	    //error_log($e->getMessage(), 3, '/var/tmp/php.log');
-		echo '{"error":{"text":'. $e->getMessage() .'}}';
-	}
+	$sql = "SELECT id_usuario, id_nivel, id_rol, id_area, id_puesto, interno, cea, laboratorio, supervisa, analiza, muestrea, nombres, apellido_paterno, apellido_materno, usr, pwd, fecha_captura, fecha_actualiza, ip_captura, ip_actualiza, host_captura, host_actualiza, activo FROM Usuario WHERE activo = 1";
+	$db = getConnection();
+	$stmt = $db->prepare($sql);
+	$stmt->bindParam("userName", $userName);
+	$stmt->bindParam("userPassword", $userPassword);
+	$stmt->execute();
+	return processResultToJson($stmt->fetchAll(PDO::FETCH_ASSOC), false);
 }
 
-function getUserUpdates() {
-	$sql = "SELECT A.user_id, A.username, A.name, A.profile_pic, B.update_id, B.user_update, B.created FROM users A, updates B WHERE A.user_id=B.user_id_fk  ORDER BY B.update_id DESC";
-	try {
-		$db = getDB();
-		$stmt = $db->prepare($sql);
-		$stmt->execute();
-		$updates = $stmt->fetchAll(PDO::FETCH_OBJ);
-		$db = null;
-		echo '{"updates": ' . json_encode($updates) . '}';
+function processUserJwt($app) {
+	$request = $app->request();
+	$input = json_decode($request->getbody());
+	$usr = $input->username;
+	$pwd = $input->password;
 
-	} catch(PDOException $e) {
-	    //error_log($e->getMessage(), 3, '/var/tmp/php.log');
-		echo '{"error":{"text":'. $e->getMessage() .'}}';
-	}
+	$userData = \Service\DALSislab::getInstance()->getUserByCredentials($usr, $pwd);
+	$userInfo = json_decode($userData);
+	//$res = getUserByCredentials($usr, $pwd);
+	//$userInfo = $res[0];
+
+	$userId = $userInfo->id_usuario;
+	$userLv = $userInfo->id_nivel;
+	$userRole = $userInfo->id_rol;
+	$name = utf8_encode($userInfo->nombres) . " ";
+	$name .= utf8_encode($userInfo->apellido_paterno) . " ";
+	$name .= utf8_encode($userInfo->apellido_materno) . "";
+
+	$userPass = $usr . ".";
+	$userPass .= $pwd . ".";
+	$userPass .= $userId . "." . $userLv;
+	$userPass = bin2hex($userPass);
+
+	$token = array();
+	//$token["usr"] = $input->username;
+	//$token["pwd"] = $input->password;
+	$token["nam"] = $name;
+	$token["upt"] = $userPass;
+	$token["uid"] = $userId;
+	$token["ulv"] = $userLv;
+	$token["uro"] = $userRole;
+	$token["cip"] = $request->getIp() . "";
+	$token["iss"] = $request->getUrl();
+	$token["aud"] = "sislab.ceajalisco.gob.mx";
+	$token["iat"] = time();
+	/// Token expires 3 hours from now
+	$token["exp"] = time() + (3 * 60 * 60);
+	$jwt = JWT::encode($token, KEY);
+	return $jwt;
 }
-
-function getUserUpdate($update_id) {
-	$sql = "SELECT A.user_id, A.username, A.name, A.profile_pic, B.update_id, B.user_update, B.created FROM users A, updates B WHERE A.user_id=B.user_id_fk AND B.update_id=:update_id";
-	try {
-		$db = getDB();
-		$stmt = $db->prepare($sql);
-        $stmt->bindParam("update_id", $update_id);
-		$stmt->execute();
-		$updates = $stmt->fetchAll(PDO::FETCH_OBJ);
-		$db = null;
-		echo '{"updates": ' . json_encode($updates) . '}';
-
-	} catch(PDOException $e) {
-	    //error_log($e->getMessage(), 3, '/var/tmp/php.log');
-		echo '{"error":{"text":'. $e->getMessage() .'}}';
-	}
-}
-
-function insertUpdate() {
-	$request = \Slim\Slim::getInstance()->request();
-	$update = json_decode($request->getBody());
-	$sql = "INSERT INTO updates (user_update, user_id_fk, created, ip) VALUES (:user_update, :user_id, :created, :ip)";
-	try {
-		$db = getDB();
-		$stmt = $db->prepare($sql);
-		$stmt->bindParam("user_update", $update->user_update);
-		$stmt->bindParam("user_id", $update->user_id);
-		$time=time();
-		$stmt->bindParam("created", $time);
-		$ip=$_SERVER['REMOTE_ADDR'];
-		$stmt->bindParam("ip", $ip);
-		$stmt->execute();
-		$update->id = $db->lastInsertId();
-		$db = null;
-		$update_id= $update->id;
-		getUserUpdate($update_id);
-	} catch(PDOException $e) {
-		//error_log($e->getMessage(), 3, '/var/tmp/php.log');
-		echo '{"error":{"text":'. $e->getMessage() .'}}';
-	}
-}
-
-function deleteUpdate($update_id) {
-
-	$sql = "DELETE FROM updates WHERE update_id=:update_id";
-	try {
-		$db = getDB();
-		$stmt = $db->prepare($sql);
-		$stmt->bindParam("update_id", $update_id);
-		$stmt->execute();
-		$db = null;
-		echo true;
-	} catch(PDOException $e) {
-		echo '{"error":{"text":'. $e->getMessage() .'}}';
-	}
-
-}
-
-function getUserSearch($query) {
-	$sql = "SELECT user_id,username,name,profile_pic FROM users WHERE UPPER(name) LIKE :query ORDER BY user_id";
-	try {
-		$db = getDB();
-		$stmt = $db->prepare($sql);
-		$query = "%".$query."%";
-		$stmt->bindParam("query", $query);
-		$stmt->execute();
-		$users = $stmt->fetchAll(PDO::FETCH_OBJ);
-		$db = null;
-		echo '{"users": ' . json_encode($users) . '}';
-	} catch(PDOException $e) {
-		echo '{"error":{"text":'. $e->getMessage() .'}}';
-	}
-}
-?>
-*/

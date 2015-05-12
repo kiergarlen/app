@@ -50,8 +50,8 @@
           id="receptionsList">
           <thead>
             <tr>
-              <th>Id Hoja Campo</th>
               <th>Id Recepción</th>
+              <th>Id Hoja Campo</th>
               <th>Status</th>
               <th>Fecha Muestreo</th>
               <th>Fecha Recepción</th>
@@ -65,10 +65,10 @@
               id="receptionId{{item.id_recepcion}}"
               data-ng-click="receptions.selectRow($event)">
               <td>
-                {{item.id_hoja}}
+                {{item.id_recepcion}}
               </td>
               <td>
-                {{item.id_recepcion}}
+                {{item.id_hoja}}
               </td>
               <td>
                 <span class="label label-success"

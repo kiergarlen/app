@@ -4,18 +4,19 @@ require "../libs/JWT/JWT.php";
 require "./Services/DALSislab.php";
 // cd372fb85148700fa88095e3492d3f9f5beb43e555e5ff26d95f5a6adc36f8e6
 define("KEY", "m0oxUT7L8Unn93hXMUGHpwq_jTSKVBjQfEVCUe8jZ38KUU4VSAfmsNk4JJYcJl7CukrY6QMlixxwat7AZSpDcSQ");
-define("DB_DRIVER", "mysql");
-//define("DB_DRIVER", "sqlsrv");
+
+define("DB_DRIVER", "sqlsrv");
 define("DB_HOST", "localhost");
+define("DB_PORT", "");
+define("DB_USER", "sislab");
+define("DB_PASSWORD", "sislab");
+define("DB_DATA_BASE", "Sislab");
+/*
+define("DB_DRIVER", "mysql");
 define("DB_PORT", "8889");
-//define("DB_PORT", "");
 define("DB_USER", "root");
 define("DB_PASSWORD", "root");
 define("DB_DATA_BASE", "sislab");
-/*
-define("DB_USER", "sislab");
-define("DB_PASSWORD", "sislab@12#");
-define("DB_DATA_BASE", "Sislab");
 */
 
 \Slim\Slim::registerAutoloader();
@@ -1093,8 +1094,15 @@ function processResultToJson($items, $isArrayOutputExpected) {
 				$v = $value;
 				if (!is_numeric($v))
 				{
-					//TODO: format string for dates
-					$v = '"' . utf8_encode($value) .'"';
+					if (strtotime($v)) {
+						$dateArray = explode(" ", $v);
+						$v = $dateArray[0] . 'T'. substr($dateArray[1], 0, 5) . '-06:00';
+					}
+					//else
+					//{
+					//	$v = utf8_encode($v);
+					//}
+					$v = '"' . $v .'"';
 				}
 				$output .= $v;
 				if ($j < $m)
@@ -1122,12 +1130,17 @@ function processResultToJson($items, $isArrayOutputExpected) {
 
 function getConnection() {
 	$dsn = DB_DRIVER . ":";
+	/*
 	$dsn .= "host=" . DB_HOST . ";";
 	if (strlen(DB_PORT) > 0)
 	{
 		$dsn .= "port=" . DB_PORT . ";";
 	}
 	$dsn .= "dbname=" . DB_DATA_BASE;
+	*/
+	$dsn .= "server=" . DB_HOST . ";";
+	$dsn .= "Database=" . DB_DATA_BASE;
+
 	$dbConnection = new PDO($dsn, DB_USER, DB_PASSWORD);
 	$dbConnection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 	return $dbConnection;
@@ -1169,9 +1182,12 @@ function processUserJwt($app) {
 	$userId = $userInfo->id_usuario;
 	$userLv = $userInfo->id_nivel;
 	$userRole = $userInfo->id_rol;
-	$name = utf8_encode($userInfo->nombres) . " ";
-	$name .= utf8_encode($userInfo->apellido_paterno) . " ";
-	$name .= utf8_encode($userInfo->apellido_materno) . "";
+	//$name = utf8_encode($userInfo->nombres) . " ";
+	//$name .= utf8_encode($userInfo->apellido_paterno) . " ";
+	//$name .= utf8_encode($userInfo->apellido_materno) . "";
+	$name = $userInfo->nombres . " ";
+	$name .= $userInfo->apellido_paterno . " ";
+	$name .= $userInfo->apellido_materno . "";
 
 	$userPass = $usr . ".";
 	$userPass .= $pwd . ".";

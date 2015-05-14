@@ -45,21 +45,6 @@ $app->post("/login", function() use ($app) {
 	}
 });
 
-$app->get("/users", function() use ($app) {
-	try {
-		$userId = validateTokenUser($app);
-		$result = \Service\DALSislab::getInstance()->getUsers();
-		//$result = getUsers();
-		$app->response()->status(200);
-		$app->response()->header('Content-Type', 'application/json');
-		//$result = ")]}',\n" . $result;
-		echo $result;
-	} catch (Exception $e) {
-		$app->response()->status(400);
-		$app->response()->header('X-Status-Reason', $e->getMessage());
-	}
-});
-
 $app->get("/menu", function() use ($app) {
 	try {
 		$userId = validateTokenUser($app);
@@ -998,10 +983,18 @@ $app->get("/prices", function() use ($app) {
 	}
 });
 
-$app->get("/users", function() use ($app) {
+$app->get("/users(/)(:userId)", function($userId = -1) use ($app) {
 	try {
 		$userId = validateTokenUser($app);
-		$result = \Service\DALSislab::getInstance()->getUsers();
+		if ($userId > -1)
+		{
+			$result = getUser($userId);
+		}
+		else
+		{
+			$result = getUsers();
+		}
+		$result = getUsers();
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
 		//$result = ")]}',\n" . $result;
@@ -1011,21 +1004,6 @@ $app->get("/users", function() use ($app) {
 		$app->response()->header('X-Status-Reason', $e->getMessage());
 	}
 });
-/*
-$app->get("/users/:userId", function() use ($app) {
-	try {
-		$userId = validateTokenUser($app);
-		$result = \Service\DALSislab::getInstance()->getUser($userId);
-		$app->response()->status(200);
-		$app->response()->header('Content-Type', 'application/json');
-		//$result = ")]}',\n" . $result;
-		echo $result;
-	} catch (Exception $e) {
-		$app->response()->status(400);
-		$app->response()->header('X-Status-Reason', $e->getMessage());
-	}
-});
-*/
 /*
 $app->get("/clients/:clientId", function() use ($app) {
 	try {
@@ -1075,97 +1053,112 @@ function validateTokenUser($app) {
 
 function processResultToJson($items, $isArrayOutputExpected) {
 	$output = "";
-	try {
-		if ($isArrayOutputExpected)
-		{
-			$output .= "[";
-		}
-		$i = 0;
-		$l = count($items);
-		foreach ($items as $item) {
-			$i++;
-			$j = 0;
-			$item = (array)$item;
-			$m = count($item);
-			$output .= "{";
-			foreach ($item as $key => $value) {
-				$j++;
-				$output .= '"' . $key . '":';
-				$v = $value;
-				if (!is_numeric($v))
-				{
-					if (strtotime($v)) {
-						$dateArray = explode(" ", $v);
-						$v = $dateArray[0] . 'T'. substr($dateArray[1], 0, 5) . '-06:00';
-					}
-					//else
-					//{
-					//	$v = utf8_encode($v);
-					//}
-					$v = '"' . $v .'"';
+	if ($isArrayOutputExpected)
+	{
+		$output .= "[";
+	}
+	$i = 0;
+	$l = count($items);
+	foreach ($items as $item) {
+		$i++;
+		$j = 0;
+		$item = (array)$item;
+		$m = count($item);
+		$output .= "{";
+		foreach ($item as $key => $value) {
+			$j++;
+			$output .= '"' . $key . '":';
+			$v = $value;
+			if (!is_numeric($v))
+			{
+				if (strtotime($v)) {
+					$dateArray = explode(" ", $v);
+					$v = $dateArray[0] . 'T'. substr($dateArray[1], 0, 5) . '-06:00';
 				}
-				$output .= $v;
-				if ($j < $m)
-				{
-					$output .= ",";
-				}
+				//else
+				//{
+				//	$v = utf8_encode($v);
+				//}
+				$v = '"' . $v .'"';
 			}
-			$output .= "}";
-			if ($isArrayOutputExpected && $i < $l)
+			$output .= $v;
+			if ($j < $m)
 			{
 				$output .= ",";
 			}
 		}
-		if ($isArrayOutputExpected)
+		$output .= "}";
+		if ($isArrayOutputExpected && $i < $l)
 		{
-			$output .= "]";
+			$output .= ",";
 		}
-	} catch(PDOException $e) {
-		//error_log($e->getMessage(), 3, '/var/tmp/php.log');
-		//echo '{"error":{"text":'. $e->getMessage() .'}}';
-		$output = '{"error":"' . $e->getMessage() . '"}';
+	}
+	if ($isArrayOutputExpected)
+	{
+		$output .= "]";
 	}
 	return $output;
 }
 
 function getConnection() {
-	$dsn = DB_DRIVER . ":";
-	/*
-	$dsn .= "host=" . DB_HOST . ";";
-	if (strlen(DB_PORT) > 0)
-	{
-		$dsn .= "port=" . DB_PORT . ";";
-	}
-	$dsn .= "dbname=" . DB_DATA_BASE;
-	*/
-	$dsn .= "server=" . DB_HOST . ";";
-	$dsn .= "Database=" . DB_DATA_BASE;
+	try {
+		$dsn = DB_DRIVER . ":";
+		/*
+		$dsn .= "host=" . DB_HOST . ";";
+		if (strlen(DB_PORT) > 0)
+		{
+			$dsn .= "port=" . DB_PORT . ";";
+		}
+		$dsn .= "dbname=" . DB_DATA_BASE;
+		*/
+		$dsn .= "server=" . DB_HOST . ";";
+		$dsn .= "Database=" . DB_DATA_BASE;
 
-	$dbConnection = new PDO($dsn, DB_USER, DB_PASSWORD);
-	$dbConnection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+		$dbConnection = new PDO($dsn, DB_USER, DB_PASSWORD);
+		$dbConnection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+	} catch(PDOException $e) {
+		//error_log($e->getMessage(), 3, '/var/tmp/php.log');
+		//echo '{"error":{"text":'. $e->getMessage() .'}}';
+		$output = '{"error":"' . $e->getMessage() . '"}';
+	}
 	return $dbConnection;
 }
 
 function getUserByCredentials($userName, $userPassword) {
+	$result = \Service\DALSislab::getInstance()->getUserByCredentials($userName, $userPassword);
 	//$userName = "rgarcia";
 	//$userPassword = "8493a161f70fffc0dcd4732ae4f6c4667f373688fff802ea13c71bd0fce41cb1";
-	$sql = "SELECT id_usuario, id_nivel, id_rol, id_area, id_puesto, interno, cea, laboratorio, supervisa, analiza, muestrea, nombres, apellido_paterno, apellido_materno, usr, pwd, fecha_captura, fecha_actualiza, ip_captura, ip_actualiza, host_captura, host_actualiza, activo FROM Usuario WHERE usr = :userName AND pwd = :userPassword AND activo = 1";
-	$db = getConnection();
-	$stmt = $db->prepare($sql);
-	$stmt->bindParam("userName", $userName);
-	$stmt->bindParam("userPassword", $userPassword);
-	$stmt->execute();
-	return $stmt->fetchAll(PDO::FETCH_OBJ);
+	//$sql = "SELECT id_usuario, id_nivel, id_rol, id_area, id_puesto, interno, cea, laboratorio, supervisa, analiza, muestrea, nombres, apellido_paterno, apellido_materno, usr, pwd, fecha_captura, fecha_actualiza, ip_captura, ip_actualiza, host_captura, host_actualiza, activo FROM Usuario WHERE usr = :userName AND pwd = :userPassword AND activo = 1";
+	//$db = getConnection();
+	//$stmt = $db->prepare($sql);
+	//$stmt->bindParam("userName", $userName);
+	//$stmt->bindParam("userPassword", $userPassword);
+	//$stmt->execute();
+	//$result = $stmt->fetchAll(PDO::FETCH_OBJ);
+	return $result;
+}
+
+function getUser($userId) {
+	$result = \Service\DALSislab::getInstance()->getUser($userId);
+	// $sql = "SELECT id_usuario, id_nivel, id_rol, id_area, id_puesto, interno, cea, laboratorio, supervisa, analiza, muestrea, nombres, apellido_paterno, apellido_materno, usr, pwd, fecha_captura, fecha_actualiza, ip_captura, ip_actualiza, host_captura, host_actualiza, activo FROM Usuario WHERE id_usuario = :userId AND activo = 1";
+	// $db = getConnection();
+	// $stmt = $db->prepare($sql);
+	// $stmt->bindParam("userId", $userId);
+	// $stmt->execute();
+	// $result = $stmt->fetchAll(PDO::FETCH_OBJ);
+	return $result;
 }
 
 function getUsers() {
-	$sql = "SELECT id_usuario, id_nivel, id_rol, id_area, id_puesto, interno, cea, laboratorio, supervisa, analiza, muestrea, nombres, apellido_paterno, apellido_materno, usr, pwd, fecha_captura, fecha_actualiza, ip_captura, ip_actualiza, host_captura, host_actualiza, activo FROM Usuario WHERE activo = 1";
-	$db = getConnection();
-	$stmt = $db->prepare($sql);
-	$stmt->bindParam("userName", $userName);
-	$stmt->bindParam("userPassword", $userPassword);
-	$stmt->execute();
-	return processResultToJson($stmt->fetchAll(PDO::FETCH_ASSOC), false);
+	$result = \Service\DALSislab::getInstance()->getUsers();
+	// $sql = "SELECT id_usuario, id_nivel, id_rol, id_area, id_puesto, interno, cea, laboratorio, supervisa, analiza, muestrea, nombres, apellido_paterno, apellido_materno, usr, pwd, fecha_captura, fecha_actualiza, ip_captura, ip_actualiza, host_captura, host_actualiza, activo FROM Usuario WHERE activo = 1";
+	// $db = getConnection();
+	// $stmt = $db->prepare($sql);
+	// $stmt->bindParam("userName", $userName);
+	// $stmt->bindParam("userPassword", $userPassword);
+	// $stmt->execute();
+	// $result = processResultToJson($stmt->fetchAll(PDO::FETCH_ASSOC), false);
+	return $result;
 }
 
 function processUserJwt($app) {
@@ -1174,10 +1167,9 @@ function processUserJwt($app) {
 	$usr = $input->username;
 	$pwd = $input->password;
 
-	$userData = \Service\DALSislab::getInstance()->getUserByCredentials($usr, $pwd);
+	$userData = getUserByCredentials($usr, $pwd);
+	//$userInfo = $userData[0];
 	$userInfo = json_decode($userData);
-	//$res = getUserByCredentials($usr, $pwd);
-	//$userInfo = $res[0];
 
 	$userId = $userInfo->id_usuario;
 	$userLv = $userInfo->id_nivel;

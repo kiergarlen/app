@@ -1,5 +1,4 @@
 <?php
-
 	const DB_DRIVER = "mysql";
 	//const DB_DRIVER = "sqlsrv";
 	const DB_HOST = "localhost";
@@ -13,9 +12,19 @@
 	const DB_DATA_BASE = "Sislab";
 	*/
 
+function getDB2() {
+	$dsn = "sqlsrv:server=";
+	$dsn .= DB_HOST . ";Database=";
+	$dsn .= DB_DATA_BASE;
+
+	$dbConnection = new PDO($dsn, DB_USER, DB_PASSWORD);
+	$dbConnection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+	return $dbConnection;
+}
+
 function getDB() {
-	$dsn = DB_DRIVER . ":";
-	$dsn .= "host=" . DB_HOST . ";";
+	$dsn = "mysql:host=";
+	$dsn .= DB_HOST . ";";
 	if (strlen(DB_PORT) > 0)
 	{
 		$dsn .= "port=" . DB_PORT . ";";
@@ -79,12 +88,13 @@ function processResultToJson($items, $isArrayOutputExpected)
 	$userName = "rgarcia";
 	$userPassword = "8493a161f70fffc0dcd4732ae4f6c4667f373688fff802ea13c71bd0fce41cb1";
 	$sql = "SELECT id_usuario, id_nivel, id_rol, id_area, id_puesto, interno, cea, laboratorio, supervisa, analiza, muestrea, nombres, apellido_paterno, apellido_materno, usr, pwd, fecha_captura, fecha_actualiza, ip_captura, ip_actualiza, host_captura, host_actualiza, activo FROM Usuario WHERE usr = :userName AND pwd = :userPassword";
+
+
 	$db = getDB();
 	$stmt = $db->prepare($sql);
 	$stmt->bindParam("userName", $userName);
 	$stmt->bindParam("userPassword", $userPassword);
 	$stmt->execute();
-	$db = null;
 	print_r(processResultToJson($stmt->fetchAll(PDO::FETCH_ASSOC), false));
 
 	/*

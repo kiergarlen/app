@@ -1046,7 +1046,7 @@ function validateTokenUser($app) {
 	} catch (Exception $e) {
 		$app->response()->status(401);
 		$app->response()->header('X-Status-Reason', $e->getMessage());
-		echo '{"error":"Unauthorized"}';
+		echo '{"error":'"Unauthorized"'}';
 		$app->stop();
 	}
 }

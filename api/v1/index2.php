@@ -12,8 +12,8 @@ $app->post("/login", 'loginUser');
 
 function loginUser() {
 	try {
-		$app = \Slim\Slim::getInstance();
-		$request = $app->request();
+		//$app = \Slim\Slim::getInstance();
+		$request = "hey";
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
 		print_r($request);

@@ -5,19 +5,19 @@ require "./Services/DALSislab.php";
 // cd372fb85148700fa88095e3492d3f9f5beb43e555e5ff26d95f5a6adc36f8e6
 define("KEY", "m0oxUT7L8Unn93hXMUGHpwq_jTSKVBjQfEVCUe8jZ38KUU4VSAfmsNk4JJYcJl7CukrY6QMlixxwat7AZSpDcSQ");
 
-define("DB_DRIVER", "sqlsrv");
-define("DB_HOST", "localhost");
-define("DB_PORT", "");
-define("DB_USER", "sislab");
-define("DB_PASSWORD", "sislab");
-define("DB_DATA_BASE", "Sislab");
-/*
+// define("DB_DRIVER", "sqlsrv");
+// define("DB_HOST", "localhost");
+// define("DB_PORT", "");
+// define("DB_USER", "sislab");
+// define("DB_PASSWORD", "sislab");
+// define("DB_DATA_BASE", "Sislab");
+
 define("DB_DRIVER", "mysql");
+define("DB_HOST", "localhost");
 define("DB_PORT", "8889");
 define("DB_USER", "root");
 define("DB_PASSWORD", "root");
 define("DB_DATA_BASE", "sislab");
-*/
 
 \Slim\Slim::registerAutoloader();
 $app = new \Slim\Slim();
@@ -38,6 +38,8 @@ $app->post("/login", function() use ($app) {
 		//} else {
 		//	echo $_GET['callback'] . '(' . json_encode($result) . ');';
 		//}
+		////debugging only
+		////$result = '{"result":"ok"}';
 		print_r($result);
 	} catch (Exception $e) {
 		$app->response()->status(400);
@@ -103,7 +105,7 @@ $app->post("/studies", function() use ($app) {
 		$result = json_encode($requestData);
 
 		$userId = validateTokenUser($app);
-		//$result = \Service\DALSislab::getInstance()->insertStudy();
+		//$result = insertStudy();
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
 		//$result = ")]}',\n" . $result;
@@ -144,7 +146,7 @@ $app->post("/quotes", function() use ($app) {
 		$result = json_encode($requestData);
 
 		$userId = validateTokenUser($app);
-		//$result = \Service\DALSislab::getInstance()->insertStudy();
+		//$result = insertStudy();
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
 		//$result = ")]}',\n" . $result;
@@ -185,7 +187,7 @@ $app->post("/orders", function() use ($app) {
 		$result = json_encode($requestData);
 
 		$userId = validateTokenUser($app);
-		//$result = \Service\DALSislab::getInstance()->insertStudy();
+		//$result = insertStudy();
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
 		//$result = ")]}',\n" . $result;
@@ -226,7 +228,7 @@ $app->post("/plans", function() use ($app) {
 		$result = json_encode($requestData);
 
 		$userId = validateTokenUser($app);
-		//$result = \Service\DALSislab::getInstance()->insertStudy();
+		//$result = insertStudy();
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
 		//$result = ")]}',\n" . $result;
@@ -268,7 +270,7 @@ $app->post("/sheets", function() use ($app) {
 		$result = json_encode($requestData);
 
 		$userId = validateTokenUser($app);
-		//$result = \Service\DALSislab::getInstance()->insertStudy();
+		//$result = insertStudy();
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
 		//$result = ")]}',\n" . $result;
@@ -309,7 +311,7 @@ $app->post("/receptions", function() use ($app) {
 		$result = json_encode($requestData);
 
 		$userId = validateTokenUser($app);
-		//$result = \Service\DALSislab::getInstance()->insertStudy();
+		//$result = insertStudy();
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
 		//$result = ")]}',\n" . $result;
@@ -350,7 +352,7 @@ $app->post("/custodies", function() use ($app) {
 		$result = json_encode($requestData);
 
 		$userId = validateTokenUser($app);
-		//$result = \Service\DALSislab::getInstance()->insertStudy();
+		//$result = insertStudy();
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
 		//$result = ")]}',\n" . $result;
@@ -988,13 +990,12 @@ $app->get("/users(/)(:userId)", function($userId = -1) use ($app) {
 		$userId = validateTokenUser($app);
 		if ($userId > -1)
 		{
-			$result = getUser($userId);
+			$result = \Service\DALSislab::getInstance()->getUser($userId);
 		}
 		else
 		{
-			$result = getUsers();
+			$result = \Service\DALSislab::getInstance()->getUsers();
 		}
-		$result = getUsers();
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
 		//$result = ")]}',\n" . $result;
@@ -1004,23 +1005,65 @@ $app->get("/users(/)(:userId)", function($userId = -1) use ($app) {
 		$app->response()->header('X-Status-Reason', $e->getMessage());
 	}
 });
-/*
-$app->get("/clients/:clientId", function() use ($app) {
-	try {
-		$userId = validateTokenUser($app);
-		$result = \Service\DALSislab::getInstance()->getClient($clientId);
-		$app->response()->status(200);
-		$app->response()->header('Content-Type', 'application/json');
-		//$result = ")]}',\n" . $result;
-		echo $result;
-	} catch (Exception $e) {
-		$app->response()->status(400);
-		$app->response()->header('X-Status-Reason', $e->getMessage());
-	}
-});
-*/
+
+//$app->get("/clients/:clientId", function() use ($app) {
+//	try {
+//		$userId = validateTokenUser($app);
+//		$result = \Service\DALSislab::getInstance()->getClient($clientId);
+//		$app->response()->status(200);
+//		$app->response()->header('Content-Type', 'application/json');
+//		//$result = ")]}',\n" . $result;
+//		echo $result;
+//	} catch (Exception $e) {
+//		$app->response()->status(400);
+//		$app->response()->header('X-Status-Reason', $e->getMessage());
+//	}
+//});
 
 $app->run();
+
+function processUserJwt($app) {
+	$request = $app->request();
+	$input = json_decode($request->getbody());
+	$usr = $input->username;
+	$pwd = $input->password;
+
+	$userData = getUserByCredentials($usr, $pwd);
+	$userInfo = $userData[0];
+	//$userInfo = json_decode($userData);
+
+	$userId = $userInfo->id_usuario;
+	$userLv = $userInfo->id_nivel;
+	$userRole = $userInfo->id_rol;
+	$name = utf8_encode($userInfo->nombres) . " ";
+	$name .= utf8_encode($userInfo->apellido_paterno) . " ";
+	$name .= utf8_encode($userInfo->apellido_materno) . "";
+	// $name = $userInfo->nombres . " ";
+	// $name .= $userInfo->apellido_paterno . " ";
+	// $name .= $userInfo->apellido_materno . "";
+
+	$userPass = $usr . ".";
+	$userPass .= $pwd . ".";
+	$userPass .= $userId . "." . $userLv;
+	$userPass = bin2hex($userPass);
+
+	$token = array();
+	//$token["usr"] = $input->username;
+	//$token["pwd"] = $input->password;
+	$token["nam"] = $name;
+	$token["upt"] = $userPass;
+	$token["uid"] = $userId;
+	$token["ulv"] = $userLv;
+	$token["uro"] = $userRole;
+	$token["cip"] = $request->getIp() . "";
+	$token["iss"] = $request->getUrl();
+	$token["aud"] = "sislab.ceajalisco.gob.mx";
+	$token["iat"] = time();
+	/// Token expires 3 hours from now
+	$token["exp"] = time() + (3 * 60 * 60);
+	$jwt = JWT::encode($token, KEY);
+	return $jwt;
+}
 
 function decodeJwt($jwt) {
 	$decoded = JWT::decode($jwt, KEY);
@@ -1046,9 +1089,27 @@ function validateTokenUser($app) {
 	} catch (Exception $e) {
 		$app->response()->status(401);
 		$app->response()->header('X-Status-Reason', $e->getMessage());
-		echo '{"error":'"Unauthorized"'}';
-		$app->stop();
 	}
+}
+
+function getConnection() {
+	try {
+		$dsn = "mysql:host=";
+		$dsn .= DB_HOST . ";";
+		if (strlen(DB_PORT) > 0)
+		{
+			$dsn .= "port=" . DB_PORT . ";";
+		}
+		$dsn .= "dbname=" . DB_DATA_BASE;
+
+		$dbConnection = new PDO($dsn, DB_USER, DB_PASSWORD);
+		$dbConnection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+	} catch(PDOException $e) {
+		//error_log($e->getMessage(), 3, '/var/tmp/php.log');
+		//echo '{"error":{"text":'. $e->getMessage() .'}}';
+		$output = '{"error":"' . $e->getMessage() . '"}';
+	}
+	return $dbConnection;
 }
 
 function processResultToJson($items, $isArrayOutputExpected) {
@@ -1100,47 +1161,77 @@ function processResultToJson($items, $isArrayOutputExpected) {
 	return $output;
 }
 
-function getConnection() {
-	try {
-		$dsn = DB_DRIVER . ":";
-		/*
-		$dsn .= "host=" . DB_HOST . ";";
-		if (strlen(DB_PORT) > 0)
+function processMenuToJson($items) {
+	$output = '';
+	$i = 0;
+	$l = count($items);
+	$currentItem = $items[$i];
+	$output .= '[';
+	$output .= '{';
+	$output .= '"id_menu":' . $currentItem["id_menu"] . ',';
+	$output .= '"orden":' . $currentItem["orden"] . ',';
+	$output .= '"url":"' . $currentItem["url"] . '",';
+	$output .= '"menu":"' . $currentItem["menu"] . '",';
+	$output .= '"submenu":[';
+	$output .= '{';
+	$output .= '"id_submenu":' . $currentItem["id_submenu"] . ',';
+	$output .= '"id_menu":' . $currentItem["id_menu"] . ',';
+	$output .= '"orden":' . $currentItem["orden_submenu"] . ',';
+	$output .= '"url":"' . $currentItem["url_submenu"] . '",';
+	$output .= '"menu":"' . $currentItem["submenu"] . '"';
+	$output .= '}';
+	for($i = 1; $i < $l; $i++)
+	{
+		if ($currentItem["id_menu"] == $items[$i]["id_menu"])
 		{
-			$dsn .= "port=" . DB_PORT . ";";
+			$output .= ',';
+			// add submenu
+			$currentItem = $items[$i];
 		}
-		$dsn .= "dbname=" . DB_DATA_BASE;
-		*/
-		$dsn .= "server=" . DB_HOST . ";";
-		$dsn .= "Database=" . DB_DATA_BASE;
-
-		$dbConnection = new PDO($dsn, DB_USER, DB_PASSWORD);
-		$dbConnection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-	} catch(PDOException $e) {
-		//error_log($e->getMessage(), 3, '/var/tmp/php.log');
-		//echo '{"error":{"text":'. $e->getMessage() .'}}';
-		$output = '{"error":"' . $e->getMessage() . '"}';
+		else
+		{
+			//close current menu, add new one
+			$output .= ']';
+			$output .= '},';
+			$currentItem = $items[$i];
+			$output .= '{';
+			$output .= '"id_menu":' . $currentItem["id_menu"] . ',';
+			$output .= '"orden":' . $currentItem["orden"] . ',';
+			$output .= '"url":"' . $currentItem["url"] . '",';
+			$output .= '"menu":"' . $currentItem["menu"] . '",';
+			$output .= '"submenu":[';
+		}
+		$output .= '{';
+		$output .= '"id_submenu":' . $currentItem["id_submenu"] . ',';
+		$output .= '"id_menu":' . $currentItem["id_menu"] . ',';
+		$output .= '"orden":' . $currentItem["orden_submenu"] . ',';
+		$output .= '"url":"' . $currentItem["url_submenu"] . '",';
+		$output .= '"menu":"' . $currentItem["submenu"] . '"';
+		$output .= '}';
 	}
-	return $dbConnection;
+	$output .= ']';
+	$output .= '}';
+	$output .= ']';
+	return $output;
 }
 
 function getUserByCredentials($userName, $userPassword) {
-	$result = \Service\DALSislab::getInstance()->getUserByCredentials($userName, $userPassword);
-	//$userName = "rgarcia";
-	//$userPassword = "8493a161f70fffc0dcd4732ae4f6c4667f373688fff802ea13c71bd0fce41cb1";
-	//$sql = "SELECT id_usuario, id_nivel, id_rol, id_area, id_puesto, interno, cea, laboratorio, supervisa, analiza, muestrea, nombres, apellido_paterno, apellido_materno, usr, pwd, fecha_captura, fecha_actualiza, ip_captura, ip_actualiza, host_captura, host_actualiza, activo FROM Usuario WHERE usr = :userName AND pwd = :userPassword AND activo = 1";
-	//$db = getConnection();
-	//$stmt = $db->prepare($sql);
-	//$stmt->bindParam("userName", $userName);
-	//$stmt->bindParam("userPassword", $userPassword);
-	//$stmt->execute();
-	//$result = $stmt->fetchAll(PDO::FETCH_OBJ);
+	//$result = \Service\DALSislab::getInstance()->getUserByCredentials($userName, $userPassword);
+	////$userName = "rgarcia";
+	////$userPassword = "8493a161f70fffc0dcd4732ae4f6c4667f373688fff802ea13c71bd0fce41cb1";
+	$sql = "SELECT id_usuario, id_nivel, id_rol, id_area, id_puesto, interno, cea, laboratorio, supervisa, analiza, muestrea, nombres, apellido_paterno, apellido_materno, usr, pwd, fecha_captura, fecha_actualiza, ip_captura, ip_actualiza, host_captura, host_actualiza, activo FROM Usuario WHERE usr = :userName AND pwd = :userPassword AND activo = 1";
+	$db = getConnection();
+	$stmt = $db->prepare($sql);
+	$stmt->bindParam("userName", $userName);
+	$stmt->bindParam("userPassword", $userPassword);
+	$stmt->execute();
+	$result = $stmt->fetchAll(PDO::FETCH_OBJ);
 	return $result;
 }
 
 function getUser($userId) {
 	$result = \Service\DALSislab::getInstance()->getUser($userId);
-	// $sql = "SELECT id_usuario, id_nivel, id_rol, id_area, id_puesto, interno, cea, laboratorio, supervisa, analiza, muestrea, nombres, apellido_paterno, apellido_materno, usr, pwd, fecha_captura, fecha_actualiza, ip_captura, ip_actualiza, host_captura, host_actualiza, activo FROM Usuario WHERE id_usuario = :userId AND activo = 1";
+	$sql = "SELECT id_usuario, id_nivel, id_rol, id_area, id_puesto, interno, cea, laboratorio, supervisa, analiza, muestrea, nombres, apellido_paterno, apellido_materno, usr, pwd, fecha_captura, fecha_actualiza, ip_captura, ip_actualiza, host_captura, host_actualiza, activo FROM Usuario WHERE id_usuario = :userId AND activo = 1";
 	// $db = getConnection();
 	// $stmt = $db->prepare($sql);
 	// $stmt->bindParam("userId", $userId);
@@ -1161,45 +1252,24 @@ function getUsers() {
 	return $result;
 }
 
-function processUserJwt($app) {
-	$request = $app->request();
-	$input = json_decode($request->getbody());
-	$usr = $input->username;
-	$pwd = $input->password;
-
-	$userData = getUserByCredentials($usr, $pwd);
-	//$userInfo = $userData[0];
-	$userInfo = json_decode($userData);
-
-	$userId = $userInfo->id_usuario;
-	$userLv = $userInfo->id_nivel;
-	$userRole = $userInfo->id_rol;
-	//$name = utf8_encode($userInfo->nombres) . " ";
-	//$name .= utf8_encode($userInfo->apellido_paterno) . " ";
-	//$name .= utf8_encode($userInfo->apellido_materno) . "";
-	$name = $userInfo->nombres . " ";
-	$name .= $userInfo->apellido_paterno . " ";
-	$name .= $userInfo->apellido_materno . "";
-
-	$userPass = $usr . ".";
-	$userPass .= $pwd . ".";
-	$userPass .= $userId . "." . $userLv;
-	$userPass = bin2hex($userPass);
-
-	$token = array();
-	//$token["usr"] = $input->username;
-	//$token["pwd"] = $input->password;
-	$token["nam"] = $name;
-	$token["upt"] = $userPass;
-	$token["uid"] = $userId;
-	$token["ulv"] = $userLv;
-	$token["uro"] = $userRole;
-	$token["cip"] = $request->getIp() . "";
-	$token["iss"] = $request->getUrl();
-	$token["aud"] = "sislab.ceajalisco.gob.mx";
-	$token["iat"] = time();
-	/// Token expires 3 hours from now
-	$token["exp"] = time() + (3 * 60 * 60);
-	$jwt = JWT::encode($token, KEY);
-	return $jwt;
+function getMenu($userId) {
+	$result = \Service\DALSislab::getInstance()->getMenu($userId);
+	// $sql = "SELECT
+	// 	dbo.Menu.id_menu, dbo.Submenu.id_submenu, dbo.Menu.orden,
+	// 	dbo.Submenu.orden AS orden_submenu, dbo.Menu.menu,
+	// 	dbo.Submenu.menu AS submenu,dbo.Submenu.url
+	// 	FROM
+	// 	dbo.Usuario INNER JOIN
+	// 	dbo.Rol ON dbo.Usuario.id_rol = dbo.Rol.id_rol INNER JOIN
+	// 	dbo.RolSubmenu ON dbo.Rol.id_rol = dbo.RolSubmenu.id_rol INNER JOIN
+	// 	dbo.Submenu ON dbo.RolSubmenu.id_submenu = dbo.Submenu.id_submenu INNER JOIN
+	// 	dbo.Menu ON dbo.Submenu.id_menu = dbo.Menu.id_menu
+	// 	WHERE (dbo.Usuario.id_usuario = :userId) AND (dbo.Usuario.activo = 1)
+	// 	ORDER BY dbo.Menu.id_menu, dbo.Menu.orden, orden_submenu";
+	// $db = getConnection();
+	// $stmt = $db->prepare($sql);
+	// $stmt->bindParam("userId", $userId);
+	// $stmt->execute();
+	// $result = processResultToJson($stmt->fetchAll(PDO::FETCH_ASSOC), false);
+	return $result;
 }

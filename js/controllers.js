@@ -76,7 +76,7 @@
     {
       userData = TokenService.getUserFromToken();
       vm.userName = userData.name;
-      vm.tasks = TaskService.get(userData.id);
+      vm.tasks = TaskService.get();
     }
   }
   angular

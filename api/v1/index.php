@@ -63,7 +63,8 @@ $app->get("/menu", function() use ($app) {
 
 $app->get("/tasks", function() use ($app) {
 	try {
-		$userId = validateTokenUser($app);
+		//$userId = validateTokenUser($app);
+		$userId = 1;
 		$result = getTasks($userId);
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
@@ -1264,11 +1265,12 @@ function getMenu($userId) {
 	return $result;
 }
 
-function getTasks() {
-	$result = \Service\DALSislab::getInstance()->getTasks();
+function getTasks($userId) {
+	$result = \Service\DALSislab::getInstance()->getTasks($userId);
 	// $sql = "SELECT id_usuario, id_nivel, id_rol, id_area, id_puesto, interno, cea, laboratorio, supervisa, analiza, muestrea, nombres, apellido_paterno, apellido_materno, usr, pwd, fecha_captura, fecha_actualiza, ip_captura, ip_actualiza, host_captura, host_actualiza, activo FROM Usuario WHERE activo = 1";
 	// $db = getConnection();
 	// $stmt = $db->prepare($sql);
+	// $stmt->bindParam("userId", $userId);
 	// $stmt->execute();
 	// $result = processResultToJson($stmt->fetchAll(PDO::FETCH_ASSOC), false);
 	return $result;
@@ -1357,7 +1359,169 @@ function getStudies() {
 	return $result;
 }
 
+//VALIDATION DRAFT
+function isQuoteListValid($quotes) {
+// 	$i = 0;
+// 	$l = count($quotes);
+// 	if ($quotes && count($quotes) > 0)
+// 	{
+// 		for ($i = 0; $i < $l; $i .= 1) {
+// 			if ($quotes[$i]["id_matriz"] < 1)
+// 			{
+// 				$message .= ' Falta matriz ';
+// 				return false;
+// 			}
+// 			if (isNaN($quotes[$i]["cantidad_muestras"]) || $quotes[$i]["cantidad_muestras"] < 1)
+// 			{
+// 				$message .= ' Falta cantidad de muestras ';
+// 				return false;
+// 			}
+// 			if ($quotes[$i]["id_tipo_muestreo"] < 1)
+// 			{
+// 				$message .= ' Falta tipo de muestreo ';
+// 				return false;
+// 			}
+// 			if ($quotes[$i]["id_norma"] < 1)
+// 			{
+// 				$message .= ' Falta norma ';
+// 				return false;
+// 			}
+// 		}
+// 	}
+// 	else
+// 	{
+// 		$message .= ' Agregue una solicitud ';
+// 		return false;
+// 	}
+// 	return true;
+// }
+
+// function isFormValid() {
+// 	$message = '';
+// 	if (!DateUtilsService.isValidDate(new Date($study->fecha)))
+// 	{
+// 		$message .= ' Ingrese una fecha válida ';
+// 		return false;
+// 	}
+// 	if ($study->id_cliente < 1)
+// 	{
+// 		$message .= ' Seleccione un cliente ';
+// 		return false;
+// 	}
+// 	if (!isQuoteListValid())
+// 	{
+// 		return isQuoteListValid();
+// 	}
+// 	if ($study->id_origen_orden < 1)
+// 	{
+// 		$message .= ' Seleccione un medio de solicitud de muestreo ';
+// 		return false;
+// 	}
+// 	if ($study->id_origen_orden == 1 || $study->id_origen_orden == 4)
+// 	{
+// 		if ($study->origen_descripcion.length < 1)
+// 		{
+// 			$message .= ' Ingrese oficio o emergencia ';
+// 			return false;
+// 		}
+// 	}
+// 	if ($study->ubicacion.length < 1)
+// 	{
+// 		$message .= ' Ingrese una ubicación ';
+// 		return false;
+// 	}
+// 	if ($userLevel < 3)
+// 	{
+// 		if ($study->id_status == 3 && strlen(($study->motivo_rechaza) < 1)
+// 		{
+// 			$message .= ' Ingrese el motivo de rechazo del Informe ';
+// 			return false;
+// 		}
+// 	}
+// 	return true;
+// }
+
+
 function insertStudy($requestData) {
+	// {
+	//   "id_cliente" : 13,
+	//   "id_usuario_valida" : 1,
+	//   "id_usuario_actualiza" : 1,
+	//   "status" : "Validado",
+	//   "ip_captura" : "[::1]",
+	//   "id_ejercicio" : 2015,
+	//   "folio" : "CEA-432/2015",
+	//   "host_captura" : "[::1]",
+	//   "ip_valida" : "[::1]",
+	//   "host_valida" : "[::1]",
+	//   "motivo_rechaza" : "Error en datos cliente",
+	//   "id_status" : 2,
+	//   "ip_actualiza" : "[::1]",
+	//   "ubicacion" : "Río Santiago",
+	//   "host_actualiza" : "[::1]",
+	//   "fecha_valida" : "2015-03-21",
+	//   "origen_descripcion" : "GP-001/2015",
+	//   "id_origen_orden" : 1,
+	//   "numero_oficio" : 432,
+	//   "fecha" : "2015-03-21",
+	//   "fecha_rechaza" : "2015-03-21",
+	//   "fecha_actualiza" : "2015-03-21",
+	//   "solicitudes" : [
+	//     {
+	//       "activo" : 1,
+	//       "$$hashKey" : "object:113",
+	//       "id_matriz" : 1,
+	//       "id_norma" : 3,
+	//       "id_solicitud" : 1,
+	//       "id_estudio" : 1,
+	//       "id_tipo_muestreo" : 2,
+	//       "id_status" : 1,
+	//       "cantidad_muestras" : 15
+	//     },
+	//     {
+	//       "activo" : 1,
+	//       "$$hashKey" : "object:114",
+	//       "id_matriz" : 6,
+	//       "id_norma" : 1,
+	//       "id_solicitud" : 2,
+	//       "id_estudio" : 1,
+	//       "id_tipo_muestreo" : 1,
+	//       "id_status" : 1,
+	//       "cantidad_muestras" : 16
+	//     }
+	//   ],
+	//   "fecha_captura" : "2015-03-21",
+	//   "cliente" : {
+	//     "numero" : "100",
+	//     "cp" : "59940",
+	//     "id_organismo" : 6,
+	//     "tel" : "045-35-4100-1836",
+	//     "cea" : 0,
+	//     "municipio" : "Cotija",
+	//     "fax" : "",
+	//     "fecha_act" : "23/11/2014",
+	//     "colonia" : "Col. Centro",
+	//     "id_municipio" : 16019,
+	//     "localidad" : "Cotija de La Paz",
+	//     "rfc" : "Registro Federal de Contribuyentes",
+	//     "tasa" : 1,
+	//     "puesto_contacto" : "puesto contacto",
+	//     "email" : "ooapascotija@hotmail.com",
+	//     "id_estado" : 16,
+	//     "interno" : 0,
+	//     "area" : "",
+	//     "cliente" : "Ayuntamiento de Cotija, Michoacan",
+	//     "id_localidad" : 160190001,
+	//     "contacto" : "Arq. Juan Jesús Zarate Barajas",
+	//     "calle" : "Pino Suárez Pte.",
+	//     "estado" : "Michoacán de Ocampo",
+	//     "activo" : 1,
+	//     "id_cliente" : 13
+	//   },
+	//   "id_usuario_captura" : 20,
+	//   "activo" : 1,
+	//   "id_estudio" : 1
+	// }
 	// $sql = "SELECT
 	// 	dbo.Menu.id_menu, dbo.Submenu.id_submenu, dbo.Menu.orden,
 	// 	dbo.Submenu.orden AS orden_submenu, dbo.Menu.menu,

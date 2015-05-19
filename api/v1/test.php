@@ -1,4 +1,206 @@
 <?php
+
+
+	$dataString = '
+		{
+			"id_usuario":5,
+			"id_nivel":6,
+			"id_rol":8,
+			"id_area":5,
+			"id_puesto":7,
+			"interno":1,
+			"cea":1,
+			"laboratorio":1,
+			"supervisa":0,
+			"analiza":0,
+			"muestrea":0,
+			"nombres":"Mirna María",
+			"apellido_paterno":"Román",
+			"apellido_materno":"García",
+			"usr":"mroman",
+			"pwd":"73d1b1b1bc1dabfb97f216d897b7968e44b06457920f00f2dc6c1ed3be25ad4c",
+			"fecha_captura":"2014-11-10 00:00",
+			"fecha_actualiza":"2014-11-10 00:00",
+			"ip_captura":"[::1]",
+			"ip_actualiza":"[::1]",
+			"host_captura":"localhost",
+			"host_actualiza":"localhost",
+			"activo":1
+		}
+	';
+	$requestData = json_decode($dataString);
+
+	$insertDataArray = array (
+		"id_usuario" => $requestData->id_usuario,
+		"id_nivel" => $requestData->id_nivel,
+		"id_rol" => $requestData->id_rol,
+		"id_area" => $requestData->id_area,
+		"id_puesto" => $requestData->id_puesto,
+		"interno" => $requestData->interno,
+		"cea" => $requestData->cea,
+		"laboratorio" => $requestData->laboratorio,
+		"supervisa" => $requestData->supervisa,
+		"analiza" => $requestData->analiza,
+		"muestrea" => $requestData->muestrea,
+		"nombres" => $requestData->nombres,
+		"apellido_paterno" => $requestData->apellido_paterno,
+		"apellido_materno" => $requestData->apellido_materno,
+		"usr" => $requestData->usr,
+		"pwd" => $requestData->pwd,
+		"fecha_captura" => $requestData->fecha_captura,
+		"fecha_actualiza" => $requestData->fecha_actualiza,
+		"ip_captura" => $requestData->ip_captura,
+		"ip_actualiza" => $requestData->ip_actualiza,
+		"host_captura" => $requestData->host_captura,
+		"host_actualiza" => $requestData->host_actualiza,
+		"activo" => $requestData->activo
+	);
+	print_r("<hr>");
+	print_r($insertDataArray);
+	print_r("<hr>");
+
+
+function insertStudy($requestData, $insertDataArray) {
+	$quotes = $requestData->solicitudes;
+
+
+	//print_r(json_decode(isQuoteListValid($quotes)));
+
+	$sql = "INSERT INTO Usuario
+		(id_usuario, id_nivel, id_rol, id_area, id_puesto, interno, cea,
+		 laboratorio, supervisa, analiza, muestrea, nombres, apellido_paterno,
+		 apellido_materno, usr, pwd, fecha_captura, fecha_actualiza,
+		 ip_captura, ip_actualiza, host_captura, host_actualiza, activo)
+		VALUES (
+			:id_usuario, :id_nivel, :id_rol, :id_area, :id_puesto, :interno,
+			:cea, :laboratorio, :supervisa, :analiza, :muestrea, :nombres,
+			:apellido_paterno, :apellido_materno, :usr, :pwd, :fecha_captura,
+			:fecha_actualiza, :ip_captura, :ip_actualiza, :host_captura,
+			:host_actualiza, :activo
+		)";
+	$db = getConnection();
+	$stmt = $db->prepare($sql);
+	$stmt->execute($insertDataArray);
+
+	$sql2 = "SELECT * FROM Usuario ORDER BY id_usuario DESC LIMIT 1";
+	$stmt2 = $db->prepare($sql2);
+	$result = $stmt->fetchAll(PDO::FETCH_OBJ);
+	$result = json_encode($requestData);
+	return $result;
+}
+
+	print_r("<hr>");
+	print_r(insertStudy());
+
+
+function isQuoteListValid($quotes) {
+	$i = 0;
+	$l = count($quotes);
+	if (isset($quotes) && count($quotes) > 0)
+	{
+		for ($i = 0; $i < $l; $i++) {
+			if (!is_numeric($quotes[$i]->id_matriz) || $quotes[$i]->id_matriz > 1)
+			{
+				$message .= 'matriz:' . $i . ',';
+			}
+			if (!is_numeric($quotes[$i]->cantidad_muestras) || $quotes[$i]->cantidad_muestras > 1)
+			{
+				$message .= 'cantidad_muestras:' . $i . ',';
+			}
+			if ($quotes[$i]->id_tipo_muestreo > 1)
+			{
+				$message .= 'id_tipo_muestreo:' . $i . ',';
+			}
+			if ($quotes[$i]->id_norma > 1)
+			{
+				$message .= 'norma:' . $i . ',';
+			}
+		}
+	}
+	$output = '{';
+	if ($status < 1)
+	{
+		$output .= '"status":"0","reason":"invalid input","message":"';
+		$output .= $message . '"';
+	}
+	else
+	{
+		$output .= '"status":"1","reason":"valid input","message":"none"';
+	}
+	$output .= '}';
+	return $output;
+}
+
+function isFormValid() {
+// 	$message = '';
+// 	if (!DateUtilsService.isValidDate(new Date($study->fecha)))
+// 	{
+// 		$message .= ' Ingrese una fecha válida ';
+// 		return false;
+// 	}
+// 	if ($study->id_cliente < 1)
+// 	{
+// 		$message .= ' Seleccione un cliente ';
+// 		return false;
+// 	}
+// 	if (!isQuoteListValid())
+// 	{
+// 		return isQuoteListValid();
+// 	}
+// 	if ($study->id_origen_orden < 1)
+// 	{
+// 		$message .= ' Seleccione un medio de solicitud de muestreo ';
+// 		return false;
+// 	}
+// 	if ($study->id_origen_orden == 1 || $study->id_origen_orden == 4)
+// 	{
+// 		if ($study->origen_descripcion.length < 1)
+// 		{
+// 			$message .= ' Ingrese oficio o emergencia ';
+// 			return false;
+// 		}
+// 	}
+// 	if ($study->ubicacion.length < 1)
+// 	{
+// 		$message .= ' Ingrese una ubicación ';
+// 		return false;
+// 	}
+// 	if ($userLevel < 3)
+// 	{
+// 		if ($study->id_status == 3 && strlen(($study->motivo_rechaza) < 1)
+// 		{
+// 			$message .= ' Ingrese el motivo de rechazo del Informe ';
+// 			return false;
+// 		}
+// 	}
+// 	return true;
+//
+}
+
+/*
+// THIS IS AN EXAMPLE
+$dbhost = "localhost";
+$dbname = "pdo";
+$dbusername = "root";
+$dbpassword = "845625";
+
+$link = new PDO("mysql:host=$dbhost;dbname=$dbname",$dbusername,$dbpassword);
+
+$statement = $link->prepare("INSERT INTO testtable(name, lastname, age)
+    VALUES(:fname, :sname, :age)");
+$statement->execute(array(
+    "fname" => "Bob",
+    "sname" => "Desaunois",
+    "age" => "18"
+));
+
+$statement = $link->prepare("INSERT INTO testtable(name, lastname, age)
+    VALUES(?, ?, ?)");
+
+$statement->execute(array("Bob", "Desaunois", "18"));
+
+
+//END EXAMPLE
 // define("DB_DRIVER", "sqlsrv");
 // define("DB_HOST", "localhost");
 // define("DB_PORT", "");

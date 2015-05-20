@@ -1,5 +1,37 @@
 <?php
+// define("DB_DRIVER", "sqlsrv");
+// define("DB_HOST", "localhost");
+// define("DB_PORT", "");
+// define("DB_USER", "sislab");
+// define("DB_PASSWORD", "sislab");
+// define("DB_DATA_BASE", "Sislab");
 
+define("DB_DRIVER", "mysql");
+define("DB_HOST", "localhost");
+define("DB_PORT", "8889");
+define("DB_USER", "root");
+define("DB_PASSWORD", "root");
+define("DB_DATA_BASE", "sislab");
+
+function getConnection() {
+	try {
+		$dsn = "mysql:host=";
+		$dsn .= DB_HOST . ";";
+		if (strlen(DB_PORT) > 0)
+		{
+			$dsn .= "port=" . DB_PORT . ";";
+		}
+		$dsn .= "dbname=" . DB_DATA_BASE;
+
+		$dbConnection = new PDO($dsn, DB_USER, DB_PASSWORD);
+		$dbConnection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+	} catch(PDOException $e) {
+		//error_log($e->getMessage(), 3, '/var/tmp/php.log');
+		//echo '{"error":{"text":'. $e->getMessage() .'}}';
+		$output = '{"error":"' . $e->getMessage() . '"}';
+	}
+	return $dbConnection;
+}
 
 	$dataString = '
 		{
@@ -29,9 +61,7 @@
 		}
 	';
 	$requestData = json_decode($dataString);
-
 	$insertDataArray = array (
-		"id_usuario" => $requestData->id_usuario,
 		"id_nivel" => $requestData->id_nivel,
 		"id_rol" => $requestData->id_rol,
 		"id_area" => $requestData->id_area,
@@ -42,9 +72,9 @@
 		"supervisa" => $requestData->supervisa,
 		"analiza" => $requestData->analiza,
 		"muestrea" => $requestData->muestrea,
-		"nombres" => $requestData->nombres,
-		"apellido_paterno" => $requestData->apellido_paterno,
-		"apellido_materno" => $requestData->apellido_materno,
+		"nombres" => utf8_decode($requestData->nombres),
+		"apellido_paterno" => utf8_decode($requestData->apellido_paterno),
+		"apellido_materno" => utf8_decode($requestData->apellido_materno),
 		"usr" => $requestData->usr,
 		"pwd" => $requestData->pwd,
 		"fecha_captura" => $requestData->fecha_captura,
@@ -53,45 +83,55 @@
 		"ip_actualiza" => $requestData->ip_actualiza,
 		"host_captura" => $requestData->host_captura,
 		"host_actualiza" => $requestData->host_actualiza,
-		"activo" => $requestData->activo
+		"activo" => $requestData->activo,
+		"roles" => array (
+
+		)
 	);
-	print_r("<hr>");
-	print_r($insertDataArray);
-	print_r("<hr>");
+	try {
 
+		//$quotes = $requestData->solicitudes;
+		$sql = "INSERT INTO Usuario
+			( id_nivel, id_rol, id_area, id_puesto, interno, cea,
+			 laboratorio, supervisa, analiza, muestrea, nombres, apellido_paterno,
+			 apellido_materno, usr, pwd, fecha_captura, fecha_actualiza,
+			 ip_captura, ip_actualiza, host_captura, host_actualiza, activo)
+			VALUES ( :id_nivel, :id_rol, :id_area, :id_puesto, :interno,
+				:cea, :laboratorio, :supervisa, :analiza, :muestrea, :nombres,
+				:apellido_paterno, :apellido_materno, :usr, :pwd, :fecha_captura,
+				:fecha_actualiza, :ip_captura, :ip_actualiza, :host_captura,
+				:host_actualiza, :activo
+			)";
+		$db = getConnection();
+		$stmt = $db->prepare($sql);
+		$stmt->execute($insertDataArray);
+		$userId = $db->lastInsertId();
+		print_r("<h1>ID: ");
+		print_r($userId);
+		print_r("</h1>");
+	} catch(PDOException $e) {
+		print_r($e->getMessage());
+		echo "<br>";
+	}
+	print_r($stmt);
+	/*
 
-function insertStudy($requestData, $insertDataArray) {
-	$quotes = $requestData->solicitudes;
+function insertStudy() {
 
 
 	//print_r(json_decode(isQuoteListValid($quotes)));
 
-	$sql = "INSERT INTO Usuario
-		(id_usuario, id_nivel, id_rol, id_area, id_puesto, interno, cea,
-		 laboratorio, supervisa, analiza, muestrea, nombres, apellido_paterno,
-		 apellido_materno, usr, pwd, fecha_captura, fecha_actualiza,
-		 ip_captura, ip_actualiza, host_captura, host_actualiza, activo)
-		VALUES (
-			:id_usuario, :id_nivel, :id_rol, :id_area, :id_puesto, :interno,
-			:cea, :laboratorio, :supervisa, :analiza, :muestrea, :nombres,
-			:apellido_paterno, :apellido_materno, :usr, :pwd, :fecha_captura,
-			:fecha_actualiza, :ip_captura, :ip_actualiza, :host_captura,
-			:host_actualiza, :activo
-		)";
-	$db = getConnection();
-	$stmt = $db->prepare($sql);
-	$stmt->execute($insertDataArray);
-
-	$sql2 = "SELECT * FROM Usuario ORDER BY id_usuario DESC LIMIT 1";
-	$stmt2 = $db->prepare($sql2);
-	$result = $stmt->fetchAll(PDO::FETCH_OBJ);
-	$result = json_encode($requestData);
-	return $result;
+return $userId;
+	// $sql2 = "SELECT * FROM Usuario WHERE id_usuario = :userId";
+	// $stmt2 = $db->prepare($sql2);
+	// $stmt2->bindParam("userName", $userName);
+	// $result2 = $stmt2->fetchAll(PDO::FETCH_OBJ);
+	// return $result2;
 }
 
 	print_r("<hr>");
-	print_r(insertStudy());
-
+	print_r(insertStudy($requestData, $insertDataArray));
+	print_r("<hr>");
 
 function isQuoteListValid($quotes) {
 	$i = 0;

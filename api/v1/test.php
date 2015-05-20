@@ -83,13 +83,10 @@ function getConnection() {
 		"ip_actualiza" => $requestData->ip_actualiza,
 		"host_captura" => $requestData->host_captura,
 		"host_actualiza" => $requestData->host_actualiza,
-		"activo" => $requestData->activo,
-		"roles" => array (
-
-		)
+		"activo" => $requestData->activo
 	);
 	try {
-
+		/*
 		//$quotes = $requestData->solicitudes;
 		$sql = "INSERT INTO Usuario
 			( id_nivel, id_rol, id_area, id_puesto, interno, cea,
@@ -106,14 +103,36 @@ function getConnection() {
 		$stmt = $db->prepare($sql);
 		$stmt->execute($insertDataArray);
 		$userId = $db->lastInsertId();
+		$db = null;
+		*/
+		$userId = 9;
 		print_r("<h1>ID: ");
 		print_r($userId);
 		print_r("</h1>");
+
+		$sql = "SELECT id_usuario, id_nivel, id_rol, id_area, id_puesto,
+			interno, cea, laboratorio, supervisa, analiza, muestrea, nombres,
+			apellido_paterno, apellido_materno, usr, pwd, fecha_captura,
+			fecha_actualiza, ip_captura, ip_actualiza,
+			host_captura, host_actualiza, activo
+			FROM Usuario
+			WHERE id_usuario=:userId
+		";
+		try {
+			$db = getConnection();
+			$stmt = $db->prepare($sql);
+			$stmt->bindParam("userId", $userId);
+			$stmt->execute();
+			$updates = $stmt->fetch(PDO::FETCH_OBJ);
+			print_r($updates);
+		} catch(PDOException $e) {
+			echo '{"error":{"text":'. $e->getMessage() .'}}';
+		}
+		print_r("<hr>");
 	} catch(PDOException $e) {
 		print_r($e->getMessage());
-		echo "<br>";
 	}
-	print_r($stmt);
+	echo "<hr>";
 	/*
 
 function insertStudy() {
@@ -275,212 +294,6 @@ function getConnection() {
 	return $dbConnection;
 }
 
-function getUserByCredentials($userName, $userPassword) {
-	//$result = \Service\DALSislab::getInstance()->getUserByCredentials($userName, $userPassword);
-	////$userName = "rgarcia";
-	////$userPassword = "8493a161f70fffc0dcd4732ae4f6c4667f373688fff802ea13c71bd0fce41cb1";
-	$sql = "SELECT id_usuario, id_nivel, id_rol, id_area, id_puesto, interno, cea, laboratorio, supervisa, analiza, muestrea, nombres, apellido_paterno, apellido_materno, usr, pwd, fecha_captura, fecha_actualiza, ip_captura, ip_actualiza, host_captura, host_actualiza, activo FROM Usuario WHERE usr = :userName AND pwd = :userPassword AND activo = 1";
-	$db = getConnection();
-	$stmt = $db->prepare($sql);
-	$stmt->bindParam("userName", $userName);
-	$stmt->bindParam("userPassword", $userPassword);
-	$stmt->execute();
-	$result = $stmt->fetchAll(PDO::FETCH_OBJ);
-	return $result;
-}
-
-function getUsers() {
-	//$result = \Service\DALSislab::getInstance()->getUsers();
-	$sql = "SELECT id_usuario, id_nivel, id_rol, id_area, id_puesto, interno, cea, laboratorio, supervisa, analiza, muestrea, nombres, apellido_paterno, apellido_materno, usr, pwd, fecha_captura, fecha_actualiza, ip_captura, ip_actualiza, host_captura, host_actualiza, activo FROM Usuario WHERE activo = 1";
-	$db = getConnection();
-	$stmt = $db->prepare($sql);
-	$stmt->bindParam("userName", $userName);
-	$stmt->bindParam("userPassword", $userPassword);
-	$stmt->execute();
-	//$result = processResultToJson($stmt->fetchAll(PDO::FETCH_ASSOC), false);
-	$result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-	return $result;
-}
-
-
-function processResultToJson($items, $isArrayOutputExpected) {
-	$output = "";
-	if ($isArrayOutputExpected)
-	{
-		$output .= "[";
-	}
-	$i = 0;
-	$l = count($items);
-	foreach ($items as $item) {
-		$i++;
-		$j = 0;
-		$item = (array)$item;
-		$m = count($item);
-		$output .= "{";
-		foreach ($item as $key => $value) {
-			$j++;
-			$output .= '"' . $key . '":';
-			$v = $value;
-			if (!is_numeric($v))
-			{
-				if (strtotime($v)) {
-					$dateArray = explode(" ", $v);
-					$v = $dateArray[0] . 'T'. substr($dateArray[1], 0, 5) . '-06:00';
-				}
-				else
-				{
-					$v = utf8_encode($v);
-				}
-				$v = '"' . $v .'"';
-			}
-			$output .= $v;
-			if ($j < $m)
-			{
-				$output .= ",";
-			}
-		}
-		$output .= "}";
-		if ($isArrayOutputExpected && $i < $l)
-		{
-			$output .= ",";
-		}
-	}
-	if ($isArrayOutputExpected)
-	{
-		$output .= "]";
-	}
-	return $output;
-}
-
-
-$usr = "rgarcia";
-$pwd = "8493a161f70fffc0dcd4732ae4f6c4667f373688fff802ea13c71bd0fce41cb1";
-
-//$userData = getUsers();
-$userData =
-	Array (
-	        Array (
-	            "id_menu" => 1,
-	            "id_submenu" => 1,
-	            "orden" => 1,
-	            "orden_submenu" => 1,
-	            "url" => "/estudio/estudio",
-	            "menu" => "Informe",
-	            "submenu" => "Informe"
-	        ),
-	        Array (
-	            "id_menu" => 2,
-	            "id_submenu" => 2,
-	            "orden" => 2,
-	            "orden_submenu" => 1,
-	            "url" => "/muestreo/orden",
-	            "menu" => "Muestreo",
-	            "submenu" => "Orden Muestreo"
-	        ),
-	        Array (
-	            "id_menu" => 2,
-	            "id_submenu" => 3,
-	            "orden" => 2,
-	            "orden_submenu" => 2,
-	            "url" => "/muestreo/orden",
-	            "menu" => "Muestreo",
-	            "submenu" => "Plan Muestreo"
-	        ),
-	        Array (
-	            "id_menu" => 3,
-	            "id_submenu" => 3,
-	            "orden" => 3,
-	            "orden_submenu" => 1,
-	            "url" => "/recepcion/hoja",
-	            "menu" => "Recepción",
-	            "submenu" => "Hoja Campo"
-	        )
-	);
-print_r(processMenuToJson($userData));
-//print_r($userData[0]);
-
-function processMenuToJson($items) {
-	$output = '';
-	$i = 0;
-	$l = count($items);
-	$currentItem = $items[$i];
-	$output .= '[';
-	$output .= '{';
-	$output .= '"id_menu":' . $currentItem["id_menu"] . ',';
-	$output .= '"orden":' . $currentItem["orden"] . ',';
-	$output .= '"url":"' . $currentItem["url"] . '",';
-	$output .= '"menu":"' . $currentItem["menu"] . '",';
-	$output .= '"submenu":[';
-	$output .= '{';
-	$output .= '"id_submenu":' . $currentItem["id_submenu"] . ',';
-	$output .= '"id_menu":' . $currentItem["id_menu"] . ',';
-	$output .= '"orden":' . $currentItem["orden_submenu"] . ',';
-	$output .= '"url":"' . $currentItem["url_submenu"] . '",';
-	$output .= '"menu":"' . $currentItem["submenu"] . '"';
-	$output .= '}';
-	for($i = 1; $i < $l; $i++)
-	{
-		if ($currentItem["id_menu"] == $items[$i]["id_menu"])
-		{
-			$output .= ',';
-			// add submenu
-			$currentItem = $items[$i];
-		}
-		else
-		{
-			//close current menu, add new one
-			$output .= ']';
-			$output .= '},';
-			$currentItem = $items[$i];
-			$output .= '{';
-			$output .= '"id_menu":' . $currentItem["id_menu"] . ',';
-			$output .= '"orden":' . $currentItem["orden"] . ',';
-			$output .= '"url":"' . $currentItem["url"] . '",';
-			$output .= '"menu":"' . $currentItem["menu"] . '",';
-			$output .= '"submenu":[';
-		}
-		$output .= '{';
-		$output .= '"id_submenu":' . $currentItem["id_submenu"] . ',';
-		$output .= '"id_menu":' . $currentItem["id_menu"] . ',';
-		$output .= '"orden":' . $currentItem["orden_submenu"] . ',';
-		$output .= '"url":"' . $currentItem["url_submenu"] . '",';
-		$output .= '"menu":"' . $currentItem["submenu"] . '"';
-		$output .= '}';
-	}
-	$output .= ']';
-	$output .= '}';
-	$output .= ']';
-	return $output;
-}
-/*
-
-	$userData = getUserByCredentials($usr, $pwd);
-	$userInfo = $userData[0];
-	//$userInfo = json_decode($userData);
-
-	$userId = $userInfo->id_usuario;
-	$userLv = $userInfo->id_nivel;
-	$userRole = $userInfo->id_rol;
-	$name = utf8_encode($userInfo->nombres) . " ";
-	$name .= utf8_encode($userInfo->apellido_paterno) . " ";
-	$name .= utf8_encode($userInfo->apellido_materno) . "";
-	// $name = $userInfo->nombres . " ";
-	// $name .= $userInfo->apellido_paterno . " ";
-	// $name .= $userInfo->apellido_materno . "";
-
-
-
-print_r($userId);
-print_r("<hr>");
-
-	$userPass = $usr . ".";
-	$userPass .= $pwd . ".";
-	$userPass .= $userId . "." . $userLv;
-	$userPass = bin2hex($userPass);
-
-	print_r($userPass);
-print_r("<hr>");
-print_r($name);
 
 /*
 	const DB_DRIVER = "mysql";

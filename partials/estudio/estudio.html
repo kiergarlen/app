@@ -59,7 +59,7 @@
         required
         data-ng-model="study.study.fecha"
         data-date-format="yyyy-MM-dd"
-        data-date-type="string"
+        data-date-type="date"
         data-autoclose="1"
         date-use-native="true"
         data-bs-datepicker
@@ -127,14 +127,14 @@
     </div>
   </div>
   <div class="row"
-    data-ng-repeat="row in study.study.solicitudes">
+    data-ng-repeat="row in study.study.ordenes">
     <div class="col-xs-6 col-sm-4">
-      <label for="matrixSelectId{{row.id_solicitud}}">
+      <label for="matrixSelectId{{row.id_orden}}">
         Matriz
       </label>
       <select class="form-control"
-        id="matrixSelectId{{row.id_solicitud}}"
-        name="matrixSelectId{{row.id_solicitud}}"
+        id="matrixSelectId{{row.id_orden}}"
+        name="matrixSelectId{{row.id_orden}}"
         required
         data-ng-model="row.id_matriz"
         >
@@ -147,24 +147,24 @@
       </select>
     </div>
     <div class="col-xs-6 col-sm-1">
-      <label for="sampleAmountTextId{{row.id_solicitud}}">
+      <label for="sampleAmountTextId{{row.id_orden}}">
         Muestras
       </label>
       <input type="text" class="form-control"
-        id="sampleAmountTextId{{row.id_solicitud}}"
-        name="sampleAmountTextId{{row.id_solicitud}}"
+        id="sampleAmountTextId{{row.id_orden}}"
+        name="sampleAmountTextId{{row.id_orden}}"
         title="Muestras"
         placeholder="Cant."
         data-ng-model="row.cantidad_muestras"
         >
     </div>
     <div class="col-xs-6 col-sm-3">
-      <label for="samplingSelectId{{row.id_solicitud}}">
+      <label for="samplingSelectId{{row.id_orden}}">
         Tipo muestreo
       </label>
       <select class="form-control"
-        id="samplingSelectId{{row.id_solicitud}}"
-        name="samplingSelectId{{row.id_solicitud}}"
+        id="samplingSelectId{{row.id_orden}}"
+        name="samplingSelectId{{row.id_orden}}"
         required
         data-ng-model="row.id_tipo_muestreo"
         >
@@ -177,12 +177,12 @@
       </select>
     </div>
     <div class="col-xs-6 col-sm-3">
-      <label for="normSelectId{{row.id_solicitud}}">
+      <label for="normSelectId{{row.id_orden}}">
         Norma
       </label>
       <select class="form-control"
-        id="normSelectId{{row.id_solicitud}}"
-        name="normSelectId{{row.id_solicitud}}"
+        id="normSelectId{{row.id_orden}}"
+        name="normSelectId{{row.id_orden}}"
         required
         data-ng-model="row.id_norma"
         >
@@ -195,15 +195,15 @@
       </select>
     </div>
     <div class="col-xs-1">
-      <label for="removeButtonId{{row.id_solicitud}}">
+      <label for="removeButtonId{{row.id_orden}}">
         Eliminar
       </label>
       <button class="btn btn-danger"
-        id="removeButtonId{{row.id_solicitud}}"
-        name="removeButtonId{{row.id_solicitud}}"
+        id="removeButtonId{{row.id_orden}}"
+        name="removeButtonId{{row.id_orden}}"
         value="Eliminar" title="Eliminar"
-        data-ng-click="study.getScope().removeQuote(row)"
-        data-ng-disabled="study.study.solicitudes.length < 2"
+        data-ng-click="study.getScope().removeOrder(row)"
+        data-ng-disabled="study.study.ordenes.length < 2"
         >
         <i class="glyphicon glyphicon-remove" aria-hidden="true"></i>
     </div>
@@ -213,7 +213,7 @@
       <br>
       <a class="btn btn-success"
         value="Agregar solicitud" title="Agregar solicitud"
-        data-ng-click="study.addQuote()"
+        data-ng-click="study.addOrder()"
         >
         <i class="glyphicon glyphicon-plus" aria-hidden="true"></i>
         Agregar orden

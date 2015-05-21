@@ -33,7 +33,98 @@ function getConnection() {
 	return $dbConnection;
 }
 
-	$dataString = '
+
+$studyDataString = '
+{
+	"id_estudio":1
+	"id_cliente":13,
+	"id_origen_orden":1,
+	"id_ubicacion":1,
+	"id_ejercicio":2015,
+	"id_status":2,
+	"id_etapa":2,
+	"id_usuario_captura":20,
+	"id_usuario_valida":1,
+	"id_usuario_entrega":0,
+	"id_usuario_actualiza":0,
+	"oficio":"001",
+	"folio":"CEA-001/2015",
+	"origen_descripcion":"GPT-001/2015",
+	"ubicacion":"Río Santiago",
+	"fecha":"2015-05-20 00:00",
+	"fecha_entrega":"2015-05-21 00:00",
+	"fecha_captura":"2015-05-20 00:00",
+	"fecha_valida":"2015-05-21 00:00",
+	"fecha_rechaza":"2015-05-21 00:00",
+	"ip_captura":"[::1]",
+	"ip_valida":"[::1]",
+	"ip_actualiza":"[::1]",
+	"host_captura":"localhost",
+	"host_valida":"localhost",
+	"host_actualiza":"localhost",
+	"motivo_rechaza":"Error en ubicación",
+	"activo":1,
+	"cliente":
+	{
+		"id_cliente":13,
+		"id_organismo":6,
+		"cliente":"Ayuntamiento de Cotija, Michoacan",
+		"area":"",
+		"rfc":"Registro Federal de Contribuyentes",
+		"calle":"Pino Suárez Pte.",
+		"numero":"100",
+		"colonia":"Col. Centro",
+		"cp":"59940",
+		"id_estado":16,
+		"estado":"Michoacán de Ocampo",
+		"id_municipio":16019,
+		"municipio":"Cotija",
+		"id_localidad":160190001,
+		"localidad":"Cotija de La Paz",
+		"tel":"045-35-4100-1836",
+		"fax":"",
+		"contacto":"Arq. Juan Jesús Zarate Barajas",
+		"puesto_contacto":"puesto contacto",
+		"email":"ooapascotija@hotmail.com",
+		"fecha_act":"23/11/2014",
+		"interno":0,
+		"cea":0,
+		"tasa":1,
+		"activo":1
+	},
+	"ordenes":
+	[
+		{
+			"id_orden":1,
+			"id_estudio":1,
+			"id_matriz":1,
+			"id_tipo_muestreo":2,
+			"id_norma":3,
+			"id_status":1,
+			"cantidad_muestras":15,
+			"activo":1,
+			"$$hashKey":"object:179"
+		},
+		{
+			"id_orden":2,
+			"id_estudio":1,
+			"id_matriz":6,
+			"id_tipo_muestreo":1,
+			"id_norma":1,
+			"id_status":1,
+			"cantidad_muestras":16,
+			"activo":1,
+			"$$hashKey":"object:180"
+		}
+	]
+}
+';
+$studyPayload = json_decode($studyDataString);
+$orders = $studyPayload->ordenes;
+
+
+
+	$payload = '
 		{
 			"id_usuario":5,
 			"id_nivel":6,
@@ -60,7 +151,7 @@ function getConnection() {
 			"activo":1
 		}
 	';
-	$requestData = json_decode($dataString);
+	$requestData = json_decode($payload);
 	$insertDataArray = array (
 		"id_nivel" => $requestData->id_nivel,
 		"id_rol" => $requestData->id_rol,
@@ -87,7 +178,7 @@ function getConnection() {
 	);
 	try {
 		/*
-		//$quotes = $requestData->solicitudes;
+
 		$sql = "INSERT INTO Usuario
 			( id_nivel, id_rol, id_area, id_puesto, interno, cea,
 			 laboratorio, supervisa, analiza, muestrea, nombres, apellido_paterno,

@@ -156,8 +156,8 @@
     vm.isDataSubmitted = false;
     vm.selectClient = selectClient;
     vm.getScope = getScope;
-    vm.addQuote = addQuote;
-    vm.removeQuote = removeQuote;
+    vm.addOrder = addOrder;
+    vm.removeOrder = removeOrder;
     vm.approveItem = approveItem;
     vm.rejectItem = rejectItem;
     vm.isFormValid = isFormValid;
@@ -176,9 +176,9 @@
       return vm;
     }
 
-    function addQuote() {
-      vm.study.solicitudes.push({
-        'id_solicitud':vm.study.solicitudes.length + 1,
+    function addOrder() {
+      vm.study.ordenes.push({
+        'id_orden':vm.study.ordenes.length + 1,
         'id_estudio':vm.study.id_estudio,
         'id_matriz':0,
         'cantidad_muestras':0,
@@ -187,10 +187,10 @@
       });
     }
 
-    function removeQuote(event) {
+    function removeOrder(event) {
       var field = '$$hashKey',
-      quoteRow = ArrayUtilsService.extractItemFromCollection(
-        vm.study.solicitudes,
+      orderRow = ArrayUtilsService.extractItemFromCollection(
+        vm.study.ordenes,
         field,
         event[field]
       );
@@ -204,36 +204,36 @@
       ValidationService.rejectItem(vm.study, vm.user);
     }
 
-    function isQuoteListValid() {
+    function isOrderListValid() {
       var i = 0,
       l = 0,
-      quotes = [];
-      if (vm.study.solicitudes && vm.study.solicitudes.length > 0)
+      orders = [];
+      if (vm.study.ordenes && vm.study.ordenes.length > 0)
       {
-        quotes = vm.study.solicitudes;
-        l = quotes.length;
+        orders = vm.study.ordenes;
+        l = orders.length;
         for (i = 0; i < l; i += 1) {
-          if (quotes[i].id_matriz < 1)
+          if (orders[i].id_matriz < 1)
           {
-            vm.message += ' Seleccione una matriz, para la solicitud ';
+            vm.message += ' Seleccione una matriz, para la orden ';
             vm.message += '(Ver fila ' + (i + 1) + ')';
             return false;
           }
-          if (isNaN(quotes[i].cantidad_muestras) || quotes[i].cantidad_muestras < 1)
+          if (isNaN(orders[i].cantidad_muestras) || orders[i].cantidad_muestras < 1)
           {
-            vm.message += ' Ingrese cantidad de muestras, para la solicitud ';
+            vm.message += ' Ingrese cantidad de muestras, para la orden ';
             vm.message += '(Ver fila ' + (i + 1) + ')';
             return false;
           }
-          if (quotes[i].id_tipo_muestreo < 1)
+          if (orders[i].id_tipo_muestreo < 1)
           {
-            vm.message += ' Seleccione un tipo de muestreo, para la solicitud ';
+            vm.message += ' Seleccione un tipo de muestreo, para la orden ';
             vm.message += '(Ver fila ' + (i + 1) + ')';
             return false;
           }
-          if (quotes[i].id_norma < 1)
+          if (orders[i].id_norma < 1)
           {
-            vm.message += ' Seleccione una norma, para la solicitud ';
+            vm.message += ' Seleccione una norma, para la orden ';
             vm.message += '(Ver fila ' + (i + 1) + ')';
             return false;
           }
@@ -241,7 +241,7 @@
       }
       else
       {
-        vm.message += ' Agregue una solicitud ';
+        vm.message += ' Agregue una orden ';
         return false;
       }
       return true;
@@ -259,13 +259,13 @@
         vm.message += ' Seleccione un cliente ';
         return false;
       }
-      if (!isQuoteListValid())
+      if (!isOrderListValid())
       {
-        return isQuoteListValid();
+        return isOrderListValid();
       }
       if (vm.study.id_origen_orden < 1)
       {
-        vm.message += ' Seleccione un medio de solicitud de muestreo ';
+        vm.message += ' Seleccione un medio de orden de muestreo ';
         return false;
       }
       if (vm.study.id_origen_orden == 1 || vm.study.id_origen_orden == 4)

@@ -1346,12 +1346,14 @@ function getStudy($studyId) {
 
 function getStudies() {
 	$result = \Service\DALSislab::getInstance()->getStudies();
-	// $sql = "SELECT
-	// 	dbo.Menu.id_menu, dbo.Submenu.id_submenu, dbo.Menu.orden,
-	// 	dbo.Submenu.orden AS orden_submenu, dbo.Menu.menu,
-	// 	dbo.Submenu.menu AS submenu,dbo.Submenu.url
-	// 	FROM
-	// 	dbo.Estudio";
+	// $sql = "SELECT id_estudio, id_cliente, id_origen_orden, id_ubicacion,
+	// id_ejercicio, id_status, id_etapa, id_usuario_captura,
+	// id_usuario_valida, id_usuario_entrega, id_usuario_actualiza,
+	// oficio, folio, origen_descripcion, ubicacion, fecha,
+	// fecha_entrega, fecha_captura, fecha_valida, fecha_rechaza,
+	// ip_captura, ip_valida, ip_actualiza, host_captura,
+	//  host_valida, host_actualiza, motivo_rechaza, activo
+	// FROM Estudio";
 	// $db = getConnection();
 	// $stmt = $db->prepare($sql);
 	// $stmt->execute();
@@ -1360,7 +1362,43 @@ function getStudies() {
 }
 
 //TODO: VALIDATION DRAFT
-
+// function isQuoteListValid($quotes) {
+// 	$i = 0;
+// 	$l = count($quotes);
+// 	if (isset($quotes) && count($quotes) > 0)
+// 	{
+// 		for ($i = 0; $i < $l; $i++) {
+// 			if (!is_numeric($quotes[$i]->id_matriz) || $quotes[$i]->id_matriz > 1)
+// 			{
+// 				$message .= 'matriz:' . $i . ',';
+// 			}
+// 			if (!is_numeric($quotes[$i]->cantidad_muestras) || $quotes[$i]->cantidad_muestras > 1)
+// 			{
+// 				$message .= 'cantidad_muestras:' . $i . ',';
+// 			}
+// 			if ($quotes[$i]->id_tipo_muestreo > 1)
+// 			{
+// 				$message .= 'id_tipo_muestreo:' . $i . ',';
+// 			}
+// 			if ($quotes[$i]->id_norma > 1)
+// 			{
+// 				$message .= 'norma:' . $i . ',';
+// 			}
+// 		}
+// 	}
+// 	$output = '{';
+// 	if ($status < 1)
+// 	{
+// 		$output .= '"status":"0","reason":"invalid input","message":"';
+// 		$output .= $message . '"';
+// 	}
+// 	else
+// 	{
+// 		$output .= '"status":"1","reason":"valid input","message":"none"';
+// 	}
+// 	$output .= '}';
+// 	return $output;
+// }
 
 
 
@@ -1467,3 +1505,77 @@ function insertStudy($requestData) {
 	$result = json_encode($requestData);
 	return $result;
 }
+/*
+function insertUser($requestData) {
+	try {
+		//$requestData = json_decode($payload);
+		$insertDataArray = array (
+			"id_nivel" => $requestData->id_nivel,
+			"id_rol" => $requestData->id_rol,
+			"id_area" => $requestData->id_area,
+			"id_puesto" => $requestData->id_puesto,
+			"interno" => $requestData->interno,
+			"cea" => $requestData->cea,
+			"laboratorio" => $requestData->laboratorio,
+			"supervisa" => $requestData->supervisa,
+			"analiza" => $requestData->analiza,
+			"muestrea" => $requestData->muestrea,
+			"nombres" => utf8_decode($requestData->nombres),
+			"apellido_paterno" => utf8_decode($requestData->apellido_paterno),
+			"apellido_materno" => utf8_decode($requestData->apellido_materno),
+			"usr" => $requestData->usr,
+			"pwd" => $requestData->pwd,
+			"fecha_captura" => $requestData->fecha_captura,
+			"fecha_actualiza" => $requestData->fecha_actualiza,
+			"ip_captura" => $requestData->ip_captura,
+			"ip_actualiza" => $requestData->ip_actualiza,
+			"host_captura" => $requestData->host_captura,
+			"host_actualiza" => $requestData->host_actualiza,
+			"activo" => $requestData->activo
+		);
+		$sql = "INSERT INTO Usuario
+			( id_nivel, id_rol, id_area, id_puesto, interno, cea,
+			 laboratorio, supervisa, analiza, muestrea, nombres,
+			 apellido_paterno,
+			 apellido_materno, usr, pwd, fecha_captura, fecha_actualiza,
+			 ip_captura, ip_actualiza, host_captura, host_actualiza, activo)
+			VALUES ( :id_nivel, :id_rol, :id_area, :id_puesto, :interno,
+				:cea, :laboratorio, :supervisa, :analiza, :muestrea, :nombres,
+				:apellido_paterno, :apellido_materno, :usr, :pwd, :fecha_captura,
+				:fecha_actualiza, :ip_captura, :ip_actualiza, :host_captura,
+				:host_actualiza, :activo
+			)";
+		$db = getConnection();
+		$stmt = $db->prepare($sql);
+		$stmt->execute($userData);
+		$userId = $db->lastInsertId();
+		$db = null;
+		return getUser($userId);
+	} catch(PDOException $e) {
+		//print_r($e->getMessage());
+		return 0;
+	}
+}
+
+function getUser($userId) {
+	try {
+		$sql = "SELECT id_usuario, id_nivel, id_rol, id_area, id_puesto,
+			interno, cea, laboratorio, supervisa, analiza, muestrea, nombres,
+			apellido_paterno, apellido_materno, usr, pwd, fecha_captura,
+			fecha_actualiza, ip_captura, ip_actualiza,
+			host_captura, host_actualiza, activo
+			FROM Usuario
+			WHERE id_usuario=:userId
+		";
+		$db = getConnection();
+		$stmt = $db->prepare($sql);
+		$stmt->bindParam("userId", $userId);
+		$stmt->execute();
+		$user = $stmt->fetch(PDO::FETCH_OBJ);
+		$db = null;
+		return $user;
+	} catch(PDOException $e) {
+		echo '{"error":{"text":'. $e->getMessage() .'}}';
+	}
+}
+*/

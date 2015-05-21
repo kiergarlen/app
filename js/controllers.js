@@ -1110,7 +1110,7 @@
         vm.message += ' Seleccione una localidad ';
         return false;
       }
-      if (vm.plan.solicitud.id_tipo_muestreo > 1 && isNaN(vm.plab.frecuencia_muestreo))
+      if (vm.plan.solicitud.id_tipo_muestreo > 1 && isNaN(vm.plan.frecuencia_muestreo))
       {
         vm.message += ' Seleccione una frecuencia de muestreo ';
         return false;

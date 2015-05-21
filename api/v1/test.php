@@ -36,7 +36,7 @@ function getConnection() {
 
 $studyDataString = '
 {
-	"id_estudio":1
+	"id_estudio":1,
 	"id_cliente":13,
 	"id_origen_orden":1,
 	"id_ubicacion":1,
@@ -121,9 +121,54 @@ $studyDataString = '
 ';
 $studyPayload = json_decode($studyDataString);
 $orders = $studyPayload->ordenes;
+print_r($orders);
+// $l = count($orders);
+// for ($i=0; $i < $l; $i++) {
+// 	array (
+// 		"id_orden" => $orders[$i]->id_orden,
+// 		"id_estudio" => $orders[$i]->id_estudio,
+// 		"id_matriz" => $orders[$i]->id_matriz,
+// 		"id_tipo_muestreo" => $orders[$i]->id_tipo_muestreo,
+// 		"id_norma" => $orders[$i]->id_norma,
+// 		"id_status" => $orders[$i]->id_status,
+// 		"cantidad_muestras" => $orders[$i]->cantidad_muestras,
+// 		"activo" => $orders[$i]->activo
+// 	);
+// }
+
+$insertStudyData = array(
+	"id_estudio" => $requestData->id_estudio,
+	"id_cliente" => $requestData->id_cliente,
+	"id_origen_orden" => $requestData->id_origen_orden,
+	"id_ubicacion" => $requestData->id_ubicacion,
+	"id_ejercicio" => $requestData->id_ejercicio,
+	"id_status" => $requestData->id_status,
+	"id_etapa" => $requestData->id_etapa,
+	"id_usuario_captura" => $requestData->id_usuario_captura,
+	"id_usuario_valida" => $requestData->id_usuario_valida,
+	"id_usuario_entrega" => $requestData->id_usuario_entrega,
+	"id_usuario_actualiza" => $requestData->id_usuario_actualiza,
+	"oficio" => $requestData->oficio,
+	"folio" => $requestData->folio,
+	"origen_descripcion" => $requestData->origen_descripcion,
+	"ubicacion" => $requestData->ubicacion,
+	"fecha" => $requestData->fecha,
+	"fecha_entrega" => $requestData->fecha_entrega,
+	"fecha_captura" => $requestData->fecha_captura,
+	"fecha_valida" => $requestData->fecha_valida,
+	"fecha_rechaza" => $requestData->fecha_rechaza,
+	"ip_captura" => $requestData->ip_captura,
+	"ip_valida" => $requestData->ip_valida,
+	"ip_actualiza" => $requestData->ip_actualiza,
+	"host_captura" => $requestData->host_captura,
+	"host_valida" => $requestData->host_valida,
+	"host_actualiza" => $requestData->host_actualiza,
+	"motivo_rechaza" => $requestData->motivo_rechaza,
+	"activo" => $requestData->activo
+);
 
 
-
+/*
 	$payload = '
 		{
 			"id_usuario":5,
@@ -177,25 +222,23 @@ $orders = $studyPayload->ordenes;
 		"activo" => $requestData->activo
 	);
 	try {
-		/*
+		// $sql = "INSERT INTO Usuario
+		// 	( id_nivel, id_rol, id_area, id_puesto, interno, cea,
+		// 	 laboratorio, supervisa, analiza, muestrea, nombres, apellido_paterno,
+		// 	 apellido_materno, usr, pwd, fecha_captura, fecha_actualiza,
+		// 	 ip_captura, ip_actualiza, host_captura, host_actualiza, activo)
+		// 	VALUES ( :id_nivel, :id_rol, :id_area, :id_puesto, :interno,
+		// 		:cea, :laboratorio, :supervisa, :analiza, :muestrea, :nombres,
+		// 		:apellido_paterno, :apellido_materno, :usr, :pwd, :fecha_captura,
+		// 		:fecha_actualiza, :ip_captura, :ip_actualiza, :host_captura,
+		// 		:host_actualiza, :activo
+		// 	)";
+		// $db = getConnection();
+		// $stmt = $db->prepare($sql);
+		// $stmt->execute($insertDataArray);
+		// $userId = $db->lastInsertId();
+		// $db = null;
 
-		$sql = "INSERT INTO Usuario
-			( id_nivel, id_rol, id_area, id_puesto, interno, cea,
-			 laboratorio, supervisa, analiza, muestrea, nombres, apellido_paterno,
-			 apellido_materno, usr, pwd, fecha_captura, fecha_actualiza,
-			 ip_captura, ip_actualiza, host_captura, host_actualiza, activo)
-			VALUES ( :id_nivel, :id_rol, :id_area, :id_puesto, :interno,
-				:cea, :laboratorio, :supervisa, :analiza, :muestrea, :nombres,
-				:apellido_paterno, :apellido_materno, :usr, :pwd, :fecha_captura,
-				:fecha_actualiza, :ip_captura, :ip_actualiza, :host_captura,
-				:host_actualiza, :activo
-			)";
-		$db = getConnection();
-		$stmt = $db->prepare($sql);
-		$stmt->execute($insertDataArray);
-		$userId = $db->lastInsertId();
-		$db = null;
-		*/
 		$userId = 9;
 		print_r("<h1>ID: ");
 		print_r($userId);
@@ -612,7 +655,7 @@ function getUserSearch($query) {
 		echo '{"error":{"text":'. $e->getMessage() .'}}';
 	}
 }
-*/
+
 
 
 /*

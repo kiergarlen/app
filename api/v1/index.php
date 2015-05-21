@@ -1020,24 +1020,20 @@ function processUserJwt($app) {
 	$pwd = $input->password;
 
 	$userData = getUserByCredentials($usr, $pwd);
-	$userInfo = $userData[0];
-	//$userInfo = json_decode($userData);
+	//$userInfo = $userData[0];
+	$userInfo = json_decode($userData);
 
 	$userId = $userInfo->id_usuario;
 	$userLv = $userInfo->id_nivel;
 	$userRole = $userInfo->id_rol;
-	$name = utf8_encode($userInfo->nombres) . " ";
-	$name .= utf8_encode($userInfo->apellido_paterno) . " ";
-	$name .= utf8_encode($userInfo->apellido_materno) . "";
-	// $name = $userInfo->nombres . " ";
-	// $name .= $userInfo->apellido_paterno . " ";
-	// $name .= $userInfo->apellido_materno . "";
+	$name = $userInfo->nombres . " ";
+	$name .= $userInfo->apellido_paterno . " ";
+	$name .= $userInfo->apellido_materno . "";
 
 	$userPass = $usr . ".";
 	$userPass .= $pwd . ".";
 	$userPass .= $userId . "." . $userLv;
 	$userPass = bin2hex($userPass);
-
 	$token = array();
 	//$token["usr"] = $input->username;
 	//$token["pwd"] = $input->password;
@@ -1207,16 +1203,16 @@ function processMenuToJson($items) {
 }
 
 function getUserByCredentials($userName, $userPassword) {
-	//$result = \Service\DALSislab::getInstance()->getUserByCredentials($userName, $userPassword);
+	$result = \Service\DALSislab::getInstance()->getUserByCredentials($userName, $userPassword);
 	////$userName = "rgarcia";
 	////$userPassword = "8493a161f70fffc0dcd4732ae4f6c4667f373688fff802ea13c71bd0fce41cb1";
-	$sql = "SELECT id_usuario, id_nivel, id_rol, id_area, id_puesto, interno, cea, laboratorio, supervisa, analiza, muestrea, nombres, apellido_paterno, apellido_materno, usr, pwd, fecha_captura, fecha_actualiza, ip_captura, ip_actualiza, host_captura, host_actualiza, activo FROM Usuario WHERE usr = :userName AND pwd = :userPassword AND activo = 1";
-	$db = getConnection();
-	$stmt = $db->prepare($sql);
-	$stmt->bindParam("userName", $userName);
-	$stmt->bindParam("userPassword", $userPassword);
-	$stmt->execute();
-	$result = $stmt->fetchAll(PDO::FETCH_OBJ);
+	// $sql = "SELECT id_usuario, id_nivel, id_rol, id_area, id_puesto, interno, cea, laboratorio, supervisa, analiza, muestrea, nombres, apellido_paterno, apellido_materno, usr, pwd, fecha_captura, fecha_actualiza, ip_captura, ip_actualiza, host_captura, host_actualiza, activo FROM Usuario WHERE usr = :userName AND pwd = :userPassword AND activo = 1";
+	// $db = getConnection();
+	// $stmt = $db->prepare($sql);
+	// $stmt->bindParam("userName", $userName);
+	// $stmt->bindParam("userPassword", $userPassword);
+	// $stmt->execute();
+	// $result = $stmt->fetchAll(PDO::FETCH_OBJ);
 	return $result;
 }
 
@@ -1404,106 +1400,106 @@ function getStudies() {
 
 
 function insertStudy($requestData) {
-	$dataString = '
-	{
-	  "id_cliente" : 13,
-	  "id_usuario_valida" : 1,
-	  "id_usuario_actualiza" : 1,
-	  "status" : "Validado",
-	  "ip_captura" : "[::1]",
-	  "id_ejercicio" : 2015,
-	  "folio" : "CEA-432/2015",
-	  "host_captura" : "[::1]",
-	  "ip_valida" : "[::1]",
-	  "host_valida" : "[::1]",
-	  "motivo_rechaza" : "Error en datos cliente",
-	  "id_status" : 2,
-	  "ip_actualiza" : "[::1]",
-	  "ubicacion" : "Río Santiago",
-	  "host_actualiza" : "[::1]",
-	  "fecha_valida" : "2015-03-21",
-	  "origen_descripcion" : "GP-001/2015",
-	  "id_origen_orden" : 1,
-	  "numero_oficio" : 432,
-	  "fecha" : "2015-03-21",
-	  "fecha_rechaza" : "2015-03-21",
-	  "fecha_actualiza" : "2015-03-21",
-	  "solicitudes" : [
-	    {
-	      "activo" : 1,
-	      "$$hashKey" : "object:113",
-	      "id_matriz" : 1,
-	      "id_norma" : 3,
-	      "id_solicitud" : 1,
-	      "id_estudio" : 1,
-	      "id_tipo_muestreo" : 2,
-	      "id_status" : 1,
-	      "cantidad_muestras" : 15
-	    },
-	    {
-	      "activo" : 1,
-	      "$$hashKey" : "object:114",
-	      "id_matriz" : 6,
-	      "id_norma" : 1,
-	      "id_solicitud" : 2,
-	      "id_estudio" : 1,
-	      "id_tipo_muestreo" : 1,
-	      "id_status" : 1,
-	      "cantidad_muestras" : 16
-	    }
-	  ],
-	  "fecha_captura" : "2015-03-21",
-	  "cliente" : {
-	    "numero" : "100",
-	    "cp" : "59940",
-	    "id_organismo" : 6,
-	    "tel" : "045-35-4100-1836",
-	    "cea" : 0,
-	    "municipio" : "Cotija",
-	    "fax" : "",
-	    "fecha_act" : "23/11/2014",
-	    "colonia" : "Col. Centro",
-	    "id_municipio" : 16019,
-	    "localidad" : "Cotija de La Paz",
-	    "rfc" : "Registro Federal de Contribuyentes",
-	    "tasa" : 1,
-	    "puesto_contacto" : "puesto contacto",
-	    "email" : "ooapascotija@hotmail.com",
-	    "id_estado" : 16,
-	    "interno" : 0,
-	    "area" : "",
-	    "cliente" : "Ayuntamiento de Cotija, Michoacan",
-	    "id_localidad" : 160190001,
-	    "contacto" : "Arq. Juan Jesús Zarate Barajas",
-	    "calle" : "Pino Suárez Pte.",
-	    "estado" : "Michoacán de Ocampo",
-	    "activo" : 1,
-	    "id_cliente" : 13
-	  },
-	  "id_usuario_captura" : 20,
-	  "activo" : 1,
-	  "id_estudio" : 1
-	}
-	';
-	$sql = "INSERT INTO Usuario
-		(id_usuario, id_nivel, id_rol, id_area, id_puesto, interno, cea,
-		 laboratorio, supervisa, analiza, muestrea, nombres, apellido_paterno,
-		 apellido_materno, usr, pwd, fecha_captura, fecha_actualiza, ip_captura,
-		 ip_actualiza, host_captura, host_actualiza, activo)
-		VALUES
-		(NULL, '3', '3', '3', '3', '1',
-		 '1', '1', '1', '1', '1',
-		 'Supervisor', 'de', 'Area', 'super',
-		 '73d1b1b1bc1dabfb97f216d897b7968e44b06457920f00f2dc6c1ed3be25ad4c',
-		 '', '', '', '', '', '', '1'
-		);";
-	// $db = getConnection();
-	// $stmt = $db->prepare($sql);
-	// $stmt->bindParam("data", $data);
-	// $stmt->execute();
-	// $result = $stmt->fetchAll(PDO::FETCH_OBJ);
+	// $dataString = '
+	// {
+	//   "id_cliente" : 13,
+	//   "id_usuario_valida" : 1,
+	//   "id_usuario_actualiza" : 1,
+	//   "status" : "Validado",
+	//   "ip_captura" : "[::1]",
+	//   "id_ejercicio" : 2015,
+	//   "folio" : "CEA-432/2015",
+	//   "host_captura" : "[::1]",
+	//   "ip_valida" : "[::1]",
+	//   "host_valida" : "[::1]",
+	//   "motivo_rechaza" : "Error en datos cliente",
+	//   "id_status" : 2,
+	//   "ip_actualiza" : "[::1]",
+	//   "ubicacion" : "Río Santiago",
+	//   "host_actualiza" : "[::1]",
+	//   "fecha_valida" : "2015-03-21",
+	//   "origen_descripcion" : "GP-001/2015",
+	//   "id_origen_orden" : 1,
+	//   "numero_oficio" : 432,
+	//   "fecha" : "2015-03-21",
+	//   "fecha_rechaza" : "2015-03-21",
+	//   "fecha_actualiza" : "2015-03-21",
+	//   "solicitudes" : [
+	//     {
+	//       "activo" : 1,
+	//       "$$hashKey" : "object:113",
+	//       "id_matriz" : 1,
+	//       "id_norma" : 3,
+	//       "id_solicitud" : 1,
+	//       "id_estudio" : 1,
+	//       "id_tipo_muestreo" : 2,
+	//       "id_status" : 1,
+	//       "cantidad_muestras" : 15
+	//     },
+	//     {
+	//       "activo" : 1,
+	//       "$$hashKey" : "object:114",
+	//       "id_matriz" : 6,
+	//       "id_norma" : 1,
+	//       "id_solicitud" : 2,
+	//       "id_estudio" : 1,
+	//       "id_tipo_muestreo" : 1,
+	//       "id_status" : 1,
+	//       "cantidad_muestras" : 16
+	//     }
+	//   ],
+	//   "fecha_captura" : "2015-03-21",
+	//   "cliente" : {
+	//     "numero" : "100",
+	//     "cp" : "59940",
+	//     "id_organismo" : 6,
+	//     "tel" : "045-35-4100-1836",
+	//     "cea" : 0,
+	//     "municipio" : "Cotija",
+	//     "fax" : "",
+	//     "fecha_act" : "23/11/2014",
+	//     "colonia" : "Col. Centro",
+	//     "id_municipio" : 16019,
+	//     "localidad" : "Cotija de La Paz",
+	//     "rfc" : "Registro Federal de Contribuyentes",
+	//     "tasa" : 1,
+	//     "puesto_contacto" : "puesto contacto",
+	//     "email" : "ooapascotija@hotmail.com",
+	//     "id_estado" : 16,
+	//     "interno" : 0,
+	//     "area" : "",
+	//     "cliente" : "Ayuntamiento de Cotija, Michoacan",
+	//     "id_localidad" : 160190001,
+	//     "contacto" : "Arq. Juan Jesús Zarate Barajas",
+	//     "calle" : "Pino Suárez Pte.",
+	//     "estado" : "Michoacán de Ocampo",
+	//     "activo" : 1,
+	//     "id_cliente" : 13
+	//   },
+	//   "id_usuario_captura" : 20,
+	//   "activo" : 1,
+	//   "id_estudio" : 1
+	// }
+	// ';
+	// $sql = "INSERT INTO Usuario
+	// 	(id_usuario, id_nivel, id_rol, id_area, id_puesto, interno, cea,
+	// 	 laboratorio, supervisa, analiza, muestrea, nombres, apellido_paterno,
+	// 	 apellido_materno, usr, pwd, fecha_captura, fecha_actualiza, ip_captura,
+	// 	 ip_actualiza, host_captura, host_actualiza, activo)
+	// 	VALUES
+	// 	(NULL, '3', '3', '3', '3', '1',
+	// 	 '1', '1', '1', '1', '1',
+	// 	 'Supervisor', 'de', 'Area', 'super',
+	// 	 '73d1b1b1bc1dabfb97f216d897b7968e44b06457920f00f2dc6c1ed3be25ad4c',
+	// 	 '', '', '', '', '', '', '1'
+	// 	);";
+	// // $db = getConnection();
+	// // $stmt = $db->prepare($sql);
+	// // $stmt->bindParam("data", $data);
+	// // $stmt->execute();
+	// // $result = $stmt->fetchAll(PDO::FETCH_OBJ);
 	$result = json_encode($requestData);
-	return $result;
+	// return $result;
 }
 /*
 function insertUser($requestData) {

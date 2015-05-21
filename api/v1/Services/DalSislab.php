@@ -46,7 +46,7 @@ class DALSislab
 						"id_menu":1,
 						"orden":1,
 						"url":"/#",
-						"menu":"Informe",
+						"menu":"Estudio",
 						"activo":1,
 						"submenu":
 						[
@@ -55,7 +55,7 @@ class DALSislab
 								"id_menu":1,
 								"orden":1,
 								"url":"/estudio/estudio",
-								"menu":"Informe",
+								"menu":"Estudio",
 								"activo":1
 							}
 						]

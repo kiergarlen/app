@@ -370,6 +370,7 @@
       return item;
     }
 
+
     /**
      * @function seItemsFromReference
      * @desc Cambia el valor de una propiedad de ítem de un Array, coincidiendo una propiedad y su valor desde otro Array
@@ -636,6 +637,7 @@
     cachedToken,
     Token = {};
 
+    Token.hashMessage = hashMessage;
     Token.authenticateUser = authenticateUser;
     Token.isAuthenticated = isAuthenticated;
     Token.setToken = setToken;
@@ -643,6 +645,17 @@
     Token.clearToken = clearToken;
     Token.decodeToken = decodeToken;
     Token.getUserFromToken = getUserFromToken;
+
+    /**
+     * @function hashMessage
+     * @desc Codifica un mensaje usando SHA-256
+     * @param {String} message - Mensaje a codificar
+     * @return {String} hash - Mensaje codificado
+     */
+    function hashMessage(message) {
+      var hash = CryptoJS.SHA256(message);
+      return hash;
+    }
 
     /**
      * @function authenticateUser
@@ -910,6 +923,7 @@
       ]
     );
 
+
   // QuoteService.js
   /**
    * @name QuoteService
@@ -1110,7 +1124,7 @@
       save: {
         method: 'POST',
         params: {},
-        isArray: true,
+        isArray: false,
         headers: {
           'Auth-Token': TokenService.getToken()
         }
@@ -1164,7 +1178,7 @@
       save: {
         method: 'POST',
         params: {},
-        isArray: true,
+        isArray: false,
         headers: {
           'Auth-Token': TokenService.getToken()
         }
@@ -1218,7 +1232,7 @@
       save: {
         method: 'POST',
         params: {},
-        isArray: true,
+        isArray: false,
         headers: {
           'Auth-Token': TokenService.getToken()
         }
@@ -1581,6 +1595,7 @@
         SamplingSupervisorService
       ]
     );
+
 
   // PlanObjectivesService.js
   /**
@@ -2062,17 +2077,25 @@
       ]
     );
 
-  // SamplesListService.js
+  // SampleService.js
   /**
-   * @name SamplesListService
+   * @name SampleService
    * @constructor
    * @desc Proveedor de datos, Muestras
    * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @param {Object} TokenService - Proveedor de métodos para token
    * @return {Object} $resource - Acceso a recursos HTTP
    */
-  function SamplesListService($resource, TokenService) {
-    return $resource(API_BASE_URL + 'samples', {}, {
+  function SampleService($resource, TokenService) {
+    return $resource(API_BASE_URL + 'samples/:sampleId', {}, {
+      query: {
+        method: 'GET',
+        params: {sampleId: 'id_muestra'},
+        isArray: false,
+        headers: {
+          'Auth-Token': TokenService.getToken()
+        }
+      },
       get: {
         method: 'GET',
         params: {},
@@ -2085,10 +2108,10 @@
   }
   angular
     .module('sislabApp')
-    .factory('SamplesListService',
+    .factory('SampleService',
       [
         '$resource', 'TokenService',
-        SamplesListService
+        SampleService
       ]
     );
 
@@ -2512,6 +2535,8 @@
       ]
     );
 
+
+
   // CloudService.js
   /**
    * @name CloudService
@@ -2658,7 +2683,7 @@
       }
       vm.message = TokenService.authenticateUser(
         vm.user.username,
-        vm.user.password
+        String(TokenService.hashMessage(vm.user.password))
       );
     }
   }
@@ -2710,7 +2735,7 @@
     {
       userData = TokenService.getUserFromToken();
       vm.userName = userData.name;
-      vm.tasks = TaskService.get(userData.id);
+      vm.tasks = TaskService.get();
     }
   }
   angular
@@ -2790,8 +2815,8 @@
     vm.isDataSubmitted = false;
     vm.selectClient = selectClient;
     vm.getScope = getScope;
-    vm.addQuote = addQuote;
-    vm.removeQuote = removeQuote;
+    vm.addOrder = addOrder;
+    vm.removeOrder = removeOrder;
     vm.approveItem = approveItem;
     vm.rejectItem = rejectItem;
     vm.isFormValid = isFormValid;
@@ -2810,9 +2835,9 @@
       return vm;
     }
 
-    function addQuote() {
-      vm.study.solicitudes.push({
-        'id_solicitud':vm.study.solicitudes.length + 1,
+    function addOrder() {
+      vm.study.ordenes.push({
+        'id_orden':vm.study.ordenes.length + 1,
         'id_estudio':vm.study.id_estudio,
         'id_matriz':0,
         'cantidad_muestras':0,
@@ -2821,10 +2846,10 @@
       });
     }
 
-    function removeQuote(event) {
+    function removeOrder(event) {
       var field = '$$hashKey',
-      quoteRow = ArrayUtilsService.extractItemFromCollection(
-        vm.study.solicitudes,
+      orderRow = ArrayUtilsService.extractItemFromCollection(
+        vm.study.ordenes,
         field,
         event[field]
       );
@@ -2838,36 +2863,36 @@
       ValidationService.rejectItem(vm.study, vm.user);
     }
 
-    function isQuoteListValid() {
+    function isOrderListValid() {
       var i = 0,
       l = 0,
-      quotes = [];
-      if (vm.study.solicitudes && vm.study.solicitudes.length > 0)
+      orders = [];
+      if (vm.study.ordenes && vm.study.ordenes.length > 0)
       {
-        quotes = vm.study.solicitudes;
-        l = quotes.length;
+        orders = vm.study.ordenes;
+        l = orders.length;
         for (i = 0; i < l; i += 1) {
-          if (quotes[i].id_matriz < 1)
+          if (orders[i].id_matriz < 1)
           {
-            vm.message += ' Seleccione una matriz, para la solicitud ';
+            vm.message += ' Seleccione una matriz, para la orden ';
             vm.message += '(Ver fila ' + (i + 1) + ')';
             return false;
           }
-          if (isNaN(quotes[i].cantidad_muestras) || quotes[i].cantidad_muestras < 1)
+          if (isNaN(orders[i].cantidad_muestras) || orders[i].cantidad_muestras < 1)
           {
-            vm.message += ' Ingrese cantidad de muestras, para la solicitud ';
+            vm.message += ' Ingrese cantidad de muestras, para la orden ';
             vm.message += '(Ver fila ' + (i + 1) + ')';
             return false;
           }
-          if (quotes[i].id_tipo_muestreo < 1)
+          if (orders[i].id_tipo_muestreo < 1)
           {
-            vm.message += ' Seleccione un tipo de muestreo, para la solicitud ';
+            vm.message += ' Seleccione un tipo de muestreo, para la orden ';
             vm.message += '(Ver fila ' + (i + 1) + ')';
             return false;
           }
-          if (quotes[i].id_norma < 1)
+          if (orders[i].id_norma < 1)
           {
-            vm.message += ' Seleccione una norma, para la solicitud ';
+            vm.message += ' Seleccione una norma, para la orden ';
             vm.message += '(Ver fila ' + (i + 1) + ')';
             return false;
           }
@@ -2875,7 +2900,7 @@
       }
       else
       {
-        vm.message += ' Agregue una solicitud ';
+        vm.message += ' Agregue una orden ';
         return false;
       }
       return true;
@@ -2893,13 +2918,13 @@
         vm.message += ' Seleccione un cliente ';
         return false;
       }
-      if (!isQuoteListValid())
+      if (!isOrderListValid())
       {
-        return isQuoteListValid();
+        return isOrderListValid();
       }
       if (vm.study.id_origen_orden < 1)
       {
-        vm.message += ' Seleccione un medio de solicitud de muestreo ';
+        vm.message += ' Seleccione un medio de orden de muestreo ';
         return false;
       }
       if (vm.study.id_origen_orden == 1 || vm.study.id_origen_orden == 4)
@@ -3744,7 +3769,7 @@
         vm.message += ' Seleccione una localidad ';
         return false;
       }
-      if (vm.plan.solicitud.id_tipo_muestreo > 1 && isNaN(vm.plab.frecuencia_muestreo))
+      if (vm.plan.solicitud.id_tipo_muestreo > 1 && isNaN(vm.plan.frecuencia_muestreo))
       {
         vm.message += ' Seleccione una frecuencia de muestreo ';
         return false;
@@ -3863,9 +3888,9 @@
   function SheetListController($location, SheetService) {
     var vm = this;
     vm.sheets = SheetService.get();
-    vm.viewFieldSheet = viewFieldSheet;
+    vm.viewSheet = viewSheet;
 
-    function viewFieldSheet(id) {
+    function viewSheet(id) {
       $location.path('/recepcion/hoja/' + parseInt(id));
     }
   }
@@ -4015,12 +4040,12 @@
 
     function isFormValid() {
       vm.message = '';
-      if (vm.sheet.id_metodo_muestreo < 1)
+      if (vm.sheet.id_norma_muestreo < 1)
       {
         vm.message += ' Seleccione una Norma de referencia ';
         return false;
       }
-      if (!DateUtilsService.isValidDate(new Date(vm.sheet.fecha_inicio)))
+      if (!DateUtilsService.isValidDate(new Date(vm.sheet.fecha_muestreo)))
       {
         vm.message += ' Ingrese una fecha/hora de muestreo válida ';
         return false;
@@ -4061,6 +4086,7 @@
     }
 
     function submitForm() {
+      console.log(vm.sheet);
       if (isFormValid() && !vm.isDataSubmitted)
       {
         vm.isDataSubmitted = true;
@@ -4142,23 +4168,25 @@
    * @param {Object} RestUtilsService - Proveedor para manejo de servicios REST
    * @param {Object} ArrayUtilsService - Proveedor para manejo de arreglos
    * @param {Object} DateUtilsService - Proveedor para manejo de fechas
-   * @param {Object} ReceptionistService - Proveedor de datos, Recepcionistas
+   * @param {Object} SamplingEmployeeService - Proveedor de datos, Empleados muestreo
    * @param {Object} ReceptionService - Proveedor de datos, Recepción muestras
    */
   function ReceptionController($scope, $routeParams, TokenService,
     ValidationService, RestUtilsService, ArrayUtilsService,
-    DateUtilsService, ReceptionistService, ReceptionService) {
+    DateUtilsService, SamplingEmployeeService, ReceptionService) {
     var vm = this;
     vm.user = TokenService.getUserFromToken();
-    vm.receptionists = ReceptionistService.get();
-    vm.reception = ReceptionService.query({receptionId: $routeParams.sheetId});
-
-    vm.selectReceptionist = selectReceptionist;
+    vm.receptionists = SamplingEmployeeService.get();
+    vm.reception = ReceptionService.query({receptionId: $routeParams.receptionId});
+    vm.message = '';
+    vm.isDataSubmitted = false;
     vm.approveItem = approveItem;
     vm.rejectItem = rejectItem;
     vm.submitForm = submitForm;
 
-    function selectReceptionist(idRecepcionist) {
+      /*
+    vm.selectSample = selectSample;
+    function selectSample() {
       var i = 0, l = vm.receptionists.length;
       vm.reception.recepcionista = {};
       for (i = 0; i < l; i += 1) {
@@ -4170,13 +4198,92 @@
       }
       return vm.reception.recepcionista;
     }
+      */
 
-    function validateForm() {
-
+    function approveItem() {
+      ValidationService.approveItem(vm.reception, vm.user);
     }
 
-    function submitReceptionForm() {
-      //send to verification service
+    function rejectItem() {
+      ValidationService.rejectItem(vm.reception, vm.user);
+    }
+
+    function isFormValid() {
+      vm.message = '';
+      if (!DateUtilsService.isValidDate(new Date(vm.reception.hoja.fecha_muestreo)))
+      {
+        vm.message += ' Ingrese una fecha/hora de muestreo válida ';
+        return false;
+      }
+      if (!DateUtilsService.isValidDate(new Date(vm.reception.hoja.fecha_recibe)))
+      {
+        vm.message += ' Ingrese una fecha/hora de recepción válida ';
+        return false;
+      }
+      if (vm.reception.id_recepcionista < 1)
+      {
+        vm.message += ' Seleccione un responsable de la recepción ';
+        return false;
+      }
+      if (vm.reception.muestras.length < 1)
+      {
+        vm.message += ' Confirme la recepción de al menos una muestra ';
+        return false;
+      }
+      if (vm.reception.id_validacion_muestra < 1)
+      {
+        vm.message += ' Selececcione una muestra a verificar ';
+        return false;
+      }
+      if (vm.reception.validacion_preservaciones.length < 1)
+      {
+        vm.message += ' Seleccione al menos una preservación ';
+        return false;
+      }
+      if (vm.reception.validacion_contenedores.length < 1)
+      {
+        vm.message += ' Seleccione al menos un tipo de análisis ';
+        return false;
+      }
+      if (vm.user.level < 3)
+      {
+        if (vm.reception.id_status == 3 && vm.reception.motivo_rechaza.length < 1)
+        {
+          vm.message += ' Ingrese el motivo de rechazo del Informe ';
+          return false;
+        }
+      }
+      return true;
+    }
+
+    function submitForm() {
+      if (isFormValid() && !vm.isDataSubmitted)
+      {
+        vm.isDataSubmitted = true;
+        if (vm.reception.id_recepcion < 1)
+        {
+          RestUtilsService
+            .saveData(
+              ReceptionService,
+              vm.reception,
+              'recepcion/recepcion',
+              'id_recepcion'
+            );
+        }
+        else
+        {
+          if (vm.user.level < 3 || vm.reception.reception.id_status < 2)
+          {
+            RestUtilsService
+              .updateData(
+                ReceptionService,
+                vm.reception,
+                'recepcion/recepcion',
+                'id_recepcion'
+              );
+          }
+        }
+      }
     }
   }
   angular
@@ -4185,67 +4292,8 @@
       [
         '$scope', '$routeParams', 'TokenService',
         'ValidationService', 'RestUtilsService', 'ArrayUtilsService',
-        'DateUtilsService','ReceptionistService', 'ReceptionService',
+        'DateUtilsService','SamplingEmployeeService', 'ReceptionService',
         ReceptionController
-      ]
-    );
-
-  // CustodyController.js
-  /**
-   * @name CustodyController
-   * @constructor
-   * @desc Controla la vista para capturar las Hojas de custodia
-   * @this {Object} $scope - Contenedor para el modelo [AngularJS]
-   * @param {Object} TokenService - Proveedor para manejo del token
-   * @param {Object} ArrayUtilsService - Proveedor para manejo de arreglos
-   * @param {Object} PreservationService - Proveedor de datos, Preservaciones
-   * @param {Object} ExpirationService - Proveedor de datos, Vigencias
-   * @param {Object} RequiredVolumeService - Proveedor de datos, Volúmenes requeridos
-   * @param {Object} ContainerService - Proveedor de datos, Recipientes
-   * @param {Object} CheckerService - Proveedor de datos, Responsables verificación
-   * @param {Object} CustodyService - Proveedor de datos, Cadenas de custodia
-   */
-  function CustodyController($routeParams, TokenService, ArrayUtilsService,
-    PreservationService, ExpirationService, RequiredVolumeService,
-    ContainerService, CheckerService, CustodyService) {
-    var vm = this;
-    vm.user = TokenService.getUserFromToken();
-    vm.preservations = PreservationService.get();
-    vm.expirations = ExpirationService.get();
-    vm.volumes = RequiredVolumeService.get();
-    vm.containers = ContainerService.get();
-    vm.checkers = CheckerService.get();
-    vm.custody = CustodyService.query({custodyId: $routeParams.custodyId});
-
-    vm.selectChecker = selectChecker;
-
-    vm.validateCustodyForm = validateCustodyForm;
-    vm.submitCustodyForm = submitCustodyForm;
-
-    function selectChecker(idChecker) {
-      ArrayUtilsService.selectItemFromCollection(
-        vm.checkers,
-        'id_responsable_verificacion',
-        idChecker
-      );
-    }
-
-    function validateCustodyForm() {
-
-    }
-
-    function submitCustodyForm () {
-
-    }
-  }
-  angular
-    .module('sislabApp')
-    .controller('CustodyController',
-      [
-        '$routeParams', 'TokenService', 'ArrayUtilsService',
-        'PreservationService', 'ExpirationService', 'RequiredVolumeService',
-        'ContainerService', 'CheckerService', 'CustodyService',
-        CustodyController
       ]
     );
 
@@ -4275,28 +4323,104 @@
       ]
     );
 
+  // CustodyController.js
+  /**
+   * @name CustodyController
+   * @constructor
+   * @desc Controla la vista para capturar las Hojas de custodia
+   * @this {Object} $scope - Contenedor para el modelo [AngularJS]
+   * @param {Object} $routeParams - Proveedor de parámetros de ruta [AngularJS]
+   * @param {Object} TokenService - Proveedor para manejo del token
+   * @param {Object} CustodyService - Proveedor de datos, Cadenas de custodia
+   */
+  function CustodyController($scope, $routeParams, TokenService,
+    ValidationService, RestUtilsService, ArrayUtilsService,
+    DateUtilsService, CustodyService) {
+    var vm = this;
+    vm.user = TokenService.getUserFromToken();
+    vm.custody = CustodyService.query({custodyId: $routeParams.custodyId});
+    vm.isDataSubmitted = false;
+    vm.approveItem = approveItem;
+    vm.rejectItem = rejectItem;
+    vm.submitForm = submitForm;
+
+    function approveItem() {
+      ValidationService.approveItem(vm.custody, vm.user);
+    }
+
+    function rejectItem() {
+      ValidationService.rejectItem(vm.custody, vm.user);
+    }
+
+    function isFormValid() {
+      return true;
+    }
+
+    function submitForm() {
+      if (isFormValid() && !vm.isDataSubmitted)
+      {
+        vm.isDataSubmitted = true;
+        if (vm.custody.id_custodia < 1)
+        {
+          RestUtilsService
+            .saveData(
+              CustodyService,
+              vm.custody,
+              'recepcion/custodia',
+              'id_custodia'
+            );
+        }
+        else
+        {
+          if (vm.user.level < 3 || vm.custody.custody.id_status < 2)
+          {
+            RestUtilsService
+              .updateData(
+                CustodyService,
+                vm.custody,
+                'recepcion/custodia',
+                'id_custodia'
+              );
+          }
+        }
+      }
+    }
+  }
+  angular
+    .module('sislabApp')
+    .controller('CustodyController',
+      [
+        '$scope', '4routeParams', 'TokenService',
+        'ValidationService', 'RestUtilsService', 'ArrayUtilsService',
+        'DateUtilsService', 'CustodyService',
+        CustodyController
+      ]
+    );
+
+
   //SampleListController.js
   /**
    * @name SampleListController
    * @constructor
    * @desc Controla la vista para el listado de Muestras
    * @this {Object} $scope - Contenedor para el modelo [AngularJS]
+   * @param {Object} $location - Manejo de URL [AngularJS]
    * @param {Object} SampleService - Proveedor de datos, Muestras
    */
-  function SampleListController(SampleService) {
+  function SampleListController($location, SampleService) {
     var vm = this;
-    vm.pricesList = SampleService.get();
-    vm.selectRow = selectRow;
+    vm.samples = SampleService.get();
+    vm.viewSample = viewSample;
 
-    function selectRow() {
-
+    function viewSample(id) {
+      $location.path('/inventario/muestra/' + parseInt(id));
     }
   }
   angular
     .module('sislabApp')
     .controller('SampleListController',
       [
-        'SampleService',
+        '$location', 'SampleService',
         SampleListController
       ]
     );

@@ -1401,9 +1401,6 @@ function getStudies() {
 // 	return $output;
 // }
 
-
-
-
 function insertStudy($requestData) {
 	// $dataString = '
 	// {

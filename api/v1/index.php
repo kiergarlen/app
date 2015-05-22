@@ -5,19 +5,18 @@ require "./Services/DALSislab.php";
 // cd372fb85148700fa88095e3492d3f9f5beb43e555e5ff26d95f5a6adc36f8e6
 define("KEY", "m0oxUT7L8Unn93hXMUGHpwq_jTSKVBjQfEVCUe8jZ38KUU4VSAfmsNk4JJYcJl7CukrY6QMlixxwat7AZSpDcSQ");
 
-// define("DB_DRIVER", "sqlsrv");
-// define("DB_HOST", "localhost");
-// define("DB_PORT", "");
-// define("DB_USER", "sislab");
-// define("DB_PASSWORD", "sislab");
-// define("DB_DATA_BASE", "Sislab");
-
-define("DB_DRIVER", "mysql");
+define("DB_DRIVER", "sqlsrv");
 define("DB_HOST", "localhost");
-define("DB_PORT", "8889");
-define("DB_USER", "root");
-define("DB_PASSWORD", "root");
-define("DB_DATA_BASE", "sislab");
+define("DB_USER", "sislab");
+define("DB_PASSWORD", "sislab");
+define("DB_DATA_BASE", "Sislab");
+
+// define("DB_DRIVER", "mysql");
+// define("DB_HOST", "localhost");
+// define("DB_PORT", "8889");
+// define("DB_USER", "root");
+// define("DB_PASSWORD", "root");
+// define("DB_DATA_BASE", "sislab");
 
 \Slim\Slim::registerAutoloader();
 $app = new \Slim\Slim();
@@ -1081,13 +1080,13 @@ function validateTokenUser($app) {
 
 function getConnection() {
 	try {
-		$dsn = "mysql:host=";
-		$dsn .= DB_HOST . ";";
-		if (strlen(DB_PORT) > 0)
-		{
-			$dsn .= "port=" . DB_PORT . ";";
-		}
-		$dsn .= "dbname=" . DB_DATA_BASE;
+		// $dsn = "mysql:host=";
+		// $dsn .= DB_HOST . ";";
+		// $dsn .= "port=" . DB_PORT . ";";
+		// $dsn .= "dbname=" . DB_DATA_BASE;
+		$dsn = "sqlsrv:server=";
+		$dsn .= DB_HOST . ";Database=";
+		$dsn .= DB_DATA_BASE;
 
 		$dbConnection = new PDO($dsn, DB_USER, DB_PASSWORD);
 		$dbConnection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -1157,14 +1156,14 @@ function processMenuToJson($items) {
 	$output .= '{';
 	$output .= '"id_menu":' . $currentItem["id_menu"] . ',';
 	$output .= '"orden":' . $currentItem["orden"] . ',';
-	$output .= '"url":"' . $currentItem["url"] . '",';
+	$output .= '"url":"/#",';
 	$output .= '"menu":"' . $currentItem["menu"] . '",';
 	$output .= '"submenu":[';
 	$output .= '{';
 	$output .= '"id_submenu":' . $currentItem["id_submenu"] . ',';
 	$output .= '"id_menu":' . $currentItem["id_menu"] . ',';
 	$output .= '"orden":' . $currentItem["orden_submenu"] . ',';
-	$output .= '"url":"' . $currentItem["url_submenu"] . '",';
+	$output .= '"url":"' . $currentItem["url"] . '",';
 	$output .= '"menu":"' . $currentItem["submenu"] . '"';
 	$output .= '}';
 	for($i = 1; $i < $l; $i++)
@@ -1184,7 +1183,7 @@ function processMenuToJson($items) {
 			$output .= '{';
 			$output .= '"id_menu":' . $currentItem["id_menu"] . ',';
 			$output .= '"orden":' . $currentItem["orden"] . ',';
-			$output .= '"url":"' . $currentItem["url"] . '",';
+			$output .= '"url":"/#",';
 			$output .= '"menu":"' . $currentItem["menu"] . '",';
 			$output .= '"submenu":[';
 		}
@@ -1192,7 +1191,7 @@ function processMenuToJson($items) {
 		$output .= '"id_submenu":' . $currentItem["id_submenu"] . ',';
 		$output .= '"id_menu":' . $currentItem["id_menu"] . ',';
 		$output .= '"orden":' . $currentItem["orden_submenu"] . ',';
-		$output .= '"url":"' . $currentItem["url_submenu"] . '",';
+		$output .= '"url":"' . $currentItem["url"] . '",';
 		$output .= '"menu":"' . $currentItem["submenu"] . '"';
 		$output .= '}';
 	}
@@ -1203,72 +1202,84 @@ function processMenuToJson($items) {
 }
 
 function getUserByCredentials($userName, $userPassword) {
-	$result = \Service\DALSislab::getInstance()->getUserByCredentials($userName, $userPassword);
-	////$userName = "rgarcia";
-	////$userPassword = "8493a161f70fffc0dcd4732ae4f6c4667f373688fff802ea13c71bd0fce41cb1";
-	// $sql = "SELECT id_usuario, id_nivel, id_rol, id_area, id_puesto, interno, cea, laboratorio, supervisa, analiza, muestrea, nombres, apellido_paterno, apellido_materno, usr, pwd, fecha_captura, fecha_actualiza, ip_captura, ip_actualiza, host_captura, host_actualiza, activo FROM Usuario WHERE usr = :userName AND pwd = :userPassword AND activo = 1";
-	// $db = getConnection();
-	// $stmt = $db->prepare($sql);
-	// $stmt->bindParam("userName", $userName);
-	// $stmt->bindParam("userPassword", $userPassword);
-	// $stmt->execute();
-	// $result = $stmt->fetchAll(PDO::FETCH_OBJ);
+	//$result = \Service\DALSislab::getInstance()->getUserByCredentials($userName, $userPassword);
+	//$userName = "rgarcia";
+	//$userPassword = "8493a161f70fffc0dcd4732ae4f6c4667f373688fff802ea13c71bd0fce41cb1";
+	$sql = "SELECT id_usuario, id_nivel, id_rol, id_area, id_puesto,
+		interno, cea, laboratorio, supervisa, analiza, muestrea,
+		nombres, apellido_paterno, apellido_materno, usr, pwd,
+		fecha_captura, fecha_actualiza, ip_captura, ip_actualiza,
+		host_captura, host_actualiza, activo
+		FROM Usuario
+		WHERE activo = 1 AND pwd = :userPassword AND usr = :userName";
+	$db = getConnection();
+	$stmt = $db->prepare($sql);
+	$stmt->bindParam("userName", $userName);
+	$stmt->bindParam("userPassword", $userPassword);
+	$stmt->execute();
+	$result = $stmt->fetchAll(PDO::FETCH_OBJ);
 	return $result;
 }
 
 function getUser($userId) {
-	$result = \Service\DALSislab::getInstance()->getUser($userId);
+	//$result = \Service\DALSislab::getInstance()->getUser($userId);
 	$sql = "SELECT id_usuario, id_nivel, id_rol, id_area, id_puesto,
 		interno, cea, laboratorio, supervisa, analiza, muestrea, nombres,
 		apellido_paterno, apellido_materno, usr, pwd, fecha_captura,
 		fecha_actualiza, ip_captura, ip_actualiza,
 		host_captura, host_actualiza, activo
-		FROM Usuario WHERE id_usuario = :userId AND activo = 1";
-	// $db = getConnection();
-	// $stmt = $db->prepare($sql);
-	// $stmt->bindParam("userId", $userId);
-	// $stmt->execute();
-	// $result = $stmt->fetchAll(PDO::FETCH_OBJ);
+		FROM Usuario
+		WHERE activo = 1 AND id_usuario = :userId";
+	$db = getConnection();
+	$stmt = $db->prepare($sql);
+	$stmt->bindParam("userId", $userId);
+	$stmt->execute();
+	$result = $stmt->fetchAll(PDO::FETCH_OBJ);
 	return $result;
 }
 
 function getUsers() {
-	$result = \Service\DALSislab::getInstance()->getUsers();
-	// $sql = "SELECT id_usuario, id_nivel, id_rol, id_area, id_puesto, interno, cea, laboratorio, supervisa, analiza, muestrea, nombres, apellido_paterno, apellido_materno, usr, pwd, fecha_captura, fecha_actualiza, ip_captura, ip_actualiza, host_captura, host_actualiza, activo FROM Usuario WHERE activo = 1";
-	// $db = getConnection();
-	// $stmt = $db->prepare($sql);
-	// $stmt->bindParam("userName", $userName);
-	// $stmt->bindParam("userPassword", $userPassword);
-	// $stmt->execute();
-	// $result = processResultToJson($stmt->fetchAll(PDO::FETCH_ASSOC), false);
+	//$result = \Service\DALSislab::getInstance()->getUsers();
+	$sql = "SELECT id_usuario, id_nivel, id_rol, id_area, id_puesto,
+		interno, cea, laboratorio, supervisa, analiza, muestrea,
+		nombres, apellido_paterno, apellido_materno, usr, pwd,
+		fecha_captura, fecha_actualiza, ip_captura, ip_actualiza,
+		host_captura, host_actualiza, activo
+		FROM Usuario WHERE activo = 1";
+	$db = getConnection();
+	$stmt = $db->prepare($sql);
+	$stmt->bindParam("userName", $userName);
+	$stmt->bindParam("userPassword", $userPassword);
+	$stmt->execute();
+	$result = processResultToJson($stmt->fetchAll(PDO::FETCH_ASSOC), false);
 	return $result;
 }
 
 function getMenu($userId) {
-	$result = \Service\DALSislab::getInstance()->getMenu($userId);
-	// $sql = "SELECT
-	// 	dbo.Menu.id_menu, dbo.Submenu.id_submenu, dbo.Menu.orden,
-	// 	dbo.Submenu.orden AS orden_submenu, dbo.Menu.menu,
-	// 	dbo.Submenu.menu AS submenu,dbo.Submenu.url
-	// 	FROM
-	// 	dbo.Usuario INNER JOIN
-	// 	dbo.Rol ON dbo.Usuario.id_rol = dbo.Rol.id_rol INNER JOIN
-	// 	dbo.RolSubmenu ON dbo.Rol.id_rol = dbo.RolSubmenu.id_rol INNER JOIN
-	// 	dbo.Submenu ON dbo.RolSubmenu.id_submenu = dbo.Submenu.id_submenu INNER JOIN
-	// 	dbo.Menu ON dbo.Submenu.id_menu = dbo.Menu.id_menu
-	// 	WHERE (dbo.Usuario.id_usuario = :userId) AND (dbo.Usuario.activo = 1)
-	// 	ORDER BY dbo.Menu.id_menu, dbo.Menu.orden, orden_submenu";
-	// $db = getConnection();
-	// $stmt = $db->prepare($sql);
-	// $stmt->bindParam("userId", $userId);
-	// $stmt->execute();
-	// $result = processResultToJson($stmt->fetchAll(PDO::FETCH_ASSOC), false);
+	//$result = \Service\DALSislab::getInstance()->getMenu($userId);
+	$sql = "SELECT
+		Menu.id_menu, Submenu.id_submenu, Menu.orden,
+		Submenu.orden AS orden_submenu, Menu.menu,
+		Submenu.menu AS submenu,Submenu.url
+		FROM
+		Usuario INNER JOIN
+		Rol ON Usuario.id_rol = Rol.id_rol INNER JOIN
+		RolSubmenu ON Rol.id_rol = RolSubmenu.id_rol INNER JOIN
+		Submenu ON RolSubmenu.id_submenu = Submenu.id_submenu INNER JOIN
+		Menu ON Submenu.id_menu = Menu.id_menu
+		WHERE Usuario.activo = 1 AND Usuario.id_usuario = :userId
+		ORDER BY Menu.id_menu, Menu.orden, orden_submenu";
+	$db = getConnection();
+	$stmt = $db->prepare($sql);
+	$stmt->bindParam("userId", $userId);
+	$stmt->execute();
+	$result = processMenuToJson($stmt->fetchAll(PDO::FETCH_ASSOC));
 	return $result;
 }
 
 function getTasks($userId) {
 	$result = \Service\DALSislab::getInstance()->getTasks($userId);
-	// $sql = "SELECT id_usuario, id_nivel, id_rol, id_area, id_puesto, interno, cea, laboratorio, supervisa, analiza, muestrea, nombres, apellido_paterno, apellido_materno, usr, pwd, fecha_captura, fecha_actualiza, ip_captura, ip_actualiza, host_captura, host_actualiza, activo FROM Usuario WHERE activo = 1";
+	// $sql = "SELECT * FROM Tarea WHERE activo = 1";
 	// $db = getConnection();
 	// $stmt = $db->prepare($sql);
 	// $stmt->bindParam("userId", $userId);
@@ -1278,87 +1289,76 @@ function getTasks($userId) {
 }
 
 function getClient($clientId) {
-	$result = \Service\DALSislab::getInstance()->getClient($clientId);
-	$sql = "SELECT id_usuario, id_nivel, id_rol, id_area, id_puesto, interno, cea, laboratorio, supervisa, analiza, muestrea, nombres, apellido_paterno, apellido_materno, usr, pwd, fecha_captura, fecha_actualiza, ip_captura, ip_actualiza, host_captura, host_actualiza, activo FROM Usuario WHERE id_usuario = :clientId AND activo = 1";
-	// $sql = "SELECT
-	// 	dbo.Menu.id_menu, dbo.Submenu.id_submenu, dbo.Menu.orden,
-	// 	dbo.Submenu.orden AS orden_submenu, dbo.Menu.menu,
-	// 	dbo.Submenu.menu AS submenu,dbo.Submenu.url
-	// 	FROM
-	// 	dbo.Usuario INNER JOIN
-	// 	dbo.Rol ON dbo.Usuario.id_rol = dbo.Rol.id_rol INNER JOIN
-	// 	dbo.RolSubmenu ON dbo.Rol.id_rol = dbo.RolSubmenu.id_rol INNER JOIN
-	// 	dbo.Submenu ON dbo.RolSubmenu.id_submenu = dbo.Submenu.id_submenu INNER JOIN
-	// 	dbo.Menu ON dbo.Submenu.id_menu = dbo.Menu.id_menu
-	// 	WHERE (dbo.Usuario.id_usuario = :clientId) AND (dbo.Usuario.activo = 1)
-	// 	ORDER BY dbo.Menu.id_menu, dbo.Menu.orden, orden_submenu";
-	// $db = getConnection();
-	// $stmt = $db->prepare($sql);
-	// $stmt->bindParam("clientId", $clientId);
-	// $stmt->execute();
-	// $result = $stmt->fetchAll(PDO::FETCH_OBJ);
+	//$result = \Service\DALSislab::getInstance()->getClient($clientId);
+	$sql = "SELECT id_cliente, id_estado, id_municipio,
+		id_localidad, interno, cea, tasa, cliente, area,
+		rfc, calle, numero, colonia, codigo_postal, telefono,
+		fax, contacto, puesto_contacto, email, fecha_captura,
+		fecha_actualiza, ip_captura, ip_actualiza, host_captura,
+		host_actualiza, activo
+		FROM Cliente
+		WHERE activo = 1 AND id_cliente = :clientId";
+	$db = getConnection();
+	$stmt = $db->prepare($sql);
+	$stmt->bindParam("clientId", $clientId);
+	$stmt->execute();
+	$result = processResultToJson($stmt->fetchAll(PDO::FETCH_ASSOC), false);
 	return $result;
 }
 
 function getClients() {
-	$result = \Service\DALSislab::getInstance()->getClients();
-	// $sql = "SELECT
-	// 	dbo.Menu.id_menu, dbo.Submenu.id_submenu, dbo.Menu.orden,
-	// 	dbo.Submenu.orden AS orden_submenu, dbo.Menu.menu,
-	// 	dbo.Submenu.menu AS submenu,dbo.Submenu.url
-	// 	FROM
-	// 	dbo.Usuario INNER JOIN
-	// 	dbo.Rol ON dbo.Usuario.id_rol = dbo.Rol.id_rol INNER JOIN
-	// 	dbo.RolSubmenu ON dbo.Rol.id_rol = dbo.RolSubmenu.id_rol INNER JOIN
-	// 	dbo.Submenu ON dbo.RolSubmenu.id_submenu = dbo.Submenu.id_submenu INNER JOIN
-	// 	dbo.Menu ON dbo.Submenu.id_menu = dbo.Menu.id_menu
-	// 	WHERE (dbo.Usuario.id_usuario = :userId) AND (dbo.Usuario.activo = 1)
-	// 	ORDER BY dbo.Menu.id_menu, dbo.Menu.orden, orden_submenu";
-	// $db = getConnection();
-	// $stmt = $db->prepare($sql);
-	// $stmt->bindParam("userId", $userId);
-	// $stmt->execute();
-	// $result = processResultToJson($stmt->fetchAll(PDO::FETCH_ASSOC), false);
+	//$result = \Service\DALSislab::getInstance()->getClients();
+	$sql = "SELECT id_cliente, id_estado, id_municipio,
+		id_localidad, interno, cea, tasa, cliente, area,
+		rfc, calle, numero, colonia, codigo_postal, telefono,
+		fax, contacto, puesto_contacto, email, fecha_captura,
+		fecha_actualiza, ip_captura, ip_actualiza, host_captura,
+		host_actualiza, activo
+		FROM Cliente
+		WHERE activo = 1";
+	$db = getConnection();
+	$stmt = $db->prepare($sql);
+	$stmt->execute();
+	$result = processResultToJson($stmt->fetchAll(PDO::FETCH_ASSOC), true);
 	return $result;
 }
 
 function getStudy($studyId) {
-	$result = \Service\DALSislab::getInstance()->getStudy($studyId);
-	$sql = "SELECT id_usuario, id_nivel, id_rol, id_area, id_puesto, interno, cea, laboratorio, supervisa, analiza, muestrea, nombres, apellido_paterno, apellido_materno, usr, pwd, fecha_captura, fecha_actualiza, ip_captura, ip_actualiza, host_captura, host_actualiza, activo FROM Usuario WHERE id_usuario = :studyId AND activo = 1";
-	// $sql = "SELECT
-	// 	dbo.Menu.id_menu, dbo.Submenu.id_submenu, dbo.Menu.orden,
-	// 	dbo.Submenu.orden AS orden_submenu, dbo.Menu.menu,
-	// 	dbo.Submenu.menu AS submenu,dbo.Submenu.url
-	// 	FROM
-	// 	dbo.Usuario INNER JOIN
-	// 	dbo.Rol ON dbo.Usuario.id_rol = dbo.Rol.id_rol INNER JOIN
-	// 	dbo.RolSubmenu ON dbo.Rol.id_rol = dbo.RolSubmenu.id_rol INNER JOIN
-	// 	dbo.Submenu ON dbo.RolSubmenu.id_submenu = dbo.Submenu.id_submenu INNER JOIN
-	// 	dbo.Menu ON dbo.Submenu.id_menu = dbo.Menu.id_menu
-	// 	WHERE (dbo.Usuario.id_usuario = :studyId) AND (dbo.Usuario.activo = 1)
-	// 	ORDER BY dbo.Menu.id_menu, dbo.Menu.orden, orden_submenu";
-	// $db = getConnection();
-	// $stmt = $db->prepare($sql);
-	// $stmt->bindParam("studyId", $studyId);
-	// $stmt->execute();
-	// $result = $stmt->fetchAll(PDO::FETCH_OBJ);
+	//$result = \Service\DALSislab::getInstance()->getStudy($studyId);
+	$sql = "SELECT id_estudio, id_cliente, id_origen_orden,
+		id_ubicacion, id_ejercicio, id_status, id_etapa,
+		id_usuario_captura, id_usuario_valida, id_usuario_entrega,
+		id_usuario_actualiza, oficio, folio, origen_descripcion,
+		ubicacion, fecha, fecha_entrega, fecha_captura, fecha_valida,
+		fecha_rechaza, ip_captura, ip_valida, ip_actualiza,
+		host_captura, host_valida, host_actualiza, motivo_rechaza,
+		activo
+		FROM Estudio
+		WHERE activo = 1 AND id_estudio = :studyId";
+	$db = getConnection();
+	$stmt = $db->prepare($sql);
+	$stmt->bindParam("studyId", $studyId);
+	$stmt->execute();
+	$result = processResultToJson($stmt->fetchAll(PDO::FETCH_ASSOC), false);
 	return $result;
 }
 
 function getStudies() {
-	$result = \Service\DALSislab::getInstance()->getStudies();
-	// $sql = "SELECT id_estudio, id_cliente, id_origen_orden, id_ubicacion,
-	// id_ejercicio, id_status, id_etapa, id_usuario_captura,
-	// id_usuario_valida, id_usuario_entrega, id_usuario_actualiza,
-	// oficio, folio, origen_descripcion, ubicacion, fecha,
-	// fecha_entrega, fecha_captura, fecha_valida, fecha_rechaza,
-	// ip_captura, ip_valida, ip_actualiza, host_captura,
-	//  host_valida, host_actualiza, motivo_rechaza, activo
-	// FROM Estudio";
-	// $db = getConnection();
-	// $stmt = $db->prepare($sql);
-	// $stmt->execute();
-	// $result = processResultToJson($stmt->fetchAll(PDO::FETCH_OBJ), false);
+	//$result = \Service\DALSislab::getInstance()->getStudies();
+	$sql = "SELECT id_estudio, id_cliente, id_origen_orden,
+		id_ubicacion, id_ejercicio, id_status, id_etapa,
+		id_usuario_captura, id_usuario_valida, id_usuario_entrega,
+		id_usuario_actualiza, oficio, folio, origen_descripcion,
+		ubicacion, fecha, fecha_entrega, fecha_captura, fecha_valida,
+		fecha_rechaza, ip_captura, ip_valida, ip_actualiza,
+		host_captura, host_valida, host_actualiza, motivo_rechaza,
+		activo
+		FROM Estudio
+		WHERE activo = 1";
+	$db = getConnection();
+	$stmt = $db->prepare($sql);
+	$stmt->execute();
+	$result = processResultToJson($stmt->fetchAll(PDO::FETCH_ASSOC), true);
 	return $result;
 }
 

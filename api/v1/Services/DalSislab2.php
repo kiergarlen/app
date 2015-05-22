@@ -1,0 +1,269 @@
+<?php
+namespace Service;
+
+class Sislab
+{
+	protected static $_instance;
+
+	public static function getInstance() {
+		if (self::$_instance === null)
+		{
+			self::$_instance = new self();
+		}
+		return self::$_instance;
+	}
+
+	protected function __construct() {
+
+	}
+
+	protected function __clone(){}
+
+	public function getMenu($userId) {
+		$result = '
+			[
+				{
+					"id_menu":1,
+					"orden":1,
+					"url":"/#",
+					"menu":"Estudio",
+					"submenu":
+					[
+						{
+							"id_submenu":1,
+							"id_menu":1,
+							"orden":1,
+							"url":"/estudio/estudio",
+							"menu":"Estudio"
+						}
+					]
+				},
+				{
+					"id_menu":2,
+					"orden":2,
+					"url":"/#",
+					"menu":"Muestreo",
+					"submenu":
+					[
+						{
+							"id_submenu":2,
+							"id_menu":2,
+							"orden":1,
+							"url":"/muestreo/orden",
+							"menu":"Orden Muestreo"
+						},
+						{
+							"id_submenu":3,
+							"id_menu":2,
+							"orden":2,
+							"url":"/muestreo/plan",
+							"menu":"Plan Muestreo"
+						}
+					]
+				},
+				{
+					"id_menu":3,
+					"orden":3,
+					"url":"/#",
+					"menu":"Recepción",
+					"submenu":
+					[
+						{
+							"id_submenu":4,
+							"id_menu":3,
+							"orden":1,
+							"url":"/recepcion/hoja",
+							"menu":"Hoja Campo"
+						},
+						{
+							"id_submenu":5,
+							"id_menu":3,
+							"orden":2,
+							"url":"/recepcion/recepcion",
+							"menu":"Recepción"
+						},
+						{
+							"id_submenu":6,
+							"id_menu":3,
+							"orden":3,
+							"url":"/recepcion/custodia",
+							"menu":"Custodia Interna"
+						}
+					]
+				},
+				{
+					"id_menu":4,
+					"orden":4,
+					"url":"/#",
+					"menu":"Inventario",
+					"submenu":
+					[
+						{
+							"id_submenu":7,
+							"id_menu":4,
+							"orden":1,
+							"url":"/inventario/muestra",
+							"menu":"Muestras"
+						},
+						{
+							"id_submenu":8,
+							"id_menu":4,
+							"orden":2,
+							"url":"/inventario/equipo",
+							"menu":"Equipos"
+						},
+						{
+							"id_submenu":9,
+							"id_menu":4,
+							"orden":3,
+							"url":"/inventario/reactivo",
+							"menu":"Reactivos"
+						},
+						{
+							"id_submenu":10,
+							"id_menu":4,
+							"orden":4,
+							"url":"/inventario/recipiente",
+							"menu":"Recipientes"
+						}
+					]
+				},
+				{
+					"id_menu":5,
+					"orden":5,
+					"url":"/#",
+					"menu":"Análisis",
+					"submenu":
+					[
+						{
+							"id_submenu":11,
+							"id_menu":5,
+							"orden":1,
+							"url":"/analisis/fisico",
+							"menu":"Fisicoquímicos"
+						},
+						{
+							"id_submenu":12,
+							"id_menu":5,
+							"orden":2,
+							"url":"/analisis/metal",
+							"menu":"Metales Pesados"
+						},
+						{
+							"id_submenu":13,
+							"id_menu":5,
+							"orden":3,
+							"url":"/analisis/biologico",
+							"menu":"Microbiológicos"
+						}
+					]
+				},
+				{
+					"id_menu":6,
+					"orden":6,
+					"url":"/#",
+					"menu":"Reporte",
+					"submenu":
+					[
+						{
+							"id_submenu":14,
+							"id_menu":6,
+							"orden":1,
+							"url":"/reporte/reporte",
+							"menu":"Reportes"
+						}
+					]
+				},
+				{
+					"id_menu":7,
+					"orden":7,
+					"url":"/#",
+					"menu":"Catálogo",
+					"submenu":
+					[
+						{
+							"id_submenu":15,
+							"id_menu":7,
+							"orden":1,
+							"url":"/catalogo/paquete",
+							"menu":"Paquete Puntos"
+						},
+						{
+							"id_submenu":16,
+							"id_menu":7,
+							"orden":2,
+							"url":"/catalogo/punto",
+							"menu":"Puntos"
+						},
+						{
+							"id_submenu":17,
+							"id_menu":7,
+							"orden":3,
+							"url":"/catalogo/cliente",
+							"menu":"Clientes"
+						},
+						{
+							"id_submenu":18,
+							"id_menu":7,
+							"orden":4,
+							"url":"/catalogo/empleado",
+							"menu":"Empleados"
+						},
+						{
+							"id_submenu":19,
+							"id_menu":7,
+							"orden":5,
+							"url":"/catalogo/norma",
+							"menu":"Normas"
+						},
+						{
+							"id_submenu":20,
+							"id_menu":7,
+							"orden":6,
+							"url":"/catalogo/metodo",
+							"menu":"Métodos"
+						},
+						{
+							"id_submenu":21,
+							"id_menu":7,
+							"orden":7,
+							"url":"/catalogo/parametro",
+							"menu":"Parámetros"
+						}
+					]
+				},
+				{
+					"id_menu":8,
+					"orden":8,
+					"url":"/#",
+					"menu":"Administración",
+					"submenu":
+					[
+						{
+							"id_submenu":22,
+							"id_menu":8,
+							"orden":1,
+							"url":"/sistema/usuario",
+							"menu":"Usuarios"
+						},
+						{
+							"id_submenu":23,
+							"id_menu":8,
+							"orden":2,
+							"url":"/sistema/perfil",
+							"menu":"Perfil"
+						},
+						{
+							"id_submenu":24,
+							"id_menu":8,
+							"orden":3,
+							"url":"/sistema/logout",
+							"menu":"Cerrar Sesión"
+						}
+					]
+				}
+			]
+		';
+		return $result;
+	}
+}

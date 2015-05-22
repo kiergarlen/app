@@ -1011,7 +1011,7 @@ $app->get("/users(/)(:userId)", function($userId = -1) use ($app) {
 });
 
 $app->run();
-
+//json_decode
 function processUserJwt($app) {
 	$request = $app->request();
 	$input = json_decode($request->getbody());
@@ -1019,8 +1019,8 @@ function processUserJwt($app) {
 	$pwd = $input->password;
 
 	$userData = getUserByCredentials($usr, $pwd);
-	//$userInfo = $userData[0];
-	$userInfo = json_decode($userData);
+	$userInfo = $userData[0];
+	//$userInfo = json_decode($userData);
 
 	$userId = $userInfo->id_usuario;
 	$userLv = $userInfo->id_nivel;
@@ -1202,9 +1202,9 @@ function processMenuToJson($items) {
 }
 
 function getUserByCredentials($userName, $userPassword) {
-	//$result = \Service\DALSislab::getInstance()->getUserByCredentials($userName, $userPassword);
+	$result = \Service\DALSislab::getInstance()->getUserByCredentials($userName, $userPassword);
 	//$userName = "rgarcia";
-	//$userPassword = "8493a161f70fffc0dcd4732ae4f6c4667f373688fff802ea13c71bd0fce41cb1";
+	////$userPassword = "8493a161f70fffc0dcd4732ae4f6c4667f373688fff802ea13c71bd0fce41cb1";
 	$sql = "SELECT id_usuario, id_nivel, id_rol, id_area, id_puesto,
 		interno, cea, laboratorio, supervisa, analiza, muestrea,
 		nombres, apellido_paterno, apellido_materno, usr, pwd,

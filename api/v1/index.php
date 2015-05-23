@@ -62,8 +62,7 @@ $app->get("/menu", function() use ($app) {
 
 $app->get("/tasks", function() use ($app) {
 	try {
-		//$userId = validateTokenUser($app);
-		$userId = 1;
+		$userId = validateTokenUser($app);
 		$result = getTasks($userId);
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
@@ -1339,7 +1338,12 @@ function getStudy($studyId) {
 	$stmt = $db->prepare($sql);
 	$stmt->bindParam("studyId", $studyId);
 	$stmt->execute();
-	$result = processResultToJson($stmt->fetchAll(PDO::FETCH_ASSOC), false);
+	$study = $stmt->fetchAll(PDO::FETCH_ASSOC);
+	$db = null;
+	$clientId = 1;
+	$studyClient = getClient($clientId);
+	$studyOrders = getStudyOrders($studyId);
+	$result = processResultToJson($study, false);
 	return $result;
 }
 
@@ -1358,7 +1362,22 @@ function getStudies() {
 	$db = getConnection();
 	$stmt = $db->prepare($sql);
 	$stmt->execute();
-	$result = processResultToJson($stmt->fetchAll(PDO::FETCH_ASSOC), true);
+	$rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+	$db = null;
+	$result = processResultToJson($rows, true);
+	return $result;
+}
+
+function getStudyOrders($studyId) {
+	$sql = "SELECT *
+		FROM Orden
+		WHERE activo = 1 AND id_estudio = :studyId";
+	$db = getConnection();
+	$stmt = $db->prepare($sql);
+	$stmt->bindParam("studyId", $studyId);
+	$stmt->execute();
+	$studyOrders = $stmt->fetchAll(PDO::FETCH_ASSOC);
+	$result = processResultToJson($studyOrders, false);
 	return $result;
 }
 

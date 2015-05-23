@@ -49,19 +49,12 @@ function processResultToJson($items, $isArrayOutputExpected) {
 			$j++;
 			$output .= '"' . $key . '":';
 			$v = $value;
-			if (!is_numeric($v))
+			if (!is_numeric($v) && strtotime($v))
 			{
-				if (strtotime($v)) {
-					$dateArray = explode(" ", $v);
-					$v = $dateArray[0] . 'T'. substr($dateArray[1], 0, 5) . '-06:00';
-				}
-				//else
-				//{
-				//	$v = utf8_encode($v);
-				//}
-				$v = '"' . $v .'"';
+				$dateArray = explode(" ", $v);
+				$v = $dateArray[0] . 'T'. substr($dateArray[1], 0, 5) . '-06:00';
 			}
-			$output .= $v;
+			$output .= '"' . $v .'"';
 			if ($j < $m)
 			{
 				$output .= ",";
@@ -81,22 +74,63 @@ function processResultToJson($items, $isArrayOutputExpected) {
 }
 
 function getStudy($studyId) {
-	//$result = \Service\DALSislab::getInstance()->getStudy($studyId);
-	$sql = "SELECT id_estudio, id_cliente, id_origen_orden,
-		id_ubicacion, id_ejercicio, id_status, id_etapa,
-		id_usuario_captura, id_usuario_valida, id_usuario_entrega,
-		id_usuario_actualiza, oficio, folio, origen_descripcion,
-		ubicacion, fecha, fecha_entrega, fecha_captura, fecha_valida,
-		fecha_rechaza, ip_captura, ip_valida, ip_actualiza,
-		host_captura, host_valida, host_actualiza, motivo_rechaza,
-		activo
-		FROM Estudio
-		WHERE activo = 1 AND id_estudio = :studyId";
-	$db = getConnection();
-	$stmt = $db->prepare($sql);
-	$stmt->bindParam("studyId", $studyId);
-	$stmt->execute();
-	$result = processResultToJson($stmt->fetchAll(PDO::FETCH_ASSOC), false);
+	if ($studyId < 1)
+	{
+		$result = '{"id_estudio":0,"id_cliente":0,"id_origen_orden":0,
+		"id_ubicacion":0,"id_ejercicio":2015,"id_status":0,"id_etapa":0,
+		"id_usuario_captura":0,"id_usuario_valida":0,
+		"id_usuario_entrega":0,"id_usuario_actualiza":0,"oficio":0,
+		"folio":"","origen_descripcion":"","ubicacion":"","fecha":"",
+		"fecha_entrega":"","fecha_captura":"","fecha_valida":"",
+		"fecha_rechaza":"","ip_captura":"","ip_valida":"",
+		"ip_actualiza":"","host_captura":"","host_valida":"",
+		"host_actualiza":"","motivo_rechaza":"","activo":1,
+		"cliente":{"id_cliente":0,"id_estado":14,"id_municipio":14039,
+		"id_localidad":140390001,"interno":0,"cea":0,"tasa":0.0,
+		"cliente":"","area":"","rfc":"","calle":"","numero":"0",
+		"colonia":"","codigo_postal":"","telefono":"","fax":"",
+		"contacto":"","puesto_contacto":"","email":"","fecha_captura":"",
+		"fecha_actualiza":"","ip_captura":"","ip_actualiza":"",
+		"host_captura":"","host_actualiza":"","activo":""},
+		"ordenes":[{"id_orden":0,"id_estudio":0,"id_cliente":0,
+		"id_matriz":0,"id_tipo_muestreo":0,"id_norma":0,
+		"id_cuerpo_receptor":0,"id_status":0,"id_usuario_captura":0,
+		"id_usuario_valida":0,"id_usuario_actualiza":0,
+		"cantidad_muestreas":0,"costo_total":0,"cuerpo_receptor":"",
+		"tipo_cuerpo":"","fecha":"","fecha_entrega":"","fecha_captura":"",
+		"fecha_valida":"","fecha_actualiza":"","fecha_rechaza":"",
+		"ip_captura":"","ip_valida":"","ip_actualiza":"",
+		"host_captura":"","host_valida":"","host_actualiza":"",
+		"motivo_rechaza":"","comentarios":"","activo":1}]}';
+	}
+	else
+	{
+		//$result = \Service\DALSislab::getInstance()->getStudy($studyId);
+		$sql = "SELECT id_estudio, id_cliente, id_origen_orden,
+			id_ubicacion, id_ejercicio, id_status, id_etapa,
+			id_usuario_captura, id_usuario_valida, id_usuario_entrega,
+			id_usuario_actualiza, oficio, folio, origen_descripcion,
+			ubicacion, fecha, fecha_entrega, fecha_captura, fecha_valida,
+			fecha_rechaza, ip_captura, ip_valida, ip_actualiza,
+			host_captura, host_valida, host_actualiza, motivo_rechaza,
+			activo
+			FROM Estudio
+			WHERE activo = 1 AND id_estudio = :studyId";
+		$db = getConnection();
+		$stmt = $db->prepare($sql);
+		$stmt->bindParam("studyId", $studyId);
+		$stmt->execute();
+		$study = $stmt->fetchAll(PDO::FETCH_ASSOC);
+		$db = null;
+		$clientId = $study[0]['id_cliente'];
+		$studyClient = getClient($clientId);
+		$studyOrders = getStudyOrders($studyId);
+		$result = processResultToJson($study, false);
+		$result = substr($result, 0, -1);
+		$result .= ',"cliente":';
+		$result .= $studyClient . ',"ordenes":';
+		$result .= $studyOrders . '}';
+	}
 	return $result;
 }
 
@@ -115,12 +149,55 @@ function getStudies() {
 	$db = getConnection();
 	$stmt = $db->prepare($sql);
 	$stmt->execute();
-	$result = processResultToJson($stmt->fetchAll(PDO::FETCH_ASSOC), true);
+	$studies = $stmt->fetchAll(PDO::FETCH_ASSOC);
+	$i = 0;
+	$l = count($studies);
+	for ($i = 0; $i < $l; $i++) {
+		$studies[$i];
+	}
+	$result = processResultToJson($studies, true);
 	return $result;
 }
 
+function getClient($clientId) {
+	//$result = \Service\DALSislab::getInstance()->getClient($clientId);
+	$sql = "SELECT id_cliente, id_estado, id_municipio,
+		id_localidad, interno, cea, tasa, cliente, area,
+		rfc, calle, numero, colonia, codigo_postal, telefono,
+		fax, contacto, puesto_contacto, email, fecha_captura,
+		fecha_actualiza, ip_captura, ip_actualiza, host_captura,
+		host_actualiza, activo
+		FROM Cliente
+		WHERE activo = 1 AND id_cliente = :clientId";
+	$db = getConnection();
+	$stmt = $db->prepare($sql);
+	$stmt->bindParam("clientId", $clientId);
+	$stmt->execute();
+	$result = processResultToJson($stmt->fetchAll(PDO::FETCH_ASSOC), false);
+	return $result;
+}
 
-print_r(getStudy(1));
+function getStudyOrders($studyId) {
+	$sql = "SELECT id_orden, id_estudio, id_cliente, id_matriz,
+		id_tipo_muestreo, id_norma, id_cuerpo_receptor, id_status,
+		id_usuario_captura, id_usuario_valida, id_usuario_actualiza,
+		cantidad_muestreas, costo_total, cuerpo_receptor, tipo_cuerpo,
+		fecha, fecha_entrega, fecha_captura, fecha_valida,
+		fecha_actualiza, fecha_rechaza, ip_captura, ip_valida,
+		ip_actualiza, host_captura, host_valida, host_actualiza,
+		motivo_rechaza, comentarios, activo
+		FROM Orden
+		WHERE activo = 1 AND id_estudio = :studyId";
+	$db = getConnection();
+	$stmt = $db->prepare($sql);
+	$stmt->bindParam("studyId", $studyId);
+	$stmt->execute();
+	$studyOrders = $stmt->fetchAll(PDO::FETCH_ASSOC);
+	$result = processResultToJson($studyOrders, true);
+	return $result;
+}
+
+print_r(getStudy(0));
 
 
 
@@ -609,7 +686,6 @@ print_r(getStudy(1));
 
 // 	$userName = "rgarcia";
 // 	$userPassword = "8493a161f70fffc0dcd4732ae4f6c4667f373688fff802ea13c71bd0fce41cb1";
-// 	$sql = "SELECT id_usuario, id_nivel, id_rol, id_area, id_puesto, interno, cea, laboratorio, supervisa, analiza, muestrea, nombres, apellido_paterno, apellido_materno, usr, pwd, fecha_captura, fecha_actualiza, ip_captura, ip_actualiza, host_captura, host_actualiza, activo FROM Usuario WHERE usr = :userName AND pwd = :userPassword";
 
 
 // 	$db = getDB();
@@ -619,12 +695,6 @@ print_r(getStudy(1));
 // 	$stmt->execute();
 // 	print_r(processResultToJson($stmt->fetchAll(PDO::FETCH_ASSOC), false));
 
-// 	/*
-// 	$sql = "SELECT id_usuario, id_nivel, id_rol, id_area, id_puesto, interno, cea, laboratorio, supervisa, analiza, muestrea, nombres, apellido_paterno, apellido_materno, usr, pwd, fecha_captura, fecha_actualiza, ip_captura, ip_actualiza, host_captura, host_actualiza, activo FROM Usuario";
-// 	$db = getDB();
-// 	$stmt = $db->prepare($sql);
-// 	$stmt->execute();
-// 	print_r(processResultToJson($stmt->fetchAll(PDO::FETCH_ASSOC), false));
 
 
 
@@ -771,23 +841,6 @@ print_r(getStudy(1));
 // 	};
 // };
 
-// //$app->get("/tasks", $validateAccessToken($app), function() use ($app) {
-// //	try {
-// //		$request = $app->request();
-// //		$headers = $request->headers();
-// //
-// //		$userId = validateTokenUser($headers);
-// //
-// //		$result = DALSislab::getInstance()->getTasks($userId);
-// //		$app->response()->status(200);
-// //		$app->response()->header('Content-Type', 'application/json');
-// //		//$result = ")]}',\n" . $result;
-// //echo $result;
-// //	} catch (Exception $e) {
-// //		$app->response()->status(400);
-// //		$app->response()->header('X-Status-Reason', $e->getMessage());
-// //	}
-// //});
 // /*
 // $app->get('/acciones/:id', 'getAccion');
 
@@ -814,223 +867,3 @@ print_r(getStudy(1));
 // 	}
 // }
 
-
-// /*
-// [
-//   {
-//     "id_menu":1,
-//     "id_submenu":1,
-//     "orden":1,
-//     "orden_submenu":1,
-//     "menu":"Informe",
-//     "submenu":"Informe",
-//     "url":"/estudio/estudio"
-//   },
-//   {
-//     "id_menu":2,
-//     "id_submenu":2,
-//     "orden":2,
-//     "orden_submenu":1,
-//     "submenu":"Orden Muestreo",
-//     "menu":"Muestreo",
-//     "url":"/muestreo/orden"
-//   },
-//   {
-//     "id_menu":2,
-//     "id_submenu":3,
-//     "orden":2,
-//     "orden_submenu":2,
-//     "submenu":"Plan Muestreo",
-//     "menu":"Muestreo",
-//     "url":"/muestreo/plan"
-//   },
-//   {
-//     "id_menu":3,
-//     "id_submenu":4,
-//     "orden":3,
-//     "orden_submenu":1,
-//     "submenu":"Hoja Campo",
-//     "menu":"Recepción",
-//     "url":"/recepcion/hoja"
-//   },
-//   {
-//     "id_menu":3,
-//     "id_submenu":5,
-//     "orden":3,
-//     "orden_submenu":2,
-//     "submenu":"Recepción",
-//     "menu":"Recepción",
-//     "url":"/recepcion/recepcion"
-//   },
-//   {
-//     "id_menu":3,
-//     "id_submenu":6,
-//     "orden":3,
-//     "orden_submenu":3,
-//     "submenu":"Custodia Interna",
-//     "menu":"Recepción",
-//     "url":"/recepcion/custodia"
-//   },
-//   {
-//     "id_menu":4,
-//     "id_submenu":7,
-//     "orden":4,
-//     "orden_submenu":1,
-//     "submenu":"Muestras",
-//     "menu":"Inventario",
-//     "url":"/inventario/muestras"
-//   },
-//   {
-//     "id_menu":4,
-//     "id_submenu":8,
-//     "orden":4,
-//     "orden_submenu":2,
-//     "submenu":"Equipos",
-//     "menu":"Inventario",
-//     "url":"/inventario/equipo"
-//   },
-//   {
-//     "id_menu":4,
-//     "id_submenu":9,
-//     "orden":4,
-//     "orden_submenu":3,
-//     "submenu":"Reactivos",
-//     "menu":"Inventario",
-//     "url":"/inventario/reactivo"
-//   },
-//   {
-//     "id_menu":4,
-//     "id_submenu":10,
-//     "orden":4,
-//     "orden_submenu":4,
-//     "submenu":"Recipientes",
-//     "menu":"Inventario",
-//     "url":"/inventario/recipiente"
-//   },
-//   {
-//     "id_menu":5,
-//     "id_submenu":11,
-//     "orden":5,
-//     "orden_submenu":1,
-//     "submenu":"Fisicoquímicos",
-//     "menu":"Análisis",
-//     "url":"/analisis/fisico"
-//   },
-//   {
-//     "id_menu":5,
-//     "id_submenu":12,
-//     "orden":5,
-//     "orden_submenu":2,
-//     "submenu":"Metales Pesados",
-//     "menu":"Análisis",
-//     "url":"/analisis/metal"
-//   },
-//   {
-//     "id_menu":5,
-//     "id_submenu":13,
-//     "orden":5,
-//     "orden_submenu":3,
-//     "submenu":"Microbiológicos",
-//     "menu":"Análisis",
-//     "url":"/analisis/biologico"
-//   },
-//   {
-//     "id_menu":6,
-//     "id_submenu":14,
-//     "orden":6,
-//     "orden_submenu":1,
-//     "submenu":"Reportes",
-//     "menu":"Reporte",
-//     "url":"/reporte/reporte"
-//   },
-//   {
-//     "id_menu":7,
-//     "id_submenu":15,
-//     "orden":7,
-//     "orden_submenu":1,
-//     "submenu":"Paquete Puntos",
-//     "menu":"Catálogo",
-//     "url":"/catalogo/paquete"
-//   },
-//   {
-//     "id_menu":7,
-//     "id_submenu":16,
-//     "orden":7,
-//     "orden_submenu":2,
-//     "submenu":"Puntos",
-//     "menu":"Catálogo",
-//     "url":"/catalogo/punto"
-//   },
-//   {
-//     "id_menu":7,
-//     "id_submenu":17,
-//     "orden":7,
-//     "orden_submenu":3,
-//     "submenu":"Clientes",
-//     "menu":"Catálogo",
-//     "url":"/catalogo/cliente"
-//   },
-//   {
-//     "id_menu":7,
-//     "id_submenu":18,
-//     "orden":7,
-//     "orden_submenu":4,
-//     "submenu":"Empleados",
-//     "menu":"Catálogo",
-//     "url":"/catalogo/empleados"
-//   },
-//   {
-//     "id_menu":7,
-//     "id_submenu":19,
-//     "orden":7,
-//     "orden_submenu":5,
-//     "submenu":"Normas",
-//     "menu":"Catálogo",
-//     "url":"/catalogo/norma"
-//   },
-//   {
-//     "id_menu":7,
-//     "id_submenu":20,
-//     "orden":7,
-//     "orden_submenu":6,
-//     "submenu":"Métodos",
-//     "menu":"Catálogo",
-//     "url":"/catalogo/metodo"
-//   },
-//   {
-//     "id_menu":7,
-//     "id_submenu":21,
-//     "orden":7,
-//     "orden_submenu":7,
-//     "submenu":"Parámetros",
-//     "menu":"Catálogo",
-//     "url":"/catalogo/parametro"
-//   },
-//   {
-//     "id_menu":8,
-//     "id_submenu":22,
-//     "orden":8,
-//     "orden_submenu":1,
-//     "submenu":"Usuarios",
-//     "menu":"Administración",
-//     "url":"/sistema/usuario"
-//   },
-//   {
-//     "id_menu":8,
-//     "id_submenu":23,
-//     "orden":8,
-//     "orden_submenu":2,
-//     "submenu":"Perfil",
-//     "menu":"Administración",
-//     "url":"/sistema/perfil"
-//   },
-//   {
-//     "id_menu":8,
-//     "id_submenu":24,
-//     "orden":8,
-//     "orden_submenu":3,
-//     "submenu":"Cerrar Sesión",
-//     "menu":"Administración",
-//     "url":"/sistema/logout"
-//   }
-// ]

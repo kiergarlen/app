@@ -365,11 +365,11 @@ $app->get("/clients(/)(:clientId)", function($clientId = -1) use ($app) {
 		$userId = validateTokenUser($app);
 		if ($clientId > -1)
 		{
-			$result = getClient($clientId);
+			$result = json_encode(getClient($clientId));
 		}
 		else
 		{
-			$result = getClients();
+			$result = json_encode(getClients());
 		}
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
@@ -1345,21 +1345,23 @@ function getStudy($studyId) {
 				"host_actualiza" => "", "activo" => 1
 			),
 			"ordenes" => array(
-				"id_orden" => 0, "id_estudio" => 0,
-				"id_cliente" => 0, "id_matriz" => 0,
-				"id_tipo_muestreo" => 0, "id_norma" => 0,
-				"id_cuerpo_receptor" => 0, "id_status" => 0,
-				"id_usuario_captura" => 0, "id_usuario_valida" => 0,
-				"id_usuario_actualiza" => 0, "cantidad_muestreas" => 0,
-				"costo_total" => 0, "cuerpo_receptor" => "",
-				"tipo_cuerpo" => "", "fecha" => "",
-				"fecha_entrega" => "", "fecha_captura" => "",
-				"fecha_valida" => "", "fecha_actualiza" => "",
-				"fecha_rechaza" => "", "ip_captura" => "",
-				"ip_valida" => "", "ip_actualiza" => "",
-				"host_captura" => "", "host_valida" => "",
-				"host_actualiza" => "", "motivo_rechaza" => "",
-				"comentarios" => "", "activo" => 1
+				array(
+					"id_orden" => 0, "id_estudio" => 0,
+					"id_cliente" => 0, "id_matriz" => 0,
+					"id_tipo_muestreo" => 1, "id_norma" => 0,
+					"id_cuerpo_receptor" => 0, "id_status" => 0,
+					"id_usuario_captura" => 0, "id_usuario_valida" => 0,
+					"id_usuario_actualiza" => 0, "cantidad_muestras" => 0,
+					"costo_total" => 0, "cuerpo_receptor" => "",
+					"tipo_cuerpo" => "", "fecha" => "",
+					"fecha_entrega" => "", "fecha_captura" => "",
+					"fecha_valida" => "", "fecha_actualiza" => "",
+					"fecha_rechaza" => "", "ip_captura" => "",
+					"ip_valida" => "", "ip_actualiza" => "",
+					"host_captura" => "", "host_valida" => "",
+					"host_actualiza" => "", "motivo_rechaza" => "",
+					"comentarios" => "", "activo" => 1
+				)
 			)
 		);
 		// $result = '{"id_estudio":0,"id_cliente":0,"id_origen_orden":0,
@@ -1382,7 +1384,7 @@ function getStudy($studyId) {
 		// "id_matriz":0,"id_tipo_muestreo":0,"id_norma":0,
 		// "id_cuerpo_receptor":0,"id_status":0,"id_usuario_captura":0,
 		// "id_usuario_valida":0,"id_usuario_actualiza":0,
-		// "cantidad_muestreas":0,"costo_total":0,"cuerpo_receptor":"",
+		// "cantidad_muestras":0,"costo_total":0,"cuerpo_receptor":"",
 		// "tipo_cuerpo":"","fecha":"","fecha_entrega":"","fecha_captura":"",
 		// "fecha_valida":"","fecha_actualiza":"","fecha_rechaza":"",
 		// "ip_captura":"","ip_valida":"","ip_actualiza":"",
@@ -1410,7 +1412,7 @@ function getStudy($studyId) {
 		$db = null;
 		$clientId = $study[0]['id_cliente'];
 		$study[0]["cliente"] = getClient($clientId);
-		$study[0]["cliente"] = getStudyOrders($studyId);
+		$study[0]["ordenes"] = getStudyOrders($studyId);
 		$result = $study[0];
 	}
 	return $result;
@@ -1445,7 +1447,7 @@ function getStudyOrders($studyId) {
 	$sql = "SELECT id_orden, id_estudio, id_cliente, id_matriz,
 		id_tipo_muestreo, id_norma, id_cuerpo_receptor, id_status,
 		id_usuario_captura, id_usuario_valida, id_usuario_actualiza,
-		cantidad_muestreas, costo_total, cuerpo_receptor, tipo_cuerpo,
+		cantidad_muestras, costo_total, cuerpo_receptor, tipo_cuerpo,
 		fecha, fecha_entrega, fecha_captura, fecha_valida,
 		fecha_actualiza, fecha_rechaza, ip_captura, ip_valida,
 		ip_actualiza, host_captura, host_valida, host_actualiza,

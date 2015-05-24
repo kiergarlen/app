@@ -31,47 +31,10 @@ function getConnection() {
 	return $dbConnection;
 }
 
-function getClient($clientId) {
-	//$result = \Service\DALSislab::getInstance()->getClient($clientId);
-	$sql = "SELECT id_cliente, id_estado, id_municipio,
-		id_localidad, interno, cea, tasa, cliente, area,
-		rfc, calle, numero, colonia, codigo_postal, telefono,
-		fax, contacto, puesto_contacto, email, fecha_captura,
-		fecha_actualiza, ip_captura, ip_actualiza, host_captura,
-		host_actualiza, activo
-		FROM Cliente
-		WHERE activo = 1 AND id_cliente = :clientId";
-	$db = getConnection();
-	$stmt = $db->prepare($sql);
-	$stmt->bindParam("clientId", $clientId);
-	$stmt->execute();
-	$result = processResultToJson($stmt->fetchAll(PDO::FETCH_ASSOC), false);
-	return $result;
-}
 
-function getStudyOrders($studyId) {
-	$sql = "SELECT id_orden, id_estudio, id_cliente, id_matriz,
-		id_tipo_muestreo, id_norma, id_cuerpo_receptor, id_status,
-		id_usuario_captura, id_usuario_valida, id_usuario_actualiza,
-		cantidad_muestreas, costo_total, cuerpo_receptor, tipo_cuerpo,
-		fecha, fecha_entrega, fecha_captura, fecha_valida,
-		fecha_actualiza, fecha_rechaza, ip_captura, ip_valida,
-		ip_actualiza, host_captura, host_valida, host_actualiza,
-		motivo_rechaza, comentarios, activo
-		FROM Orden
-		WHERE activo = 1 AND id_estudio = :studyId";
-	$db = getConnection();
-	$stmt = $db->prepare($sql);
-	$stmt->bindParam("studyId", $studyId);
-	$stmt->execute();
-	$studyOrders = $stmt->fetchAll(PDO::FETCH_ASSOC);
-	$result = processResultToJson($studyOrders, true);
-	return $result;
-}
 
-//print_r(
-        getStudies()
-        //);
+
+print_r(json_encode(getStudy(1)));
 
 
 

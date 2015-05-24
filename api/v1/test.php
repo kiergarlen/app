@@ -31,134 +31,6 @@ function getConnection() {
 	return $dbConnection;
 }
 
-function processResultToJson($items, $isArrayOutputExpected) {
-	$output = "";
-	if ($isArrayOutputExpected)
-	{
-		$output .= "[";
-	}
-	$i = 0;
-	$l = count($items);
-	foreach ($items as $item) {
-		$i++;
-		$j = 0;
-		$item = (array)$item;
-		$m = count($item);
-		$output .= "{";
-		foreach ($item as $key => $value) {
-			$j++;
-			$output .= '"' . $key . '":';
-			$v = $value;
-			if (!is_numeric($v) && strtotime($v))
-			{
-				$dateArray = explode(" ", $v);
-				$v = $dateArray[0] . 'T'. substr($dateArray[1], 0, 5) . '-06:00';
-			}
-			$output .= '"' . $v .'"';
-			if ($j < $m)
-			{
-				$output .= ",";
-			}
-		}
-		$output .= "}";
-		if ($isArrayOutputExpected && $i < $l)
-		{
-			$output .= ",";
-		}
-	}
-	if ($isArrayOutputExpected)
-	{
-		$output .= "]";
-	}
-	return $output;
-}
-
-function getStudy($studyId) {
-	if ($studyId < 1)
-	{
-		$result = '{"id_estudio":0,"id_cliente":0,"id_origen_orden":0,
-		"id_ubicacion":0,"id_ejercicio":2015,"id_status":0,"id_etapa":0,
-		"id_usuario_captura":0,"id_usuario_valida":0,
-		"id_usuario_entrega":0,"id_usuario_actualiza":0,"oficio":0,
-		"folio":"","origen_descripcion":"","ubicacion":"","fecha":"",
-		"fecha_entrega":"","fecha_captura":"","fecha_valida":"",
-		"fecha_rechaza":"","ip_captura":"","ip_valida":"",
-		"ip_actualiza":"","host_captura":"","host_valida":"",
-		"host_actualiza":"","motivo_rechaza":"","activo":1,
-		"cliente":{"id_cliente":0,"id_estado":14,"id_municipio":14039,
-		"id_localidad":140390001,"interno":0,"cea":0,"tasa":0.0,
-		"cliente":"","area":"","rfc":"","calle":"","numero":"0",
-		"colonia":"","codigo_postal":"","telefono":"","fax":"",
-		"contacto":"","puesto_contacto":"","email":"","fecha_captura":"",
-		"fecha_actualiza":"","ip_captura":"","ip_actualiza":"",
-		"host_captura":"","host_actualiza":"","activo":""},
-		"ordenes":[{"id_orden":0,"id_estudio":0,"id_cliente":0,
-		"id_matriz":0,"id_tipo_muestreo":0,"id_norma":0,
-		"id_cuerpo_receptor":0,"id_status":0,"id_usuario_captura":0,
-		"id_usuario_valida":0,"id_usuario_actualiza":0,
-		"cantidad_muestreas":0,"costo_total":0,"cuerpo_receptor":"",
-		"tipo_cuerpo":"","fecha":"","fecha_entrega":"","fecha_captura":"",
-		"fecha_valida":"","fecha_actualiza":"","fecha_rechaza":"",
-		"ip_captura":"","ip_valida":"","ip_actualiza":"",
-		"host_captura":"","host_valida":"","host_actualiza":"",
-		"motivo_rechaza":"","comentarios":"","activo":1}]}';
-	}
-	else
-	{
-		//$result = \Service\DALSislab::getInstance()->getStudy($studyId);
-		$sql = "SELECT id_estudio, id_cliente, id_origen_orden,
-			id_ubicacion, id_ejercicio, id_status, id_etapa,
-			id_usuario_captura, id_usuario_valida, id_usuario_entrega,
-			id_usuario_actualiza, oficio, folio, origen_descripcion,
-			ubicacion, fecha, fecha_entrega, fecha_captura, fecha_valida,
-			fecha_rechaza, ip_captura, ip_valida, ip_actualiza,
-			host_captura, host_valida, host_actualiza, motivo_rechaza,
-			activo
-			FROM Estudio
-			WHERE activo = 1 AND id_estudio = :studyId";
-		$db = getConnection();
-		$stmt = $db->prepare($sql);
-		$stmt->bindParam("studyId", $studyId);
-		$stmt->execute();
-		$study = $stmt->fetchAll(PDO::FETCH_ASSOC);
-		$db = null;
-		$clientId = $study[0]['id_cliente'];
-		$studyClient = getClient($clientId);
-		$studyOrders = getStudyOrders($studyId);
-		$result = processResultToJson($study, false);
-		$result = substr($result, 0, -1);
-		$result .= ',"cliente":';
-		$result .= $studyClient . ',"ordenes":';
-		$result .= $studyOrders . '}';
-	}
-	return $result;
-}
-
-function getStudies() {
-	//$result = \Service\DALSislab::getInstance()->getStudies();
-	$sql = "SELECT id_estudio, id_cliente, id_origen_orden,
-		id_ubicacion, id_ejercicio, id_status, id_etapa,
-		id_usuario_captura, id_usuario_valida, id_usuario_entrega,
-		id_usuario_actualiza, oficio, folio, origen_descripcion,
-		ubicacion, fecha, fecha_entrega, fecha_captura, fecha_valida,
-		fecha_rechaza, ip_captura, ip_valida, ip_actualiza,
-		host_captura, host_valida, host_actualiza, motivo_rechaza,
-		activo
-		FROM Estudio
-		WHERE activo = 1";
-	$db = getConnection();
-	$stmt = $db->prepare($sql);
-	$stmt->execute();
-	$studies = $stmt->fetchAll(PDO::FETCH_ASSOC);
-	$i = 0;
-	$l = count($studies);
-	for ($i = 0; $i < $l; $i++) {
-		$studies[$i];
-	}
-	$result = processResultToJson($studies, true);
-	return $result;
-}
-
 function getClient($clientId) {
 	//$result = \Service\DALSislab::getInstance()->getClient($clientId);
 	$sql = "SELECT id_cliente, id_estado, id_municipio,
@@ -197,7 +69,9 @@ function getStudyOrders($studyId) {
 	return $result;
 }
 
-print_r(getStudy(0));
+//print_r(
+        getStudies()
+        //);
 
 
 

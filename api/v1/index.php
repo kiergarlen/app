@@ -96,13 +96,22 @@ $app->get("/studies(/)(:studyId)", function($studyId = -1) use ($app) {
 	}
 });
 
-$app->post("/studies", function() use ($app) {
+$app->post("/studies(/)(:studyId)", function($studyId = -1) use ($app) {
 	try {
-		$userId = validateTokenUser($app);
+		//$userId = validateTokenUser($app);
 		$request = $app->request();
 		$requestBody = $request->getBody();
 		$requestData = extractDataFromRequest($app);
-		$result = insertStudy($requestData);
+		if ($studyId > - 1)
+		{
+			//UPDATE Study
+			$result = updateStudy($requestData);
+		}
+		else
+		{
+			//INSERT Study
+			$result = insertStudy($requestData);
+		}
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
 		//$result = ")]}',\n" . $result;
@@ -1054,7 +1063,6 @@ function processUserJwt($app) {
 function decodeJwt($jwt) {
 	$decoded = JWT::decode($jwt, KEY);
 	$decoded_array = (array) $decoded;
-	//print_r($decoded_array);
 	return $decoded_array;
 }
 
@@ -1317,8 +1325,8 @@ function getStudy($studyId) {
 		$result = array(
 			"id_estudio" => 0, "id_cliente" => 0,
 			"id_origen_orden" => 0, "id_ubicacion" => 0,
-			"id_ejercicio" => 2015, "id_status" => 0,
-			"id_etapa" => 0, "id_usuario_captura" => 0,
+			"id_ejercicio" => 2015, "id_status" => 1,
+			"id_etapa" => 1, "id_usuario_captura" => 0,
 			"id_usuario_valida" => 0, "id_usuario_entrega" => 0,
 			"id_usuario_actualiza" => 0, "oficio" => 0,
 			"folio" => "", "origen_descripcion" => "",
@@ -1335,7 +1343,7 @@ function getStudy($studyId) {
 				"interno" => 0, "cea" => 0,
 				"tasa" => 0, "cliente" => "",
 				"area" => "", "rfc" => "",
-				"calle" => "", "numero" => 0,
+				"calle" => "", "numero" => "",
 				"colonia" => "", "codigo_postal" => "",
 				"telefono" => "", "fax" => "",
 				"contacto" => "", "puesto_contacto" => "",
@@ -1349,7 +1357,7 @@ function getStudy($studyId) {
 					"id_orden" => 0, "id_estudio" => 0,
 					"id_cliente" => 0, "id_matriz" => 0,
 					"id_tipo_muestreo" => 1, "id_norma" => 0,
-					"id_cuerpo_receptor" => 0, "id_status" => 0,
+					"id_cuerpo_receptor" => 5, "id_status" => 1,
 					"id_usuario_captura" => 0, "id_usuario_valida" => 0,
 					"id_usuario_actualiza" => 0, "cantidad_muestras" => 0,
 					"costo_total" => 0, "cuerpo_receptor" => "",
@@ -1364,32 +1372,6 @@ function getStudy($studyId) {
 				)
 			)
 		);
-		// $result = '{"id_estudio":0,"id_cliente":0,"id_origen_orden":0,
-		// "id_ubicacion":0,"id_ejercicio":2015,"id_status":0,"id_etapa":0,
-		// "id_usuario_captura":0,"id_usuario_valida":0,
-		// "id_usuario_entrega":0,"id_usuario_actualiza":0,"oficio":0,
-		// "folio":"","origen_descripcion":"","ubicacion":"","fecha":"",
-		// "fecha_entrega":"","fecha_captura":"","fecha_valida":"",
-		// "fecha_rechaza":"","ip_captura":"","ip_valida":"",
-		// "ip_actualiza":"","host_captura":"","host_valida":"",
-		// "host_actualiza":"","motivo_rechaza":"","activo":1,
-		// "cliente":{"id_cliente":0,"id_estado":14,"id_municipio":14039,
-		// "id_localidad":140390001,"interno":0,"cea":0,"tasa":0.0,
-		// "cliente":"","area":"","rfc":"","calle":"","numero":"0",
-		// "colonia":"","codigo_postal":"","telefono":"","fax":"",
-		// "contacto":"","puesto_contacto":"","email":"","fecha_captura":"",
-		// "fecha_actualiza":"","ip_captura":"","ip_actualiza":"",
-		// "host_captura":"","host_actualiza":"","activo":""},
-		// "ordenes":[{"id_orden":0,"id_estudio":0,"id_cliente":0,
-		// "id_matriz":0,"id_tipo_muestreo":0,"id_norma":0,
-		// "id_cuerpo_receptor":0,"id_status":0,"id_usuario_captura":0,
-		// "id_usuario_valida":0,"id_usuario_actualiza":0,
-		// "cantidad_muestras":0,"costo_total":0,"cuerpo_receptor":"",
-		// "tipo_cuerpo":"","fecha":"","fecha_entrega":"","fecha_captura":"",
-		// "fecha_valida":"","fecha_actualiza":"","fecha_rechaza":"",
-		// "ip_captura":"","ip_valida":"","ip_actualiza":"",
-		// "host_captura":"","host_valida":"","host_actualiza":"",
-		// "motivo_rechaza":"","comentarios":"","activo":1}]}';
 	}
 	else
 	{
@@ -1437,7 +1419,7 @@ function getStudies() {
 	$i = 0;
 	$l = count($studies);
 	for ($i = 0; $i < $l; $i++) {
-		$studies[$i]["cliente"] = getClient($studies[$i]['id_cliente']);
+		$studies[$i]["cliente"] = getClient($studies[$i]['id_cliente'])[0];
 		$studies[$i]["ordenes"] = getStudyOrders($studies[$i]['id_estudio']);
 	}
 	return $studies;
@@ -1459,6 +1441,15 @@ function getStudyOrders($studyId) {
 	$stmt->bindParam("studyId", $studyId);
 	$stmt->execute();
 	return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
+
+function insertStudy($data) {
+	return $data;
+}
+
+function updateStudy($data) {
+	return $data;
 }
 
 //TODO: VALIDATION DRAFT
@@ -1500,108 +1491,6 @@ function getStudyOrders($studyId) {
 // 	return $output;
 // }
 
-function insertStudy($requestData) {
-	// $dataString = '
-	// {
-	//   "id_cliente" : 13,
-	//   "id_usuario_valida" : 1,
-	//   "id_usuario_actualiza" : 1,
-	//   "status" : "Validado",
-	//   "ip_captura" : "[::1]",
-	//   "id_ejercicio" : 2015,
-	//   "folio" : "CEA-432/2015",
-	//   "host_captura" : "[::1]",
-	//   "ip_valida" : "[::1]",
-	//   "host_valida" : "[::1]",
-	//   "motivo_rechaza" : "Error en datos cliente",
-	//   "id_status" : 2,
-	//   "ip_actualiza" : "[::1]",
-	//   "ubicacion" : "Río Santiago",
-	//   "host_actualiza" : "[::1]",
-	//   "fecha_valida" : "2015-03-21",
-	//   "origen_descripcion" : "GP-001/2015",
-	//   "id_origen_orden" : 1,
-	//   "numero_oficio" : 432,
-	//   "fecha" : "2015-03-21",
-	//   "fecha_rechaza" : "2015-03-21",
-	//   "fecha_actualiza" : "2015-03-21",
-	//   "solicitudes" : [
-	//     {
-	//       "activo" : 1,
-	//       "$$hashKey" : "object:113",
-	//       "id_matriz" : 1,
-	//       "id_norma" : 3,
-	//       "id_solicitud" : 1,
-	//       "id_estudio" : 1,
-	//       "id_tipo_muestreo" : 2,
-	//       "id_status" : 1,
-	//       "cantidad_muestras" : 15
-	//     },
-	//     {
-	//       "activo" : 1,
-	//       "$$hashKey" : "object:114",
-	//       "id_matriz" : 6,
-	//       "id_norma" : 1,
-	//       "id_solicitud" : 2,
-	//       "id_estudio" : 1,
-	//       "id_tipo_muestreo" : 1,
-	//       "id_status" : 1,
-	//       "cantidad_muestras" : 16
-	//     }
-	//   ],
-	//   "fecha_captura" : "2015-03-21",
-	//   "cliente" : {
-	//     "numero" : "100",
-	//     "cp" : "59940",
-	//     "id_organismo" : 6,
-	//     "tel" : "045-35-4100-1836",
-	//     "cea" : 0,
-	//     "municipio" : "Cotija",
-	//     "fax" : "",
-	//     "fecha_act" : "23/11/2014",
-	//     "colonia" : "Col. Centro",
-	//     "id_municipio" : 16019,
-	//     "localidad" : "Cotija de La Paz",
-	//     "rfc" : "Registro Federal de Contribuyentes",
-	//     "tasa" : 1,
-	//     "puesto_contacto" : "puesto contacto",
-	//     "email" : "ooapascotija@hotmail.com",
-	//     "id_estado" : 16,
-	//     "interno" : 0,
-	//     "area" : "",
-	//     "cliente" : "Ayuntamiento de Cotija, Michoacan",
-	//     "id_localidad" : 160190001,
-	//     "contacto" : "Arq. Juan Jesús Zarate Barajas",
-	//     "calle" : "Pino Suárez Pte.",
-	//     "estado" : "Michoacán de Ocampo",
-	//     "activo" : 1,
-	//     "id_cliente" : 13
-	//   },
-	//   "id_usuario_captura" : 20,
-	//   "activo" : 1,
-	//   "id_estudio" : 1
-	// }
-	// ';
-	// $sql = "INSERT INTO Usuario
-	// 	(id_usuario, id_nivel, id_rol, id_area, id_puesto, interno, cea,
-	// 	 laboratorio, supervisa, analiza, muestrea, nombres, apellido_paterno,
-	// 	 apellido_materno, usr, pwd, fecha_captura, fecha_actualiza, ip_captura,
-	// 	 ip_actualiza, host_captura, host_actualiza, activo)
-	// 	VALUES
-	// 	(NULL, '3', '3', '3', '3', '1',
-	// 	 '1', '1', '1', '1', '1',
-	// 	 'Supervisor', 'de', 'Area', 'super',
-	// 	 '73d1b1b1bc1dabfb97f216d897b7968e44b06457920f00f2dc6c1ed3be25ad4c',
-	// 	 '', '', '', '', '', '', '1'
-	// 	);";
-	// // $db = getConnection();
-	// // $stmt = $db->prepare($sql);
-	// // $stmt->bindParam("data", $data);
-	// // $stmt->execute();
-	// // $result = $stmt->fetchAll(PDO::FETCH_OBJ);
-	$result = json_encode($requestData);
-	// return $result;
-}
 /*
 function insertUser($requestData) {
 	try {

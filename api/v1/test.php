@@ -11,119 +11,186 @@ define("DB_DATA_BASE", "Sislab");
 // define("DB_PASSWORD", "root");
 // define("DB_DATA_BASE", "sislab");
 
-function getConnection() {
-	try {
-		// $dsn = "mysql:host=";
-		// $dsn .= DB_HOST . ";";
-		// $dsn .= "port=" . DB_PORT . ";";
-		// $dsn .= "dbname=" . DB_DATA_BASE;
-		$dsn = "sqlsrv:server=";
-		$dsn .= DB_HOST . ";Database=";
-		$dsn .= DB_DATA_BASE;
+// function getConnection() {
+// 	try {
+// 		// $dsn = "mysql:host=";
+// 		// $dsn .= DB_HOST . ";";
+// 		// $dsn .= "port=" . DB_PORT . ";";
+// 		// $dsn .= "dbname=" . DB_DATA_BASE;
+// 		$dsn = "sqlsrv:server=";
+// 		$dsn .= DB_HOST . ";Database=";
+// 		$dsn .= DB_DATA_BASE;
 
-		$dbConnection = new PDO($dsn, DB_USER, DB_PASSWORD);
-		$dbConnection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-	} catch(PDOException $e) {
-		//error_log($e->getMessage(), 3, '/var/tmp/php.log');
-		//echo '{"error":{"text":'. $e->getMessage() .'}}';
-		$output = '{"error":"' . $e->getMessage() . '"}';
+// 		$dbConnection = new PDO($dsn, DB_USER, DB_PASSWORD);
+// 		$dbConnection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+// 	} catch(PDOException $e) {
+// 		//error_log($e->getMessage(), 3, '/var/tmp/php.log');
+// 		//echo '{"error":{"text":'. $e->getMessage() .'}}';
+// 		$output = '{"error":"' . $e->getMessage() . '"}';
+// 	}
+// 	return $dbConnection;
+// }
+
+$insertData = '
+	{
+		"id_estudio":0,
+		"id_cliente":"1",
+		"id_origen_orden":"3",
+		"id_ubicacion":1,
+		"id_ejercicio":2015,
+		"id_status":1,
+		"id_etapa":1,
+		"id_usuario_captura":0,
+		"id_usuario_valida":0,
+		"id_usuario_entrega":0,
+		"id_usuario_actualiza":0,
+		"oficio":0,
+		"folio":"",
+		"origen_descripcion":"",
+		"ubicacion":"Río Santiago",
+		"fecha":"2015-05-24T05:00:00.000Z",
+		"fecha_entrega":"",
+		"fecha_captura":"",
+		"fecha_valida":"",
+		"fecha_rechaza":"",
+		"ip_captura":"",
+		"ip_valida":"",
+		"ip_actualiza":"",
+		"host_captura":"",
+		"host_valida":"",
+		"host_actualiza":"",
+		"motivo_rechaza":"",
+		"activo":1,
+		"cliente":
+		{
+			"id_cliente":"1",
+			"id_estado":"14",
+			"id_municipio":"14039",
+			"id_localidad":"140390001",
+			"interno":"1",
+			"cea":"1",
+			"tasa":"0.0",
+			"cliente":"CEA Jalisco",
+			"area":"Dirección de Operación de PTARS",
+			"rfc":"xxxx-xxxxxxxx",
+			"calle":"Av. Brasilia",
+			"numero":"2970",
+			"colonia":"Colomos Providencia",
+			"codigo_postal":"44680",
+			"telefono":"3030-9350 ext. 8370",
+			"fax":"",
+			"contacto":"Biól. Luis Aceves Martínez",
+			"puesto_contacto":"Director de Operación de PTARS",
+			"email":"laceves@ceajalisco.gob.mx",
+			"fecha_captura":"2015-02-10 00:00:00.0000000",
+			"fecha_actualiza":null,
+			"ip_captura":"[::1]",
+			"ip_actualiza":null,
+			"host_captura":"localhost",
+			"host_actualiza":null,
+			"activo":"1"
+		},
+		"ordenes":
+		[
+			{
+				"id_orden":0,
+				"id_estudio":0,
+				"id_cliente":0,
+				"id_matriz":"1",
+				"id_tipo_muestreo":1,
+				"id_norma":"1",
+				"id_cuerpo_receptor":5,
+				"id_status":1,
+				"id_usuario_captura":0,
+				"id_usuario_valida":0,
+				"id_usuario_actualiza":0,
+				"cantidad_muestras":"4",
+				"costo_total":0,
+				"cuerpo_receptor":"",
+				"tipo_cuerpo":"",
+				"fecha":"",
+				"fecha_entrega":"",
+				"fecha_captura":"",
+				"fecha_valida":"",
+				"fecha_actualiza":"",
+				"fecha_rechaza":"",
+				"ip_captura":"",
+				"ip_valida":"",
+				"ip_actualiza":"",
+				"host_captura":"",
+				"host_valida":"",
+				"host_actualiza":"",
+				"motivo_rechaza":"",
+				"comentarios":"",
+				"activo":1,
+				"$$hashKey":"object:158"
+			}
+		]
 	}
-	return $dbConnection;
+';
+$requestData = json_decode($insertData);
+$request = array(
+	"headers" = array (
+		"Accept" => "application/json, text/plain, */*",
+		"Accept-Encoding" => "gzip, deflate",
+		"Accept-Language" => "es-ES,es;q=0.8,en;q=0.6",
+		"Cache-Control" => "no-cache",
+		"Connection" => "keep-alive",
+		"Content-Length" => "100",
+		"Content-Type" => "application/json;charset=UTF-8",
+		"Host" => "localhost:8888",
+		"Origin" => "http://localhost:8888",
+		"Pragma" => "no-cache",
+		"Referer" => "http://localhost:8888/siclab/app/",
+		"User-Agent" => "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.65 Safari/537.36",
+		"Auth-Token" => "--JWT TOKEN--"
+	)
+);
+print_r(insertStudy($requestData, $request));
+
+function insertStudy($study, $request) {
+	$study = (array) $study;
+	$studyClient = $study["cliente"];
+	$studyOrders = $study["ordenes"];
+	unset($study["cliente"]);
+	unset($study["ordenes"]);
+	unset($study["id_estudio"]);
+
+	//"ip" = $request->getIp();
+	//"url" = $request->getUrl();
+
+	//hex2bin($token["upt"])  explode by '.' as array[2] -userId-
+	//$decoded = JWT::decode($jwt, KEY);
+
+	$study["ip_captura"] = $request->getIp();
+	$study["host_captura"] = $request->getUrl();
+	//CEA-001/2015
+	/*
+	$sql = "INSERT INTO Usuario
+		( id_nivel, id_rol, id_area, id_puesto, interno, cea,
+		 laboratorio, supervisa, analiza,
+		 muestrea, nombres, apellido_paterno,
+		 apellido_materno, usr, pwd,
+		 fecha_captura, fecha_actualiza,
+		 ip_captura, ip_actualiza,
+		 host_captura, host_actualiza,
+		 activo)
+		VALUES ( :id_nivel, :id_rol, :id_area, :id_puesto, :interno,
+			:cea, :laboratorio, :supervisa, :analiza, :muestrea, :nombres,
+			:apellido_paterno, :apellido_materno, :usr, :pwd, :fecha_captura,
+			:fecha_actualiza, :ip_captura, :ip_actualiza, :host_captura,
+			:host_actualiza, :activo
+		)";
+	*/
+	return $requestData;
+
 }
 
 
 
 
-print_r(json_encode(getStudy(1)));
 
 
-
-
-// $studyDataString = '
-// {
-// 	"id_estudio":1,
-// 	"id_cliente":13,
-// 	"id_origen_orden":1,
-// 	"id_ubicacion":1,
-// 	"id_ejercicio":2015,
-// 	"id_status":2,
-// 	"id_etapa":2,
-// 	"id_usuario_captura":20,
-// 	"id_usuario_valida":1,
-// 	"id_usuario_entrega":0,
-// 	"id_usuario_actualiza":0,
-// 	"oficio":"001",
-// 	"folio":"CEA-001/2015",
-// 	"origen_descripcion":"GPT-001/2015",
-// 	"ubicacion":"Río Santiago",
-// 	"fecha":"2015-05-20 00:00",
-// 	"fecha_entrega":"2015-05-21 00:00",
-// 	"fecha_captura":"2015-05-20 00:00",
-// 	"fecha_valida":"2015-05-21 00:00",
-// 	"fecha_rechaza":"2015-05-21 00:00",
-// 	"ip_captura":"[::1]",
-// 	"ip_valida":"[::1]",
-// 	"ip_actualiza":"[::1]",
-// 	"host_captura":"localhost",
-// 	"host_valida":"localhost",
-// 	"host_actualiza":"localhost",
-// 	"motivo_rechaza":"Error en ubicación",
-// 	"activo":1,
-// 	"cliente":
-// 	{
-// 		"id_cliente":13,
-// 		"id_organismo":6,
-// 		"cliente":"Ayuntamiento de Cotija, Michoacan",
-// 		"area":"",
-// 		"rfc":"Registro Federal de Contribuyentes",
-// 		"calle":"Pino Suárez Pte.",
-// 		"numero":"100",
-// 		"colonia":"Col. Centro",
-// 		"cp":"59940",
-// 		"id_estado":16,
-// 		"estado":"Michoacán de Ocampo",
-// 		"id_municipio":16019,
-// 		"municipio":"Cotija",
-// 		"id_localidad":160190001,
-// 		"localidad":"Cotija de La Paz",
-// 		"tel":"045-35-4100-1836",
-// 		"fax":"",
-// 		"contacto":"Arq. Juan Jesús Zarate Barajas",
-// 		"puesto_contacto":"puesto contacto",
-// 		"email":"ooapascotija@hotmail.com",
-// 		"fecha_act":"23/11/2014",
-// 		"interno":0,
-// 		"cea":0,
-// 		"tasa":1,
-// 		"activo":1
-// 	},
-// 	"ordenes":
-// 	[
-// 		{
-// 			"id_orden":1,
-// 			"id_estudio":1,
-// 			"id_matriz":1,
-// 			"id_tipo_muestreo":2,
-// 			"id_norma":3,
-// 			"id_status":1,
-// 			"cantidad_muestras":15,
-// 			"activo":1,
-// 			"$$hashKey":"object:179"
-// 		},
-// 		{
-// 			"id_orden":2,
-// 			"id_estudio":1,
-// 			"id_matriz":6,
-// 			"id_tipo_muestreo":1,
-// 			"id_norma":1,
-// 			"id_status":1,
-// 			"cantidad_muestras":16,
-// 			"activo":1,
-// 			"$$hashKey":"object:180"
-// 		}
-// 	]
-// }
-// ';
 // $studyPayload = json_decode($studyDataString);
 // $orders = $studyPayload->ordenes;
 // print_r($orders);

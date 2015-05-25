@@ -178,12 +178,36 @@
 
     function addOrder() {
       vm.study.ordenes.push({
-        'id_orden':vm.study.ordenes.length + 1,
+        'id_orden':0,
         'id_estudio':vm.study.id_estudio,
+        'id_cliente':0,
         'id_matriz':0,
-        'cantidad_muestras':0,
         'id_tipo_muestreo':1,
-        'id_norma':0
+        'id_norma':0,
+        'id_cuerpo_receptor':5,
+        'id_status':1,
+        'id_usuario_captura':0,
+        'id_usuario_valida':0,
+        'id_usuario_actualiza':0,
+        'cantidad_muestras':0,
+        'costo_total':0,
+        'cuerpo_receptor':'',
+        'tipo_cuerpo':'',
+        'fecha':'',
+        'fecha_entrega':'',
+        'fecha_captura':'',
+        'fecha_valida':'',
+        'fecha_actualiza':'',
+        'fecha_rechaza':'',
+        'ip_captura':'',
+        'ip_valida':'',
+        'ip_actualiza':'',
+        'host_captura':'',
+        'host_valida':'',
+        'host_actualiza':'',
+        'motivo_rechaza':'',
+        'comentarios':'',
+        'activo':1
       });
     }
 
@@ -296,14 +320,13 @@
       if (isFormValid() && !vm.isDataSubmitted)
       {
         vm.isDataSubmitted = true;
-        if (vm.study.id_estudio > 0)
+        if (vm.study.id_estudio < 1)
         {
           RestUtilsService
             .saveData(
               StudyService,
               vm.study,
-              'estudio/estudio',
-              'id_estudio'
+              'estudio/estudio'
             );
         }
         else
@@ -472,8 +495,7 @@
             .saveData(
               QuoteService,
               vm.quote,
-              'muestreo/solicitud',
-              'id_solicitud'
+              'muestreo/solicitud'
             );
         }
         else
@@ -662,8 +684,7 @@
             .saveData(
               OrderService,
               vm.order,
-              'muestreo/orden',
-              'id_orden'
+              'muestreo/orden'
             );
         }
         else
@@ -1183,8 +1204,7 @@
             .saveData(
               PlanService,
               vm.plan,
-              'muestreo/plan',
-              'id_plan'
+              'muestreo/plan'
             );
         }
         else
@@ -1437,8 +1457,7 @@
             .saveData(
               SheetService,
               vm.sheet,
-              'recepcion/hoja',
-              'id_hoja'
+              'recepcion/hoja'
             );
         }
         else
@@ -1607,8 +1626,7 @@
             .saveData(
               ReceptionService,
               vm.reception,
-              'recepcion/recepcion',
-              'id_recepcion'
+              'recepcion/recepcion'
             );
         }
         else
@@ -1707,8 +1725,7 @@
             .saveData(
               CustodyService,
               vm.custody,
-              'recepcion/custodia',
-              'id_custodia'
+              'recepcion/custodia'
             );
         }
         else

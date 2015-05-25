@@ -274,9 +274,8 @@
      * @param {Object} service - Proveedor de datos a usar
      * @param {String} data - JSON a enviar al servicio
      * @param {String} returnPath - Ruta de la vista a desplegar, éxito
-     * @param {String} itemIdName - Propiedad a usar como identificador del recurso
      */
-    function saveData(service, data, returnPath, itemIdName) {
+    function saveData(service, data, returnPath) {
       service
         .save(JSON.stringify(data))
         .$promise

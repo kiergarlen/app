@@ -1,35 +1,35 @@
 <?php
-// define("DB_DRIVER", "sqlsrv");
+define("DB_DRIVER", "sqlsrv");
+define("DB_HOST", "localhost");
+define("DB_USER", "sislab");
+define("DB_PASSWORD", "sislab");
+define("DB_DATA_BASE", "Sislab");
+// define("DB_DRIVER", "mysql");
 // define("DB_HOST", "localhost");
-// define("DB_USER", "sislab");
-// define("DB_PASSWORD", "sislab");
-// define("DB_DATA_BASE", "Sislab");
-// // define("DB_DRIVER", "mysql");
-// // define("DB_HOST", "localhost");
-// // define("DB_PORT", "8889");
-// // define("DB_USER", "root");
-// // define("DB_PASSWORD", "root");
-// // define("DB_DATA_BASE", "sislab");
+// define("DB_PORT", "8889");
+// define("DB_USER", "root");
+// define("DB_PASSWORD", "root");
+// define("DB_DATA_BASE", "sislab");
 
-// function getConnection() {
-// 	try {
-// 		// $dsn = "mysql:host=";
-// 		// $dsn .= DB_HOST . ";";
-// 		// $dsn .= "port=" . DB_PORT . ";";
-// 		// $dsn .= "dbname=" . DB_DATA_BASE;
-// 		$dsn = "sqlsrv:server=";
-// 		$dsn .= DB_HOST . ";Database=";
-// 		$dsn .= DB_DATA_BASE;
+function getConnection() {
+	try {
+		// $dsn = "mysql:host=";
+		// $dsn .= DB_HOST . ";";
+		// $dsn .= "port=" . DB_PORT . ";";
+		// $dsn .= "dbname=" . DB_DATA_BASE;
+		$dsn = "sqlsrv:server=";
+		$dsn .= DB_HOST . ";Database=";
+		$dsn .= DB_DATA_BASE;
 
-// 		$dbConnection = new PDO($dsn, DB_USER, DB_PASSWORD);
-// 		$dbConnection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-// 	} catch(PDOException $e) {
-// 		//error_log($e->getMessage(), 3, '/var/tmp/php.log');
-// 		//echo '{"error":{"text":'. $e->getMessage() .'}}';
-// 		$output = '{"error":"' . $e->getMessage() . '"}';
-// 	}
-// 	return $dbConnection;
-// }
+		$dbConnection = new PDO($dsn, DB_USER, DB_PASSWORD);
+		$dbConnection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+	} catch(PDOException $e) {
+		//error_log($e->getMessage(), 3, '/var/tmp/php.log');
+		//echo '{"error":{"text":'. $e->getMessage() .'}}';
+		$output = '{"error":"' . $e->getMessage() . '"}';
+	}
+	return $dbConnection;
+}
 
 // /*
 // // THIS IS AN EXAMPLE
@@ -88,107 +88,6 @@
 // 	}
 // 	return $dbConnection;
 // }
-
-
-// /*
-// 	const DB_DRIVER = "mysql";
-// 	//const DB_DRIVER = "sqlsrv";
-// 	const DB_HOST = "localhost";
-// 	const DB_PORT = "8889";
-// 	const DB_USER = "root";
-// 	const DB_PASSWORD = "root";
-// 	const DB_DATA_BASE = "sislab";
-
-// 	// const DB_USER = "sislab";
-// 	// const DB_PASSWORD = "sislab@12#";
-// 	// const DB_DATA_BASE = "Sislab";
-
-
-// function getDB2() {
-// 	$dsn = "sqlsrv:server=";
-// 	$dsn .= DB_HOST . ";Database=";
-// 	$dsn .= DB_DATA_BASE;
-
-// 	$dbConnection = new PDO($dsn, DB_USER, DB_PASSWORD);
-// 	$dbConnection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-// 	return $dbConnection;
-// }
-
-// function getDB() {
-// 	$dsn = "mysql:host=";
-// 	$dsn .= DB_HOST . ";";
-// 	if (strlen(DB_PORT) > 0)
-// 	{
-// 		$dsn .= "port=" . DB_PORT . ";";
-// 	}
-// 	$dsn .= "dbname=" . DB_DATA_BASE;
-// 	$dbConnection = new PDO($dsn, DB_USER, DB_PASSWORD);
-// 	$dbConnection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-// 	return $dbConnection;
-// }
-
-
-// function processResultToJson($items, $isArrayOutputExpected)
-// {
-// 	$output = "";
-// 	try {
-// 		if ($isArrayOutputExpected)
-// 		{
-// 			$output .= "[";
-// 		}
-// 		$i = 0;
-// 		$l = count($items);
-// 		foreach ($items as $item) {
-// 			$i++;
-// 			$j = 0;
-// 			$item = (array)$item;
-// 			$m = count($item);
-// 			$output .= "{";
-// 			foreach ($item as $key => $value) {
-// 				$j++;
-// 				$output .= '"' . $key . '":';
-// 				$v = $value;
-// 				if (!is_numeric($v))
-// 				{
-// 					//TODO: format string for dates
-// 					$v = '"' . utf8_encode($value) .'"';
-// 				}
-// 				$output .= $v;
-// 				if ($j < $m)
-// 				{
-// 					$output .= ",";
-// 				}
-// 			}
-// 			$output .= "}";
-// 			if ($isArrayOutputExpected && $i < $l)
-// 			{
-// 				$output .= ",";
-// 			}
-// 		}
-// 		if ($isArrayOutputExpected)
-// 		{
-// 			$output .= "]";
-// 		}
-// 	} catch(PDOException $e) {
-// 		//error_log($e->getMessage(), 3, '/var/tmp/php.log');
-// 		//echo '{"error":{"text":'. $e->getMessage() .'}}';
-// 		$output = '{"error":"' . $e->getMessage() . '"}';
-// 	}
-// 	return $output;
-// }
-
-// 	$userName = "rgarcia";
-// 	$userPassword = "8493a161f70fffc0dcd4732ae4f6c4667f373688fff802ea13c71bd0fce41cb1";
-
-
-// 	$db = getDB();
-// 	$stmt = $db->prepare($sql);
-// 	$stmt->bindParam("userName", $userName);
-// 	$stmt->bindParam("userPassword", $userPassword);
-// 	$stmt->execute();
-// 	print_r(processResultToJson($stmt->fetchAll(PDO::FETCH_ASSOC), false));
-
-
 
 
 // /*
@@ -310,30 +209,6 @@
 // 	}
 // }
 
-
-
-//
-// $validateAccessToken = function($app) {
-//    return function () use ($app) {
-// 		$request = $app->request();
-// 		$headers = $request->headers();
-
-// 		$jwt = $headers["Auth-Token"];
-// 		$decoded = JWT::decode($jwt, KEY);
-// 		$userPass = hex2bin($decoded->upt);
-// 		$userPassArray = explode (".", $userPass);
-// 		$userId = 0;
-// 		if ($userPassArray[0] === "rgarcia" && $userPassArray[1] === "rgarcia")
-// 		{
-// 			$userId = 1;
-// 		}
-// 		else
-// 		{
-// 		   //$app->redirect("/errorpage");
-// 		}
-// 	};
-// };
-
 //
 // $app->get('/acciones/:id', 'getAccion');
 
@@ -359,6 +234,3 @@
 // 		echo '{"error":{"text":'. $e->getMessage() .'}}';
 // 	}
 // }
-
-
-

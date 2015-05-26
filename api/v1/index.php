@@ -1292,7 +1292,6 @@ function getMenu($userId) {
 
 function getTasks($userId) {
 	$result = '[]';
-	//$result = json_encode(\Service\DALSislab::getInstance()->getTasks($userId));
 	// $sql = "SELECT * FROM Tarea WHERE activo = 1";
 	// $db = getConnection();
 	// $stmt = $db->prepare($sql);
@@ -1494,7 +1493,7 @@ function insertStudy($request) {
 	if (is_numeric(getLastStudyByYear($currentYear)["oficio"])) {
 		$lastStudyId = getLastStudyByYear($currentYear)["oficio"];
 	}
-	$lastStudyId++;
+	$lastStudyId = $lastStudyId + 1;
 	$folio = "CEA-" . str_pad($lastStudyId, 3, "0", STR_PAD_LEFT);
 	$folio .= "-" . $currentYear;
 
@@ -1574,8 +1573,90 @@ function insertStudyOrder($order, $studyId, $clientId) {
 	return $orderId;
 }
 
-function updateStudy($data) {
-	return $data;
+function updateStudy($request) {
+	$token = decodeUserToken($request);
+	$updateData = (array) json_decode($request->getBody());
+	$orders = $updateData["ordenes"];
+	$studyId = $updateData["id_estudio"];
+	unset($updateData["id_estudio"]);
+	unset($updateData["id_usuario_captura"]);
+	unset($updateData["fecha_captura"]);
+	unset($updateData["ip_captura"]);
+	unset($updateData["host_captura"]);
+	unset($updateData["cliente"]);
+	unset($updateData["ordenes"]);
+
+	$updateData["id_usuario_actualiza"] = $token->uid;
+	$updateData["ip_actualiza"] = $request->getIp();
+	$updateData["host_actualiza"] = $request->getUrl();
+	$updateData["fecha"] = formatIsoDateForSqlServer($updateData["fecha"]);
+	$updateData["fecha_entrega"] = formatIsoDateForSqlServer($updateData["fecha_entrega"]);
+	$updateData["fecha_valida"] = formatIsoDateForSqlServer($updateData["fecha_valida"]);
+	$updateData["fecha_rechaza"] = formatIsoDateForSqlServer($updateData["fecha_rechaza"]);
+
+	$sql = "UPDATE Estudio SET (id_cliente = :id_cliente,
+		id_origen_orden = :id_origen_orden, id_ubicacion = :id_ubicacion,
+		id_ejercicio = :id_ejercicio, id_status = :id_status,
+		id_etapa = :id_etapa,
+		id_usuario_valida = :id_usuario_valida,
+		id_usuario_entrega = :id_usuario_entrega,
+		id_usuario_actualiza = :id_usuario_actualiza,
+		oficio = :oficio, folio = :folio,
+		origen_descripcion = :origen_descripcion, ubicacion = :ubicacion,
+		fecha = :fecha, fecha_entrega = :fecha_entrega,
+		fecha_valida = :fecha_valida,
+		fecha_rechaza = :fecha_rechaza,
+		ip_valida = :ip_valida, ip_actualiza = :ip_actualiza,
+		host_valida = :host_valida,
+		host_actualiza = :host_actualiza, motivo_rechaza = :motivo_rechaza,
+		activo = :activo,)
+		WHERE id_estudio = :id_estudio";
+	$db = getConnection();
+	$stmt = $db->prepare($sql);
+	$stmt->execute($updateData);
+	$db = null;
+
+	$i = 0;
+	$l = count($orders);
+	for ($i = 0; $i < $l; $i++) {
+		updateStudyOrder($orders[$i], $orders[$i]->id_orden);
+	}
+	return $studyId;
+}
+
+function updateStudyOrder($order, $orderId) {
+	$order = (array) $order;
+	unset($order['$$hashKey']);
+	unset($order["id_orden"]);
+	$order["id_estudio"] = $studyId;
+	$order["id_cliente"] = $clientId;
+	$order["id_cuerpo_receptor"] = 5;
+	$order["id_status"] = 1;
+	$order["costo_total"] = 0;
+
+	$sql = "INSERT INTO Orden (id_estudio, id_cliente, id_matriz,
+		id_tipo_muestreo, id_norma, id_cuerpo_receptor, id_status,
+		id_usuario_captura, id_usuario_valida, id_usuario_actualiza,
+		cantidad_muestras, costo_total, cuerpo_receptor,
+		tipo_cuerpo, fecha, fecha_entrega, fecha_captura,
+		fecha_valida, fecha_actualiza, fecha_rechaza,
+		ip_captura, ip_valida, ip_actualiza, host_captura,
+		host_valida, host_actualiza, motivo_rechaza,
+		comentarios, activo)
+		VALUES (:id_estudio, :id_cliente, :id_matriz,
+		:id_tipo_muestreo, :id_norma, :id_cuerpo_receptor, :id_status,
+		:id_usuario_captura, :id_usuario_valida, :id_usuario_actualiza,
+		:cantidad_muestras, :costo_total, :cuerpo_receptor,
+		:tipo_cuerpo, :fecha, :fecha_entrega, :fecha_captura,
+		:fecha_valida, :fecha_actualiza, :fecha_rechaza,
+		:ip_captura, :ip_valida, :ip_actualiza, :host_captura,
+		:host_valida, :host_actualiza, :motivo_rechaza,
+		:comentarios, :activo)";
+	$db = getConnection();
+	$stmt = $db->prepare($sql);
+	$stmt->execute($order);
+	$db = null;
+	return $order["id_orden"];
 }
 
 // function insertUser($requestData) {

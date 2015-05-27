@@ -165,13 +165,13 @@ $app->get("/orders(/)(:orderId)", function($orderId = -1) use ($app) {
 		$userId = decodeUserToken($app->request())->uid;
 		if ($orderId > -1)
 		{
-			$result = getOrder($orderId);
-			//$result = json_encode(getOrder($orderId));
+			//$result = getOrder($orderId);
+			$result = json_encode(getOrder($orderId));
 		}
 		else
 		{
-			$result = getOrders();
-			//$result = json_encode(getOrders());
+			//$result = getOrders();
+			$result = json_encode(getOrders());
 		}
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
@@ -188,15 +188,15 @@ $app->post("/orders", function() use ($app) {
 		$userId = decodeUserToken($app->request())->uid;
 		$request = $app->request();
 		$requestData = extractDataFromRequest($request);
-		//$orderId = extractDataFromRequest($request)->id_orden;
-		// if ($orderId < 1)
-		// {
-		// 	$result = insertOrder($request);
-		// }
-		// else
-		// {
-		// 	$result = updateOrder($request);
-		// }
+		$orderId = extractDataFromRequest($request)->id_orden;
+		if ($orderId < 1)
+		{
+			$result = insertOrder($request);
+		}
+		else
+		{
+			$result = updateOrder($request);
+		}
 		$result = json_encode($requestData);
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
@@ -213,11 +213,11 @@ $app->get("/plans(/)(:planId)", function($planId = -1) use ($app) {
 		$userId = decodeUserToken($app->request())->uid;
 		if ($planId > -1)
 		{
-			$result = \Service\DALSislab::getInstance()->getPlan($planId);
+			$result = getPlan($planId);
 		}
 		else
 		{
-			$result = \Service\DALSislab::getInstance()->getPlans();
+			$result = getPlans();
 		}
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
@@ -1007,11 +1007,11 @@ $app->get("/users(/)(:userId)", function($userId = -1) use ($app) {
 		$userId = decodeUserToken($app->request())->uid;
 		if ($userId > -1)
 		{
-			$result = \Service\DALSislab::getInstance()->getUser($userId);
+			$result = getUser($userId);
 		}
 		else
 		{
-			$result = \Service\DALSislab::getInstance()->getUsers();
+			$result = getUsers();
 		}
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
@@ -1024,7 +1024,6 @@ $app->get("/users(/)(:userId)", function($userId = -1) use ($app) {
 });
 
 $app->run();
-//comment json_decode for db use...
 function processUserJwt($request) {
 	$input = json_decode($request->getbody());
 	$usr = $input->username;
@@ -1032,6 +1031,7 @@ function processUserJwt($request) {
 
 	$userData = getUserByCredentials($usr, $pwd);
 	$userInfo = $userData[0];
+	//comment json_decode for db use...
 	//$userInfo = json_decode($userData);
 
 	$userId = $userInfo->id_usuario;
@@ -1233,7 +1233,7 @@ function processMenuToJson($items) {
 }
 
 function getUserByCredentials($userName, $userPassword) {
-	$result = \Service\DALSislab::getInstance()->getUserByCredentials($userName, $userPassword);
+	//$result = \Service\DALSislab::getInstance()->getUserByCredentials($userName, $userPassword);
 	//$userName = "rgarcia";
 	////$userPassword = "8493a161f70fffc0dcd4732ae4f6c4667f373688fff802ea13c71bd0fce41cb1";
 	$sql = "SELECT id_usuario, id_nivel, id_rol, id_area, id_puesto,
@@ -1248,7 +1248,9 @@ function getUserByCredentials($userName, $userPassword) {
 	$stmt->bindParam("userName", $userName);
 	$stmt->bindParam("userPassword", $userPassword);
 	$stmt->execute();
-	return $stmt->fetchAll(PDO::FETCH_OBJ);
+	$result = $stmt->fetchAll(PDO::FETCH_OBJ);
+	$db = null;
+	return $result;
 }
 
 function getUser($userId) {
@@ -1264,7 +1266,9 @@ function getUser($userId) {
 	$stmt = $db->prepare($sql);
 	$stmt->bindParam("userId", $userId);
 	$stmt->execute();
-	return $stmt->fetchAll(PDO::FETCH_OBJ);
+	$result = $stmt->fetchAll(PDO::FETCH_OBJ);
+	$db = null;
+	return $result;
 }
 
 function getUsers() {
@@ -1281,7 +1285,9 @@ function getUsers() {
 	$stmt->bindParam("userName", $userName);
 	$stmt->bindParam("userPassword", $userPassword);
 	$stmt->execute();
-	return $stmt->fetchAll(PDO::FETCH_ASSOC);
+	$result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+	$db = null;
+	return $result;
 }
 
 function getMenu($userId) {
@@ -1301,7 +1307,9 @@ function getMenu($userId) {
 	$stmt = $db->prepare($sql);
 	$stmt->bindParam("userId", $userId);
 	$stmt->execute();
-	return processMenuToJson($stmt->fetchAll(PDO::FETCH_ASSOC));
+	$result = processMenuToJson($stmt->fetchAll(PDO::FETCH_ASSOC));
+	$db = null;
+	return $result;
 }
 
 function getTasks($userId) {
@@ -1329,11 +1337,13 @@ function getClient($clientId) {
 	$stmt = $db->prepare($sql);
 	$stmt->bindParam("clientId", $clientId);
 	$stmt->execute();
-	return $stmt->fetchAll(PDO::FETCH_OBJ);
+	$result = $stmt->fetchAll(PDO::FETCH_OBJ);
+	$db = null;
+	return $result;
 }
 
 function getClients() {
-	//$result = \Service\DALSislab::getInstance()->getClient($clientId);
+	//$result = \Service\DALSislab::getInstance()->getClients();
 	$sql = "SELECT id_cliente, id_estado, id_municipio,
 		id_localidad, interno, cea, tasa, cliente, area,
 		rfc, calle, numero, colonia, codigo_postal, telefono,
@@ -1345,7 +1355,9 @@ function getClients() {
 	$db = getConnection();
 	$stmt = $db->prepare($sql);
 	$stmt->execute();
-	return $stmt->fetchAll(PDO::FETCH_ASSOC);
+	$result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+	$db = null;
+	return $result;
 }
 
 function getStudies() {
@@ -1364,6 +1376,7 @@ function getStudies() {
 	$stmt = $db->prepare($sql);
 	$stmt->execute();
 	$studies = $stmt->fetchAll(PDO::FETCH_ASSOC);
+	4db = null;
 	$i = 0;
 	$l = count($studies);
 	for ($i = 0; $i < $l; $i++) {
@@ -1454,7 +1467,6 @@ function getStudy($studyId) {
 	return $result;
 }
 
-
 function getStudyOrders($studyId) {
 	$sql = "SELECT id_orden, id_estudio, id_cliente, id_matriz,
 		id_tipo_muestreo, id_norma, id_cuerpo_receptor, id_status,
@@ -1470,7 +1482,9 @@ function getStudyOrders($studyId) {
 	$stmt = $db->prepare($sql);
 	$stmt->bindParam("studyId", $studyId);
 	$stmt->execute();
-	return $stmt->fetchAll(PDO::FETCH_ASSOC);
+	$result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+	$db = null;
+	return $result;
 }
 
 function getLastStudyByYear($yearId) {
@@ -1680,45 +1694,104 @@ function updateStudyOrder($order, $orderId, $userId, $ip, $url) {
 }
 
 function getOrders() {
-	$result = \Service\DALSislab::getInstance()->getOrders();
-	// $sql = "SELECT id_orden, id_estudio, id_cliente, id_matriz,
-	// 	id_tipo_muestreo, id_norma, id_cuerpo_receptor, id_status,
-	// 	id_usuario_captura, id_usuario_valida, id_usuario_actualiza,
-	// 	cantidad_muestras, costo_total, cuerpo_receptor, tipo_cuerpo,
-	// 	fecha, fecha_entrega, fecha_captura, fecha_valida,
-	// 	fecha_actualiza, fecha_rechaza, ip_captura, ip_valida,
-	// 	ip_actualiza, host_captura, host_valida, host_actualiza,
-	// 	motivo_rechaza, comentarios, activo
-	// 	FROM Orden
-	// 	WHERE activo = 1";
-	// $db = getConnection();
-	// $stmt = $db->prepare($sql);
-	// $stmt->execute();
-	// $orders = $stmt->fetchAll(PDO::FETCH_ASSOC);
-	// return $orders;
-	return $result;
+	// $orders = \Service\DALSislab::getInstance()->getOrders();
+	$sql = "SELECT id_orden, id_estudio, id_cliente, id_matriz,
+		id_tipo_muestreo, id_norma, id_cuerpo_receptor, id_status,
+		id_usuario_captura, id_usuario_valida, id_usuario_actualiza,
+		cantidad_muestras, costo_total, cuerpo_receptor, tipo_cuerpo,
+		fecha, fecha_entrega, fecha_captura, fecha_valida,
+		fecha_actualiza, fecha_rechaza, ip_captura, ip_valida,
+		ip_actualiza, host_captura, host_valida, host_actualiza,
+		motivo_rechaza, comentarios, activo
+		FROM Orden
+		WHERE activo = 1";
+	$db = getConnection();
+	$stmt = $db->prepare($sql);
+	$stmt->execute();
+	$orders = $stmt->fetchAll(PDO::FETCH_ASSOC);
+	$db = null;
+	return $orders;
 }
 
 function getOrder($orderId) {
-	$result = \Service\DALSislab::getInstance()->getOrder($orderId);
-	// $sql = "SELECT id_orden, id_estudio, id_cliente, id_matriz,
-	// 	id_tipo_muestreo, id_norma, id_cuerpo_receptor, id_status,
-	// 	id_usuario_captura, id_usuario_valida, id_usuario_actualiza,
-	// 	cantidad_muestras, costo_total, cuerpo_receptor, tipo_cuerpo,
-	// 	fecha, fecha_entrega, fecha_captura, fecha_valida,
-	// 	fecha_actualiza, fecha_rechaza, ip_captura, ip_valida,
-	// 	ip_actualiza, host_captura, host_valida, host_actualiza,
-	// 	motivo_rechaza, comentarios, activo
-	// 	FROM Orden
-	// 	WHERE activo = 1 AND id_orden = :orderId";
-	// $db = getConnection();
-	// $stmt = $db->prepare($sql);
-	// $stmt->bindParam("orderId", $orderId);
-	// $stmt->execute();
-	// $order = $stmt->fetchAll(PDO::FETCH_ASSOC);
-	// $db = null;
-	// $result = $order[0];
+	// $result = \Service\DALSislab::getInstance()->getOrder($orderId);
+	$sql = "SELECT id_orden, id_estudio, id_cliente, id_matriz,
+		id_tipo_muestreo, id_norma, id_cuerpo_receptor, id_status,
+		id_usuario_captura, id_usuario_valida, id_usuario_actualiza,
+		cantidad_muestras, costo_total, cuerpo_receptor, tipo_cuerpo,
+		fecha, fecha_entrega, fecha_captura, fecha_valida,
+		fecha_actualiza, fecha_rechaza, ip_captura, ip_valida,
+		ip_actualiza, host_captura, host_valida, host_actualiza,
+		motivo_rechaza, comentarios, activo
+		FROM Orden
+		WHERE activo = 1 AND id_orden = :orderId";
+	$db = getConnection();
+	$stmt = $db->prepare($sql);
+	$stmt->bindParam("orderId", $orderId);
+	$stmt->execute();
+	$order = $stmt->fetchAll(PDO::FETCH_ASSOC);
+	$db = null;
+	$result = $order[0];
+	//TODO : getClient($clientId);
+	//TODO : getStudy($studyId);
+
 	return $result;
+}
+
+function getPlans() {
+	// $plans = \Service\DALSislab::getInstance()->getPlans();
+	$sql = "SELECT id_plan, id_estudio, id_orden, id_ubicacion,
+			id_paquete, id_objetivo_plan, id_norma_muestreo,
+			id_supervisor_muestreo, id_supervisor_entrega,
+			id_supervisor_recoleccion, id_supervisor_registro,
+			id_ayudante_entrega, id_ayudante_recoleccion,
+			id_ayudante_registro, id_responsable_calibracion,
+			id_responsable_recipientes, id_responsable_reactivos,
+			id_responsable_material, id_responsable_hieleras, id_status,
+			id_usuario_captura, id_usuario_valida, id_usuario_actualiza,
+			fecha, fecha_probable, fecha_calibracion, fecha_captura,
+			fecha_valida, fecha_actualiza, fecha_rechaza, ip_captura,
+			ip_valida, ip_actualiza, host_captura, host_valida,
+			host_actualiza, calle, numero, colonia, codigo_postal,
+			telefono, contacto, email, comentarios_ubicacion,
+			cantidad_puntos, cantidad_equipos, cantidad_recipientes,
+			cantidad_reactivos, cantidad_hieleras, frecuencia,
+			objetivo_otro, motivo_rechaza, comentarios, activo
+		FROM Plan
+		WHERE activo = 1";
+	$db = getConnection();
+	$stmt = $db->prepare($sql);
+	$stmt->execute();
+	$plans = $stmt->fetchAll(PDO::FETCH_ASSOC);
+	return $plans;
+}
+
+function getPlan($planId) {
+	// $plan = \Service\DALSislab::getInstance()->getPlan($planId);
+	$sql = "SELECT id_plan, id_estudio, id_orden, id_ubicacion,
+			id_paquete, id_objetivo_plan, id_norma_muestreo,
+			id_supervisor_muestreo, id_supervisor_entrega,
+			id_supervisor_recoleccion, id_supervisor_registro,
+			id_ayudante_entrega, id_ayudante_recoleccion,
+			id_ayudante_registro, id_responsable_calibracion,
+			id_responsable_recipientes, id_responsable_reactivos,
+			id_responsable_material, id_responsable_hieleras, id_status,
+			id_usuario_captura, id_usuario_valida, id_usuario_actualiza,
+			fecha, fecha_probable, fecha_calibracion, fecha_captura,
+			fecha_valida, fecha_actualiza, fecha_rechaza, ip_captura,
+			ip_valida, ip_actualiza, host_captura, host_valida,
+			host_actualiza, calle, numero, colonia, codigo_postal,
+			telefono, contacto, email, comentarios_ubicacion,
+			cantidad_puntos, cantidad_equipos, cantidad_recipientes,
+			cantidad_reactivos, cantidad_hieleras, frecuencia,
+			objetivo_otro, motivo_rechaza, comentarios, activo
+		FROM Plan
+		WHERE activo = 1 AND id_plan = :planId";
+	$db = getConnection();
+	$stmt = $db->prepare($sql);
+	$stmt->execute();
+	$plan = $stmt->fetchAll(PDO::FETCH_ASSOC);
+	return $plan;
 }
 
 // function insertUser($requestData) {

@@ -281,7 +281,7 @@
         .$promise
         .then(function success(response) {
           $location.path(returnPath);
-          return response[itemIdName];
+          return response;
         }, function error(response) {
           if (response.status === 404)
           {
@@ -300,15 +300,16 @@
      * @param {Object} service - Proveedor de datos a usar
      * @param {String} data - JSON a enviar al servicio
      * @param {String} returnPath - Ruta de la vista a desplegar, éxito
-     * @param {String} itemIdName - Propiedad a usar como identificador del recurso
+     * @param {String} itemIdName - Nombre del identificador del recurso
      */
     function updateData(service, data, returnPath, itemIdName) {
       service
         .update(JSON.stringify(data))
         .$promise
         .then(function success(response) {
-          $location.path(returnPath + '/' + response[itemIdName]);
-          return response[itemIdName];
+          //$location.path(returnPath + '/' + response[itemIdName]);
+          $location.path(returnPath);
+          return response;
         }, function error(response) {
           if (response.status === 404)
           {
@@ -608,7 +609,7 @@
       },
       update: {
         method: 'POST',
-        params: {studyId: 'id_estudio'},
+        params: {},
         isArray: false,
         headers: {
           'Auth-Token': TokenService.getToken()
@@ -663,7 +664,7 @@
       },
       update: {
         method: 'POST',
-        params: {quoteId:'id_solicitud'},
+        params: {},
         isArray: false,
         headers: {
           'Auth-Token': TokenService.getToken()
@@ -717,7 +718,7 @@
       },
       update: {
         method: 'POST',
-        params: {orderId: 'id_orden'},
+        params: {},
         isArray: false,
         headers: {
           'Auth-Token': TokenService.getToken()
@@ -771,7 +772,7 @@
       },
       update: {
         method: 'POST',
-        params: {planId: 'id_plan'},
+        params: {},
         isArray: false,
         headers: {
           'Auth-Token': TokenService.getToken()
@@ -825,7 +826,7 @@
       },
       update: {
         method: 'POST',
-        params: {sheetId: 'id_hoja'},
+        params: {},
         isArray: false,
         headers: {
           'Auth-Token': TokenService.getToken()
@@ -879,7 +880,7 @@
       },
       update: {
         method: 'POST',
-        params: {receptionId: 'id_recepcion'},
+        params: {},
         isArray: false,
         headers: {
           'Auth-Token': TokenService.getToken()
@@ -933,7 +934,7 @@
       },
       update: {
         method: 'POST',
-        params: {custodyId: 'id_custodia'},
+        params: {},
         isArray: false,
         headers: {
           'Auth-Token': TokenService.getToken()
@@ -987,7 +988,7 @@
       },
       update: {
         method: 'POST',
-        params: {clientId: 'id_cliente'},
+        params: {},
         isArray: false,
         headers: {
           'Auth-Token': TokenService.getToken()
@@ -1041,7 +1042,7 @@
       },
       update: {
         method: 'POST',
-        params: {pointId: 'id_punto'},
+        params: {},
         isArray: false,
         headers: {
           'Auth-Token': TokenService.getToken()

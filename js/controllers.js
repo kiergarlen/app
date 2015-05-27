@@ -221,10 +221,12 @@
     }
 
     function approveItem() {
+      vm.study.id_etapa = 2;
       ValidationService.approveItem(vm.study, vm.user);
     }
 
     function rejectItem() {
+      vm.study.id_etapa = 1;
       ValidationService.rejectItem(vm.study, vm.user);
     }
 
@@ -322,6 +324,7 @@
         vm.isDataSubmitted = true;
         if (vm.study.id_estudio < 1)
         {
+          //vm.study.$save();
           RestUtilsService
             .saveData(
               StudyService,
@@ -331,8 +334,9 @@
         }
         else
         {
-          if (vm.user.level < 3 || vm.study.study.id_status < 2)
+          if (vm.user.level < 3 || vm.study.study.id_status != 2)
           {
+            //vm.study.$update();
             RestUtilsService
               .updateData(
                 StudyService,
@@ -500,7 +504,7 @@
         }
         else
         {
-          if (vm.user.level < 3 || vm.quote.quote.id_status < 2)
+          if (vm.user.level < 3 || vm.quote.quote.id_status !== 2)
           {
             RestUtilsService
               .updateData(
@@ -689,7 +693,7 @@
         }
         else
         {
-          if (vm.user.level < 3 || vm.order.order.id_status < 2)
+          if (vm.user.level < 3 || vm.order.order.id_status !== 2)
           {
             RestUtilsService
               .updateData(
@@ -1209,7 +1213,7 @@
         }
         else
         {
-          if (vm.user.level < 3 || vm.plan.plan.id_status < 2)
+          if (vm.user.level < 3 || vm.plan.plan.id_status !== 2)
           {
             RestUtilsService
               .updateData(
@@ -1462,7 +1466,7 @@
         }
         else
         {
-          if (vm.user.level < 3 || vm.sheet.sheet.id_status < 2)
+          if (vm.user.level < 3 || vm.sheet.sheet.id_status !== 2)
           {
             RestUtilsService
               .updateData(
@@ -1631,7 +1635,7 @@
         }
         else
         {
-          if (vm.user.level < 3 || vm.reception.reception.id_status < 2)
+          if (vm.user.level < 3 || vm.reception.reception.id_status !== 2)
           {
             RestUtilsService
               .updateData(
@@ -1730,7 +1734,7 @@
         }
         else
         {
-          if (vm.user.level < 3 || vm.custody.custody.id_status < 2)
+          if (vm.user.level < 3 || vm.custody.custody.id_status !== 2)
           {
             RestUtilsService
               .updateData(

@@ -2,6 +2,7 @@
 require "../libs/Slim/Slim.php";
 require "../libs/JWT/JWT.php";
 require "./Services/DALSislab.php";
+require "./db.php";
 // cd372fb85148700fa88095e3492d3f9f5beb43e555e5ff26d95f5a6adc36f8e6
 define("KEY", "m0oxUT7L8Unn93hXMUGHpwq_jTSKVBjQfEVCUe8jZ38KUU4VSAfmsNk4JJYcJl7CukrY6QMlixxwat7AZSpDcSQ");
 
@@ -49,7 +50,7 @@ $app->post("/login", function() use ($app) {
 $app->get("/menu", function() use ($app) {
 	try {
 		$userId = decodeUserToken($app->request())->uid;
-		$result = getMenu($userId);
+		$result = processMenuToJson(getMenu($userId));
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
 		//$result = ")]}',\n" . $result;
@@ -78,7 +79,8 @@ $app->get("/tasks", function() use ($app) {
 $app->get("/studies(/)(:studyId)", function($studyId = -1) use ($app) {
 	try {
 		$userId = decodeUserToken($app->request())->uid;
-		if ($studyId > -1)
+		$result = json_encode(getBlankStudy($studyId));
+		if ($studyId > 0)
 		{
 			$result = json_encode(getStudy($studyId));
 		}
@@ -103,11 +105,13 @@ $app->post("/studies", function() use ($app) {
 		$studyId = extractDataFromRequest($request)->id_estudio;
 		if ($studyId < 1)
 		{
-			$result = insertStudy($request);
+			$insertData = processStudyInsert($request);
+			$result = insertStudy($insertData);
 		}
 		else
 		{
-			$result = updateStudy($request);
+			$updateData = processStudyUpdate($request);
+			$result = updateStudy($updateData);
 		}
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
@@ -119,46 +123,46 @@ $app->post("/studies", function() use ($app) {
 	}
 });
 
-$app->get("/quotes(/)(:quoteId)", function($quoteId = -1) use ($app) {
-	try {
-		$userId = decodeUserToken($app->request())->uid;
-		if ($quoteId > -1)
-		{
-			$result = \Service\DALSislab::getInstance()->getQuote($quoteId);
-		}
-		else
-		{
-			$result = \Service\DALSislab::getInstance()->getQuotes();
-		}
-		$app->response()->status(200);
-		$app->response()->header('Content-Type', 'application/json');
-		//$result = ")]}',\n" . $result;
-		print_r($result);
-	} catch (Exception $e) {
-		$app->response()->status(400);
-		$app->response()->header('X-Status-Reason', $e->getMessage());
-	}
-});
+// $app->get("/quotes(/)(:quoteId)", function($quoteId = -1) use ($app) {
+// 	try {
+// 		$userId = decodeUserToken($app->request())->uid;
+// 		if ($quoteId > -1)
+// 		{
+// 			$result = \Service\DALSislab::getInstance()->getQuote($quoteId);
+// 		}
+// 		else
+// 		{
+// 			$result = \Service\DALSislab::getInstance()->getQuotes();
+// 		}
+// 		$app->response()->status(200);
+// 		$app->response()->header('Content-Type', 'application/json');
+// 		//$result = ")]}',\n" . $result;
+// 		print_r($result);
+// 	} catch (Exception $e) {
+// 		$app->response()->status(400);
+// 		$app->response()->header('X-Status-Reason', $e->getMessage());
+// 	}
+// });
 
-$app->post("/quotes", function() use ($app) {
-	try {
-		$request = $app->request();
-		$requestBody = $request->getBody();
+// $app->post("/quotes", function() use ($app) {
+// 	try {
+// 		$request = $app->request();
+// 		$requestBody = $request->getBody();
 
-		$requestData = extractDataFromRequest($request);
-		$result = json_encode($requestData);
+// 		$requestData = extractDataFromRequest($request);
+// 		$result = json_encode($requestData);
 
-		$userId = decodeUserToken($app->request())->uid;
-		//$result = insertStudy();
-		$app->response()->status(200);
-		$app->response()->header('Content-Type', 'application/json');
-		//$result = ")]}',\n" . $result;
-		print_r($result);
-	} catch (Exception $e) {
-		$app->response()->status(400);
-		$app->response()->header('X-Status-Reason', $e->getMessage());
-	}
-});
+// 		$userId = decodeUserToken($app->request())->uid;
+// 		//$result = insertStudy();
+// 		$app->response()->status(200);
+// 		$app->response()->header('Content-Type', 'application/json');
+// 		//$result = ")]}',\n" . $result;
+// 		print_r($result);
+// 	} catch (Exception $e) {
+// 		$app->response()->status(400);
+// 		$app->response()->header('X-Status-Reason', $e->getMessage());
+// 	}
+// });
 
 $app->get("/orders(/)(:orderId)", function($orderId = -1) use ($app) {
 	try {
@@ -191,13 +195,29 @@ $app->post("/orders", function() use ($app) {
 		$orderId = extractDataFromRequest($request)->id_orden;
 		if ($orderId < 1)
 		{
-			$result = insertOrder($request);
+			$insertData = processOrderInsert($request);
+			$result = insertOrder($insertData);
 		}
 		else
 		{
-			$result = updateOrder($request);
+			$updateData = processOrderUpdate($request);
+			$result = updateOrder($updateData);
 		}
 		$result = json_encode($requestData);
+		$app->response()->status(200);
+		$app->response()->header('Content-Type', 'application/json');
+		//$result = ")]}',\n" . $result;
+		print_r($result);
+	} catch (Exception $e) {
+		$app->response()->status(400);
+		$app->response()->header('X-Status-Reason', $e->getMessage());
+	}
+});
+
+$app->get("/order/sources", function() use ($app) {
+	try {
+		$userId = decodeUserToken($app->request())->uid;
+		$result = getOrderSources();
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
 		//$result = ")]}',\n" . $result;
@@ -426,20 +446,6 @@ $app->get("/sampling/types", function() use ($app) {
 	try {
 		$userId = decodeUserToken($app->request())->uid;
 		$result = \Service\DALSislab::getInstance()->getSamplingTypes();
-		$app->response()->status(200);
-		$app->response()->header('Content-Type', 'application/json');
-		//$result = ")]}',\n" . $result;
-		print_r($result);
-	} catch (Exception $e) {
-		$app->response()->status(400);
-		$app->response()->header('X-Status-Reason', $e->getMessage());
-	}
-});
-
-$app->get("/order/sources", function() use ($app) {
-	try {
-		$userId = decodeUserToken($app->request())->uid;
-		$result = \Service\DALSislab::getInstance()->getOrderSources();
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
 		//$result = ")]}',\n" . $result;
@@ -1024,6 +1030,7 @@ $app->get("/users(/)(:userId)", function($userId = -1) use ($app) {
 });
 
 $app->run();
+
 function processUserJwt($request) {
 	$input = json_decode($request->getbody());
 	$usr = $input->username;
@@ -1096,87 +1103,47 @@ function decodeUserToken($request) {
 	}
 }
 
-function formatIsoDateForSqlServer($dateString) {
-	$format = 'Y-m-d H:i:s';
-	if (strlen($dateString) > 18)
-	{
-		$dateString = substr($dateString, 0, 19);
-		$dateString = str_replace("T", " ", $dateString);
-		if (DateTime::createFromFormat($format, $dateString))
-		{
-			$date = DateTime::createFromFormat($format, $dateString);
-			return $date->format($format);
-		}
-	}
-	if (strlen($dateString) == 10)
-	{
-		$date = DateTime::createFromFormat('Y-m-d', $dateString);
-		return $date->format($format);
-	}
-	return "1970-01-01 00:00";
-}
-
-function getConnection() {
-	try {
-		// $dsn = "mysql:host=";
-		// $dsn .= DB_HOST . ";";
-		// $dsn .= "port=" . DB_PORT . ";";
-		// $dsn .= "dbname=" . DB_DATA_BASE;
-		$dsn = "sqlsrv:server=";
-		$dsn .= DB_HOST . ";Database=";
-		$dsn .= DB_DATA_BASE;
-
-		$dbConnection = new PDO($dsn, DB_USER, DB_PASSWORD);
-		$dbConnection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-	} catch(PDOException $e) {
-		//error_log($e->getMessage(), 3, '/var/tmp/php.log');
-		//echo '{"error":{"text":'. $e->getMessage() .'}}';
-		$output = '{"error":"' . $e->getMessage() . '"}';
-	}
-	return $dbConnection;
-}
-
-function processResultToJson($items, $isArrayOutputExpected) {
-	$output = "";
-	if ($isArrayOutputExpected)
-	{
-		$output .= "[";
-	}
-	$i = 0;
-	$l = count($items);
-	foreach ($items as $item) {
-		$i++;
-		$j = 0;
-		$item = (array)$item;
-		$m = count($item);
-		$output .= "{";
-		foreach ($item as $key => $value) {
-			$j++;
-			$output .= '"' . $key . '":';
-			$v = $value;
-			if (!is_numeric($v) && strtotime($v))
-			{
-				$dateArray = explode(" ", $v);
-				$v = $dateArray[0] . 'T'. substr($dateArray[1], 0, 5) . '-06:00';
-			}
-			$output .= '"' . $v .'"';
-			if ($j < $m)
-			{
-				$output .= ",";
-			}
-		}
-		$output .= "}";
-		if ($isArrayOutputExpected && $i < $l)
-		{
-			$output .= ",";
-		}
-	}
-	if ($isArrayOutputExpected)
-	{
-		$output .= "]";
-	}
-	return $output;
-}
+// function processResultToJson($items, $isArrayOutputExpected) {
+// 	$output = "";
+// 	if ($isArrayOutputExpected)
+// 	{
+// 		$output .= "[";
+// 	}
+// 	$i = 0;
+// 	$l = count($items);
+// 	foreach ($items as $item) {
+// 		$i++;
+// 		$j = 0;
+// 		$item = (array)$item;
+// 		$m = count($item);
+// 		$output .= "{";
+// 		foreach ($item as $key => $value) {
+// 			$j++;
+// 			$output .= '"' . $key . '":';
+// 			$v = $value;
+// 			if (!is_numeric($v) && strtotime($v))
+// 			{
+// 				$dateArray = explode(" ", $v);
+// 				$v = $dateArray[0] . 'T'. substr($dateArray[1], 0, 5) . '-06:00';
+// 			}
+// 			$output .= '"' . $v .'"';
+// 			if ($j < $m)
+// 			{
+// 				$output .= ",";
+// 			}
+// 		}
+// 		$output .= "}";
+// 		if ($isArrayOutputExpected && $i < $l)
+// 		{
+// 			$output .= ",";
+// 		}
+// 	}
+// 	if ($isArrayOutputExpected)
+// 	{
+// 		$output .= "]";
+// 	}
+// 	return $output;
+// }
 
 function processMenuToJson($items) {
 	$output = '';
@@ -1232,284 +1199,27 @@ function processMenuToJson($items) {
 	return $output;
 }
 
-function getUserByCredentials($userName, $userPassword) {
-	//$result = \Service\DALSislab::getInstance()->getUserByCredentials($userName, $userPassword);
-	//$userName = "rgarcia";
-	////$userPassword = "8493a161f70fffc0dcd4732ae4f6c4667f373688fff802ea13c71bd0fce41cb1";
-	$sql = "SELECT id_usuario, id_nivel, id_rol, id_area, id_puesto,
-		interno, cea, laboratorio, supervisa, analiza, muestrea,
-		nombres, apellido_paterno, apellido_materno, usr, pwd,
-		fecha_captura, fecha_actualiza, ip_captura, ip_actualiza,
-		host_captura, host_actualiza, activo
-		FROM Usuario
-		WHERE activo = 1 AND pwd = :userPassword AND usr = :userName";
-	$db = getConnection();
-	$stmt = $db->prepare($sql);
-	$stmt->bindParam("userName", $userName);
-	$stmt->bindParam("userPassword", $userPassword);
-	$stmt->execute();
-	$result = $stmt->fetchAll(PDO::FETCH_OBJ);
-	$db = null;
-	return $result;
-}
-
-function getUser($userId) {
-	//$result = \Service\DALSislab::getInstance()->getUser($userId);
-	$sql = "SELECT id_usuario, id_nivel, id_rol, id_area, id_puesto,
-		interno, cea, laboratorio, supervisa, analiza, muestrea, nombres,
-		apellido_paterno, apellido_materno, usr, pwd, fecha_captura,
-		fecha_actualiza, ip_captura, ip_actualiza,
-		host_captura, host_actualiza, activo
-		FROM Usuario
-		WHERE activo = 1 AND id_usuario = :userId";
-	$db = getConnection();
-	$stmt = $db->prepare($sql);
-	$stmt->bindParam("userId", $userId);
-	$stmt->execute();
-	$result = $stmt->fetchAll(PDO::FETCH_OBJ);
-	$db = null;
-	return $result;
-}
-
-function getUsers() {
-	//$result = \Service\DALSislab::getInstance()->getUsers();
-	$sql = "SELECT id_usuario, id_nivel, id_rol, id_area, id_puesto,
-		interno, cea, laboratorio, supervisa, analiza, muestrea,
-		nombres, apellido_paterno, apellido_materno, usr, pwd,
-		fecha_captura, fecha_actualiza, ip_captura, ip_actualiza,
-		host_captura, host_actualiza, activo
-		FROM Usuario
-		WHERE activo = 1";
-	$db = getConnection();
-	$stmt = $db->prepare($sql);
-	$stmt->bindParam("userName", $userName);
-	$stmt->bindParam("userPassword", $userPassword);
-	$stmt->execute();
-	$result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-	$db = null;
-	return $result;
-}
-
-function getMenu($userId) {
-	//$result = \Service\DALSislab::getInstance()->getMenu($userId);
-	$sql = "SELECT
-		Menu.id_menu, Submenu.id_submenu, Menu.orden,
-		Submenu.orden AS orden_submenu, Menu.menu,
-		Submenu.menu AS submenu,Submenu.url
-		FROM Usuario INNER JOIN
-		Rol ON Usuario.id_rol = Rol.id_rol INNER JOIN
-		RolSubmenu ON Rol.id_rol = RolSubmenu.id_rol INNER JOIN
-		Submenu ON RolSubmenu.id_submenu = Submenu.id_submenu INNER JOIN
-		Menu ON Submenu.id_menu = Menu.id_menu
-		WHERE Usuario.activo = 1 AND Usuario.id_usuario = :userId
-		ORDER BY Menu.id_menu, Menu.orden, orden_submenu";
-	$db = getConnection();
-	$stmt = $db->prepare($sql);
-	$stmt->bindParam("userId", $userId);
-	$stmt->execute();
-	$result = processMenuToJson($stmt->fetchAll(PDO::FETCH_ASSOC));
-	$db = null;
-	return $result;
-}
-
-function getTasks($userId) {
-	$result = '[]';
-	// $sql = "SELECT * FROM Tarea WHERE activo = 1";
-	// $db = getConnection();
-	// $stmt = $db->prepare($sql);
-	// $stmt->bindParam("userId", $userId);
-	// $stmt->execute();
-	// $result = json_encode($stmt->fetchAll(PDO::FETCH_ASSOC));
-	return $result;
-}
-
-function getClient($clientId) {
-	//$result = \Service\DALSislab::getInstance()->getClient($clientId);
-	$sql = "SELECT id_cliente, id_estado, id_municipio,
-		id_localidad, interno, cea, tasa, cliente, area,
-		rfc, calle, numero, colonia, codigo_postal, telefono,
-		fax, contacto, puesto_contacto, email, fecha_captura,
-		fecha_actualiza, ip_captura, ip_actualiza, host_captura,
-		host_actualiza, activo
-		FROM Cliente
-		WHERE activo = 1 AND id_cliente = :clientId";
-	$db = getConnection();
-	$stmt = $db->prepare($sql);
-	$stmt->bindParam("clientId", $clientId);
-	$stmt->execute();
-	$result = $stmt->fetchAll(PDO::FETCH_OBJ);
-	$db = null;
-	return $result;
-}
-
-function getClients() {
-	//$result = \Service\DALSislab::getInstance()->getClients();
-	$sql = "SELECT id_cliente, id_estado, id_municipio,
-		id_localidad, interno, cea, tasa, cliente, area,
-		rfc, calle, numero, colonia, codigo_postal, telefono,
-		fax, contacto, puesto_contacto, email, fecha_captura,
-		fecha_actualiza, ip_captura, ip_actualiza, host_captura,
-		host_actualiza, activo
-		FROM Cliente
-		WHERE activo = 1";
-	$db = getConnection();
-	$stmt = $db->prepare($sql);
-	$stmt->execute();
-	$result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-	$db = null;
-	return $result;
-}
-
-function getStudies() {
-	//$result = \Service\DALSislab::getInstance()->getStudies();
-	$sql = "SELECT id_estudio, id_cliente, id_origen_orden,
-		id_ubicacion, id_ejercicio, id_status, id_etapa,
-		id_usuario_captura, id_usuario_valida, id_usuario_entrega,
-		id_usuario_actualiza, oficio, folio, origen_descripcion,
-		ubicacion, fecha, fecha_entrega, fecha_captura, fecha_valida,
-		fecha_rechaza, ip_captura, ip_valida, ip_actualiza,
-		host_captura, host_valida, host_actualiza, motivo_rechaza,
-		activo
-		FROM Estudio
-		WHERE activo = 1";
-	$db = getConnection();
-	$stmt = $db->prepare($sql);
-	$stmt->execute();
-	$studies = $stmt->fetchAll(PDO::FETCH_ASSOC);
-	4db = null;
-	$i = 0;
-	$l = count($studies);
-	for ($i = 0; $i < $l; $i++) {
-		$studies[$i]["cliente"] = getClient($studies[$i]['id_cliente'])[0];
-		$studies[$i]["ordenes"] = getStudyOrders($studies[$i]['id_estudio']);
-	}
-	return $studies;
-}
-
-function getStudy($studyId) {
-	if ($studyId < 1)
+function formatIsoDateForMsSql($dateString) {
+	$format = 'Y-m-d H:i:s';
+	if (strlen($dateString) > 18)
 	{
-		$result = array(
-			"id_estudio" => 0, "id_cliente" => 0,
-			"id_origen_orden" => 0, "id_ubicacion" => 1,
-			"id_ejercicio" => 2015, "id_status" => 1,
-			"id_etapa" => 1, "id_usuario_captura" => 0,
-			"id_usuario_valida" => 0, "id_usuario_entrega" => 0,
-			"id_usuario_actualiza" => 0, "oficio" => 0,
-			"folio" => "", "origen_descripcion" => "",
-			"ubicacion" => "", "fecha" => "",
-			"fecha_entrega" => "", "fecha_captura" => "",
-			"fecha_valida" => "", "fecha_rechaza" => "",
-			"ip_captura" => "", "ip_valida" => "",
-			"ip_actualiza" => "", "host_captura" => "",
-			"host_valida" => "", "host_actualiza" => "",
-			"motivo_rechaza" => "", "activo" => 1,
-			"cliente" => array(
-				"id_cliente" => 0, "id_estado" => 14,
-				"id_municipio" => 14039, "id_localidad" => 140390001,
-				"interno" => 0, "cea" => 0,
-				"tasa" => 0, "cliente" => "",
-				"area" => "", "rfc" => "",
-				"calle" => "", "numero" => "",
-				"colonia" => "", "codigo_postal" => "",
-				"telefono" => "", "fax" => "",
-				"contacto" => "", "puesto_contacto" => "",
-				"email" => "", "fecha_captura" => "",
-				"fecha_actualiza" => "", "ip_captura" => "",
-				"ip_actualiza" => "", "host_captura" => "",
-				"host_actualiza" => "", "activo" => 1
-			),
-			"ordenes" => array(
-				array(
-					"id_orden" => 0, "id_estudio" => 0,
-					"id_cliente" => 0, "id_matriz" => 0,
-					"id_tipo_muestreo" => 1, "id_norma" => 0,
-					"id_cuerpo_receptor" => 5, "id_status" => 1,
-					"id_usuario_captura" => 0, "id_usuario_valida" => 0,
-					"id_usuario_actualiza" => 0, "cantidad_muestras" => 0,
-					"costo_total" => 0, "cuerpo_receptor" => "",
-					"tipo_cuerpo" => "", "fecha" => "",
-					"fecha_entrega" => "", "fecha_captura" => "",
-					"fecha_valida" => "", "fecha_actualiza" => "",
-					"fecha_rechaza" => "", "ip_captura" => "",
-					"ip_valida" => "", "ip_actualiza" => "",
-					"host_captura" => "", "host_valida" => "",
-					"host_actualiza" => "", "motivo_rechaza" => "",
-					"comentarios" => "", "activo" => 1
-				)
-			)
-		);
+		$dateString = substr($dateString, 0, 19);
+		$dateString = str_replace("T", " ", $dateString);
+		if (DateTime::createFromFormat($format, $dateString))
+		{
+			$date = DateTime::createFromFormat($format, $dateString);
+			return $date->format($format);
+		}
 	}
-	else
+	if (strlen($dateString) == 10)
 	{
-		//$result = \Service\DALSislab::getInstance()->getStudy($studyId);
-		$sql = "SELECT id_estudio, id_cliente, id_origen_orden,
-			id_ubicacion, id_ejercicio, id_status, id_etapa,
-			id_usuario_captura, id_usuario_valida, id_usuario_entrega,
-			id_usuario_actualiza, oficio, folio, origen_descripcion,
-			ubicacion, fecha, fecha_entrega, fecha_captura, fecha_valida,
-			fecha_rechaza, ip_captura, ip_valida, ip_actualiza,
-			host_captura, host_valida, host_actualiza, motivo_rechaza,
-			activo
-			FROM Estudio
-			WHERE activo = 1 AND id_estudio = :studyId";
-		$db = getConnection();
-		$stmt = $db->prepare($sql);
-		$stmt->bindParam("studyId", $studyId);
-		$stmt->execute();
-		$study = $stmt->fetchAll(PDO::FETCH_ASSOC);
-		$db = null;
-		$clientId = $study[0]['id_cliente'];
-		$study[0]["cliente"] = getClient($clientId);
-		$study[0]["ordenes"] = getStudyOrders($studyId);
-		$result = $study[0];
+		$date = DateTime::createFromFormat('Y-m-d', $dateString);
+		return $date->format($format);
 	}
-	return $result;
+	return "1970-01-01 00:00";
 }
 
-function getStudyOrders($studyId) {
-	$sql = "SELECT id_orden, id_estudio, id_cliente, id_matriz,
-		id_tipo_muestreo, id_norma, id_cuerpo_receptor, id_status,
-		id_usuario_captura, id_usuario_valida, id_usuario_actualiza,
-		cantidad_muestras, costo_total, cuerpo_receptor, tipo_cuerpo,
-		fecha, fecha_entrega, fecha_captura, fecha_valida,
-		fecha_actualiza, fecha_rechaza, ip_captura, ip_valida,
-		ip_actualiza, host_captura, host_valida, host_actualiza,
-		motivo_rechaza, comentarios, activo
-		FROM Orden
-		WHERE activo = 1 AND id_estudio = :studyId";
-	$db = getConnection();
-	$stmt = $db->prepare($sql);
-	$stmt->bindParam("studyId", $studyId);
-	$stmt->execute();
-	$result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-	$db = null;
-	return $result;
-}
-
-function getLastStudyByYear($yearId) {
-	$sql = "SELECT TOP (1) id_estudio, id_cliente, id_origen_orden,
-		id_ubicacion, id_ejercicio, id_status, id_etapa,
-		id_usuario_captura, id_usuario_valida, id_usuario_entrega,
-		id_usuario_actualiza, oficio, folio, origen_descripcion,
-		ubicacion, fecha, fecha_entrega, fecha_captura, fecha_valida,
-		fecha_rechaza, ip_captura, ip_valida, ip_actualiza,
-		host_captura, host_valida, host_actualiza, motivo_rechaza,
-		activo
-		FROM Estudio
-		WHERE id_ejercicio = :yearId
-		ORDER BY id_estudio DESC";
-	$db = getConnection();
-	$stmt = $db->prepare($sql);
-	$stmt->bindParam("yearId", $yearId);
-	$stmt->execute();
-	$study = $stmt->fetchAll(PDO::FETCH_ASSOC);
-	$db = null;
-	$result = $study[0];
-	return $result;
-}
-
-function insertStudy($request) {
+function processStudyInsert($request) {
 	$token = decodeUserToken($request);
 	$insertData = (array) json_decode($request->getBody());
 	$lastStudyId = 0;
@@ -1534,76 +1244,12 @@ function insertStudy($request) {
 	$insertData["id_etapa"]  = 1;
 	$insertData["oficio"] = $lastStudyId;
 	$insertData["folio"] = $folio;
-	$insertData["fecha"] = formatIsoDateForSqlServer($insertData["fecha"]);
+	$insertData["fecha"] = formatIsoDateForMsSql($insertData["fecha"]);
 	$insertData["fecha_captura"] = date('Y-m-d H:i:s');
-
-	$sql = "INSERT INTO Estudio (id_cliente, id_origen_orden, id_ubicacion,
-		id_ejercicio, id_status, id_etapa, id_usuario_captura,
-		id_usuario_valida, id_usuario_entrega,
-		id_usuario_actualiza, oficio, folio, origen_descripcion,
-		ubicacion, fecha, fecha_entrega, fecha_captura,
-		fecha_valida, fecha_rechaza, ip_captura, ip_valida,
-		ip_actualiza, host_captura, host_valida, host_actualiza,
-		motivo_rechaza, activo)
-		VALUES (:id_cliente, :id_origen_orden, :id_ubicacion,
-		:id_ejercicio, :id_status, :id_etapa, :id_usuario_captura,
-		:id_usuario_valida, :id_usuario_entrega,
-		:id_usuario_actualiza, :oficio, :folio, :origen_descripcion,
-		:ubicacion, :fecha, :fecha_entrega, :fecha_captura,
-		:fecha_valida, :fecha_rechaza, :ip_captura, :ip_valida,
-		:ip_actualiza, :host_captura, :host_valida, :host_actualiza,
-		:motivo_rechaza, :activo)";
-	$db = getConnection();
-	$stmt = $db->prepare($sql);
-	$stmt->execute($insertData);
-	$studyId = $db->lastInsertId();
-	$db = null;
-
-	$i = 0;
-	$l = count($orders);
-	for ($i = 0; $i < $l; $i++) {
-		insertStudyOrder($orders[$i], $studyId, $clientId);
-	}
-	return $studyId;
+	return $insertData;
 }
 
-function insertStudyOrder($order, $studyId, $clientId) {
-	$order = (array) $order;
-	unset($order['$$hashKey']);
-	unset($order["id_orden"]);
-	$order["id_estudio"] = $studyId;
-	$order["id_cliente"] = $clientId;
-	$order["id_cuerpo_receptor"] = 5;
-	$order["id_status"] = 1;
-	$order["costo_total"] = 0;
-
-	$sql = "INSERT INTO Orden (id_estudio, id_cliente, id_matriz,
-		id_tipo_muestreo, id_norma, id_cuerpo_receptor, id_status,
-		id_usuario_captura, id_usuario_valida, id_usuario_actualiza,
-		cantidad_muestras, costo_total, cuerpo_receptor,
-		tipo_cuerpo, fecha, fecha_entrega, fecha_captura,
-		fecha_valida, fecha_actualiza, fecha_rechaza,
-		ip_captura, ip_valida, ip_actualiza, host_captura,
-		host_valida, host_actualiza, motivo_rechaza,
-		comentarios, activo)
-		VALUES (:id_estudio, :id_cliente, :id_matriz,
-		:id_tipo_muestreo, :id_norma, :id_cuerpo_receptor, :id_status,
-		:id_usuario_captura, :id_usuario_valida, :id_usuario_actualiza,
-		:cantidad_muestras, :costo_total, :cuerpo_receptor,
-		:tipo_cuerpo, :fecha, :fecha_entrega, :fecha_captura,
-		:fecha_valida, :fecha_actualiza, :fecha_rechaza,
-		:ip_captura, :ip_valida, :ip_actualiza, :host_captura,
-		:host_valida, :host_actualiza, :motivo_rechaza,
-		:comentarios, :activo)";
-	$db = getConnection();
-	$stmt = $db->prepare($sql);
-	$stmt->execute($order);
-	$orderId = $db->lastInsertId();
-	$db = null;
-	return $orderId;
-}
-
-function updateStudy($request) {
+function processStudyUpdate($request) {
 	$token = decodeUserToken($request);
 	$updateData = (array) json_decode($request->getBody());
 	$orders = $updateData["ordenes"];
@@ -1623,247 +1269,70 @@ function updateStudy($request) {
 		$updateData["ip_valida"] = $request->getIp();
 		$updateData["host_valida"] = $request->getUrl();
 	}
-	$updateData["fecha"] = formatIsoDateForSqlServer($updateData["fecha"]);
-	$updateData["fecha_entrega"] = formatIsoDateForSqlServer($updateData["fecha_entrega"]);
-	$updateData["fecha_valida"] = formatIsoDateForSqlServer($updateData["fecha_valida"]);
+	$updateData["fecha"] = formatIsoDateForMsSql($updateData["fecha"]);
+	$updateData["fecha_entrega"] = formatIsoDateForMsSql($updateData["fecha_entrega"]);
+	$updateData["fecha_valida"] = formatIsoDateForMsSql($updateData["fecha_valida"]);
 	$updateData["fecha_actualiza"] = date('Y-m-d H:i:s');
-	$updateData["fecha_rechaza"] = formatIsoDateForSqlServer($updateData["fecha_rechaza"]);
-
-	try {
-		$sql = "UPDATE Estudio SET id_cliente = :id_cliente,
-			id_origen_orden = :id_origen_orden, id_ubicacion = :id_ubicacion,
-			id_ejercicio = :id_ejercicio, id_status = :id_status,
-			id_etapa = :id_etapa, id_usuario_valida = :id_usuario_valida,
-			id_usuario_entrega = :id_usuario_entrega,
-			id_usuario_actualiza = :id_usuario_actualiza, oficio = :oficio,
-			folio = :folio, origen_descripcion = :origen_descripcion,
-			ubicacion = :ubicacion, fecha = :fecha,
-			fecha_entrega = :fecha_entrega,
-			fecha_valida = :fecha_valida, fecha_actualiza = :fecha_actualiza,
-			fecha_rechaza = :fecha_rechaza, ip_valida = :ip_valida,
-			ip_actualiza = :ip_actualiza, host_valida = :host_valida,
-			host_actualiza = :host_actualiza, motivo_rechaza = :motivo_rechaza,
-			activo = :activo
-			WHERE id_estudio = :id_estudio";
-		$db = getConnection();
-		$stmt = $db->prepare($sql);
-		$stmt->execute($updateData);
-		$db = null;
-
-		$i = 0;
-		$l = count($orders);
-		for ($i = 0; $i < $l; $i++) {
-			updateStudyOrder(
-				$orders[$i], $orders[$i]->id_orden,
-				$updateData["id_usuario_actualiza"],
-				$updateData["ip_actualiza"],
-				$updateData["host_actualiza"]
-			);
-		}
-		return $studyId;
-	} catch (PDOException $e) {
-		return '{"error":"' . $e->getMessage() . '"}';
-	}
+	$updateData["fecha_rechaza"] = formatIsoDateForMsSql($updateData["fecha_rechaza"]);
+	return $updateData;
 }
 
-function updateStudyOrder($order, $orderId, $userId, $ip, $url) {
-	$updateData = array (
-		"id_matriz" => $order->id_matriz,
-		"id_tipo_muestreo" => $order->id_tipo_muestreo,
-		"id_norma" => $order->id_norma,
-		"id_usuario_actualiza" => $userId,
-		"cantidad_muestras" => $order->cantidad_muestras,
-		"fecha_actualiza" => date('Y-m-d H:i:s'),
-		"ip_actualiza" => $ip,
-		"host_actualiza" => $url,
-		"activo" => $order->activo,
-		"id_orden" => $orderId
-	);
-	$sql = "UPDATE Orden SET id_matriz = :id_matriz,
-		id_tipo_muestreo = :id_tipo_muestreo,id_norma = :id_norma,
-		id_usuario_actualiza = :id_usuario_actualiza,
-		cantidad_muestras = :cantidad_muestras,
-		fecha_actualiza = :fecha_actualiza, ip_actualiza = :ip_actualiza,
-		host_actualiza = :host_actualiza, activo = :activo
-		WHERE id_orden = :id_orden";
-	$db = getConnection();
-	$stmt = $db->prepare($sql);
-	$stmt->execute($updateData);
-	$db = null;
-	return $orderId;
+
+function processOrderInsert($request) {
+	$token = decodeUserToken($request);
+	$insertData = (array) json_decode($request->getBody());
+	// $lastStudyId = 0;
+	// $currentYear = date("Y");
+	// $clientId = $insertData["id_cliente"];
+	// $orders = $insertData["ordenes"];
+
+	// unset($insertData["id_estudio"]);
+	// unset($insertData["cliente"]);
+	// unset($insertData["ordenes"]);
+	// if (is_numeric(getLastStudyByYear($currentYear)["oficio"])) {
+	// 	$lastStudyId = getLastStudyByYear($currentYear)["oficio"];
+	// }
+	// $lastStudyId = $lastStudyId + 1;
+	// $folio = "CEA-" . str_pad($lastStudyId, 3, "0", STR_PAD_LEFT);
+	// $folio .= "-" . $currentYear;
+
+	// $insertData["id_usuario_captura"] = $token->uid;
+	// $insertData["ip_captura"] = $request->getIp();
+	// $insertData["host_captura"] = $request->getUrl();
+	// $insertData["id_status"]  = 1;
+	// $insertData["id_etapa"]  = 1;
+	// $insertData["oficio"] = $lastStudyId;
+	// $insertData["folio"] = $folio;
+	// $insertData["fecha"] = formatIsoDateForMsSql($insertData["fecha"]);
+	// $insertData["fecha_captura"] = date('Y-m-d H:i:s');
+	return $insertData;
 }
 
-function getOrders() {
-	// $orders = \Service\DALSislab::getInstance()->getOrders();
-	$sql = "SELECT id_orden, id_estudio, id_cliente, id_matriz,
-		id_tipo_muestreo, id_norma, id_cuerpo_receptor, id_status,
-		id_usuario_captura, id_usuario_valida, id_usuario_actualiza,
-		cantidad_muestras, costo_total, cuerpo_receptor, tipo_cuerpo,
-		fecha, fecha_entrega, fecha_captura, fecha_valida,
-		fecha_actualiza, fecha_rechaza, ip_captura, ip_valida,
-		ip_actualiza, host_captura, host_valida, host_actualiza,
-		motivo_rechaza, comentarios, activo
-		FROM Orden
-		WHERE activo = 1";
-	$db = getConnection();
-	$stmt = $db->prepare($sql);
-	$stmt->execute();
-	$orders = $stmt->fetchAll(PDO::FETCH_ASSOC);
-	$db = null;
-	return $orders;
+function processOrderUpdate($request) {
+	$token = decodeUserToken($request);
+	$updateData = (array) json_decode($request->getBody());
+	// $orders = $updateData["ordenes"];
+	// $studyId = $updateData["id_estudio"];
+	// //unset($updateData["id_estudio"]);
+	// unset($updateData["id_usuario_captura"]);
+	// unset($updateData["fecha_captura"]);
+	// unset($updateData["ip_captura"]);
+	// unset($updateData["host_captura"]);
+	// unset($updateData["cliente"]);
+	// unset($updateData["ordenes"]);
+	// unset($updateData["status"]);
+	// $updateData["id_usuario_actualiza"] = $token->uid;
+	// $updateData["ip_actualiza"] = $request->getIp();
+	// $updateData["host_actualiza"] = $request->getUrl();
+	// if ($updateData["id_status"] == 2) {
+	// 	$updateData["ip_valida"] = $request->getIp();
+	// 	$updateData["host_valida"] = $request->getUrl();
+	// }
+	// $updateData["fecha"] = formatIsoDateForMsSql($updateData["fecha"]);
+	// $updateData["fecha_entrega"] = formatIsoDateForMsSql($updateData["fecha_entrega"]);
+	// $updateData["fecha_valida"] = formatIsoDateForMsSql($updateData["fecha_valida"]);
+	// $updateData["fecha_actualiza"] = date('Y-m-d H:i:s');
+	// $updateData["fecha_rechaza"] = formatIsoDateForMsSql($updateData["fecha_rechaza"]);
+	return $updateData;
 }
-
-function getOrder($orderId) {
-	// $result = \Service\DALSislab::getInstance()->getOrder($orderId);
-	$sql = "SELECT id_orden, id_estudio, id_cliente, id_matriz,
-		id_tipo_muestreo, id_norma, id_cuerpo_receptor, id_status,
-		id_usuario_captura, id_usuario_valida, id_usuario_actualiza,
-		cantidad_muestras, costo_total, cuerpo_receptor, tipo_cuerpo,
-		fecha, fecha_entrega, fecha_captura, fecha_valida,
-		fecha_actualiza, fecha_rechaza, ip_captura, ip_valida,
-		ip_actualiza, host_captura, host_valida, host_actualiza,
-		motivo_rechaza, comentarios, activo
-		FROM Orden
-		WHERE activo = 1 AND id_orden = :orderId";
-	$db = getConnection();
-	$stmt = $db->prepare($sql);
-	$stmt->bindParam("orderId", $orderId);
-	$stmt->execute();
-	$order = $stmt->fetchAll(PDO::FETCH_ASSOC);
-	$db = null;
-	$result = $order[0];
-	//TODO : getClient($clientId);
-	//TODO : getStudy($studyId);
-
-	return $result;
-}
-
-function getPlans() {
-	// $plans = \Service\DALSislab::getInstance()->getPlans();
-	$sql = "SELECT id_plan, id_estudio, id_orden, id_ubicacion,
-			id_paquete, id_objetivo_plan, id_norma_muestreo,
-			id_supervisor_muestreo, id_supervisor_entrega,
-			id_supervisor_recoleccion, id_supervisor_registro,
-			id_ayudante_entrega, id_ayudante_recoleccion,
-			id_ayudante_registro, id_responsable_calibracion,
-			id_responsable_recipientes, id_responsable_reactivos,
-			id_responsable_material, id_responsable_hieleras, id_status,
-			id_usuario_captura, id_usuario_valida, id_usuario_actualiza,
-			fecha, fecha_probable, fecha_calibracion, fecha_captura,
-			fecha_valida, fecha_actualiza, fecha_rechaza, ip_captura,
-			ip_valida, ip_actualiza, host_captura, host_valida,
-			host_actualiza, calle, numero, colonia, codigo_postal,
-			telefono, contacto, email, comentarios_ubicacion,
-			cantidad_puntos, cantidad_equipos, cantidad_recipientes,
-			cantidad_reactivos, cantidad_hieleras, frecuencia,
-			objetivo_otro, motivo_rechaza, comentarios, activo
-		FROM Plan
-		WHERE activo = 1";
-	$db = getConnection();
-	$stmt = $db->prepare($sql);
-	$stmt->execute();
-	$plans = $stmt->fetchAll(PDO::FETCH_ASSOC);
-	return $plans;
-}
-
-function getPlan($planId) {
-	// $plan = \Service\DALSislab::getInstance()->getPlan($planId);
-	$sql = "SELECT id_plan, id_estudio, id_orden, id_ubicacion,
-			id_paquete, id_objetivo_plan, id_norma_muestreo,
-			id_supervisor_muestreo, id_supervisor_entrega,
-			id_supervisor_recoleccion, id_supervisor_registro,
-			id_ayudante_entrega, id_ayudante_recoleccion,
-			id_ayudante_registro, id_responsable_calibracion,
-			id_responsable_recipientes, id_responsable_reactivos,
-			id_responsable_material, id_responsable_hieleras, id_status,
-			id_usuario_captura, id_usuario_valida, id_usuario_actualiza,
-			fecha, fecha_probable, fecha_calibracion, fecha_captura,
-			fecha_valida, fecha_actualiza, fecha_rechaza, ip_captura,
-			ip_valida, ip_actualiza, host_captura, host_valida,
-			host_actualiza, calle, numero, colonia, codigo_postal,
-			telefono, contacto, email, comentarios_ubicacion,
-			cantidad_puntos, cantidad_equipos, cantidad_recipientes,
-			cantidad_reactivos, cantidad_hieleras, frecuencia,
-			objetivo_otro, motivo_rechaza, comentarios, activo
-		FROM Plan
-		WHERE activo = 1 AND id_plan = :planId";
-	$db = getConnection();
-	$stmt = $db->prepare($sql);
-	$stmt->execute();
-	$plan = $stmt->fetchAll(PDO::FETCH_ASSOC);
-	return $plan;
-}
-
-// function insertUser($requestData) {
-// 	try {
-// 		//$requestData = json_decode($payload);
-// 		$insertDataArray = array (
-// 			"id_nivel" => $requestData->id_nivel,
-// 			"id_rol" => $requestData->id_rol,
-// 			"id_area" => $requestData->id_area,
-// 			"id_puesto" => $requestData->id_puesto,
-// 			"interno" => $requestData->interno,
-// 			"cea" => $requestData->cea,
-// 			"laboratorio" => $requestData->laboratorio,
-// 			"supervisa" => $requestData->supervisa,
-// 			"analiza" => $requestData->analiza,
-// 			"muestrea" => $requestData->muestrea,
-// 			"nombres" => utf8_decode($requestData->nombres),
-// 			"apellido_paterno" => utf8_decode($requestData->apellido_paterno),
-// 			"apellido_materno" => utf8_decode($requestData->apellido_materno),
-// 			"usr" => $requestData->usr,
-// 			"pwd" => $requestData->pwd,
-// 			"fecha_captura" => $requestData->fecha_captura,
-// 			"fecha_actualiza" => $requestData->fecha_actualiza,
-// 			"ip_captura" => $requestData->ip_captura,
-// 			"ip_actualiza" => $requestData->ip_actualiza,
-// 			"host_captura" => $requestData->host_captura,
-// 			"host_actualiza" => $requestData->host_actualiza,
-// 			"activo" => $requestData->activo
-// 		);
-// 		$sql = "INSERT INTO Usuario
-// 			( id_nivel, id_rol, id_area, id_puesto, interno, cea,
-// 			 laboratorio, supervisa, analiza, muestrea, nombres,
-// 			 apellido_paterno,
-// 			 apellido_materno, usr, pwd, fecha_captura, fecha_actualiza,
-// 			 ip_captura, ip_actualiza, host_captura, host_actualiza, activo)
-// 			VALUES ( :id_nivel, :id_rol, :id_area, :id_puesto, :interno,
-// 				:cea, :laboratorio, :supervisa, :analiza, :muestrea, :nombres,
-// 				:apellido_paterno, :apellido_materno, :usr, :pwd, :fecha_captura,
-// 				:fecha_actualiza, :ip_captura, :ip_actualiza, :host_captura,
-// 				:host_actualiza, :activo
-// 			)";
-// 		$db = getConnection();
-// 		$stmt = $db->prepare($sql);
-// 		$stmt->execute($userData);
-// 		$userId = $db->lastInsertId();
-// 		$db = null;
-// 		return getUser($userId);
-// 	} catch(PDOException $e) {
-// 		//print_r($e->getMessage());
-// 		return 0;
-// 	}
-// }
-
-// function getUser($userId) {
-// 	try {
-// 		$sql = "SELECT id_usuario, id_nivel, id_rol, id_area, id_puesto,
-// 			interno, cea, laboratorio, supervisa, analiza, muestrea, nombres,
-// 			apellido_paterno, apellido_materno, usr, pwd, fecha_captura,
-// 			fecha_actualiza, ip_captura, ip_actualiza,
-// 			host_captura, host_actualiza, activo
-// 			FROM Usuario
-// 			WHERE id_usuario=:userId
-// 		";
-// 		$db = getConnection();
-// 		$stmt = $db->prepare($sql);
-// 		$stmt->bindParam("userId", $userId);
-// 		$stmt->execute();
-// 		$user = $stmt->fetch(PDO::FETCH_OBJ);
-// 		$db = null;
-// 		return $user;
-// 	} catch(PDOException $e) {
-// 		echo '{"error":{"text":'. $e->getMessage() .'}}';
-// 	}
-// }
 

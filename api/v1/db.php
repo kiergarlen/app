@@ -242,9 +242,9 @@ function getPlainStudy($studyId) {
 	$stmt = $db->prepare($sql);
 	$stmt->bindParam("studyId", $studyId);
 	$stmt->execute();
-	$study = $stmt->fetchAll(PDO::FETCH_OBJ);
+	$study = (array) $stmt->fetchAll(PDO::FETCH_OBJ)[0];
 	$db = null;
-	return $study;
+	return (object) $study;
 }
 
 function getStudy($studyId) {
@@ -291,9 +291,9 @@ function getLastStudyByYear($yearId) {
 	$stmt = $db->prepare($sql);
 	$stmt->bindParam("yearId", $yearId);
 	$stmt->execute();
-	$result = $stmt->fetchAll(PDO::FETCH_OBJ);
+	$result = (array) $stmt->fetchAll(PDO::FETCH_OBJ)[0];
 	$db = null;
-	return $result;
+	return (object) $result;
 }
 
 function insertStudy($insertData) {
@@ -442,7 +442,7 @@ function getOrders() {
 	$orders = $stmt->fetchAll(PDO::FETCH_ASSOC);
 	$db = null;
 	$i = 0;
-	$l = count($studies);
+	$l = count($orders);
 	for ($i = 0; $i < $l; $i++) {
 		$orders[$i]["cliente"] = getClient($orders[$i]['id_cliente'])[0];
 		$orders[$i]["estudio"] = getPlainStudy($orders[$i]['id_estudio']);
@@ -467,20 +467,26 @@ function getPlainOrder($orderId) {
 	$stmt = $db->prepare($sql);
 	$stmt->bindParam("orderId", $orderId);
 	$stmt->execute();
-	$order = $stmt->fetchAll(PDO::FETCH_OBJ);
+	$order = (array) $stmt->fetchAll(PDO::FETCH_OBJ)[0];
 	$db = null;
-	return $order;
+	return (object) $order;
 }
 
 function getOrder($orderId) {
 	// $result = \Service\DALSislab::getInstance()->getOrder($orderId);
 	$order = getPlainOrder($orderId);
-	$order->cliente = getClient($order->id_cliente);
+	$order->cliente = getClient($order->id_cliente)[0];
 	$order->estudio = getPlainStudy($order->id_estudio);
-	$order->planes = getPlansByOrder($orderId);
+	if (count(getPlansByOrder($orderId)))
+	{
+		$order->planes = getPlansByOrder($orderId);
+	}
+	else
+	{
+		$order->planes = array(getBlankPlan());
+	}
 	return $order;
 }
-
 
 function getOrderSources() {
 	$orders = \Service\DALSislab::getInstance()->getOrderSources();
@@ -551,6 +557,39 @@ function getPlans() {
 	return $plans;
 }
 
+function getBlankPlan() {
+	return array(
+		"id_plan" => 0, "id_estudio" => 0,
+		"id_orden" => 0, "id_ubicacion" => 0,
+		"id_paquete" => 0, "id_objetivo_plan" => 0,
+		"id_norma_muestreo" => 0, "id_supervisor_muestreo" => 0,
+		"id_supervisor_entrega" => 0, "id_supervisor_recoleccion" => 0,
+		"id_supervisor_registro" => 0, "id_ayudante_entrega" => 0,
+		"id_ayudante_recoleccion" => 0, "id_ayudante_registro" => 0,
+		"id_responsable_calibracion" => 0,
+		"id_responsable_recipientes" => 0,
+		"id_responsable_reactivos" => 0, "id_responsable_material" => 0,
+		"id_responsable_hieleras" => 0, "id_status" => 0,
+		"id_usuario_captura" => 0, "id_usuario_valida" => 0,
+		"id_usuario_actualiza" => 0, "fecha" => "",
+		"fecha_probable" => "", "fecha_calibracion" => "",
+		"fecha_captura" => "", "fecha_valida" => "",
+		"fecha_actualiza" => "", "fecha_rechaza" => "",
+		"ip_captura" => "", "ip_valida" => "",
+		"ip_actualiza" => "", "host_captura" => "",
+		"host_valida" => "", "host_actualiza" => "",
+		"calle" => "", "numero" => "",
+		"colonia" => "", "codigo_postal" => "",
+		"telefono" => "", "contacto" => "",
+		"email" => "", "comentarios_ubicacion" => "",
+		"cantidad_puntos" => 0, "cantidad_equipos" => 0,
+		"cantidad_recipientes" => 0, "cantidad_reactivos" => 0,
+		"cantidad_hieleras" => 0, "frecuencia" => 0,
+		"objetivo_otro" => "", "motivo_rechaza" => "",
+		"comentarios" => "", "activo" => 1
+	);
+}
+
 function getPlansByOrder($orderId) {
 	// $plans = \Service\DALSislab::getInstance()->getPlans();
 	$sql = "SELECT id_plan, id_estudio, id_orden, id_ubicacion,
@@ -570,11 +609,11 @@ function getPlansByOrder($orderId) {
 			cantidad_puntos, cantidad_equipos, cantidad_recipientes,
 			cantidad_reactivos, cantidad_hieleras, frecuencia,
 			objetivo_otro, motivo_rechaza, comentarios, activo
-		FROM Plan
+		FROM [Plan]
 		WHERE activo = 1 AND id_orden = :orderId";
 	$db = getConnection();
 	$stmt = $db->prepare($sql);
-	$stmt->bind($orderId);
+	$stmt->bindParam("orderId", $orderId);
 	$stmt->execute();
 	$plans = $stmt->fetchAll(PDO::FETCH_ASSOC);
 	return $plans;
@@ -599,13 +638,13 @@ function getPlainPlan($planId) {
 			cantidad_puntos, cantidad_equipos, cantidad_recipientes,
 			cantidad_reactivos, cantidad_hieleras, frecuencia,
 			objetivo_otro, motivo_rechaza, comentarios, activo
-		FROM Plan
+		FROM [Plan]
 		WHERE activo = 1 AND id_plan = :planId";
 	$db = getConnection();
 	$stmt = $db->prepare($sql);
 	$stmt->execute();
-	$plan = $stmt->fetchAll(PDO::FETCH_OBJ);
-	return $plan;
+	$plan = (array) $stmt->fetchAll(PDO::FETCH_OBJ)[0];
+	return (object) $plan;
 }
 
 function getPlan($planId) {

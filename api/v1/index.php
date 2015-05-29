@@ -78,7 +78,7 @@ $app->get("/tasks", function() use ($app) {
 
 $app->get("/studies(/)(:studyId)", function($studyId = -1) use ($app) {
 	try {
-		$userId = decodeUserToken($app->request())->uid;
+		//$userId = decodeUserToken($app->request())->uid;
 		$result = json_encode(getBlankStudy($studyId));
 		if ($studyId > 0)
 		{
@@ -166,15 +166,13 @@ $app->post("/studies", function() use ($app) {
 
 $app->get("/orders(/)(:orderId)", function($orderId = -1) use ($app) {
 	try {
-		$userId = decodeUserToken($app->request())->uid;
-		if ($orderId > -1)
+		//$userId = decodeUserToken($app->request())->uid;
+		if ($orderId > 0)
 		{
-			//$result = getOrder($orderId);
 			$result = json_encode(getOrder($orderId));
 		}
 		else
 		{
-			//$result = getOrders();
 			$result = json_encode(getOrders());
 		}
 		$app->response()->status(200);

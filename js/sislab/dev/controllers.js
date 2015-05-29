@@ -596,16 +596,32 @@
     }
 
     function addPlan() {
-      vm.order.planes.push({
-        'id_plan':vm.order.planes.length + 1,
-        'id_estudio':vm.order.id_estudio,
-        'id_orden':vm.order.id_orden,
-        'id_paquete_puntos':0,
-        'id_supervisor_muestreo':0,
-        'id_status':0,
-        'fecha_probable':'',
-        'activo':1
-      });
+      if (vm.order.planes)
+      {
+        vm.order.planes.push({
+          'id_plan': vm.order.planes.length + 1,
+          'id_estudio': vm.order.id_estudio,
+          'id_orden': vm.order.id_orden,
+          'id_paquete_puntos': 0,
+          'id_supervisor_muestreo': 0,
+          'id_status': 0,
+          'fecha_probable': '',
+          'activo': 1
+        });
+      }
+      else
+      {
+        vm.order.planes = [{
+          'id_plan': 1,
+          'id_estudio': vm.order.id_estudio,
+          'id_orden': vm.order.id_orden,
+          'id_paquete_puntos': 0,
+          'id_supervisor_muestreo': 0,
+          'id_status': 0,
+          'fecha_probable': '',
+          'activo': 1
+        }];
+      }
     }
 
     function removePlan(event) {

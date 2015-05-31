@@ -65,6 +65,7 @@ $app->get("/tasks", function() use ($app) {
 	try {
 		$userId = decodeUserToken($app->request())->uid;
 		$result = getTasks($userId);
+		//Temporary
 		//$result = json_encode(getTasks($userId));
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
@@ -78,7 +79,7 @@ $app->get("/tasks", function() use ($app) {
 
 $app->get("/studies(/)(:studyId)", function($studyId = -1) use ($app) {
 	try {
-		//$userId = decodeUserToken($app->request())->uid;
+		$userId = decodeUserToken($app->request())->uid;
 		$result = json_encode(getBlankStudy($studyId));
 		if ($studyId > 0)
 		{
@@ -105,13 +106,17 @@ $app->post("/studies", function() use ($app) {
 		$studyId = extractDataFromRequest($request)->id_estudio;
 		if ($studyId < 1)
 		{
-			$insertData = processStudyInsert($request);
-			$result = insertStudy($insertData);
+			$studyInsertData = processStudyInsert($request);
+			$studyId = insertStudy($studyInsertData["study"]);
+			processStudyOrderInsert($studyInsertData, $studyId);
+			$result = '{"id_estudio":' . $studyId . '}';
 		}
 		else
 		{
-			$updateData = processStudyUpdate($request);
-			$result = updateStudy($updateData);
+			$studyUpdateData = processStudyUpdate($request);
+			$studyId = updateStudy($studyUpdateData["study"]);
+			processStudyOrderUpdate($studyUpdateData);
+			$result = '{"id_estudio":' . $studyId . '}';
 		}
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
@@ -215,7 +220,7 @@ $app->post("/orders", function() use ($app) {
 $app->get("/order/sources", function() use ($app) {
 	try {
 		$userId = decodeUserToken($app->request())->uid;
-		$result = getOrderSources();
+		$result = json_encode(getOrderSources());
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
 		//$result = ")]}',\n" . $result;
@@ -1197,7 +1202,7 @@ function processMenuToJson($items) {
 	return $output;
 }
 
-function formatIsoDateForMsSql($dateString) {
+function isoDateToMsSql($dateString) {
 	$format = 'Y-m-d H:i:s';
 	if (strlen($dateString) > 18)
 	{
@@ -1220,7 +1225,7 @@ function formatIsoDateForMsSql($dateString) {
 function processStudyInsert($request) {
 	$token = decodeUserToken($request);
 	$insertData = (array) json_decode($request->getBody());
-	$lastStudyId = 0;
+	$lastStudyNumber = 0;
 	$currentYear = date("Y");
 	$clientId = $insertData["id_cliente"];
 	$orders = $insertData["ordenes"];
@@ -1228,31 +1233,70 @@ function processStudyInsert($request) {
 	unset($insertData["id_estudio"]);
 	unset($insertData["cliente"]);
 	unset($insertData["ordenes"]);
+
 	if (is_numeric(getLastStudyByYear($currentYear)["oficio"])) {
-		$lastStudyId = getLastStudyByYear($currentYear)["oficio"];
+		$lastStudyNumber = getLastStudyByYear($currentYear)["oficio"];
 	}
-	$lastStudyId = $lastStudyId + 1;
-	$folio = "CEA-" . str_pad($lastStudyId, 3, "0", STR_PAD_LEFT);
+
+	$lastStudyNumber = $lastStudyNumber + 1;
+	$folio = "CEA-" . str_pad($lastStudyNumber, 3, "0", STR_PAD_LEFT);
 	$folio .= "-" . $currentYear;
 
 	$insertData["id_usuario_captura"] = $token->uid;
 	$insertData["ip_captura"] = $request->getIp();
 	$insertData["host_captura"] = $request->getUrl();
-	$insertData["id_status"]  = 1;
-	$insertData["id_etapa"]  = 1;
-	$insertData["oficio"] = $lastStudyId;
+	$insertData["id_status"] = 1;
+	$insertData["id_etapa"] = 1;
+	$insertData["oficio"] = $lastStudyNumber;
 	$insertData["folio"] = $folio;
-	$insertData["fecha"] = formatIsoDateForMsSql($insertData["fecha"]);
+	$insertData["fecha"] = isoDateToMsSql($insertData["fecha"]);
 	$insertData["fecha_captura"] = date('Y-m-d H:i:s');
-	return $insertData;
+
+	$studyInsertData = array(
+		"study" => $insertData,
+		"orders" = $orders
+	);
+	return $studyInsertData;
+}
+
+function processStudyOrderInsert($studyInsertData, $studyId) {
+	$orders = (array) $studyInsertData["orders"];
+	$clientId = $studyInsertData["study"]["clientId"];
+	$insertUserId = $studyInsertData["study"]["id_usuario_captura"];
+	$insertDate = $studyInsertData["study"]["fecha_captura"];
+	$insertIp = $studyInsertData["study"]["ip_captura"];
+	$insertUrl = $studyInsertData["study"]["host_captura"];
+
+	$i = 0;
+	$l = count($orders);
+	for ($i = 0; $i < $l; $i++) {
+		$order = (array) $orders[$i];
+
+		unset($order['$$hashKey']);
+		unset($order["id_orden"]);
+
+		$order["id_estudio"] = $studyId;
+		$order["id_cliente"] = $clientId;
+		$order["id_cuerpo_receptor"] = 5;
+		$order["id_status"] = 1;
+		$order["costo_total"] = 0;
+		$order["id_usuario_captura"] = $insertUserId;
+		$order["fecha_captura"] = $insertDate;
+		$order["ip_captura"] = $insertIp;
+		$order["host_captura"] = $insertUrl;
+		$order["activo"] = 1;
+
+		insertOrder($order);
+	}
 }
 
 function processStudyUpdate($request) {
 	$token = decodeUserToken($request);
 	$updateData = (array) json_decode($request->getBody());
-	$orders = $updateData["ordenes"];
 	$studyId = $updateData["id_estudio"];
-	//unset($updateData["id_estudio"]);
+	$clientId = $updateData["id_cliente"];
+	$orders = $updateData["ordenes"];
+
 	unset($updateData["id_usuario_captura"]);
 	unset($updateData["fecha_captura"]);
 	unset($updateData["ip_captura"]);
@@ -1260,19 +1304,60 @@ function processStudyUpdate($request) {
 	unset($updateData["cliente"]);
 	unset($updateData["ordenes"]);
 	unset($updateData["status"]);
+
 	$updateData["id_usuario_actualiza"] = $token->uid;
+	$updateData["fecha_actualiza"] = date('Y-m-d H:i:s');
 	$updateData["ip_actualiza"] = $request->getIp();
 	$updateData["host_actualiza"] = $request->getUrl();
+
 	if ($updateData["id_status"] == 2) {
 		$updateData["ip_valida"] = $request->getIp();
 		$updateData["host_valida"] = $request->getUrl();
+		$updateData["fecha_valida"] = isoDateToMsSql($updateData["fecha_valida"]);
 	}
-	$updateData["fecha"] = formatIsoDateForMsSql($updateData["fecha"]);
-	$updateData["fecha_entrega"] = formatIsoDateForMsSql($updateData["fecha_entrega"]);
-	$updateData["fecha_valida"] = formatIsoDateForMsSql($updateData["fecha_valida"]);
-	$updateData["fecha_actualiza"] = date('Y-m-d H:i:s');
-	$updateData["fecha_rechaza"] = formatIsoDateForMsSql($updateData["fecha_rechaza"]);
-	return $updateData;
+
+	$updateData["fecha"] = isoDateToMsSql($updateData["fecha"]);
+	$updateData["fecha_entrega"] = isoDateToMsSql($updateData["fecha_entrega"]);
+	$updateData["fecha_rechaza"] = isoDateToMsSql($updateData["fecha_rechaza"]);
+
+	$studyUpdateData = array(
+		"study" => $updateData,
+		"orders" = $orders
+	);
+	return $studyUpdateData;
+}
+
+function processStudyOrderUpdate($studyUpdateData) {
+	$orders = (array) $studyUpdateData["orders"];
+	$clientId = $studyUpdateData["study"]["clientId"];
+	$updateUserId = $studyUpdateData["study"]["id_usuario_actualiza"];
+	$updateDate = $studyUpdateData["study"]["fecha_actualiza"];
+	$updateIp = $studyUpdateData["study"]["ip_actualiza"];
+	$updateUrl = $studyUpdateData["study"]["host_actualiza"];
+
+	$i = 0;
+	$l = count($orders);
+	for ($i = 0; $i < $l; $i++) {
+		$order = (array) $orders[$i];
+
+		$statusId = $order["id_status"];
+		if ($order["id_status"] == 2) {
+			$order["id_status"] = 1;
+			$order["ip_valida"] = "";
+			$order["host_valida"] = "";
+			$order["fecha_valida"] = "";
+		}
+		unset($order['$$hashKey']);
+		unset($order["id_orden"]);
+
+		$order["id_cliente"] = $clientId;
+		$order["id_usuario_actualiza"] = $updateUserId;
+		$order["fecha_actualiza"] = $updateDate;
+		$order["ip_actualiza"] = $updateIp;
+		$order["host_actualiza"] = $updateUrl;
+
+		updateOrder($order);
+	}
 }
 
 
@@ -1301,7 +1386,7 @@ function processOrderInsert($request) {
 	// $insertData["id_etapa"]  = 1;
 	// $insertData["oficio"] = $lastStudyId;
 	// $insertData["folio"] = $folio;
-	// $insertData["fecha"] = formatIsoDateForMsSql($insertData["fecha"]);
+	// $insertData["fecha"] = isoDateToMsSql($insertData["fecha"]);
 	// $insertData["fecha_captura"] = date('Y-m-d H:i:s');
 	return $insertData;
 }
@@ -1326,11 +1411,11 @@ function processOrderUpdate($request) {
 	// 	$updateData["ip_valida"] = $request->getIp();
 	// 	$updateData["host_valida"] = $request->getUrl();
 	// }
-	// $updateData["fecha"] = formatIsoDateForMsSql($updateData["fecha"]);
-	// $updateData["fecha_entrega"] = formatIsoDateForMsSql($updateData["fecha_entrega"]);
-	// $updateData["fecha_valida"] = formatIsoDateForMsSql($updateData["fecha_valida"]);
+	// $updateData["fecha"] = isoDateToMsSql($updateData["fecha"]);
+	// $updateData["fecha_entrega"] = isoDateToMsSql($updateData["fecha_entrega"]);
+	// $updateData["fecha_valida"] = isoDateToMsSql($updateData["fecha_valida"]);
 	// $updateData["fecha_actualiza"] = date('Y-m-d H:i:s');
-	// $updateData["fecha_rechaza"] = formatIsoDateForMsSql($updateData["fecha_rechaza"]);
+	// $updateData["fecha_rechaza"] = isoDateToMsSql($updateData["fecha_rechaza"]);
 	return $updateData;
 }
 

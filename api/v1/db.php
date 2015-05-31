@@ -22,7 +22,6 @@ function getConnection() {
 }
 
 function getUsers() {
-	//$result = \Service\DALSislab::getInstance()->getUsers();
 	$sql = "SELECT id_usuario, id_nivel, id_rol, id_area, id_puesto,
 		interno, cea, laboratorio, supervisa, analiza, muestrea,
 		nombres, apellido_paterno, apellido_materno, usr, pwd,
@@ -41,7 +40,6 @@ function getUsers() {
 }
 
 function getUser($userId) {
-	//$result = \Service\DALSislab::getInstance()->getUser($userId);
 	$sql = "SELECT id_usuario, id_nivel, id_rol, id_area, id_puesto,
 		interno, cea, laboratorio, supervisa, analiza, muestrea, nombres,
 		apellido_paterno, apellido_materno, usr, pwd, fecha_captura,
@@ -59,7 +57,6 @@ function getUser($userId) {
 }
 
 function getUserByCredentials($userName, $userPassword) {
-	//$result = \Service\DALSislab::getInstance()->getUserByCredentials($userName, $userPassword);
 	$sql = "SELECT id_usuario, id_nivel, id_rol, id_area, id_puesto,
 		interno, cea, laboratorio, supervisa, analiza, muestrea,
 		nombres, apellido_paterno, apellido_materno, usr, pwd,
@@ -78,7 +75,6 @@ function getUserByCredentials($userName, $userPassword) {
 }
 
 function getMenu($userId) {
-	//$result = \Service\DALSislab::getInstance()->getMenu($userId);
 	$sql = "SELECT
 		Menu.id_menu, Submenu.id_submenu, Menu.orden,
 		Submenu.orden AS orden_submenu, Menu.menu,
@@ -111,7 +107,6 @@ function getTasks($userId) {
 }
 
 function getClients() {
-	//$result = \Service\DALSislab::getInstance()->getClients();
 	$sql = "SELECT id_cliente, id_estado, id_municipio,
 		id_localidad, interno, cea, tasa, cliente, area,
 		rfc, calle, numero, colonia, codigo_postal, telefono,
@@ -129,7 +124,6 @@ function getClients() {
 }
 
 function getClient($clientId) {
-	//$result = \Service\DALSislab::getInstance()->getClient($clientId);
 	$sql = "SELECT id_cliente, id_estado, id_municipio,
 		id_localidad, interno, cea, tasa, cliente, area,
 		rfc, calle, numero, colonia, codigo_postal, telefono,
@@ -148,7 +142,6 @@ function getClient($clientId) {
 }
 
 function getStudies() {
-	//$result = \Service\DALSislab::getInstance()->getStudies();
 	$sql = "SELECT id_estudio, id_cliente, id_origen_orden,
 		id_ubicacion, id_ejercicio, id_status, id_etapa,
 		id_usuario_captura, id_usuario_valida, id_usuario_entrega,
@@ -227,7 +220,6 @@ function getBlankStudy() {
 }
 
 function getPlainStudy($studyId) {
-	//$result = \Service\DALSislab::getInstance()->getStudy($studyId);
 	$sql = "SELECT id_estudio, id_cliente, id_origen_orden,
 		id_ubicacion, id_ejercicio, id_status, id_etapa,
 		id_usuario_captura, id_usuario_valida, id_usuario_entrega,
@@ -248,31 +240,10 @@ function getPlainStudy($studyId) {
 }
 
 function getStudy($studyId) {
-	//$result = \Service\DALSislab::getInstance()->getStudy($studyId);
 	$study = getPlainStudy($studyId);
 	$study->cliente = getClient($study->id_cliente);
 	$study->ordenes = getStudyOrders($studyId);
 	return $study;
-}
-
-function getStudyOrders($studyId) {
-	$sql = "SELECT id_orden, id_estudio, id_cliente, id_matriz,
-		id_tipo_muestreo, id_norma, id_cuerpo_receptor, id_status,
-		id_usuario_captura, id_usuario_valida, id_usuario_actualiza,
-		cantidad_muestras, costo_total, cuerpo_receptor, tipo_cuerpo,
-		fecha, fecha_entrega, fecha_captura, fecha_valida,
-		fecha_actualiza, fecha_rechaza, ip_captura, ip_valida,
-		ip_actualiza, host_captura, host_valida, host_actualiza,
-		motivo_rechaza, comentarios, activo
-		FROM Orden
-		WHERE activo = 1 AND id_estudio = :studyId";
-	$db = getConnection();
-	$stmt = $db->prepare($sql);
-	$stmt->bindParam("studyId", $studyId);
-	$stmt->execute();
-	$result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-	$db = null;
-	return $result;
 }
 
 function getLastStudyByYear($yearId) {
@@ -318,49 +289,7 @@ function insertStudy($insertData) {
 	$stmt->execute($insertData);
 	$studyId = $db->lastInsertId();
 	$db = null;
-
-	$i = 0;
-	$l = count($orders);
-	for ($i = 0; $i < $l; $i++) {
-		insertStudyOrder($orders[$i], $studyId, $clientId);
-	}
 	return $studyId;
-}
-
-function insertStudyOrder($order, $studyId, $clientId) {
-	$order = (array) $order;
-	unset($order['$$hashKey']);
-	unset($order["id_orden"]);
-	$order["id_estudio"] = $studyId;
-	$order["id_cliente"] = $clientId;
-	$order["id_cuerpo_receptor"] = 5;
-	$order["id_status"] = 1;
-	$order["costo_total"] = 0;
-
-	$sql = "INSERT INTO Orden (id_estudio, id_cliente, id_matriz,
-		id_tipo_muestreo, id_norma, id_cuerpo_receptor, id_status,
-		id_usuario_captura, id_usuario_valida, id_usuario_actualiza,
-		cantidad_muestras, costo_total, cuerpo_receptor,
-		tipo_cuerpo, fecha, fecha_entrega, fecha_captura,
-		fecha_valida, fecha_actualiza, fecha_rechaza,
-		ip_captura, ip_valida, ip_actualiza, host_captura,
-		host_valida, host_actualiza, motivo_rechaza,
-		comentarios, activo)
-		VALUES (:id_estudio, :id_cliente, :id_matriz,
-		:id_tipo_muestreo, :id_norma, :id_cuerpo_receptor, :id_status,
-		:id_usuario_captura, :id_usuario_valida, :id_usuario_actualiza,
-		:cantidad_muestras, :costo_total, :cuerpo_receptor,
-		:tipo_cuerpo, :fecha, :fecha_entrega, :fecha_captura,
-		:fecha_valida, :fecha_actualiza, :fecha_rechaza,
-		:ip_captura, :ip_valida, :ip_actualiza, :host_captura,
-		:host_valida, :host_actualiza, :motivo_rechaza,
-		:comentarios, :activo)";
-	$db = getConnection();
-	$stmt = $db->prepare($sql);
-	$stmt->execute($order);
-	$orderId = $db->lastInsertId();
-	$db = null;
-	return $orderId;
 }
 
 function updateStudy($updateData) {
@@ -383,49 +312,10 @@ function updateStudy($updateData) {
 	$stmt = $db->prepare($sql);
 	$stmt->execute($updateData);
 	$db = null;
-
-	$i = 0;
-	$l = count($orders);
-	for ($i = 0; $i < $l; $i++) {
-		updateStudyOrder(
-			$orders[$i], $orders[$i]->id_orden,
-			$updateData["id_usuario_actualiza"],
-			$updateData["ip_actualiza"],
-			$updateData["host_actualiza"]
-		);
-	}
-	return $studyId;
-}
-
-function updateStudyOrder($order, $orderId, $userId, $ip, $url) {
-	$updateData = array (
-		"id_matriz" => $order->id_matriz,
-		"id_tipo_muestreo" => $order->id_tipo_muestreo,
-		"id_norma" => $order->id_norma,
-		"id_usuario_actualiza" => $userId,
-		"cantidad_muestras" => $order->cantidad_muestras,
-		"fecha_actualiza" => date('Y-m-d H:i:s'),
-		"ip_actualiza" => $ip,
-		"host_actualiza" => $url,
-		"activo" => $order->activo,
-		"id_orden" => $orderId
-	);
-	$sql = "UPDATE Orden SET id_matriz = :id_matriz,
-		id_tipo_muestreo = :id_tipo_muestreo,id_norma = :id_norma,
-		id_usuario_actualiza = :id_usuario_actualiza,
-		cantidad_muestras = :cantidad_muestras,
-		fecha_actualiza = :fecha_actualiza, ip_actualiza = :ip_actualiza,
-		host_actualiza = :host_actualiza, activo = :activo
-		WHERE id_orden = :id_orden";
-	$db = getConnection();
-	$stmt = $db->prepare($sql);
-	$stmt->execute($updateData);
-	$db = null;
-	return $orderId;
+	return $updateData["id_estudio"];
 }
 
 function getOrders() {
-	// $orders = \Service\DALSislab::getInstance()->getOrders();
 	$sql = "SELECT id_orden, id_estudio, id_cliente, id_matriz,
 		id_tipo_muestreo, id_norma, id_cuerpo_receptor, id_status,
 		id_usuario_captura, id_usuario_valida, id_usuario_actualiza,
@@ -452,7 +342,6 @@ function getOrders() {
 }
 
 function getPlainOrder($orderId) {
-	// $result = \Service\DALSislab::getInstance()->getOrder($orderId);
 	$sql = "SELECT id_orden, id_estudio, id_cliente, id_matriz,
 		id_tipo_muestreo, id_norma, id_cuerpo_receptor, id_status,
 		id_usuario_captura, id_usuario_valida, id_usuario_actualiza,
@@ -473,7 +362,6 @@ function getPlainOrder($orderId) {
 }
 
 function getOrder($orderId) {
-	// $result = \Service\DALSislab::getInstance()->getOrder($orderId);
 	$order = getPlainOrder($orderId);
 	$order->cliente = getClient($order->id_cliente)[0];
 	$order->estudio = getPlainStudy($order->id_estudio);
@@ -488,35 +376,92 @@ function getOrder($orderId) {
 	return $order;
 }
 
+function getStudyOrders($studyId) {
+	$sql = "SELECT id_orden, id_estudio, id_cliente, id_matriz,
+		id_tipo_muestreo, id_norma, id_cuerpo_receptor, id_status,
+		id_usuario_captura, id_usuario_valida, id_usuario_actualiza,
+		cantidad_muestras, costo_total, cuerpo_receptor, tipo_cuerpo,
+		fecha, fecha_entrega, fecha_captura, fecha_valida,
+		fecha_actualiza, fecha_rechaza, ip_captura, ip_valida,
+		ip_actualiza, host_captura, host_valida, host_actualiza,
+		motivo_rechaza, comentarios, activo
+		FROM Orden
+		WHERE activo = 1 AND id_estudio = :studyId";
+	$db = getConnection();
+	$stmt = $db->prepare($sql);
+	$stmt->bindParam("studyId", $studyId);
+	$stmt->execute();
+	$result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+	$db = null;
+	return $result;
+}
+
+function insertOrder($orderData) {
+	$sql = "INSERT INTO Orden (id_estudio, id_cliente, id_matriz,
+		id_tipo_muestreo, id_norma, id_cuerpo_receptor, id_status,
+		id_usuario_captura, id_usuario_valida, id_usuario_actualiza,
+		cantidad_muestras, costo_total, cuerpo_receptor,
+		tipo_cuerpo, fecha, fecha_entrega, fecha_captura,
+		fecha_valida, fecha_actualiza, fecha_rechaza,
+		ip_captura, ip_valida, ip_actualiza, host_captura,
+		host_valida, host_actualiza, motivo_rechaza,
+		comentarios, activo)
+		VALUES (:id_estudio, :id_cliente, :id_matriz,
+		:id_tipo_muestreo, :id_norma, :id_cuerpo_receptor, :id_status,
+		:id_usuario_captura, :id_usuario_valida, :id_usuario_actualiza,
+		:cantidad_muestras, :costo_total, :cuerpo_receptor,
+		:tipo_cuerpo, :fecha, :fecha_entrega, :fecha_captura,
+		:fecha_valida, :fecha_actualiza, :fecha_rechaza,
+		:ip_captura, :ip_valida, :ip_actualiza, :host_captura,
+		:host_valida, :host_actualiza, :motivo_rechaza,
+		:comentarios, :activo)";
+	$db = getConnection();
+	$stmt = $db->prepare($sql);
+	$stmt->execute($orderData);
+	$orderId = $db->lastInsertId();
+	$db = null;
+	return $orderId;
+}
+
+function updateOrder($updateData) {
+	$sql = "UPDATE Orden SET
+		id_estudio = :id_estudio, id_cliente = :id_cliente,
+		id_matriz = :id_matriz, id_tipo_muestreo = :id_tipo_muestreo,
+		id_norma = :id_norma, id_cuerpo_receptor = :id_cuerpo_receptor,
+		id_status = :id_status, id_usuario_captura = :id_usuario_captura,
+		id_usuario_valida = :id_usuario_valida,
+		id_usuario_actualiza = :id_usuario_actualiza,
+		cantidad_muestras = :cantidad_muestras, costo_total = :costo_total,
+		cuerpo_receptor = :cuerpo_receptor, tipo_cuerpo = :tipo_cuerpo,
+		fecha = :fecha, fecha_entrega = :fecha_entrega,
+		fecha_captura = :fecha_captura, fecha_valida = :fecha_valida,
+		fecha_actualiza = :fecha_actualiza, fecha_rechaza = :fecha_rechaza,
+		ip_captura = :ip_captura, ip_valida = :ip_valida,
+		ip_actualiza = :ip_actualiza, host_captura = :host_captura,
+		host_valida = :host_valida, host_actualiza = :host_actualiza,
+		motivo_rechaza = :motivo_rechaza, comentarios = :comentarios,
+		activo = :activo
+		WHERE id_orden = :id_orden";
+	$db = getConnection();
+	$stmt = $db->prepare($sql);
+	$stmt->execute($updateData);
+	$db = null;
+	return $updateData["id_orden"];
+}
+
 function getOrderSources() {
-	$orders = \Service\DALSislab::getInstance()->getOrderSources();
-	// $sql = "SELECT id_orden, id_estudio, id_cliente, id_matriz,
-	// 	id_tipo_muestreo, id_norma, id_cuerpo_receptor, id_status,
-	// 	id_usuario_captura, id_usuario_valida, id_usuario_actualiza,
-	// 	cantidad_muestras, costo_total, cuerpo_receptor, tipo_cuerpo,
-	// 	fecha, fecha_entrega, fecha_captura, fecha_valida,
-	// 	fecha_actualiza, fecha_rechaza, ip_captura, ip_valida,
-	// 	ip_actualiza, host_captura, host_valida, host_actualiza,
-	// 	motivo_rechaza, comentarios, activo
-	// 	FROM Orden
-	// 	WHERE activo = 1";
-	// $db = getConnection();
-	// $stmt = $db->prepare($sql);
-	// $stmt->execute();
-	// $orders = $stmt->fetchAll(PDO::FETCH_ASSOC);
-	// $db = null;
-	// $i = 0;
-	// $l = count($studies);
-	// for ($i = 0; $i < $l; $i++) {
-	// 	$orders[$i]["cliente"] = getClient($orders[$i]['id_cliente'])[0];
-	// 	$orders[$i]["estudio"] = getPlainStudy($orders[$i]['id_estudio']);
-	// 	$orders[$i]["planes"] = getPlansByOrder($orders[$i]['id_orden']);
-	// }
-	return $orders;
+	$sql = "SELECT *
+		FROM OrigenOrden
+		WHERE activo = 1";
+	$db = getConnection();
+	$stmt = $db->prepare($sql);
+	$stmt->execute();
+	$orderSources = $stmt->fetchAll(PDO::FETCH_ASSOC);
+	$db = null;
+	return $orderSources;
 }
 
 function getPlans() {
-	// $plans = \Service\DALSislab::getInstance()->getPlans();
 	$sql = "SELECT id_plan, id_estudio, id_orden, id_ubicacion,
 			id_paquete, id_objetivo_plan, id_norma_muestreo,
 			id_supervisor_muestreo, id_supervisor_entrega,
@@ -534,7 +479,7 @@ function getPlans() {
 			cantidad_puntos, cantidad_equipos, cantidad_recipientes,
 			cantidad_reactivos, cantidad_hieleras, frecuencia,
 			objetivo_otro, motivo_rechaza, comentarios, activo
-		FROM Plan
+		FROM [Plan]
 		WHERE activo = 1";
 	$db = getConnection();
 	$stmt = $db->prepare($sql);
@@ -591,7 +536,6 @@ function getBlankPlan() {
 }
 
 function getPlansByOrder($orderId) {
-	// $plans = \Service\DALSislab::getInstance()->getPlans();
 	$sql = "SELECT id_plan, id_estudio, id_orden, id_ubicacion,
 			id_paquete, id_objetivo_plan, id_norma_muestreo,
 			id_supervisor_muestreo, id_supervisor_entrega,
@@ -620,7 +564,6 @@ function getPlansByOrder($orderId) {
 }
 
 function getPlainPlan($planId) {
-	// $plan = \Service\DALSislab::getInstance()->getPlan($planId);
 	$sql = "SELECT id_plan, id_estudio, id_orden, id_ubicacion,
 			id_paquete, id_objetivo_plan, id_norma_muestreo,
 			id_supervisor_muestreo, id_supervisor_entrega,
@@ -697,7 +640,8 @@ function getPlan($planId) {
 // 			 ip_captura, ip_actualiza, host_captura, host_actualiza, activo)
 // 			VALUES ( :id_nivel, :id_rol, :id_area, :id_puesto, :interno,
 // 				:cea, :laboratorio, :supervisa, :analiza, :muestrea, :nombres,
-// 				:apellido_paterno, :apellido_materno, :usr, :pwd, :fecha_captura,
+// 				:apellido_paterno, :apellido_materno, :usr, :pwd,
+// 				:fecha_captura,
 // 				:fecha_actualiza, :ip_captura, :ip_actualiza, :host_captura,
 // 				:host_actualiza, :activo
 // 			)";
@@ -735,3 +679,59 @@ function getPlan($planId) {
 // 	}
 // }
 
+/*
+<?
+$insertData = array(
+      id_orden => $requestData["id_orden"],
+      id_estudio => $requestData["id_estudio"],
+      id_cliente => $requestData["id_cliente"],
+      id_matriz => $requestData["id_matriz"],
+      id_tipo_muestreo => $requestData["id_tipo_muestreo"],
+      id_norma => $requestData["id_norma"],
+      id_cuerpo_receptor => $requestData["id_cuerpo_receptor"],
+      id_status => $requestData["id_status"],
+      id_usuario_captura => $requestData["id_usuario_captura"],
+      id_usuario_valida => $requestData["id_usuario_valida"],
+      id_usuario_actualiza => $requestData["id_usuario_actualiza"],
+      cantidad_muestras => $requestData["cantidad_muestras"],
+      costo_total => $requestData["costo_total"],
+      cuerpo_receptor => $requestData["cuerpo_receptor"],
+      tipo_cuerpo => $requestData["tipo_cuerpo"],
+      fecha => $requestData["fecha"],
+      fecha_entrega => $requestData["fecha_entrega"],
+      fecha_captura => $requestData["fecha_captura"],
+      fecha_valida => $requestData["fecha_valida"],
+      fecha_actualiza => $requestData["fecha_actualiza"],
+      fecha_rechaza => $requestData["fecha_rechaza"],
+      ip_captura => $requestData["ip_captura"],
+      ip_valida => $requestData["ip_valida"],
+      ip_actualiza => $requestData["ip_actualiza"],
+      host_captura => $requestData["host_captura"],
+      host_valida => $requestData["host_valida"],
+      host_actualiza => $requestData["host_actualiza"],
+      motivo_rechaza => $requestData["motivo_rechaza"],
+      comentarios => $requestData["comentarios"],
+      activo => $requestData["activo"],
+);
+
+      $sql = "UPDATE Orden SET
+            id_estudio = :id_estudio, id_cliente = :id_cliente,
+            id_matriz = :id_matriz, id_tipo_muestreo = :id_tipo_muestreo,
+            id_norma = :id_norma, id_cuerpo_receptor = :id_cuerpo_receptor,
+            id_status = :id_status, id_usuario_captura = :id_usuario_captura,
+            id_usuario_valida = :id_usuario_valida,
+            id_usuario_actualiza = :id_usuario_actualiza,
+            cantidad_muestras = :cantidad_muestras,
+            costo_total = :costo_total, cuerpo_receptor = :cuerpo_receptor,
+            tipo_cuerpo = :tipo_cuerpo, fecha = :fecha,
+            fecha_entrega = :fecha_entrega, fecha_captura = :fecha_captura,
+            fecha_valida = :fecha_valida, fecha_actualiza = :fecha_actualiza,
+            fecha_rechaza = :fecha_rechaza, ip_captura = :ip_captura,
+            ip_valida = :ip_valida, ip_actualiza = :ip_actualiza,
+            host_captura = :host_captura, host_valida = :host_valida,
+            host_actualiza = :host_actualiza,
+            motivo_rechaza = :motivo_rechaza, comentarios = :comentarios,
+            activo = :activo
+            WHERE id_orden = :id_orden";
+
+*/

@@ -115,8 +115,8 @@ $app->post("/studies", function() use ($app) {
 		{
 			$studyUpdateData = processStudyUpdate($request);
 			$studyId = updateStudy($studyUpdateData["study"]);
-			$result = processStudyOrderUpdate($studyUpdateData);
-			//$result = '{"id_estudio":' . $studyId . '}';
+			processStudyOrderUpdate($studyUpdateData);
+			$result = '{"id_estudio":' . $studyId . '}';
 		}
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
@@ -171,7 +171,8 @@ $app->post("/studies", function() use ($app) {
 
 $app->get("/orders(/)(:orderId)", function($orderId = -1) use ($app) {
 	try {
-		$userId = decodeUserToken($app->request())->uid;
+		//$userId = decodeUserToken($app->request())->uid;
+		$userId = 13;
 		if ($orderId > 0)
 		{
 			$result = json_encode(getOrder($orderId));
@@ -206,8 +207,9 @@ $app->post("/orders", function() use ($app) {
 		{
 			$orderUpdateData = processOrderUpdate($request);
 			$orderId = updateOrder($orderUpdateData["order"]);
-			$result = json_encode(processOrderPlansUpdate($orderUpdateData));
-			//$result = updateOrder($updateData);
+			$orderPlans = processOrderPlansUpdate($orderUpdateData);
+			//$result = '{"id_orden":' . $orderId . ', "message":"updating?"}';
+			$result = $orderPlans;
 		}
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
@@ -238,11 +240,11 @@ $app->get("/plans(/)(:planId)", function($planId = -1) use ($app) {
 		$userId = decodeUserToken($app->request())->uid;
 		if ($planId > -1)
 		{
-			$result = getPlan($planId);
+			$result = json_encode(getPlan($planId));
 		}
 		else
 		{
-			$result = getPlans();
+			$result = json_encode(getPlans());
 		}
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
@@ -519,7 +521,7 @@ $app->get("/sampling/employees", function() use ($app) {
 $app->get("/plan/objectives", function() use ($app) {
 	try {
 		$userId = decodeUserToken($app->request())->uid;
-		$result = \Service\DALSislab::getInstance()->getPlanObjectives();
+		$result = json_encode(getPlanObjectives());
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
 		//$result = ")]}',\n" . $result;
@@ -1405,21 +1407,34 @@ function processOrderUpdate($request) {
 function processOrderPlansUpdate($orderUpdateData) {
 	$orderId = $orderUpdateData["order"]["id_orden"];
 	$storedPlans = getPlansByOrder($orderId);
-	$updatePlans = $orderUpdateData["plans"];
+	$plans = (array) $orderUpdateData["plans"];
 
 	$i = 0;
 	$j = 0;
 	$l = count($storedPlans);
-	$m = count($updatePlans);
+	$m = count($plans);
 
 	//TODO: refactor with array_walk()
 	//TODO: use single transaction
 	if ($l < 1)
 	{
 		//stored empty, insert all
-		for ($j = 0; $j < $l; $j++) {
-			unset($updatePlans[$j]['$$hashKey']);
-			insertPlan($updatePlans[$j]);
+		for ($j = 0; $j < $m; $j++) {
+			$plan = (array) $plans[$j];
+			unset($plan["id_plan"]);
+			unset($plan['$$hashKey']);
+			$plan["fecha"] = isoDateToMsSql($plan["fecha"]);
+			$plan["fecha_probable"] = isoDateToMsSql($plan["fecha_probable"]);
+			$plan["fecha_calibracion"] = isoDateToMsSql($plan["fecha_calibracion"]);
+			$plan["fecha_captura"] = isoDateToMsSql($plan["fecha_captura"]);
+			$plan["fecha_valida"] = isoDateToMsSql($plan["fecha_valida"]);
+			$plan["fecha_actualiza"] = isoDateToMsSql($plan["fecha_actualiza"]);
+			$plan["fecha_rechaza"] = isoDateToMsSql($plan["fecha_rechaza"]);
+			if (isset($plan["id_paquete_puntos"])) {
+				unset($plan["id_paquete_puntos"]);
+			}
+			//insertPlan($plan);
+			return json_encode($plan);
 		}
 		return $orderId;
 	}
@@ -1428,22 +1443,22 @@ function processOrderPlansUpdate($orderUpdateData) {
 		//mark all stored as deleted, only additions/matches persist
 		for ($i = 0; $i < $l; $i++) {
 			$storedPlans[$i]["activo"] = 0;
-			updatePlan($storedPlans[$i]);
+			//updatePlan($storedPlans[$i]);
 		}
 		//check for additions/matches
 		for ($j = 0; $j < $m; $j++) {
-			if ($updatePlans[$j]["id_plan"] == 0)
+			if ($plans[$j]["id_plan"] == 0)
 			{
 				//new, store it
 				unset($updatedData[$j]["id_plan"]);
-				unset($updatePlans[$j]['$$hashKey']);
-				insertPlan($updatePlans);
+				unset($plans[$j]['$$hashKey']);
+				//insertPlan($plans);
 			}
 			else
 			{
 				//update
-				unset($updatePlans[$j]['$$hashKey']);
-				updatePlan($updatePlans);
+				unset($plans[$j]['$$hashKey']);
+				//updatePlan($plans);
 			}
 		}
 	}

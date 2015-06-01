@@ -187,11 +187,11 @@
         id="packSelectId{{::row.id_plan}}"
         name="packSelectId{{::row.id_plan}}"
         required
-        data-ng-model="row.id_paquete_puntos"
+        data-ng-model="row.id_paquete"
         >
         <option data-ng-repeat="package in order.packages"
-          value="{{package.id_paquete_puntos}}"
-          data-ng-selected="row.id_paquete_puntos == package.id_paquete_puntos"
+          value="{{package.id_paquete}}"
+          data-ng-selected="row.id_paquete == package.id_paquete"
           >
           {{package.paquete_puntos}}
         </option>

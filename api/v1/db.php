@@ -365,13 +365,10 @@ function getOrder($orderId) {
 	$order = getPlainOrder($orderId);
 	$order->cliente = getClient($order->id_cliente)[0];
 	$order->estudio = getPlainStudy($order->id_estudio);
+	$order->planes = array((object) getBlankPlan());
 	if (count(getPlansByOrder($orderId)) > 0)
 	{
 		$order->planes = getPlansByOrder($orderId);
-	}
-	else
-	{
-		$order->planes = array((object) getBlankPlan());
 	}
 	return $order;
 }
@@ -537,25 +534,27 @@ function getBlankPlan() {
 }
 
 function getPlansByOrder($orderId) {
-	$sql = "SELECT id_plan, id_estudio, id_orden, id_ubicacion,
-		id_paquete, id_objetivo_plan, id_norma_muestreo,
-		id_supervisor_muestreo, id_supervisor_entrega,
-		id_supervisor_recoleccion, id_supervisor_registro,
-		id_ayudante_entrega, id_ayudante_recoleccion,
-		id_ayudante_registro, id_responsable_calibracion,
-		id_responsable_recipientes, id_responsable_reactivos,
-		id_responsable_material, id_responsable_hieleras, id_status,
-		id_usuario_captura, id_usuario_valida, id_usuario_actualiza,
-		fecha, fecha_probable, fecha_calibracion, fecha_captura,
-		fecha_valida, fecha_actualiza, fecha_rechaza, ip_captura,
-		ip_valida, ip_actualiza, host_captura, host_valida,
-		host_actualiza, calle, numero, colonia, codigo_postal,
-		telefono, contacto, email, comentarios_ubicacion,
-		cantidad_puntos, cantidad_equipos, cantidad_recipientes,
+	$sql = "SELECT id_plan, id_estudio, id_orden,
+		id_ubicacion, id_paquete, id_objetivo_plan,
+		id_norma_muestreo, id_supervisor_muestreo,
+		id_supervisor_entrega,  id_supervisor_recoleccion,
+		id_supervisor_registro, id_ayudante_entrega,
+		id_ayudante_recoleccion, id_ayudante_registro,
+		id_responsable_calibracion,  id_responsable_recipientes,
+		id_responsable_reactivos, id_responsable_material,
+		id_responsable_hieleras, id_status, id_usuario_captura,
+		id_usuario_valida,  id_usuario_actualiza, fecha,
+		fecha_probable, fecha_calibracion, fecha_captura,
+		fecha_valida, fecha_actualiza, fecha_rechaza,
+		ip_captura, ip_valida, ip_actualiza,  host_captura,
+		host_valida, host_actualiza, calle, numero, colonia,
+		codigo_postal, telefono, contacto, email,
+		comentarios_ubicacion, cantidad_puntos,
+		cantidad_equipos, cantidad_recipientes,
 		cantidad_reactivos, cantidad_hieleras, frecuencia,
 		objetivo_otro, motivo_rechaza, comentarios, activo
 		FROM [Plan]
-		WHERE activo = 0 AND id_orden = :orderId";
+		WHERE activo = 1 AND id_orden = :orderId";
 	$db = getConnection();
 	$stmt = $db->prepare($sql);
 	$stmt->bindParam("orderId", $orderId);
@@ -565,21 +564,23 @@ function getPlansByOrder($orderId) {
 }
 
 function getPlainPlan($planId) {
-	$sql = "SELECT id_plan, id_estudio, id_orden, id_ubicacion,
-		id_paquete, id_objetivo_plan, id_norma_muestreo,
-		id_supervisor_muestreo, id_supervisor_entrega,
-		id_supervisor_recoleccion, id_supervisor_registro,
-		id_ayudante_entrega, id_ayudante_recoleccion,
-		id_ayudante_registro, id_responsable_calibracion,
-		id_responsable_recipientes, id_responsable_reactivos,
-		id_responsable_material, id_responsable_hieleras, id_status,
-		id_usuario_captura, id_usuario_valida, id_usuario_actualiza,
-		fecha, fecha_probable, fecha_calibracion, fecha_captura,
-		fecha_valida, fecha_actualiza, fecha_rechaza, ip_captura,
-		ip_valida, ip_actualiza, host_captura, host_valida,
-		host_actualiza, calle, numero, colonia, codigo_postal,
-		telefono, contacto, email, comentarios_ubicacion,
-		cantidad_puntos, cantidad_equipos, cantidad_recipientes,
+	$sql = "SELECT id_plan, id_estudio, id_orden,
+		id_ubicacion, id_paquete, id_objetivo_plan,
+		id_norma_muestreo, id_supervisor_muestreo,
+		id_supervisor_entrega,  id_supervisor_recoleccion,
+		id_supervisor_registro, id_ayudante_entrega,
+		id_ayudante_recoleccion, id_ayudante_registro,
+		id_responsable_calibracion,  id_responsable_recipientes,
+		id_responsable_reactivos, id_responsable_material,
+		id_responsable_hieleras, id_status, id_usuario_captura,
+		id_usuario_valida,  id_usuario_actualiza, fecha,
+		fecha_probable, fecha_calibracion, fecha_captura,
+		fecha_valida, fecha_actualiza, fecha_rechaza,
+		ip_captura, ip_valida, ip_actualiza,  host_captura,
+		host_valida, host_actualiza, calle, numero, colonia,
+		codigo_postal, telefono, contacto, email,
+		comentarios_ubicacion, cantidad_puntos,
+		cantidad_equipos, cantidad_recipientes,
 		cantidad_reactivos, cantidad_hieleras, frecuencia,
 		objetivo_otro, motivo_rechaza, comentarios, activo
 		FROM [Plan]
@@ -605,41 +606,56 @@ function getPlan($planId) {
 	return $plan;
 }
 
+function getPlanObjectives() {
+	$sql = "SELECT *
+		FROM ObjetivoPlan
+		WHERE activo = 1";
+	$db = getConnection();
+	$stmt = $db->prepare($sql);
+	$stmt->execute();
+	$plan = (array) $stmt->fetchAll(PDO::FETCH_OBJ)[0];
+	return (object) $plan;
+}
+
 function insertPlan($planData) {
-	$sql = "INSERT INTO [Plan] (id_estudio, id_orden, id_ubicacion,
-		id_paquete, id_objetivo_plan, id_norma_muestreo,
-		id_supervisor_muestreo, id_supervisor_entrega,
-		id_supervisor_recoleccion, id_supervisor_registro,
-		id_ayudante_entrega, id_ayudante_recoleccion,
-		id_ayudante_registro, id_responsable_calibracion,
-		id_responsable_recipientes, id_responsable_reactivos,
-		id_responsable_material, id_responsable_hieleras, id_status,
-		id_usuario_captura, id_usuario_valida, id_usuario_actualiza,
-		fecha, fecha_probable, fecha_calibracion, fecha_captura,
-		fecha_valida, fecha_actualiza, fecha_rechaza, ip_captura,
-		ip_valida, ip_actualiza, host_captura, host_valida,
-		host_actualiza, calle, numero, colonia, codigo_postal,
-		telefono, contacto, email, comentarios_ubicacion,
-		cantidad_puntos, cantidad_equipos, cantidad_recipientes,
+	$sql = "INSERT INTO [Plan] (id_estudio, id_orden,
+		id_ubicacion, id_paquete, id_objetivo_plan,
+		id_norma_muestreo, id_supervisor_muestreo,
+		id_supervisor_entrega,  id_supervisor_recoleccion,
+		id_supervisor_registro, id_ayudante_entrega,
+		id_ayudante_recoleccion, id_ayudante_registro,
+		id_responsable_calibracion,  id_responsable_recipientes,
+		id_responsable_reactivos, id_responsable_material,
+		id_responsable_hieleras, id_status, id_usuario_captura,
+		id_usuario_valida,  id_usuario_actualiza, fecha,
+		fecha_probable, fecha_calibracion, fecha_captura,
+		fecha_valida, fecha_actualiza, fecha_rechaza,
+		ip_captura, ip_valida, ip_actualiza,  host_captura,
+		host_valida, host_actualiza, calle, numero, colonia,
+		codigo_postal, telefono, contacto, email,
+		comentarios_ubicacion, cantidad_puntos,
+		cantidad_equipos, cantidad_recipientes,
 		cantidad_reactivos, cantidad_hieleras, frecuencia,
 		objetivo_otro, motivo_rechaza, comentarios, activo)
-		VALUES (:id_estudio, :id_orden, :id_ubicacion,
-		:id_paquete, :id_objetivo_plan, :id_norma_muestreo,
-		:id_supervisor_muestreo, :id_supervisor_entrega,
-		:id_supervisor_recoleccion, :id_supervisor_registro,
-		:id_ayudante_entrega, :id_ayudante_recoleccion,
-		:id_ayudante_registro, :id_responsable_calibracion,
-		:id_responsable_recipientes, :id_responsable_reactivos,
-		:id_responsable_material, :id_responsable_hieleras, :id_status,
-		:id_usuario_captura, :id_usuario_valida, :id_usuario_actualiza,
-		:fecha, :fecha_probable, :fecha_calibracion, :fecha_captura,
-		:fecha_valida, :fecha_actualiza, :fecha_rechaza, :ip_captura,
-		:ip_valida, :ip_actualiza, :host_captura, :host_valida,
-		:host_actualiza, :calle, :numero, :colonia, :codigo_postal,
-		:telefono, :contacto, :email, :comentarios_ubicacion,
-		:cantidad_puntos, :cantidad_equipos, :cantidad_recipientes,
+		VALUES (:id_estudio, :id_orden,
+		:id_ubicacion, :id_paquete, :id_objetivo_plan,
+		:id_norma_muestreo, :id_supervisor_muestreo,
+		:id_supervisor_entrega,  :id_supervisor_recoleccion,
+		:id_supervisor_registro, :id_ayudante_entrega,
+		:id_ayudante_recoleccion, :id_ayudante_registro,
+		:id_responsable_calibracion,  :id_responsable_recipientes,
+		:id_responsable_reactivos, :id_responsable_material,
+		:id_responsable_hieleras, :id_status, :id_usuario_captura,
+		:id_usuario_valida,  :id_usuario_actualiza, :fecha,
+		:fecha_probable, :fecha_calibracion, :fecha_captura,
+		:fecha_valida, :fecha_actualiza, :fecha_rechaza,
+		:ip_captura, :ip_valida, :ip_actualiza,  :host_captura,
+		:host_valida, :host_actualiza, :calle, :numero, :colonia,
+		:codigo_postal, :telefono, :contacto, :email,
+		:comentarios_ubicacion, :cantidad_puntos,
+		:cantidad_equipos, :cantidad_recipientes,
 		:cantidad_reactivos, :cantidad_hieleras, :frecuencia,
-		:objetivo_otro, :motivo_rechaza, :comentarios, :activo,)";
+		:objetivo_otro, :motivo_rechaza, :comentarios, :activo)";
 	$db = getConnection();
 	$stmt = $db->prepare($sql);
 	$stmt->execute($planData);

@@ -737,3 +737,15 @@ function insertPlan($planData) {
 // 		echo '{"error":{"text":'. $e->getMessage() .'}}';
 // 	}
 // }
+
+function getPointPackages() {
+	$sql ="SELECT id_paquete, paquete, activo
+		FROM Paquete
+		WHERE activo = 1";
+	$db = getConnection();
+	$stmt = $db->prepare($sql);
+	$stmt->execute();
+	$pointPackages = $stmt->fetchAll(PDO::FETCH_ASSOC);
+	$db = null;
+	return $pointPackages;
+}

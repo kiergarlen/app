@@ -65,7 +65,7 @@ $app->get("/tasks", function() use ($app) {
 	try {
 		$userId = decodeUserToken($app->request())->uid;
 		$result = getTasks($userId);
-		//Temporary
+		//TODO: Once Tasks table is in DB, replace for this:
 		//$result = json_encode(getTasks($userId));
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
@@ -195,20 +195,21 @@ $app->post("/orders", function() use ($app) {
 	try {
 		$userId = decodeUserToken($app->request())->uid;
 		$request = $app->request();
-		$requestData = extractDataFromRequest($request);
+		//$requestData = extractDataFromRequest($request);
 		$orderId = extractDataFromRequest($request)->id_orden;
 		if ($orderId < 1)
 		{
 			$orderInsertData = processOrderInsert($request);
-			$result = insertOrder($orderInsertData);
-			$result = '{"id_orden":' . $orderId . ', "message":"inserting..."}';
+			$orderId = insertOrder($orderInsertData);
+			//TODO: check if processOrderPlansInsert() is needed
+			$result = '{"id_orden":' . $orderId . ', "message":"inserted..."}';
 		}
 		else
 		{
 			$orderUpdateData = processOrderUpdate($request);
 			$orderId = updateOrder($orderUpdateData["order"]);
 			$orderPlans = processOrderPlansUpdate($orderUpdateData);
-			//$result = '{"id_orden":' . $orderId . ', "message":"updating?"}';
+			//$result = '{"id_orden":' . $orderId . ', "message":"updated"}';
 			$result = $orderPlans;
 		}
 		$app->response()->status(200);
@@ -220,6 +221,9 @@ $app->post("/orders", function() use ($app) {
 		$app->response()->header('X-Status-Reason', $e->getMessage());
 	}
 });
+
+
+
 
 $app->get("/order/sources", function() use ($app) {
 	try {
@@ -479,8 +483,8 @@ $app->get("/matrices", function() use ($app) {
 
 $app->get("/points/packages", function() use ($app) {
 	try {
-		$userId = decodeUserToken($app->request())->uid;
-		$result = \Service\DALSislab::getInstance()->getPointPackages();
+		//$userId = decodeUserToken($app->request())->uid;
+		$result = json_encode(getPointPackages());
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
 		//$result = ")]}',\n" . $result;
@@ -1131,7 +1135,8 @@ function decodeUserToken($request) {
 // 			if (!is_numeric($v) && strtotime($v))
 // 			{
 // 				$dateArray = explode(" ", $v);
-// 				$v = $dateArray[0] . 'T'. substr($dateArray[1], 0, 5) . '-06:00';
+// 				//$v = $dateArray[0] . 'T'. substr($dateArray[1], 0, 5) . '-06:00';
+// 				$v = $dateArray[0] . 'T'. substr($dateArray[1], 0, 5);
 // 			}
 // 			$output .= '"' . $v .'"';
 // 			if ($j < $m)
@@ -1423,6 +1428,7 @@ function processOrderPlansUpdate($orderUpdateData) {
 			$plan = (array) $plans[$j];
 			unset($plan["id_plan"]);
 			unset($plan['$$hashKey']);
+			$plan["id_orden"] = $orderId;
 			$plan["fecha"] = isoDateToMsSql($plan["fecha"]);
 			$plan["fecha_probable"] = isoDateToMsSql($plan["fecha_probable"]);
 			$plan["fecha_calibracion"] = isoDateToMsSql($plan["fecha_calibracion"]);
@@ -1433,8 +1439,8 @@ function processOrderPlansUpdate($orderUpdateData) {
 			if (isset($plan["id_paquete_puntos"])) {
 				unset($plan["id_paquete_puntos"]);
 			}
-			//insertPlan($plan);
-			return json_encode($plan);
+			insertPlan($plan);
+			//return json_encode($plan);
 		}
 		return $orderId;
 	}
@@ -1444,6 +1450,7 @@ function processOrderPlansUpdate($orderUpdateData) {
 		for ($i = 0; $i < $l; $i++) {
 			$storedPlans[$i]["activo"] = 0;
 			//updatePlan($storedPlans[$i]);
+			return json_encode($storedPlans);
 		}
 		//check for additions/matches
 		for ($j = 0; $j < $m; $j++) {

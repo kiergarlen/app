@@ -194,7 +194,6 @@
         'cuerpo_receptor':'',
         'tipo_cuerpo':'',
         'fecha':'',
-        'fecha_entrega':'',
         'fecha_captura':'',
         'fecha_valida':'',
         'fecha_actualiza':'',

@@ -320,7 +320,7 @@ function getOrders() {
 		id_tipo_muestreo, id_norma, id_cuerpo_receptor, id_status,
 		id_usuario_captura, id_usuario_valida, id_usuario_actualiza,
 		cantidad_muestras, costo_total, cuerpo_receptor, tipo_cuerpo,
-		fecha, fecha_entrega, fecha_captura, fecha_valida,
+		fecha, fecha_captura, fecha_valida,
 		fecha_actualiza, fecha_rechaza, ip_captura, ip_valida,
 		ip_actualiza, host_captura, host_valida, host_actualiza,
 		motivo_rechaza, comentarios, activo
@@ -346,7 +346,7 @@ function getPlainOrder($orderId) {
 		id_tipo_muestreo, id_norma, id_cuerpo_receptor, id_status,
 		id_usuario_captura, id_usuario_valida, id_usuario_actualiza,
 		cantidad_muestras, costo_total, cuerpo_receptor, tipo_cuerpo,
-		fecha, fecha_entrega, fecha_captura, fecha_valida,
+		fecha, fecha_captura, fecha_valida,
 		fecha_actualiza, fecha_rechaza, ip_captura, ip_valida,
 		ip_actualiza, host_captura, host_valida, host_actualiza,
 		motivo_rechaza, comentarios, activo
@@ -365,13 +365,13 @@ function getOrder($orderId) {
 	$order = getPlainOrder($orderId);
 	$order->cliente = getClient($order->id_cliente)[0];
 	$order->estudio = getPlainStudy($order->id_estudio);
-	if (count(getPlansByOrder($orderId)))
+	if (count(getPlansByOrder($orderId)) > 0)
 	{
 		$order->planes = getPlansByOrder($orderId);
 	}
 	else
 	{
-		$order->planes = array(getBlankPlan());
+		$order->planes = array((object) getBlankPlan());
 	}
 	return $order;
 }
@@ -380,11 +380,12 @@ function getStudyOrders($studyId) {
 	$sql = "SELECT id_orden, id_estudio, id_cliente, id_matriz,
 		id_tipo_muestreo, id_norma, id_cuerpo_receptor, id_status,
 		id_usuario_captura, id_usuario_valida, id_usuario_actualiza,
-		cantidad_muestras, costo_total, cuerpo_receptor, tipo_cuerpo,
-		fecha, fecha_entrega, fecha_captura, fecha_valida,
-		fecha_actualiza, fecha_rechaza, ip_captura, ip_valida,
-		ip_actualiza, host_captura, host_valida, host_actualiza,
-		motivo_rechaza, comentarios, activo
+		cantidad_muestras, costo_total, cuerpo_receptor,
+		tipo_cuerpo, fecha, fecha_captura,
+		fecha_valida, fecha_actualiza, fecha_rechaza,
+		ip_captura, ip_valida, ip_actualiza, host_captura,
+		host_valida, host_actualiza, motivo_rechaza,
+		comentarios, activo
 		FROM Orden
 		WHERE activo = 1 AND id_estudio = :studyId";
 	$db = getConnection();
@@ -401,7 +402,7 @@ function insertOrder($orderData) {
 		id_tipo_muestreo, id_norma, id_cuerpo_receptor, id_status,
 		id_usuario_captura, id_usuario_valida, id_usuario_actualiza,
 		cantidad_muestras, costo_total, cuerpo_receptor,
-		tipo_cuerpo, fecha, fecha_entrega, fecha_captura,
+		tipo_cuerpo, fecha, fecha_captura,
 		fecha_valida, fecha_actualiza, fecha_rechaza,
 		ip_captura, ip_valida, ip_actualiza, host_captura,
 		host_valida, host_actualiza, motivo_rechaza,
@@ -410,7 +411,7 @@ function insertOrder($orderData) {
 		:id_tipo_muestreo, :id_norma, :id_cuerpo_receptor, :id_status,
 		:id_usuario_captura, :id_usuario_valida, :id_usuario_actualiza,
 		:cantidad_muestras, :costo_total, :cuerpo_receptor,
-		:tipo_cuerpo, :fecha, :fecha_entrega, :fecha_captura,
+		:tipo_cuerpo, :fecha, :fecha_captura,
 		:fecha_valida, :fecha_actualiza, :fecha_rechaza,
 		:ip_captura, :ip_valida, :ip_actualiza, :host_captura,
 		:host_valida, :host_actualiza, :motivo_rechaza,
@@ -433,9 +434,9 @@ function updateOrder($updateData) {
 		id_usuario_actualiza = :id_usuario_actualiza,
 		cantidad_muestras = :cantidad_muestras, costo_total = :costo_total,
 		cuerpo_receptor = :cuerpo_receptor, tipo_cuerpo = :tipo_cuerpo,
-		fecha = :fecha, fecha_entrega = :fecha_entrega,
-		fecha_captura = :fecha_captura, fecha_valida = :fecha_valida,
-		fecha_actualiza = :fecha_actualiza, fecha_rechaza = :fecha_rechaza,
+		fecha = :fecha, fecha_captura = :fecha_captura,
+		fecha_valida = :fecha_valida, fecha_actualiza = :fecha_actualiza,
+		fecha_rechaza = :fecha_rechaza,
 		ip_captura = :ip_captura, ip_valida = :ip_valida,
 		ip_actualiza = :ip_actualiza, host_captura = :host_captura,
 		host_valida = :host_valida, host_actualiza = :host_actualiza,
@@ -463,22 +464,22 @@ function getOrderSources() {
 
 function getPlans() {
 	$sql = "SELECT id_plan, id_estudio, id_orden, id_ubicacion,
-			id_paquete, id_objetivo_plan, id_norma_muestreo,
-			id_supervisor_muestreo, id_supervisor_entrega,
-			id_supervisor_recoleccion, id_supervisor_registro,
-			id_ayudante_entrega, id_ayudante_recoleccion,
-			id_ayudante_registro, id_responsable_calibracion,
-			id_responsable_recipientes, id_responsable_reactivos,
-			id_responsable_material, id_responsable_hieleras, id_status,
-			id_usuario_captura, id_usuario_valida, id_usuario_actualiza,
-			fecha, fecha_probable, fecha_calibracion, fecha_captura,
-			fecha_valida, fecha_actualiza, fecha_rechaza, ip_captura,
-			ip_valida, ip_actualiza, host_captura, host_valida,
-			host_actualiza, calle, numero, colonia, codigo_postal,
-			telefono, contacto, email, comentarios_ubicacion,
-			cantidad_puntos, cantidad_equipos, cantidad_recipientes,
-			cantidad_reactivos, cantidad_hieleras, frecuencia,
-			objetivo_otro, motivo_rechaza, comentarios, activo
+		id_paquete, id_objetivo_plan, id_norma_muestreo,
+		id_supervisor_muestreo, id_supervisor_entrega,
+		id_supervisor_recoleccion, id_supervisor_registro,
+		id_ayudante_entrega, id_ayudante_recoleccion,
+		id_ayudante_registro, id_responsable_calibracion,
+		id_responsable_recipientes, id_responsable_reactivos,
+		id_responsable_material, id_responsable_hieleras, id_status,
+		id_usuario_captura, id_usuario_valida, id_usuario_actualiza,
+		fecha, fecha_probable, fecha_calibracion, fecha_captura,
+		fecha_valida, fecha_actualiza, fecha_rechaza, ip_captura,
+		ip_valida, ip_actualiza, host_captura, host_valida,
+		host_actualiza, calle, numero, colonia, codigo_postal,
+		telefono, contacto, email, comentarios_ubicacion,
+		cantidad_puntos, cantidad_equipos, cantidad_recipientes,
+		cantidad_reactivos, cantidad_hieleras, frecuencia,
+		objetivo_otro, motivo_rechaza, comentarios, activo
 		FROM [Plan]
 		WHERE activo = 1";
 	$db = getConnection();
@@ -487,7 +488,7 @@ function getPlans() {
 	$plans = $stmt->fetchAll(PDO::FETCH_ASSOC);
 	$db = null;
 	// $i = 0;
-	// $l = count($studies);
+	// $l = count($plans);
 	// for ($i = 0; $i < $l; $i++) {
 	// 	$plans[$i]["cliente"] = getClient($clientId);
 	// 	$plans[$i]["orden"] = getPlainOrder($orderId);
@@ -504,17 +505,17 @@ function getPlans() {
 
 function getBlankPlan() {
 	return array(
-		"id_plan" => 0, "id_estudio" => 0,
-		"id_orden" => 0, "id_ubicacion" => 0,
-		"id_paquete" => 0, "id_objetivo_plan" => 0,
-		"id_norma_muestreo" => 0, "id_supervisor_muestreo" => 0,
+		"id_plan" => 1, "id_estudio" => 1,
+		"id_orden" => 1, "id_ubicacion" => 1,
+		"id_paquete" => 1, "id_objetivo_plan" => 1,
+		"id_norma_muestreo" => 1, "id_supervisor_muestreo" => 0,
 		"id_supervisor_entrega" => 0, "id_supervisor_recoleccion" => 0,
 		"id_supervisor_registro" => 0, "id_ayudante_entrega" => 0,
 		"id_ayudante_recoleccion" => 0, "id_ayudante_registro" => 0,
-		"id_responsable_calibracion" => 0,
+		"id_responsable_calibracion" => 1,
 		"id_responsable_recipientes" => 0,
 		"id_responsable_reactivos" => 0, "id_responsable_material" => 0,
-		"id_responsable_hieleras" => 0, "id_status" => 0,
+		"id_responsable_hieleras" => 0, "id_status" => 1,
 		"id_usuario_captura" => 0, "id_usuario_valida" => 0,
 		"id_usuario_actualiza" => 0, "fecha" => "",
 		"fecha_probable" => "", "fecha_calibracion" => "",
@@ -537,24 +538,24 @@ function getBlankPlan() {
 
 function getPlansByOrder($orderId) {
 	$sql = "SELECT id_plan, id_estudio, id_orden, id_ubicacion,
-			id_paquete, id_objetivo_plan, id_norma_muestreo,
-			id_supervisor_muestreo, id_supervisor_entrega,
-			id_supervisor_recoleccion, id_supervisor_registro,
-			id_ayudante_entrega, id_ayudante_recoleccion,
-			id_ayudante_registro, id_responsable_calibracion,
-			id_responsable_recipientes, id_responsable_reactivos,
-			id_responsable_material, id_responsable_hieleras, id_status,
-			id_usuario_captura, id_usuario_valida, id_usuario_actualiza,
-			fecha, fecha_probable, fecha_calibracion, fecha_captura,
-			fecha_valida, fecha_actualiza, fecha_rechaza, ip_captura,
-			ip_valida, ip_actualiza, host_captura, host_valida,
-			host_actualiza, calle, numero, colonia, codigo_postal,
-			telefono, contacto, email, comentarios_ubicacion,
-			cantidad_puntos, cantidad_equipos, cantidad_recipientes,
-			cantidad_reactivos, cantidad_hieleras, frecuencia,
-			objetivo_otro, motivo_rechaza, comentarios, activo
+		id_paquete, id_objetivo_plan, id_norma_muestreo,
+		id_supervisor_muestreo, id_supervisor_entrega,
+		id_supervisor_recoleccion, id_supervisor_registro,
+		id_ayudante_entrega, id_ayudante_recoleccion,
+		id_ayudante_registro, id_responsable_calibracion,
+		id_responsable_recipientes, id_responsable_reactivos,
+		id_responsable_material, id_responsable_hieleras, id_status,
+		id_usuario_captura, id_usuario_valida, id_usuario_actualiza,
+		fecha, fecha_probable, fecha_calibracion, fecha_captura,
+		fecha_valida, fecha_actualiza, fecha_rechaza, ip_captura,
+		ip_valida, ip_actualiza, host_captura, host_valida,
+		host_actualiza, calle, numero, colonia, codigo_postal,
+		telefono, contacto, email, comentarios_ubicacion,
+		cantidad_puntos, cantidad_equipos, cantidad_recipientes,
+		cantidad_reactivos, cantidad_hieleras, frecuencia,
+		objetivo_otro, motivo_rechaza, comentarios, activo
 		FROM [Plan]
-		WHERE activo = 1 AND id_orden = :orderId";
+		WHERE activo = 0 AND id_orden = :orderId";
 	$db = getConnection();
 	$stmt = $db->prepare($sql);
 	$stmt->bindParam("orderId", $orderId);
@@ -565,22 +566,22 @@ function getPlansByOrder($orderId) {
 
 function getPlainPlan($planId) {
 	$sql = "SELECT id_plan, id_estudio, id_orden, id_ubicacion,
-			id_paquete, id_objetivo_plan, id_norma_muestreo,
-			id_supervisor_muestreo, id_supervisor_entrega,
-			id_supervisor_recoleccion, id_supervisor_registro,
-			id_ayudante_entrega, id_ayudante_recoleccion,
-			id_ayudante_registro, id_responsable_calibracion,
-			id_responsable_recipientes, id_responsable_reactivos,
-			id_responsable_material, id_responsable_hieleras, id_status,
-			id_usuario_captura, id_usuario_valida, id_usuario_actualiza,
-			fecha, fecha_probable, fecha_calibracion, fecha_captura,
-			fecha_valida, fecha_actualiza, fecha_rechaza, ip_captura,
-			ip_valida, ip_actualiza, host_captura, host_valida,
-			host_actualiza, calle, numero, colonia, codigo_postal,
-			telefono, contacto, email, comentarios_ubicacion,
-			cantidad_puntos, cantidad_equipos, cantidad_recipientes,
-			cantidad_reactivos, cantidad_hieleras, frecuencia,
-			objetivo_otro, motivo_rechaza, comentarios, activo
+		id_paquete, id_objetivo_plan, id_norma_muestreo,
+		id_supervisor_muestreo, id_supervisor_entrega,
+		id_supervisor_recoleccion, id_supervisor_registro,
+		id_ayudante_entrega, id_ayudante_recoleccion,
+		id_ayudante_registro, id_responsable_calibracion,
+		id_responsable_recipientes, id_responsable_reactivos,
+		id_responsable_material, id_responsable_hieleras, id_status,
+		id_usuario_captura, id_usuario_valida, id_usuario_actualiza,
+		fecha, fecha_probable, fecha_calibracion, fecha_captura,
+		fecha_valida, fecha_actualiza, fecha_rechaza, ip_captura,
+		ip_valida, ip_actualiza, host_captura, host_valida,
+		host_actualiza, calle, numero, colonia, codigo_postal,
+		telefono, contacto, email, comentarios_ubicacion,
+		cantidad_puntos, cantidad_equipos, cantidad_recipientes,
+		cantidad_reactivos, cantidad_hieleras, frecuencia,
+		objetivo_otro, motivo_rechaza, comentarios, activo
 		FROM [Plan]
 		WHERE activo = 1 AND id_plan = :planId";
 	$db = getConnection();
@@ -592,18 +593,60 @@ function getPlainPlan($planId) {
 
 function getPlan($planId) {
 	$plan = getPlainPlan($planId);
-	// 	$plan->cliente = getClient($clientId);
-	// 	$plan->orden = getPlainOrder($orderId);
-	// 	$plan->supervisor_muestreo = getSamplingSupervisor($supervisorId);
-	// 	$plan->puntos = getPointsByPackage($packageId);
-	// 	$plan->equipos = getEquipmentByPlan($planId);
-	// 	$plan->recipientes = getContainersByPlan($planId);
-	// 	$plan->reactivos = getReactivesByPlan($planId);
-	// 	$plan->materiales = getMaterialsByPlan($planId);
-	// 	$plan->hieleras = getCoolersByPlan($planId);
+	$plan->cliente = getClient($plan->id_cliente);
+	$plan->orden = getPlainOrder($plan->id_orden);
+	// $plan->supervisor_muestreo = getSamplingSupervisor($plan->supervisorId);
+	// $plan->puntos = getPointsByPackage($plan->packageId);
+	// $plan->equipos = getEquipmentByPlan($plan->planId);
+	// $plan->recipientes = getContainersByPlan($plan->planId);
+	// $plan->reactivos = getReactivesByPlan($plan->planId);
+	// $plan->materiales = getMaterialsByPlan($plan->planId);
+	// $plan->hieleras = getCoolersByPlan($plan->planId);
 	return $plan;
 }
 
+function insertPlan($planData) {
+	$sql = "INSERT INTO [Plan] (id_estudio, id_orden, id_ubicacion,
+		id_paquete, id_objetivo_plan, id_norma_muestreo,
+		id_supervisor_muestreo, id_supervisor_entrega,
+		id_supervisor_recoleccion, id_supervisor_registro,
+		id_ayudante_entrega, id_ayudante_recoleccion,
+		id_ayudante_registro, id_responsable_calibracion,
+		id_responsable_recipientes, id_responsable_reactivos,
+		id_responsable_material, id_responsable_hieleras, id_status,
+		id_usuario_captura, id_usuario_valida, id_usuario_actualiza,
+		fecha, fecha_probable, fecha_calibracion, fecha_captura,
+		fecha_valida, fecha_actualiza, fecha_rechaza, ip_captura,
+		ip_valida, ip_actualiza, host_captura, host_valida,
+		host_actualiza, calle, numero, colonia, codigo_postal,
+		telefono, contacto, email, comentarios_ubicacion,
+		cantidad_puntos, cantidad_equipos, cantidad_recipientes,
+		cantidad_reactivos, cantidad_hieleras, frecuencia,
+		objetivo_otro, motivo_rechaza, comentarios, activo)
+		VALUES (:id_estudio, :id_orden, :id_ubicacion,
+		:id_paquete, :id_objetivo_plan, :id_norma_muestreo,
+		:id_supervisor_muestreo, :id_supervisor_entrega,
+		:id_supervisor_recoleccion, :id_supervisor_registro,
+		:id_ayudante_entrega, :id_ayudante_recoleccion,
+		:id_ayudante_registro, :id_responsable_calibracion,
+		:id_responsable_recipientes, :id_responsable_reactivos,
+		:id_responsable_material, :id_responsable_hieleras, :id_status,
+		:id_usuario_captura, :id_usuario_valida, :id_usuario_actualiza,
+		:fecha, :fecha_probable, :fecha_calibracion, :fecha_captura,
+		:fecha_valida, :fecha_actualiza, :fecha_rechaza, :ip_captura,
+		:ip_valida, :ip_actualiza, :host_captura, :host_valida,
+		:host_actualiza, :calle, :numero, :colonia, :codigo_postal,
+		:telefono, :contacto, :email, :comentarios_ubicacion,
+		:cantidad_puntos, :cantidad_equipos, :cantidad_recipientes,
+		:cantidad_reactivos, :cantidad_hieleras, :frecuencia,
+		:objetivo_otro, :motivo_rechaza, :comentarios, :activo,)";
+	$db = getConnection();
+	$stmt = $db->prepare($sql);
+	$stmt->execute($planData);
+	$planId = $db->lastInsertId();
+	$db = null;
+	return $planId;
+}
 
 // function insertUser($requestData) {
 // 	try {
@@ -678,60 +721,3 @@ function getPlan($planId) {
 // 		echo '{"error":{"text":'. $e->getMessage() .'}}';
 // 	}
 // }
-
-/*
-<?
-$insertData = array(
-      id_orden => $requestData["id_orden"],
-      id_estudio => $requestData["id_estudio"],
-      id_cliente => $requestData["id_cliente"],
-      id_matriz => $requestData["id_matriz"],
-      id_tipo_muestreo => $requestData["id_tipo_muestreo"],
-      id_norma => $requestData["id_norma"],
-      id_cuerpo_receptor => $requestData["id_cuerpo_receptor"],
-      id_status => $requestData["id_status"],
-      id_usuario_captura => $requestData["id_usuario_captura"],
-      id_usuario_valida => $requestData["id_usuario_valida"],
-      id_usuario_actualiza => $requestData["id_usuario_actualiza"],
-      cantidad_muestras => $requestData["cantidad_muestras"],
-      costo_total => $requestData["costo_total"],
-      cuerpo_receptor => $requestData["cuerpo_receptor"],
-      tipo_cuerpo => $requestData["tipo_cuerpo"],
-      fecha => $requestData["fecha"],
-      fecha_entrega => $requestData["fecha_entrega"],
-      fecha_captura => $requestData["fecha_captura"],
-      fecha_valida => $requestData["fecha_valida"],
-      fecha_actualiza => $requestData["fecha_actualiza"],
-      fecha_rechaza => $requestData["fecha_rechaza"],
-      ip_captura => $requestData["ip_captura"],
-      ip_valida => $requestData["ip_valida"],
-      ip_actualiza => $requestData["ip_actualiza"],
-      host_captura => $requestData["host_captura"],
-      host_valida => $requestData["host_valida"],
-      host_actualiza => $requestData["host_actualiza"],
-      motivo_rechaza => $requestData["motivo_rechaza"],
-      comentarios => $requestData["comentarios"],
-      activo => $requestData["activo"],
-);
-
-      $sql = "UPDATE Orden SET
-            id_estudio = :id_estudio, id_cliente = :id_cliente,
-            id_matriz = :id_matriz, id_tipo_muestreo = :id_tipo_muestreo,
-            id_norma = :id_norma, id_cuerpo_receptor = :id_cuerpo_receptor,
-            id_status = :id_status, id_usuario_captura = :id_usuario_captura,
-            id_usuario_valida = :id_usuario_valida,
-            id_usuario_actualiza = :id_usuario_actualiza,
-            cantidad_muestras = :cantidad_muestras,
-            costo_total = :costo_total, cuerpo_receptor = :cuerpo_receptor,
-            tipo_cuerpo = :tipo_cuerpo, fecha = :fecha,
-            fecha_entrega = :fecha_entrega, fecha_captura = :fecha_captura,
-            fecha_valida = :fecha_valida, fecha_actualiza = :fecha_actualiza,
-            fecha_rechaza = :fecha_rechaza, ip_captura = :ip_captura,
-            ip_valida = :ip_valida, ip_actualiza = :ip_actualiza,
-            host_captura = :host_captura, host_valida = :host_valida,
-            host_actualiza = :host_actualiza,
-            motivo_rechaza = :motivo_rechaza, comentarios = :comentarios,
-            activo = :activo
-            WHERE id_orden = :id_orden";
-
-*/

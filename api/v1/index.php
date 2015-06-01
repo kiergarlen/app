@@ -115,8 +115,8 @@ $app->post("/studies", function() use ($app) {
 		{
 			$studyUpdateData = processStudyUpdate($request);
 			$studyId = updateStudy($studyUpdateData["study"]);
-			processStudyOrderUpdate($studyUpdateData);
-			$result = '{"id_estudio":' . $studyId . '}';
+			$result = processStudyOrderUpdate($studyUpdateData);
+			//$result = '{"id_estudio":' . $studyId . '}';
 		}
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
@@ -171,7 +171,7 @@ $app->post("/studies", function() use ($app) {
 
 $app->get("/orders(/)(:orderId)", function($orderId = -1) use ($app) {
 	try {
-		//$userId = decodeUserToken($app->request())->uid;
+		$userId = decodeUserToken($app->request())->uid;
 		if ($orderId > 0)
 		{
 			$result = json_encode(getOrder($orderId));
@@ -198,15 +198,17 @@ $app->post("/orders", function() use ($app) {
 		$orderId = extractDataFromRequest($request)->id_orden;
 		if ($orderId < 1)
 		{
-			$insertData = processOrderInsert($request);
-			$result = insertOrder($insertData);
+			$orderInsertData = processOrderInsert($request);
+			$result = insertOrder($orderInsertData);
+			$result = '{"id_orden":' . $orderId . ', "message":"inserting..."}';
 		}
 		else
 		{
-			$updateData = processOrderUpdate($request);
-			$result = updateOrder($updateData);
+			$orderUpdateData = processOrderUpdate($request);
+			$orderId = updateOrder($orderUpdateData["order"]);
+			$result = json_encode(processOrderPlansUpdate($orderUpdateData));
+			//$result = updateOrder($updateData);
 		}
-		$result = json_encode($requestData);
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
 		//$result = ")]}',\n" . $result;
@@ -1153,20 +1155,14 @@ function processMenuToJson($items) {
 	$i = 0;
 	$l = count($items);
 	$currentItem = $items[$i];
-	$output .= '[';
-	$output .= '{';
-	$output .= '"id_menu":' . $currentItem["id_menu"] . ',';
+	$output .= '[{"id_menu":' . $currentItem["id_menu"] . ',';
 	$output .= '"orden":' . $currentItem["orden"] . ',';
-	$output .= '"url":"/#",';
-	$output .= '"menu":"' . $currentItem["menu"] . '",';
-	$output .= '"submenu":[';
-	$output .= '{';
-	$output .= '"id_submenu":' . $currentItem["id_submenu"] . ',';
+	$output .= '"url":"/#","menu":"' . $currentItem["menu"] . '",';
+	$output .= '"submenu":[{"id_submenu":' . $currentItem["id_submenu"] . ',';
 	$output .= '"id_menu":' . $currentItem["id_menu"] . ',';
 	$output .= '"orden":' . $currentItem["orden_submenu"] . ',';
 	$output .= '"url":"' . $currentItem["url"] . '",';
-	$output .= '"menu":"' . $currentItem["submenu"] . '"';
-	$output .= '}';
+	$output .= '"menu":"' . $currentItem["submenu"] . '"}';
 	for($i = 1; $i < $l; $i++)
 	{
 		if ($currentItem["id_menu"] == $items[$i]["id_menu"])
@@ -1178,27 +1174,21 @@ function processMenuToJson($items) {
 		else
 		{
 			//close current menu, add new one
-			$output .= ']';
-			$output .= '},';
+			$output .= ']},';
 			$currentItem = $items[$i];
 			$output .= '{';
 			$output .= '"id_menu":' . $currentItem["id_menu"] . ',';
 			$output .= '"orden":' . $currentItem["orden"] . ',';
-			$output .= '"url":"/#",';
-			$output .= '"menu":"' . $currentItem["menu"] . '",';
+			$output .= '"url":"/#","menu":"' . $currentItem["menu"] . '",';
 			$output .= '"submenu":[';
 		}
-		$output .= '{';
-		$output .= '"id_submenu":' . $currentItem["id_submenu"] . ',';
+		$output .= '{"id_submenu":' . $currentItem["id_submenu"] . ',';
 		$output .= '"id_menu":' . $currentItem["id_menu"] . ',';
 		$output .= '"orden":' . $currentItem["orden_submenu"] . ',';
 		$output .= '"url":"' . $currentItem["url"] . '",';
-		$output .= '"menu":"' . $currentItem["submenu"] . '"';
-		$output .= '}';
+		$output .= '"menu":"' . $currentItem["submenu"] . '"}';
 	}
-	$output .= ']';
-	$output .= '}';
-	$output .= ']';
+	$output .= ']}]';
 	return $output;
 }
 
@@ -1254,7 +1244,7 @@ function processStudyInsert($request) {
 
 	$studyInsertData = array(
 		"study" => $insertData,
-		"orders" = $orders
+		"orders" => $orders
 	);
 	return $studyInsertData;
 }
@@ -1267,8 +1257,18 @@ function processStudyOrderInsert($studyInsertData, $studyId) {
 	$insertIp = $studyInsertData["study"]["ip_captura"];
 	$insertUrl = $studyInsertData["study"]["host_captura"];
 
+	$blankPlan = getBlankPlan();
+	unset($blankPlan["id_plan"]);
+	$blankPlan["id_estudio"] = $studyId;
+	$blankPlan["id_cliente"] = $clientId;
+	$blankPlan["id_usuario_captura"] = $insertUserId;
+	$blankPlan["fecha_captura"] = $insertDate;
+	$blankPlan["ip_captura"] = $insertIp;
+	$blankPlan["host_captura"] = $insertUrl;
+
 	$i = 0;
 	$l = count($orders);
+
 	for ($i = 0; $i < $l; $i++) {
 		$order = (array) $orders[$i];
 
@@ -1286,7 +1286,10 @@ function processStudyOrderInsert($studyInsertData, $studyId) {
 		$order["host_captura"] = $insertUrl;
 		$order["activo"] = 1;
 
-		insertOrder($order);
+		$orderId = insertOrder($order);
+		//assign this order's ID to blank plan
+		$blankPlan["id_orden"] = $orderId;
+		$planId = insertPlan($blankPlan);
 	}
 }
 
@@ -1310,7 +1313,7 @@ function processStudyUpdate($request) {
 	$updateData["ip_actualiza"] = $request->getIp();
 	$updateData["host_actualiza"] = $request->getUrl();
 
-	if ($updateData["id_status"] == 2) {
+	if ($updateData["id_status"] == 2 && strlen($updateData["ip_valida"]) < 1) {
 		$updateData["ip_valida"] = $request->getIp();
 		$updateData["host_valida"] = $request->getUrl();
 		$updateData["fecha_valida"] = isoDateToMsSql($updateData["fecha_valida"]);
@@ -1322,14 +1325,14 @@ function processStudyUpdate($request) {
 
 	$studyUpdateData = array(
 		"study" => $updateData,
-		"orders" = $orders
+		"orders" => $orders
 	);
 	return $studyUpdateData;
 }
 
 function processStudyOrderUpdate($studyUpdateData) {
 	$orders = (array) $studyUpdateData["orders"];
-	$clientId = $studyUpdateData["study"]["clientId"];
+	$clientId = $studyUpdateData["study"]["id_cliente"];
 	$updateUserId = $studyUpdateData["study"]["id_usuario_actualiza"];
 	$updateDate = $studyUpdateData["study"]["fecha_actualiza"];
 	$updateIp = $studyUpdateData["study"]["ip_actualiza"];
@@ -1340,7 +1343,6 @@ function processStudyOrderUpdate($studyUpdateData) {
 	for ($i = 0; $i < $l; $i++) {
 		$order = (array) $orders[$i];
 
-		$statusId = $order["id_status"];
 		if ($order["id_status"] == 2) {
 			$order["id_status"] = 1;
 			$order["ip_valida"] = "";
@@ -1348,7 +1350,6 @@ function processStudyOrderUpdate($studyUpdateData) {
 			$order["fecha_valida"] = "";
 		}
 		unset($order['$$hashKey']);
-		unset($order["id_orden"]);
 
 		$order["id_cliente"] = $clientId;
 		$order["id_usuario_actualiza"] = $updateUserId;
@@ -1358,64 +1359,94 @@ function processStudyOrderUpdate($studyUpdateData) {
 
 		updateOrder($order);
 	}
+	return $clientId;
 }
-
 
 function processOrderInsert($request) {
 	$token = decodeUserToken($request);
 	$insertData = (array) json_decode($request->getBody());
-	// $lastStudyId = 0;
-	// $currentYear = date("Y");
-	// $clientId = $insertData["id_cliente"];
-	// $orders = $insertData["ordenes"];
-
-	// unset($insertData["id_estudio"]);
-	// unset($insertData["cliente"]);
-	// unset($insertData["ordenes"]);
-	// if (is_numeric(getLastStudyByYear($currentYear)["oficio"])) {
-	// 	$lastStudyId = getLastStudyByYear($currentYear)["oficio"];
-	// }
-	// $lastStudyId = $lastStudyId + 1;
-	// $folio = "CEA-" . str_pad($lastStudyId, 3, "0", STR_PAD_LEFT);
-	// $folio .= "-" . $currentYear;
-
-	// $insertData["id_usuario_captura"] = $token->uid;
-	// $insertData["ip_captura"] = $request->getIp();
-	// $insertData["host_captura"] = $request->getUrl();
-	// $insertData["id_status"]  = 1;
-	// $insertData["id_etapa"]  = 1;
-	// $insertData["oficio"] = $lastStudyId;
-	// $insertData["folio"] = $folio;
-	// $insertData["fecha"] = isoDateToMsSql($insertData["fecha"]);
-	// $insertData["fecha_captura"] = date('Y-m-d H:i:s');
 	return $insertData;
 }
 
 function processOrderUpdate($request) {
 	$token = decodeUserToken($request);
 	$updateData = (array) json_decode($request->getBody());
-	// $orders = $updateData["ordenes"];
-	// $studyId = $updateData["id_estudio"];
-	// //unset($updateData["id_estudio"]);
-	// unset($updateData["id_usuario_captura"]);
-	// unset($updateData["fecha_captura"]);
-	// unset($updateData["ip_captura"]);
-	// unset($updateData["host_captura"]);
-	// unset($updateData["cliente"]);
-	// unset($updateData["ordenes"]);
-	// unset($updateData["status"]);
-	// $updateData["id_usuario_actualiza"] = $token->uid;
-	// $updateData["ip_actualiza"] = $request->getIp();
-	// $updateData["host_actualiza"] = $request->getUrl();
-	// if ($updateData["id_status"] == 2) {
-	// 	$updateData["ip_valida"] = $request->getIp();
-	// 	$updateData["host_valida"] = $request->getUrl();
-	// }
-	// $updateData["fecha"] = isoDateToMsSql($updateData["fecha"]);
-	// $updateData["fecha_entrega"] = isoDateToMsSql($updateData["fecha_entrega"]);
-	// $updateData["fecha_valida"] = isoDateToMsSql($updateData["fecha_valida"]);
-	// $updateData["fecha_actualiza"] = date('Y-m-d H:i:s');
-	// $updateData["fecha_rechaza"] = isoDateToMsSql($updateData["fecha_rechaza"]);
-	return $updateData;
+	$client = $updateData["cliente"];
+	$study = $updateData["estudio"];
+	$plans = $updateData["planes"];
+
+	unset($updateData["cliente"]);
+	unset($updateData["estudio"]);
+	unset($updateData["planes"]);
+	unset($updateData["status"]);
+
+	$updateData["id_usuario_actualiza"] = $token->uid;
+	$updateData["fecha_actualiza"] = date('Y-m-d H:i:s');
+	$updateData["ip_actualiza"] = $request->getIp();
+	$updateData["host_actualiza"] = $request->getUrl();
+
+	if ($updateData["id_status"] == 2 && strlen($updateData["ip_valida"]) < 1)
+	{
+		$updateData["ip_valida"] = $request->getIp();
+		$updateData["host_valida"] = $request->getUrl();
+		$updateData["fecha_valida"] = isoDateToMsSql($updateData["fecha_valida"]);
+	}
+
+	$updateData["fecha"] = isoDateToMsSql($updateData["fecha"]);
+	$updateData["fecha_rechaza"] = isoDateToMsSql($updateData["fecha_rechaza"]);
+
+	$orderUpdateData = array(
+		"order" => $updateData,
+		"plans" => $plans
+	);
+	return $orderUpdateData;
+}
+
+function processOrderPlansUpdate($orderUpdateData) {
+	$orderId = $orderUpdateData["order"]["id_orden"];
+	$storedPlans = getPlansByOrder($orderId);
+	$updatePlans = $orderUpdateData["plans"];
+
+	$i = 0;
+	$j = 0;
+	$l = count($storedPlans);
+	$m = count($updatePlans);
+
+	//TODO: refactor with array_walk()
+	//TODO: use single transaction
+	if ($l < 1)
+	{
+		//stored empty, insert all
+		for ($j = 0; $j < $l; $j++) {
+			unset($updatePlans[$j]['$$hashKey']);
+			insertPlan($updatePlans[$j]);
+		}
+		return $orderId;
+	}
+	else
+	{
+		//mark all stored as deleted, only additions/matches persist
+		for ($i = 0; $i < $l; $i++) {
+			$storedPlans[$i]["activo"] = 0;
+			updatePlan($storedPlans[$i]);
+		}
+		//check for additions/matches
+		for ($j = 0; $j < $m; $j++) {
+			if ($updatePlans[$j]["id_plan"] == 0)
+			{
+				//new, store it
+				unset($updatedData[$j]["id_plan"]);
+				unset($updatePlans[$j]['$$hashKey']);
+				insertPlan($updatePlans);
+			}
+			else
+			{
+				//update
+				unset($updatePlans[$j]['$$hashKey']);
+				updatePlan($updatePlans);
+			}
+		}
+	}
+	return $orderId;
 }
 

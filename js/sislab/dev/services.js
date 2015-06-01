@@ -496,7 +496,7 @@
 
     function approveItem(item, user) {
       item.id_status = 2;
-      item.status = 'Validado';
+      //item.status = 'Validado';
       item.id_usuario_valida = user.id;
       item.motivo_rechaza = '';
       item.fecha_valida = DateUtilsService.dateToISOString(new Date()).slice(0,10);
@@ -504,7 +504,7 @@
 
     function rejectItem(item, user) {
       item.id_status = 3;
-      item.status = 'Rechazado';
+      //item.status = 'Rechazado';
       item.id_usuario_valida = user.id;
       item.fecha_rechaza = DateUtilsService.dateToISOString(new Date()).slice(0,10);
     }

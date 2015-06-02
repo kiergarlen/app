@@ -598,7 +598,7 @@
       if (vm.order.planes)
       {
         vm.order.planes.push({
-          'id_plan': vm.order.planes.length + 1,
+          'id_plan': 0,
           'id_estudio': vm.order.id_estudio,
           'id_orden': vm.order.id_orden,
           'id_ubicacion': 1,
@@ -657,7 +657,7 @@
       else
       {
         vm.order.planes = [{
-          'id_plan': vm.order.planes.length + 1,
+          'id_plan': 0,
           'id_estudio': vm.order.id_estudio,
           'id_orden': vm.order.id_orden,
           'id_ubicacion': 1,

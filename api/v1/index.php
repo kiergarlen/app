@@ -1075,8 +1075,8 @@ function processUserJwt($request) {
 	$token["iss"] = $request->getUrl();
 	$token["aud"] = "sislab.ceajalisco.gob.mx";
 	$token["iat"] = time();
-	/// Token expires 3 hours from now
-	$token["exp"] = time() + (3 * 60 * 60);
+	/// Token expires 10 hours from now
+	$token["exp"] = time() + (10 * 60 * 60);
 	$jwt = JWT::encode($token, KEY);
 	return $jwt;
 }
@@ -1410,7 +1410,8 @@ function processOrderUpdate($request) {
 }
 
 function processOrderPlansUpdate($orderUpdateData) {
-	$orderId = $orderUpdateData["order"]["id_orden"];
+	$orderData = $orderUpdateData["order"];
+	$orderId = $orderData["id_orden"];
 	$storedPlans = getPlansByOrder($orderId);
 	$plans = (array) $orderUpdateData["plans"];
 
@@ -1429,46 +1430,66 @@ function processOrderPlansUpdate($orderUpdateData) {
 			unset($plan["id_plan"]);
 			unset($plan['$$hashKey']);
 			$plan["id_orden"] = $orderId;
-			$plan["fecha"] = isoDateToMsSql($plan["fecha"]);
+			$plan["id_usuario_captura"] = $orderData["id_usuario_captura"];
+			$plan["fecha_captura"] = date('Y-m-d H:i:s');
+			$plan["ip_captura"] = $orderData["ip_captura"];
+			$plan["host_captura"] = $orderData["host_captura"];
+			$plan["fecha"] = "";
 			$plan["fecha_probable"] = isoDateToMsSql($plan["fecha_probable"]);
-			$plan["fecha_calibracion"] = isoDateToMsSql($plan["fecha_calibracion"]);
-			$plan["fecha_captura"] = isoDateToMsSql($plan["fecha_captura"]);
-			$plan["fecha_valida"] = isoDateToMsSql($plan["fecha_valida"]);
-			$plan["fecha_actualiza"] = isoDateToMsSql($plan["fecha_actualiza"]);
-			$plan["fecha_rechaza"] = isoDateToMsSql($plan["fecha_rechaza"]);
-			if (isset($plan["id_paquete_puntos"])) {
-				unset($plan["id_paquete_puntos"]);
-			}
+			$plan["fecha_calibracion"] = "";
+			$plan["fecha_valida"] = "";
+			$plan["fecha_actualiza"] = "";
+			$plan["fecha_rechaza"] = "";
 			insertPlan($plan);
 			//return json_encode($plan);
 		}
-		return $orderId;
+		//return $orderId;
+		return "all new";
 	}
 	else
 	{
 		//mark all stored as deleted, only additions/matches persist
 		for ($i = 0; $i < $l; $i++) {
-			$storedPlans[$i]["activo"] = 0;
-			//updatePlan($storedPlans[$i]);
-			return json_encode($storedPlans);
+			// $storedPlans[$i]["activo"] = 0;
+			// $storedPlans[$i]["id_usuario_actualiza"] = $orderData["id_usuario_actualiza"];
+			// $storedPlans[$i]["fecha_actualiza"] = date('Y-m-d H:i:s');
+			// $storedPlans[$i]["ip_actualiza"] = $orderData["ip_actualiza"];
+			// $storedPlans[$i]["host_actualiza"] = $orderData["host_actualiza"];
+			// updatePlan($storedPlans[$i]);
+			// //return json_encode($storedPlans[$i]);
+			// //return "delete old";
 		}
-		//check for additions/matches
 		for ($j = 0; $j < $m; $j++) {
-			if ($plans[$j]["id_plan"] == 0)
+			$plan = (array) $plans[$j];
+			if ($plan["id_plan"] == 0)
 			{
 				//new, store it
 				unset($updatedData[$j]["id_plan"]);
-				unset($plans[$j]['$$hashKey']);
-				//insertPlan($plans);
+				unset($plan['$$hashKey']);
+				$plan["id_usuario_captura"] = $orderData["id_usuario_captura"];
+				$plan["fecha_captura"] = date('Y-m-d H:i:s');
+				$plan["ip_captura"] = $orderData["ip_captura"];
+				$plan["host_captura"] = $orderData["host_captura"];
+				//insertPlan($plan);
+				//return json_encode($plan);
+				return "something new...";
 			}
 			else
 			{
 				//update
-				unset($plans[$j]['$$hashKey']);
-				//updatePlan($plans);
+				unset($plan['$$hashKey']);
+				$plan["activo"] = 1;
+				$plan["id_usuario_actualiza"] = $orderData["id_usuario_actualiza"];
+				$plan["fecha_actualiza"] = date('Y-m-d H:i:s');
+				$plan["ip_actualiza"] = $orderData["ip_actualiza"];
+				$plan["host_actualiza"] = $orderData["host_actualiza"];
+				//updatePlan($plan);
+				return json_encode($plan);
+				//return "...something old";
 			}
 		}
 	}
-	return $orderId;
+	//return $orderId;
+	return "done";
 }
 

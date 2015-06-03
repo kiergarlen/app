@@ -983,7 +983,7 @@
           ArrayUtilsService.seItemsFromReference(
             vm.containers,
             vm.plan.recipientes,
-            'id_clase_recipiente',
+            'id_tipo_recipiente',
             [
               'selected',
               'id_plan',

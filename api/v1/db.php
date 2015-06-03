@@ -564,6 +564,7 @@ function getPlansByOrder($orderId) {
 }
 
 function getPlainPlan($planId) {
+	//TODO: agregar id_estado, id_municipio, id_localidad
 	$sql = "SELECT id_plan, id_estudio, id_orden,
 		id_ubicacion, id_paquete, id_objetivo_plan,
 		id_norma_muestreo, id_supervisor_muestreo,
@@ -597,7 +598,7 @@ function getPlan($planId) {
 	$plan->cliente = getClient($plan->id_cliente);
 	$plan->orden = getPlainOrder($plan->id_orden);
 	// $plan->supervisor_muestreo = getSamplingSupervisor($plan->supervisorId);
-	// $plan->puntos = getPointsByPackage($plan->packageId);
+	$plan->puntos = getPointsByPackage($plan->packageId);
 	// $plan->equipos = getEquipmentByPlan($plan->planId);
 	// $plan->recipientes = getContainersByPlan($plan->planId);
 	// $plan->reactivos = getReactivesByPlan($plan->planId);
@@ -789,7 +790,7 @@ function updatePlan($updateData) {
 // }
 
 function getPointPackages() {
-	$sql ="SELECT id_paquete, paquete, activo
+	$sql = "SELECT id_paquete, paquete, activo
 		FROM Paquete
 		WHERE activo = 1";
 	$db = getConnection();
@@ -801,7 +802,7 @@ function getPointPackages() {
 }
 
 function getPoints() {
-	$sql ="SELECT id_punto, id_cuerpo_receptor, id_tipo_punto,
+	$sql = "SELECT id_punto, id_cuerpo_receptor, id_tipo_punto,
 		id_estado, id_municipio, id_localidad, id_usuario_captura,
 		id_usuario_actualiza, punto, descripcion, siglas,
 		consecutivo, clave, lat, lng, alt, lat_gra, lat_min, lat_seg,
@@ -819,7 +820,7 @@ function getPoints() {
 }
 
 function getPoint($pointId) {
-	$sql ="SELECT id_punto, id_cuerpo_receptor, id_tipo_punto,
+	$sql = "SELECT id_punto, id_cuerpo_receptor, id_tipo_punto,
 		id_estado, id_municipio, id_localidad, id_usuario_captura,
 		id_usuario_actualiza, punto, descripcion, siglas,
 		consecutivo, clave, lat, lng, alt, lat_gra, lat_min, lat_seg,
@@ -835,4 +836,23 @@ function getPoint($pointId) {
 	$point = (array) $stmt->fetchAll(PDO::FETCH_OBJ)[0];
 	$db = null;
 	return (object) $point;
+}
+
+function getPointsByPackage($packageId) {
+	$sql = "SELECT id_paquete, paquete, id_paquete_punto, id_punto,
+	id_cuerpo_receptor, id_tipo_punto, id_estado, id_municipio,
+	id_localidad, id_usuario_captura, id_usuario_actualiza, punto,
+	descripcion, siglas, consecutivo, clave, lat, lng, alt,
+	lat_gra, lat_min, lat_seg, lng_gra, lng_min, lng_seg,
+	fecha_captura, fecha_actualiza, ip_captura, ip_actualiza,
+	host_captura, host_actualiza, comentarios, activo
+	FROM viewPuntoPaquete
+	WHERE id_paquete = :packageId";
+	$db = getConnection();
+	$stmt = $db->prepare($sql);
+	$stmt->bindParam("packageId", $packageId);
+	$stmt->execute();
+	$points = $stmt->fetchAll(PDO::FETCH_ASSOC);
+	$db = null;
+	return $points;
 }

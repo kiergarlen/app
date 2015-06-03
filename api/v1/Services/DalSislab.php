@@ -5430,7 +5430,7 @@ class DALSislab
 					[
 						{
 							"id_recipiente":1,
-							"id_clase_recipiente":1,
+							"id_tipo_recipiente":1,
 							"id_plan":1,
 							"id_preservacion":1,
 							"id_clase_parametro":1,
@@ -5448,7 +5448,7 @@ class DALSislab
 						},
 						{
 							"id_recipiente":3,
-							"id_clase_recipiente":3,
+							"id_tipo_recipiente":3,
 							"id_preservacion":3,
 							"id_clase_parametro":3,
 							"id_plan":1,
@@ -5466,7 +5466,7 @@ class DALSislab
 						},
 						{
 							"id_recipiente":5,
-							"id_clase_recipiente":5,
+							"id_tipo_recipiente":5,
 							"id_plan":1,
 							"id_preservacion":5,
 							"id_clase_parametro":5,
@@ -6210,7 +6210,7 @@ class DALSislab
 					[
 						{
 							"id_recipiente":1,
-							"id_clase_recipiente":1,
+							"id_tipo_recipiente":1,
 							"id_plan":1,
 							"id_preservacion":1,
 							"id_clase_parametro":1,
@@ -6228,7 +6228,7 @@ class DALSislab
 						},
 						{
 							"id_recipiente":3,
-							"id_clase_recipiente":3,
+							"id_tipo_recipiente":3,
 							"id_preservacion":3,
 							"id_clase_parametro":3,
 							"id_plan":1,
@@ -6246,7 +6246,7 @@ class DALSislab
 						},
 						{
 							"id_recipiente":5,
-							"id_clase_recipiente":5,
+							"id_tipo_recipiente":5,
 							"id_plan":1,
 							"id_preservacion":5,
 							"id_clase_parametro":5,
@@ -7072,7 +7072,7 @@ class DALSislab
 					[
 						{
 							"id_recipiente":1,
-							"id_clase_recipiente":1,
+							"id_tipo_recipiente":1,
 							"id_plan":1,
 							"id_preservacion":1,
 							"id_clase_parametro":1,
@@ -7090,7 +7090,7 @@ class DALSislab
 						},
 						{
 							"id_recipiente":3,
-							"id_clase_recipiente":3,
+							"id_tipo_recipiente":3,
 							"id_preservacion":3,
 							"id_clase_parametro":3,
 							"id_plan":1,
@@ -7108,7 +7108,7 @@ class DALSislab
 						},
 						{
 							"id_recipiente":5,
-							"id_clase_recipiente":5,
+							"id_tipo_recipiente":5,
 							"id_plan":1,
 							"id_preservacion":5,
 							"id_clase_parametro":5,
@@ -7847,7 +7847,7 @@ class DALSislab
 					[
 						{
 							"id_recipiente":1,
-							"id_clase_recipiente":1,
+							"id_tipo_recipiente":1,
 							"id_plan":1,
 							"id_preservacion":1,
 							"id_clase_parametro":1,
@@ -7865,7 +7865,7 @@ class DALSislab
 						},
 						{
 							"id_recipiente":3,
-							"id_clase_recipiente":3,
+							"id_tipo_recipiente":3,
 							"id_preservacion":3,
 							"id_clase_parametro":3,
 							"id_plan":1,
@@ -7883,7 +7883,7 @@ class DALSislab
 						},
 						{
 							"id_recipiente":5,
-							"id_clase_recipiente":5,
+							"id_tipo_recipiente":5,
 							"id_plan":1,
 							"id_preservacion":5,
 							"id_clase_parametro":5,
@@ -24158,7 +24158,7 @@ class DALSislab
 			[
 				{
 					"id_recipiente":1,
-					"id_clase_recipiente":1,
+					"id_tipo_recipiente":1,
 					"id_preservacion":1,
 					"id_clase_parametro":1,
 					"clase_parametro":"Fisicoquímico",
@@ -24175,7 +24175,7 @@ class DALSislab
 				},
 				{
 					"id_recipiente":2,
-					"id_clase_recipiente":2,
+					"id_tipo_recipiente":2,
 					"id_preservacion":2,
 					"id_clase_parametro":2,
 					"clase_parametro":"Oxígeno disuelto",
@@ -24192,7 +24192,7 @@ class DALSislab
 				},
 				{
 					"id_recipiente":3,
-					"id_clase_recipiente":3,
+					"id_tipo_recipiente":3,
 					"id_preservacion":3,
 					"id_clase_parametro":3,
 					"clase_parametro":"Sustancias activas al azul de metileno",
@@ -24209,7 +24209,7 @@ class DALSislab
 				},
 				{
 					"id_recipiente":4,
-					"id_clase_recipiente":4,
+					"id_tipo_recipiente":4,
 					"id_preservacion":4,
 					"id_clase_parametro":4,
 					"clase_parametro":"Fenoles",
@@ -24226,7 +24226,7 @@ class DALSislab
 				},
 				{
 					"id_recipiente":5,
-					"id_clase_recipiente":5,
+					"id_tipo_recipiente":5,
 					"id_preservacion":5,
 					"id_clase_parametro":5,
 					"clase_parametro":"Dureza",
@@ -24243,7 +24243,7 @@ class DALSislab
 				},
 				{
 					"id_recipiente":6,
-					"id_clase_recipiente":6,
+					"id_tipo_recipiente":6,
 					"id_preservacion":6,
 					"id_clase_parametro":6,
 					"clase_parametro":"Sulfuros",
@@ -24260,7 +24260,7 @@ class DALSislab
 				},
 				{
 					"id_recipiente":7,
-					"id_clase_recipiente":7,
+					"id_tipo_recipiente":7,
 					"id_preservacion":7,
 					"id_clase_parametro":7,
 					"clase_parametro":"Fisicoquímico 2",
@@ -24277,7 +24277,7 @@ class DALSislab
 				},
 				{
 					"id_recipiente":8,
-					"id_clase_recipiente":8,
+					"id_tipo_recipiente":8,
 					"id_preservacion":8,
 					"id_clase_parametro":8,
 					"clase_parametro":"Grasas y aceites",
@@ -24294,7 +24294,7 @@ class DALSislab
 				},
 				{
 					"id_recipiente":9,
-					"id_clase_recipiente":9,
+					"id_tipo_recipiente":9,
 					"id_preservacion":9,
 					"id_clase_parametro":9,
 					"clase_parametro":"Metales pesados",

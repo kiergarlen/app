@@ -51,9 +51,9 @@ function getUser($userId) {
 	$stmt = $db->prepare($sql);
 	$stmt->bindParam("userId", $userId);
 	$stmt->execute();
-	$result = $stmt->fetchAll(PDO::FETCH_OBJ);
+	$user = (array) $stmt->fetchAll(PDO::FETCH_OBJ)[0];
 	$db = null;
-	return $result;
+	return (object) $user;
 }
 
 function getUserByCredentials($userName, $userPassword) {
@@ -69,9 +69,48 @@ function getUserByCredentials($userName, $userPassword) {
 	$stmt->bindParam("userName", $userName);
 	$stmt->bindParam("userPassword", $userPassword);
 	$stmt->execute();
-	$result = $stmt->fetchAll(PDO::FETCH_OBJ);
+	$user = (array) $stmt->fetchAll(PDO::FETCH_OBJ)[0];
 	$db = null;
-	return $result;
+	return (object) $user;
+}
+
+function insertUser($userData) {
+	$sql = "INSERT INTO Usuario (id_nivel, id_rol, id_area, id_puesto,
+		interno, cea, laboratorio, supervisa, analiza, muestrea,
+		nombres, apellido_paterno, apellido_materno, usr, pwd,
+		fecha_captura, fecha_actualiza, ip_captura, ip_actualiza,
+		host_captura, host_actualiza, activo)
+		VALUES (:id_nivel, :id_rol, :id_area, :id_puesto,
+		:interno, :cea, :laboratorio, :supervisa, :analiza, :muestrea,
+		:nombres, :apellido_paterno, :apellido_materno, :usr, :pwd,
+		:fecha_captura, :fecha_actualiza, :ip_captura, :ip_actualiza,
+		:host_captura, :host_actualiza, :activo,)";
+	$db = getConnection();
+	$stmt = $db->prepare($sql);
+	$stmt->execute($userData);
+	$userId = $db->lastInsertId();
+	$db = null;
+	return $userId;
+}
+
+function updateUser($updateData) {
+	$sql = "UPDATE Usuario SET id_nivel = :id_nivel, id_rol = :id_rol,
+		id_area = :id_area, id_puesto = :id_puesto,interno = :interno,
+		cea = :cea, laboratorio = :laboratorio, supervisa = :supervisa,
+		analiza = :analiza, muestrea = :muestrea,nombres = :nombres,
+		apellido_paterno = :apellido_paterno,
+		apellido_materno = :apellido_materno, usr = :usr,
+		pwd = :pwd,fecha_captura = :fecha_captura,
+		fecha_actualiza = :fecha_actualiza, ip_captura = :ip_captura,
+		ip_actualiza = :ip_actualiza,host_captura = :host_captura,
+		host_actualiza = :host_actualiza, activo = :activo
+		WHERE id_usuario = :id_usuario";
+	$db = getConnection();
+	$stmt = $db->prepare($sql);
+	$stmt->execute($updateData);
+	$userId = $db->lastInsertId();
+	$db = null;
+	return $userId;
 }
 
 function getMenu($userId) {
@@ -136,9 +175,9 @@ function getClient($clientId) {
 	$stmt = $db->prepare($sql);
 	$stmt->bindParam("clientId", $clientId);
 	$stmt->execute();
-	$result = $stmt->fetchAll(PDO::FETCH_OBJ);
+	$client = (array) $stmt->fetchAll(PDO::FETCH_OBJ)[0];
 	$db = null;
-	return $result;
+	return (object) $client;
 }
 
 function getStudies() {
@@ -614,8 +653,9 @@ function getPlanObjectives() {
 	$db = getConnection();
 	$stmt = $db->prepare($sql);
 	$stmt->execute();
-	$plan = (array) $stmt->fetchAll(PDO::FETCH_OBJ)[0];
-	return (object) $plan;
+	$planObjectives = $stmt->fetchAll(PDO::FETCH_ASSOC);
+	$db = null;
+	return $planObjectives;
 }
 
 function insertPlan($planData) {
@@ -707,98 +747,12 @@ function updatePlan($updateData) {
 		frecuencia = :frecuencia, objetivo_otro = :objetivo_otro,
 		motivo_rechaza = :motivo_rechaza,
 		comentarios = :comentarios, activo = :activo
-		WHERE activo = 1 AND id_plan = :id_plan";
+		WHERE id_plan = :id_plan";
 	$db = getConnection();
 	$stmt = $db->prepare($sql);
 	$stmt->execute($updateData);
 	$db = null;
 	return $updateData["id_plan"];
-}
-
-// function insertUser($requestData) {
-// 	try {
-// 		//$requestData = json_decode($payload);
-// 		$insertData = array (
-// 			"id_nivel" => $requestData->id_nivel,
-// 			"id_rol" => $requestData->id_rol,
-// 			"id_area" => $requestData->id_area,
-// 			"id_puesto" => $requestData->id_puesto,
-// 			"interno" => $requestData->interno,
-// 			"cea" => $requestData->cea,
-// 			"laboratorio" => $requestData->laboratorio,
-// 			"supervisa" => $requestData->supervisa,
-// 			"analiza" => $requestData->analiza,
-// 			"muestrea" => $requestData->muestrea,
-// 			"nombres" => utf8_decode($requestData->nombres),
-// 			"apellido_paterno" => utf8_decode($requestData->apellido_paterno),
-// 			"apellido_materno" => utf8_decode($requestData->apellido_materno),
-// 			"usr" => $requestData->usr,
-// 			"pwd" => $requestData->pwd,
-// 			"fecha_captura" => $requestData->fecha_captura,
-// 			"fecha_actualiza" => $requestData->fecha_actualiza,
-// 			"ip_captura" => $requestData->ip_captura,
-// 			"ip_actualiza" => $requestData->ip_actualiza,
-// 			"host_captura" => $requestData->host_captura,
-// 			"host_actualiza" => $requestData->host_actualiza,
-// 			"activo" => $requestData->activo
-// 		);
-// 		$sql = "INSERT INTO Usuario
-// 			( id_nivel, id_rol, id_area, id_puesto, interno, cea,
-// 			 laboratorio, supervisa, analiza, muestrea, nombres,
-// 			 apellido_paterno,
-// 			 apellido_materno, usr, pwd, fecha_captura, fecha_actualiza,
-// 			 ip_captura, ip_actualiza, host_captura, host_actualiza, activo)
-// 			VALUES ( :id_nivel, :id_rol, :id_area, :id_puesto, :interno,
-// 				:cea, :laboratorio, :supervisa, :analiza, :muestrea, :nombres,
-// 				:apellido_paterno, :apellido_materno, :usr, :pwd,
-// 				:fecha_captura,
-// 				:fecha_actualiza, :ip_captura, :ip_actualiza, :host_captura,
-// 				:host_actualiza, :activo
-// 			)";
-// 		$db = getConnection();
-// 		$stmt = $db->prepare($sql);
-// 		$stmt->execute($insertData);
-// 		$userId = $db->lastInsertId();
-// 		$db = null;
-// 		return getUser($userId);
-// 	} catch(PDOException $e) {
-// 		//print_r($e->getMessage());
-// 		return 0;
-// 	}
-// }
-
-// function getUser($userId) {
-// 	try {
-// 		$sql = "SELECT id_usuario, id_nivel, id_rol, id_area, id_puesto,
-// 			interno, cea, laboratorio, supervisa, analiza, muestrea, nombres,
-// 			apellido_paterno, apellido_materno, usr, pwd, fecha_captura,
-// 			fecha_actualiza, ip_captura, ip_actualiza,
-// 			host_captura, host_actualiza, activo
-// 			FROM Usuario
-// 			WHERE id_usuario=:userId
-// 		";
-// 		$db = getConnection();
-// 		$stmt = $db->prepare($sql);
-// 		$stmt->bindParam("userId", $userId);
-// 		$stmt->execute();
-// 		$user = $stmt->fetch(PDO::FETCH_OBJ);
-// 		$db = null;
-// 		return $user;
-// 	} catch(PDOException $e) {
-// 		echo '{"error":{"text":'. $e->getMessage() .'}}';
-// 	}
-// }
-
-function getPointPackages() {
-	$sql = "SELECT id_paquete, paquete, activo
-		FROM Paquete
-		WHERE activo = 1";
-	$db = getConnection();
-	$stmt = $db->prepare($sql);
-	$stmt->execute();
-	$pointPackages = $stmt->fetchAll(PDO::FETCH_ASSOC);
-	$db = null;
-	return $pointPackages;
 }
 
 function getPoints() {
@@ -838,16 +792,28 @@ function getPoint($pointId) {
 	return (object) $point;
 }
 
+function getPointPackages() {
+	$sql = "SELECT id_paquete, paquete, activo
+		FROM Paquete
+		WHERE activo = 1";
+	$db = getConnection();
+	$stmt = $db->prepare($sql);
+	$stmt->execute();
+	$pointPackages = $stmt->fetchAll(PDO::FETCH_ASSOC);
+	$db = null;
+	return $pointPackages;
+}
+
 function getPointsByPackage($packageId) {
 	$sql = "SELECT id_paquete, paquete, id_paquete_punto, id_punto,
-	id_cuerpo_receptor, id_tipo_punto, id_estado, id_municipio,
-	id_localidad, id_usuario_captura, id_usuario_actualiza, punto,
-	descripcion, siglas, consecutivo, clave, lat, lng, alt,
-	lat_gra, lat_min, lat_seg, lng_gra, lng_min, lng_seg,
-	fecha_captura, fecha_actualiza, ip_captura, ip_actualiza,
-	host_captura, host_actualiza, comentarios, activo
-	FROM viewPuntoPaquete
-	WHERE id_paquete = :packageId";
+		id_cuerpo_receptor, id_tipo_punto, id_estado, id_municipio,
+		id_localidad, id_usuario_captura, id_usuario_actualiza, punto,
+		descripcion, siglas, consecutivo, clave, lat, lng, alt,
+		lat_gra, lat_min, lat_seg, lng_gra, lng_min, lng_seg,
+		fecha_captura, fecha_actualiza, ip_captura, ip_actualiza,
+		host_captura, host_actualiza, comentarios, activo
+		FROM viewPuntoPaquete
+		WHERE id_paquete = :packageId";
 	$db = getConnection();
 	$stmt = $db->prepare($sql);
 	$stmt->bindParam("packageId", $packageId);
@@ -855,4 +821,29 @@ function getPointsByPackage($packageId) {
 	$points = $stmt->fetchAll(PDO::FETCH_ASSOC);
 	$db = null;
 	return $points;
+}
+
+function getMethods() {
+	$sql = "SELECT id_metodo, id_norma, metodo, descripcion, activo
+		FROM Metodo
+		WHERE activo = 1";
+	$db = getConnection();
+	$stmt = $db->prepare($sql);
+	$stmt->execute();
+	$methods = $stmt->fetchAll(PDO::FETCH_ASSOC);
+	$db = null;
+	return $methods;
+}
+
+function getMethod($methodId) {
+	$sql = "SELECT id_metodo, id_norma, metodo, descripcion, activo
+		FROM Metodo
+		WHERE activo = 1 AND id_metodo = :methodId";
+	$db = getConnection();
+	$stmt = $db->prepare($sql);
+	$stmt->bindParam("methodId", $methodId);
+	$stmt->execute();
+	$method = (array) $stmt->fetchAll(PDO::FETCH_OBJ)[0];
+	$db = null;
+	return (object) $method;
 }

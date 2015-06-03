@@ -106,9 +106,9 @@ $app->post("/studies", function() use ($app) {
 		$studyId = extractDataFromRequest($request)->id_estudio;
 		if ($studyId < 1)
 		{
-			$studyInsertData = processStudyInsert($request);
-			$studyId = insertStudy($studyInsertData["study"]);
-			processStudyOrderInsert($studyInsertData, $studyId);
+			// $studyInsertData = processStudyInsert($request);
+			// $studyId = insertStudy($studyInsertData["study"]);
+			// processStudyOrderInsert($studyInsertData, $studyId);
 			$result = '{"id_estudio":' . $studyId . '}';
 		}
 		else
@@ -258,14 +258,23 @@ $app->get("/plans(/)(:planId)", function($planId = -1) use ($app) {
 
 $app->post("/plans", function() use ($app) {
 	try {
-		$request = $app->request();
-		$requestBody = $request->getBody();
-
-		$requestData = extractDataFromRequest($request);
-		$result = json_encode($requestData);
-
 		$userId = decodeUserToken($app->request())->uid;
-		//$result = insertStudy();
+		$request = $app->request();
+		$planId = extractDataFromRequest($request)->id_plan;
+		if ($planId < 1)
+		{
+			// $planInsertData = processPlanInsert($request);
+			// $planId = insertPlan($planInsertData["plan"]);
+			// //processPlanOrderInsert($planInsertData, $planId);
+			$result = '{"id_plan":' . $planId . '}';
+		}
+		else
+		{
+			$planUpdateData = processPlanUpdate($request);
+			$planId = updatePlan($planUpdateData["plan"]);
+			//processPlanOrderUpdate($planUpdateData);
+			$result = '{"id_plan":' . $planId . '}';
+		}
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
 		//$result = ")]}',\n" . $result;
@@ -987,10 +996,17 @@ $app->get("/references", function() use ($app) {
 	}
 });
 
-$app->get("/methods", function() use ($app) {
+$app->get("/methods(/)(:methodId)", function() use ($app) {
 	try {
 		$userId = decodeUserToken($app->request())->uid;
-		$result = \Service\DALSislab::getInstance()->getMethods();
+		if ($methodId > -1)
+		{
+			$result = json_encode(getMethod($methodId));
+		}
+		else
+		{
+			$result = json_encode(getMethods());
+		}
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
 		//$result = ")]}',\n" . $result;
@@ -1020,11 +1036,11 @@ $app->get("/users(/)(:userId)", function($userId = -1) use ($app) {
 		$userId = decodeUserToken($app->request())->uid;
 		if ($userId > -1)
 		{
-			$result = getUser($userId);
+			$result = json_encode(getUser($userId));
 		}
 		else
 		{
-			$result = getUsers();
+			$result = json_encode(getUsers());
 		}
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
@@ -1043,11 +1059,7 @@ function processUserJwt($request) {
 	$usr = $input->username;
 	$pwd = $input->password;
 
-	$userData = getUserByCredentials($usr, $pwd);
-	$userInfo = $userData[0];
-	//comment json_decode for db use...
-	//$userInfo = json_decode($userData);
-
+	$userInfo = getUserByCredentials($usr, $pwd);
 	$userId = $userInfo->id_usuario;
 	$userLv = $userInfo->id_nivel;
 	$userRole = $userInfo->id_rol;
@@ -1071,8 +1083,8 @@ function processUserJwt($request) {
 	$token["iss"] = $request->getUrl();
 	$token["aud"] = "sislab.ceajalisco.gob.mx";
 	$token["iat"] = time();
-	/// Token expires 10 hours from now
-	$token["exp"] = time() + (10 * 60 * 60);
+	/// Token expires 48 hours from now
+	$token["exp"] = time() + (48 * 60 * 60);
 	$jwt = JWT::encode($token, KEY);
 	return $jwt;
 }
@@ -1445,16 +1457,16 @@ function processOrderPlansUpdate($orderUpdateData) {
 	else
 	{
 		//mark all stored as deleted, only additions/matches persist
-		// for ($i = 0; $i < $l; $i++) {
-		// 	$storedPlans[$i]["activo"] = 0;
-		// 	$storedPlans[$i]["id_usuario_actualiza"] = $orderData["id_usuario_actualiza"];
-		// 	$storedPlans[$i]["fecha_actualiza"] = date('Y-m-d H:i:s');
-		// 	$storedPlans[$i]["ip_actualiza"] = $orderData["ip_actualiza"];
-		// 	$storedPlans[$i]["host_actualiza"] = $orderData["host_actualiza"];
-		// 	//return json_encode($storedPlans[$i]);
-		// 	//return "delete old";
-		// 	updatePlan($storedPlans[$i]);
-		// }
+		for ($i = 0; $i < $l; $i++) {
+			$storedPlans[$i]["activo"] = 0;
+			$storedPlans[$i]["id_usuario_actualiza"] = $orderData["id_usuario_actualiza"];
+			$storedPlans[$i]["fecha_actualiza"] = date('Y-m-d H:i:s');
+			$storedPlans[$i]["ip_actualiza"] = $orderData["ip_actualiza"];
+			$storedPlans[$i]["host_actualiza"] = $orderData["host_actualiza"];
+			//return json_encode($storedPlans[$i]);
+			//return "delete old";
+			updatePlan($storedPlans[$i]);
+		}
 		for ($j = 0; $j < $m; $j++) {
 			$plan = (array) $plans[$j];
 			if ($plan["id_plan"] == 0)

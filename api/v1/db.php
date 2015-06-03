@@ -448,7 +448,7 @@ function updateOrder($updateData) {
 }
 
 function getOrderSources() {
-	$sql = "SELECT *
+	$sql = "SELECT id_origen_orden, origen_orden, activo
 		FROM OrigenOrden
 		WHERE activo = 1";
 	$db = getConnection();
@@ -534,7 +534,25 @@ function getBlankPlan() {
 }
 
 function getPlansByOrder($orderId) {
-	$sql = "SELECT *
+	$sql = "SELECT id_plan, id_estudio, id_orden,
+		id_ubicacion, id_paquete, id_objetivo_plan,
+		id_norma_muestreo, id_supervisor_muestreo,
+		id_supervisor_entrega,  id_supervisor_recoleccion,
+		id_supervisor_registro, id_ayudante_entrega,
+		id_ayudante_recoleccion, id_ayudante_registro,
+		id_responsable_calibracion,  id_responsable_recipientes,
+		id_responsable_reactivos, id_responsable_material,
+		id_responsable_hieleras, id_status, id_usuario_captura,
+		id_usuario_valida,  id_usuario_actualiza, fecha,
+		fecha_probable, fecha_calibracion, fecha_captura,
+		fecha_valida, fecha_actualiza, fecha_rechaza,
+		ip_captura, ip_valida, ip_actualiza,  host_captura,
+		host_valida, host_actualiza, calle, numero, colonia,
+		codigo_postal, telefono, contacto, email,
+		comentarios_ubicacion, cantidad_puntos,
+		cantidad_equipos, cantidad_recipientes,
+		cantidad_reactivos, cantidad_hieleras, frecuencia,
+		objetivo_otro, motivo_rechaza, comentarios, activo
 		FROM [Plan]
 		WHERE activo = 1 AND id_orden = :orderId";
 	$db = getConnection();
@@ -589,7 +607,7 @@ function getPlan($planId) {
 }
 
 function getPlanObjectives() {
-	$sql = "SELECT *
+	$sql = "SELECT id_objetivo_plan, objetivo_plan, activo
 		FROM ObjetivoPlan
 		WHERE activo = 1";
 	$db = getConnection();
@@ -600,116 +618,44 @@ function getPlanObjectives() {
 }
 
 function insertPlan($planData) {
-	$sql = "INSERT INTO [Plan] (
-id_estudio,
-id_orden,
-id_ubicacion,
-id_paquete,
-id_objetivo_plan,
-id_norma_muestreo,
-id_supervisor_muestreo,
-id_supervisor_entrega,
-id_supervisor_recoleccion,
-id_supervisor_registro,
-id_ayudante_entrega,
-id_ayudante_recoleccion,
-id_ayudante_registro,
-id_responsable_calibracion,
-id_responsable_recipientes,
-id_responsable_reactivos,
-id_responsable_material,
-id_responsable_hieleras,
-id_status,
-id_usuario_captura,
-id_usuario_valida,
-id_usuario_actualiza,
-fecha,
-fecha_probable,
-fecha_calibracion,
-fecha_captura,
-fecha_valida,
-fecha_actualiza,
-fecha_rechaza,
-ip_captura,
-ip_valida,
-ip_actualiza,
-host_captura,
-host_valida,
-host_actualiza,
-calle,
-numero,
-colonia,
-codigo_postal,
-telefono,
-contacto,
-email,
-comentarios_ubicacion,
-cantidad_puntos,
-cantidad_equipos,
-cantidad_recipientes,
-cantidad_reactivos,
-cantidad_hieleras,
-frecuencia,
-objetivo_otro,
-motivo_rechaza,
-comentarios,
-activo
-)
-		VALUES (
-:id_estudio,
-:id_orden,
-:id_ubicacion,
-:id_paquete,
-:id_objetivo_plan,
-:id_norma_muestreo,
-:id_supervisor_muestreo,
-:id_supervisor_entrega,
-:id_supervisor_recoleccion,
-:id_supervisor_registro,
-:id_ayudante_entrega,
-:id_ayudante_recoleccion,
-:id_ayudante_registro,
-:id_responsable_calibracion,
-:id_responsable_recipientes,
-:id_responsable_reactivos,
-:id_responsable_material,
-:id_responsable_hieleras,
-:id_status,
-:id_usuario_captura,
-:id_usuario_valida,
-:id_usuario_actualiza,
-:fecha,
-:fecha_probable,
-:fecha_calibracion,
-:fecha_captura,
-:fecha_valida,
-:fecha_actualiza,
-:fecha_rechaza,
-:ip_captura,
-:ip_valida,
-:ip_actualiza,
-:host_captura,
-:host_valida,
-:host_actualiza,
-:calle,
-:numero,
-:colonia,
-:codigo_postal,
-:telefono,
-:contacto,
-:email,
-:comentarios_ubicacion,
-:cantidad_puntos,
-:cantidad_equipos,
-:cantidad_recipientes,
-:cantidad_reactivos,
-:cantidad_hieleras,
-:frecuencia,
-:objetivo_otro,
-:motivo_rechaza,
-:comentarios,
-:activo
-)";
+	$sql = "INSERT INTO [Plan] (id_estudio, id_orden,
+		id_ubicacion, id_paquete, id_objetivo_plan,
+		id_norma_muestreo, id_supervisor_muestreo,
+		id_supervisor_entrega,  id_supervisor_recoleccion,
+		id_supervisor_registro, id_ayudante_entrega,
+		id_ayudante_recoleccion, id_ayudante_registro,
+		id_responsable_calibracion,  id_responsable_recipientes,
+		id_responsable_reactivos, id_responsable_material,
+		id_responsable_hieleras, id_status, id_usuario_captura,
+		id_usuario_valida,  id_usuario_actualiza, fecha,
+		fecha_probable, fecha_calibracion, fecha_captura,
+		fecha_valida, fecha_actualiza, fecha_rechaza,
+		ip_captura, ip_valida, ip_actualiza,  host_captura,
+		host_valida, host_actualiza, calle, numero, colonia,
+		codigo_postal, telefono, contacto, email,
+		comentarios_ubicacion, cantidad_puntos,
+		cantidad_equipos, cantidad_recipientes,
+		cantidad_reactivos, cantidad_hieleras, frecuencia,
+		objetivo_otro, motivo_rechaza, comentarios, activo)
+		VALUES (:id_estudio, :id_orden,
+		:id_ubicacion, :id_paquete, :id_objetivo_plan,
+		:id_norma_muestreo, :id_supervisor_muestreo,
+		:id_supervisor_entrega,  :id_supervisor_recoleccion,
+		:id_supervisor_registro, :id_ayudante_entrega,
+		:id_ayudante_recoleccion, :id_ayudante_registro,
+		:id_responsable_calibracion,  :id_responsable_recipientes,
+		:id_responsable_reactivos, :id_responsable_material,
+		:id_responsable_hieleras, :id_status, :id_usuario_captura,
+		:id_usuario_valida,  :id_usuario_actualiza, :fecha,
+		:fecha_probable, :fecha_calibracion, :fecha_captura,
+		:fecha_valida, :fecha_actualiza, :fecha_rechaza,
+		:ip_captura, :ip_valida, :ip_actualiza,  :host_captura,
+		:host_valida, :host_actualiza, :calle, :numero, :colonia,
+		:codigo_postal, :telefono, :contacto, :email,
+		:comentarios_ubicacion, :cantidad_puntos,
+		:cantidad_equipos, :cantidad_recipientes,
+		:cantidad_reactivos, :cantidad_hieleras, :frecuencia,
+		:objetivo_otro, :motivo_rechaza, :comentarios, :activo)";
 	$db = getConnection();
 	$stmt = $db->prepare($sql);
 	$stmt->execute($planData);
@@ -852,4 +798,41 @@ function getPointPackages() {
 	$pointPackages = $stmt->fetchAll(PDO::FETCH_ASSOC);
 	$db = null;
 	return $pointPackages;
+}
+
+function getPoints() {
+	$sql ="SELECT id_punto, id_cuerpo_receptor, id_tipo_punto,
+		id_estado, id_municipio, id_localidad, id_usuario_captura,
+		id_usuario_actualiza, punto, descripcion, siglas,
+		consecutivo, clave, lat, lng, alt, lat_gra, lat_min, lat_seg,
+		lng_gra, lng_min, lng_seg, fecha_captura, fecha_actualiza,
+		ip_captura, ip_actualiza, host_captura, host_actualiza,
+		comentarios, activo
+		FROM Punto
+		WHERE activo = 1";
+	$db = getConnection();
+	$stmt = $db->prepare($sql);
+	$stmt->execute();
+	$points = $stmt->fetchAll(PDO::FETCH_ASSOC);
+	$db = null;
+	return $points;
+}
+
+function getPoint($pointId) {
+	$sql ="SELECT id_punto, id_cuerpo_receptor, id_tipo_punto,
+		id_estado, id_municipio, id_localidad, id_usuario_captura,
+		id_usuario_actualiza, punto, descripcion, siglas,
+		consecutivo, clave, lat, lng, alt, lat_gra, lat_min, lat_seg,
+		lng_gra, lng_min, lng_seg, fecha_captura, fecha_actualiza,
+		ip_captura, ip_actualiza, host_captura, host_actualiza,
+		comentarios, activo
+		FROM Punto
+		WHERE activo = 1 AND id_punto = :pointId";
+	$db = getConnection();
+	$stmt = $db->prepare($sql);
+	$stmt->bindParam("pointId", $pointId);
+	$stmt->execute();
+	$point = (array) $stmt->fetchAll(PDO::FETCH_OBJ)[0];
+	$db = null;
+	return (object) $point;
 }

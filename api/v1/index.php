@@ -171,8 +171,7 @@ $app->post("/studies", function() use ($app) {
 
 $app->get("/orders(/)(:orderId)", function($orderId = -1) use ($app) {
 	try {
-		//$userId = decodeUserToken($app->request())->uid;
-		$userId = 13;
+		$userId = decodeUserToken($app->request())->uid;
 		if ($orderId > 0)
 		{
 			$result = json_encode(getOrder($orderId));
@@ -202,15 +201,15 @@ $app->post("/orders", function() use ($app) {
 			$orderInsertData = processOrderInsert($request);
 			$orderId = insertOrder($orderInsertData);
 			//TODO: check if processOrderPlansInsert() is needed
-			$result = '{"id_orden":' . $orderId . ', "message":"inserted..."}';
+			$result = '{"id_orden":' . $orderId . '}';
 		}
 		else
 		{
 			$orderUpdateData = processOrderUpdate($request);
 			$orderId = updateOrder($orderUpdateData["order"]);
 			$orderPlans = processOrderPlansUpdate($orderUpdateData);
-			//$result = '{"id_orden":' . $orderId . ', "message":"updated"}';
-			$result = $orderPlans;
+			//$result = $orderPlans;
+			$result = '{"id_orden":' . $orderId . '}';
 		}
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
@@ -221,9 +220,6 @@ $app->post("/orders", function() use ($app) {
 		$app->response()->header('X-Status-Reason', $e->getMessage());
 	}
 });
-
-
-
 
 $app->get("/order/sources", function() use ($app) {
 	try {
@@ -1440,25 +1436,25 @@ function processOrderPlansUpdate($orderUpdateData) {
 			$plan["fecha_valida"] = "";
 			$plan["fecha_actualiza"] = "";
 			$plan["fecha_rechaza"] = "";
-			insertPlan($plan);
 			//return json_encode($plan);
+			insertPlan($plan);
 		}
-		//return $orderId;
-		return "all new";
+		//return "all new";
+		return $orderId;
 	}
 	else
 	{
 		//mark all stored as deleted, only additions/matches persist
-		for ($i = 0; $i < $l; $i++) {
-			// $storedPlans[$i]["activo"] = 0;
-			// $storedPlans[$i]["id_usuario_actualiza"] = $orderData["id_usuario_actualiza"];
-			// $storedPlans[$i]["fecha_actualiza"] = date('Y-m-d H:i:s');
-			// $storedPlans[$i]["ip_actualiza"] = $orderData["ip_actualiza"];
-			// $storedPlans[$i]["host_actualiza"] = $orderData["host_actualiza"];
-			// updatePlan($storedPlans[$i]);
-			// //return json_encode($storedPlans[$i]);
-			// //return "delete old";
-		}
+		// for ($i = 0; $i < $l; $i++) {
+		// 	$storedPlans[$i]["activo"] = 0;
+		// 	$storedPlans[$i]["id_usuario_actualiza"] = $orderData["id_usuario_actualiza"];
+		// 	$storedPlans[$i]["fecha_actualiza"] = date('Y-m-d H:i:s');
+		// 	$storedPlans[$i]["ip_actualiza"] = $orderData["ip_actualiza"];
+		// 	$storedPlans[$i]["host_actualiza"] = $orderData["host_actualiza"];
+		// 	//return json_encode($storedPlans[$i]);
+		// 	//return "delete old";
+		// 	updatePlan($storedPlans[$i]);
+		// }
 		for ($j = 0; $j < $m; $j++) {
 			$plan = (array) $plans[$j];
 			if ($plan["id_plan"] == 0)
@@ -1470,9 +1466,9 @@ function processOrderPlansUpdate($orderUpdateData) {
 				$plan["fecha_captura"] = date('Y-m-d H:i:s');
 				$plan["ip_captura"] = $orderData["ip_captura"];
 				$plan["host_captura"] = $orderData["host_captura"];
-				//insertPlan($plan);
+				//return "something new...";
 				//return json_encode($plan);
-				return "something new...";
+				insertPlan($plan);
 			}
 			else
 			{
@@ -1483,13 +1479,13 @@ function processOrderPlansUpdate($orderUpdateData) {
 				$plan["fecha_actualiza"] = date('Y-m-d H:i:s');
 				$plan["ip_actualiza"] = $orderData["ip_actualiza"];
 				$plan["host_actualiza"] = $orderData["host_actualiza"];
-				//updatePlan($plan);
-				return json_encode($plan);
 				//return "...something old";
+				//return json_encode($plan);
+				updatePlan($plan);
 			}
 		}
 	}
-	//return $orderId;
-	return "done";
+	//return "done";
+	return $orderId;
 }
 

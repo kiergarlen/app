@@ -847,3 +847,65 @@ function getMethod($methodId) {
 	$db = null;
 	return (object) $method;
 }
+
+function getParameters() {
+	$sql = "SELECT id_parametro, id_tipo_matriz, id_area,
+		id_tipo_preservacion, id_metodo, id_unidad, id_tipo_valor,
+		parametro, param, caducidad, limite_entrega, acreditado,
+		precio, activo
+		FROM Parametro
+		WHERE activo = 1";
+	$db = getConnection();
+	$stmt = $db->prepare($sql);
+	$stmt->execute();
+	$parameters = $stmt->fetchAll(PDO::FETCH_ASSOC);
+	$db = null;
+	return $parameters;
+}
+
+function getParametersField() {
+	$sql = "SELECT id_parametro, id_tipo_matriz, id_area,
+		id_tipo_preservacion, id_metodo, id_unidad, id_tipo_valor,
+		parametro, param, caducidad, limite_entrega, acreditado,
+		precio, activo
+		FROM Parametro
+		WHERE activo = 1 AND id_area = 4";
+	$db = getConnection();
+	$stmt = $db->prepare($sql);
+	$stmt->execute();
+	$parameters = $stmt->fetchAll(PDO::FETCH_ASSOC);
+	$db = null;
+	return $parameters;
+}
+
+function getParameter($parameterId) {
+	$sql = "SELECT id_parametro, id_tipo_matriz, id_area,
+		id_tipo_preservacion, id_metodo, id_unidad, id_tipo_valor,
+		parametro, param, caducidad, limite_entrega, acreditado,
+		precio, activo
+		FROM Parametro
+		WHERE activo = 1 AND id_parametro = :parameterId";
+	$db = getConnection();
+	$stmt = $db->prepare($sql);
+	$stmt->bindParam("parameterId", $parameterId);
+	$stmt->execute();
+	$parameter = (array) $stmt->fetchAll(PDO::FETCH_OBJ)[0];
+	$db = null;
+	return (object) $parameter;
+}
+
+function getParametersByNorm($normId) {
+	$sql = "SELECT id_parametro, id_tipo_matriz, id_area,
+		id_tipo_preservacion, id_metodo, id_unidad, id_tipo_valor,
+		parametro, param, caducidad, limite_entrega, acreditado,
+		precio, activo, id_norma
+		FROM viewParametroNorma
+		WHERE id_norma = :normId";
+	$db = getConnection();
+	$stmt = $db->prepare($sql);
+	$stmt->bindParam("normId", $normId);
+	$stmt->execute();
+	$parameter = (array) $stmt->fetchAll(PDO::FETCH_OBJ)[0];
+	$db = null;
+	return (object) $parameter;
+}

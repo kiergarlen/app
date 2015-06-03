@@ -1501,3 +1501,32 @@ function processOrderPlansUpdate($orderUpdateData) {
 	return $orderId;
 }
 
+/*
+SELECT
+,[id_usuario]
+,[id_nivel]
+,[id_rol]
+,[id_area]
+,[id_puesto]
+,[interno]
+,[cea]
+,[laboratorio]
+,[calidad]
+,[supervisa]
+,[recibe]
+,[analiza]
+,[muestrea]
+,[nombres]
+,[apellido_paterno]
+,[apellido_materno]
+,[usr]
+,[pwd]
+,[fecha_captura]
+,[fecha_actualiza]
+,[ip_captura]
+,[ip_actualiza]
+,[host_captura]
+,[host_actualiza]
+,[activo]
+FROM [Usuario]
+*/

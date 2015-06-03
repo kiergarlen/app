@@ -747,11 +747,11 @@ $app->get("/points(/)(:pointid)", function($pointId = -1) use ($app) {
 		$userId = decodeUserToken($app->request())->uid;
 		if ($pointId > -1)
 		{
-			$result = \Service\DALSislab::getInstance()->getPoint($pointId);
+			$result = json_encode(getPoint($pointId));
 		}
 		else
 		{
-			$result = \Service\DALSislab::getInstance()->getPoints();
+			$result = json_encode(getPoints());
 		}
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');

@@ -522,8 +522,16 @@ $app->get("/sampling/supervisors", function() use ($app) {
 
 $app->get("/sampling/employees", function() use ($app) {
 	try {
-		//$userId = decodeUserToken($app->request())->uid;
-		$result = \Service\DALSislab::getInstance()->getSamplingEmployees();
+		$userId = decodeUserToken($app->request())->uid;
+		$result = json_encode(getBlankStudy($studyId));
+		if ($studyId > 0)
+		{
+			$result = json_encode(getSamplingEmployee($studyId));
+		}
+		else
+		{
+			$result = json_encode(getSamplingEmployees());
+		}
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
 		//$result = ")]}',\n" . $result;

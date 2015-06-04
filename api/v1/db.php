@@ -636,9 +636,9 @@ function getPlan($planId) {
 	$plan = getPlainPlan($planId);
 	$plan->cliente = getClient($plan->id_cliente);
 	$plan->orden = getPlainOrder($plan->id_orden);
-	// $plan->supervisor_muestreo = getSamplingSupervisor($plan->supervisorId);
+	$plan->supervisor_muestreo = getSamplingEmployee($plan->supervisorId);
 	$plan->puntos = getPointsByPackage($plan->packageId);
-	// $plan->equipos = getEquipmentByPlan($plan->planId);
+	// $plan->equipos = getInstrumentsByPlan($plan->planId);
 	// $plan->recipientes = getContainersByPlan($plan->planId);
 	// $plan->reactivos = getReactivesByPlan($plan->planId);
 	// $plan->materiales = getMaterialsByPlan($plan->planId);
@@ -911,7 +911,8 @@ function getParametersByNorm($normId) {
 }
 
 function getNorms() {
-	$sql = "SELECT *
+	$sql = "SELECT id_norma, id_tipo_norma, id_tipo_matriz, norma,
+		descripcion, activo
 		FROM Norma
 		WHERE activo = 1";
 	$db = getConnection();
@@ -923,7 +924,8 @@ function getNorms() {
 }
 
 function getNorm($normId) {
-	$sql = "SELECT *
+	$sql = "SELECT id_norma, id_tipo_norma, id_tipo_matriz, norma,
+		descripcion, activo
 		FROM Norma
 		WHERE activo = 1 AND id_norma = :normId";
 	$db = getConnection();
@@ -933,4 +935,62 @@ function getNorm($normId) {
 	$norm = (array) $stmt->fetchAll(PDO::FETCH_OBJ)[0];
 	$db = null;
 	return (object) $norm;
+}
+
+function getContainers() {
+	$sql = "SELECT id_recipiente, recipiente, tipo_recipiente, activo
+		FROM Recipiente
+		WHERE activo = 1";
+	$db = getConnection();
+	$stmt = $db->prepare($sql);
+	$stmt->execute();
+	$containers = $stmt->fetchAll(PDO::FETCH_ASSOC);
+	$db = null;
+	return $containers;
+}
+
+function getReactivesByPlan() {
+	$sql = "SELECT id_plan_reactivo, id_plan, id_reactivo, valor,
+		lote, folio, activo
+		FROM PlanReactivo
+		WHERE activo = 1";
+	$db = getConnection();
+	$stmt = $db->prepare($sql);
+	$stmt->execute();
+	$reactives = $stmt->fetchAll(PDO::FETCH_ASSOC);
+	$db = null;
+	return $reactives;
+}
+
+function getSamplingEmployees() {
+	$sql = "SELECT id_usuario, id_nivel, id_rol, id_area, id_puesto,
+		interno, cea, laboratorio, supervisa, analiza, muestrea, nombres,
+		apellido_paterno, apellido_materno, usr, pwd, fecha_captura,
+		fecha_actualiza, ip_captura, ip_actualiza,
+		host_captura, host_actualiza, activo
+		FROM Usuario
+		WHERE activo = 1 AND id_area = 4";
+	$db = getConnection();
+	$stmt = $db->prepare($sql);
+	$stmt->execute();
+	$samplingEmployees = $stmt->fetchAll(PDO::FETCH_ASSOC);
+	$db = null;
+	return $samplingEmployees;
+}
+
+function getSamplingEmployee($userId) {
+	$sql = "SELECT id_usuario, id_nivel, id_rol, id_area, id_puesto,
+		interno, cea, laboratorio, supervisa, analiza, muestrea, nombres,
+		apellido_paterno, apellido_materno, usr, pwd, fecha_captura,
+		fecha_actualiza, ip_captura, ip_actualiza,
+		host_captura, host_actualiza, activo
+		FROM Usuario
+		WHERE activo = 1 AND id_area = 4 AND id_usuario = :userId";
+	$db = getConnection();
+	$stmt = $db->prepare($sql);
+	$stmt->bindParam("userId", $userId);
+	$stmt->execute();
+	$samplingEmployee = (array) $stmt->fetchAll(PDO::FETCH_OBJ)[0];
+	$db = null;
+	return (object) $samplingEmployee;
 }

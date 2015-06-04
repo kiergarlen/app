@@ -909,3 +909,28 @@ function getParametersByNorm($normId) {
 	$db = null;
 	return (object) $parameter;
 }
+
+function getNorms() {
+	$sql = "SELECT *
+		FROM Norma
+		WHERE activo = 1";
+	$db = getConnection();
+	$stmt = $db->prepare($sql);
+	$stmt->execute();
+	$norms = $stmt->fetchAll(PDO::FETCH_ASSOC);
+	$db = null;
+	return $norms;
+}
+
+function getNorm($normId) {
+	$sql = "SELECT *
+		FROM Norma
+		WHERE activo = 1 AND id_norma = :normId";
+	$db = getConnection();
+	$stmt = $db->prepare($sql);
+	$stmt->bindParam("normId", $normId);
+	$stmt->execute();
+	$norm = (array) $stmt->fetchAll(PDO::FETCH_OBJ)[0];
+	$db = null;
+	return (object) $norm;
+}

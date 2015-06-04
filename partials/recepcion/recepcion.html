@@ -241,11 +241,11 @@
       <select class="form-control"
         id="sampleSelect"
         name="sampleSelect"
-        data-ng-model="reception.reception.id_validacion_muestra"
+        data-ng-model="reception.reception.id_muestra_validacion"
         >
         <option
           data-ng-repeat="sample in reception.reception.muestras"
-          value="{{sample.id_validacion_muestra}}">
+          value="{{sample.id_muestra_validacion}}">
           {{sample.descripcion}}
         </option>
       </select>

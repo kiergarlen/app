@@ -444,10 +444,17 @@ $app->get("/parameters", function() use ($app) {
 	}
 });
 
-$app->get("/norms", function() use ($app) {
+$app->get("/norms(/)(:normId)", function($normId = -1) use ($app) {
 	try {
 		$userId = decodeUserToken($app->request())->uid;
-		$result = \Service\DALSislab::getInstance()->getNorms();
+		if ($normId > -1)
+		{
+			$result = json_encode(getNorm($normId));
+		}
+		else
+		{
+			$result = json_encode(getNorms());
+		}
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
 		//$result = ")]}',\n" . $result;

@@ -11048,7 +11048,7 @@ class DALSislab
 					"id_hoja":1,
 					"id_recepcionista":13,
 					"id_verificador":13,
-					"id_validacion_muestra":1,
+					"id_muestra_validacion":1,
 					"id_status":1,
 					"fecha_recibe":"2015-03-24T13:05-06:00",
 					"fecha_verifica":"2015-03-23T13:06-06:00",
@@ -11080,7 +11080,7 @@ class DALSislab
 					"muestras":
 					[
 						{
-							"id_validacion_muestra":1,
+							"id_muestra_validacion":1,
 							"id_muestra":1,
 							"id_estudio":1,
 							"id_cliente":1,
@@ -11109,7 +11109,7 @@ class DALSislab
 							"comentarios_muestreo":""
 						},
 						{
-							"id_validacion_muestra":2,
+							"id_muestra_validacion":2,
 							"id_muestra":2,
 							"id_estudio":1,
 							"id_cliente":1,
@@ -11139,7 +11139,7 @@ class DALSislab
 							"comentarios_muestreo":""
 						},
 						{
-							"id_validacion_muestra":3,
+							"id_muestra_validacion":3,
 							"id_muestra":3,
 							"id_estudio":1,
 							"id_cliente":1,
@@ -11169,7 +11169,7 @@ class DALSislab
 							"comentarios_muestreo":""
 						},
 						{
-							"id_validacion_muestra":4,
+							"id_muestra_validacion":4,
 							"id_muestra":4,
 							"id_estudio":1,
 							"id_cliente":1,
@@ -11199,7 +11199,7 @@ class DALSislab
 							"comentarios_muestreo":""
 						},
 						{
-							"id_validacion_muestra":5,
+							"id_muestra_validacion":5,
 							"id_muestra":5,
 							"id_estudio":1,
 							"id_cliente":1,
@@ -11229,7 +11229,7 @@ class DALSislab
 							"comentarios_muestreo":""
 						},
 						{
-							"id_validacion_muestra":6,
+							"id_muestra_validacion":6,
 							"id_muestra":6,
 							"id_estudio":1,
 							"id_cliente":1,
@@ -11416,7 +11416,7 @@ class DALSislab
 					"id_hoja":1,
 					"id_recepcionista":13,
 					"id_verificador":13,
-					"id_validacion_muestra":1,
+					"id_muestra_validacion":1,
 					"id_status":1,
 					"fecha_recibe":"2015-03-24T13:05-06:00",
 					"fecha_verifica":"2015-03-23T13:06-06:00",
@@ -11448,7 +11448,7 @@ class DALSislab
 					"muestras":
 					[
 						{
-							"id_validacion_muestra":1,
+							"id_muestra_validacion":1,
 							"id_muestra":1,
 							"id_estudio":1,
 							"id_cliente":1,
@@ -11477,7 +11477,7 @@ class DALSislab
 							"comentarios_muestreo":""
 						},
 						{
-							"id_validacion_muestra":2,
+							"id_muestra_validacion":2,
 							"id_muestra":2,
 							"id_estudio":1,
 							"id_cliente":1,
@@ -11507,7 +11507,7 @@ class DALSislab
 							"comentarios_muestreo":""
 						},
 						{
-							"id_validacion_muestra":3,
+							"id_muestra_validacion":3,
 							"id_muestra":3,
 							"id_estudio":1,
 							"id_cliente":1,
@@ -11537,7 +11537,7 @@ class DALSislab
 							"comentarios_muestreo":""
 						},
 						{
-							"id_validacion_muestra":4,
+							"id_muestra_validacion":4,
 							"id_muestra":4,
 							"id_estudio":1,
 							"id_cliente":1,
@@ -11567,7 +11567,7 @@ class DALSislab
 							"comentarios_muestreo":""
 						},
 						{
-							"id_validacion_muestra":5,
+							"id_muestra_validacion":5,
 							"id_muestra":5,
 							"id_estudio":1,
 							"id_cliente":1,
@@ -11597,7 +11597,7 @@ class DALSislab
 							"comentarios_muestreo":""
 						},
 						{
-							"id_validacion_muestra":6,
+							"id_muestra_validacion":6,
 							"id_muestra":6,
 							"id_estudio":1,
 							"id_cliente":1,

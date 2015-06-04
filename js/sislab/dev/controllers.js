@@ -1706,7 +1706,7 @@
         vm.message += ' Confirme la recepción de al menos una muestra ';
         return false;
       }
-      if (vm.reception.id_validacion_muestra < 1)
+      if (vm.reception.id_muestra_validacion < 1)
       {
         vm.message += ' Selececcione una muestra a verificar ';
         return false;

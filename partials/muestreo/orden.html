@@ -208,8 +208,8 @@
         data-ng-model="row.id_supervisor_muestreo"
         >
         <option data-ng-repeat="supervisor in order.supervisors"
-          value="{{supervisor.id_empleado}}"
-          data-ng-selected="row.id_supervisor_muestreo == supervisor.id_empleado"
+          value="{{supervisor.id_usuario}}"
+          data-ng-selected="row.id_supervisor_muestreo == supervisor.id_usuario"
           >
           {{supervisor.nombres}}
           {{supervisor.apellido_paterno}}
@@ -230,6 +230,7 @@
         required
         data-ng-model="row.fecha_probable"
         data-date-format="yyyy-MM-dd"
+        data-date-type="date"
         data-autoclose="1"
         date-use-native="true"
         data-bs-datepicker

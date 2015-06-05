@@ -287,7 +287,7 @@ $app->post("/plans", function() use ($app) {
 
 $app->get("/sheets(/)(:sheetId)", function($sheetId = -1) use ($app) {
 	try {
-		//$userId = decodeUserToken($app->request())->uid;
+		$userId = decodeUserToken($app->request())->uid;
 		$userId = 1;
 		if ($sheetId > -1)
 		{
@@ -446,7 +446,7 @@ $app->get("/parameters", function() use ($app) {
 
 $app->get("/norms(/)(:normId)", function($normId = -1) use ($app) {
 	try {
-		//$userId = decodeUserToken($app->request())->uid;
+		$userId = decodeUserToken($app->request())->uid;
 		if ($normId > -1)
 		{
 			$result = json_encode(getNorm($normId));
@@ -467,7 +467,7 @@ $app->get("/norms(/)(:normId)", function($normId = -1) use ($app) {
 
 $app->get("/sampling/types", function() use ($app) {
 	try {
-		//$userId = decodeUserToken($app->request())->uid;
+		$userId = decodeUserToken($app->request())->uid;
 		$result = json_encode(getSamplingTypes());
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
@@ -481,7 +481,7 @@ $app->get("/sampling/types", function() use ($app) {
 
 $app->get("/matrices", function() use ($app) {
 	try {
-		//$userId = decodeUserToken($app->request())->uid;
+		$userId = decodeUserToken($app->request())->uid;
 		$result = json_encode(getMatrices());
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
@@ -495,7 +495,7 @@ $app->get("/matrices", function() use ($app) {
 
 $app->get("/points/packages", function() use ($app) {
 	try {
-		//$userId = decodeUserToken($app->request())->uid;
+		$userId = decodeUserToken($app->request())->uid;
 		$result = json_encode(getPointPackages());
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
@@ -509,7 +509,7 @@ $app->get("/points/packages", function() use ($app) {
 
 $app->get("/sampling/supervisors(/)(:empId)", function($empId = -1) use ($app) {
 	try {
-		//$userId = decodeUserToken($app->request())->uid;
+		$userId = decodeUserToken($app->request())->uid;
 		if ($empId > 0)
 		{
 			$result = json_encode(getSamplingEmployee($empId));
@@ -530,7 +530,7 @@ $app->get("/sampling/supervisors(/)(:empId)", function($empId = -1) use ($app) {
 
 $app->get("/sampling/employees(/)(:empId)", function($empId = -1) use ($app) {
 	try {
-		//$userId = decodeUserToken($app->request())->uid;
+		$userId = decodeUserToken($app->request())->uid;
 		if ($empId > 0)
 		{
 			$result = json_encode(getSamplingEmployee($empId));
@@ -551,7 +551,7 @@ $app->get("/sampling/employees(/)(:empId)", function($empId = -1) use ($app) {
 
 $app->get("/plan/objectives", function() use ($app) {
 	try {
-		//$userId = decodeUserToken($app->request())->uid;
+		$userId = decodeUserToken($app->request())->uid;
 		$result = json_encode(getPlanObjectives());
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
@@ -565,7 +565,7 @@ $app->get("/plan/objectives", function() use ($app) {
 
 $app->get("/point/kinds", function() use ($app) {
 	try {
-		//$userId = decodeUserToken($app->request())->uid;
+		$userId = decodeUserToken($app->request())->uid;
 		$result = json_encode(getPointKinds());
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
@@ -579,7 +579,7 @@ $app->get("/point/kinds", function() use ($app) {
 
 $app->get("/districts/:districtId", function($districtId) use ($app) {
 	try {
-		//$userId = decodeUserToken($app->request())->uid;
+		$userId = decodeUserToken($app->request())->uid;
 		$result = \Service\DALSislab::getInstance()->getDistrict($districtId);
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
@@ -593,7 +593,7 @@ $app->get("/districts/:districtId", function($districtId) use ($app) {
 
 $app->get("/districts", function() use ($app) {
 	try {
-		//$userId = decodeUserToken($app->request())->uid;
+		$userId = decodeUserToken($app->request())->uid;
 		$result = \Service\DALSislab::getInstance()->getDistricts();
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
@@ -607,7 +607,7 @@ $app->get("/districts", function() use ($app) {
 
 $app->get("/districts/cities/:districtId", function($districtId) use ($app) {
 	try {
-		//$userId = decodeUserToken($app->request())->uid;
+		$userId = decodeUserToken($app->request())->uid;
 		$result = \Service\DALSislab::getInstance()->getCitiesByDistrictId($districtId);
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
@@ -621,7 +621,7 @@ $app->get("/districts/cities/:districtId", function($districtId) use ($app) {
 
 $app->get("/districts", function() use ($app) {
 	try {
-		//$userId = decodeUserToken($app->request())->uid;
+		$userId = decodeUserToken($app->request())->uid;
 		$result = \Service\DALSislab::getInstance()->getDistricts();
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
@@ -635,7 +635,7 @@ $app->get("/districts", function() use ($app) {
 
 $app->get("/preservations", function() use ($app) {
 	try {
-		//$userId = decodeUserToken($app->request())->uid;
+		$userId = decodeUserToken($app->request())->uid;
 		$result = json_encode(getPreservations());
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
@@ -649,7 +649,7 @@ $app->get("/preservations", function() use ($app) {
 
 $app->get("/containers/kinds", function() use ($app) {
 	try {
-		//$userId = decodeUserToken($app->request())->uid;
+		$userId = decodeUserToken($app->request())->uid;
 		$result = json_encode(getContainerKinds());
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
@@ -663,7 +663,7 @@ $app->get("/containers/kinds", function() use ($app) {
 
 $app->get("/reactives", function() use ($app) {
 	try {
-		//$userId = decodeUserToken($app->request())->uid;
+		$userId = decodeUserToken($app->request())->uid;
 		$result = json_encode(getReactives());
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
@@ -677,7 +677,7 @@ $app->get("/reactives", function() use ($app) {
 
 $app->get("/materials", function() use ($app) {
 	try {
-		//$userId = decodeUserToken($app->request())->uid;
+		$userId = decodeUserToken($app->request())->uid;
 		$result = json_encode(getMaterials());
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
@@ -691,7 +691,7 @@ $app->get("/materials", function() use ($app) {
 
 $app->get("/instruments/sampling", function() use ($app) {
 	try {
-		//$userId = decodeUserToken($app->request())->uid;
+		$userId = decodeUserToken($app->request())->uid;
 		$result = \Service\DALSislab::getInstance()->getSamplingInstruments();
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
@@ -705,7 +705,7 @@ $app->get("/instruments/sampling", function() use ($app) {
 
 $app->get("/coolers", function() use ($app) {
 	try {
-		//$userId = decodeUserToken($app->request())->uid;
+		$userId = decodeUserToken($app->request())->uid;
 		$result = json_encode(getCoolers());
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
@@ -719,7 +719,7 @@ $app->get("/coolers", function() use ($app) {
 
 $app->get("/clouds", function() use ($app) {
 	try {
-		//$userId = decodeUserToken($app->request())->uid;
+		$userId = decodeUserToken($app->request())->uid;
 		$result = json_encode(getClouds());
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
@@ -733,7 +733,7 @@ $app->get("/clouds", function() use ($app) {
 
 $app->get("/winds", function() use ($app) {
 	try {
-		//$userId = decodeUserToken($app->request())->uid;
+		$userId = decodeUserToken($app->request())->uid;
 		$result = json_encode(getCurrentDirections());
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
@@ -747,7 +747,7 @@ $app->get("/winds", function() use ($app) {
 
 $app->get("/waves", function() use ($app) {
 	try {
-		//$userId = decodeUserToken($app->request())->uid;
+		$userId = decodeUserToken($app->request())->uid;
 		$result = json_encode(getWaves());
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
@@ -1522,33 +1522,3 @@ function processOrderPlansUpdate($orderUpdateData) {
 	//return "done";
 	return $orderId;
 }
-
-/*
-SELECT
-,[id_usuario]
-,[id_nivel]
-,[id_rol]
-,[id_area]
-,[id_puesto]
-,[interno]
-,[cea]
-,[laboratorio]
-,[calidad]
-,[supervisa]
-,[recibe]
-,[analiza]
-,[muestrea]
-,[nombres]
-,[apellido_paterno]
-,[apellido_materno]
-,[usr]
-,[pwd]
-,[fecha_captura]
-,[fecha_actualiza]
-,[ip_captura]
-,[ip_actualiza]
-,[host_captura]
-,[host_actualiza]
-,[activo]
-FROM [Usuario]
-*/

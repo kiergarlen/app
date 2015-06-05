@@ -335,7 +335,6 @@
         {
           if (vm.user.level < 3 || vm.study.study.id_status != 2)
           {
-            console.log(vm.study);
             //vm.study.$update();
             RestUtilsService
               .updateData(

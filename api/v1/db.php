@@ -691,6 +691,7 @@ function getPlainPlan($planId) {
 		WHERE activo = 1 AND id_plan = :planId";
 	$db = getConnection();
 	$stmt = $db->prepare($sql);
+	$stmt->bindParam("planId", $planId);
 	$stmt->execute();
 	$plan = (array) $stmt->fetchAll(PDO::FETCH_OBJ)[0];
 	return (object) $plan;
@@ -698,15 +699,15 @@ function getPlainPlan($planId) {
 
 function getPlan($planId) {
 	$plan = getPlainPlan($planId);
-	$plan->cliente = getClient($plan->id_cliente);
+	//$plan->cliente = getClient($plan->id_cliente);
 	$plan->orden = getPlainOrder($plan->id_orden);
-	$plan->supervisor_muestreo = getSamplingEmployee($plan->supervisorId);
-	$plan->puntos = getPointsByPackage($plan->packageId);
-	// $plan->equipos = getInstrumentsByPlan($plan->planId);
-	// $plan->recipientes = getContainersByPlan($plan->planId);
-	// $plan->reactivos = getReactivesByPlan($plan->planId);
-	// $plan->materiales = getMaterialsByPlan($plan->planId);
-	// $plan->hieleras = getCoolersByPlan($plan->planId);
+	$plan->supervisor_muestreo = getSamplingEmployee($plan->id_supervisor_muestreo);
+	$plan->puntos = getPointsByPackage($plan->id_paquete);
+	// $plan->equipos = getInstrumentsByPlan($planId);
+	// $plan->recipientes = getContainersByPlan($planId);
+	// $plan->reactivos = getReactivesByPlan($planId);
+	// $plan->materiales = getMaterialsByPlan($planId);
+	// $plan->hieleras = getCoolersByPlan($planId);
 	return $plan;
 }
 
@@ -1111,4 +1112,69 @@ function getPointKinds() {
 	$pointKinds = $stmt->fetchAll(PDO::FETCH_ASSOC);
 	$db = null;
 	return $pointKinds;
+}
+
+function getPreservations() {
+	$sql = "SELECT id_preservacion, id_tipo_preservacion, preservacion,
+		descripcion, activo
+		FROM Preservacion
+		WHERE activo = 1";
+	$db = getConnection();
+	$stmt = $db->prepare($sql);
+	$stmt->execute();
+	$preservations = $stmt->fetchAll(PDO::FETCH_ASSOC);
+	$db = null;
+	return $preservations;
+}
+
+function getContainerKinds() {
+	$sql = "SELECT  id_recipiente, recipiente, tipo_recipiente, activo,
+		'0' AS cantidad, 'false' AS selected
+		FROM Recipiente
+		WHERE activo = 1";
+	$db = getConnection();
+	$stmt = $db->prepare($sql);
+	$stmt->execute();
+	$containerKinds = $stmt->fetchAll(PDO::FETCH_ASSOC);
+	$db = null;
+	return $containerKinds;
+}
+
+function getReactives() {
+	$sql = "SELECT   id_reactivo, id_tipo_reactivo, reactivo, activo,
+		'0' AS valor, '' AS lote, '' AS folio, 'false' AS selected
+		FROM Reactivo
+		WHERE activo = 1";
+	$db = getConnection();
+	$stmt = $db->prepare($sql);
+	$stmt->execute();
+	$reactives = $stmt->fetchAll(PDO::FETCH_ASSOC);
+	$db = null;
+	return $reactives;
+}
+
+function getMaterials() {
+	$sql = "SELECT id_material, material, activo,
+		'false' AS selected
+		FROM Material
+		WHERE activo = 1";
+	$db = getConnection();
+	$stmt = $db->prepare($sql);
+	$stmt->execute();
+	$materials = $stmt->fetchAll(PDO::FETCH_ASSOC);
+	$db = null;
+	return $materials;
+}
+
+function getCoolers() {
+	$sql = "SELECT id_hielera, hielera, activo,
+		'false' AS selected
+		FROM Hielera
+		WHERE activo = 1";
+	$db = getConnection();
+	$stmt = $db->prepare($sql);
+	$stmt->execute();
+	$coolers = $stmt->fetchAll(PDO::FETCH_ASSOC);
+	$db = null;
+	return $coolers;
 }

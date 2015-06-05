@@ -937,6 +937,45 @@ function getNorm($normId) {
 	return (object) $norm;
 }
 
+function getSamplingTypes() {
+	$sql = "SELECT id_tipo_muestreo, tipo_muestreo, activo
+		FROM TipoMuestreo
+		WHERE activo = 1";
+	$db = getConnection();
+	$stmt = $db->prepare($sql);
+	$stmt->execute();
+	$samplingTypes = $stmt->fetchAll(PDO::FETCH_ASSOC);
+	$db = null;
+	return $samplingTypes;
+}
+
+function getMatrices() {
+	$sql = "SELECT id_matriz, id_tipo_matriz, id_norma, matriz,
+		siglas, activo
+		FROM Matriz
+		WHERE activo = 1";
+	$db = getConnection();
+	$stmt = $db->prepare($sql);
+	$stmt->execute();
+	$matrices = $stmt->fetchAll(PDO::FETCH_ASSOC);
+	$db = null;
+	return $matrices;
+}
+
+function getMatrix($matrixId) {
+	$sql = "SELECT id_matriz, id_tipo_matriz, id_norma, matriz,
+		siglas, activo
+		FROM Matriz
+		WHERE activo = 1 AND id_matriz = :matrixId";
+	$db = getConnection();
+	$stmt = $db->prepare($sql);
+	$stmt->bindParam("matrixId", $matrixId);
+	$stmt->execute();
+	$matrix = (array) $stmt->fetchAll(PDO::FETCH_OBJ)[0];
+	$db = null;
+	return (object) $matrix;
+}
+
 function getContainers() {
 	$sql = "SELECT id_recipiente, recipiente, tipo_recipiente, activo
 		FROM Recipiente
@@ -993,4 +1032,17 @@ function getSamplingEmployee($userId) {
 	$samplingEmployee = (array) $stmt->fetchAll(PDO::FETCH_OBJ)[0];
 	$db = null;
 	return (object) $samplingEmployee;
+}
+
+
+function getPointKinds() {
+	$sql = "SELECT id_tipo_punto, tipo_punto, activo
+		FROM TipoPunto
+		WHERE activo = 1";
+	$db = getConnection();
+	$stmt = $db->prepare($sql);
+	$stmt->execute();
+	$pointKinds = $stmt->fetchAll(PDO::FETCH_ASSOC);
+	$db = null;
+	return $pointKinds;
 }

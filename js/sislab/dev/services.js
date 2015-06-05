@@ -1759,36 +1759,6 @@
       ]
     );
 
-  // CheckerService.js
-  /**
-   * @name CheckerService
-   * @constructor
-   * @desc Proveedor de datos, Responsables verificación
-   * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
-   * @param {Object} TokenService - Proveedor de métodos para token
-   * @return {Object} $resource - Acceso a recursos HTTP
-   */
-  function CheckerService($resource, TokenService) {
-    return $resource(API_BASE_URL + 'checkers', {}, {
-      get: {
-        method: 'GET',
-        params: {},
-        isArray: true,
-        headers: {
-          'Auth-Token': TokenService.getToken()
-        }
-      }
-    });
-  }
-  angular
-    .module('sislabApp')
-    .factory('CheckerService',
-      [
-        '$resource', 'TokenService',
-        CheckerService
-      ]
-    );
-
   // SampleService.js
   /**
    * @name SampleService

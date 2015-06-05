@@ -954,6 +954,25 @@ function getParametersField() {
 	return $parameters;
 }
 
+
+function getReceptionists() {
+	$sql = "SELECT id_usuario, id_nivel, id_rol, id_empleado,
+		id_area, id_puesto, interno, cea, laboratorio, calidad,
+		supervisa, recibe, analiza, muestrea, nombres,
+		apellido_paterno, apellido_materno,
+		fecha_captura, fecha_actualiza, ip_captura, ip_actualiza,
+		host_captura, host_actualiza, activo
+FROM Usuario
+WHERE (activo = 1) AND (recibe = 1)";
+	$db = getConnection();
+	$stmt = $db->prepare($sql);
+	$stmt->execute();
+	$parameters = $stmt->fetchAll(PDO::FETCH_ASSOC);
+	$db = null;
+	return $parameters;
+}
+
+
 function getParameter($parameterId) {
 	$sql = "SELECT id_parametro, id_tipo_matriz, id_area,
 		id_tipo_preservacion, id_metodo, id_unidad, id_tipo_valor,

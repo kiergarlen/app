@@ -1,7 +1,6 @@
 <?php
 require "../libs/Slim/Slim.php";
 require "../libs/JWT/JWT.php";
-require "./Services/DALSislab.php";
 require "./db.php";
 // cd372fb85148700fa88095e3492d3f9f5beb43e555e5ff26d95f5a6adc36f8e6
 define("KEY", "m0oxUT7L8Unn93hXMUGHpwq_jTSKVBjQfEVCUe8jZ38KUU4VSAfmsNk4JJYcJl7CukrY6QMlixxwat7AZSpDcSQ");
@@ -128,47 +127,6 @@ $app->post("/studies", function() use ($app) {
 	}
 });
 
-// $app->get("/quotes(/)(:quoteId)", function($quoteId = -1) use ($app) {
-// 	try {
-// 		$userId = decodeUserToken($app->request())->uid;
-// 		if ($quoteId > -1)
-// 		{
-// 			$result = \Service\DALSislab::getInstance()->getQuote($quoteId);
-// 		}
-// 		else
-// 		{
-// 			$result = \Service\DALSislab::getInstance()->getQuotes();
-// 		}
-// 		$app->response()->status(200);
-// 		$app->response()->header('Content-Type', 'application/json');
-// 		//$result = ")]}',\n" . $result;
-// 		print_r($result);
-// 	} catch (Exception $e) {
-// 		$app->response()->status(400);
-// 		$app->response()->header('X-Status-Reason', $e->getMessage());
-// 	}
-// });
-
-// $app->post("/quotes", function() use ($app) {
-// 	try {
-// 		$request = $app->request();
-// 		$requestBody = $request->getBody();
-
-// 		$requestData = extractDataFromRequest($request);
-// 		$result = json_encode($requestData);
-
-// 		$userId = decodeUserToken($app->request())->uid;
-// 		//$result = insertStudy();
-// 		$app->response()->status(200);
-// 		$app->response()->header('Content-Type', 'application/json');
-// 		//$result = ")]}',\n" . $result;
-// 		print_r($result);
-// 	} catch (Exception $e) {
-// 		$app->response()->status(400);
-// 		$app->response()->header('X-Status-Reason', $e->getMessage());
-// 	}
-// });
-
 $app->get("/orders(/)(:orderId)", function($orderId = -1) use ($app) {
 	try {
 		$userId = decodeUserToken($app->request())->uid;
@@ -291,11 +249,11 @@ $app->get("/sheets(/)(:sheetId)", function($sheetId = -1) use ($app) {
 		$userId = 1;
 		if ($sheetId > -1)
 		{
-			$result = \Service\DALSislab::getInstance()->getSheet($sheetId);
+			$result = json_encode(getSheet($sheetId));
 		}
 		else
 		{
-			$result = \Service\DALSislab::getInstance()->getSheets();
+			$result = json_encode(getSheets());
 		}
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
@@ -332,11 +290,11 @@ $app->get("/receptions(/)(:receptionId)", function($receptionId = -1) use ($app)
 		$userId = decodeUserToken($app->request())->uid;
 		if ($receptionId > -1)
 		{
-			$result = \Service\DALSislab::getInstance()->getReception($receptionId);
+			$result = json_encode(getReception($receptionId));
 		}
 		else
 		{
-			$result = \Service\DALSislab::getInstance()->getReceptions();
+			$result = json_encode(getReceptions());
 		}
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
@@ -373,11 +331,11 @@ $app->get("/custodies(/)(:custodyId)", function($custodyId = -1) use ($app) {
 		$userId = decodeUserToken($app->request())->uid;
 		if ($custodyId > -1)
 		{
-			$result = \Service\DALSislab::getInstance()->getCustody($custodyId);
+			$result = json_encode(getCustody($custodyId));
 		}
 		else
 		{
-			$result = \Service\DALSislab::getInstance()->getCustodies();
+			$result = json_encode(getCustodies());
 		}
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
@@ -433,7 +391,7 @@ $app->get("/clients(/)(:clientId)", function($clientId = -1) use ($app) {
 $app->get("/parameters", function() use ($app) {
 	try {
 		$userId = decodeUserToken($app->request())->uid;
-		$result = \Service\DALSislab::getInstance()->getParameters();
+		$result = json_encode(getParameters());
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
 		//$result = ")]}',\n" . $result;
@@ -580,7 +538,7 @@ $app->get("/point/kinds", function() use ($app) {
 $app->get("/districts/:districtId", function($districtId) use ($app) {
 	try {
 		$userId = decodeUserToken($app->request())->uid;
-		$result = \Service\DALSislab::getInstance()->getDistrict($districtId);
+		$result = json_encode(getDistrict($districtId));
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
 		//$result = ")]}',\n" . $result;
@@ -594,7 +552,7 @@ $app->get("/districts/:districtId", function($districtId) use ($app) {
 $app->get("/districts", function() use ($app) {
 	try {
 		$userId = decodeUserToken($app->request())->uid;
-		$result = \Service\DALSislab::getInstance()->getDistricts();
+		$result = json_encode(getDistricts());
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
 		//$result = ")]}',\n" . $result;
@@ -608,21 +566,7 @@ $app->get("/districts", function() use ($app) {
 $app->get("/districts/cities/:districtId", function($districtId) use ($app) {
 	try {
 		//$userId = decodeUserToken($app->request())->uid;
-		$result = \Service\DALSislab::getInstance()->getCitiesByDistrictId($districtId);
-		$app->response()->status(200);
-		$app->response()->header('Content-Type', 'application/json');
-		//$result = ")]}',\n" . $result;
-		print_r($result);
-	} catch (Exception $e) {
-		$app->response()->status(400);
-		$app->response()->header('X-Status-Reason', $e->getMessage());
-	}
-});
-
-$app->get("/districts", function() use ($app) {
-	try {
-		$userId = decodeUserToken($app->request())->uid;
-		$result = \Service\DALSislab::getInstance()->getDistricts();
+		$result =json_encode(getCitiesByDistrictId($districtId));
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
 		//$result = ")]}',\n" . $result;
@@ -797,7 +741,7 @@ $app->get("/points(/)(:pointid)", function($pointId = -1) use ($app) {
 $app->get("/parameters/field", function() use ($app) {
 	try {
 		$userId = decodeUserToken($app->request())->uid;
-		$result = \Service\DALSislab::getInstance()->getParametersField();
+		$result = json_encode(getParametersField());
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
 		//$result = ")]}',\n" . $result;
@@ -811,49 +755,7 @@ $app->get("/parameters/field", function() use ($app) {
 $app->get("/receptionists", function() use ($app) {
 	try {
 		$userId = decodeUserToken($app->request())->uid;
-		$result = \Service\DALSislab::getInstance()->getReceptionists();
-		$app->response()->status(200);
-		$app->response()->header('Content-Type', 'application/json');
-		//$result = ")]}',\n" . $result;
-		print_r($result);
-	} catch (Exception $e) {
-		$app->response()->status(400);
-		$app->response()->header('X-Status-Reason', $e->getMessage());
-	}
-});
-
-$app->get("/expirations", function() use ($app) {
-	try {
-		$userId = decodeUserToken($app->request())->uid;
-		$result = \Service\DALSislab::getInstance()->getExpirations();
-		$app->response()->status(200);
-		$app->response()->header('Content-Type', 'application/json');
-		//$result = ")]}',\n" . $result;
-		print_r($result);
-	} catch (Exception $e) {
-		$app->response()->status(400);
-		$app->response()->header('X-Status-Reason', $e->getMessage());
-	}
-});
-
-$app->get("/volumes", function() use ($app) {
-	try {
-		$userId = decodeUserToken($app->request())->uid;
-		$result = \Service\DALSislab::getInstance()->getVolumes();
-		$app->response()->status(200);
-		$app->response()->header('Content-Type', 'application/json');
-		//$result = ")]}',\n" . $result;
-		print_r($result);
-	} catch (Exception $e) {
-		$app->response()->status(400);
-		$app->response()->header('X-Status-Reason', $e->getMessage());
-	}
-});
-
-$app->get("/checkers", function() use ($app) {
-	try {
-		$userId = decodeUserToken($app->request())->uid;
-		$result = \Service\DALSislab::getInstance()->getCheckers();
+		$result = json_encode(getReceptionists());
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
 		//$result = ")]}',\n" . $result;
@@ -867,7 +769,7 @@ $app->get("/checkers", function() use ($app) {
 $app->get("/samples", function() use ($app) {
 	try {
 		$userId = decodeUserToken($app->request())->uid;
-		$result = \Service\DALSislab::getInstance()->getSamples();
+		$result = json_encode(getSamples());
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
 		//$result = ")]}',\n" . $result;
@@ -895,7 +797,7 @@ $app->get("/instruments", function() use ($app) {
 $app->get("/containers", function() use ($app) {
 	try {
 		$userId = decodeUserToken($app->request())->uid;
-		$result = \Service\DALSislab::getInstance()->getContainers();
+		$result = json_encode(getContainers());
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
 		//$result = ")]}',\n" . $result;
@@ -909,7 +811,7 @@ $app->get("/containers", function() use ($app) {
 $app->get("/analysis", function() use ($app) {
 	try {
 		$userId = decodeUserToken($app->request())->uid;
-		$result = \Service\DALSislab::getInstance()->getAnalysis();
+		$result = json_encode(getAnalysis());
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
 		//$result = ")]}',\n" . $result;
@@ -923,7 +825,7 @@ $app->get("/analysis", function() use ($app) {
 $app->get("/areas", function() use ($app) {
 	try {
 		$userId = decodeUserToken($app->request())->uid;
-		$result = \Service\DALSislab::getInstance()->getAreas();
+		$result = jspn_encode(getAreas());
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
 		//$result = ")]}',\n" . $result;
@@ -937,7 +839,7 @@ $app->get("/areas", function() use ($app) {
 $app->get("/analysis/selections", function() use ($app) {
 	try {
 		$userId = decodeUserToken($app->request())->uid;
-		$result = \Service\DALSislab::getInstance()->getAnalysisSelections();
+		$result = json_encode(getAnalysisSelections());
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
 		//$result = ")]}',\n" . $result;
@@ -951,7 +853,7 @@ $app->get("/analysis/selections", function() use ($app) {
 $app->get("/reports", function() use ($app) {
 	try {
 		$userId = decodeUserToken($app->request())->uid;
-		$result = \Service\DALSislab::getInstance()->getReports();
+		$result = json_encode(getReports());
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
 		//$result = ")]}',\n" . $result;
@@ -965,7 +867,7 @@ $app->get("/reports", function() use ($app) {
 $app->get("/reports/:reportId", function($reportId) use ($app) {
 	try {
 		$userId = decodeUserToken($app->request())->uid;
-		$result = \Service\DALSislab::getInstance()->getReport($reportId);
+		$result = json_encode(getReport($reportId));
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
 		//$result = ")]}',\n" . $result;
@@ -979,7 +881,7 @@ $app->get("/reports/:reportId", function($reportId) use ($app) {
 $app->get("/reports/:reportId", function() use ($app) {
 	try {
 		$userId = decodeUserToken($app->request())->uid;
-		$result = \Service\DALSislab::getInstance()->getReports();
+		$result = json_encode(getReports());
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
 		//$result = ")]}',\n" . $result;
@@ -993,7 +895,7 @@ $app->get("/reports/:reportId", function() use ($app) {
 $app->get("/employees", function() use ($app) {
 	try {
 		$userId = decodeUserToken($app->request())->uid;
-		$result = \Service\DALSislab::getInstance()->getEmployees();
+		$result = json_encode(getEmployees());
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
 		//$result = ")]}',\n" . $result;
@@ -1007,7 +909,7 @@ $app->get("/employees", function() use ($app) {
 $app->get("/references", function() use ($app) {
 	try {
 		$userId = decodeUserToken($app->request())->uid;
-		$result = \Service\DALSislab::getInstance()->getReferences();
+		$result = json_encode(getReferences());
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
 		//$result = ")]}',\n" . $result;
@@ -1042,7 +944,7 @@ $app->get("/methods(/)(:methodId)", function() use ($app) {
 $app->get("/prices", function() use ($app) {
 	try {
 		$userId = decodeUserToken($app->request())->uid;
-		$result = \Service\DALSislab::getInstance()->getPrices();
+		$result = json_encode(getPrices());
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
 		//$result = ")]}',\n" . $result;

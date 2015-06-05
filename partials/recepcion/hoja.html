@@ -69,7 +69,7 @@
             <li data-ng-show="sheet.sheet.plan.fecha_plan.length > 0">
               Fecha:
               <strong>
-                {{::sheet.sheet.plan.fecha_plan || date}}
+                {{::sheet.sheet.plan.fecha_plan || date: 'yyyy-MM-dd'}}
               </strong>
             </li>
           </ul>

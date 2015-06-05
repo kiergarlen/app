@@ -546,6 +546,7 @@ function getOrderSources() {
 function getPlans() {
 	$sql = "SELECT id_plan, id_estudio, id_orden, id_ubicacion,
 		id_paquete, id_objetivo_plan, id_norma_muestreo,
+		id_estado, id_municipio, id_localidad,
 		id_supervisor_muestreo, id_supervisor_entrega,
 		id_supervisor_recoleccion, id_supervisor_registro,
 		id_ayudante_entrega, id_ayudante_recoleccion,
@@ -596,7 +597,9 @@ function getBlankPlan() {
 		"id_plan" => 1, "id_estudio" => 1,
 		"id_orden" => 1, "id_ubicacion" => 1,
 		"id_paquete" => 1, "id_objetivo_plan" => 1,
-		"id_norma_muestreo" => 1, "id_supervisor_muestreo" => 0,
+		"id_norma_muestreo" => 1, "id_estado" => 14,
+		"id_municipio" => 1, "id_localidad" => 1,
+		"id_supervisor_muestreo" => 0,
 		"id_supervisor_entrega" => 0, "id_supervisor_recoleccion" => 0,
 		"id_supervisor_registro" => 0, "id_ayudante_entrega" => 0,
 		"id_ayudante_recoleccion" => 0, "id_ayudante_registro" => 0,
@@ -625,16 +628,16 @@ function getBlankPlan() {
 }
 
 function getPlansByOrder($orderId) {
-	$sql = "SELECT id_plan, id_estudio, id_orden,
-		id_ubicacion, id_paquete, id_objetivo_plan,
-		id_norma_muestreo, id_supervisor_muestreo,
-		id_supervisor_entrega,  id_supervisor_recoleccion,
-		id_supervisor_registro, id_ayudante_entrega,
-		id_ayudante_recoleccion, id_ayudante_registro,
-		id_responsable_calibracion,  id_responsable_recipientes,
-		id_responsable_reactivos, id_responsable_material,
-		id_responsable_hieleras, id_status, id_usuario_captura,
-		id_usuario_valida,  id_usuario_actualiza,
+	$sql = "SELECT id_plan, id_estudio, id_orden, id_ubicacion,
+		id_paquete, id_objetivo_plan, id_norma_muestreo,
+		id_estado, id_municipio, id_localidad,
+		id_supervisor_muestreo, id_supervisor_entrega,
+		id_supervisor_recoleccion, id_supervisor_registro,
+		id_ayudante_entrega, id_ayudante_recoleccion,
+		id_ayudante_registro, id_responsable_calibracion,
+		id_responsable_recipientes, id_responsable_reactivos,
+		id_responsable_material, id_responsable_hieleras, id_status,
+		id_usuario_captura, id_usuario_valida, id_usuario_actualiza,
 		CONVERT(nvarchar, fecha, 127) AS fecha,
 		CONVERT(nvarchar, fecha_probable, 127) AS fecha_probable,
 		CONVERT(nvarchar, fecha_probable, 127) AS fecha_probable,
@@ -643,11 +646,11 @@ function getPlansByOrder($orderId) {
 		CONVERT(nvarchar, fecha_valida, 127) AS fecha_valida,
 		CONVERT(nvarchar, fecha_actualiza, 127) AS fecha_actualiza,
 		CONVERT(nvarchar, fecha_rechaza, 127) AS fecha_rechaza,
-		ip_captura, ip_valida, ip_actualiza,  host_captura,
-		host_valida, host_actualiza, calle, numero, colonia,
-		codigo_postal, telefono, contacto, email,
-		comentarios_ubicacion, cantidad_puntos,
-		cantidad_equipos, cantidad_recipientes,
+		ip_captura,
+		ip_valida, ip_actualiza, host_captura, host_valida,
+		host_actualiza, calle, numero, colonia, codigo_postal,
+		telefono, contacto, email, comentarios_ubicacion,
+		cantidad_puntos, cantidad_equipos, cantidad_recipientes,
 		cantidad_reactivos, cantidad_hieleras, frecuencia,
 		objetivo_otro, motivo_rechaza, comentarios, activo
 		FROM [Plan]
@@ -662,16 +665,16 @@ function getPlansByOrder($orderId) {
 
 function getPlainPlan($planId) {
 	//TODO: agregar id_estado, id_municipio, id_localidad
-	$sql = "SELECT id_plan, id_estudio, id_orden,
-		id_ubicacion, id_paquete, id_objetivo_plan,
-		id_norma_muestreo, id_supervisor_muestreo,
-		id_supervisor_entrega,  id_supervisor_recoleccion,
-		id_supervisor_registro, id_ayudante_entrega,
-		id_ayudante_recoleccion, id_ayudante_registro,
-		id_responsable_calibracion,  id_responsable_recipientes,
-		id_responsable_reactivos, id_responsable_material,
-		id_responsable_hieleras, id_status, id_usuario_captura,
-		id_usuario_valida,  id_usuario_actualiza,
+	$sql = "SELECT id_plan, id_estudio, id_orden, id_ubicacion,
+		id_paquete, id_objetivo_plan, id_norma_muestreo,
+		id_estado, id_municipio, id_localidad,
+		id_supervisor_muestreo, id_supervisor_entrega,
+		id_supervisor_recoleccion, id_supervisor_registro,
+		id_ayudante_entrega, id_ayudante_recoleccion,
+		id_ayudante_registro, id_responsable_calibracion,
+		id_responsable_recipientes, id_responsable_reactivos,
+		id_responsable_material, id_responsable_hieleras, id_status,
+		id_usuario_captura, id_usuario_valida, id_usuario_actualiza,
 		CONVERT(nvarchar, fecha, 127) AS fecha,
 		CONVERT(nvarchar, fecha_probable, 127) AS fecha_probable,
 		CONVERT(nvarchar, fecha_probable, 127) AS fecha_probable,
@@ -680,11 +683,11 @@ function getPlainPlan($planId) {
 		CONVERT(nvarchar, fecha_valida, 127) AS fecha_valida,
 		CONVERT(nvarchar, fecha_actualiza, 127) AS fecha_actualiza,
 		CONVERT(nvarchar, fecha_rechaza, 127) AS fecha_rechaza,
-		ip_captura, ip_valida, ip_actualiza,  host_captura,
-		host_valida, host_actualiza, calle, numero, colonia,
-		codigo_postal, telefono, contacto, email,
-		comentarios_ubicacion, cantidad_puntos,
-		cantidad_equipos, cantidad_recipientes,
+		ip_captura,
+		ip_valida, ip_actualiza, host_captura, host_valida,
+		host_actualiza, calle, numero, colonia, codigo_postal,
+		telefono, contacto, email, comentarios_ubicacion,
+		cantidad_puntos, cantidad_equipos, cantidad_recipientes,
 		cantidad_reactivos, cantidad_hieleras, frecuencia,
 		objetivo_otro, motivo_rechaza, comentarios, activo
 		FROM [Plan]
@@ -726,7 +729,8 @@ function getPlanObjectives() {
 function insertPlan($planData) {
 	$sql = "INSERT INTO [Plan] (id_estudio, id_orden,
 		id_ubicacion, id_paquete, id_objetivo_plan,
-		id_norma_muestreo, id_supervisor_muestreo,
+		id_norma_muestreo, id_estado, id_municipio,
+		id_localidad, id_supervisor_muestreo,
 		id_supervisor_entrega,  id_supervisor_recoleccion,
 		id_supervisor_registro, id_ayudante_entrega,
 		id_ayudante_recoleccion, id_ayudante_registro,
@@ -745,7 +749,8 @@ function insertPlan($planData) {
 		objetivo_otro, motivo_rechaza, comentarios, activo)
 		VALUES (:id_estudio, :id_orden,
 		:id_ubicacion, :id_paquete, :id_objetivo_plan,
-		:id_norma_muestreo, :id_supervisor_muestreo,
+		:id_norma_muestreo, :id_estado, :id_municipio,
+		:id_localidad, :id_supervisor_muestreo,
 		:id_supervisor_entrega,  :id_supervisor_recoleccion,
 		:id_supervisor_registro, :id_ayudante_entrega,
 		:id_ayudante_recoleccion, :id_ayudante_registro,
@@ -773,9 +778,9 @@ function insertPlan($planData) {
 function updatePlan($updateData) {
 	$sql = "UPDATE [Plan] SET id_estudio = :id_estudio,
 		id_orden = :id_orden, id_ubicacion = :id_ubicacion,
-		id_paquete = :id_paquete,
-		id_objetivo_plan = :id_objetivo_plan,
-		id_norma_muestreo = :id_norma_muestreo,
+		id_paquete = :id_paquete, id_objetivo_plan = :id_objetivo_plan,
+		id_norma_muestreo = :id_norma_muestreo, id_estado, = :id_estado,
+		id_municipio, = :id_municipio, id_localidad= :id_localidad,
 		id_supervisor_muestreo = :id_supervisor_muestreo,
 		id_supervisor_entrega = :id_supervisor_entrega,
 		id_supervisor_recoleccion = :id_supervisor_recoleccion,
@@ -1166,6 +1171,22 @@ function getMaterials() {
 	return $materials;
 }
 
+function getSamplingInstruments() {
+	$sql = "SELECT id_instrumento, id_usuario_captura,
+		id_usuario_actualiza, instrumento, descripcion, muestreo,
+		laboratorio, inventario, fecha_captura, fecha_actualiza,
+		ip_captura, ip_actualiza, host_captura, host_actualiza,
+		comentarios, activo, 'false' AS selected
+		FROM Instrumento
+		WHERE activo = 1 AND muestreo = 1";
+	$db = getConnection();
+	$stmt = $db->prepare($sql);
+	$stmt->execute();
+	$materials = $stmt->fetchAll(PDO::FETCH_ASSOC);
+	$db = null;
+	return $materials;
+}
+
 function getCoolers() {
 	$sql = "SELECT id_hielera, hielera, activo,
 		'false' AS selected
@@ -1177,4 +1198,53 @@ function getCoolers() {
 	$coolers = $stmt->fetchAll(PDO::FETCH_ASSOC);
 	$db = null;
 	return $coolers;
+}
+
+function getClouds() {
+	$sql = "SELECT id_nubes, nubes, activo
+		FROM Nubes
+		WHERE activo = 1";
+	$db = getConnection();
+	$stmt = $db->prepare($sql);
+	$stmt->execute();
+	$clouds = $stmt->fetchAll(PDO::FETCH_ASSOC);
+	$db = null;
+	return $clouds;
+}
+
+function getCurrentDirections() {
+	$sql = "SELECT id_direccion_corriente, direccion_corriente, activo
+		FROM DireccionCorriente
+		WHERE activo = 1";
+	$db = getConnection();
+	$stmt = $db->prepare($sql);
+	$stmt->execute();
+	$currentDirections = $stmt->fetchAll(PDO::FETCH_ASSOC);
+	$db = null;
+	return $currentDirections;
+}
+
+function getWaves() {
+	$sql = "SELECT id_oleaje, oleaje, activo
+		FROM Oleaje
+		WHERE activo = 1";
+	$db = getConnection();
+	$stmt = $db->prepare($sql);
+	$stmt->execute();
+	$waves = $stmt->fetchAll(PDO::FETCH_ASSOC);
+	$db = null;
+	return $waves;
+}
+
+function getSamplingNorms() {
+	$sql = "SELECT id_norma, id_tipo_norma, id_tipo_matriz,
+		norma, descripcion, activo
+		FROM Norma
+		WHERE activo = 1 AND id_tipo_norma = 2";
+	$db = getConnection();
+	$stmt = $db->prepare($sql);
+	$stmt->execute();
+	$waves = $stmt->fetchAll(PDO::FETCH_ASSOC);
+	$db = null;
+	return $waves;
 }

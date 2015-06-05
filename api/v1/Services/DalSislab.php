@@ -23854,90 +23854,88 @@ class DALSislab
 		// WHERE
 		//		id_municipio := $districtId";
 		//return \Service\Adapter\PDOAdapter::getInstance()->getAllRows($sql);
-		if ($districtId == 14001)
-		{
-			$result = '
-				[
-					{
-						"id_municipio":14001,
-						"id_localidad":140010001,
-						"localidad":"Acatic"
-					}
-				]
-			';
-		}
-		else if ($districtId == 14030)
-		{
-			$result = '
-				[
-					{
-						"id_municipio":14030,
-						"id_localidad":140300001,
-						"localidad":"Chapala"
-					}
-				]
-			';
-		}
-		else if ($districtId == 14039)
-		{
-			$result = '
-				[
-					{
-						"id_municipio":14039,
-						"id_localidad":140390001,
-						"localidad":"Guadalajara"
-					}
-				]
-			';
-		}
-		else if ($districtId == 14120)
-		{
-			$result = '
-				[
-					{
-						"id_municipio":14120,
-						"id_localidad":141200001,
-						"localidad":"Zapopan"
-					}
-				]
-			';
-		}
-		else if ($districtId == 14123)
-		{
-			$result = '
-				[
-					{
-						"id_municipio":14123,
-						"id_localidad":141230001,
-						"localidad":"Zapotlan El Grande"
-					}
-				]
-			';
-		}
-		else if ($districtId == 14124)
-		{
-			$result = '
-				[
-					{
-						"id_municipio":14124,
-						"id_localidad":141240001,
-						"localidad":"Zapotlanejo"
-					}
-				]
-			';
-		}
-		else
-		{
-			$result = '
-				[
-					{
-						"id_municipio":0,
-						"id_localidad":0,
-						"localidad":""
-					}
-				]
-			';
-		}
+		$result = '
+			[
+				{
+					"id_municipio":' . $districtId . ',
+					"id_localidad":' . $districtId . '0001,
+					"localidad": "Localidad municipio ' . $districtId . '"
+				}
+			]
+		';
+
+		// if ($districtId == 14001)
+		// {
+		// 	$result = '
+		// 		[
+		// 			{
+		// 				"id_municipio":14001,
+		// 				"id_localidad":140010001,
+		// 				"localidad":"Acatic"
+		// 			}
+		// 		]
+		// 	';
+		// }
+		// if ($districtId == 14030)
+		// {
+		// 	$result = '
+		// 		[
+		// 			{
+		// 				"id_municipio":14030,
+		// 				"id_localidad":140300001,
+		// 				"localidad":"Chapala"
+		// 			}
+		// 		]
+		// 	';
+		// }
+		// if ($districtId == 14039)
+		// {
+		// 	$result = '
+		// 		[
+		// 			{
+		// 				"id_municipio":14039,
+		// 				"id_localidad":140390001,
+		// 				"localidad":"Guadalajara"
+		// 			}
+		// 		]
+		// 	';
+		// }
+		// if ($districtId == 14120)
+		// {
+		// 	$result = '
+		// 		[
+		// 			{
+		// 				"id_municipio":14120,
+		// 				"id_localidad":141200001,
+		// 				"localidad":"Zapopan"
+		// 			}
+		// 		]
+		// 	';
+		// }
+		// if ($districtId == 14123)
+		// {
+		// 	$result = '
+		// 		[
+		// 			{
+		// 				"id_municipio":14123,
+		// 				"id_localidad":141230001,
+		// 				"localidad":"Zapotlan El Grande"
+		// 			}
+		// 		]
+		// 	';
+		// }
+		// if ($districtId == 14124)
+		// {
+		// 	$result = '
+		// 		[
+		// 			{
+		// 				"id_municipio":14124,
+		// 				"id_localidad":141240001,
+		// 				"localidad":"Zapotlanejo"
+		// 			}
+		// 		]
+		// 	';
+		// }
 		return $result;
 	}
 

@@ -607,7 +607,7 @@ $app->get("/districts", function() use ($app) {
 
 $app->get("/districts/cities/:districtId", function($districtId) use ($app) {
 	try {
-		$userId = decodeUserToken($app->request())->uid;
+		//$userId = decodeUserToken($app->request())->uid;
 		$result = \Service\DALSislab::getInstance()->getCitiesByDistrictId($districtId);
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
@@ -692,7 +692,7 @@ $app->get("/materials", function() use ($app) {
 $app->get("/instruments/sampling", function() use ($app) {
 	try {
 		$userId = decodeUserToken($app->request())->uid;
-		$result = \Service\DALSislab::getInstance()->getSamplingInstruments();
+		$result = json_encode(getSamplingInstruments());
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
 		//$result = ")]}',\n" . $result;
@@ -762,7 +762,7 @@ $app->get("/waves", function() use ($app) {
 $app->get("/sampling/norms", function() use ($app) {
 	try {
 		$userId = decodeUserToken($app->request())->uid;
-		$result = \Service\DALSislab::getInstance()->getSamplingNorms();
+		$result = json_encode(getSamplingNorms());
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
 		//$result = ")]}',\n" . $result;

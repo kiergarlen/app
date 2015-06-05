@@ -888,7 +888,7 @@
     ReactiveService,MaterialService,CoolerService,
     SamplingInstrumentService,PlanService) {
     var vm = this;
-    vm.plan = PlanService.query({planId: $routeParams.planId});
+    vm.plan = {};
     vm.user = TokenService.getUserFromToken();
     vm.objectives = PlanObjectivesService.get();
     vm.instruments = SamplingInstrumentService.get();
@@ -915,30 +915,37 @@
     vm.rejectItem = rejectItem;
     vm.submitForm = submitForm;
 
-    DistrictService.get()
-      .$promise.then(function success(response) {
-        vm.districts = response;
-        if (vm.plan.id_municipio && vm.plan.id_municipio > 0)
-        {
-          ArrayUtilsService.selectItemFromCollection(
-            vm.districts,
-            'id_municipio',
-            parseInt(vm.plan.id_municipio)
-          );
-        }
-        CityService
-          .query({districtId: vm.plan.id_municipio})
+    PlanService
+      .query({planId: $routeParams.planId})
+      .$promise
+      .then(function success(response) {
+        vm.plan = response;
+        DistrictService.get()
           .$promise
           .then(function success(response) {
-            vm.cities = response;
-            if (vm.plan.id_localidad && vm.plan.id_localidad > 0)
+            vm.districts = response;
+            if (vm.plan.id_municipio && vm.plan.id_municipio > 0)
             {
               ArrayUtilsService.selectItemFromCollection(
-                vm.cities,
-                'id_localidad',
-                parseInt(vm.plan.id_localidad)
+                vm.districts,
+                'id_municipio',
+                parseInt(vm.plan.id_municipio)
               );
             }
+            CityService
+              .query({districtId: vm.plan.id_municipio})
+              .$promise
+              .then(function success(response) {
+                vm.cities = response;
+                if (vm.plan.id_localidad && vm.plan.id_localidad > 0)
+                {
+                  ArrayUtilsService.selectItemFromCollection(
+                    vm.cities,
+                    'id_localidad',
+                    parseInt(vm.plan.id_localidad)
+                  );
+                }
+              });
           });
       });
 
@@ -955,7 +962,7 @@
           ArrayUtilsService.seItemsFromReference(
             vm.instruments,
             vm.plan.equipos,
-            'id_equipo',
+            'id_instrumento',
             [
               'selected'
             ]

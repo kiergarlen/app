@@ -825,6 +825,1139 @@ function updatePlan($updateData) {
 	return $updateData["id_plan"];
 }
 
+function getSheet() {
+	$json = '
+		{
+			"id_hoja":1,
+			"id_estudio":1,
+			"id_cliente":1,
+			"id_solicitud":1,
+			"id_orden":1,
+			"id_plan":1,
+			"id_paquete_puntos":1,
+			"id_norma_muestreo":2,
+			"id_nubes":1,
+			"id_direccion_corriente":1,
+			"id_oleaje":1,
+			"id_status":1,
+			"fecha_muestreo":"2015-03-24T08:12-06:00",
+			"fecha_entrega":"2015-03-24T11:47-06:00",
+			"fecha_captura":"2015-03-23T08:25-06:00",
+			"ip_captura":"[::1]",
+			"host_captura":"localhost",
+			"fecha_valida":"2015-03-23T08:25-06:00",
+			"ip_valida":"[::1]",
+			"host_valida":"localhost",
+			"fecha_actualiza":"2015-03-23T08:25-06:00",
+			"ip_actualiza":"[::1]",
+			"host_actualiza":"localhost",
+			"fecha_rechaza":"",
+			"nubes_otro":"",
+			"comentarios":"",
+			"motivo_rechaza":"",
+			"activo":1,
+			"plan":
+			{
+				"id_plan":1,
+				"id_estudio":1,
+				"id_cliente":13,
+				"id_solicitud":1,
+				"id_orden":1,
+				"id_matriz":1,
+				"id_tipo_muestreo":2,
+				"id_norma":1,
+				"id_cuerpo_receptor":1,
+				"id_tipo_cuerpo":3,
+				"id_paquete_puntos":1,
+				"id_supervisor_muestreo":3,
+				"id_objetivo_plan":2,
+				"id_supervisor_entrega":13,
+				"id_ayudante_entrega":13,
+				"id_supervisor_recoleccion":13,
+				"id_ayudante_recoleccion":13,
+				"id_supervisor_registro":13,
+				"id_ayudante_registro":13,
+				"id_responsable_calibracion":13,
+				"id_responsable_recipientes":13,
+				"id_responsable_reactivos":13,
+				"id_responsable_material":13,
+				"id_responsable_hieleras":13,
+				"id_estado":14,
+				"id_municipio":14039,
+				"id_localidad":140390001,
+				"id_ejercicio":2015,
+				"id_status":1,
+				"numero_oficio":437,
+				"folio":"CEA-437/2014",
+				"fecha_probable":"2015-03-23T08:25-06:00",
+				"fecha_plan":"2015-03-23",
+				"fecha_calibracion":"2015-03-23T08:25-06:00",
+				"fecha_captura":"2015-03-23T08:25-06:00",
+				"ip_captura":"[::1]",
+				"host_captura":"localhost",
+				"fecha_valida":"2015-03-23T08:25-06:00",
+				"ip_valida":"[::1]",
+				"host_valida":"localhost",
+				"fecha_actualiza":"2015-03-23T08:25-06:00",
+				"ip_actualiza":"[::1]",
+				"host_actualiza":"localhost",
+				"objetivo_otro":"esto es una prueba",
+				"calle":"Av. Brasilia",
+				"numero":"2970",
+				"colonia":"Col. Colomos Providencia",
+				"frecuencia_muestreo":2,
+				"matriz":"Agua residual",
+				"municipio":"Guadalajara",
+				"localidad":"Guadalajara",
+				"asistente_muestreo":"",
+				"asistente_recoleccion":"",
+				"asistente_registro":"",
+				"tipo_muestreo":"Compuesto",
+				"fecha_rechaza":"",
+				"motivo_rechaza":"",
+				"activo":1,
+				"cliente":
+				{
+					"id_cliente":13,
+					"id_organismo":6,
+					"cliente":"Ayuntamiento de Cotija, Michoacan",
+					"area":"",
+					"rfc":"Registro Federal de Contribuyentes",
+					"calle":"Pino Suárez Pte.",
+					"numero":"100",
+					"colonia":"Col. Centro",
+					"cp":"59940",
+					"id_estado":16,
+					"estado":"Michoacán de Ocampo",
+					"id_municipio":16019,
+					"municipio":"Cotija",
+					"id_localidad":160190001,
+					"localidad":"Cotija de La Paz",
+					"tel":"045-35-4100-1836",
+					"fax":"",
+					"contacto":"Arq. Juan Jesús Zarate Barajas",
+					"puesto_contacto":"puesto contacto",
+					"email":"ooapascotija@hotmail.com",
+					"fecha_act":"23/11/2014",
+					"interno":0,
+					"cea":0,
+					"tasa":1,
+					"activo":1
+				},
+				"solicitud":
+				{
+					"id_solicitud":1,
+					"id_estudio":1,
+					"id_cliente":13,
+					"id_matriz":1,
+					"id_tipo_muestreo":2,
+					"id_norma":1,
+					"id_cuerpo_receptor":1,
+					"id_tipo_cuerpo":3,
+					"id_ejercicio":2015,
+					"id_status":2,
+					"id_usuario_captura":20,
+					"id_usuario_valida":1,
+					"id_usuario_actualiza":1,
+					"numero_oficio":432,
+					"folio":"CEA-432/2015",
+					"matriz":"Agua residual",
+					"cantidad_muestras":15,
+					"tipo_muestreo":"Compuesto",
+					"costo_total":35850,
+					"cuerpo_receptor":"Río Santiago",
+					"tipo_cuerpo":"C",
+					"status":"Validado",
+					"fecha":"2015-03-21",
+					"fecha_captura":"2015-03-21",
+					"ip_captura":"[::1]",
+					"host_captura":"localhost",
+					"fecha_valida":"2015-03-21",
+					"ip_valida":"[::1]",
+					"host_valida":"localhost",
+					"fecha_actualiza":"2015-03-21",
+					"ip_actualiza":"[::1]",
+					"host_actualiza":"localhost",
+					"fecha_acepta":"2015-03-21",
+					"fecha_rechaza":"",
+					"motivo_rechaza":"",
+					"activo":1
+				},
+				"supervisor_muestreo":
+				{
+					"id_empleado":3,
+					"id_nivel":3,
+					"id_area":2,
+					"area":"Metales Pesados",
+					"id_puesto":4,
+					"usr":"mgomar",
+					"pwd":"mgomar",
+					"puesto":"Supervisor (MP)",
+					"nombres":"Marín",
+					"apellido_paterno":"Gomar",
+					"apellido_materno":"Sosa",
+					"fecha_act":"2014-11-30",
+					"calidad":0,
+					"supervisa":1,
+					"analiza":1,
+					"muestrea":1,
+					"cert":1,
+					"activo":1
+				}
+			}
+		}
+	';
+	return json_decode($json);
+}
+
+function getSheets() {
+	$json = '
+		[
+			{
+				"id_hoja":1,
+				"id_estudio":1,
+				"id_cliente":1,
+				"id_solicitud":1,
+				"id_orden":1,
+				"id_plan":1,
+				"id_paquete_puntos":1,
+				"id_norma_muestreo":2,
+				"id_nubes":1,
+				"id_direccion_corriente":1,
+				"id_oleaje":1,
+				"id_status":1,
+				"fecha_muestreo":"2015-03-24T08:12-06:00",
+				"fecha_entrega":"2015-03-24T11:47-06:00",
+				"fecha_captura":"2015-03-23T08:25-06:00",
+				"ip_captura":"[::1]",
+				"host_captura":"localhost",
+				"fecha_valida":"2015-03-23T08:25-06:00",
+				"ip_valida":"[::1]",
+				"host_valida":"localhost",
+				"fecha_actualiza":"2015-03-23T08:25-06:00",
+				"ip_actualiza":"[::1]",
+				"host_actualiza":"localhost",
+				"fecha_rechaza":"",
+				"nubes_otro":"",
+				"comentarios":"",
+				"motivo_rechaza":"",
+				"activo":1,
+				"plan":
+				{
+					"id_plan":1,
+					"id_estudio":1,
+					"id_cliente":13,
+					"id_solicitud":1,
+					"id_orden":1,
+					"id_matriz":1,
+					"id_tipo_muestreo":2,
+					"id_norma":1,
+					"id_cuerpo_receptor":1,
+					"id_tipo_cuerpo":3,
+					"id_paquete_puntos":1,
+					"id_supervisor_muestreo":3,
+					"id_objetivo_plan":2,
+					"id_supervisor_entrega":13,
+					"id_ayudante_entrega":13,
+					"id_supervisor_recoleccion":13,
+					"id_ayudante_recoleccion":13,
+					"id_supervisor_registro":13,
+					"id_ayudante_registro":13,
+					"id_responsable_calibracion":13,
+					"id_responsable_recipientes":13,
+					"id_responsable_reactivos":13,
+					"id_responsable_material":13,
+					"id_responsable_hieleras":13,
+					"id_estado":14,
+					"id_municipio":14039,
+					"id_localidad":140390001,
+					"id_ejercicio":2015,
+					"id_status":1,
+					"numero_oficio":437,
+					"folio":"CEA-437/2014",
+					"fecha_probable":"2015-03-23T08:25-06:00",
+					"fecha_plan":"2015-03-23",
+					"fecha_calibracion":"2015-03-23T08:25-06:00",
+					"fecha_captura":"2015-03-23T08:25-06:00",
+					"ip_captura":"[::1]",
+					"host_captura":"localhost",
+					"fecha_valida":"2015-03-23T08:25-06:00",
+					"ip_valida":"[::1]",
+					"host_valida":"localhost",
+					"fecha_actualiza":"2015-03-23T08:25-06:00",
+					"ip_actualiza":"[::1]",
+					"host_actualiza":"localhost",
+					"objetivo_otro":"esto es una prueba",
+					"calle":"Av. Brasilia",
+					"numero":"2970",
+					"colonia":"Col. Colomos Providencia",
+					"frecuencia_muestreo":2,
+					"matriz":"Agua residual",
+					"municipio":"Guadalajara",
+					"localidad":"Guadalajara",
+					"asistente_muestreo":"",
+					"asistente_recoleccion":"",
+					"asistente_registro":"",
+					"tipo_muestreo":"Compuesto",
+					"fecha_rechaza":"",
+					"motivo_rechaza":"",
+					"activo":1,
+					"cliente":
+					{
+						"id_cliente":13,
+						"id_organismo":6,
+						"cliente":"Ayuntamiento de Cotija, Michoacan",
+						"area":"",
+						"rfc":"Registro Federal de Contribuyentes",
+						"calle":"Pino Suárez Pte.",
+						"numero":"100",
+						"colonia":"Col. Centro",
+						"cp":"59940",
+						"id_estado":16,
+						"estado":"Michoacán de Ocampo",
+						"id_municipio":16019,
+						"municipio":"Cotija",
+						"id_localidad":160190001,
+						"localidad":"Cotija de La Paz",
+						"tel":"045-35-4100-1836",
+						"fax":"",
+						"contacto":"Arq. Juan Jesús Zarate Barajas",
+						"puesto_contacto":"puesto contacto",
+						"email":"ooapascotija@hotmail.com",
+						"fecha_act":"23/11/2014",
+						"interno":0,
+						"cea":0,
+						"tasa":1,
+						"activo":1
+					},
+					"solicitud":
+					{
+						"id_solicitud":1,
+						"id_estudio":1,
+						"id_cliente":13,
+						"id_matriz":1,
+						"id_tipo_muestreo":2,
+						"id_norma":1,
+						"id_cuerpo_receptor":1,
+						"id_tipo_cuerpo":3,
+						"id_ejercicio":2015,
+						"id_status":2,
+						"id_usuario_captura":20,
+						"id_usuario_valida":1,
+						"id_usuario_actualiza":1,
+						"numero_oficio":432,
+						"folio":"CEA-432/2015",
+						"matriz":"Agua residual",
+						"cantidad_muestras":15,
+						"tipo_muestreo":"Compuesto",
+						"costo_total":35850,
+						"cuerpo_receptor":"Río Santiago",
+						"tipo_cuerpo":"C",
+						"status":"Validado",
+						"fecha":"2015-03-21",
+						"fecha_captura":"2015-03-21",
+						"ip_captura":"[::1]",
+						"host_captura":"localhost",
+						"fecha_valida":"2015-03-21",
+						"ip_valida":"[::1]",
+						"host_valida":"localhost",
+						"fecha_actualiza":"2015-03-21",
+						"ip_actualiza":"[::1]",
+						"host_actualiza":"localhost",
+						"fecha_acepta":"2015-03-21",
+						"fecha_rechaza":"",
+						"motivo_rechaza":"",
+						"activo":1
+					},
+					"supervisor_muestreo":
+					{
+						"id_empleado":3,
+						"id_nivel":3,
+						"id_area":2,
+						"area":"Metales Pesados",
+						"id_puesto":4,
+						"usr":"mgomar",
+						"pwd":"mgomar",
+						"puesto":"Supervisor (MP)",
+						"nombres":"Marín",
+						"apellido_paterno":"Gomar",
+						"apellido_materno":"Sosa",
+						"fecha_act":"2014-11-30",
+						"calidad":0,
+						"supervisa":1,
+						"analiza":1,
+						"muestrea":1,
+						"cert":1,
+						"activo":1
+					}
+				}
+			}
+		]
+	';
+	return json_decode($json);
+}
+
+function insertSheet($sheetData) {
+	return $sheetData;
+}
+
+function updateSheet($updateData) {
+	return $updateData;
+}
+
+function getReception($receptionId) {
+	$json = '
+			{
+				"id_recepcion":1,
+				"id_hoja":1,
+				"id_recepcionista":13,
+				"id_verificador":13,
+				"id_muestra_validacion":1,
+				"id_status":1,
+				"fecha_recibe":"2015-03-24T13:05-06:00",
+				"fecha_verifica":"2015-03-23T13:06-06:00",
+				"fecha_captura":"2015-03-23T14:25-06:00",
+				"ip_captura":"[::1]",
+				"host_captura":"localhost",
+				"fecha_valida":"2015-03-23T14:25-06:00",
+				"ip_valida":"[::1]",
+				"host_valida":"localhost",
+				"fecha_actualiza":"2015-03-23T14:25-06:00",
+				"ip_actualiza":"[::1]",
+				"host_actualiza":"localhost",
+				"fecha_rechaza":"",
+				"comentarios":"Sin observaciones",
+				"motivo_rechaza":"",
+				"activo":1,
+				"plan":
+				{
+					"id_plan":1,
+					"folio":"CEA-437/2014",
+					"fecha_plan":"2015-03-23T09:12-06:00"
+				},
+				"hoja":
+				{
+					"id_hoja":1,
+					"fecha_muestreo":"2015-03-24T08:12-06:00",
+					"fecha_recibe":"2015-03-24T13:05-06:00"
+				},
+				"muestras":
+				[
+					{
+						"id_muestra_validacion":1,
+						"id_muestra":1,
+						"id_estudio":1,
+						"id_cliente":1,
+						"id_solicitud":1,
+						"id_orden":1,
+						"id_plan":1,
+						"id_hoja":1,
+						"id_recepcion":1,
+						"id_custodia":0,
+						"id_paquete_puntos":1,
+						"id_punto":1,
+						"id_status":1,
+						"id_ejercicio":2015,
+						"id_municipio":14063,
+						"id_localidad":140630001,
+						"folio":"0419/2015",
+						"punto":"Ocotlán",
+						"descripcion":"Ocotlán",
+						"lat":20.346928,
+						"lng":-102.779392,
+						"alt":0,
+						"municipio":"municipio 14063",
+						"localidad":"localidad 140630001",
+						"fecha_muestreo":"2015-03-23T09:00-06:00",
+						"selected":true,
+						"comentarios_muestreo":""
+					},
+					{
+						"id_muestra_validacion":2,
+						"id_muestra":2,
+						"id_estudio":1,
+						"id_cliente":1,
+						"id_solicitud":1,
+						"id_orden":1,
+						"id_plan":1,
+						"id_hoja":1,
+						"id_recepcion":1,
+						"id_recepcion":0,
+						"id_custodia":0,
+						"id_paquete_puntos":1,
+						"id_punto":2,
+						"id_status":1,
+						"id_ejercicio":2015,
+						"id_municipio":14030,
+						"id_localidad":140300038,
+						"folio":"0420/2015",
+						"punto":"Presa Corona",
+						"descripcion":"Cortina Presa Corona - Poncitlán",
+						"lat":20.399667,
+						"lng":-103.090619,
+						"alt":0,
+						"municipio":"municipio 14030",
+						"localidad":"localidad 140300038",
+						"fecha_muestreo":"2015-03-23T10:40-06:00",
+						"selected":true,
+						"comentarios_muestreo":""
+					},
+					{
+						"id_muestra_validacion":3,
+						"id_muestra":3,
+						"id_estudio":1,
+						"id_cliente":1,
+						"id_solicitud":1,
+						"id_orden":1,
+						"id_plan":1,
+						"id_hoja":1,
+						"id_recepcion":1,
+						"id_recepcion":0,
+						"id_custodia":0,
+						"id_paquete_puntos":1,
+						"id_punto":3,
+						"id_status":1,
+						"id_ejercicio":2015,
+						"id_municipio":14051,
+						"id_localidad":140510013,
+						"folio":"0421/2015",
+						"punto":"Ex-hacienda Zap.",
+						"descripcion":"Ex-hacienda de Zapotlanejo",
+						"lat":20.442003,
+						"lng":-103.143814,
+						"alt":0,
+						"municipio":"municipio 14051",
+						"localidad":"localidad 140510013",
+						"fecha_muestreo":"2015-03-23T11:23-06:00",
+						"selected":true,
+						"comentarios_muestreo":""
+					},
+					{
+						"id_muestra_validacion":4,
+						"id_muestra":4,
+						"id_estudio":1,
+						"id_cliente":1,
+						"id_solicitud":1,
+						"id_orden":1,
+						"id_plan":1,
+						"id_hoja":1,
+						"id_recepcion":1,
+						"id_recepcion":0,
+						"id_custodia":0,
+						"id_paquete_puntos":1,
+						"id_punto":4,
+						"id_status":1,
+						"id_ejercicio":2015,
+						"id_municipio":14051,
+						"id_localidad":140510001,
+						"folio":"0422/2015",
+						"punto":"Salto-Juanacatlán",
+						"descripcion":"Compuerta - Puente El Salto-Juanacatlán",
+						"lat":20.512825,
+						"lng":-103.174558,
+						"alt":0,
+						"municipio":"municipio 14051",
+						"localidad":"localidad 140510001",
+						"fecha_muestreo":"2015-03-23T12:40-06:00",
+						"selected":true,
+						"comentarios_muestreo":""
+					},
+					{
+						"id_muestra_validacion":5,
+						"id_muestra":5,
+						"id_estudio":1,
+						"id_cliente":1,
+						"id_solicitud":1,
+						"id_orden":1,
+						"id_plan":1,
+						"id_hoja":1,
+						"id_recepcion":1,
+						"id_recepcion":0,
+						"id_custodia":0,
+						"id_paquete_puntos":1,
+						"id_punto":5,
+						"id_status":1,
+						"id_ejercicio":2015,
+						"id_municipio":14101,
+						"id_localidad":141010026,
+						"folio":"0423/2015",
+						"punto":"Puente Grande",
+						"descripcion":"Puente Grande",
+						"lat":20.571036,
+						"lng":-103.147283,
+						"alt":0,
+						"municipio":"municipio 14101",
+						"localidad":"localidad 141010026",
+						"fecha_muestreo":"2015-03-23T13:14-06:00",
+						"selected":true,
+						"comentarios_muestreo":""
+					},
+					{
+						"id_muestra_validacion":6,
+						"id_muestra":6,
+						"id_estudio":1,
+						"id_cliente":1,
+						"id_solicitud":1,
+						"id_orden":1,
+						"id_plan":1,
+						"id_hoja":1,
+						"id_recepcion":1,
+						"id_recepcion":0,
+						"id_custodia":0,
+						"id_paquete_puntos":1,
+						"id_punto":6,
+						"id_status":1,
+						"id_ejercicio":2015,
+						"id_municipio":14101,
+						"id_localidad":141010009,
+						"folio":"0424/2015",
+						"punto":"Matatlán",
+						"descripcion":"Vertedero Controlado Matatlán",
+						"lat":20.668289,
+						"lng":-103.187169,
+						"alt":0,
+						"municipio":"municipio 14101",
+						"localidad":"localidad 141010009",
+						"fecha_muestreo":"2015-03-23T13:51-06:00",
+						"selected":true,
+						"comentarios_muestreo":""
+					}
+				],
+				"validacion_preservaciones":
+				[
+					{
+						"id_validacion_preservacion":1,
+						"id_recepcion":1,
+						"id_preservacion":1,
+						"id_clase_parametro":1,
+						"clase_parametro":"Fisicoquímico",
+						"clase_param":"FQ",
+						"preservacion":"Hielo, 4°C",
+						"tipo_preservacion":"Fisicoquímico",
+						"descripcion":"Hielo, 4°C",
+						"preservado":true,
+						"selected":true,
+						"cantidad":0,
+						"activo":1
+					},
+					{
+						"id_validacion_preservacion":2,
+						"id_recepcion":1,
+						"id_preservacion":2,
+						"id_clase_parametro":2,
+						"clase_parametro":"Oxígeno disuelto",
+						"clase_param":"OD",
+						"preservacion":"2 ml MnSo4 + 2 ml Álcali Ioduro + 2 ml H2So4",
+						"tipo_preservacion":"Oxígeno disuelto",
+						"descripcion":"2 ml MnSo4 + 2 ml Álcali Ioduro + 2 ml H2So4",
+						"preservado":true,
+						"selected":true,
+						"cantidad":0,
+						"activo":1
+					},
+					{
+						"id_validacion_preservacion":3,
+						"id_recepcion":1,
+						"id_preservacion":3,
+						"id_clase_parametro":3,
+						"clase_parametro":"Sustancias activas al azul de metileno",
+						"clase_param":"SAAM",
+						"preservacion":"H2SO4, 4°C, pH<2",
+						"tipo_preservacion":"Sustancias activas al azul de metileno",
+						"descripcion":"H2SO4, 4°C, pH<2",
+						"preservado":true,
+						"selected":true,
+						"cantidad":0,
+						"activo":1
+					},
+					{
+						"id_validacion_preservacion":4,
+						"id_recepcion":1,
+						"id_preservacion":4,
+						"id_clase_parametro":4,
+						"clase_parametro":"Fenoles",
+						"clase_param":"FEN",
+						"preservacion":"5ml H2SO4 + CuSO4, 4°C, pH<2",
+						"tipo_preservacion":"Fenoles",
+						"descripcion":"5ml H2SO4 + CuSO4, 4°C, pH<2",
+						"preservado":true,
+						"selected":true,
+						"cantidad":0,
+						"activo":1
+					},
+					{
+						"id_validacion_preservacion":5,
+						"id_recepcion":1,
+						"id_preservacion":5,
+						"id_clase_parametro":5,
+						"clase_parametro":"Dureza",
+						"clase_param":"DZA",
+						"preservacion":"HNO3, pH<2",
+						"tipo_preservacion":"Dureza",
+						"descripcion":"HNO3, pH<2",
+						"preservado":false,
+						"selected":false,
+						"cantidad":0,
+						"activo":1
+					},
+					{
+						"id_validacion_preservacion":6,
+						"id_recepcion":1,
+						"id_preservacion":6,
+						"id_clase_parametro":6,
+						"clase_parametro":"Sulfuros",
+						"clase_param":"Sulfuros",
+						"preservacion":"6.5 ml de Acetato de Zn 2N, NaOH 6N pH≥9, 4°C",
+						"tipo_preservacion":"Sulfuros",
+						"descripcion":"6.5 ml de Acetato de Zn 2N, NaOH 6N pH≥9, 4°C",
+						"preservado":false,
+						"selected":false,
+						"cantidad":0,
+						"activo":1
+					},
+					{
+						"id_validacion_preservacion":8,
+						"id_recepcion":1,
+						"id_preservacion":8,
+						"id_clase_parametro":8,
+						"clase_parametro":"Grasas y aceites",
+						"clase_param":"GyA",
+						"preservacion":"HCL 1:1, 4°C, pH<2",
+						"tipo_preservacion":"Grasas y aceites",
+						"descripcion":"HCL1:1, 4°C, pH<2",
+						"preservado":false,
+						"selected":false,
+						"cantidad":0,
+						"activo":1
+					}
+				],
+				"validacion_contenedores":
+				[
+					{
+						"id_validacion_contenedor":1,
+						"id_recepcion":1,
+						"id_muestra":5,
+						"id_area":1,
+						"area":"Fisicoquímicos",
+						"volumen":true,
+						"vigencia":true,
+						"contenedor":true,
+						"selected":true
+					},
+					{
+						"id_validacion_contenedor":2,
+						"id_recepcion":1,
+						"id_muestra":5,
+						"id_area":2,
+						"area":"Metales Pesados",
+						"volumen":true,
+						"vigencia":true,
+						"contenedor":true,
+						"selected":true
+					},
+					{
+						"id_validacion_contenedor":3,
+						"id_recepcion":1,
+						"id_muestra":5,
+						"id_area":3,
+						"area":"Microbiología",
+						"volumen":true,
+						"vigencia":true,
+						"contenedor":true,
+						"selected":true
+					}
+				]
+			}
+	';
+	return json_decode($json);
+}
+
+function getReceptions() {
+	$json = '
+		[
+			{
+				"id_recepcion":1,
+				"id_hoja":1,
+				"id_recepcionista":13,
+				"id_verificador":13,
+				"id_muestra_validacion":1,
+				"id_status":1,
+				"fecha_recibe":"2015-03-24T13:05-06:00",
+				"fecha_verifica":"2015-03-23T13:06-06:00",
+				"fecha_captura":"2015-03-23T14:25-06:00",
+				"ip_captura":"[::1]",
+				"host_captura":"localhost",
+				"fecha_valida":"2015-03-23T14:25-06:00",
+				"ip_valida":"[::1]",
+				"host_valida":"localhost",
+				"fecha_actualiza":"2015-03-23T14:25-06:00",
+				"ip_actualiza":"[::1]",
+				"host_actualiza":"localhost",
+				"fecha_rechaza":"",
+				"comentarios":"Sin observaciones",
+				"motivo_rechaza":"",
+				"activo":1,
+				"plan":
+				{
+					"id_plan":1,
+					"folio":"CEA-437/2014",
+					"fecha_plan":"2015-03-23T09:12-06:00"
+				},
+				"hoja":
+				{
+					"id_hoja":1,
+					"fecha_muestreo":"2015-03-24T08:12-06:00",
+					"fecha_recibe":"2015-03-24T13:05-06:00"
+				},
+				"muestras":
+				[
+					{
+						"id_muestra_validacion":1,
+						"id_muestra":1,
+						"id_estudio":1,
+						"id_cliente":1,
+						"id_solicitud":1,
+						"id_orden":1,
+						"id_plan":1,
+						"id_hoja":1,
+						"id_recepcion":1,
+						"id_custodia":0,
+						"id_paquete_puntos":1,
+						"id_punto":1,
+						"id_status":1,
+						"id_ejercicio":2015,
+						"id_municipio":14063,
+						"id_localidad":140630001,
+						"folio":"0419/2015",
+						"punto":"Ocotlán",
+						"descripcion":"Ocotlán",
+						"lat":20.346928,
+						"lng":-102.779392,
+						"alt":0,
+						"municipio":"municipio 14063",
+						"localidad":"localidad 140630001",
+						"fecha_muestreo":"2015-03-23T09:00-06:00",
+						"selected":true,
+						"comentarios_muestreo":""
+					},
+					{
+						"id_muestra_validacion":2,
+						"id_muestra":2,
+						"id_estudio":1,
+						"id_cliente":1,
+						"id_solicitud":1,
+						"id_orden":1,
+						"id_plan":1,
+						"id_hoja":1,
+						"id_recepcion":1,
+						"id_recepcion":0,
+						"id_custodia":0,
+						"id_paquete_puntos":1,
+						"id_punto":2,
+						"id_status":1,
+						"id_ejercicio":2015,
+						"id_municipio":14030,
+						"id_localidad":140300038,
+						"folio":"0420/2015",
+						"punto":"Presa Corona",
+						"descripcion":"Cortina Presa Corona - Poncitlán",
+						"lat":20.399667,
+						"lng":-103.090619,
+						"alt":0,
+						"municipio":"municipio 14030",
+						"localidad":"localidad 140300038",
+						"fecha_muestreo":"2015-03-23T10:40-06:00",
+						"selected":true,
+						"comentarios_muestreo":""
+					},
+					{
+						"id_muestra_validacion":3,
+						"id_muestra":3,
+						"id_estudio":1,
+						"id_cliente":1,
+						"id_solicitud":1,
+						"id_orden":1,
+						"id_plan":1,
+						"id_hoja":1,
+						"id_recepcion":1,
+						"id_recepcion":0,
+						"id_custodia":0,
+						"id_paquete_puntos":1,
+						"id_punto":3,
+						"id_status":1,
+						"id_ejercicio":2015,
+						"id_municipio":14051,
+						"id_localidad":140510013,
+						"folio":"0421/2015",
+						"punto":"Ex-hacienda Zap.",
+						"descripcion":"Ex-hacienda de Zapotlanejo",
+						"lat":20.442003,
+						"lng":-103.143814,
+						"alt":0,
+						"municipio":"municipio 14051",
+						"localidad":"localidad 140510013",
+						"fecha_muestreo":"2015-03-23T11:23-06:00",
+						"selected":true,
+						"comentarios_muestreo":""
+					},
+					{
+						"id_muestra_validacion":4,
+						"id_muestra":4,
+						"id_estudio":1,
+						"id_cliente":1,
+						"id_solicitud":1,
+						"id_orden":1,
+						"id_plan":1,
+						"id_hoja":1,
+						"id_recepcion":1,
+						"id_recepcion":0,
+						"id_custodia":0,
+						"id_paquete_puntos":1,
+						"id_punto":4,
+						"id_status":1,
+						"id_ejercicio":2015,
+						"id_municipio":14051,
+						"id_localidad":140510001,
+						"folio":"0422/2015",
+						"punto":"Salto-Juanacatlán",
+						"descripcion":"Compuerta - Puente El Salto-Juanacatlán",
+						"lat":20.512825,
+						"lng":-103.174558,
+						"alt":0,
+						"municipio":"municipio 14051",
+						"localidad":"localidad 140510001",
+						"fecha_muestreo":"2015-03-23T12:40-06:00",
+						"selected":true,
+						"comentarios_muestreo":""
+					},
+					{
+						"id_muestra_validacion":5,
+						"id_muestra":5,
+						"id_estudio":1,
+						"id_cliente":1,
+						"id_solicitud":1,
+						"id_orden":1,
+						"id_plan":1,
+						"id_hoja":1,
+						"id_recepcion":1,
+						"id_recepcion":0,
+						"id_custodia":0,
+						"id_paquete_puntos":1,
+						"id_punto":5,
+						"id_status":1,
+						"id_ejercicio":2015,
+						"id_municipio":14101,
+						"id_localidad":141010026,
+						"folio":"0423/2015",
+						"punto":"Puente Grande",
+						"descripcion":"Puente Grande",
+						"lat":20.571036,
+						"lng":-103.147283,
+						"alt":0,
+						"municipio":"municipio 14101",
+						"localidad":"localidad 141010026",
+						"fecha_muestreo":"2015-03-23T13:14-06:00",
+						"selected":true,
+						"comentarios_muestreo":""
+					},
+					{
+						"id_muestra_validacion":6,
+						"id_muestra":6,
+						"id_estudio":1,
+						"id_cliente":1,
+						"id_solicitud":1,
+						"id_orden":1,
+						"id_plan":1,
+						"id_hoja":1,
+						"id_recepcion":1,
+						"id_recepcion":0,
+						"id_custodia":0,
+						"id_paquete_puntos":1,
+						"id_punto":6,
+						"id_status":1,
+						"id_ejercicio":2015,
+						"id_municipio":14101,
+						"id_localidad":141010009,
+						"folio":"0424/2015",
+						"punto":"Matatlán",
+						"descripcion":"Vertedero Controlado Matatlán",
+						"lat":20.668289,
+						"lng":-103.187169,
+						"alt":0,
+						"municipio":"municipio 14101",
+						"localidad":"localidad 141010009",
+						"fecha_muestreo":"2015-03-23T13:51-06:00",
+						"selected":true,
+						"comentarios_muestreo":""
+					}
+				],
+				"validacion_preservaciones":
+				[
+					{
+						"id_validacion_preservacion":1,
+						"id_recepcion":1,
+						"id_preservacion":1,
+						"id_clase_parametro":1,
+						"clase_parametro":"Fisicoquímico",
+						"clase_param":"FQ",
+						"preservacion":"Hielo, 4°C",
+						"tipo_preservacion":"Fisicoquímico",
+						"descripcion":"Hielo, 4°C",
+						"preservado":true,
+						"selected":true,
+						"cantidad":0,
+						"activo":1
+					},
+					{
+						"id_validacion_preservacion":2,
+						"id_recepcion":1,
+						"id_preservacion":2,
+						"id_clase_parametro":2,
+						"clase_parametro":"Oxígeno disuelto",
+						"clase_param":"OD",
+						"preservacion":"2 ml MnSo4 + 2 ml Álcali Ioduro + 2 ml H2So4",
+						"tipo_preservacion":"Oxígeno disuelto",
+						"descripcion":"2 ml MnSo4 + 2 ml Álcali Ioduro + 2 ml H2So4",
+						"preservado":true,
+						"selected":true,
+						"cantidad":0,
+						"activo":1
+					},
+					{
+						"id_validacion_preservacion":3,
+						"id_recepcion":1,
+						"id_preservacion":3,
+						"id_clase_parametro":3,
+						"clase_parametro":"Sustancias activas al azul de metileno",
+						"clase_param":"SAAM",
+						"preservacion":"H2SO4, 4°C, pH<2",
+						"tipo_preservacion":"Sustancias activas al azul de metileno",
+						"descripcion":"H2SO4, 4°C, pH<2",
+						"preservado":true,
+						"selected":true,
+						"cantidad":0,
+						"activo":1
+					},
+					{
+						"id_validacion_preservacion":4,
+						"id_recepcion":1,
+						"id_preservacion":4,
+						"id_clase_parametro":4,
+						"clase_parametro":"Fenoles",
+						"clase_param":"FEN",
+						"preservacion":"5ml H2SO4 + CuSO4, 4°C, pH<2",
+						"tipo_preservacion":"Fenoles",
+						"descripcion":"5ml H2SO4 + CuSO4, 4°C, pH<2",
+						"preservado":true,
+						"selected":true,
+						"cantidad":0,
+						"activo":1
+					},
+					{
+						"id_validacion_preservacion":5,
+						"id_recepcion":1,
+						"id_preservacion":5,
+						"id_clase_parametro":5,
+						"clase_parametro":"Dureza",
+						"clase_param":"DZA",
+						"preservacion":"HNO3, pH<2",
+						"tipo_preservacion":"Dureza",
+						"descripcion":"HNO3, pH<2",
+						"preservado":false,
+						"selected":false,
+						"cantidad":0,
+						"activo":1
+					},
+					{
+						"id_validacion_preservacion":6,
+						"id_recepcion":1,
+						"id_preservacion":6,
+						"id_clase_parametro":6,
+						"clase_parametro":"Sulfuros",
+						"clase_param":"Sulfuros",
+						"preservacion":"6.5 ml de Acetato de Zn 2N, NaOH 6N pH≥9, 4°C",
+						"tipo_preservacion":"Sulfuros",
+						"descripcion":"6.5 ml de Acetato de Zn 2N, NaOH 6N pH≥9, 4°C",
+						"preservado":false,
+						"selected":false,
+						"cantidad":0,
+						"activo":1
+					},
+					{
+						"id_validacion_preservacion":8,
+						"id_recepcion":1,
+						"id_preservacion":8,
+						"id_clase_parametro":8,
+						"clase_parametro":"Grasas y aceites",
+						"clase_param":"GyA",
+						"preservacion":"HCL 1:1, 4°C, pH<2",
+						"tipo_preservacion":"Grasas y aceites",
+						"descripcion":"HCL1:1, 4°C, pH<2",
+						"preservado":false,
+						"selected":false,
+						"cantidad":0,
+						"activo":1
+					}
+				],
+				"validacion_contenedores":
+				[
+					{
+						"id_validacion_contenedor":1,
+						"id_recepcion":1,
+						"id_muestra":5,
+						"id_area":1,
+						"area":"Fisicoquímicos",
+						"volumen":true,
+						"vigencia":true,
+						"contenedor":true,
+						"selected":true
+					},
+					{
+						"id_validacion_contenedor":2,
+						"id_recepcion":1,
+						"id_muestra":5,
+						"id_area":2,
+						"area":"Metales Pesados",
+						"volumen":true,
+						"vigencia":true,
+						"contenedor":true,
+						"selected":true
+					},
+					{
+						"id_validacion_contenedor":3,
+						"id_recepcion":1,
+						"id_muestra":5,
+						"id_area":3,
+						"area":"Microbiología",
+						"volumen":true,
+						"vigencia":true,
+						"contenedor":true,
+						"selected":true
+					}
+				]
+			}
+		]
+	';
+	return json_decode($json);
+}
+
+
+function getCustody($custodyId) {
+	$json = '
+		{}
+	';
+	return json_decode($json);
+}
+
+function getCustodies() {
+	$json = '
+		[
+			{}
+		]
+	';
+	return json_decode($json);
+}
+
 function getPoints() {
 	$sql = "SELECT id_punto, id_cuerpo_receptor, id_tipo_punto,
 		id_estado, id_municipio, id_localidad, id_usuario_captura,
@@ -962,14 +2095,43 @@ function getReceptionists() {
 		apellido_paterno, apellido_materno,
 		fecha_captura, fecha_actualiza, ip_captura, ip_actualiza,
 		host_captura, host_actualiza, activo
-FROM Usuario
-WHERE (activo = 1) AND (recibe = 1)";
+		FROM Usuario
+		WHERE activo = 1 AND recibe = 1";
 	$db = getConnection();
 	$stmt = $db->prepare($sql);
 	$stmt->execute();
-	$parameters = $stmt->fetchAll(PDO::FETCH_ASSOC);
+	$receptionists = $stmt->fetchAll(PDO::FETCH_ASSOC);
 	$db = null;
-	return $parameters;
+	return $receptionists;
+}
+
+function getSamples() {
+	$sql = "SELECT id_muestra, id_estudio, id_cliente, id_orden,
+		id_plan, id_hoja, id_recepcion, id_custodia, id_paquete,
+		id_ubicacion, id_punto, fecha_muestreo, comentarios, activo
+		FROM Muestra
+		WHERE activo = 1";
+	$db = getConnection();
+	$stmt = $db->prepare($sql);
+	$stmt->execute();
+	$samples = $stmt->fetchAll(PDO::FETCH_ASSOC);
+	$db = null;
+	return $samples;
+}
+
+function getInstruments() {
+	$sql = "SELECT id_instrumento, id_usuario_captura,
+		id_usuario_actualiza, instrumento, descripcion, muestreo,
+		laboratorio, inventario, fecha_captura, fecha_actualiza,
+		ip_captura, ip_actualiza, host_captura, host_actualiza,
+		comentarios, activo
+		FROM Instrumento";
+	$db = getConnection();
+	$stmt = $db->prepare($sql);
+	$stmt->execute();
+	$instruments = $stmt->fetchAll(PDO::FETCH_ASSOC);
+	$db = null;
+	return $instruments;
 }
 
 
@@ -1083,6 +2245,40 @@ function getContainers() {
 	return $containers;
 }
 
+function getAnalysis() {
+	$json = '[]';
+	return json_decode($json);
+}
+
+function getAnalysisSelections() {
+	$json = '[]';
+	return json_decode($json);
+}
+
+function getReports() {
+	$json = '[]';
+	return json_decode($json);
+}
+
+function getReferences() {
+	$json = '[]';
+	return json_decode($json);
+}
+
+function getPrices() {
+	$sql = "SELECT DISTINCT precio, activo
+		FROM Parametro
+		ORDER BY precio";
+	$db = getConnection();
+	$stmt = $db->prepare($sql);
+	$stmt->execute();
+	$prices = $stmt->fetchAll(PDO::FETCH_ASSOC);
+	$db = null;
+	return $prices;
+}
+
+
+
 function getReactivesByPlan() {
 	$sql = "SELECT id_plan_reactivo, id_plan, id_reactivo, valor,
 		lote, folio, activo
@@ -1096,12 +2292,12 @@ function getReactivesByPlan() {
 	return $reactives;
 }
 
-function getSamplingEmployees() {
+function getEmployees() {
 	$sql = "SELECT id_usuario, id_nivel, id_rol, id_area, id_puesto,
 		interno, cea, laboratorio, supervisa, analiza, muestrea, nombres,
 		apellido_paterno, apellido_materno, activo
 		FROM Usuario
-		WHERE activo = 1 AND id_area = 4";
+		WHERE activo = 1 AND laboratorio = 1";
 	$db = getConnection();
 	$stmt = $db->prepare($sql);
 	$stmt->execute();
@@ -1125,7 +2321,6 @@ function getSamplingEmployee($userId) {
 	return (object) $samplingEmployee;
 }
 
-
 function getPointKinds() {
 	$sql = "SELECT id_tipo_punto, tipo_punto, activo
 		FROM TipoPunto
@@ -1136,6 +2331,109 @@ function getPointKinds() {
 	$pointKinds = $stmt->fetchAll(PDO::FETCH_ASSOC);
 	$db = null;
 	return $pointKinds;
+}
+
+function getDistricts() {
+	$json = '
+		[
+			{
+				"id_municipio":14001,
+				"municipio":"Acatic"
+			},
+			{
+				"id_municipio":14030,
+				"municipio":"Chapala"
+			},
+			{
+				"id_municipio":14039,
+				"municipio":"Guadalajara"
+			},
+			{
+				"id_municipio":14120,
+				"municipio":"Zapopan"
+			},
+			{
+				"id_municipio":14123,
+				"municipio":"Zapotlan El Grande"
+			},
+			{
+				"id_municipio":14124,
+				"municipio":"Zapotlanejo"
+			}
+		]
+	';
+	return json_decode($json);
+}
+
+function getDistrict() {
+	if ($districtId == 14001)
+	{
+		$json = '
+			{
+				"id_municipio":14001,
+				"municipio":"Acatic"
+			}
+		';
+	}
+	else if ($districtId == 14030)
+	{
+		$json = '
+			{
+				"id_municipio":14030,
+				"municipio":"Chapala"
+			}
+		';
+	}
+	else if ($districtId == 14039)
+	{
+		$json = '
+			{
+				"id_municipio":14039,
+				"municipio":"Guadalajara"
+			}
+		';
+	}
+	else if ($districtId == 14120)
+	{
+		$json = '
+			{
+				"id_municipio":14120,
+				"municipio":"Zapopan"
+			}
+		';
+	}
+	else if ($districtId == 14123)
+	{
+		$json = '
+			{
+				"id_municipio":14123,
+				"municipio":"Zapotlan El Grande"
+			}
+		';
+	}
+	else
+	{
+		$json = '
+			{
+				"id_municipio":14124,
+				"municipio":"Zapotlanejo"
+			}
+		';
+	}
+	return json_decode($json);
+}
+
+function getCitiesByDistrictId($districtId) {
+	$json = '
+		[
+			{
+				"id_municipio":' . $districtId . ',
+				"id_localidad":' . $districtId . '0001,
+				"localidad": "Localidad municipio ' . $districtId . '"
+			}
+		]
+	';
+	return json_decode($json);
 }
 
 function getPreservations() {

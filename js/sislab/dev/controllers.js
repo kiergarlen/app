@@ -1984,15 +1984,15 @@
       ]
     );
 
-  //AnalysiListController.js
+  //AnalysisListController.js
   /**
-   * @name AnalysiListController
+   * @name AnalysisListController
    * @constructor
    * @desc Controla la vista para la búsqueda de Análisis
    * @this {Object} $scope - Contenedor para el modelo [AngularJS]
    * @param {Object} AnalysisService - Proveedor de datos, Análisis
    */
-  function AnalysiListController(AnalysisService) {
+  function AnalysisListController(AnalysisService) {
     var vm = this;
     vm.analysisList = AnalysisService.get();
 
@@ -2004,10 +2004,10 @@
   }
   angular
     .module('sislabApp')
-    .controller('AnalysiListController',
+    .controller('AnalysisListController',
       [
         'AnalysisService',
-        AnalysiListController
+        AnalysisListController
       ]
     );
 

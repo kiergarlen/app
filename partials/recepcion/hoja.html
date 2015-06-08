@@ -121,7 +121,7 @@
         >
         <option data-ng-repeat="samplingNorm in sheet.samplingNorms"
           value="{{samplingNorm.id_norma}}">
-          {{samplingNorm.norma}}
+          {{::samplingNorm.norma}}
         </option>
       </select>
     </div>
@@ -321,7 +321,7 @@
         >
         <option data-ng-repeat="cloudCover in sheet.cloudCovers"
           value="{{cloudCover.id_nubes}}">
-          {{cloudCover.nubes}}
+          {{::cloudCover.nubes}}
         </option>
       </select>
     </div>
@@ -337,7 +337,7 @@
         >
         <option data-ng-repeat="windDirection in sheet.windDirections"
           value="{{windDirection.id_direccion_corriente}}">
-          {{windDirection.direccion_corriente}}
+          {{::windDirection.direccion_corriente}}
         </option>
       </select>
     </div>
@@ -353,7 +353,7 @@
         >
         <option data-ng-repeat="waveIntensity in sheet.waveIntensities"
           value="{{waveIntensity.id_oleaje}}">
-          {{waveIntensity.oleaje}}
+          {{::waveIntensity.oleaje}}
         </option>
       </select>
     </div>

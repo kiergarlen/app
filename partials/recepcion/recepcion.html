@@ -196,9 +196,9 @@
         <option
           data-ng-repeat="receptionist in reception.receptionists"
           value="{{receptionist.id_empleado}}">
-          {{receptionist.nombres}}
-          {{receptionist.ap}}
-          {{receptionist.am}}
+          {{::receptionist.nombres}}
+          {{::receptionist.ap}}
+          {{::receptionist.am}}
         </option>
       </select>
     </div>
@@ -217,13 +217,13 @@
           <label>
             <input type="checkbox"
               data-ng-model="sample.selected"
-              name="{{sample.id_muestra}}"
-              title="{{sample.punto}}"
+              name="{{::sample.id_muestra}}"
+              title="{{::sample.punto}}"
               />
-              {{sample.folio}}
+              {{::sample.folio}}
           </label>
           <br>
-          ({{sample.punto}})
+          ({{::sample.punto}})
         </div>
       </div>
     </div>
@@ -246,7 +246,7 @@
         <option
           data-ng-repeat="sample in reception.reception.muestras"
           value="{{sample.id_muestra_validacion}}">
-          {{sample.descripcion}}
+          {{::sample.descripcion}}
         </option>
       </select>
     </div>
@@ -290,7 +290,7 @@
   <div class="row"
     data-ng-repeat="container in reception.reception.validacion_contenedores">
     <div class="col-xs-12 col-sm-3">
-      {{container.area}}
+      {{::container.area}}
     </div>
     <div class="col-xs-12 col-sm-3">
       <label>

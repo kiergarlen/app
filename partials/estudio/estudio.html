@@ -84,8 +84,8 @@
         >
         <option data-ng-repeat="client in study.clients"
           value="{{client.id_cliente}}">
-          {{client.cliente}}
-          {{client.area.length > 0 &&
+          {{::client.cliente}}
+          {{::client.area.length > 0 &&
           ' - ' + client.area ||
           ''}}
         </option>
@@ -239,7 +239,7 @@
         >
         <option data-ng-repeat="orderSource in study.orderSources"
           value="{{orderSource.id_origen_orden}}">
-          {{orderSource.origen_orden}}
+          {{::orderSource.origen_orden}}
         </option>
       </select>
     </div>

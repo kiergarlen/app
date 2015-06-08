@@ -825,6 +825,24 @@ function updatePlan($updateData) {
 	return $updateData["id_plan"];
 }
 
+function getSamplingEmployees() {
+	$sql = "SELECT id_usuario, id_nivel, id_rol, id_area, id_puesto,
+		interno, cea, laboratorio, supervisa, analiza, muestrea,
+		nombres, apellido_paterno, apellido_materno,
+		CONVERT(nvarchar, fecha_captura, 127) AS fecha_captura,
+		CONVERT(nvarchar, fecha_actualiza, 127) AS fecha_actualiza,
+		ip_captura, ip_actualiza,
+		host_captura, host_actualiza, activo
+		FROM Usuario
+		WHERE activo = 1 AND id_area = 4";
+	$db = getConnection();
+	$stmt = $db->prepare($sql);
+	$stmt->execute();
+	$result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+	$db = null;
+	return $result;
+}
+
 function getSheet() {
 	$json = '
 		{

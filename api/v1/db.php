@@ -340,28 +340,69 @@ function getLastStudyByYear($yearId) {
 }
 
 function insertStudy($insertData) {
+	// $sql = "INSERT INTO Estudio (id_cliente, id_origen_orden, id_ubicacion,
+	// 	id_ejercicio, id_status, id_etapa, id_usuario_captura,
+	// 	id_usuario_valida, id_usuario_entrega,
+	// 	id_usuario_actualiza, oficio, folio, origen_descripcion,
+	// 	ubicacion, fecha, fecha_entrega, fecha_captura,
+	// 	fecha_valida, fecha_actualiza, fecha_rechaza, ip_captura,
+	// 	ip_valida, ip_actualiza, host_captura, host_valida,
+	// 	host_actualiza, motivo_rechaza, activo)
+	// 	VALUES (:id_cliente, :id_origen_orden, :id_ubicacion,
+	// 	:id_ejercicio, :id_status, :id_etapa, :id_usuario_captura,
+	// 	:id_usuario_valida, :id_usuario_entrega,
+	// 	:id_usuario_actualiza, :oficio, :folio, :origen_descripcion,
+	// 	:ubicacion, :fecha, :fecha_entrega, :fecha_captura,
+	// 	:fecha_valida, :fecha_rechaza, :ip_captura, :ip_valida,
+	// 	:ip_actualiza, :host_captura, :host_valida, :host_actualiza,
+	// 	:motivo_rechaza, :activo)";
+	// $db = getConnection();
+	// $stmt = $db->prepare($sql);
+	// $stmt->execute($insertData);
+	// $studyId = $db->lastInsertId();
+	// $db = null;
+	// return $studyId;
+
 	$sql = "INSERT INTO Estudio (id_cliente, id_origen_orden, id_ubicacion,
 		id_ejercicio, id_status, id_etapa, id_usuario_captura,
 		id_usuario_valida, id_usuario_entrega,
 		id_usuario_actualiza, oficio, folio, origen_descripcion,
 		ubicacion, fecha, fecha_entrega, fecha_captura,
-		fecha_valida, fecha_rechaza, ip_captura, ip_valida,
-		ip_actualiza, host_captura, host_valida, host_actualiza,
-		motivo_rechaza, activo)
-		VALUES (:id_cliente, :id_origen_orden, :id_ubicacion,
-		:id_ejercicio, :id_status, :id_etapa, :id_usuario_captura,
-		:id_usuario_valida, :id_usuario_entrega,
-		:id_usuario_actualiza, :oficio, :folio, :origen_descripcion,
-		:ubicacion, :fecha, :fecha_entrega, :fecha_captura,
-		:fecha_valida, :fecha_rechaza, :ip_captura, :ip_valida,
-		:ip_actualiza, :host_captura, :host_valida, :host_actualiza,
-		:motivo_rechaza, :activo)";
-	$db = getConnection();
-	$stmt = $db->prepare($sql);
-	$stmt->execute($insertData);
-	$studyId = $db->lastInsertId();
-	$db = null;
-	return $studyId;
+		fecha_valida, fecha_actualiza, fecha_rechaza, ip_captura,
+		ip_valida, ip_actualiza, host_captura, host_valida,
+		host_actualiza, motivo_rechaza, activo)";
+		// VALUES (
+		// 	" . $insertData['id_cliente'] . ",
+		// 	" . $insertData['id_origen_orden'] . ",
+		// 	" . $insertData['id_ubicacion'] . ",
+		// 	" . $insertData['id_ejercicio'] . ",
+		// 	" . $insertData['id_status'] . ",
+		// 	" . $insertData['id_etapa'] . ",
+		// 	" . $insertData['id_usuario_captura'] . ",
+		// 	" . $insertData['id_usuario_valida'] . ",
+		// 	" . $insertData['id_usuario_entrega'] . ",
+		// 	" . $insertData['id_usuario_actualiza'] . ",
+		// 	" . $insertData['oficio'] . ",
+		// 	" . $insertData['folio'] . ",
+		// 	" . $insertData['origen_descripcion'] . ",
+		// 	" . $insertData['ubicacion'] . ",
+		// 	" . $insertData['fecha'] . ",
+		// 	" . $insertData['fecha_entrega'] . ",
+		// 	" . $insertData['fecha_captura'] . ",
+		// 	" . $insertData['fecha_valida'] . ",
+		// 	" . $insertData['fecha_rechaza'] . ",
+		// 	" . $insertData['ip_captura'] . ",
+		// 	" . $insertData['ip_valida'] . ",
+		// 	" . $insertData['ip_actualiza'] . ",
+		// 	" . $insertData['host_captura'] . ",
+		// 	" . $insertData['host_valida'] . ",
+		// 	" . $insertData['host_actualiza'] . ",
+		// 	" . $insertData['motivo_rechaza'] . ",
+		// 	" . $insertData['activo'] . "
+		// )";
+
+	return $sql;
+
 }
 
 function updateStudy($updateData) {

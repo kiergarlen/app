@@ -184,8 +184,9 @@ function processStudyInsert($request) {
 	unset($insertData["cliente"]);
 	unset($insertData["ordenes"]);
 
-	if (is_numeric(getLastStudyByYear($currentYear)["oficio"])) {
-		$lastStudyNumber = getLastStudyByYear($currentYear)["oficio"];
+	$lastStudy = (array) getLastStudyByYear($currentYear);
+	if (is_numeric($lastStudy["oficio"])) {
+		$lastStudyNumber = $lastStudy["oficio"];
 	}
 
 	$lastStudyNumber = $lastStudyNumber + 1;

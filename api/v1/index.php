@@ -80,10 +80,13 @@ $app->get("/tasks", function() use ($app) {
 $app->get("/studies(/)(:studyId)", function($studyId = -1) use ($app) {
 	try {
 		$userId = decodeUserToken($app->request())->uid;
-		$result = json_encode(getBlankStudy($studyId));
 		if ($studyId > 0)
 		{
 			$result = json_encode(getStudy($studyId));
+		}
+		else if ($studyId == 0)
+		{
+			$result = json_encode(getBlankStudy());
 		}
 		else
 		{
@@ -106,10 +109,12 @@ $app->post("/studies", function() use ($app) {
 		$studyId = extractDataFromRequest($request)->id_estudio;
 		if ($studyId < 1)
 		{
-			// $studyInsertData = processStudyInsert($request);
-			// $studyId = insertStudy($studyInsertData["study"]);
-			// processStudyOrderInsert($studyInsertData, $studyId);
-			$result = '{"id_estudio":' . $studyId . '}';
+			$studyInsertData = processStudyInsert($request);
+			$result = json_encode($studyInsertData);
+			//$studyId = insertStudy($studyInsertData["study"]);
+			//$result = '{"query":"' + $studyId + '"}';
+			//processStudyOrderInsert($studyInsertData, $studyId);
+			//$result = '{"id_estudio":' . $studyId . '}';
 		}
 		else
 		{

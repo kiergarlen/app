@@ -133,8 +133,8 @@ $app->post("/studies", function() use ($app) {
 
 $app->get("/orders(/)(:orderId)", function($orderId = -1) use ($app) {
 	try {
-		$userId = decodeUserToken($app->request())->uid;
-		if ($orderId > 0)
+		//$userId = decodeUserToken($app->request())->uid;
+		if ($orderId > -1)
 		{
 			$result = json_encode(getOrder($orderId));
 		}
@@ -154,7 +154,7 @@ $app->get("/orders(/)(:orderId)", function($orderId = -1) use ($app) {
 
 $app->get("/orders/study/(:studyId)", function($studyId) use ($app) {
 	try {
-		//$userId = decodeUserToken($app->request())->uid;
+		$userId = decodeUserToken($app->request())->uid;
 		$result = json_encode(getOrdersByStudy($studyId));
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
@@ -610,7 +610,7 @@ $app->get("/districts(/)(:districtId)", function($districtId = -1) use ($app) {
 
 $app->get("/districts/cities/:districtId", function($districtId) use ($app) {
 	try {
-		//$userId = decodeUserToken($app->request())->uid;
+		$userId = decodeUserToken($app->request())->uid;
 		$result =json_encode(getCitiesByDistrictId($districtId));
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');

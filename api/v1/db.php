@@ -409,10 +409,13 @@ function getOrders() {
 	$db = null;
 	$i = 0;
 	$l = count($orders);
-	for ($i = 0; $i < $l; $i++) {
-		$orders[$i]["cliente"] = getClient($orders[$i]['id_cliente']);
-		$orders[$i]["estudio"] = getPlainStudy($orders[$i]['id_estudio']);
-		$orders[$i]["planes"] = getPlansByOrder($orders[$i]['id_orden']);
+	if ($l > 0)
+	{
+		for ($i = 0; $i < $l; $i++) {
+			$orders[$i]["cliente"] = getClient($orders[$i]['id_cliente']);
+			$orders[$i]["estudio"] = getPlainStudy($orders[$i]['id_estudio']);
+			$orders[$i]["planes"] = getPlansByOrder($orders[$i]['id_orden']);
+		}
 	}
 	return $orders;
 }

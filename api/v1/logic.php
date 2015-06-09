@@ -295,36 +295,93 @@ function processStudyUpdate($request) {
 
 function processStudyOrderUpdate($studyUpdateData) {
 	$orders = (array) $studyUpdateData["orders"];
-	$storedOrders = getOrdersByStudy($studyUpdateData["study"]["id_estudio"]);
+	$studyId = $studyUpdateData["study"]["id_estudio"];
 	$clientId = $studyUpdateData["study"]["id_cliente"];
 	$updateUserId = $studyUpdateData["study"]["id_usuario_actualiza"];
 	$updateDate = $studyUpdateData["study"]["fecha_actualiza"];
 	$updateIp = $studyUpdateData["study"]["ip_actualiza"];
 	$updateUrl = $studyUpdateData["study"]["host_actualiza"];
+	$storedOrders = getOrdersByStudy($studyId);
 
 	$i = 0;
-	$l = count($orders);
-	for ($i = 0; $i < $l; $i++) {
-		$order = (array) $orders[$i];
+	$j = 0;
+	$l = count($storedOrders);
+	$m = count($orders);
 
-		if ($order["id_status"] == 2) {
-			$order["id_status"] = 1;
-			$order["ip_valida"] = "";
-			$order["host_valida"] = "";
-			$order["fecha_valida"] = "";
+	if ($l < 1)
+	{
+		//stored empty, insert all
+		for ($j = 0; $j < $m; $j++) {
+			$newOrder = (array) $orders[$j];
+			unset($newOrder["id_orden"]);
+			unset($newOrder['$$hashKey']);
+			$newOrder["id_estudio"] = $studyId;
+			$newOrder["id_cliente"] = $clientId;
+			$newOrder["id_cliente"] = $clientId;
+			//TODO: Get from catalog
+			$newOrder["id_cuerpo_receptor"] = 5;
+
+			$newOrder["fecha"] = isoDateToMsSql($newOrder["fecha"]);
+			$newOrder["id_usuario_captura"] = $updateUserId;
+			$newOrder["fecha_captura"] = date('Y-m-d H:i:s');
+			$newOrder["ip_captura"] = $updateIp;
+			$newOrder["host_captura"] = $updateUrl;
+			$newOrder["fecha_valida"] = "";
+			$newOrder["fecha_actualiza"] = "";
+			$newOrder["fecha_rechaza"] = "";
+			insertOrder($order);
 		}
-		unset($order['$$hashKey']);
-
-		$order["id_cliente"] = $clientId;
-		$order["id_usuario_actualiza"] = $updateUserId;
-		$order["fecha_actualiza"] = $updateDate;
-		$order["ip_actualiza"] = $updateIp;
-		$order["host_actualiza"] = $updateUrl;
-
-		updateOrder($order);
-		return $order;
+		return $studyId;
 	}
-	return $clientId;
+	else
+	{
+		//mark all stored as deleted, only additions/matches persist
+		for ($i = 0; $i < $l; $i++) {
+			unset($storedOrders[$i]['$$hashKey']);
+			unset($storedOrders[$i]["id_usuario_captura"]);
+			unset($storedOrders[$i]["fecha_captura"]);
+			unset($storedOrders[$i]["ip_captura"]);
+			unset($storedOrders[$i]["host_captura"]);
+			$storedOrders[$i]["activo"] = 0;
+			$storedOrders[$i]["id_usuario_actualiza"] = $updateUserId;
+			$storedOrders[$i]["fecha_actualiza"] = date('Y-m-d H:i:s');
+			$storedOrders[$i]["ip_actualiza"] = $updateIp;
+			$storedOrders[$i]["host_actualiza"] = $updateUrl;
+			//return json_encode($storedOrders[$i]);
+			//return "delete old";
+			updateOrder($storedOrders[$i]);
+		}
+		for ($j = 0; $j < $m; $j++) {
+			$order = (array) $orders[$i];
+			if ($order["id_orden"] == 0)
+			{
+				//new, store it
+				unset($order["id_orden"]);
+				unset($order['$$hashKey']);
+				$order["id_usuario_captura"] = $updateUserId;
+				$order["fecha_captura"] = date('Y-m-d H:i:s');
+				$order["ip_captura"] = $updateIp;
+				$order["host_captura"] = $updateUrl;
+				//return "...something new;
+				//return json_encode($order);
+				insertOrder($order);
+			}
+			else
+			{
+				//update
+				unset($order['$$hashKey']);
+				$order["activo"] = 1;
+				$order["id_usuario_actualiza"] = $updateUserId;
+				$order["fecha_actualiza"] = date('Y-m-d H:i:s');
+				$order["ip_actualiza"] = $updateIp;
+				$order["host_actualiza"] = $updateUrl;
+				//return "...something old";
+				//return json_encode($order);
+				updateOrder($order);
+			}
+		}
+	}
+	return $studyId;
 }
 
 function processOrderInsert($request) {

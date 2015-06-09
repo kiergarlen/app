@@ -538,17 +538,17 @@ function updateOrder($updateData) {
 		id_estudio = :id_estudio, id_cliente = :id_cliente,
 		id_matriz = :id_matriz, id_tipo_muestreo = :id_tipo_muestreo,
 		id_norma = :id_norma, id_cuerpo_receptor = :id_cuerpo_receptor,
-		id_status = :id_status, id_usuario_captura = :id_usuario_captura,
+		id_status = :id_status,
 		id_usuario_valida = :id_usuario_valida,
 		id_usuario_actualiza = :id_usuario_actualiza,
 		cantidad_muestras = :cantidad_muestras, costo_total = :costo_total,
 		cuerpo_receptor = :cuerpo_receptor, tipo_cuerpo = :tipo_cuerpo,
-		fecha = :fecha,  fecha_captura = :fecha_captura,
+		fecha = :fecha,
 		fecha_valida = :fecha_valida,
 		fecha_actualiza = :fecha_actualiza,
 		fecha_rechaza = :fecha_rechaza,
-		ip_captura = :ip_captura, ip_valida = :ip_valida,
-		ip_actualiza = :ip_actualiza, host_captura = :host_captura,
+		ip_valida = :ip_valida,
+		ip_actualiza = :ip_actualiza,
 		host_valida = :host_valida, host_actualiza = :host_actualiza,
 		motivo_rechaza = :motivo_rechaza, comentarios = :comentarios,
 		activo = :activo
@@ -2319,8 +2319,6 @@ function getPrices() {
 	$db = null;
 	return $prices;
 }
-
-
 
 function getReactivesByPlan() {
 	$sql = "SELECT id_plan_reactivo, id_plan, id_reactivo, valor,

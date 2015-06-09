@@ -117,10 +117,10 @@ $app->post("/studies", function() use ($app) {
 		else
 		{
 			$studyUpdateData = processStudyUpdate($request);
-			//$studyId = updateStudy($studyUpdateData["study"]);
-			$result = json_encode($studyUpdateData);
-			// processStudyOrderUpdate($studyUpdateData);
-			// $result = '{"id_estudio":' . $studyId . '}';
+			$studyId = updateStudy($studyUpdateData["study"]);
+			//$result = json_encode($studyUpdateData);
+			processStudyOrderUpdate($studyUpdateData);
+			$result = '{"id_estudio":' . $studyId . '}';
 		}
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');

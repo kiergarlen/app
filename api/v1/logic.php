@@ -329,7 +329,7 @@ function processStudyOrderUpdate($studyUpdateData) {
 			$newOrder["fecha_valida"] = "";
 			$newOrder["fecha_actualiza"] = "";
 			$newOrder["fecha_rechaza"] = "";
-			insertOrder($order);
+			insertOrder($newOrder);
 		}
 		return $studyId;
 	}
@@ -347,12 +347,12 @@ function processStudyOrderUpdate($studyUpdateData) {
 			$storedOrders[$i]["fecha_actualiza"] = date('Y-m-d H:i:s');
 			$storedOrders[$i]["ip_actualiza"] = $updateIp;
 			$storedOrders[$i]["host_actualiza"] = $updateUrl;
-			//return json_encode($storedOrders[$i]);
+			//return $storedOrders[$i];
 			//return "delete old";
 			updateOrder($storedOrders[$i]);
 		}
 		for ($j = 0; $j < $m; $j++) {
-			$order = (array) $orders[$i];
+			$order = (array) $orders[$j];
 			if ($order["id_orden"] == 0)
 			{
 				//new, store it
@@ -363,20 +363,24 @@ function processStudyOrderUpdate($studyUpdateData) {
 				$order["ip_captura"] = $updateIp;
 				$order["host_captura"] = $updateUrl;
 				//return "...something new;
-				//return json_encode($order);
+				//return $order;
 				insertOrder($order);
 			}
 			else
 			{
 				//update
 				unset($order['$$hashKey']);
+				unset($order["id_usuario_captura"]);
+				unset($order["fecha_captura"]);
+				unset($order["ip_captura"]);
+				unset($order["host_captura"]);
 				$order["activo"] = 1;
 				$order["id_usuario_actualiza"] = $updateUserId;
 				$order["fecha_actualiza"] = date('Y-m-d H:i:s');
 				$order["ip_actualiza"] = $updateIp;
 				$order["host_actualiza"] = $updateUrl;
 				//return "...something old";
-				//return json_encode($order);
+				//return $order;
 				updateOrder($order);
 			}
 		}
@@ -406,6 +410,8 @@ function processOrderUpdate($request) {
 	$updateData["fecha_actualiza"] = date('Y-m-d H:i:s');
 	$updateData["ip_actualiza"] = $request->getIp();
 	$updateData["host_actualiza"] = $request->getUrl();
+	$updateData["fecha"] = isoDateToMsSql($updateData["fecha"]);
+	$updateData["fecha_rechaza"] = isoDateToMsSql($updateData["fecha_rechaza"]);
 
 	if ($updateData["id_status"] == 2 && strlen($updateData["ip_valida"]) < 1)
 	{
@@ -413,9 +419,6 @@ function processOrderUpdate($request) {
 		$updateData["host_valida"] = $request->getUrl();
 		$updateData["fecha_valida"] = isoDateToMsSql($updateData["fecha_valida"]);
 	}
-
-	$updateData["fecha"] = isoDateToMsSql($updateData["fecha"]);
-	$updateData["fecha_rechaza"] = isoDateToMsSql($updateData["fecha_rechaza"]);
 
 	$orderUpdateData = array(
 		"order" => $updateData,

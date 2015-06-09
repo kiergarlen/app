@@ -118,8 +118,7 @@ $app->post("/studies", function() use ($app) {
 		{
 			$studyUpdateData = processStudyUpdate($request);
 			$studyId = updateStudy($studyUpdateData["study"]);
-			//$result = json_encode($studyUpdateData);
-			processStudyOrderUpdate($studyUpdateData);
+			$orderData = processStudyOrderUpdate($studyUpdateData);
 			$result = '{"id_estudio":' . $studyId . '}';
 		}
 		$app->response()->status(200);
@@ -143,6 +142,20 @@ $app->get("/orders(/)(:orderId)", function($orderId = -1) use ($app) {
 		{
 			$result = json_encode(getOrders());
 		}
+		$app->response()->status(200);
+		$app->response()->header('Content-Type', 'application/json');
+		//$result = ")]}',\n" . $result;
+		print_r($result);
+	} catch (Exception $e) {
+		$app->response()->status(400);
+		$app->response()->header('X-Status-Reason', $e->getMessage());
+	}
+});
+
+$app->get("/orders/study/(:studyId)", function($studyId) use ($app) {
+	try {
+		//$userId = decodeUserToken($app->request())->uid;
+		$result = json_encode(getOrdersByStudy($studyId));
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
 		//$result = ")]}',\n" . $result;

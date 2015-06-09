@@ -161,3 +161,104 @@ $json = '
 	]
 }
 ';
+
+function isoDateToMsSql($dateString) {
+	$format = 'Y-m-d H:i:s';
+	if (strlen($dateString) > 18)
+	{
+		$dateString = substr($dateString, 0, 19);
+		$dateString = str_replace("T", " ", $dateString);
+		if (DateTime::createFromFormat($format, $dateString))
+		{
+			$date = DateTime::createFromFormat($format, $dateString);
+			return $date->format($format);
+		}
+	}
+	if (strlen($dateString) == 10)
+	{
+		$date = DateTime::createFromFormat('Y-m-d', $dateString);
+		return $date->format($format);
+	}
+	return "1970-01-01 00:00";
+}
+
+function processStudyInsert($request) {
+	//$token = decodeUserToken($request);
+	//$insertData = (array) json_decode($request->getBody());
+	$insertData = (array) json_decode($request);
+	$lastStudyNumber = 0;
+	$currentYear = date("Y");
+	$clientId = $insertData["id_cliente"];
+	$orders = $insertData["ordenes"];
+
+	unset($insertData["id_estudio"]);
+	unset($insertData["cliente"]);
+	unset($insertData["ordenes"]);
+
+	// $lastStudy = (array) getLastStudyByYear($currentYear);
+	// if (is_numeric($lastStudy["oficio"])) {
+	// 	$lastStudyNumber = $lastStudy["oficio"];
+	// }
+
+	$lastStudyNumber = $lastStudyNumber + 1;
+	$folio = "CEA-" . str_pad($lastStudyNumber, 3, "0", STR_PAD_LEFT);
+	$folio .= "-" . $currentYear;
+
+	//$insertData["id_usuario_captura"] = $token->uid;
+	$insertData["id_usuario_captura"] = 1;
+	$insertData["ip_captura"] = "::1";
+	$insertData["host_captura"] = "http://localhost";
+	$insertData["id_status"] = 1;
+	$insertData["id_etapa"] = 1;
+	$insertData["oficio"] = $lastStudyNumber;
+	$insertData["folio"] = $folio;
+	$insertData["fecha"] = isoDateToMsSql($insertData["fecha"]);
+	$insertData["fecha_captura"] = date('Y-m-d H:i:s');
+
+	$studyInsertData = array(
+		"study" => $insertData,
+		"orders" => $orders
+	);
+	return $studyInsertData;
+}
+
+
+function insertStudy($insertData) {
+	$sql = "INSERT INTO Estudio (id_cliente, id_origen_orden, id_ubicacion,
+		id_ejercicio, id_status, id_etapa, id_usuario_captura,
+		id_usuario_valida, id_usuario_entrega,
+		id_usuario_actualiza, oficio, folio, origen_descripcion,
+		ubicacion, fecha, fecha_entrega, fecha_captura,
+		fecha_valida, fecha_actualiza, fecha_rechaza, ip_captura,
+		ip_valida, ip_actualiza, host_captura, host_valida,
+		host_actualiza, motivo_rechaza, activo)
+		VALUES (:id_cliente, :id_origen_orden, :id_ubicacion,
+		:id_ejercicio, :id_status, :id_etapa, :id_usuario_captura,
+		:id_usuario_valida, :id_usuario_entrega,
+		:id_usuario_actualiza, :oficio, :folio, :origen_descripcion,
+		:ubicacion, :fecha, :fecha_entrega, :fecha_captura,
+		:fecha_valida, :fecha_rechaza, :ip_captura, :ip_valida,
+		:ip_actualiza, :host_captura, :host_valida, :host_actualiza,
+		:motivo_rechaza, :activo)";
+	$db = getConnection();
+	$stmt = $db->prepare($sql);
+	$stmt->execute($insertData);
+	$studyId = $db->lastInsertId();
+	$db = null;
+	return $studyId;
+	return $insertData;
+}
+
+
+print_r(insertStudy(processStudyInsert($json)["study"]));
+
+
+/*
+print_r(
+    insertStudy(
+        processStudyInsert(
+            $json
+        )["study"]
+    )
+);
+*/

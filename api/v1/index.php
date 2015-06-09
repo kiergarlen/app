@@ -110,18 +110,17 @@ $app->post("/studies", function() use ($app) {
 		if ($studyId < 1)
 		{
 			$studyInsertData = processStudyInsert($request);
-			$result = json_encode($studyInsertData);
-			//$studyId = insertStudy($studyInsertData["study"]);
-			//$result = '{"query":"' + $studyId + '"}';
-			//processStudyOrderInsert($studyInsertData, $studyId);
-			//$result = '{"id_estudio":' . $studyId . '}';
+			$studyId = insertStudy($studyInsertData["study"]);
+			processStudyOrderInsert($studyInsertData, $studyId);
+			$result = '{"id_estudio":' . $studyId . '}';
 		}
 		else
 		{
 			$studyUpdateData = processStudyUpdate($request);
-			$studyId = updateStudy($studyUpdateData["study"]);
-			processStudyOrderUpdate($studyUpdateData);
-			$result = '{"id_estudio":' . $studyId . '}';
+			//$studyId = updateStudy($studyUpdateData["study"]);
+			$result = json_encode($studyUpdateData);
+			// processStudyOrderUpdate($studyUpdateData);
+			// $result = '{"id_estudio":' . $studyId . '}';
 		}
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');

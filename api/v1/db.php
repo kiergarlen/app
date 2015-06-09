@@ -267,7 +267,7 @@ function getBlankStudy() {
 				"id_usuario_actualiza" => 0, "cantidad_muestras" => 0,
 				"costo_total" => 0, "cuerpo_receptor" => "",
 				"tipo_cuerpo" => "", "fecha" => "",
-				"fecha_entrega" => "", "fecha_captura" => "",
+				"fecha_captura" => "",
 				"fecha_valida" => "", "fecha_actualiza" => "",
 				"fecha_rechaza" => "", "ip_captura" => "",
 				"ip_valida" => "", "ip_actualiza" => "",
@@ -340,29 +340,6 @@ function getLastStudyByYear($yearId) {
 }
 
 function insertStudy($insertData) {
-	// $sql = "INSERT INTO Estudio (id_cliente, id_origen_orden, id_ubicacion,
-	// 	id_ejercicio, id_status, id_etapa, id_usuario_captura,
-	// 	id_usuario_valida, id_usuario_entrega,
-	// 	id_usuario_actualiza, oficio, folio, origen_descripcion,
-	// 	ubicacion, fecha, fecha_entrega, fecha_captura,
-	// 	fecha_valida, fecha_actualiza, fecha_rechaza, ip_captura,
-	// 	ip_valida, ip_actualiza, host_captura, host_valida,
-	// 	host_actualiza, motivo_rechaza, activo)
-	// 	VALUES (:id_cliente, :id_origen_orden, :id_ubicacion,
-	// 	:id_ejercicio, :id_status, :id_etapa, :id_usuario_captura,
-	// 	:id_usuario_valida, :id_usuario_entrega,
-	// 	:id_usuario_actualiza, :oficio, :folio, :origen_descripcion,
-	// 	:ubicacion, :fecha, :fecha_entrega, :fecha_captura,
-	// 	:fecha_valida, :fecha_rechaza, :ip_captura, :ip_valida,
-	// 	:ip_actualiza, :host_captura, :host_valida, :host_actualiza,
-	// 	:motivo_rechaza, :activo)";
-	// $db = getConnection();
-	// $stmt = $db->prepare($sql);
-	// $stmt->execute($insertData);
-	// $studyId = $db->lastInsertId();
-	// $db = null;
-	// return $studyId;
-
 	$sql = "INSERT INTO Estudio (id_cliente, id_origen_orden, id_ubicacion,
 		id_ejercicio, id_status, id_etapa, id_usuario_captura,
 		id_usuario_valida, id_usuario_entrega,
@@ -370,39 +347,21 @@ function insertStudy($insertData) {
 		ubicacion, fecha, fecha_entrega, fecha_captura,
 		fecha_valida, fecha_actualiza, fecha_rechaza, ip_captura,
 		ip_valida, ip_actualiza, host_captura, host_valida,
-		host_actualiza, motivo_rechaza, activo)";
-		// VALUES (
-		// 	" . $insertData['id_cliente'] . ",
-		// 	" . $insertData['id_origen_orden'] . ",
-		// 	" . $insertData['id_ubicacion'] . ",
-		// 	" . $insertData['id_ejercicio'] . ",
-		// 	" . $insertData['id_status'] . ",
-		// 	" . $insertData['id_etapa'] . ",
-		// 	" . $insertData['id_usuario_captura'] . ",
-		// 	" . $insertData['id_usuario_valida'] . ",
-		// 	" . $insertData['id_usuario_entrega'] . ",
-		// 	" . $insertData['id_usuario_actualiza'] . ",
-		// 	" . $insertData['oficio'] . ",
-		// 	" . $insertData['folio'] . ",
-		// 	" . $insertData['origen_descripcion'] . ",
-		// 	" . $insertData['ubicacion'] . ",
-		// 	" . $insertData['fecha'] . ",
-		// 	" . $insertData['fecha_entrega'] . ",
-		// 	" . $insertData['fecha_captura'] . ",
-		// 	" . $insertData['fecha_valida'] . ",
-		// 	" . $insertData['fecha_rechaza'] . ",
-		// 	" . $insertData['ip_captura'] . ",
-		// 	" . $insertData['ip_valida'] . ",
-		// 	" . $insertData['ip_actualiza'] . ",
-		// 	" . $insertData['host_captura'] . ",
-		// 	" . $insertData['host_valida'] . ",
-		// 	" . $insertData['host_actualiza'] . ",
-		// 	" . $insertData['motivo_rechaza'] . ",
-		// 	" . $insertData['activo'] . "
-		// )";
-
-	return $sql;
-
+		host_actualiza, motivo_rechaza, activo)
+		VALUES (:id_cliente, :id_origen_orden, :id_ubicacion,
+		:id_ejercicio, :id_status, :id_etapa, :id_usuario_captura,
+		:id_usuario_valida, :id_usuario_entrega,
+		:id_usuario_actualiza, :oficio, :folio, :origen_descripcion,
+		:ubicacion, :fecha, :fecha_entrega, :fecha_captura,
+		:fecha_valida, :fecha_actualiza, :fecha_rechaza, :ip_captura, :ip_valida,
+		:ip_actualiza, :host_captura, :host_valida, :host_actualiza,
+		:motivo_rechaza, :activo)";
+	$db = getConnection();
+	$stmt = $db->prepare($sql);
+	$stmt->execute($insertData);
+	$studyId = $db->lastInsertId();
+	$db = null;
+	return $studyId;
 }
 
 function updateStudy($updateData) {
@@ -455,6 +414,37 @@ function getOrders() {
 		$orders[$i]["estudio"] = getPlainStudy($orders[$i]['id_estudio']);
 		$orders[$i]["planes"] = getPlansByOrder($orders[$i]['id_orden']);
 	}
+	return $orders;
+}
+
+function getOrdersByStudy($studyId) {
+	$sql = "SELECT id_orden, id_estudio, id_cliente, id_matriz,
+		id_tipo_muestreo, id_norma, id_cuerpo_receptor, id_status,
+		id_usuario_captura, id_usuario_valida, id_usuario_actualiza,
+		cantidad_muestras, costo_total, cuerpo_receptor, tipo_cuerpo,
+		CONVERT(nvarchar, fecha, 127) AS fecha,
+		CONVERT(nvarchar, fecha_captura, 127) AS fecha_captura,
+		CONVERT(nvarchar, fecha_valida, 127) AS fecha_valida,
+		CONVERT(nvarchar, fecha_actualiza, 127) AS fecha_actualiza,
+		CONVERT(nvarchar, fecha_rechaza, 127) AS fecha_rechaza,
+		ip_captura, ip_valida,
+		ip_actualiza, host_captura, host_valida, host_actualiza,
+		motivo_rechaza, comentarios, activo
+		FROM Orden
+		WHERE activo = 1 AND id_estudio = :studyId";
+	$db = getConnection();
+	$stmt = $db->prepare($sql);
+	$stmt->bindParam("studyId", $studyId);
+	$stmt->execute();
+	$orders = $stmt->fetchAll(PDO::FETCH_ASSOC);
+	$db = null;
+	// $i = 0;
+	// $l = count($orders);
+	// for ($i = 0; $i < $l; $i++) {
+	// 	$orders[$i]["cliente"] = getClient($orders[$i]['id_cliente']);
+	// 	$orders[$i]["estudio"] = getPlainStudy($orders[$i]['id_estudio']);
+	// 	$orders[$i]["planes"] = getPlansByOrder($orders[$i]['id_orden']);
+	// }
 	return $orders;
 }
 
@@ -520,23 +510,21 @@ function getStudyOrders($studyId) {
 
 function insertOrder($orderData) {
 	$sql = "INSERT INTO Orden (id_estudio, id_cliente, id_matriz,
-		id_tipo_muestreo, id_norma, id_cuerpo_receptor, id_status,
-		id_usuario_captura, id_usuario_valida, id_usuario_actualiza,
-		cantidad_muestras, costo_total, cuerpo_receptor,
-		tipo_cuerpo, fecha, fecha_captura,
-		fecha_valida, fecha_actualiza, fecha_rechaza,
-		ip_captura, ip_valida, ip_actualiza, host_captura,
-		host_valida, host_actualiza, motivo_rechaza,
-		comentarios, activo)
+		id_tipo_muestreo, id_norma, id_cuerpo_receptor,
+		id_status, id_usuario_captura, id_usuario_valida,
+		id_usuario_actualiza, cantidad_muestras, costo_total,
+		cuerpo_receptor, tipo_cuerpo, fecha, fecha_captura,
+		fecha_valida, fecha_actualiza, fecha_rechaza, ip_captura,
+		ip_valida, ip_actualiza, host_captura, host_valida,
+		host_actualiza, motivo_rechaza, comentarios, activo)
 		VALUES (:id_estudio, :id_cliente, :id_matriz,
-		:id_tipo_muestreo, :id_norma, :id_cuerpo_receptor, :id_status,
-		:id_usuario_captura, :id_usuario_valida, :id_usuario_actualiza,
-		:cantidad_muestras, :costo_total, :cuerpo_receptor,
-		:tipo_cuerpo, :fecha, :fecha_captura, :fecha_valida,
-		:echa_actualiza, :fecha_rechaza,
-		:ip_captura, :ip_valida, :ip_actualiza, :host_captura,
-		:host_valida, :host_actualiza, :motivo_rechaza,
-		:comentarios, :activo)";
+		:id_tipo_muestreo, :id_norma, :id_cuerpo_receptor,
+		:id_status, :id_usuario_captura, :id_usuario_valida,
+		:id_usuario_actualiza, :cantidad_muestras, :costo_total,
+		:cuerpo_receptor, :tipo_cuerpo, :fecha, :fecha_captura,
+		:fecha_valida, :fecha_actualiza, :fecha_rechaza, :ip_captura,
+		:ip_valida, :ip_actualiza, :host_captura, :host_valida,
+		:host_actualiza, :motivo_rechaza, :comentarios, :activo)";
 	$db = getConnection();
 	$stmt = $db->prepare($sql);
 	$stmt->execute($orderData);
@@ -768,44 +756,40 @@ function getPlanObjectives() {
 }
 
 function insertPlan($planData) {
-	$sql = "INSERT INTO [Plan] (id_estudio, id_orden,
-		id_ubicacion, id_paquete, id_objetivo_plan,
-		id_norma_muestreo, id_estado, id_municipio,
-		id_localidad, id_supervisor_muestreo,
-		id_supervisor_entrega,  id_supervisor_recoleccion,
+	$sql = "INSERT INTO [Plan] (id_estudio, id_orden, id_ubicacion,
+		id_paquete, id_objetivo_plan, id_norma_muestreo, id_estado,
+		id_municipio, id_localidad, id_supervisor_muestreo,
+		id_supervisor_entrega, id_supervisor_recoleccion,
 		id_supervisor_registro, id_ayudante_entrega,
 		id_ayudante_recoleccion, id_ayudante_registro,
-		id_responsable_calibracion,  id_responsable_recipientes,
+		id_responsable_calibracion, id_responsable_recipientes,
 		id_responsable_reactivos, id_responsable_material,
 		id_responsable_hieleras, id_status, id_usuario_captura,
-		id_usuario_valida,  id_usuario_actualiza, fecha,
+		id_usuario_valida, id_usuario_actualiza, fecha,
 		fecha_probable, fecha_calibracion, fecha_captura,
-		fecha_valida, fecha_actualiza, fecha_rechaza,
-		ip_captura, ip_valida, ip_actualiza,  host_captura,
-		host_valida, host_actualiza, calle, numero, colonia,
-		codigo_postal, telefono, contacto, email,
-		comentarios_ubicacion, cantidad_puntos,
-		cantidad_equipos, cantidad_recipientes,
+		fecha_valida, fecha_actualiza, fecha_rechaza, ip_captura,
+		ip_valida, ip_actualiza, host_captura, host_valida,
+		host_actualiza, calle, numero, colonia, codigo_postal,
+		telefono, contacto, email, comentarios_ubicacion,
+		cantidad_puntos, cantidad_equipos, cantidad_recipientes,
 		cantidad_reactivos, cantidad_hieleras, frecuencia,
 		objetivo_otro, motivo_rechaza, comentarios, activo)
-		VALUES (:id_estudio, :id_orden,
-		:id_ubicacion, :id_paquete, :id_objetivo_plan,
-		:id_norma_muestreo, :id_estado, :id_municipio,
-		:id_localidad, :id_supervisor_muestreo,
-		:id_supervisor_entrega,  :id_supervisor_recoleccion,
+		VALUES (:id_estudio, :id_orden, :id_ubicacion,
+		:id_paquete, :id_objetivo_plan, :id_norma_muestreo, :id_estado,
+		:id_municipio, :id_localidad, :id_supervisor_muestreo,
+		:id_supervisor_entrega, :id_supervisor_recoleccion,
 		:id_supervisor_registro, :id_ayudante_entrega,
 		:id_ayudante_recoleccion, :id_ayudante_registro,
-		:id_responsable_calibracion,  :id_responsable_recipientes,
+		:id_responsable_calibracion, :id_responsable_recipientes,
 		:id_responsable_reactivos, :id_responsable_material,
 		:id_responsable_hieleras, :id_status, :id_usuario_captura,
-		:id_usuario_valida,  :id_usuario_actualiza, :fecha,
+		:id_usuario_valida, :id_usuario_actualiza, :fecha,
 		:fecha_probable, :fecha_calibracion, :fecha_captura,
-		:fecha_valida, :fecha_actualiza, :fecha_rechaza,
-		:ip_captura, :ip_valida, :ip_actualiza,  :host_captura,
-		:host_valida, :host_actualiza, :calle, :numero, :colonia,
-		:codigo_postal, :telefono, :contacto, :email,
-		:comentarios_ubicacion, :cantidad_puntos,
-		:cantidad_equipos, :cantidad_recipientes,
+		:fecha_valida, :fecha_actualiza, :fecha_rechaza, :ip_captura,
+		:ip_valida, :ip_actualiza, :host_captura, :host_valida,
+		:host_actualiza, :calle, :numero, :colonia, :codigo_postal,
+		:telefono, :contacto, :email, :comentarios_ubicacion,
+		:cantidad_puntos, :cantidad_equipos, :cantidad_recipientes,
 		:cantidad_reactivos, :cantidad_hieleras, :frecuencia,
 		:objetivo_otro, :motivo_rechaza, :comentarios, :activo)";
 	$db = getConnection();

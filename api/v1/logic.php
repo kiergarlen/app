@@ -212,7 +212,7 @@ function processStudyInsert($request) {
 
 function processStudyOrderInsert($studyInsertData, $studyId) {
 	$orders = (array) $studyInsertData["orders"];
-	$clientId = $studyInsertData["study"]["clientId"];
+	$clientId = $studyInsertData["study"]["id_cliente"];
 	$insertUserId = $studyInsertData["study"]["id_usuario_captura"];
 	$insertDate = $studyInsertData["study"]["fecha_captura"];
 	$insertIp = $studyInsertData["study"]["ip_captura"];
@@ -221,7 +221,6 @@ function processStudyOrderInsert($studyInsertData, $studyId) {
 	$blankPlan = getBlankPlan();
 	unset($blankPlan["id_plan"]);
 	$blankPlan["id_estudio"] = $studyId;
-	$blankPlan["id_cliente"] = $clientId;
 	$blankPlan["id_usuario_captura"] = $insertUserId;
 	$blankPlan["fecha_captura"] = $insertDate;
 	$blankPlan["ip_captura"] = $insertIp;
@@ -235,6 +234,9 @@ function processStudyOrderInsert($studyInsertData, $studyId) {
 
 		unset($order['$$hashKey']);
 		unset($order["id_orden"]);
+		if (isset($order["fecha_entrega"])) {
+			unset($order["fecha_entrega"]);
+		}
 
 		$order["id_estudio"] = $studyId;
 		$order["id_cliente"] = $clientId;
@@ -293,6 +295,7 @@ function processStudyUpdate($request) {
 
 function processStudyOrderUpdate($studyUpdateData) {
 	$orders = (array) $studyUpdateData["orders"];
+	$storedOrders = getOrdersByStudy($studyUpdateData["study"]["id_estudio"]);
 	$clientId = $studyUpdateData["study"]["id_cliente"];
 	$updateUserId = $studyUpdateData["study"]["id_usuario_actualiza"];
 	$updateDate = $studyUpdateData["study"]["fecha_actualiza"];
@@ -319,6 +322,7 @@ function processStudyOrderUpdate($studyUpdateData) {
 		$order["host_actualiza"] = $updateUrl;
 
 		updateOrder($order);
+		return $order;
 	}
 	return $clientId;
 }

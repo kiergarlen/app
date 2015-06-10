@@ -527,9 +527,11 @@ function processOrderPlansUpdate($orderUpdateData) {
 }
 
 function processPlanUpdate($request) {
-	// $token = decodeUserToken($request);
-	// $update = (array) json_decode($request->getBody());
-	// $client = $update["cliente"];
-	// $study = $update["estudio"];
-	// $plans = $update["planes"];
+//	$token = decodeUserToken($request);
+//	$update = (array) json_decode($request->getBody());
+//	$client = $update["cliente"];
+//	$study = $update["estudio"];
+//	$plans = $update["planes"];
+//	unset($update["cliente"]);
+	
 }

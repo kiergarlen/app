@@ -84,8 +84,7 @@ function insertUser($userData) {
 	$sql = "INSERT INTO Usuario (id_nivel, id_rol, id_area, id_puesto,
 		interno, cea, laboratorio, supervisa, analiza, muestrea,
 		nombres, apellido_paterno, apellido_materno, usr, pwd,
-		CONVERT(nvarchar, fecha_captura, 127) AS fecha_captura,
-		CONVERT(nvarchar, fecha_actualiza, 127) AS fecha_actualiza,
+		fecha_captura, fecha_actualiza,
 		ip_captura, ip_actualiza,
 		host_captura, host_actualiza, activo)
 		VALUES (:id_nivel, :id_rol, :id_area, :id_puesto,

@@ -182,10 +182,11 @@ $app->post("/orders", function() use ($app) {
 		else
 		{
 			$orderUpdateData = processOrderUpdate($request);
+			//$result = json_encode(updateOrder($orderUpdateData["order"]));
 			$orderId = updateOrder($orderUpdateData["order"]);
-			$orderPlans = processOrderPlansUpdate($orderUpdateData);
-			//$result = $orderPlans;
-			$result = '{"id_orden":' . $orderId . '}';
+			$result = json_encode(processOrderPlansUpdate($orderUpdateData));
+			//processOrderPlansUpdate($orderUpdateData);
+			//$result = '{"id_orden":' . $orderId . '}';
 		}
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');

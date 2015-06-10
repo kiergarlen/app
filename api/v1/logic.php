@@ -317,7 +317,6 @@ function processStudyOrderUpdate($studyUpdateData) {
 			unset($newOrder['$$hashKey']);
 			$newOrder["id_estudio"] = $studyId;
 			$newOrder["id_cliente"] = $clientId;
-			$newOrder["id_cliente"] = $clientId;
 			//TODO: Get from catalog
 			$newOrder["id_cuerpo_receptor"] = 5;
 
@@ -396,32 +395,36 @@ function processOrderInsert($request) {
 
 function processOrderUpdate($request) {
 	$token = decodeUserToken($request);
-	$updateData = (array) json_decode($request->getBody());
-	$client = $updateData["cliente"];
-	$study = $updateData["estudio"];
-	$plans = $updateData["planes"];
+	$update = (array) json_decode($request->getBody());
+	$client = $update["cliente"];
+	$study = $update["estudio"];
+	$plans = $update["planes"];
 
-	unset($updateData["cliente"]);
-	unset($updateData["estudio"]);
-	unset($updateData["planes"]);
-	unset($updateData["status"]);
+	unset($update["cliente"]);
+	unset($update["estudio"]);
+	unset($update["planes"]);
+	unset($update["status"]);
+	unset($update["id_usuario_captura"]);
+	unset($update["fecha_captura"]);
+	unset($update["ip_captura"]);
+	unset($update["host_captura"]);
 
-	$updateData["id_usuario_actualiza"] = $token->uid;
-	$updateData["fecha_actualiza"] = date('Y-m-d H:i:s');
-	$updateData["ip_actualiza"] = $request->getIp();
-	$updateData["host_actualiza"] = $request->getUrl();
-	$updateData["fecha"] = isoDateToMsSql($updateData["fecha"]);
-	$updateData["fecha_rechaza"] = isoDateToMsSql($updateData["fecha_rechaza"]);
+	$update["id_usuario_actualiza"] = $token->uid;
+	$update["fecha_actualiza"] = date('Y-m-d H:i:s');
+	$update["ip_actualiza"] = $request->getIp();
+	$update["host_actualiza"] = $request->getUrl();
+	$update["fecha"] = isoDateToMsSql($update["fecha"]);
+	$update["fecha_rechaza"] = isoDateToMsSql($update["fecha_rechaza"]);
 
-	if ($updateData["id_status"] == 2 && strlen($updateData["ip_valida"]) < 1)
+	if ($update["id_status"] == 2 && strlen($update["ip_valida"]) < 1)
 	{
-		$updateData["ip_valida"] = $request->getIp();
-		$updateData["host_valida"] = $request->getUrl();
-		$updateData["fecha_valida"] = isoDateToMsSql($updateData["fecha_valida"]);
+		$update["ip_valida"] = $request->getIp();
+		$update["host_valida"] = $request->getUrl();
+		$update["fecha_valida"] = isoDateToMsSql($update["fecha_valida"]);
 	}
 
 	$orderUpdateData = array(
-		"order" => $updateData,
+		"order" => $update,
 		"plans" => $plans
 	);
 	return $orderUpdateData;
@@ -430,6 +433,9 @@ function processOrderUpdate($request) {
 function processOrderPlansUpdate($orderUpdateData) {
 	$orderData = $orderUpdateData["order"];
 	$orderId = $orderData["id_orden"];
+	$updateUserId = $orderData["id_usuario_actualiza"];
+	$updateIp = $orderData["ip_actualiza"];
+	$updateUrl = $orderData["host_actualiza"];
 	$storedPlans = getPlansByOrder($orderId);
 	$plans = (array) $orderUpdateData["plans"];
 
@@ -448,32 +454,35 @@ function processOrderPlansUpdate($orderUpdateData) {
 			unset($plan["id_plan"]);
 			unset($plan['$$hashKey']);
 			$plan["id_orden"] = $orderId;
-			$plan["id_usuario_captura"] = $orderData["id_usuario_captura"];
+			$plan["id_usuario_captura"] = $updateUserId;
 			$plan["fecha_captura"] = date('Y-m-d H:i:s');
-			$plan["ip_captura"] = $orderData["ip_captura"];
-			$plan["host_captura"] = $orderData["host_captura"];
+			$plan["ip_captura"] = $updateIp;
+			$plan["host_captura"] = $updateUrl;
 			$plan["fecha"] = "";
 			$plan["fecha_probable"] = isoDateToMsSql($plan["fecha_probable"]);
 			$plan["fecha_calibracion"] = "";
 			$plan["fecha_valida"] = "";
 			$plan["fecha_actualiza"] = "";
 			$plan["fecha_rechaza"] = "";
-			//return json_encode($plan);
 			insertPlan($plan);
 		}
-		//return "all new";
 		return $orderId;
 	}
 	else
 	{
 		//mark all stored as deleted, only additions/matches persist
 		for ($i = 0; $i < $l; $i++) {
+			unset($storedPlans[$i]['$$hashKey']);
+			unset($storedPlans[$i]["id_usuario_captura"]);
+			unset($storedPlans[$i]["fecha_captura"]);
+			unset($storedPlans[$i]["ip_captura"]);
+			unset($storedPlans[$i]["host_captura"]);
 			$storedPlans[$i]["activo"] = 0;
-			$storedPlans[$i]["id_usuario_actualiza"] = $orderData["id_usuario_actualiza"];
+			$storedPlans[$i]["id_usuario_actualiza"] = $updateUserId;
 			$storedPlans[$i]["fecha_actualiza"] = date('Y-m-d H:i:s');
-			$storedPlans[$i]["ip_actualiza"] = $orderData["ip_actualiza"];
-			$storedPlans[$i]["host_actualiza"] = $orderData["host_actualiza"];
-			//return json_encode($storedPlans[$i]);
+			$storedPlans[$i]["ip_actualiza"] = $updateIp;
+			$storedPlans[$i]["host_actualiza"] = $updateUrl;
+			//return $storedPlans[$i];
 			//return "delete old";
 			updatePlan($storedPlans[$i]);
 		}
@@ -482,27 +491,31 @@ function processOrderPlansUpdate($orderUpdateData) {
 			if ($plan["id_plan"] == 0)
 			{
 				//new, store it
-				unset($updatedData[$j]["id_plan"]);
+				unset($plan["id_plan"]);
 				unset($plan['$$hashKey']);
-				$plan["id_usuario_captura"] = $orderData["id_usuario_captura"];
+				$plan["id_usuario_captura"] = $updateUserId;
 				$plan["fecha_captura"] = date('Y-m-d H:i:s');
-				$plan["ip_captura"] = $orderData["ip_captura"];
-				$plan["host_captura"] = $orderData["host_captura"];
+				$plan["ip_captura"] = $updateIp;
+				$plan["host_captura"] = $updateUrl;
 				//return "something new...";
-				//return json_encode($plan);
+				//return $plan;
 				insertPlan($plan);
 			}
 			else
 			{
 				//update
 				unset($plan['$$hashKey']);
+				unset($plan["id_usuario_captura"]);
+				unset($plan["fecha_captura"]);
+				unset($plan["ip_captura"]);
+				unset($plan["host_captura"]);
 				$plan["activo"] = 1;
-				$plan["id_usuario_actualiza"] = $orderData["id_usuario_actualiza"];
+				$plan["id_usuario_actualiza"] = $updateUserId;
 				$plan["fecha_actualiza"] = date('Y-m-d H:i:s');
-				$plan["ip_actualiza"] = $orderData["ip_actualiza"];
-				$plan["host_actualiza"] = $orderData["host_actualiza"];
+				$plan["ip_actualiza"] = $updateIp;
+				$plan["host_actualiza"] = $updateUrl;
 				//return "...something old";
-				//return json_encode($plan);
+				//return $plan;
 				updatePlan($plan);
 			}
 		}

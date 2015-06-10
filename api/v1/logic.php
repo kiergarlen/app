@@ -482,7 +482,6 @@ function processOrderPlansUpdate($orderUpdateData) {
 			$storedPlans[$i]["fecha_actualiza"] = date('Y-m-d H:i:s');
 			$storedPlans[$i]["ip_actualiza"] = $updateIp;
 			$storedPlans[$i]["host_actualiza"] = $updateUrl;
-			//return $storedPlans[$i];
 			//return "delete old";
 			updatePlan($storedPlans[$i]);
 		}
@@ -497,7 +496,7 @@ function processOrderPlansUpdate($orderUpdateData) {
 				$plan["fecha_captura"] = date('Y-m-d H:i:s');
 				$plan["ip_captura"] = $updateIp;
 				$plan["host_captura"] = $updateUrl;
-				//return "something new...";
+				//return "something new... again";
 				//return $plan;
 				insertPlan($plan);
 			}
@@ -514,12 +513,12 @@ function processOrderPlansUpdate($orderUpdateData) {
 				$plan["fecha_actualiza"] = date('Y-m-d H:i:s');
 				$plan["ip_actualiza"] = $updateIp;
 				$plan["host_actualiza"] = $updateUrl;
-				//return "...something old";
+				$plan["comentarios"] = "...something old, renewed";
+				//return "...something old, renewed";
 				//return $plan;
 				updatePlan($plan);
 			}
 		}
 	}
-	//return "done";
 	return $orderId;
 }

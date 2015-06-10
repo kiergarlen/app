@@ -1254,11 +1254,11 @@
         vm.message += ' Seleccione una localidad ';
         return false;
       }
-      if (vm.plan.solicitud.id_tipo_muestreo > 1 && isNaN(vm.plan.frecuencia_muestreo))
-      {
-        vm.message += ' Seleccione una frecuencia de muestreo ';
-        return false;
-      }
+      // if (vm.plan.estudio.id_tipo_muestreo > 1 && isNaN(vm.plan.frecuencia_muestreo))
+      // {
+      //   vm.message += ' Seleccione una frecuencia de muestreo ';
+      //   return false;
+      // }
       if (vm.plan.id_supervisor_entrega < 1)
       {
         vm.message += ' Seleccione un Responsable de muestreo ';
@@ -1319,7 +1319,7 @@
     function submitForm() {
       if (isFormValid() && !vm.isDataSubmitted)
       {
-        console.log(vm.study);
+        console.log(vm.plan);
         vm.isDataSubmitted = true;
         if (vm.plan.id_estudio > 0)
         {

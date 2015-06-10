@@ -133,7 +133,7 @@ $app->post("/studies", function() use ($app) {
 
 $app->get("/orders(/)(:orderId)", function($orderId = -1) use ($app) {
 	try {
-		//$userId = decodeUserToken($app->request())->uid;
+		$userId = decodeUserToken($app->request())->uid;
 		if ($orderId > -1)
 		{
 			$result = json_encode(getOrder($orderId));
@@ -238,6 +238,7 @@ $app->post("/plans", function() use ($app) {
 	try {
 		$userId = decodeUserToken($app->request())->uid;
 		$request = $app->request();
+		//$requestData = extractDataFromRequest($request);
 		$planId = extractDataFromRequest($request)->id_plan;
 		if ($planId < 1)
 		{
@@ -248,9 +249,12 @@ $app->post("/plans", function() use ($app) {
 		}
 		else
 		{
-			$planUpdateData = processPlanUpdate($request);
-			$planId = updatePlan($planUpdateData["plan"]);
-			//processPlanOrderUpdate($planUpdateData);
+			// $planUpdateData = processPlanUpdate($request);
+			// //$result = json_encode(updatePlan($planUpdateData["plan"]));
+			// $planId = updatePlan($planUpdateData["plan"]);
+			// // $result = json_encode(processPlanOrderUpdate($planUpdateData));
+			// // $result = processPlanOrderUpdate($planUpdateData);
+			// // processPlanOrderUpdate($planUpdateData);
 			$result = '{"id_plan":' . $planId . '}';
 		}
 		$app->response()->status(200);

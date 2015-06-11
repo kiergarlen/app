@@ -120,7 +120,7 @@
      * @param {Array} collection - Array de ítems a extraer
      * @return {Number} count - Cantidad de objetos que cumplen la condición
      */
-    function countSelectedItems(collection){
+    function countSelectedItems(collection) {
       var i, l, count = 0;
       if (!collection)
       {

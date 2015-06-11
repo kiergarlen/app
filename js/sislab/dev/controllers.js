@@ -881,12 +881,12 @@
    * @param {Object} SamplingInstrumentService - Proveedor de datos, Equipos de muestreo
    * @param {Object} PlanService - Proveedor de datos, Plan de muestreo
    */
-  function PlanController($scope,$routeParams,TokenService,
-    ValidationService,RestUtilsService,ArrayUtilsService,
-    DateUtilsService,PlanObjectivesService,DistrictService,
-    CityService,SamplingEmployeeService,ContainerService,
-    ReactiveService,MaterialService,CoolerService,
-    SamplingInstrumentService,PlanService) {
+  function PlanController($scope, $routeParams, TokenService,
+    ValidationService, RestUtilsService, ArrayUtilsService,
+    DateUtilsService, PlanObjectivesService, DistrictService,
+    CityService, SamplingEmployeeService, ContainerService,
+    ReactiveService, MaterialService, CoolerService,
+    SamplingInstrumentService, PlanService) {
     var vm = this;
     vm.plan = {};
     vm.user = TokenService.getUserFromToken();

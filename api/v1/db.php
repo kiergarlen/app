@@ -732,15 +732,16 @@ function getPlainPlan($planId) {
 
 function getPlan($planId) {
 	$plan = getPlainPlan($planId);
-	//$plan->cliente = getClient($plan->id_cliente);
+	$study = getPlainStudy($plan->id_estudio);
+	$plan->cliente = getClient($study->id_cliente);
 	$plan->orden = getPlainOrder($plan->id_orden);
 	$plan->supervisor_muestreo = getSamplingEmployee($plan->id_supervisor_muestreo);
 	$plan->puntos = getPointsByPackage($plan->id_paquete);
 	// $plan->equipos = getInstrumentsByPlan($planId);
 	// $plan->recipientes = getContainersByPlan($planId);
 	// $plan->reactivos = getReactivesByPlan($planId);
-	// $plan->materiales = getMaterialsByPlan($planId);
-	// $plan->hieleras = getCoolersByPlan($planId);
+	$plan->materiales = getMaterialsByPlan($planId);
+	$plan->hieleras = getCoolersByPlan($planId);
 	return $plan;
 }
 
@@ -2317,17 +2318,58 @@ function getPrices() {
 	return $prices;
 }
 
-function getReactivesByPlan() {
+function getReactivesByPlan($planId) {
 	$sql = "SELECT id_plan_reactivo, id_plan, id_reactivo, valor,
 		lote, folio, activo
 		FROM PlanReactivo
 		WHERE activo = 1";
 	$db = getConnection();
 	$stmt = $db->prepare($sql);
+	$stmt->bindParam("planId", $planId);
 	$stmt->execute();
 	$reactives = $stmt->fetchAll(PDO::FETCH_ASSOC);
 	$db = null;
 	return $reactives;
+}
+
+function getMaterialsByPlan($planId) {
+	$sql = "SELECT p.id_plan, pm.id_plan_material, m.id_material,
+		m.material, m.activo
+		FROM [Plan] p INNER JOIN
+		PlanMaterial pm ON p.id_plan = pm.id_plan INNER JOIN
+		Material m ON pm.id_material = m.id_material
+		WHERE p.id_plan = :planId";
+	$db = getConnection();
+	$stmt = $db->prepare($sql);
+	$stmt->bindParam("planId", $planId);
+	$stmt->execute();
+	$materials = $stmt->fetchAll(PDO::FETCH_ASSOC);
+	$db = null;
+	$l = count($materials);
+	for ($i = 0; $i < $l; $i++) {
+		$materials[$i]["selected"] = true;
+	}
+	return $materials;
+}
+
+function getCoolersByPlan($planId) {
+	$sql = "SELECT p.id_plan, ph.id_plan_hielera, h.id_hielera,
+		h.hielera, h.activo, 'true' AS selected
+		FROM [Plan] p INNER JOIN
+		PlanHielera ph ON p.id_plan = ph.id_plan INNER JOIN
+		Hielera h ON ph.id_hielera = h.id_hielera
+		WHERE p.id_plan = :planId";
+	$db = getConnection();
+	$stmt = $db->prepare($sql);
+	$stmt->bindParam("planId", $planId);
+	$stmt->execute();
+	$coolers = $stmt->fetchAll(PDO::FETCH_ASSOC);
+	$db = null;
+	$l = count($coolers);
+	for ($i = 0; $i < $l; $i++) {
+		$coolers[$i]["selected"] = true;
+	}
+	return $coolers;
 }
 
 function getEmployees() {
@@ -2513,19 +2555,6 @@ function getReactives() {
 	return $reactives;
 }
 
-function getMaterials() {
-	$sql = "SELECT id_material, material, activo,
-		'false' AS selected
-		FROM Material
-		WHERE activo = 1";
-	$db = getConnection();
-	$stmt = $db->prepare($sql);
-	$stmt->execute();
-	$materials = $stmt->fetchAll(PDO::FETCH_ASSOC);
-	$db = null;
-	return $materials;
-}
-
 function getSamplingInstruments() {
 	$sql = "SELECT id_instrumento, id_usuario_captura,
 		id_usuario_actualiza, instrumento, descripcion, muestreo,
@@ -2542,9 +2571,24 @@ function getSamplingInstruments() {
 	return $materials;
 }
 
+function getMaterials() {
+	$sql = "SELECT id_material, material, activo
+		FROM Material
+		WHERE activo = 1";
+	$db = getConnection();
+	$stmt = $db->prepare($sql);
+	$stmt->execute();
+	$materials = $stmt->fetchAll(PDO::FETCH_ASSOC);
+	$db = null;
+	$l = count($materials);
+	for ($i = 0; $i < $l; $i++) {
+		$materials[$i]["selected"] = false;
+	}
+	return $materials;
+}
+
 function getCoolers() {
-	$sql = "SELECT id_hielera, hielera, activo,
-		'false' AS selected
+	$sql = "SELECT id_hielera, hielera, activo
 		FROM Hielera
 		WHERE activo = 1";
 	$db = getConnection();
@@ -2552,6 +2596,10 @@ function getCoolers() {
 	$stmt->execute();
 	$coolers = $stmt->fetchAll(PDO::FETCH_ASSOC);
 	$db = null;
+	$l = count($coolers);
+	for ($i = 0; $i < $l; $i++) {
+		$coolers[$i]["selected"] = false;
+	}
 	return $coolers;
 }
 

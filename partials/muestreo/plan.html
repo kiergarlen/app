@@ -533,6 +533,12 @@
         </div>
       </div>
     </div>
+    <div class="col-xs-12">
+      Equipos:
+      <strong>
+      {{plan.plan.equipos.length}}
+      </strong>
+    </div>
   </div>
   <div class="row">
     <div class="col-xs-12">
@@ -592,6 +598,12 @@
             >
         </div>
       </div>
+    </div>
+    <div class="col-xs-12">
+      Recipientes:
+      <strong>
+      {{plan.plan.recipientes.length}}
+      </strong>
     </div>
   </div>
   <div class="row">
@@ -665,7 +677,13 @@
       </div>
     </div>
     <div class="col-xs-12">
-      <small class="text-muted">* Soluciones para verificar la calibración</small>
+      Reactivos y soluciones:
+      <strong>
+      {{plan.plan.reactivos.length}}
+      </strong>
+    </div>
+    <div class="col-xs-12">
+      NOTA <small class="text-muted">* Soluciones para verificar la calibración</small>
     </div>
   </div>
   <div class="row">
@@ -705,6 +723,12 @@
           {{material.material}}
       </label>
     </div>
+    <div class="col-xs-12">
+      Materiales:
+      <strong>
+      {{plan.plan.materiales.length}}
+      </strong>
+    </div>
   </div>
   <div class="row">
     <div class="col-xs-12">
@@ -743,10 +767,8 @@
           {{cooler.hielera}}
       </label>
     </div>
-  </div>
-  <div class="row">
     <div class="col-xs-12">
-      Cantidad de hieleras:
+      Hieleras:
       <strong>
       {{plan.plan.hieleras.length}}
       </strong>

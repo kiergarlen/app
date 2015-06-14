@@ -7,7 +7,7 @@
 
 <div class="row">
   <div class="col-xs-12">
-    <h2 class="page-header">Estudio</h2>
+    <h2 class="page-header">Estudio ({{study.study.fecha}})</h2>
   </div>
 </div>
 <div class="row">
@@ -65,6 +65,33 @@
         data-bs-datepicker
         >
     </div>
+
+
+
+    <div class="col-xs-6 col-sm-2">
+      <label for="samplingTime">
+        <i class="glyphicon glyphicon-time"></i>
+        Hora
+      </label>
+      <input type="text"
+        class="form-control"
+        id="samplingTime"
+        name="samplingTime"
+        placeholder="HH:mm"
+        data-ng-model="study.study.fecha"
+        data-time-format="HH:mm"
+        data-date-type="date"
+        data-length="1"
+        data-hour-step="1"
+        data-minute-step="1"
+        data-arrow-behavior="picker"
+        data-auto-close="1"
+        data-bs-timepicker
+        >
+    </div>
+
+
+
   </div>
   <div class="row">
     <div class="col-xs-12">

@@ -25,8 +25,8 @@ function getUsers() {
 	$sql = "SELECT id_usuario, id_nivel, id_rol, id_area, id_puesto,
 		interno, cea, laboratorio, supervisa, analiza, muestrea,
 		nombres, apellido_paterno, apellido_materno, usr, pwd,
-		CONVERT(nvarchar, fecha_captura, 127) AS fecha_captura,
-		CONVERT(nvarchar, fecha_actualiza, 127) AS fecha_actualiza,
+		CONVERT(nvarchar, fecha_captura, 126) AS fecha_captura,
+		CONVERT(nvarchar, fecha_actualiza, 126) AS fecha_actualiza,
 		ip_captura, ip_actualiza,
 		host_captura, host_actualiza, activo
 		FROM Usuario
@@ -45,8 +45,8 @@ function getUser($userId) {
 	$sql = "SELECT id_usuario, id_nivel, id_rol, id_area, id_puesto,
 		interno, cea, laboratorio, supervisa, analiza, muestrea, nombres,
 		apellido_paterno, apellido_materno, usr, pwd,
-		CONVERT(nvarchar, fecha_captura, 127) AS fecha_captura,
-		CONVERT(nvarchar, fecha_actualiza, 127) AS fecha_actualiza,
+		CONVERT(nvarchar, fecha_captura, 126) AS fecha_captura,
+		CONVERT(nvarchar, fecha_actualiza, 126) AS fecha_actualiza,
 		ip_captura, ip_actualiza,
 		host_captura, host_actualiza, activo
 		FROM Usuario
@@ -64,8 +64,8 @@ function getUserByCredentials($userName, $userPassword) {
 	$sql = "SELECT id_usuario, id_nivel, id_rol, id_area, id_puesto,
 		interno, cea, laboratorio, supervisa, analiza, muestrea,
 		nombres, apellido_paterno, apellido_materno, usr, pwd,
-		CONVERT(nvarchar, fecha_captura, 127) AS fecha_captura,
-		CONVERT(nvarchar, fecha_actualiza, 127) AS fecha_actualiza,
+		CONVERT(nvarchar, fecha_captura, 126) AS fecha_captura,
+		CONVERT(nvarchar, fecha_actualiza, 126) AS fecha_actualiza,
 		ip_captura, ip_actualiza,
 		host_captura, host_actualiza, activo
 		FROM Usuario
@@ -124,16 +124,11 @@ function updateUser($updateData) {
 
 function getMenu($userId) {
 	$sql = "SELECT
-		Menu.id_menu, Submenu.id_submenu, Menu.orden,
-		Submenu.orden AS orden_submenu, Menu.menu,
-		Submenu.menu AS submenu,Submenu.url
-		FROM Usuario INNER JOIN
-		Rol ON Usuario.id_rol = Rol.id_rol INNER JOIN
-		RolSubmenu ON Rol.id_rol = RolSubmenu.id_rol INNER JOIN
-		Submenu ON RolSubmenu.id_submenu = Submenu.id_submenu INNER JOIN
-		Menu ON Submenu.id_menu = Menu.id_menu
-		WHERE Usuario.activo = 1 AND Usuario.id_usuario = :userId
-		ORDER BY Menu.id_menu, Menu.orden, orden_submenu";
+		id_usuario, id_menu, id_submenu, orden, orden_submenu,
+		menu, submenu, url
+		FROM viewUsuarioMenu
+		WHERE id_usuario = :userId
+		ORDER BY id_menu, orden, orden";
 	$db = getConnection();
 	$stmt = $db->prepare($sql);
 	$stmt->bindParam("userId", $userId);
@@ -159,8 +154,8 @@ function getClients() {
 		id_localidad, interno, cea, tasa, cliente, area,
 		rfc, calle, numero, colonia, codigo_postal, telefono,
 		fax, contacto, puesto_contacto, email,
-		CONVERT(nvarchar, fecha_captura, 127) AS fecha_captura,
-		CONVERT(nvarchar, fecha_actualiza, 127) AS fecha_actualiza,
+		CONVERT(nvarchar, fecha_captura, 126) AS fecha_captura,
+		CONVERT(nvarchar, fecha_actualiza, 126) AS fecha_actualiza,
 		ip_captura, ip_actualiza, host_captura,
 		host_actualiza, activo
 		FROM Cliente
@@ -178,8 +173,8 @@ function getClient($clientId) {
 		id_localidad, interno, cea, tasa, cliente, area,
 		rfc, calle, numero, colonia, codigo_postal, telefono,
 		fax, contacto, puesto_contacto, email,
-		CONVERT(nvarchar, fecha_captura, 127) AS fecha_captura,
-		CONVERT(nvarchar, fecha_actualiza, 127) AS fecha_actualiza,
+		CONVERT(nvarchar, fecha_captura, 126) AS fecha_captura,
+		CONVERT(nvarchar, fecha_actualiza, 126) AS fecha_actualiza,
 		ip_captura, ip_actualiza, host_captura,
 		host_actualiza, activo
 		FROM Cliente
@@ -199,12 +194,12 @@ function getStudies() {
 		id_usuario_captura, id_usuario_valida, id_usuario_entrega,
 		id_usuario_actualiza, oficio, folio, origen_descripcion,
 		ubicacion,
-		CONVERT(nvarchar, fecha, 127) AS fecha,
-		CONVERT(nvarchar, fecha_entrega, 127) AS fecha_entrega,
-		CONVERT(nvarchar, fecha_captura, 127) AS fecha_captura,
-		CONVERT(nvarchar, fecha_valida, 127) AS fecha_valida,
-		CONVERT(nvarchar, fecha_actualiza, 127) AS fecha_actualiza,
-		CONVERT(nvarchar, fecha_rechaza, 127) AS fecha_rechaza,
+		CONVERT(nvarchar, fecha, 126) AS fecha,
+		CONVERT(nvarchar, fecha_entrega, 126) AS fecha_entrega,
+		CONVERT(nvarchar, fecha_captura, 126) AS fecha_captura,
+		CONVERT(nvarchar, fecha_valida, 126) AS fecha_valida,
+		CONVERT(nvarchar, fecha_actualiza, 126) AS fecha_actualiza,
+		CONVERT(nvarchar, fecha_rechaza, 126) AS fecha_rechaza,
 		ip_captura, ip_valida, ip_actualiza,
 		host_captura, host_valida, host_actualiza, motivo_rechaza,
 		activo
@@ -284,12 +279,12 @@ function getPlainStudy($studyId) {
 		id_usuario_captura, id_usuario_valida, id_usuario_entrega,
 		id_usuario_actualiza, oficio, folio, origen_descripcion,
 		ubicacion,
-		CONVERT(nvarchar, fecha, 127) AS fecha,
-		CONVERT(nvarchar, fecha_entrega, 127) AS fecha_entrega,
-		CONVERT(nvarchar, fecha_captura, 127) AS fecha_captura,
-		CONVERT(nvarchar, fecha_valida, 127) AS fecha_valida,
-		CONVERT(nvarchar, fecha_actualiza, 127) AS fecha_actualiza,
-		CONVERT(nvarchar, fecha_rechaza, 127) AS fecha_rechaza,
+		CONVERT(nvarchar, fecha, 126) AS fecha,
+		CONVERT(nvarchar, fecha_entrega, 126) AS fecha_entrega,
+		CONVERT(nvarchar, fecha_captura, 126) AS fecha_captura,
+		CONVERT(nvarchar, fecha_valida, 126) AS fecha_valida,
+		CONVERT(nvarchar, fecha_actualiza, 126) AS fecha_actualiza,
+		CONVERT(nvarchar, fecha_rechaza, 126) AS fecha_rechaza,
 		ip_captura, ip_valida, ip_actualiza,
 		host_captura, host_valida, host_actualiza, motivo_rechaza,
 		activo
@@ -317,12 +312,12 @@ function getLastStudyByYear($yearId) {
 		id_usuario_captura, id_usuario_valida, id_usuario_entrega,
 		id_usuario_actualiza, oficio, folio, origen_descripcion,
 		ubicacion,
-		CONVERT(nvarchar, fecha, 127) AS fecha,
-		CONVERT(nvarchar, fecha_entrega, 127) AS fecha_entrega,
-		CONVERT(nvarchar, fecha_captura, 127) AS fecha_captura,
-		CONVERT(nvarchar, fecha_valida, 127) AS fecha_valida,
-		CONVERT(nvarchar, fecha_actualiza, 127) AS fecha_actualiza,
-		CONVERT(nvarchar, fecha_rechaza, 127) AS fecha_rechaza,
+		CONVERT(nvarchar, fecha, 126) AS fecha,
+		CONVERT(nvarchar, fecha_entrega, 126) AS fecha_entrega,
+		CONVERT(nvarchar, fecha_captura, 126) AS fecha_captura,
+		CONVERT(nvarchar, fecha_valida, 126) AS fecha_valida,
+		CONVERT(nvarchar, fecha_actualiza, 126) AS fecha_actualiza,
+		CONVERT(nvarchar, fecha_rechaza, 126) AS fecha_rechaza,
 		ip_captura, ip_valida, ip_actualiza,
 		host_captura, host_valida, host_actualiza, motivo_rechaza,
 		activo
@@ -391,11 +386,11 @@ function getOrders() {
 		id_tipo_muestreo, id_norma, id_cuerpo_receptor, id_status,
 		id_usuario_captura, id_usuario_valida, id_usuario_actualiza,
 		cantidad_muestras, costo_total, cuerpo_receptor, tipo_cuerpo,
-		CONVERT(nvarchar, fecha, 127) AS fecha,
-		CONVERT(nvarchar, fecha_captura, 127) AS fecha_captura,
-		CONVERT(nvarchar, fecha_valida, 127) AS fecha_valida,
-		CONVERT(nvarchar, fecha_actualiza, 127) AS fecha_actualiza,
-		CONVERT(nvarchar, fecha_rechaza, 127) AS fecha_rechaza,
+		CONVERT(nvarchar, fecha, 126) AS fecha,
+		CONVERT(nvarchar, fecha_captura, 126) AS fecha_captura,
+		CONVERT(nvarchar, fecha_valida, 126) AS fecha_valida,
+		CONVERT(nvarchar, fecha_actualiza, 126) AS fecha_actualiza,
+		CONVERT(nvarchar, fecha_rechaza, 126) AS fecha_rechaza,
 		ip_captura, ip_valida,
 		ip_actualiza, host_captura, host_valida, host_actualiza,
 		motivo_rechaza, comentarios, activo
@@ -424,11 +419,11 @@ function getOrdersByStudy($studyId) {
 		id_tipo_muestreo, id_norma, id_cuerpo_receptor, id_status,
 		id_usuario_captura, id_usuario_valida, id_usuario_actualiza,
 		cantidad_muestras, costo_total, cuerpo_receptor, tipo_cuerpo,
-		CONVERT(nvarchar, fecha, 127) AS fecha,
-		CONVERT(nvarchar, fecha_captura, 127) AS fecha_captura,
-		CONVERT(nvarchar, fecha_valida, 127) AS fecha_valida,
-		CONVERT(nvarchar, fecha_actualiza, 127) AS fecha_actualiza,
-		CONVERT(nvarchar, fecha_rechaza, 127) AS fecha_rechaza,
+		CONVERT(nvarchar, fecha, 126) AS fecha,
+		CONVERT(nvarchar, fecha_captura, 126) AS fecha_captura,
+		CONVERT(nvarchar, fecha_valida, 126) AS fecha_valida,
+		CONVERT(nvarchar, fecha_actualiza, 126) AS fecha_actualiza,
+		CONVERT(nvarchar, fecha_rechaza, 126) AS fecha_rechaza,
 		ip_captura, ip_valida,
 		ip_actualiza, host_captura, host_valida, host_actualiza,
 		motivo_rechaza, comentarios, activo
@@ -455,11 +450,11 @@ function getPlainOrder($orderId) {
 		id_tipo_muestreo, id_norma, id_cuerpo_receptor, id_status,
 		id_usuario_captura, id_usuario_valida, id_usuario_actualiza,
 		cantidad_muestras, costo_total, cuerpo_receptor, tipo_cuerpo,
-		CONVERT(nvarchar, fecha, 127) AS fecha,
-		CONVERT(nvarchar, fecha_captura, 127) AS fecha_captura,
-		CONVERT(nvarchar, fecha_valida, 127) AS fecha_valida,
-		CONVERT(nvarchar, fecha_actualiza, 127) AS fecha_actualiza,
-		CONVERT(nvarchar, fecha_rechaza, 127) AS fecha_rechaza,
+		CONVERT(nvarchar, fecha, 126) AS fecha,
+		CONVERT(nvarchar, fecha_captura, 126) AS fecha_captura,
+		CONVERT(nvarchar, fecha_valida, 126) AS fecha_valida,
+		CONVERT(nvarchar, fecha_actualiza, 126) AS fecha_actualiza,
+		CONVERT(nvarchar, fecha_rechaza, 126) AS fecha_rechaza,
 		ip_captura, ip_valida,
 		ip_actualiza, host_captura, host_valida, host_actualiza,
 		motivo_rechaza, comentarios, activo
@@ -491,11 +486,11 @@ function getStudyOrders($studyId) {
 		id_tipo_muestreo, id_norma, id_cuerpo_receptor, id_status,
 		id_usuario_captura, id_usuario_valida, id_usuario_actualiza,
 		cantidad_muestras, costo_total, cuerpo_receptor, tipo_cuerpo,
-		CONVERT(nvarchar, fecha, 127) AS fecha,
-		CONVERT(nvarchar, fecha_captura, 127) AS fecha_captura,
-		CONVERT(nvarchar, fecha_valida, 127) AS fecha_valida,
-		CONVERT(nvarchar, fecha_actualiza, 127) AS fecha_actualiza,
-		CONVERT(nvarchar, fecha_rechaza, 127) AS fecha_rechaza,
+		CONVERT(nvarchar, fecha, 126) AS fecha,
+		CONVERT(nvarchar, fecha_captura, 126) AS fecha_captura,
+		CONVERT(nvarchar, fecha_valida, 126) AS fecha_valida,
+		CONVERT(nvarchar, fecha_actualiza, 126) AS fecha_actualiza,
+		CONVERT(nvarchar, fecha_rechaza, 126) AS fecha_rechaza,
 		ip_captura, ip_valida, ip_actualiza, host_captura,
 		host_valida, host_actualiza, motivo_rechaza,
 		comentarios, activo
@@ -584,14 +579,14 @@ function getPlans() {
 		id_responsable_recipientes, id_responsable_reactivos,
 		id_responsable_material, id_responsable_hieleras, id_status,
 		id_usuario_captura, id_usuario_valida, id_usuario_actualiza,
-		CONVERT(nvarchar, fecha, 127) AS fecha,
-		CONVERT(nvarchar, fecha_probable, 127) AS fecha_probable,
-		CONVERT(nvarchar, fecha_probable, 127) AS fecha_probable,
-		CONVERT(nvarchar, fecha_calibracion, 127) AS fecha_calibracion,
-		CONVERT(nvarchar, fecha_captura, 127) AS fecha_captura,
-		CONVERT(nvarchar, fecha_valida, 127) AS fecha_valida,
-		CONVERT(nvarchar, fecha_actualiza, 127) AS fecha_actualiza,
-		CONVERT(nvarchar, fecha_rechaza, 127) AS fecha_rechaza,
+		CONVERT(nvarchar, fecha, 126) AS fecha,
+		CONVERT(nvarchar, fecha_probable, 126) AS fecha_probable,
+		CONVERT(nvarchar, fecha_probable, 126) AS fecha_probable,
+		CONVERT(nvarchar, fecha_calibracion, 126) AS fecha_calibracion,
+		CONVERT(nvarchar, fecha_captura, 126) AS fecha_captura,
+		CONVERT(nvarchar, fecha_valida, 126) AS fecha_valida,
+		CONVERT(nvarchar, fecha_actualiza, 126) AS fecha_actualiza,
+		CONVERT(nvarchar, fecha_rechaza, 126) AS fecha_rechaza,
 		ip_captura,
 		ip_valida, ip_actualiza, host_captura, host_valida,
 		host_actualiza, calle, numero, colonia, codigo_postal,
@@ -668,14 +663,14 @@ function getPlansByOrder($orderId) {
 		id_responsable_recipientes, id_responsable_reactivos,
 		id_responsable_material, id_responsable_hieleras, id_status,
 		id_usuario_captura, id_usuario_valida, id_usuario_actualiza,
-		CONVERT(nvarchar, fecha, 127) AS fecha,
-		CONVERT(nvarchar, fecha_probable, 127) AS fecha_probable,
-		CONVERT(nvarchar, fecha_probable, 127) AS fecha_probable,
-		CONVERT(nvarchar, fecha_calibracion, 127) AS fecha_calibracion,
-		CONVERT(nvarchar, fecha_captura, 127) AS fecha_captura,
-		CONVERT(nvarchar, fecha_valida, 127) AS fecha_valida,
-		CONVERT(nvarchar, fecha_actualiza, 127) AS fecha_actualiza,
-		CONVERT(nvarchar, fecha_rechaza, 127) AS fecha_rechaza,
+		CONVERT(nvarchar, fecha, 126) AS fecha,
+		CONVERT(nvarchar, fecha_probable, 126) AS fecha_probable,
+		CONVERT(nvarchar, fecha_probable, 126) AS fecha_probable,
+		CONVERT(nvarchar, fecha_calibracion, 126) AS fecha_calibracion,
+		CONVERT(nvarchar, fecha_captura, 126) AS fecha_captura,
+		CONVERT(nvarchar, fecha_valida, 126) AS fecha_valida,
+		CONVERT(nvarchar, fecha_actualiza, 126) AS fecha_actualiza,
+		CONVERT(nvarchar, fecha_rechaza, 126) AS fecha_rechaza,
 		ip_captura,
 		ip_valida, ip_actualiza, host_captura, host_valida,
 		host_actualiza, calle, numero, colonia, codigo_postal,
@@ -705,14 +700,14 @@ function getPlainPlan($planId) {
 		id_responsable_recipientes, id_responsable_reactivos,
 		id_responsable_material, id_responsable_hieleras, id_status,
 		id_usuario_captura, id_usuario_valida, id_usuario_actualiza,
-		CONVERT(nvarchar, fecha, 127) AS fecha,
-		CONVERT(nvarchar, fecha_probable, 127) AS fecha_probable,
-		CONVERT(nvarchar, fecha_probable, 127) AS fecha_probable,
-		CONVERT(nvarchar, fecha_calibracion, 127) AS fecha_calibracion,
-		CONVERT(nvarchar, fecha_captura, 127) AS fecha_captura,
-		CONVERT(nvarchar, fecha_valida, 127) AS fecha_valida,
-		CONVERT(nvarchar, fecha_actualiza, 127) AS fecha_actualiza,
-		CONVERT(nvarchar, fecha_rechaza, 127) AS fecha_rechaza,
+		CONVERT(nvarchar, fecha, 126) AS fecha,
+		CONVERT(nvarchar, fecha_probable, 126) AS fecha_probable,
+		CONVERT(nvarchar, fecha_probable, 126) AS fecha_probable,
+		CONVERT(nvarchar, fecha_calibracion, 126) AS fecha_calibracion,
+		CONVERT(nvarchar, fecha_captura, 126) AS fecha_captura,
+		CONVERT(nvarchar, fecha_valida, 126) AS fecha_valida,
+		CONVERT(nvarchar, fecha_actualiza, 126) AS fecha_actualiza,
+		CONVERT(nvarchar, fecha_rechaza, 126) AS fecha_rechaza,
 		ip_captura,
 		ip_valida, ip_actualiza, host_captura, host_valida,
 		host_actualiza, calle, numero, colonia, codigo_postal,
@@ -852,8 +847,8 @@ function getSamplingEmployees() {
 	$sql = "SELECT id_usuario, id_nivel, id_rol, id_area, id_puesto,
 		interno, cea, laboratorio, supervisa, analiza, muestrea,
 		nombres, apellido_paterno, apellido_materno,
-		CONVERT(nvarchar, fecha_captura, 127) AS fecha_captura,
-		CONVERT(nvarchar, fecha_actualiza, 127) AS fecha_actualiza,
+		CONVERT(nvarchar, fecha_captura, 126) AS fecha_captura,
+		CONVERT(nvarchar, fecha_actualiza, 126) AS fecha_actualiza,
 		ip_captura, ip_actualiza,
 		host_captura, host_actualiza, activo
 		FROM Usuario
@@ -2005,8 +2000,8 @@ function getPoints() {
 		id_usuario_actualiza, punto, descripcion, siglas,
 		consecutivo, clave, lat, lng, alt, lat_gra, lat_min, lat_seg,
 		lng_gra, lng_min, lng_seg,
-		CONVERT(nvarchar, fecha_captura, 127) AS fecha_captura,
-		CONVERT(nvarchar, fecha_actualiza, 127) AS fecha_actualiza,
+		CONVERT(nvarchar, fecha_captura, 126) AS fecha_captura,
+		CONVERT(nvarchar, fecha_actualiza, 126) AS fecha_actualiza,
 		ip_captura, ip_actualiza, host_captura, host_actualiza,
 		comentarios, activo
 		FROM Punto
@@ -2025,8 +2020,8 @@ function getPoint($pointId) {
 		id_usuario_actualiza, punto, descripcion, siglas,
 		consecutivo, clave, lat, lng, alt, lat_gra, lat_min, lat_seg,
 		lng_gra, lng_min, lng_seg,
-		CONVERT(nvarchar, fecha_captura, 127) AS fecha_captura,
-		CONVERT(nvarchar, fecha_actualiza, 127) AS fecha_actualiza,
+		CONVERT(nvarchar, fecha_captura, 126) AS fecha_captura,
+		CONVERT(nvarchar, fecha_actualiza, 126) AS fecha_actualiza,
 		ip_captura, ip_actualiza, host_captura, host_actualiza,
 		comentarios, activo
 		FROM Punto
@@ -2058,8 +2053,8 @@ function getPointsByPackage($packageId) {
 		id_localidad, id_usuario_captura, id_usuario_actualiza, punto,
 		descripcion, siglas, consecutivo, clave, lat, lng, alt,
 		lat_gra, lat_min, lat_seg, lng_gra, lng_min, lng_seg,
-		CONVERT(nvarchar, fecha_captura, 127) AS fecha_captura,
-		CONVERT(nvarchar, fecha_actualiza, 127) AS fecha_actualiza,
+		CONVERT(nvarchar, fecha_captura, 126) AS fecha_captura,
+		CONVERT(nvarchar, fecha_actualiza, 126) AS fecha_actualiza,
 		 ip_captura, ip_actualiza,
 		host_captura, host_actualiza, comentarios, activo
 		FROM viewPuntoPaquete
@@ -2322,13 +2317,17 @@ function getReactivesByPlan($planId) {
 	$sql = "SELECT id_plan_reactivo, id_plan, id_reactivo, valor,
 		lote, folio, activo
 		FROM PlanReactivo
-		WHERE activo = 1";
+		WHERE id_plan = :planId";
 	$db = getConnection();
 	$stmt = $db->prepare($sql);
 	$stmt->bindParam("planId", $planId);
 	$stmt->execute();
 	$reactives = $stmt->fetchAll(PDO::FETCH_ASSOC);
 	$db = null;
+	$l = count($reactives);
+	for ($i = 0; $i < $l; $i++) {
+		$reactives[$i]["selected"] = true;
+	}
 	return $reactives;
 }
 
@@ -2529,32 +2528,6 @@ function getPreservations() {
 	return $preservations;
 }
 
-function getContainerKinds() {
-	$sql = "SELECT  id_recipiente, recipiente, tipo_recipiente, activo,
-		'0' AS cantidad, 'false' AS selected
-		FROM Recipiente
-		WHERE activo = 1";
-	$db = getConnection();
-	$stmt = $db->prepare($sql);
-	$stmt->execute();
-	$containerKinds = $stmt->fetchAll(PDO::FETCH_ASSOC);
-	$db = null;
-	return $containerKinds;
-}
-
-function getReactives() {
-	$sql = "SELECT   id_reactivo, id_tipo_reactivo, reactivo, activo,
-		'0' AS valor, '' AS lote, '' AS folio, 'false' AS selected
-		FROM Reactivo
-		WHERE activo = 1";
-	$db = getConnection();
-	$stmt = $db->prepare($sql);
-	$stmt->execute();
-	$reactives = $stmt->fetchAll(PDO::FETCH_ASSOC);
-	$db = null;
-	return $reactives;
-}
-
 function getSamplingInstruments() {
 	$sql = "SELECT id_instrumento, id_usuario_captura,
 		id_usuario_actualiza, instrumento, descripcion, muestreo,
@@ -2569,6 +2542,37 @@ function getSamplingInstruments() {
 	$materials = $stmt->fetchAll(PDO::FETCH_ASSOC);
 	$db = null;
 	return $materials;
+}
+
+function getContainerKinds() {
+	$sql = "SELECT  id_recipiente, recipiente, tipo_recipiente, activo,
+		'0' AS cantidad, 'false' AS selected
+		FROM Recipiente
+		WHERE activo = 1";
+	$db = getConnection();
+	$stmt = $db->prepare($sql);
+	$stmt->execute();
+	$containerKinds = $stmt->fetchAll(PDO::FETCH_ASSOC);
+	$db = null;
+	return $containerKinds;
+}
+
+function getReactives() {
+	$sql = "SELECT   id_reactivo, id_tipo_reactivo, reactivo,
+		registra_valor, lote, folio, activo,
+		'0' AS valor
+		FROM Reactivo
+		WHERE activo = 1";
+	$db = getConnection();
+	$stmt = $db->prepare($sql);
+	$stmt->execute();
+	$reactives = $stmt->fetchAll(PDO::FETCH_ASSOC);
+	$db = null;
+	$l = count($reactives);
+	for ($i = 0; $i < $l; $i++) {
+		$reactives[$i]["selected"] = false;
+	}
+	return $reactives;
 }
 
 function getMaterials() {

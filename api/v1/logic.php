@@ -169,7 +169,66 @@ function isoDateToMsSql($dateString) {
 		$date = DateTime::createFromFormat('Y-m-d', $dateString);
 		return $date->format($format);
 	}
-	return "1970-01-01 00:00";
+	return "2015-01-01 00:00";
+}
+
+function isoDateToMsSql1($dateString) {
+	$format = "c";
+	$outputFormat = "Y-m-d H:i:s P";
+	$datePart = "2015-01-01";
+	$hoursPart = "00:00:00";
+	$secondsPart = ".000";
+	$offsetPart = "";
+
+	if (DateTime::createFromFormat($outputFormat, $dateString)) {
+		return $dateString;
+	}
+
+	if (DateTime::createFromFormat($format, $dateString)) {
+		$date = DateTime::createFromFormat($format, $dateString);
+		return $date->format($outputFormat);
+	}
+
+	if (DateTime::createFromFormat("Y-m-d", $dateString))
+	{
+		$date = DateTime::createFromFormat("Y-m-d", $dateString);
+		return $date->format($format) . " 00:00";
+	}
+
+	if (count(explode("T", $dateString)) > 1) {
+
+		$dateStringArray = explode("T", $dateString);
+		$datePart = $dateStringArray[0];
+		$dateStringTime = $dateStringArray[1];
+		if (count(explode("+", $dateStringTime)) > 1) {
+			$dateStringTimeArray = explode("+", $dateStringTime);
+			$timeString = $dateStringTimeArray[0];
+			$hoursPart = substr($timeString, 0, 8);
+			$secondsPart = substr($timeString, 8, strlen($timeString));
+			//$offsetPart = "+" . $dateStringTimeArray[1];
+		}
+
+		if (count(explode("-", $dateStringTime)) > 1) {
+			$dateStringTimeArray = explode("-", $dateStringTime);
+			$timeString = $dateStringTimeArray[0];
+			$hoursPart = substr($timeString, 0, 8);
+			$secondsPart = substr($timeString, 8, strlen($timeString));
+			//$offsetPart = "-" . $dateStringTimeArray[1];
+		}
+
+		$dateStringDate = $datePart . " ";
+		$dateStringDate .= $hoursPart . "";
+		//$dateStringDate .= " " . $offsetPart;
+
+		if (DateTime::createFromFormat('Y-m-d H:i:s', $dateStringDate)) {
+			$dateStringDate = $datePart . " ";
+			$dateStringDate .= $hoursPart . "";
+			$dateStringDate .= $secondsPart . "";
+			//$dateStringDate .= " " . $offsetPart;
+			return $dateStringDate;
+		}
+	}
+	return "2015-01-01 00:00:00";
 }
 
 function processStudyInsert($request) {
@@ -533,5 +592,5 @@ function processPlanUpdate($request) {
 //	$study = $update["estudio"];
 //	$plans = $update["planes"];
 //	unset($update["cliente"]);
-	
+
 }

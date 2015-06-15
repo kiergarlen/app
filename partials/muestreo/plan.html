@@ -643,35 +643,30 @@
               >
               {{reactive.reactivo}}
           </label>
+          <span class="text-muted"
+            data-ng-show="reactive.lote.length > 0"
+            >
+            Lote: {{reactive.lote}}
+          </span>
+          <span class="text-muted"
+            data-ng-show="reactive.folio.length > 0"
+            >
+            Folio: {{reactive.folio}}
+          </span>
         </div>
         <div class="col-xs-12 col-sm-4">
           <label
-            for="reactiveQuantity{{reactive.id_reactivo}}"
+            for="reactiveValue{{reactive.id_reactivo}}"
             >
             Valor
           </label>
           <input type="text"
             class="form-control"
             placeholder="0"
-            id="reactiveQuantity{{reactive.id_reactivo}}"
-            name="reactiveQuantity{{reactive.id_reactivo}}"
-            data-ng-model="reactive.cantidad"
-            data-ng-disabled="!reactive.selected"
-            >
-        </div>
-        <div class="col-xs-12 col-sm-4">
-          <label
-            for="reactiveLot{{reactive.id_reactivo}}"
-            >
-            Lote
-          </label>
-          <input type="text"
-            class="form-control"
-            placeholder="Lote"
-            id="reactiveLot{{reactive.id_reactivo}}"
-            name="reactiveLot{{reactive.id_reactivo}}"
-            data-ng-model="reactive.lote"
-            data-ng-disabled="!reactive.selected"
+            id="reactiveValue{{reactive.id_reactivo}}"
+            name="reactiveValue{{reactive.id_reactivo}}"
+            data-ng-model="reactive.valor"
+            data-ng-disabled="reactive.registra_valor < 1"
             >
         </div>
       </div>

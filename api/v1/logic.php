@@ -372,7 +372,7 @@ function processStudyOrderUpdate($studyUpdateData) {
 
 	if ($l < 1)
 	{
-		//stored empty, insert all
+		//nothing stored, insert all
 		for ($j = 0; $j < $m; $j++) {
 			$newOrder = (array) $orders[$j];
 			unset($newOrder["id_orden"]);
@@ -510,7 +510,7 @@ function processOrderPlansUpdate($orderUpdateData) {
 	//TODO: use single transaction
 	if ($l < 1)
 	{
-		//stored empty, insert all
+		//nothing stored, insert all
 		for ($j = 0; $j < $m; $j++) {
 			$plan = (array) $plans[$j];
 			unset($plan["id_plan"]);
@@ -586,11 +586,136 @@ function processOrderPlansUpdate($orderUpdateData) {
 }
 
 function processPlanUpdate($request) {
-//	$token = decodeUserToken($request);
-//	$update = (array) json_decode($request->getBody());
-//	$client = $update["cliente"];
-//	$study = $update["estudio"];
-//	$plans = $update["planes"];
-//	unset($update["cliente"]);
+	$token = decodeUserToken($request);
+	$plan = (array) json_decode($request->getBody());
+	$instruments = $plan["instrumentos"];
+	$containers = $plan["recipientes"];
+	$reactives = $plan["reactivos"];
+	$materials = $plan["materiales"];
+	$coolers = $plan["hieleras"];
 
+	unset($plan["cliente"]);
+	unset($plan["orden"]);
+	unset($plan["supervisor_muestreo"]);
+	unset($plan["puntos"]);
+	unset($plan["instrumentos"]);
+	unset($plan["recipientes"]);
+	unset($plan["reactivos"]);
+	unset($plan["materiales"]);
+	unset($plan["hieleras"]);
+	unset($plan["planes"]);
+	unset($plan["tipo_muestreo"]);
+	unset($plan["id_usuario_captura"]);
+	unset($plan["fecha_captura"]);
+	unset($plan["ip_captura"]);
+	unset($plan["host_captura"]);
+
+	$plan["id_usuario_actualiza"] = $token->uid;
+	$plan["fecha_actualiza"] = date('Y-m-d H:i:s');
+	$plan["ip_actualiza"] = $request->getIp();
+	$plan["host_actualiza"] = $request->getUrl();
+
+	if ($plan["id_status"] == 2 && strlen($plan["ip_valida"]) < 1)
+	{
+		$plan["ip_valida"] = $request->getIp();
+		$plan["host_valida"] = $request->getUrl();
+	}
+
+	$plan["fecha"] = isoDateToMsSql($plan["fecha"]);
+	$plan["fecha_probable"] = isoDateToMsSql($plan["fecha_probable"]);
+	$plan["fecha_calibracion"] = isoDateToMsSql($plan["fecha_calibracion"]);
+	$plan["fecha_valida"] = isoDateToMsSql($plan["fecha_valida"]);
+	$plan["fecha_rechaza"] = isoDateToMsSql($plan["fecha_rechaza"]);
+
+	$planUpdateData = array (
+		"plan" => $plan,
+		"instruments" => $instruments,
+		"containers" => $containers,
+		"reactives" => $reactives,
+		"materials" => $materials,
+		"coolers" => $coolers
+	);
+	return $planUpdateData;
+}
+
+function processPlanInstrumentsUpdate($planUpdateData) {
+	$instruments = (array) $planUpdateData["instruments"];
+	$planId = $planUpdateData["plan"]["id_plan"];
+	$updateUserId = $planUpdateData["plan"]["id_usuario_actualiza"];
+	$updateDate = $planUpdateData["plan"]["fecha_actualiza"];
+	$updateIp = $planUpdateData["plan"]["ip_actualiza"];
+	$updateUrl = $planUpdateData["plan"]["host_actualiza"];
+	$storedInstruments = getInstrumentsByPlan($planId);
+
+	$i = 0;
+	$j = 0;
+	$l = count($storedInstruments);
+	$m = count($instruments);
+
+	if ($l < 1)
+	{
+		//nothing stored, insert all
+		for ($j = 0; $j < $m; $j++) {
+			$newInstrument = (array) $instruments[$j];
+			unset($newInstrument["instrumento"]);
+			unset($newInstrument["descripcion"]);
+			unset($newInstrument["muestreo"]);
+			unset($newInstrument["selected"]);
+			insertOrder($newInstrument);
+		}
+		return $studyId;
+	}
+	else
+	{
+		// //mark all stored as deleted, only additions/matches persist
+		// for ($i = 0; $i < $l; $i++) {
+		// 	unset($storedOrders[$i]['$$hashKey']);
+		// 	unset($storedOrders[$i]["id_usuario_captura"]);
+		// 	unset($storedOrders[$i]["fecha_captura"]);
+		// 	unset($storedOrders[$i]["ip_captura"]);
+		// 	unset($storedOrders[$i]["host_captura"]);
+		// 	$storedOrders[$i]["activo"] = 0;
+		// 	$storedOrders[$i]["id_usuario_actualiza"] = $updateUserId;
+		// 	$storedOrders[$i]["fecha_actualiza"] = date('Y-m-d H:i:s');
+		// 	$storedOrders[$i]["ip_actualiza"] = $updateIp;
+		// 	$storedOrders[$i]["host_actualiza"] = $updateUrl;
+		// 	//return $storedOrders[$i];
+		// 	//return "delete old";
+		// 	updateOrder($storedOrders[$i]);
+		// }
+		// for ($j = 0; $j < $m; $j++) {
+		// 	$order = (array) $orders[$j];
+		// 	if ($order["id_orden"] == 0)
+		// 	{
+		// 		//new, store it
+		// 		unset($order["id_orden"]);
+		// 		unset($order['$$hashKey']);
+		// 		$order["id_usuario_captura"] = $updateUserId;
+		// 		$order["fecha_captura"] = date('Y-m-d H:i:s');
+		// 		$order["ip_captura"] = $updateIp;
+		// 		$order["host_captura"] = $updateUrl;
+		// 		//return "...something new;
+		// 		//return $order;
+		// 		insertOrder($order);
+		// 	}
+		// 	else
+		// 	{
+		// 		//update
+		// 		unset($order['$$hashKey']);
+		// 		unset($order["id_usuario_captura"]);
+		// 		unset($order["fecha_captura"]);
+		// 		unset($order["ip_captura"]);
+		// 		unset($order["host_captura"]);
+		// 		$order["activo"] = 1;
+		// 		$order["id_usuario_actualiza"] = $updateUserId;
+		// 		$order["fecha_actualiza"] = date('Y-m-d H:i:s');
+		// 		$order["ip_actualiza"] = $updateIp;
+		// 		$order["host_actualiza"] = $updateUrl;
+		// 		//return "...something old";
+		// 		//return $order;
+		// 		updateOrder($order);
+		// 	}
+		// }
+	}
+	return $studyId;
 }

@@ -215,7 +215,7 @@ $app->get("/order/sources", function() use ($app) {
 
 $app->get("/plans(/)(:planId)", function($planId = -1) use ($app) {
 	try {
-		// $userId = decodeUserToken($app->request())->uid;
+		$userId = decodeUserToken($app->request())->uid;
 		if ($planId > -1)
 		{
 			$result = json_encode(getPlan($planId));
@@ -238,7 +238,8 @@ $app->post("/plans", function() use ($app) {
 	try {
 		$userId = decodeUserToken($app->request())->uid;
 		$request = $app->request();
-		//$requestData = extractDataFromRequest($request);
+		$requestData = extractDataFromRequest($request);
+		//$result = json_encode($requestData);
 		$planId = extractDataFromRequest($request)->id_plan;
 		if ($planId < 1)
 		{
@@ -249,13 +250,14 @@ $app->post("/plans", function() use ($app) {
 		}
 		else
 		{
-			// $planUpdateData = processPlanUpdate($request);
-			// //$result = json_encode(updatePlan($planUpdateData["plan"]));
-			// $planId = updatePlan($planUpdateData["plan"]);
-			// // $result = json_encode(processPlanOrderUpdate($planUpdateData));
+			$planUpdateData = processPlanUpdate($request);
+			//$result = $planUpdateData;
+			$result = json_encode(updatePlan($planUpdateData["plan"]));
+			//just for a while... $planId = updatePlan($planUpdateData["plan"]);
+			//$result = json_encode(processPlanOrderUpdate($planUpdateData));
 			// // $result = processPlanOrderUpdate($planUpdateData);
 			// // processPlanOrderUpdate($planUpdateData);
-			$result = '{"id_plan":' . $planId . '}';
+			// $result = '{"id_plan":' . $planId . '}';
 		}
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');

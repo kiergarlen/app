@@ -293,10 +293,11 @@
         {{::plan.plan.supervisor_muestreo.nombres}}
         {{::plan.plan.supervisor_muestreo.apellido_paterno}}
         {{::plan.plan.supervisor_muestreo.apellido_materno}}
-        <span class="texrt-muted">(por Orden de muestreo)</span>
+        <br>
+        <span class="text-muted">(por Orden de muestreo)</span>
       </p>
       Tipo muestreo:
-      <strong>{{::plan.plan.orden.id_tipo_muestreo}}</strong>
+      <strong>{{::plan.plan.tipo_muestreo}}</strong>
     </div>
     <div class="col-xs-12 col-sm-3"
       data-ng-show="plan.plan.orden.id_tipo_muestreo > 1">
@@ -308,15 +309,9 @@
         name="samplingFrequency"
         data-ng-model="plan.plan.frecuencia"
         >
-        <option value="2">
-          2
-        </option>
-        <option value="4">
-          4
-        </option>
-        <option value="6">
-          6
-        </option>
+        <option value="2">2</option>
+        <option value="4">4</option>
+        <option value="6">6</option>
       </select>
     </div>
   </div>

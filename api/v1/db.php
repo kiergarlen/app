@@ -730,9 +730,10 @@ function getPlan($planId) {
 	$study = getPlainStudy($plan->id_estudio);
 	$plan->cliente = getClient($study->id_cliente);
 	$plan->orden = getPlainOrder($plan->id_orden);
+	$plan->tipo_muestreo = getSamplingType($plan->orden->id_tipo_muestreo)->tipo_muestreo;
 	$plan->supervisor_muestreo = getSamplingEmployee($plan->id_supervisor_muestreo);
 	$plan->puntos = getPointsByPackage($plan->id_paquete);
-	$plan->equipos = getInstrumentsByPlan($planId);
+	$plan->instrumentos = getInstrumentsByPlan($planId);
 	$plan->recipientes = getContainersByPlan($planId);
 	$plan->reactivos = getReactivesByPlan($planId);
 	$plan->materiales = getMaterialsByPlan($planId);
@@ -2158,10 +2159,12 @@ function getSamples() {
 function getInstruments() {
 	$sql = "SELECT id_instrumento, id_usuario_captura,
 		id_usuario_actualiza, instrumento, descripcion, muestreo,
-		laboratorio, inventario, fecha_captura, fecha_actualiza,
+		laboratorio, inventario, bitacora, folio,
+		fecha_captura, fecha_actualiza,
 		ip_captura, ip_actualiza, host_captura, host_actualiza,
 		comentarios, activo
-		FROM Instrumento";
+		FROM Instrumento
+		WHERE activo = 1";
 	$db = getConnection();
 	$stmt = $db->prepare($sql);
 	$stmt->execute();
@@ -2170,6 +2173,36 @@ function getInstruments() {
 	return $instruments;
 }
 
+function getInstrumentsByPlan($planId) {
+	$sql = "SELECT id_plan_instrumento, id_plan, id_instrumento,
+		bitacora, folio, activo
+		FROM PlanInstrumento
+		WHERE id_plan = :planId";
+	$db = getConnection();
+	$stmt = $db->prepare($sql);
+	$stmt->bindParam("planId", $planId);
+	$stmt->execute();
+	$instruments = $stmt->fetchAll(PDO::FETCH_ASSOC);
+	$db = null;
+	$l = count($instruments);
+	for ($i = 0; $i < $l; $i++) {
+		$instruments[$i]["selected"] = true;
+	}
+	return $instruments;
+}
+
+function insertInstrument($instrumentData) {
+	$sql = "INSERT INTO PlanInstrumento (id_plan, id_instrumento,
+		bitacora, folio, activo)
+		VALUES (:id_plan, :id_instrumento,
+		:bitacora, :folio, :activo)";
+	$db = getConnection();
+	$stmt = $db->prepare($sql);
+	$stmt->execute($instrumentData);
+	$instrumentId = $db->lastInsertId();
+	$db = null;
+	return $instrumentId;
+}
 
 function getParameter($parameterId) {
 	$sql = "SELECT id_parametro, id_tipo_matriz, id_area,
@@ -2242,6 +2275,19 @@ function getSamplingTypes() {
 	return $samplingTypes;
 }
 
+function getSamplingType($samplingTypeId) {
+	$sql = "SELECT id_tipo_muestreo, tipo_muestreo, activo
+		FROM TipoMuestreo
+		WHERE activo = 1 AND id_tipo_muestreo = :samplingTypeId";
+	$db = getConnection();
+	$stmt = $db->prepare($sql);
+	$stmt->bindParam("samplingTypeId", $samplingTypeId);
+	$stmt->execute();
+	$samplingType = (array) $stmt->fetchAll(PDO::FETCH_OBJ)[0];
+	$db = null;
+	return (object) $samplingType;
+}
+
 function getMatrices() {
 	$sql = "SELECT id_matriz, id_tipo_matriz, id_norma, matriz,
 		siglas, activo
@@ -2311,24 +2357,6 @@ function getPrices() {
 	$prices = $stmt->fetchAll(PDO::FETCH_ASSOC);
 	$db = null;
 	return $prices;
-}
-
-function getInstrumentsByPlan($planId) {
-	$sql = "SELECT id_plan_instrumento, id_plan, id_instrumento,
-		bitacora, folio, activo
-		FROM PlanInstrumento
-		WHERE id_plan = :planId";
-	$db = getConnection();
-	$stmt = $db->prepare($sql);
-	$stmt->bindParam("planId", $planId);
-	$stmt->execute();
-	$instruments = $stmt->fetchAll(PDO::FETCH_ASSOC);
-	$db = null;
-	$l = count($instruments);
-	for ($i = 0; $i < $l; $i++) {
-		$instruments[$i]["selected"] = true;
-	}
-	return $instruments;
 }
 
 function getContainersByPlan($planId) {
@@ -2565,11 +2593,8 @@ function getPreservations() {
 }
 
 function getSamplingInstruments() {
-	$sql = "SELECT id_instrumento, id_usuario_captura,
-		id_usuario_actualiza, instrumento, descripcion, muestreo,
-		laboratorio, inventario, fecha_captura, fecha_actualiza,
-		ip_captura, ip_actualiza, host_captura, host_actualiza,
-		comentarios, activo
+	$sql = "SELECT id_instrumento, instrumento, descripcion, muestreo,
+		inventario, bitacora, folio, activo
 		FROM Instrumento
 		WHERE activo = 1 AND muestreo = 1";
 	$db = getConnection();

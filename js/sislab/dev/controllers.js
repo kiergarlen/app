@@ -910,6 +910,7 @@
             for (i = 0; i < l; i += 1) {
               vm.containers[i].id_plan = vm.plan.id_plan;
             }
+            console.log(vm.containers);
           });
         ReactiveService
           .get()
@@ -945,13 +946,13 @@
 
     function selectInstruments() {
       var items = [];
-      if (vm.instruments.length > 0 && vm.plan.equipos)
+      if (vm.instruments.length > 0 && vm.plan.instrumentos)
       {
-        if (vm.plan.equipos.length > 0 && !vm.isInstrumentListLoaded)
+        if (vm.plan.instrumentos.length > 0 && !vm.isInstrumentListLoaded)
         {
           ArrayUtilsService.seItemsFromReference(
             vm.instruments,
-            vm.plan.equipos,
+            vm.plan.instrumentos,
             'id_instrumento',
             [
               'selected'
@@ -961,8 +962,8 @@
         }
         else
         {
-          vm.plan.equipos = [];
-          vm.plan.equipos = ArrayUtilsService.selectItemsFromCollection(
+          vm.plan.instrumentos = [];
+          vm.plan.instrumentos = ArrayUtilsService.selectItemsFromCollection(
             vm.instruments,
             'selected',
             true
@@ -980,7 +981,7 @@
           ArrayUtilsService.seItemsFromReference(
             vm.containers,
             vm.plan.recipientes,
-            'id_tipo_recipiente',
+            'id_recipiente',
             [
               'selected',
               'id_plan',
@@ -1110,9 +1111,9 @@
         vm.message += ' Ingrese una fecha válida de calibración ';
         return false;
       }
-      if (vm.plan.equipos.length < 1)
+      if (vm.plan.instrumentos.length < 1)
       {
-        vm.message += ' Seleccione al menos un equipo ';
+        vm.message += ' Seleccione al menos un instrumento ';
         return false;
       }
       return true;

@@ -832,14 +832,14 @@
     vm.plan = {};
     vm.user = TokenService.getUserFromToken();
     vm.objectives = PlanObjectivesService.get();
-    vm.instruments = SamplingInstrumentService.get();
     vm.cities = [];
     vm.districts = [];
     vm.samplingEmployees = SamplingEmployeeService.get();
-    vm.containers = ContainerService.get();
-    vm.reactives = ReactiveService.get();
-    vm.materials = MaterialService.get();
-    vm.coolers = CoolerService.get();
+    vm.instruments = [];
+    vm.containers = [];
+    vm.reactives = [];
+    vm.materials = [];
+    vm.coolers = [];
     vm.isInstrumentListLoaded = false;
     vm.isContainerListLoaded = false;
     vm.isReactiveListLoaded = false;
@@ -861,12 +861,12 @@
       .$promise
       .then(function success(response) {
         vm.plan = response;
-        DistrictService.get()
+        DistrictService
+          .get()
           .$promise
           .then(function success(response) {
             vm.districts = response;
-            if (vm.plan.id_municipio && vm.plan.id_municipio > 0)
-            {
+            if (vm.plan.id_municipio && vm.plan.id_municipio > 0) {
               ArrayUtilsService.selectItemFromCollection(
                 vm.districts,
                 'id_municipio',
@@ -878,8 +878,7 @@
               .$promise
               .then(function success(response) {
                 vm.cities = response;
-                if (vm.plan.id_localidad && vm.plan.id_localidad > 0)
-                {
+                if (vm.plan.id_localidad && vm.plan.id_localidad > 0) {
                   ArrayUtilsService.selectItemFromCollection(
                     vm.cities,
                     'id_localidad',
@@ -888,10 +887,60 @@
                 }
               });
           });
+        SamplingInstrumentService
+          .get()
+          .$promise
+          .then(function success(response) {
+            var i;
+            var l;
+            vm.instruments = response;
+            l = vm.instruments.length;
+            for (i = 0; i < l; i += 1) {
+              vm.instruments[i].id_plan = vm.plan.id_plan;
+            }
+          });
+        ContainerService
+          .get()
+          .$promise
+          .then(function success(response) {
+            var i;
+            var l;
+            vm.containers = response;
+            l = vm.containers.length;
+            for (i = 0; i < l; i += 1) {
+              vm.containers[i].id_plan = vm.plan.id_plan;
+            }
+          });
+        ReactiveService
+          .get()
+          .$promise
+          .then(function success(response) {
+            var i;
+            var l;
+            vm.reactives = response;
+            l = vm.reactives.length;
+            for (i = 0; i < l; i += 1) {
+              vm.reactives[i].id_plan = vm.plan.id_plan;
+            }
+          });
+        MaterialService
+          .get()
+          .$promise
+          .then(function success(response) {
+            vm.materials = response;
+          });
+        CoolerService
+          .get()
+          .$promise
+          .then(function success(response) {
+            vm.coolers = response;
+          });
       });
 
     function selectDistrict() {
-      vm.cities = CityService.query({districtId: parseInt(vm.plan.id_municipio)});
+      vm.cities = CityService.query({
+        districtId: parseInt(vm.plan.id_municipio)
+      });
     }
 
     function selectInstruments() {
@@ -966,7 +1015,8 @@
               'selected',
               'id_plan',
               'lote',
-              'cantidad'
+              'folio',
+              'valor'
             ]
           );
           vm.isReactiveListLoaded = true;
@@ -1195,11 +1245,6 @@
         vm.message += ' Seleccione una localidad ';
         return false;
       }
-      // if (vm.plan.estudio.id_tipo_muestreo > 1 && isNaN(vm.plan.frecuencia_muestreo))
-      // {
-      //   vm.message += ' Seleccione una frecuencia de muestreo ';
-      //   return false;
-      // }
       if (vm.plan.id_supervisor_entrega < 1)
       {
         vm.message += ' Seleccione un Responsable de muestreo ';

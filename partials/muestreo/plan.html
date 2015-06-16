@@ -216,14 +216,6 @@
     </div>
   </div>
   <div class="row">
-    <div class="col-xs-12">
-      Cantidad de puntos:
-      <strong>
-        {{::plan.plan.puntos.length}}
-      </strong>
-    </div>
-  </div>
-  <div class="row">
     <div class="col-xs-12 col-sm-4"
       data-ng-repeat="point in plan.plan.puntos">
       <strong>{{point.punto}}</strong>
@@ -278,6 +270,12 @@
         </select>
       </div>
     -->
+    <div class="col-xs-12">
+      Puntos:
+      <strong>
+      {{::plan.plan.puntos.length}}
+      </strong>
+    </div>
   </div>
   <div class="row">
     <div class="col-xs-12">
@@ -295,7 +293,7 @@
         {{::plan.plan.supervisor_muestreo.nombres}}
         {{::plan.plan.supervisor_muestreo.apellido_paterno}}
         {{::plan.plan.supervisor_muestreo.apellido_materno}}
-        <small>(por Orden de muestreo)</small>
+        <span class="texrt-muted">(por Orden de muestreo)</span>
       </p>
       Tipo muestreo:
       <strong>{{::plan.plan.orden.id_tipo_muestreo}}</strong>
@@ -571,10 +569,10 @@
     </div>
   </div>
   <div class="row">
-    <div class="col-xs-12 col-sm-6"
+    <div class="col-xs-12 col-sm-4"
       data-ng-repeat="container in plan.containers">
       <div class="row">
-        <div class="col-xs-7">
+        <div class="col-xs-12">
           <label>
             <input type="checkbox"
               value="{{container.selected}}"
@@ -583,6 +581,7 @@
               {{container.recipiente}}
           </label>
         </div>
+        <!--
         <div class="col-xs-5">
           <label
             for="containerQuantity{{container.id_preservacion}}"
@@ -597,12 +596,13 @@
             data-ng-disabled="!container.selected"
             >
         </div>
+        -->
       </div>
     </div>
     <div class="col-xs-12">
       Recipientes:
       <strong>
-      {{plan.plan.recipientes.length}}
+      {{plan.plan.recipientes.length * plan.plan.puntos.length}}
       </strong>
     </div>
   </div>

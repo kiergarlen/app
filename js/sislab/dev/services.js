@@ -1,5 +1,5 @@
   // SERVICES
-  // ArrayUtilsService.js
+  //ArrayUtilsService.js
   /**
    * @name ArrayUtilsService
    * @constructor
@@ -29,8 +29,7 @@
       l = collection.length,
       item = {};
       for (i = 0; i < l; i += 1) {
-        if (collection[i][field] == value)
-        {
+        if (collection[i][field] == value) {
           item = collection[i];
           break;
         }
@@ -51,8 +50,7 @@
       l = collection.length,
       items = [];
       for (i = 0; i < l; i += 1) {
-        if (collection[i][field] == value)
-        {
+        if (collection[i][field] == value) {
           items.push(collection[i]);
         }
       }
@@ -72,8 +70,7 @@
       l = collection.length,
       item = {};
       for (i = 0; i < l; i += 1) {
-        if (collection[i][field] == value)
-        {
+        if (collection[i][field] == value) {
           item = collection.splice(i, 1);
           break;
         }
@@ -81,31 +78,28 @@
       return item;
     }
 
-
     /**
      * @function seItemsFromReference
-     * @desc Cambia el valor de una propiedad de ítem de un Array, coincidiendo una propiedad y su valor desde otro Array
+     * @desc Cambia el valor de una propiedad de ítem de un Array,
+     * coincidiendo una propiedad y su valor desde otro Array
      * @param {Array} collection - Array de ítems a modificar
-     * @param {Array} referenceCollection - Array de referencia
+     * @param {Array} reference - Array de referencia
      * @param {String} matchField - Nombre de la propiedad a coincidir
      * @param {Array} fields - Nombres de las propiedades a cambiar
      * @return {Object} item - Ítem seleccionado
      */
-    function seItemsFromReference(collection, referenceCollection, matchField, fields) {
+    function seItemsFromReference(collection, reference, matchField, fields) {
       var i, l, j, m, k, n, field = '';
       l = collection.length;
       n = fields.length;
       for(i = 0; i < l; i += 1) {
-        if (referenceCollection !== undefined)
-        {
-          m = referenceCollection.length;
+        if (reference !== undefined) {
+          m = reference.length;
           for (j = 0; j < m; j += 1) {
-            if (collection[i][matchField] ==
-              referenceCollection[j][matchField])
-            {
+            if (collection[i][matchField] == reference[j][matchField]) {
               for (k = 0; k < n; k += 1) {
                 field = fields[k];
-                collection[i][field] = referenceCollection[j][field];
+                collection[i][field] = reference[j][field];
               }
             }
           }
@@ -122,14 +116,12 @@
      */
     function countSelectedItems(collection) {
       var i, l, count = 0;
-      if (!collection)
-      {
+      if (!collection) {
         return 0;
       }
       l = collection.length;
       for (i = 0; i < l; i += 1) {
-        if (collection[i].selected)
-        {
+        if (collection[i].selected) {
           count += 1;
         }
       }
@@ -147,8 +139,7 @@
       l = collection.length,
       sum = 0,
       avg = 0;
-      if (l > 0)
-      {
+      if (l > 0) {
         for (i = 0; i < l; i++) {
           sum += parseFloat(collection[i]);
         }
@@ -167,7 +158,7 @@
       ]
     );
 
-  // DateUtilsService.js
+  //DateUtilsService.js
   /**
    * @name DateUtilsService
    * @constructor
@@ -193,8 +184,7 @@
       i = 0,
       l = paddedNumber.length,
       padding = '';
-      if (l < places)
-      {
+      if (l < places) {
         l = places - l;
         for (i = 0; i < l; i += 1) {
           padding += '0';
@@ -238,8 +228,7 @@
      * @return {Boolean} - Resultado de la evaluación
      */
     function isValidDate(date) {
-      if (Object.prototype.toString.call(date) !== '[object Date]')
-      {
+      if (Object.prototype.toString.call(date) !== '[object Date]') {
         return false;
       }
       return !isNaN(date.getTime());
@@ -255,7 +244,7 @@
       ]
     );
 
-  // RestUtilsService.js
+  //RestUtilsService.js
   /**
    * @name RestUtilsService
    * @constructor
@@ -283,12 +272,10 @@
           $location.path(returnPath);
           return response;
         }, function error(response) {
-          if (response.status === 404)
-          {
+          if (response.status === 404) {
             return 'Recurso no encontrado';
           }
-          else
-          {
+          else {
             return 'Error no especificado';
           }
         });
@@ -311,12 +298,10 @@
           $location.path(returnPath);
           return response;
         }, function error(response) {
-          if (response.status === 404)
-          {
+          if (response.status === 404) {
             return 'Recurso no encontrado';
           }
-          else
-          {
+          else {
             return 'Error no especificado';
           }
         });
@@ -333,7 +318,7 @@
       ]
     );
 
-  // TokenService.js
+  //TokenService.js
   /**
    * @name TokenService
    * @constructor
@@ -361,11 +346,10 @@
      * @function hashMessage
      * @desc Codifica un mensaje usando SHA-256
      * @param {String} message - Mensaje a codificar
-     * @return {String} hash - Mensaje codificado
+     * @return {String} - Mensaje codificado
      */
     function hashMessage(message) {
-      var hash = CryptoJS.SHA256(message);
-      return hash;
+      return CryptoJS.SHA256(message);
     }
 
     /**
@@ -387,12 +371,10 @@
         setToken(token);
         $location.path('main');
       }, function error(response) {
-        if (response.status === 404)
-        {
+        if (response.status === 404) {
           return 'Sin enlace al servidor';
         }
-        else
-        {
+        else {
           return 'Error no especificado';
         }
       });
@@ -423,8 +405,7 @@
      * @return {Object} cachedToken - Token de autenticación
      */
     function getToken() {
-      if (!cachedToken)
-      {
+      if (!cachedToken) {
         cachedToken = storage.getItem(tokenKey);
       }
       return cachedToken;
@@ -442,7 +423,7 @@
     /**
      * @function decodeToken
      * @desc Decodifica el token
-     * @return {Object} - Token de autenticación, decodificado
+     * @return {Object} - Token decodificado
      */
     function decodeToken() {
       var token = getToken();
@@ -457,8 +438,7 @@
     function getUserFromToken() {
       var decodedJwt,
       userData;
-      if (isAuthenticated())
-      {
+      if (isAuthenticated()) {
         decodedJwt = decodeToken();
         userData = {
           name: decodedJwt.nam,
@@ -480,7 +460,7 @@
       ]
     );
 
-  // ValidationService.js
+  //ValidationService.js
   /**
    * @name ValidationService
    * @constructor
@@ -496,7 +476,6 @@
 
     function approveItem(item, user) {
       item.id_status = 2;
-      //item.status = 'Validado';
       item.id_usuario_valida = user.id;
       item.motivo_rechaza = '';
       item.fecha_valida = DateUtilsService.dateToISOString(new Date()).slice(0,10);
@@ -504,7 +483,6 @@
 
     function rejectItem(item, user) {
       item.id_status = 3;
-      //item.status = 'Rechazado';
       item.id_usuario_valida = user.id;
       item.fecha_rechaza = DateUtilsService.dateToISOString(new Date()).slice(0,10);
     }
@@ -520,7 +498,7 @@
       ]
     );
 
-  // MenuService.js
+  //MenuService.js
   /**
    * @name MenuService
    * @constructor
@@ -550,7 +528,7 @@
       ]
     );
 
-  // TaskService.js
+  //TaskService.js
   /**
    * @name TaskService
    * @constructor
@@ -580,7 +558,7 @@
       ]
     );
 
-  // StudyService.js
+  //StudyService.js
   /**
    * @name StudyService
    * @constructor
@@ -635,7 +613,7 @@
     );
 
 
-  // QuoteService.js
+  //QuoteService.js
   /**
    * @name QuoteService
    * @constructor
@@ -689,7 +667,7 @@
     ]
    );
 
-  // OrderService.js
+  //OrderService.js
   /**
    * @name OrderService
    * @constructor
@@ -743,7 +721,7 @@
       ]
     );
 
-  // PlanService.js
+  //PlanService.js
   /**
    * @name PlanService
    * @constructor
@@ -797,7 +775,7 @@
       ]
     );
 
-  // SheetService.js
+  //SheetService.js
   /**
    * @name SheetService
    * @constructor
@@ -851,7 +829,7 @@
       ]
     );
 
-  // ReceptionService.js
+  //ReceptionService.js
   /**
    * @name ReceptionService
    * @constructor
@@ -905,7 +883,7 @@
       ]
     );
 
-  // CustodyService.js
+  //CustodyService.js
   /**
    * @name CustodyService
    * @constructor
@@ -959,7 +937,7 @@
       ]
     );
 
-  // ClientService.js
+  //ClientService.js
   /**
    * @name ClientService
    * @constructor
@@ -1013,7 +991,7 @@
       ]
     );
 
-  // PointService.js
+  //PointService.js
   /**
    * @name PointService
    * @constructor
@@ -1067,7 +1045,7 @@
       ]
     );
 
-  // PointsByPackageService.js
+  //PointsByPackageService.js
   /**
    * @name PointsByPackageService
    * @constructor
@@ -1097,7 +1075,7 @@
       ]
     );
 
-  // ParameterService.js
+  //ParameterService.js
   /**
    * @name ParameterService
    * @constructor
@@ -1127,7 +1105,7 @@
       ]
     );
 
-  // NormService.js
+  //NormService.js
   /**
    * @name NormService
    * @constructor
@@ -1157,7 +1135,7 @@
       ]
     );
 
-  // SamplingTypeService.js
+  //SamplingTypeService.js
   /**
    * @name SamplingTypeService
    * @constructor
@@ -1187,7 +1165,7 @@
       ]
     );
 
-  // OrderSourceService.js
+  //OrderSourceService.js
   /**
    * @name OrderSourceService
    * @constructor
@@ -1217,7 +1195,7 @@
       ]
     );
 
-  // MatrixService.js
+  //MatrixService.js
   /**
    * @name MatrixService
    * @constructor
@@ -1247,7 +1225,7 @@
       ]
     );
 
-  // PointPackageService.js
+  //PointPackageService.js
   /**
    * @name PointPackageService
    * @constructor
@@ -1277,7 +1255,7 @@
       ]
     );
 
-  // SamplingSupervisorService.js
+  //SamplingSupervisorService.js
   /**
    * @name SamplingSupervisorService
    * @constructor
@@ -1308,7 +1286,7 @@
     );
 
 
-  // PlanObjectivesService.js
+  //PlanObjectivesService.js
   /**
    * @name PlanObjectivesService
    * @constructor
@@ -1338,7 +1316,7 @@
       ]
     );
 
-  // PointKindsService.js
+  //PointKindsService.js
   /**
    * @name PointKindsService
    * @constructor
@@ -1368,7 +1346,7 @@
       ]
     );
 
-  // DistrictService.js
+  //DistrictService.js
   /**
    * @name DistrictService
    * @constructor
@@ -1398,7 +1376,7 @@
       ]
     );
 
-  // CityService.js
+  //CityService.js
   /**
    * @name CityService
    * @constructor
@@ -1428,7 +1406,7 @@
       ]
     );
 
-  // SamplingEmployeeService.js
+  //SamplingEmployeeService.js
   /**
    * @name SamplingEmployeeService
    * @constructor
@@ -1458,7 +1436,7 @@
       ]
     );
 
-  // PreservationService.js
+  //PreservationService.js
   /**
    * @name PreservationService
    * @constructor
@@ -1488,7 +1466,7 @@
       ]
     );
 
-  // ContainerService.js
+  //ContainerService.js
   /**
    * @name ContainerService
    * @constructor
@@ -1518,7 +1496,7 @@
       ]
     );
 
-  // ReactiveService.js
+  //ReactiveService.js
   /**
    * @name ReactiveService
    * @constructor
@@ -1548,7 +1526,7 @@
       ]
     );
 
-  // MaterialService.js
+  //MaterialService.js
   /**
    * @name MaterialService
    * @constructor
@@ -1578,7 +1556,7 @@
       ]
     );
 
-  // CoolerService.js
+  //CoolerService.js
   /**
    * @name CoolerService
    * @constructor
@@ -1608,7 +1586,7 @@
       ]
     );
 
-  // SamplingInstrumentService.js
+  //SamplingInstrumentService.js
   /**
    * @name SamplingInstrumentService
    * @constructor
@@ -1638,7 +1616,7 @@
       ]
     );
 
-  // FieldParameterService.js
+  //FieldParameterService.js
   /**
    * @name FieldParameterService
    * @constructor
@@ -1668,7 +1646,7 @@
       ]
     );
 
-  // ReceptionistService.js
+  //ReceptionistService.js
   /**
    * @name ReceptionistService
    * @constructor
@@ -1698,7 +1676,7 @@
       ]
     );
 
-  // ExpirationService.js
+  //ExpirationService.js
   /**
    * @name ExpirationService
    * @constructor
@@ -1728,7 +1706,7 @@
       ]
     );
 
-  // RequiredVolumeService.js
+  //RequiredVolumeService.js
   /**
    * @name RequiredVolumeService
    * @constructor
@@ -1758,7 +1736,7 @@
       ]
     );
 
-  // SampleService.js
+  //SampleService.js
   /**
    * @name SampleService
    * @constructor
@@ -1796,7 +1774,7 @@
       ]
     );
 
-  // InstrumentsListService.js
+  //InstrumentsListService.js
   /**
    * @name InstrumentsListService
    * @constructor
@@ -1826,7 +1804,7 @@
       ]
     );
 
-  // ContainersListService.js
+  //ContainersListService.js
   /**
    * @name ContainersListService
    * @constructor
@@ -1856,7 +1834,7 @@
       ]
     );
 
-  // AnalysisListService.js
+  //AnalysisListService.js
   /**
    * @name AnalysisListService
    * @constructor
@@ -1886,7 +1864,7 @@
       ]
     );
 
-  // DepartmentService.js
+  //DepartmentService.js
   /**
    * @name DepartmentService
    * @constructor
@@ -1916,7 +1894,7 @@
       ]
     );
 
-  // AnalysisService.js
+  //AnalysisService.js
   /**
    * @name AnalysisService
    * @constructor
@@ -1946,7 +1924,7 @@
       ]
     );
 
-  // ReportsListService.js
+  //ReportsListService.js
   /**
    * @name ReportsListService
    * @constructor
@@ -1976,7 +1954,7 @@
       ]
     );
 
-  // ReportService.js
+  //ReportService.js
   /**
    * @name ReportService
    * @constructor
@@ -2006,7 +1984,7 @@
       ]
     );
 
-  // EmployeeService.js
+  //EmployeeService.js
   /**
    * @name EmployeeService
    * @constructor
@@ -2036,7 +2014,7 @@
       ]
     );
 
-  // NormsListService.js
+  //NormsListService.js
   /**
    * @name NormsListService
    * @constructor
@@ -2066,7 +2044,7 @@
       ]
     );
 
-  // ReferencesListService.js
+  //ReferencesListService.js
   /**
    * @name ReferencesListService
    * @constructor
@@ -2096,7 +2074,7 @@
       ]
     );
 
-  // MethodsListService.js
+  //MethodsListService.js
   /**
    * @name MethodsListService
    * @constructor
@@ -2126,7 +2104,7 @@
       ]
     );
 
-  // PricesListService.js
+  //PricesListService.js
   /**
    * @name PricesListService
    * @constructor
@@ -2156,7 +2134,7 @@
       ]
     );
 
-  // UsersListService.js
+  //UsersListService.js
   /**
    * @name UsersListService
    * @constructor
@@ -2186,7 +2164,7 @@
       ]
     );
 
-  // UserProfileService.js
+  //UserProfileService.js
   /**
    * @name UserProfileService
    * @constructor
@@ -2218,7 +2196,7 @@
 
 
 
-  // CloudService.js
+  //CloudService.js
   /**
    * @name CloudService
    * @constructor
@@ -2248,7 +2226,7 @@
       ]
     );
 
-  // WindService.js
+  //WindService.js
   /**
    * @name WindService
    * @constructor
@@ -2278,7 +2256,7 @@
       ]
     );
 
-  // WaveService.js
+  //WaveService.js
   /**
    * @name WaveService
    * @constructor
@@ -2308,7 +2286,7 @@
       ]
     );
 
-  // SamplingNormService.js
+  //SamplingNormService.js
   /**
    * @name SamplingNormService
    * @constructor

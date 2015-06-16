@@ -128,7 +128,7 @@ function getMenu($userId) {
 		menu, submenu, url
 		FROM viewUsuarioMenu
 		WHERE id_usuario = :userId
-		ORDER BY id_menu, orden, orden";
+		ORDER BY id_menu, orden, orden_submenu";
 	$db = getConnection();
 	$stmt = $db->prepare($sql);
 	$stmt->bindParam("userId", $userId);
@@ -732,9 +732,9 @@ function getPlan($planId) {
 	$plan->orden = getPlainOrder($plan->id_orden);
 	$plan->supervisor_muestreo = getSamplingEmployee($plan->id_supervisor_muestreo);
 	$plan->puntos = getPointsByPackage($plan->id_paquete);
-	// $plan->equipos = getInstrumentsByPlan($planId);
-	// $plan->recipientes = getContainersByPlan($planId);
-	// $plan->reactivos = getReactivesByPlan($planId);
+	$plan->equipos = getInstrumentsByPlan($planId);
+	$plan->recipientes = getContainersByPlan($planId);
+	$plan->reactivos = getReactivesByPlan($planId);
 	$plan->materiales = getMaterialsByPlan($planId);
 	$plan->hieleras = getCoolersByPlan($planId);
 	return $plan;
@@ -2313,9 +2313,45 @@ function getPrices() {
 	return $prices;
 }
 
+function getInstrumentsByPlan($planId) {
+	$sql = "SELECT id_plan_instrumento, id_plan, id_instrumento,
+		bitacora, folio, activo
+		FROM PlanInstrumento
+		WHERE id_plan = :planId";
+	$db = getConnection();
+	$stmt = $db->prepare($sql);
+	$stmt->bindParam("planId", $planId);
+	$stmt->execute();
+	$instruments = $stmt->fetchAll(PDO::FETCH_ASSOC);
+	$db = null;
+	$l = count($instruments);
+	for ($i = 0; $i < $l; $i++) {
+		$instruments[$i]["selected"] = true;
+	}
+	return $instruments;
+}
+
+function getContainersByPlan($planId) {
+	$sql = "SELECT id_plan_recipiente, id_plan, id_recipiente,
+		cantidad, activo
+		FROM PlanRecipiente
+		WHERE id_plan = :planId";
+	$db = getConnection();
+	$stmt = $db->prepare($sql);
+	$stmt->bindParam("planId", $planId);
+	$stmt->execute();
+	$containers = $stmt->fetchAll(PDO::FETCH_ASSOC);
+	$db = null;
+	$l = count($containers);
+	for ($i = 0; $i < $l; $i++) {
+		$containers[$i]["selected"] = true;
+	}
+	return $containers;
+}
+
 function getReactivesByPlan($planId) {
 	$sql = "SELECT id_plan_reactivo, id_plan, id_reactivo, valor,
-		lote, folio, activo
+		lote, folio
 		FROM PlanReactivo
 		WHERE id_plan = :planId";
 	$db = getConnection();
@@ -2533,15 +2569,19 @@ function getSamplingInstruments() {
 		id_usuario_actualiza, instrumento, descripcion, muestreo,
 		laboratorio, inventario, fecha_captura, fecha_actualiza,
 		ip_captura, ip_actualiza, host_captura, host_actualiza,
-		comentarios, activo, 'false' AS selected
+		comentarios, activo
 		FROM Instrumento
 		WHERE activo = 1 AND muestreo = 1";
 	$db = getConnection();
 	$stmt = $db->prepare($sql);
 	$stmt->execute();
-	$materials = $stmt->fetchAll(PDO::FETCH_ASSOC);
+	$instruments = $stmt->fetchAll(PDO::FETCH_ASSOC);
 	$db = null;
-	return $materials;
+	$l = count($instruments);
+	for ($i = 0; $i < $l; $i++) {
+		$instruments[$i]["selected"] = false;
+	}
+	return $instruments;
 }
 
 function getContainerKinds() {

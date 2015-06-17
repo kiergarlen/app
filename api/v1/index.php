@@ -12,13 +12,6 @@ define("DB_USER", "sislab");
 define("DB_PASSWORD", "sislab");
 define("DB_DATA_BASE", "Sislab");
 
-// define("DB_DRIVER", "mysql");
-// define("DB_HOST", "localhost");
-// define("DB_PORT", "8889");
-// define("DB_USER", "root");
-// define("DB_PASSWORD", "root");
-// define("DB_DATA_BASE", "sislab");
-
 \Slim\Slim::registerAutoloader();
 $app = new \Slim\Slim();
 
@@ -254,7 +247,8 @@ $app->post("/plans", function() use ($app) {
 			//$result = $planUpdateData;
 			//$result = json_encode(updatePlan($planUpdateData["plan"]));
 			//just for a while... $planId = updatePlan($planUpdateData["plan"]);
-			$result = json_encode(processPlanInstrumentsUpdate($planUpdateData));
+			//just for a while... processPlanInstrumentsUpdate($planUpdateData);
+			$result = json_encode(processPlanContainersUpdate($planUpdateData));
 			//$result = json_encode(processPlanOrderUpdate($planUpdateData));
 			// // $result = processPlanOrderUpdate($planUpdateData);
 			// // processPlanOrderUpdate($planUpdateData);

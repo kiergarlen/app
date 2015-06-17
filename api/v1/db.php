@@ -2204,19 +2204,9 @@ function insertPlanInstrument($instrumentData) {
 }
 
 function updatePlanInstrument($updateData) {
-	/*
-		{
-			"id_plan_instrumento":"1",
-			"id_plan":"3",
-			"id_instrumento":"1",
-			"bitacora":"BR-MU-02-01",
-			"folio":"45",
-			"activo":0
-		}
-	*/
 	$sql = "UPDATE PlanInstrumento SET id_plan = :id_plan,
 		id_instrumento = :id_instrumento,
- 		bitacora = :bitacora, folio = : folio,
+ 		bitacora = :bitacora, folio = :folio,
  		activo = :activo
  		WHERE id_plan_instrumento = :id_plan_instrumento";
 	$db = getConnection();
@@ -2397,6 +2387,31 @@ function getContainersByPlan($planId) {
 		$containers[$i]["selected"] = true;
 	}
 	return $containers;
+}
+
+function insertPlanContainer($containerData) {
+	$sql = "INSERT INTO PlanRecipiente (id_plan, id_recipiente,
+		cantidad, activo)
+		VALUES (:id_plan, :id_recipiente,
+		:cantidad, :activo)";
+	$db = getConnection();
+	$stmt = $db->prepare($sql);
+	$stmt->execute($containerData);
+	$instrumentId = $db->lastInsertId();
+	$db = null;
+	return $instrumentId;
+}
+
+function updatePlanContainer($updateData) {
+	$sql = "UPDATE PlanRecipiente SET id_plan = :id_plan,
+		id_recipiente = :id_recipiente,
+ 		cantidad = :cantidad, activo = :activo
+ 		WHERE id_plan_recipiente = :id_plan_recipiente";
+	$db = getConnection();
+	$stmt = $db->prepare($sql);
+	$stmt->execute($updateData);
+	$db = null;
+	return $updateData["id_plan_recipiente"];
 }
 
 function getReactivesByPlan($planId) {

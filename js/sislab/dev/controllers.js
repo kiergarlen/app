@@ -860,6 +860,7 @@
             vm.containers = response;
             l = vm.containers.length;
             for (i = 0; i < l; i += 1) {
+              vm.containers[i].id_plan_recipiente = 0;
               vm.containers[i].id_plan = vm.plan.id_plan;
             }
             console.log(vm.containers);
@@ -873,6 +874,7 @@
             vm.reactives = response;
             l = vm.reactives.length;
             for (i = 0; i < l; i += 1) {
+              vm.reactives[i].id_plan_reactivo = 0;
               vm.reactives[i].id_plan = vm.plan.id_plan;
             }
           });
@@ -881,12 +883,22 @@
           .$promise
           .then(function success(response) {
             vm.materials = response;
+            l = vm.materials.length;
+            for (i = 0; i < l; i += 1) {
+              vm.materials[i].id_plan_material = 0;
+              vm.materials[i].id_plan = vm.plan.id_plan;
+            }
           });
         CoolerService
           .get()
           .$promise
           .then(function success(response) {
             vm.coolers = response;
+            l = vm.coolers.length;
+            for (i = 0; i < l; i += 1) {
+              vm.coolers[i].id_plan_hielera = 0;
+              vm.coolers[i].id_plan = vm.plan.id_plan;
+            }
           });
       });
 
@@ -930,8 +942,9 @@
             vm.plan.recipientes,
             'id_recipiente',
             [
-              'selected',
+              'id_plan_recipiente',
               'id_plan',
+              'selected',
               'cantidad'
             ]
           );

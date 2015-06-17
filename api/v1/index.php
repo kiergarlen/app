@@ -252,8 +252,9 @@ $app->post("/plans", function() use ($app) {
 		{
 			$planUpdateData = processPlanUpdate($request);
 			//$result = $planUpdateData;
-			$result = json_encode(updatePlan($planUpdateData["plan"]));
+			//$result = json_encode(updatePlan($planUpdateData["plan"]));
 			//just for a while... $planId = updatePlan($planUpdateData["plan"]);
+			$result = json_encode(processPlanInstrumentsUpdate($planUpdateData));
 			//$result = json_encode(processPlanOrderUpdate($planUpdateData));
 			// // $result = processPlanOrderUpdate($planUpdateData);
 			// // processPlanOrderUpdate($planUpdateData);

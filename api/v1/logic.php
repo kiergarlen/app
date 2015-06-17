@@ -657,65 +657,59 @@ function processPlanInstrumentsUpdate($planUpdateData) {
 		//nothing stored, insert all
 		for ($j = 0; $j < $m; $j++) {
 			$newInstrument = (array) $instruments[$j];
+			unset($newInstrument["id_plan_instrumento"]);
 			unset($newInstrument["instrumento"]);
 			unset($newInstrument["descripcion"]);
 			unset($newInstrument["muestreo"]);
+			unset($newInstrument["inventario"]);
 			unset($newInstrument["selected"]);
-			insertOrder($newInstrument);
+			insertPlanInstrument($newInstrument);
 		}
 		return $studyId;
 	}
 	else
 	{
-		// //mark all stored as deleted, only additions/matches persist
-		// for ($i = 0; $i < $l; $i++) {
-		// 	unset($storedOrders[$i]['$$hashKey']);
-		// 	unset($storedOrders[$i]["id_usuario_captura"]);
-		// 	unset($storedOrders[$i]["fecha_captura"]);
-		// 	unset($storedOrders[$i]["ip_captura"]);
-		// 	unset($storedOrders[$i]["host_captura"]);
-		// 	$storedOrders[$i]["activo"] = 0;
-		// 	$storedOrders[$i]["id_usuario_actualiza"] = $updateUserId;
-		// 	$storedOrders[$i]["fecha_actualiza"] = date('Y-m-d H:i:s');
-		// 	$storedOrders[$i]["ip_actualiza"] = $updateIp;
-		// 	$storedOrders[$i]["host_actualiza"] = $updateUrl;
-		// 	//return $storedOrders[$i];
-		// 	//return "delete old";
-		// 	updateOrder($storedOrders[$i]);
-		// }
-		// for ($j = 0; $j < $m; $j++) {
-		// 	$order = (array) $orders[$j];
-		// 	if ($order["id_orden"] == 0)
-		// 	{
-		// 		//new, store it
-		// 		unset($order["id_orden"]);
-		// 		unset($order['$$hashKey']);
-		// 		$order["id_usuario_captura"] = $updateUserId;
-		// 		$order["fecha_captura"] = date('Y-m-d H:i:s');
-		// 		$order["ip_captura"] = $updateIp;
-		// 		$order["host_captura"] = $updateUrl;
-		// 		//return "...something new;
-		// 		//return $order;
-		// 		insertOrder($order);
-		// 	}
-		// 	else
-		// 	{
-		// 		//update
-		// 		unset($order['$$hashKey']);
-		// 		unset($order["id_usuario_captura"]);
-		// 		unset($order["fecha_captura"]);
-		// 		unset($order["ip_captura"]);
-		// 		unset($order["host_captura"]);
-		// 		$order["activo"] = 1;
-		// 		$order["id_usuario_actualiza"] = $updateUserId;
-		// 		$order["fecha_actualiza"] = date('Y-m-d H:i:s');
-		// 		$order["ip_actualiza"] = $updateIp;
-		// 		$order["host_actualiza"] = $updateUrl;
-		// 		//return "...something old";
-		// 		//return $order;
-		// 		updateOrder($order);
-		// 	}
-		// }
+		//mark all stored as deleted, only additions/matches persist
+		for ($i = 0; $i < $l; $i++) {
+			unset($storedInstruments[$i]["instrumento"]);
+			unset($storedInstruments[$i]["descripcion"]);
+			unset($storedInstruments[$i]["muestreo"]);
+			unset($storedInstruments[$i]["inventario"]);
+			unset($storedInstruments[$i]["selected"]);
+			$storedInstruments[$i]["activo"] = 0;
+			return $storedInstruments[$i];
+			//return "delete old";
+			updatePlanInstrument($storedInstruments[$i]);
+		}
+		for ($j = 0; $j < $m; $j++) {
+			$instrument = (array) $instruments[$j];
+			if ($instrument["id_plan_instrumento"] == 0)
+			{
+				//new, store it
+				unset($instrument["id_plan_instrumento"]);
+				unset($instrument["instrumento"]);
+				unset($instrument["descripcion"]);
+				unset($instrument["muestreo"]);
+				unset($instrument["inventario"]);
+				unset($instrument["selected"]);
+				//return "...something new;
+				//return $instrument;
+				insertPlanInstrument($instrument);
+			}
+			else
+			{
+				//update
+				unset($instrument["instrumento"]);
+				unset($instrument["descripcion"]);
+				unset($instrument["muestreo"]);
+				unset($instrument["inventario"]);
+				unset($instrument["selected"]);
+				$instrument["activo"] = 1;
+				//return $instrument;
+				//return "update old";
+				updatePlanInstrument($instrument);
+			}
+		}
 	}
-	return $studyId;
+	return $planId;
 }

@@ -117,9 +117,8 @@ function updateUser($updateData) {
 	$db = getConnection();
 	$stmt = $db->prepare($sql);
 	$stmt->execute($updateData);
-	$userId = $db->lastInsertId();
 	$db = null;
-	return $userId;
+	return $updateData["id_usuario"];
 }
 
 function getMenu($userId) {
@@ -2191,7 +2190,7 @@ function getInstrumentsByPlan($planId) {
 	return $instruments;
 }
 
-function insertInstrument($instrumentData) {
+function insertPlanInstrument($instrumentData) {
 	$sql = "INSERT INTO PlanInstrumento (id_plan, id_instrumento,
 		bitacora, folio, activo)
 		VALUES (:id_plan, :id_instrumento,
@@ -2202,6 +2201,29 @@ function insertInstrument($instrumentData) {
 	$instrumentId = $db->lastInsertId();
 	$db = null;
 	return $instrumentId;
+}
+
+function updatePlanInstrument($updateData) {
+	/*
+		{
+			"id_plan_instrumento":"1",
+			"id_plan":"3",
+			"id_instrumento":"1",
+			"bitacora":"BR-MU-02-01",
+			"folio":"45",
+			"activo":0
+		}
+	*/
+	$sql = "UPDATE PlanInstrumento SET id_plan = :id_plan,
+		id_instrumento = :id_instrumento,
+ 		bitacora = :bitacora, folio = : folio,
+ 		activo = :activo
+ 		WHERE id_plan_instrumento = :id_plan_instrumento";
+	$db = getConnection();
+	$stmt = $db->prepare($sql);
+	$stmt->execute($updateData);
+	$db = null;
+	return $updateData["id_plan_instrumento"];
 }
 
 function getParameter($parameterId) {

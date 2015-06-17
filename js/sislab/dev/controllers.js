@@ -17,8 +17,7 @@
 
     function submitForm() {
       vm.message = '';
-      if (!$scope.loginForm.$valid)
-      {
+      if (!$scope.loginForm.$valid) {
         vm.message = 'Ingrese usuario y/o contraseña';
         return;
       }
@@ -72,8 +71,7 @@
     userData;
     vm.userName = '';
     vm.tasks = {};
-    if (TokenService.isAuthenticated())
-    {
+    if (TokenService.isAuthenticated()) {
       userData = TokenService.getUserFromToken();
       vm.userName = userData.name;
       vm.tasks = TaskService.get();
@@ -219,39 +217,33 @@
       var i = 0,
       l = 0,
       orders = [];
-      if (vm.study.ordenes && vm.study.ordenes.length > 0)
-      {
+      if (vm.study.ordenes && vm.study.ordenes.length > 0) {
         orders = vm.study.ordenes;
         l = orders.length;
         for (i = 0; i < l; i += 1) {
-          if (orders[i].id_matriz < 1)
-          {
+          if (orders[i].id_matriz < 1) {
             vm.message += ' Seleccione una matriz, para la orden ';
             vm.message += '(Ver fila ' + (i + 1) + ')';
             return false;
           }
-          if (isNaN(orders[i].cantidad_muestras) || orders[i].cantidad_muestras < 1)
-          {
+          if (isNaN(orders[i].cantidad_muestras) || orders[i].cantidad_muestras < 1) {
             vm.message += ' Ingrese cantidad de muestras, para la orden ';
             vm.message += '(Ver fila ' + (i + 1) + ')';
             return false;
           }
-          if (orders[i].id_tipo_muestreo < 1)
-          {
+          if (orders[i].id_tipo_muestreo < 1) {
             vm.message += ' Seleccione un tipo de muestreo, para la orden ';
             vm.message += '(Ver fila ' + (i + 1) + ')';
             return false;
           }
-          if (orders[i].id_norma < 1)
-          {
+          if (orders[i].id_norma < 1) {
             vm.message += ' Seleccione una norma, para la orden ';
             vm.message += '(Ver fila ' + (i + 1) + ')';
             return false;
           }
         }
       }
-      else
-      {
+      else {
         vm.message += ' Agregue una orden ';
         return false;
       }
@@ -260,42 +252,33 @@
 
     function isFormValid() {
       vm.message = '';
-      if (!DateUtilsService.isValidDate(new Date(vm.study.fecha)))
-      {
+      if (!DateUtilsService.isValidDate(new Date(vm.study.fecha))) {
         vm.message += ' Ingrese una fecha válida ';
         return false;
       }
-      if (vm.study.id_cliente < 1)
-      {
+      if (vm.study.id_cliente < 1) {
         vm.message += ' Seleccione un cliente ';
         return false;
       }
-      if (!isOrderListValid())
-      {
+      if (!isOrderListValid()) {
         return isOrderListValid();
       }
-      if (vm.study.id_origen_orden < 1)
-      {
+      if (vm.study.id_origen_orden < 1) {
         vm.message += ' Seleccione un medio de orden de muestreo ';
         return false;
       }
-      if (vm.study.id_origen_orden == 1 || vm.study.id_origen_orden == 4)
-      {
-        if (vm.study.origen_descripcion.length < 1)
-        {
+      if (vm.study.id_origen_orden == 1 || vm.study.id_origen_orden == 4) {
+        if (vm.study.origen_descripcion.length < 1) {
           vm.message += ' Ingrese oficio o emergencia ';
           return false;
         }
       }
-      if (vm.study.ubicacion.length < 1)
-      {
+      if (vm.study.ubicacion.length < 1) {
         vm.message += ' Ingrese una ubicación ';
         return false;
       }
-      if (vm.user.level < 3)
-      {
-        if (vm.study.id_status == 3 && vm.study.motivo_rechaza.length < 1)
-        {
+      if (vm.user.level < 3) {
+        if (vm.study.id_status == 3 && vm.study.motivo_rechaza.length < 1) {
           vm.message += ' Ingrese el motivo de rechazo del Informe ';
           return false;
         }
@@ -304,11 +287,9 @@
     }
 
     function submitForm() {
-      if (isFormValid() && !vm.isDataSubmitted)
-      {
+      if (isFormValid() && !vm.isDataSubmitted) {
         vm.isDataSubmitted = true;
-        if (vm.study.id_estudio < 1)
-        {
+        if (vm.study.id_estudio < 1) {
           //vm.study.$save();
           RestUtilsService
             .saveData(
@@ -317,10 +298,8 @@
               'estudio/estudio'
             );
         }
-        else
-        {
-          if (vm.user.level < 3 || vm.study.study.id_status != 2)
-          {
+        else {
+          if (vm.user.level < 3 || vm.study.study.id_status != 2) {
             //vm.study.$update();
             RestUtilsService
               .updateData(
@@ -408,12 +387,9 @@
 
     function totalParameter(){
       var i = 0, l = 0, t = 0;
-      if (vm.parameters && vm.quote.cliente)
-      {
+      if (vm.parameters && vm.quote.cliente) {
         l = vm.parameters.length;
-        for (i = 0; i < l; i += 1) {
-          if (vm.parameters[i].selected)
-          {
+        for (i = 0; i < l; i += 1) { if (vm.parameters[i].selected) {
             t = t + parseInt(vm.parameters[i].precio, 10);
           }
         }
@@ -427,14 +403,12 @@
     function selectNormParameters() {
       var i, l, j, m;
       l = vm.parameters.length;
-      if (l > 0 && vm.quote.parametros)
-      {
+      if (l > 0 && vm.quote.parametros) {
         for(i = 0; i < l; i += 1) {
           vm.parameters[i].selected = false;
           m = vm.quote.parametros.length;
           for (j = 0; j < m; j += 1) {
-            if (vm.parameters[i].id_parametro == vm.quote.norma.parametros[j].id_parametro)
-            {
+            if (vm.parameters[i].id_parametro == vm.quote.norma.parametros[j].id_parametro) {
               vm.parameters[i].selected = true;
               break;
             }
@@ -453,20 +427,16 @@
 
     function isFormValid() {
       vm.message = '';
-      if (vm.quote.cuerpo_receptor.length > 0 && vm.quote.tipo_cuerpo.length < 1)
-      {
+      if (vm.quote.cuerpo_receptor.length > 0 && vm.quote.tipo_cuerpo.length < 1) {
         vm.message += ' Ingrese tipo de cuerpo receptor';
         return false;
       }
-      if (vm.quote.cuerpo_receptor.length < 1 && vm.quote.tipo_cuerpo.length > 0)
-      {
+      if (vm.quote.cuerpo_receptor.length < 1 && vm.quote.tipo_cuerpo.length > 0) {
         vm.message += ' Ingrese cuerpo receptor';
         return false;
       }
-      if (vm.user.level < 3)
-      {
-        if (vm.quote.id_status == 3 && vm.quote.motivo_rechaza.length < 1)
-        {
+      if (vm.user.level < 3) {
+        if (vm.quote.id_status == 3 && vm.quote.motivo_rechaza.length < 1) {
           vm.message += ' Ingrese el motivo de rechazo de la Solicitud ';
           return false;
         }
@@ -475,11 +445,9 @@
     }
 
     function submitForm() {
-      if (isFormValid() && !vm.isDataSubmitted)
-      {
+      if (isFormValid() && !vm.isDataSubmitted) {
         vm.isDataSubmitted = true;
-        if (vm.quote.id_solicitud > 0)
-        {
+        if (vm.quote.id_solicitud > 0) {
           RestUtilsService
             .saveData(
               QuoteService,
@@ -487,10 +455,8 @@
               'muestreo/solicitud'
             );
         }
-        else
-        {
-          if (vm.user.level < 3 || vm.quote.quote.id_status !== 2)
-          {
+        else {
+          if (vm.user.level < 3 || vm.quote.quote.id_status !== 2) {
             RestUtilsService
               .updateData(
                 QuoteService,
@@ -582,8 +548,7 @@
     }
 
     function addPlan() {
-      if (vm.order.planes)
-      {
+      if (vm.order.planes) {
         vm.order.planes.push({
           'id_plan': 0,
           'id_estudio': vm.order.id_estudio,
@@ -618,8 +583,7 @@
           'comentarios': '', 'activo': 1
         });
       }
-      else
-      {
+      else {
         vm.order.planes = [{
           'id_plan': 0,
           'id_estudio': vm.order.id_estudio,
@@ -677,38 +641,32 @@
       var i = 0,
       l = 0,
       plans = [];
-      if (vm.order.planes && vm.order.planes.length > 0)
-      {
+      if (vm.order.planes && vm.order.planes.length > 0) {
         plans = vm.order.planes;
         l = plans.length;
         for (i = 0; i < l; i += 1) {
-          if (!plans[i].id_paquete)
-          {
+          if (!plans[i].id_paquete) {
             vm.message = ' No hay Paquete de puntos ';
             return false;
           }
-          if (plans[i].id_paquete < 1)
-          {
+          if (plans[i].id_paquete < 1) {
             vm.message = ' Seleccione un Paquete de puntos ';
             vm.message += '(Ver fila ' + (i + 1) + ')';
             return false;
           }
-          if (plans[i].id_supervisor_muestreo < 1)
-          {
+          if (plans[i].id_supervisor_muestreo < 1) {
             vm.message = ' Seleccione un Responsable de muestreo ';
             vm.message += '(Ver fila ' + (i + 1) + ')';
             return false;
           }
-          if (!DateUtilsService.isValidDate(new Date(plans[i].fecha_probable)))
-          {
+          if (!DateUtilsService.isValidDate(new Date(plans[i].fecha_probable))) {
             vm.message = ' Ingrese fecha y hora válidas ';
             vm.message += '(Ver fila ' + (i + 1) + ')';
             return false;
           }
         }
       }
-      else
-      {
+      else {
         vm.message += ' Agregue un plan ';
         return false;
       }
@@ -717,14 +675,11 @@
 
     function isFormValid() {
       vm.message = '';
-      if (!isPlanListValid())
-      {
+      if (!isPlanListValid()) {
         return isPlanListValid();
       }
-      if (vm.user.level < 3)
-      {
-        if (vm.order.id_status == 3 && vm.order.motivo_rechaza.length < 1)
-        {
+      if (vm.user.level < 3) {
+        if (vm.order.id_status == 3 && vm.order.motivo_rechaza.length < 1) {
           vm.message += ' Ingrese el motivo de rechazo del Informe ';
           return false;
         }
@@ -733,10 +688,8 @@
     }
 
     function submitForm() {
-      if (isFormValid() && !vm.isDataSubmitted)
-      {
-        if (vm.order.id_orden > 0)
-        {
+      if (isFormValid() && !vm.isDataSubmitted) {
+        if (vm.order.id_orden > 0) {
           RestUtilsService
             .saveData(
               OrderService,
@@ -744,10 +697,8 @@
               'muestreo/orden'
             );
         }
-        else
-        {
-          if (vm.user.level < 3 || vm.order.order.id_status !== 2)
-          {
+        else {
+          if (vm.user.level < 3 || vm.order.order.id_status !== 2) {
             RestUtilsService
               .updateData(
                 OrderService,
@@ -896,6 +847,7 @@
             vm.instruments = response;
             l = vm.instruments.length;
             for (i = 0; i < l; i += 1) {
+              vm.instruments[i].id_plan_instrumento = 0;
               vm.instruments[i].id_plan = vm.plan.id_plan;
             }
           });
@@ -946,10 +898,8 @@
 
     function selectInstruments() {
       var items = [];
-      if (vm.instruments.length > 0 && vm.plan.instrumentos)
-      {
-        if (vm.plan.instrumentos.length > 0 && !vm.isInstrumentListLoaded)
-        {
+      if (vm.instruments.length > 0 && vm.plan.instrumentos) {
+        if (vm.plan.instrumentos.length > 0 && !vm.isInstrumentListLoaded) {
           ArrayUtilsService.seItemsFromReference(
             vm.instruments,
             vm.plan.instrumentos,
@@ -960,8 +910,7 @@
           );
           vm.isInstrumentListLoaded = true;
         }
-        else
-        {
+        else {
           vm.plan.instrumentos = [];
           vm.plan.instrumentos = ArrayUtilsService.selectItemsFromCollection(
             vm.instruments,
@@ -974,10 +923,8 @@
 
     function selectContainers() {
       var items = [];
-      if (vm.containers.length > 0 && vm.plan.recipientes)
-      {
-        if (vm.plan.recipientes.length > 0 && !vm.isContainerListLoaded)
-        {
+      if (vm.containers.length > 0 && vm.plan.recipientes) {
+        if (vm.plan.recipientes.length > 0 && !vm.isContainerListLoaded) {
           ArrayUtilsService.seItemsFromReference(
             vm.containers,
             vm.plan.recipientes,
@@ -990,8 +937,7 @@
           );
           vm.isContainerListLoaded = true;
         }
-        else
-        {
+        else {
           vm.plan.recipientes = [];
           vm.plan.recipientes = ArrayUtilsService.selectItemsFromCollection(
             vm.containers,
@@ -1004,10 +950,8 @@
 
     function selectReactives() {
       var items = [];
-      if (vm.reactives.length > 0 && vm.plan.reactivos)
-      {
-        if (vm.plan.reactivos.length > 0 && !vm.isReactiveListLoaded)
-        {
+      if (vm.reactives.length > 0 && vm.plan.reactivos) {
+        if (vm.plan.reactivos.length > 0 && !vm.isReactiveListLoaded) {
           ArrayUtilsService.seItemsFromReference(
             vm.reactives,
             vm.plan.reactivos,
@@ -1022,8 +966,7 @@
           );
           vm.isReactiveListLoaded = true;
         }
-        else
-        {
+        else {
           vm.plan.reactivos = [];
           vm.plan.reactivos = ArrayUtilsService.selectItemsFromCollection(
             vm.reactives,
@@ -1036,10 +979,8 @@
 
     function selectMaterials() {
       var items = [];
-      if (vm.materials.length > 0 && vm.plan.materiales)
-      {
-        if (vm.plan.materiales.length > 0 && !vm.isMaterialListLoaded)
-        {
+      if (vm.materials.length > 0 && vm.plan.materiales) {
+        if (vm.plan.materiales.length > 0 && !vm.isMaterialListLoaded) {
           ArrayUtilsService.seItemsFromReference(
             vm.materials,
             vm.plan.materiales,
@@ -1051,8 +992,7 @@
           );
           vm.isMaterialListLoaded = true;
         }
-        else
-        {
+        else {
           vm.plan.materiales = [];
           vm.plan.materiales = ArrayUtilsService.selectItemsFromCollection(
             vm.materials,
@@ -1065,10 +1005,8 @@
 
     function selectCoolers() {
       var items = [];
-      if (vm.coolers.length > 0 && vm.plan.hieleras)
-      {
-        if (vm.plan.hieleras.length > 0 && !vm.isCoolerListLoaded)
-        {
+      if (vm.coolers.length > 0 && vm.plan.hieleras) {
+        if (vm.plan.hieleras.length > 0 && !vm.isCoolerListLoaded) {
           ArrayUtilsService.seItemsFromReference(
             vm.coolers,
             vm.plan.hieleras,
@@ -1080,8 +1018,7 @@
           );
           vm.isCoolerListLoaded = true;
         }
-        else
-        {
+        else {
           vm.plan.hieleras = [];
           vm.plan.hieleras = ArrayUtilsService.selectItemsFromCollection(
             vm.coolers,
@@ -1101,18 +1038,15 @@
     }
 
     function isInstrumentListValid() {
-      if (vm.plan.id_responsable_calibracion < 1)
-      {
+      if (vm.plan.id_responsable_calibracion < 1) {
         vm.message += ' Seleccione una Responsable de calibración ';
         return false;
       }
-      if (!DateUtilsService.isValidDate(new Date(vm.plan.fecha_calibracion)))
-      {
+      if (!DateUtilsService.isValidDate(new Date(vm.plan.fecha_calibracion))) {
         vm.message += ' Ingrese una fecha válida de calibración ';
         return false;
       }
-      if (vm.plan.instrumentos.length < 1)
-      {
+      if (vm.plan.instrumentos.length < 1) {
         vm.message += ' Seleccione al menos un instrumento ';
         return false;
       }
@@ -1123,26 +1057,22 @@
       var i = 0,
       l = 0,
       containers = [];
-      if (vm.plan.id_responsable_recipientes < 1)
-      {
+      if (vm.plan.id_responsable_recipientes < 1) {
         vm.message += ' Seleccione una Responsable de preparación de recipientes ';
         return false;
       }
-      if (vm.plan.recipientes && vm.plan.recipientes.length > 0)
-      {
+      if (vm.plan.recipientes && vm.plan.recipientes.length > 0) {
         containers = vm.plan.recipientes;
         l = containers.length;
         for (i = 0; i < l; i += 1) {
-          if (isNaN(containers[i].cantidad) || containers[i].cantidad < 1)
-          {
+          if (isNaN(containers[i].cantidad) || containers[i].cantidad < 1) {
             vm.message += ' Ingrese cantidad de recipientes, para la preservación ';
             vm.message += '(Ver fila ' + (i + 1) + ')';
             return false;
           }
         }
       }
-      else
-      {
+      else {
         vm.message += ' Seleccione un recipiente ';
         return false;
       }
@@ -1153,32 +1083,27 @@
       var i = 0,
       l = 0,
       reactives = [];
-      if (vm.plan.id_responsable_reactivos < 1)
-      {
+      if (vm.plan.id_responsable_reactivos < 1) {
         vm.message += ' Seleccione una Responsable de reactivos ';
         return false;
       }
-      if (vm.plan.reactivos && vm.plan.reactivos.length > 0)
-      {
+      if (vm.plan.reactivos && vm.plan.reactivos.length > 0) {
         reactives = vm.plan.reactivos;
         l = reactives.length;
         for (i = 0; i < l; i += 1) {
-          if (isNaN(reactives[i].cantidad) || reactives[i].cantidad < 1)
-          {
+          if (isNaN(reactives[i].cantidad) || reactives[i].cantidad < 1) {
             vm.message += ' Ingrese cantidad, para el reactivo ';
             vm.message += '(Ver fila ' + (i + 1) + ')';
             return false;
           }
-          if (isNaN(reactives[i].lote) || reactives[i].lote < 1)
-          {
+          if (isNaN(reactives[i].lote) || reactives[i].lote < 1) {
             vm.message += ' Ingrese lote, para el reactivo ';
             vm.message += '(Ver fila ' + (i + 1) + ')';
             return false;
           }
         }
       }
-      else
-      {
+      else {
         vm.message += ' Seleccione un recipiente ';
         return false;
       }
@@ -1189,13 +1114,11 @@
       var i = 0,
       l = 0,
       materials = [];
-      if (vm.plan.id_responsable_material < 1)
-      {
+      if (vm.plan.id_responsable_material < 1) {
         vm.message += ' Seleccione una Responsable de preparación de material ';
         return false;
       }
-      if (vm.plan.materiales.length < 1)
-      {
+      if (vm.plan.materiales.length < 1) {
         vm.message += ' Seleccione los materiales y equipos ';
         return false;
       }
@@ -1206,13 +1129,11 @@
       var i = 0,
       l = 0,
       coolers = [];
-      if (vm.plan.id_responsable_hieleras < 1)
-      {
+      if (vm.plan.id_responsable_hieleras < 1) {
         vm.message += ' Seleccione una Responsable de hieleras ';
         return false;
       }
-      if (vm.plan.hieleras.length < 1)
-      {
+      if (vm.plan.hieleras.length < 1) {
         vm.message += ' Seleccione hieleras ';
         return false;
       }
@@ -1221,81 +1142,64 @@
 
     function isFormValid() {
       vm.message = '';
-      if (vm.plan.id_objetivo_plan < 1)
-      {
+      if (vm.plan.id_objetivo_plan < 1) {
         vm.message += ' Seleccione un objetivo ';
         return false;
       }
-      if (vm.plan.id_objetivo_plan == 5 && vm.plan.objetivo_otro.length < 1)
-      {
+      if (vm.plan.id_objetivo_plan == 5 && vm.plan.objetivo_otro.length < 1) {
         vm.message += ' Si selecciona otro objetivo debe ingresarlo ';
         return false;
       }
-      if (vm.plan.calle.length < 1)
-      {
+      if (vm.plan.calle.length < 1) {
         vm.message += ' Ingrese una calle o ubicación ';
         return false;
       }
-      if (vm.plan.id_municipio < 1)
-      {
+      if (vm.plan.id_municipio < 1) {
         vm.message += ' Seleccione un municipio ';
         return false;
       }
-      if (vm.plan.id_localidad < 1)
-      {
+      if (vm.plan.id_localidad < 1) {
         vm.message += ' Seleccione una localidad ';
         return false;
       }
-      if (vm.plan.id_supervisor_entrega < 1)
-      {
+      if (vm.plan.id_supervisor_entrega < 1) {
         vm.message += ' Seleccione un Responsable de muestreo ';
         return false;
       }
-      if (vm.plan.id_ayudante_entrega < 1)
-      {
+      if (vm.plan.id_ayudante_entrega < 1) {
         vm.message += ' Seleccione una Acompañante de muestreo ';
         return false;
       }
-      if (vm.plan.id_supervisor_recolecion < 1)
-      {
+      if (vm.plan.id_supervisor_recolecion < 1) {
         vm.message += ' Seleccione un Responsable de recolección ';
         return false;
       }
-      if (vm.plan.id_ayudante_recolecion < 1)
-      {
+      if (vm.plan.id_ayudante_recolecion < 1) {
         vm.message += ' Seleccione una Acompañante de recolección ';
         return false;
       }
-      if (vm.plan.id_supervisor_registro < 1)
-      {
+      if (vm.plan.id_supervisor_registro < 1) {
         vm.message += ' Seleccione un Responsable de registro de resultados ';
         return false;
       }
-      if (vm.plan.id_ayudante_registro < 1)
-      {
+      if (vm.plan.id_ayudante_registro < 1) {
         vm.message += ' Seleccione una Acompañante de registro de resultados ';
         return false;
       }
-      if (!isInstrumentListValid)
-      {
+      if (!isInstrumentListValid) {
         return false;
       }
-      if (!isContainerListValid)
-      {
+      if (!isContainerListValid) {
         return false;
       }
-      if (!isReactiveListValid)
-      {
+      if (!isReactiveListValid) {
         return false;
       }
-      if (!isCoolerListValid)
-      {
+      if (!isCoolerListValid) {
         return false;
       }
-      if (vm.user.level < 3)
-      {
-        if (vm.plan.id_status == 3 && vm.plan.motivo_rechaza.length < 1)
-        {
+      if (vm.user.level < 3) {
+        if (vm.plan.id_status == 3 && vm.plan.motivo_rechaza.length < 1) {
           vm.message += ' Ingrese el motivo de rechazo del Informe ';
           return false;
         }
@@ -1304,12 +1208,10 @@
     }
 
     function submitForm() {
-      if (isFormValid() && !vm.isDataSubmitted)
-      {
+      if (isFormValid() && !vm.isDataSubmitted) {
         console.log(vm.plan);
         vm.isDataSubmitted = true;
-        if (vm.plan.id_estudio > 0)
-        {
+        if (vm.plan.id_estudio > 0) {
           RestUtilsService
             .saveData(
               PlanService,
@@ -1317,10 +1219,8 @@
               'muestreo/plan'
             );
         }
-        else
-        {
-          if (vm.user.level < 3 || vm.plan.plan.id_status !== 2)
-          {
+        else {
+          if (vm.user.level < 3 || vm.plan.plan.id_status !== 2) {
             RestUtilsService
               .updateData(
                 PlanService,
@@ -1421,10 +1321,8 @@
 
     function selectPreservations() {
       var items = [];
-      if (vm.preservations.length > 0 && vm.sheet.preservaciones)
-      {
-        if (vm.sheet.preservaciones.length > 0 && !vm.isPreservationListLoaded)
-        {
+      if (vm.preservations.length > 0 && vm.sheet.preservaciones) {
+        if (vm.sheet.preservaciones.length > 0 && !vm.isPreservationListLoaded) {
           ArrayUtilsService.seItemsFromReference(
             vm.preservations,
             vm.sheet.preservaciones,
@@ -1435,8 +1333,7 @@
           );
           vm.isPreservationListLoaded = true;
         }
-        else
-        {
+        else {
           vm.sheet.preservaciones = [];
           vm.sheet.preservaciones = ArrayUtilsService
             .selectItemsFromCollection(
@@ -1462,17 +1359,14 @@
       results = sampleResults.slice();
       l = results.length;
       for (i = 0; i < l; i += 1) {
-        if (results[i].valor_texto.length > 0)
-        {
-          if (results[i].id_tipo_valor == 2 && results[i].valor_texto.length < 2)
-          {
+        if (results[i].valor_texto.length > 0) {
+          if (results[i].id_tipo_valor == 2 && results[i].valor_texto.length < 2) {
             vm.message += ' Ingrese un valor para el parámetro ';
             vm.message += results[i].parametro + ' ';
             vm.message += sample.punto + ' ';
             return false;
           }
-          if (results[i].id_tipo_valor == 1 && isNaN(results[i].valor))
-          {
+          if (results[i].id_tipo_valor == 1 && isNaN(results[i].valor)) {
             vm.message += ' Ingrese un valor numérico para el parámetro ';
             vm.message += results[i].parametro + ' ';
             vm.message += sample.punto + ' ';
@@ -1487,13 +1381,11 @@
       var i = 0,
       l = 0,
       samples = [];
-      if (vm.sheet.muestras && vm.sheet.muestras.length > 0)
-      {
+      if (vm.sheet.muestras && vm.sheet.muestras.length > 0) {
         samples = vm.sheet.muestras;
         l = samples.length;
         for (i = 0; i < l; i += 1) {
-          if (!DateUtilsService.isValidDate(new Date(samples[i].fecha_muestreo)))
-          {
+          if (!DateUtilsService.isValidDate(new Date(samples[i].fecha_muestreo))) {
             vm.message += ' Ingrese una fecha/hora válida para el punto ';
             vm.message += samples[i].punto + ' ';
             return false;
@@ -1501,8 +1393,7 @@
           isResultListValid(samples[i], samples[i].resultados);
         }
       }
-      else
-      {
+      else {
         vm.message += ' Sin resultados ';
         return false;
       }
@@ -1511,44 +1402,35 @@
 
     function isFormValid() {
       vm.message = '';
-      if (vm.sheet.id_norma_muestreo < 1)
-      {
+      if (vm.sheet.id_norma_muestreo < 1) {
         vm.message += ' Seleccione una Norma de referencia ';
         return false;
       }
-      if (!DateUtilsService.isValidDate(new Date(vm.sheet.fecha_muestreo)))
-      {
+      if (!DateUtilsService.isValidDate(new Date(vm.sheet.fecha_muestreo))) {
         vm.message += ' Ingrese una fecha/hora de muestreo válida ';
         return false;
       }
-      if (!isSampleListValid())
-      {
+      if (!isSampleListValid()) {
         return false;
       }
-      if (vm.sheet.id_nubes < 1)
-      {
+      if (vm.sheet.id_nubes < 1) {
         vm.message += ' Seleccione una cobertura de nubes ';
         return false;
       }
-      if (vm.sheet.id_direccion_corriente < 1)
-      {
+      if (vm.sheet.id_direccion_corriente < 1) {
         vm.message += ' Seleccione una dirección de corriente ';
         return false;
       }
-      if (vm.sheet.id_oleaje < 1)
-      {
+      if (vm.sheet.id_oleaje < 1) {
         vm.message += ' Seleccione una intensidad del oleaje ';
         return false;
       }
-      if (vm.sheet.preservaciones.length < 1)
-      {
+      if (vm.sheet.preservaciones.length < 1) {
         vm.message += ' Seleccione al menos un tipo de preservación ';
         return false;
       }
-      if (vm.user.level < 3)
-      {
-        if (vm.sheet.id_status == 3 && vm.sheet.motivo_rechaza.length < 1)
-        {
+      if (vm.user.level < 3) {
+        if (vm.sheet.id_status == 3 && vm.sheet.motivo_rechaza.length < 1) {
           vm.message += ' Ingrese el motivo de rechazo del Informe ';
           return false;
         }
@@ -1558,11 +1440,9 @@
 
     function submitForm() {
       console.log(vm.sheet);
-      if (isFormValid() && !vm.isDataSubmitted)
-      {
+      if (isFormValid() && !vm.isDataSubmitted) {
         vm.isDataSubmitted = true;
-        if (vm.sheet.id_hoja < 1)
-        {
+        if (vm.sheet.id_hoja < 1) {
           RestUtilsService
             .saveData(
               SheetService,
@@ -1570,10 +1450,8 @@
               'recepcion/hoja'
             );
         }
-        else
-        {
-          if (vm.user.level < 3 || vm.sheet.sheet.id_status !== 2)
-          {
+        else {
+          if (vm.user.level < 3 || vm.sheet.sheet.id_status !== 2) {
             RestUtilsService
               .updateData(
                 SheetService,
@@ -1660,8 +1538,7 @@
       var i = 0, l = vm.receptionists.length;
       vm.reception.recepcionista = {};
       for (i = 0; i < l; i += 1) {
-        if (vm.receptionists[i].id_empleado == idRecepcionist)
-        {
+        if (vm.receptionists[i].id_empleado == idRecepcionist) {
           vm.reception.recepcionista = vm.receptionists[i];
           break;
         }
@@ -1680,45 +1557,36 @@
 
     function isFormValid() {
       vm.message = '';
-      if (!DateUtilsService.isValidDate(new Date(vm.reception.hoja.fecha_muestreo)))
-      {
+      if (!DateUtilsService.isValidDate(new Date(vm.reception.hoja.fecha_muestreo))) {
         vm.message += ' Ingrese una fecha/hora de muestreo válida ';
         return false;
       }
-      if (!DateUtilsService.isValidDate(new Date(vm.reception.hoja.fecha_recibe)))
-      {
+      if (!DateUtilsService.isValidDate(new Date(vm.reception.hoja.fecha_recibe))) {
         vm.message += ' Ingrese una fecha/hora de recepción válida ';
         return false;
       }
-      if (vm.reception.id_recepcionista < 1)
-      {
+      if (vm.reception.id_recepcionista < 1) {
         vm.message += ' Seleccione un responsable de la recepción ';
         return false;
       }
-      if (vm.reception.muestras.length < 1)
-      {
+      if (vm.reception.muestras.length < 1) {
         vm.message += ' Confirme la recepción de al menos una muestra ';
         return false;
       }
-      if (vm.reception.id_muestra_validacion < 1)
-      {
+      if (vm.reception.id_muestra_validacion < 1) {
         vm.message += ' Selececcione una muestra a verificar ';
         return false;
       }
-      if (vm.reception.validacion_preservaciones.length < 1)
-      {
+      if (vm.reception.validacion_preservaciones.length < 1) {
         vm.message += ' Seleccione al menos una preservación ';
         return false;
       }
-      if (vm.reception.validacion_contenedores.length < 1)
-      {
+      if (vm.reception.validacion_contenedores.length < 1) {
         vm.message += ' Seleccione al menos un tipo de análisis ';
         return false;
       }
-      if (vm.user.level < 3)
-      {
-        if (vm.reception.id_status == 3 && vm.reception.motivo_rechaza.length < 1)
-        {
+      if (vm.user.level < 3) {
+        if (vm.reception.id_status == 3 && vm.reception.motivo_rechaza.length < 1) {
           vm.message += ' Ingrese el motivo de rechazo del Informe ';
           return false;
         }
@@ -1727,11 +1595,9 @@
     }
 
     function submitForm() {
-      if (isFormValid() && !vm.isDataSubmitted)
-      {
+      if (isFormValid() && !vm.isDataSubmitted) {
         vm.isDataSubmitted = true;
-        if (vm.reception.id_recepcion < 1)
-        {
+        if (vm.reception.id_recepcion < 1) {
           RestUtilsService
             .saveData(
               ReceptionService,
@@ -1739,10 +1605,8 @@
               'recepcion/recepcion'
             );
         }
-        else
-        {
-          if (vm.user.level < 3 || vm.reception.reception.id_status !== 2)
-          {
+        else {
+          if (vm.user.level < 3 || vm.reception.reception.id_status !== 2) {
             RestUtilsService
               .updateData(
                 ReceptionService,
@@ -1826,11 +1690,9 @@
     }
 
     function submitForm() {
-      if (isFormValid() && !vm.isDataSubmitted)
-      {
+      if (isFormValid() && !vm.isDataSubmitted) {
         vm.isDataSubmitted = true;
-        if (vm.custody.id_custodia < 1)
-        {
+        if (vm.custody.id_custodia < 1) {
           RestUtilsService
             .saveData(
               CustodyService,
@@ -1838,10 +1700,8 @@
               'recepcion/custodia'
             );
         }
-        else
-        {
-          if (vm.user.level < 3 || vm.custody.custody.id_status !== 2)
-          {
+        else {
+          if (vm.user.level < 3 || vm.custody.custody.id_status !== 2) {
             RestUtilsService
               .updateData(
                 CustodyService,

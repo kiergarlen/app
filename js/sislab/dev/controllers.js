@@ -67,8 +67,8 @@
    * @param {Object} TaskService - Proveedor de datos, Tareas
    */
   function TaskListController(TokenService, TaskService) {
-    var vm = this,
-    userData;
+    var vm = this;
+    var userData;
     vm.userName = '';
     vm.tasks = {};
     if (TokenService.isAuthenticated()) {
@@ -214,9 +214,9 @@
     }
 
     function isOrderListValid() {
-      var i = 0,
-      l = 0,
-      orders = [];
+      var i = 0;
+      var l = 0;
+      var orders = [];
       if (vm.study.ordenes && vm.study.ordenes.length > 0) {
         orders = vm.study.ordenes;
         l = orders.length;
@@ -385,8 +385,10 @@
     vm.isFormValid = isFormValid;
     vm.submitForm = submitForm;
 
-    function totalParameter(){
-      var i = 0, l = 0, t = 0;
+    function totalParameter() {
+      var i = 0;
+      var l = 0;
+      var t = 0;
       if (vm.parameters && vm.quote.cliente) {
         l = vm.parameters.length;
         for (i = 0; i < l; i += 1) { if (vm.parameters[i].selected) {
@@ -401,7 +403,10 @@
     }
 
     function selectNormParameters() {
-      var i, l, j, m;
+      var i;
+      var l;
+      var j;
+      var m;
       l = vm.parameters.length;
       if (l > 0 && vm.quote.parametros) {
         for(i = 0; i < l; i += 1) {
@@ -638,9 +643,9 @@
     }
 
     function isPlanListValid() {
-      var i = 0,
-      l = 0,
-      plans = [];
+      var i = 0;
+      var l = 0;
+      var plans = [];
       if (vm.order.planes && vm.order.planes.length > 0) {
         plans = vm.order.planes;
         l = plans.length;
@@ -863,7 +868,6 @@
               vm.containers[i].id_plan_recipiente = 0;
               vm.containers[i].id_plan = vm.plan.id_plan;
             }
-            console.log(vm.containers);
           });
         ReactiveService
           .get()
@@ -917,7 +921,9 @@
             vm.plan.instrumentos,
             'id_instrumento',
             [
+              'id_plan_instrumento',
               'selected'
+
             ]
           );
           vm.isInstrumentListLoaded = true;
@@ -944,8 +950,8 @@
             [
               'id_plan_recipiente',
               'id_plan',
-              'selected',
-              'cantidad'
+              'cantidad',
+              'selected'
             ]
           );
           vm.isContainerListLoaded = true;
@@ -970,11 +976,12 @@
             vm.plan.reactivos,
             'id_reactivo',
             [
-              'selected',
+              'id_plan_reactivo',
               'id_plan',
               'lote',
               'folio',
-              'valor'
+              'valor',
+              'selected'
             ]
           );
           vm.isReactiveListLoaded = true;
@@ -999,8 +1006,9 @@
             vm.plan.materiales,
             'id_material',
             [
-              'selected',
-              'id_plan'
+              'id_plan_material',
+              'id_plan',
+              'selected'
             ]
           );
           vm.isMaterialListLoaded = true;
@@ -1025,8 +1033,9 @@
             vm.plan.hieleras,
             'id_hielera',
             [
-              'selected',
-              'id_plan'
+              'id_plan_hielera',
+              'id_plan',
+              'selected'
             ]
           );
           vm.isCoolerListLoaded = true;
@@ -1067,9 +1076,9 @@
     }
 
     function isContainerListValid() {
-      var i = 0,
-      l = 0,
-      containers = [];
+      var i = 0;
+      var l = 0;
+      var containers = [];
       if (vm.plan.id_responsable_recipientes < 1) {
         vm.message += ' Seleccione una Responsable de preparación de recipientes ';
         return false;
@@ -1093,9 +1102,9 @@
     }
 
     function isReactiveListValid() {
-      var i = 0,
-      l = 0,
-      reactives = [];
+      var i = 0;
+      var l = 0;
+      var reactives = [];
       if (vm.plan.id_responsable_reactivos < 1) {
         vm.message += ' Seleccione una Responsable de reactivos ';
         return false;
@@ -1124,9 +1133,9 @@
     }
 
     function isMaterialListValid() {
-      var i = 0,
-      l = 0,
-      materials = [];
+      var i = 0;
+      var l = 0;
+      var materials = [];
       if (vm.plan.id_responsable_material < 1) {
         vm.message += ' Seleccione una Responsable de preparación de material ';
         return false;
@@ -1139,9 +1148,9 @@
     }
 
     function isCoolerListValid() {
-      var i = 0,
-      l = 0,
-      coolers = [];
+      var i = 0;
+      var l = 0;
+      var coolers = [];
       if (vm.plan.id_responsable_hieleras < 1) {
         vm.message += ' Seleccione una Responsable de hieleras ';
         return false;
@@ -1367,9 +1376,9 @@
     }
 
     function isResultListValid(sample, sampleResults) {
-      var i = 0,
-      l = 0,
-      results = sampleResults.slice();
+      var i = 0;
+      var l = 0;
+      var results = sampleResults.slice();
       l = results.length;
       for (i = 0; i < l; i += 1) {
         if (results[i].valor_texto.length > 0) {
@@ -1391,9 +1400,9 @@
     }
 
     function isSampleListValid() {
-      var i = 0,
-      l = 0,
-      samples = [];
+      var i = 0;
+      var l = 0;
+      var samples = [];
       if (vm.sheet.muestras && vm.sheet.muestras.length > 0) {
         samples = vm.sheet.muestras;
         l = samples.length;

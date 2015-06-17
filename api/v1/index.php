@@ -238,21 +238,18 @@ $app->post("/plans", function() use ($app) {
 		{
 			// $planInsertData = processPlanInsert($request);
 			// $planId = insertPlan($planInsertData["plan"]);
-			// //processPlanOrderInsert($planInsertData, $planId);
 			$result = '{"id_plan":' . $planId . '}';
 		}
 		else
 		{
 			$planUpdateData = processPlanUpdate($request);
-			//$result = $planUpdateData;
-			//$result = json_encode(updatePlan($planUpdateData["plan"]));
-			//just for a while... $planId = updatePlan($planUpdateData["plan"]);
-			//just for a while... processPlanInstrumentsUpdate($planUpdateData);
-			$result = json_encode(processPlanContainersUpdate($planUpdateData));
-			//$result = json_encode(processPlanOrderUpdate($planUpdateData));
-			// // $result = processPlanOrderUpdate($planUpdateData);
-			// // processPlanOrderUpdate($planUpdateData);
-			// $result = '{"id_plan":' . $planId . '}';
+			$planId = updatePlan($planUpdateData["plan"]);
+			processPlanInstrumentsUpdate($planUpdateData);
+			processPlanContainersUpdate($planUpdateData);
+			processPlanReactivesUpdate($planUpdateData);
+			processPlanMaterialsUpdate($planUpdateData);
+			processPlanCoolersUpdate($planUpdateData);
+			$result = '{"id_plan":' . $planId . '}';
 		}
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');

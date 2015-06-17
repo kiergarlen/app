@@ -2176,7 +2176,7 @@ function getInstrumentsByPlan($planId) {
 	$sql = "SELECT id_plan_instrumento, id_plan, id_instrumento,
 		bitacora, folio, activo
 		FROM PlanInstrumento
-		WHERE id_plan = :planId";
+		WHERE activo = 1 AND id_plan = :planId";
 	$db = getConnection();
 	$stmt = $db->prepare($sql);
 	$stmt->bindParam("planId", $planId);
@@ -2375,7 +2375,7 @@ function getContainersByPlan($planId) {
 	$sql = "SELECT id_plan_recipiente, id_plan, id_recipiente,
 		cantidad, activo
 		FROM PlanRecipiente
-		WHERE id_plan = :planId";
+		WHERE activo = 1 AND id_plan = :planId";
 	$db = getConnection();
 	$stmt = $db->prepare($sql);
 	$stmt->bindParam("planId", $planId);
@@ -2432,6 +2432,31 @@ function getReactivesByPlan($planId) {
 	return $reactives;
 }
 
+function insertPlanReactive($reactiveData) {
+	$sql = "INSERT INTO PlanReactivo (id_plan, id_reactivo,
+		valor, lote, folio)
+		VALUES (:id_plan, :id_reactivo,
+		:valor, :lote, :folio)";
+	$db = getConnection();
+	$stmt = $db->prepare($sql);
+	$stmt->execute($reactiveData);
+	$reactiveId = $db->lastInsertId();
+	$db = null;
+	return $reactiveId;
+}
+
+function deletePlanReactives($planId) {
+	$sql = "DELETE
+		FROM PlanReactivo
+		WHERE id_plan = :planId";
+	$db = getConnection();
+	$stmt = $db->prepare($sql);
+	$stmt->bindParam("planId", $planId);
+	$stmt->execute();
+	$db = null;
+	return $planId;
+}
+
 function getMaterialsByPlan($planId) {
 	$sql = "SELECT p.id_plan, pm.id_plan_material, m.id_material,
 		m.material, m.activo
@@ -2452,6 +2477,29 @@ function getMaterialsByPlan($planId) {
 	return $materials;
 }
 
+function insertPlanMaterial($materialData) {
+	$sql = "INSERT INTO PlanMaterial (id_plan, id_material)
+		VALUES (:id_plan, :id_material)";
+	$db = getConnection();
+	$stmt = $db->prepare($sql);
+	$stmt->execute($materialData);
+	$materialId = $db->lastInsertId();
+	$db = null;
+	return $materialId;
+}
+
+function deletePlanMaterials($planId) {
+	$sql = "DELETE
+		FROM PlanMaterial
+		WHERE id_plan = :planId";
+	$db = getConnection();
+	$stmt = $db->prepare($sql);
+	$stmt->bindParam("planId", $planId);
+	$stmt->execute();
+	$db = null;
+	return $planId;
+}
+
 function getCoolersByPlan($planId) {
 	$sql = "SELECT p.id_plan, ph.id_plan_hielera, h.id_hielera,
 		h.hielera, h.activo, 'true' AS selected
@@ -2470,6 +2518,29 @@ function getCoolersByPlan($planId) {
 		$coolers[$i]["selected"] = true;
 	}
 	return $coolers;
+}
+
+function insertPlanCooler($coolerData) {
+	$sql = "INSERT INTO PlanHielera (id_plan, id_hielera)
+		VALUES (:id_plan, :id_hielera)";
+	$db = getConnection();
+	$stmt = $db->prepare($sql);
+	$stmt->execute($coolerData);
+	$coolerId = $db->lastInsertId();
+	$db = null;
+	return $coolerId;
+}
+
+function deletePlanCoolers($planId) {
+	$sql = "DELETE
+		FROM PlanHielera
+		WHERE id_plan = :planId";
+	$db = getConnection();
+	$stmt = $db->prepare($sql);
+	$stmt->bindParam("planId", $planId);
+	$stmt->execute();
+	$db = null;
+	return $planId;
 }
 
 function getEmployees() {

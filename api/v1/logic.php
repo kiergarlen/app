@@ -650,7 +650,6 @@ function processPlanInstrumentsUpdate($planUpdateData) {
 
 	if ($l < 1)
 	{
-		//nothing stored, insert all
 		for ($j = 0; $j < $m; $j++) {
 			$newInstrument = (array) $instruments[$j];
 			unset($newInstrument["id_plan_instrumento"]);
@@ -661,11 +660,10 @@ function processPlanInstrumentsUpdate($planUpdateData) {
 			unset($newInstrument["selected"]);
 			insertPlanInstrument($newInstrument);
 		}
-		return $studyId;
+		return $planId;
 	}
 	else
 	{
-		//mark all stored as deleted, only additions/matches persist
 		for ($i = 0; $i < $l; $i++) {
 			unset($storedInstruments[$i]["instrumento"]);
 			unset($storedInstruments[$i]["descripcion"]);
@@ -673,36 +671,28 @@ function processPlanInstrumentsUpdate($planUpdateData) {
 			unset($storedInstruments[$i]["inventario"]);
 			unset($storedInstruments[$i]["selected"]);
 			$storedInstruments[$i]["activo"] = 0;
-			//return $storedInstruments[$i];
-			//return "delete old";
 			updatePlanInstrument($storedInstruments[$i]);
 		}
 		for ($j = 0; $j < $m; $j++) {
 			$instrument = (array) $instruments[$j];
 			if ($instrument["id_plan_instrumento"] == 0)
 			{
-				//new, store it
 				unset($instrument["id_plan_instrumento"]);
 				unset($instrument["instrumento"]);
 				unset($instrument["descripcion"]);
 				unset($instrument["muestreo"]);
 				unset($instrument["inventario"]);
 				unset($instrument["selected"]);
-				//return "...something new;
-				//return $instrument;
 				insertPlanInstrument($instrument);
 			}
 			else
 			{
-				//update
 				unset($instrument["instrumento"]);
 				unset($instrument["descripcion"]);
 				unset($instrument["muestreo"]);
 				unset($instrument["inventario"]);
 				unset($instrument["selected"]);
 				$instrument["activo"] = 1;
-				//return $instrument;
-				//return "update old";
 				updatePlanInstrument($instrument);
 			}
 		}
@@ -712,27 +702,7 @@ function processPlanInstrumentsUpdate($planUpdateData) {
 function processPlanContainersUpdate($planUpdateData) {
 	$containers = (array) $planUpdateData["containers"];
 	$planId = $planUpdateData["plan"]["id_plan"];
-	$updateUserId = $planUpdateData["plan"]["id_usuario_actualiza"];
-	$updateDate = $planUpdateData["plan"]["fecha_actualiza"];
-	$updateIp = $planUpdateData["plan"]["ip_actualiza"];
-	$updateUrl = $planUpdateData["plan"]["host_actualiza"];
 	$storedContainers = getContainersByPlan($planId);
-
-		//id_plan_recipiente,
-		//id_plan,
-		//id_recipiente,
-		//cantidad,
-		//activo
-
-		// {
-		// 	"id_recipiente":"1",
-		// 	"recipiente":"Fisicoquímico 1",
-		// 	"tipo_recipiente":"Plástico",
-		// 	"activo":"1",
-		// 	"cantidad":"4",
-		// 	"selected":true,
-		// 	"id_plan":"3"
-		// }
 
 	$i = 0;
 	$j = 0;
@@ -741,62 +711,98 @@ function processPlanContainersUpdate($planUpdateData) {
 
 	if ($l < 1)
 	{
-		//nothing stored, insert all
 		for ($j = 0; $j < $m; $j++) {
 			$newContainer = (array) $containers[$j];
-			unset($newContainer["id_plan_instrumento"]);
-			unset($newContainer["instrumento"]);
-			unset($newContainer["descripcion"]);
-			unset($newContainer["muestreo"]);
-			unset($newContainer["inventario"]);
+			unset($newContainer["id_plan_recipiente"]);
+			unset($newContainer["recipiente"]);
+			unset($newContainer["tipo_recipiente"]);
 			unset($newContainer["selected"]);
 			insertPlanContainer($newContainer);
 		}
-		return $studyId;
+		return $planId;
 	}
 	else
 	{
-		//mark all stored as deleted, only additions/matches persist
 		for ($i = 0; $i < $l; $i++) {
-			unset($storedContainers[$i]["instrumento"]);
-			unset($storedContainers[$i]["descripcion"]);
-			unset($storedContainers[$i]["muestreo"]);
-			unset($storedContainers[$i]["inventario"]);
+			unset($storedContainers[$i]["recipiente"]);
+			unset($storedContainers[$i]["tipo_recipiente"]);
 			unset($storedContainers[$i]["selected"]);
 			$storedContainers[$i]["activo"] = 0;
-			//return $storedContainers[$i];
-			//return "delete old";
 			updatePlanContainer($storedContainers[$i]);
 		}
 		for ($j = 0; $j < $m; $j++) {
 			$container = (array) $containers[$j];
-			if ($container["id_plan_instrumento"] == 0)
+			if ($container["id_plan_recipiente"] == 0)
 			{
-				//new, store it
-				unset($container["id_plan_instrumento"]);
-				unset($container["instrumento"]);
-				unset($container["descripcion"]);
-				unset($container["muestreo"]);
-				unset($container["inventario"]);
+				unset($container["id_plan_recipiente"]);
+				unset($container["recipiente"]);
+				unset($container["tipo_recipiente"]);
 				unset($container["selected"]);
-				//return "...something new;
-				//return $container;
 				insertPlanContainer($container);
 			}
 			else
 			{
-				//update
-				unset($container["instrumento"]);
-				unset($container["descripcion"]);
-				unset($container["muestreo"]);
-				unset($container["inventario"]);
+				unset($container["recipiente"]);
+				unset($container["tipo_recipiente"]);
 				unset($container["selected"]);
 				$container["activo"] = 1;
-				//return $container;
-				//return "update old";
 				updatePlanContainer($container);
 			}
 		}
 	}
 	return $planId;
 }
+
+function processPlanReactivesUpdate($planUpdateData) {
+	$reactives = (array) $planUpdateData["reactives"];
+	$planId = $planUpdateData["plan"]["id_plan"];
+	deletePlanReactives($planId);
+	$i = 0;
+	$l = count($reactives);
+	for ($i = 0; $i < $l; $i++) {
+		$newReactive = (array) $reactives[$i];
+		unset($newReactive["id_plan_reactivo"]);
+		unset($newReactive["id_tipo_reactivo"]);
+		unset($newReactive["reactivo"]);
+		unset($newReactive["registra_valor"]);
+		unset($newReactive["activo"]);
+		unset($newReactive["selected"]);
+		insertPlanReactive($newReactive);
+	}
+	return $planId;
+}
+
+function processPlanMaterialsUpdate($planUpdateData) {
+	$materials = (array) $planUpdateData["materials"];
+	$planId = $planUpdateData["plan"]["id_plan"];
+	deletePlanMaterials($planId);
+	$i = 0;
+	$l = count($materials);
+	for ($i = 0; $i < $l; $i++) {
+		$newMaterial = (array) $materials[$i];
+		unset($newMaterial["id_plan_material"]);
+		unset($newMaterial["material"]);
+		unset($newMaterial["activo"]);
+		unset($newMaterial["selected"]);
+		insertPlanMaterial($newMaterial);
+	}
+	return $planId;
+}
+
+function processPlanCoolersUpdate($planUpdateData) {
+	$coolers = (array) $planUpdateData["coolers"];
+	$planId = $planUpdateData["plan"]["id_plan"];
+	deletePlanCoolers($planId);
+	$i = 0;
+	$l = count($coolers);
+	for ($i = 0; $i < $l; $i++) {
+		$newCooler = (array) $coolers[$i];
+		unset($newCooler["id_plan_hielera"]);
+		unset($newCooler["hielera"]);
+		unset($newCooler["activo"]);
+		unset($newCooler["selected"]);
+		insertPlanCooler($newCooler);
+	}
+	return $planId;
+}
+

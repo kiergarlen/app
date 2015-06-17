@@ -619,6 +619,8 @@ function processPlanUpdate($request) {
 	{
 		$plan["ip_valida"] = $request->getIp();
 		$plan["host_valida"] = $request->getUrl();
+		$plan["fecha_valida"] = date('Y-m-d H:i:s');
+		//TODO: create <blank> Sheet, Reception for this Plan
 	}
 
 	$plan["fecha"] = isoDateToMsSql($plan["fecha"]);

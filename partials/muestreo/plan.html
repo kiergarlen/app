@@ -138,6 +138,27 @@
     </div>
   </div>
   <div class="row">
+    <div class="col-xs-12 col-sm-6 col-lg-4">
+      <label for="samplingDate">
+        <i class="glyphicon glyphicon-calendar"></i>
+        Fecha
+      </label>
+      <input type="text"
+        class="form-control"
+        id="samplingDate"
+        name="samplingDate"
+        placeholder="aaaa-MM-dd"
+        required
+        data-ng-model="plan.plan.fecha"
+        data-date-format="yyyy-MM-dd"
+        data-date-type="date"
+        data-autoclose="1"
+        date-use-native="true"
+        data-bs-datepicker
+        >
+    </div>
+  </div>
+  <div class="row">
     <div class="col-xs-12">
       <h4>Ubicación</h4>
     </div>

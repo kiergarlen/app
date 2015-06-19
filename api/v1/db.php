@@ -863,10 +863,15 @@ function getSamplingEmployees() {
 
 function getSheet($sheetId) {
 	$sheet = getPlainSheet($sheetId);
-	//$sheet->muestras = getSamplesBySheet($sheetId);
+	$sheet->orden = getPlainOrder($sheet->id_orden);
+	$sheet->norma = getNorm($sheet->orden->id_norma);
+	$sheet->parametros = getSamplingParametersByNorm($sheet->orden->id_norma);
+ 	$sheet->puntos = getPointsByPackage($sheet->id_paquete);
+ 	$sheet->recipientes = getContainersByPlan($sheet->id_plan);
+	$sheet->muestras = getSamplesBySheet($sheetId);
 	//TODO check parameters
 	//$sheet->resultados = getSamplingResultsBySample($sheetId);
-	return json_decode($json);
+	return $sheet;
 }
 
 function getPlainSheet($sheetId) {
@@ -879,10 +884,9 @@ function getPlainSheet($sheetId) {
 		CONVERT(NVARCHAR, fecha_captura, 126) AS fecha_captura,
 		CONVERT(NVARCHAR, fecha_valida, 126) AS fecha_valida,
 		CONVERT(NVARCHAR, fecha_actualiza, 126) AS fecha_actualiza,
-		ip_captura,
-		ip_valida, ip_actualiza, host_captura, host_valida,
-		host_actualiza, nubes_otro, comentarios, motivo_rechaza,
-		activo
+		ip_captura, ip_valida, ip_actualiza, host_captura,
+		host_valida, host_actualiza, nubes_otro, comentarios,
+		motivo_rechaza, activo
 		FROM Hoja
 		WHERE activo = 1 AND id_hoja = :sheetId";
 	$db = getConnection();
@@ -904,10 +908,9 @@ function getSheets() {
 		CONVERT(NVARCHAR, fecha_captura, 126) AS fecha_captura,
 		CONVERT(NVARCHAR, fecha_valida, 126) AS fecha_valida,
 		CONVERT(NVARCHAR, fecha_actualiza, 126) AS fecha_actualiza,
-		ip_captura,
-		ip_valida, ip_actualiza, host_captura, host_valida,
-		host_actualiza, nubes_otro, comentarios, motivo_rechaza,
-		activo
+		ip_captura, ip_valida, ip_actualiza, host_captura,
+		host_valida, host_actualiza, nubes_otro, comentarios,
+		motivo_rechaza, activo
 		FROM Hoja
 		WHERE activo = 1";
 	$db = getConnection();
@@ -1840,6 +1843,21 @@ function getSamples() {
 	return $samples;
 }
 
+function getSamplesBySheet($sheetId) {
+	$sql = "SELECT id_muestra, id_estudio, id_cliente, id_orden,
+		id_plan, id_hoja, id_recepcion, id_custodia, id_paquete,
+		id_ubicacion, id_punto, fecha_muestreo, comentarios, activo
+		FROM Muestra
+		WHERE activo = 1 AND id_hoja = :sheetId";
+	$db = getConnection();
+	$stmt = $db->prepare($sql);
+	$stmt->bindParam("sheetId", $sheetId);
+	$stmt->execute();
+	$samples = $stmt->fetchAll(PDO::FETCH_ASSOC);
+	$db = null;
+	return $samples;
+}
+
 function getInstruments() {
 	$sql = "SELECT id_instrumento, id_usuario_captura,
 		id_usuario_actualiza, instrumento, descripcion, muestreo,
@@ -1924,6 +1942,22 @@ function getParametersByNorm($normId) {
 		precio, activo, id_norma
 		FROM viewParametroNorma
 		WHERE id_norma = :normId";
+	$db = getConnection();
+	$stmt = $db->prepare($sql);
+	$stmt->bindParam("normId", $normId);
+	$stmt->execute();
+	$parameter = (array) $stmt->fetchAll(PDO::FETCH_OBJ)[0];
+	$db = null;
+	return (object) $parameter;
+}
+
+function getSamplingParametersByNorm($normId) {
+	$sql = "SELECT id_parametro, id_tipo_matriz, id_area,
+		id_tipo_preservacion, id_metodo, id_unidad, id_tipo_valor,
+		parametro, param, caducidad, limite_entrega, acreditado,
+		precio, activo, id_norma
+		FROM viewParametroNorma
+		WHERE id_area = 4 AND id_norma = :normId";
 	$db = getConnection();
 	$stmt = $db->prepare($sql);
 	$stmt->bindParam("normId", $normId);

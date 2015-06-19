@@ -1312,13 +1312,13 @@
    * @param {Object} WindService - Proveedor de datos, Direcciones viento
    * @param {Object} WaveService - Proveedor de datos, Intensidades oleaje
    * @param {Object} SamplingNormService - Proveedor de datos, Normas muestreo
-   * @param {Object} PreservationService - Proveedor de datos, Preservaciones
+   * @param {Object} ContainerService - Proveedor de datos, Recipientes
    * @param {Object} SheetService - Proveedor de datos, Hojas de campo
    */
   function SheetController($scope, $routeParams, TokenService,
     ValidationService, RestUtilsService, ArrayUtilsService,
     DateUtilsService, CloudService, WindService,
-    WaveService, SamplingNormService, PreservationService,
+    WaveService, SamplingNormService, ContainerService,
     SheetService) {
     var vm = this;
     vm.user = TokenService.getUserFromToken();
@@ -1327,7 +1327,7 @@
     vm.windDirections = WindService.get();
     vm.waveIntensities = WaveService.get();
     vm.samplingNorms = SamplingNormService.get();
-    vm.preservations = PreservationService.get();
+    vm.containers = ContainerService.get();
     //SheetService
     //  .query({sheetId: $routeParams.sheetId})
     //  .$promise
@@ -1343,11 +1343,11 @@
 
     function selectPreservations() {
       var items = [];
-      if (vm.preservations.length > 0 && vm.sheet.preservaciones) {
-        if (vm.sheet.preservaciones.length > 0 && !vm.isPreservationListLoaded) {
+      if (vm.containers.length > 0 && vm.sheet.recipientes) {
+        if (vm.sheet.recipientes.length > 0 && !vm.isPreservationListLoaded) {
           ArrayUtilsService.seItemsFromReference(
-            vm.preservations,
-            vm.sheet.preservaciones,
+            vm.containers,
+            vm.sheet.recipientes,
             'id_preservacion',
             [
               'selected'
@@ -1356,10 +1356,10 @@
           vm.isPreservationListLoaded = true;
         }
         else {
-          vm.sheet.preservaciones = [];
-          vm.sheet.preservaciones = ArrayUtilsService
+          vm.sheet.recipientes = [];
+          vm.sheet.recipientes = ArrayUtilsService
             .selectItemsFromCollection(
-              vm.preservations,
+              vm.containers,
               'selected',
               true
             ).slice();
@@ -1493,7 +1493,7 @@
         '$scope', '$routeParams', 'TokenService',
         'ValidationService', 'RestUtilsService', 'ArrayUtilsService',
         'DateUtilsService', 'CloudService', 'WindService',
-        'WaveService', 'SamplingNormService', 'PreservationService',
+        'WaveService', 'SamplingNormService', 'ContainerService',
         'SheetService',
         SheetController
       ]

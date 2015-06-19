@@ -103,7 +103,8 @@
       </div>
     </div>
   </div>
-  <div class="row">
+  <!--
+   <div class="row">
     <div class="col-xs-12">
       <h4>Referencia del muestreo</h4>
     </div>
@@ -117,7 +118,7 @@
         id="samplingNormSelect"
         name="samplingNormSelect"
         required
-        data-ng-model="sheet.sheet.id_norma_muestreo"
+        data-ng-model="sheet.sheet.id_norma"
         >
         <option data-ng-repeat="samplingNorm in sheet.samplingNorms"
           value="{{samplingNorm.id_norma}}">
@@ -126,6 +127,7 @@
       </select>
     </div>
   </div>
+  -->
   <div class="row">
     <div class="col-xs-12">
       <h4>Fecha / hora de muestreo</h4>
@@ -218,6 +220,16 @@
     </div>
   </div>
   <!-- PUNTOS Y RESULTADOS -->
+  <div class="row"
+    data-ng-repeat="row in sheet.sheet.puntos">
+    <div class="col-xs-12">
+      <div class="row">
+        <div class="col-xs-12">
+          <h5>Punto: {{row.punto}}</h5>
+        </div>
+      </div>
+    </div>
+  </div>
   <div class="row">
     <div class="col-xs-12">
       <h3>Resultados por punto</h3>
@@ -365,13 +377,13 @@
   </div>
   <div class="row">
     <div class="col-xs-12 col-sm-6"
-      data-ng-repeat="preservation in sheet.preservations">
+      data-ng-repeat="container in sheet.containers">
       <label>
         <input type="checkbox"
-          value="{{preservation.selected}}"
-          data-ng-model="preservation.selected"
+          value="{{container.selected}}"
+          data-ng-model="container.selected"
           >
-          {{preservation.preservacion}}
+          {{container.recipiente}}
       </label>
     </div>
   </div>

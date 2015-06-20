@@ -1946,25 +1946,25 @@ function getParametersByNorm($normId) {
 	$stmt = $db->prepare($sql);
 	$stmt->bindParam("normId", $normId);
 	$stmt->execute();
-	$parameter = (array) $stmt->fetchAll(PDO::FETCH_OBJ)[0];
+	$parameters = $stmt->fetchAll(PDO::FETCH_ASSOC);
 	$db = null;
-	return (object) $parameter;
+	return $parameters;
 }
 
 function getSamplingParametersByNorm($normId) {
 	$sql = "SELECT id_parametro, id_tipo_matriz, id_area,
 		id_tipo_preservacion, id_metodo, id_unidad, id_tipo_valor,
 		parametro, param, caducidad, limite_entrega, acreditado,
-		precio, activo, id_norma
+		precio, activo, id_norma, '' AS valor
 		FROM viewParametroNorma
 		WHERE id_area = 4 AND id_norma = :normId";
 	$db = getConnection();
 	$stmt = $db->prepare($sql);
 	$stmt->bindParam("normId", $normId);
 	$stmt->execute();
-	$parameter = (array) $stmt->fetchAll(PDO::FETCH_OBJ)[0];
+	$parameters = $stmt->fetchAll(PDO::FETCH_ASSOC);
 	$db = null;
-	return (object) $parameter;
+	return $parameters;
 }
 
 function getNorms() {

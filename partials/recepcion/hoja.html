@@ -220,12 +220,59 @@
     </div>
   </div>
   <!-- PUNTOS Y RESULTADOS -->
-  <div class="row"
-    data-ng-repeat="row in sheet.sheet.puntos">
-    <div class="col-xs-12">
+  <div class="row">
+    <div class="col-xs-12 col-sm-6"
+      data-ng-repeat="row in sheet.sheet.puntos">
+      <h5>Punto: {{row.punto}}</h5>
+      <p>
+        <small>
+          {{row.descripcion}}
+        </small>
+        <br>
+        Latitud:
+          {{row.lat}}
+        <br>
+        Longitud:
+          {{row.lng}}
+      </p>
       <div class="row">
-        <div class="col-xs-12">
-          <h5>Punto: {{row.punto}}</h5>
+        <div class="col-xs-12 col-sm-8">
+          <label for="sampleTime{{row.id_punto}}">
+            <i class="glyphicon glyphicon-time"></i>
+            Hora muestreo
+          </label>
+          <input type="text"
+            class="form-control"
+            id="sampleTime{{row.id_punto}}"
+            name="sampleTime{{row.id_punto}}"
+            placeholder="HH:mm"
+            required
+            data-ng-model="row.fecha_muestreo"
+            data-time-format="HH:mm"
+            data-date-type="date"
+            data-length="1"
+            data-hour-step="1"
+            data-minute-step="1"
+            data-arrow-behavior="picker"
+            data-auto-close="1"
+            data-bs-timepicker
+            >
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12"
+          data-ng-repeat="p in sheet.sheet.parametros"
+          >
+          <label for="result{{row.id_punto}}-{{p.id_parametro}}">
+            {{p.param}}
+          </label>
+          <input type="text"
+            class="form-control"
+            placeholder="{{p.parametro}}"
+            id="result{{row.id_punto}}-{{p.id_parametro}}"
+            name="result{{row.id_punto}}-{{p.id_parametro}}"
+            data-ng-model="p.valor"
+            >
         </div>
       </div>
     </div>

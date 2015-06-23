@@ -229,11 +229,9 @@
           {{row.descripcion}}
         </small>
         <br>
-        Latitud:
-          {{row.lat}}
+        Latitud: {{row.lat}}
         <br>
-        Longitud:
-          {{row.lng}}
+        Longitud: {{row.lng}}
       </p>
       <div class="row">
         <div class="col-xs-8">
@@ -268,7 +266,7 @@
           </label>
           <input type="text"
             class="form-control"
-            placeholder="{{p.parametro}}"
+            placeholder="{{p.id_parametro}}"
             id="result{{row.id_punto}}-{{p.id_parametro}}"
             name="result{{row.id_punto}}-{{p.id_parametro}}"
             data-ng-model="p.valor"

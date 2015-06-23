@@ -869,6 +869,7 @@ function getSheet($sheetId) {
  	$sheet->puntos = getPointsByPackage($sheet->id_paquete);
  	$sheet->recipientes = getContainersByPlan($sheet->id_plan);
 	$sheet->muestras = getSamplesBySheet($sheetId);
+	$sheet->resultados = getResultsBySheet($sheetId);
 	//TODO check parameters
 	//$sheet->resultados = getSamplingResultsBySample($sheetId);
 	return $sheet;
@@ -1857,6 +1858,21 @@ function getSamplesBySheet($sheetId) {
 	$db = null;
 	return $samples;
 }
+
+function getResultsBySheet($sheetId) {
+	$sql = "SELECT id_hoja, id_muestra, id_estudio, id_cliente,
+		id_orden, id_plan, id_paquete, id_resultado, id_parametro,
+		id_tipo_valor, valor, id_punto, punto, lat, lng, id_area
+		FROM viewResultadoHoja";
+	$db = getConnection();
+	$stmt = $db->prepare($sql);
+	$stmt->bindParam("sheetId", $sheetId);
+	$stmt->execute();
+	$samples = $stmt->fetchAll(PDO::FETCH_ASSOC);
+	$db = null;
+	return $samples;
+}
+
 
 function getInstruments() {
 	$sql = "SELECT id_instrumento, id_usuario_captura,

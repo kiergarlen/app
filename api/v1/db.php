@@ -885,23 +885,41 @@ function getSheets() {
 }
 
 function getBlankSheet() {
-	/*
-
-"id_muestra" => 0,
-"id_estudio" => 0,
-"id_cliente" => 0,
-"id_orden" => 0,
-"id_plan" => 0,
-"id_hoja" => 0,
-"id_recepcion" => 0,
-"id_custodia" => 0,
-"id_paquete" => 0,
-"id_ubicacion" => 0,
-"id_punto" => 0,
-"fecha_muestreo" => 0,
-"comentarios" => 0,
-"activo" => 0,
-*/
+	return array(
+		"id_hoja" => 0, "id_estudio" => 1,
+		"id_cliente" => 1, "id_orden" => 1,
+		"id_plan" => 1, "id_paquete" => 1,
+		"id_nubes" => 1, "id_direccion_corriente" => 1,
+		"id_oleaje" => 1, "id_status" => 1,
+		"id_usuario_captura" => 1, "id_usuario_valida" => 0,
+		"id_usuario_actualiza" => 0, "fecha_muestreo" => "",
+		"fecha_entrega" => "", "fecha_captura" => "",
+		"fecha_valida" => "", "fecha_actualiza" => "",
+		"ip_captura" => "", "ip_valida" => "",
+		"ip_actualiza" => "", "host_captura" => "",
+		"host_valida" => "", "host_actualiza" => "",
+		"nubes_otro" => "", "comentarios" => "",
+		"motivo_rechaza" => "", "activo" => 1,
+		"muestras" => array(
+			array(
+				"id_muestra" => 0, "id_estudio" => 1,
+				"id_cliente" => 1, "id_orden" => 1,
+				"id_plan" => 1, "id_hoja" => 0,
+				"id_recepcion" => 1, "id_custodia" => 1,
+				"id_paquete" => 1, "id_ubicacion" => 1,
+				"id_punto" => 1, "fecha_muestreo" => "",
+				"comentarios" => "", "activo" => 1,
+				"resultados" => array (
+					array(
+						"id_resultado" => 0, "id_muestra" => 0,
+						"id_parametro" => 1, "id_tipo_resultado" => 1,
+						"id_tipo_valor" => 1, "id_usuario_captura" => 0,
+						"valor" => "0", "activo" => 1
+					)
+				)
+			)
+		)
+	);
 }
 
 function getPlainSheet($sheetId) {
@@ -929,6 +947,8 @@ function getPlainSheet($sheetId) {
 }
 
 function getSheet($sheetId) {
+	$i = 0;
+	$l = 0;
 	$sheet = getPlainSheet($sheetId);
 	$sheet->orden = getPlainOrder($sheet->id_orden);
 	$sheet->norma = getNorm($sheet->orden->id_norma);
@@ -936,9 +956,14 @@ function getSheet($sheetId) {
  	$sheet->puntos = getPointsByPackage($sheet->id_paquete);
  	$sheet->recipientes = getContainersByPlan($sheet->id_plan);
 	$sheet->muestras = getSamplesBySheet($sheetId);
+	$l = count($sheet->muestras);
+	for ($i = 0; $i < $l; $i++) {
+		$pointId = $sheet->muestras[$i]
+		$sheet->muestras->punto = getPoint($pointId);
+		$sampleId = $sheet->muestras[$i]
+		$sheet->muestras->resultados = getSamplingResultsBySample($sampleId);
+	}
 	$sheet->resultados = getResultsBySheet($sheetId);
-	//TODO check parameters
-	//$sheet->resultados = getSamplingResultsBySample($sheetId);
 	return $sheet;
 }
 
@@ -1889,11 +1914,25 @@ function getResultsBySheet($sheetId) {
 	$stmt = $db->prepare($sql);
 	$stmt->bindParam("sheetId", $sheetId);
 	$stmt->execute();
-	$samples = $stmt->fetchAll(PDO::FETCH_ASSOC);
+	$results = $stmt->fetchAll(PDO::FETCH_ASSOC);
 	$db = null;
-	return $samples;
+	return $results;
 }
 
+function getSamplingResultsBySample($sampleId) {
+	$sql = "SELECT id_resultado, id_muestra, id_parametro,
+		id_tipo_resultado, id_tipo_valor, id_usuario_captura,
+		valor, activo
+		FROM viewResultadoMuestreoMuestra
+		WHERE id_muestra = :sampleId";
+	$db = getConnection();
+	$stmt = $db->prepare($sql);
+	$stmt->bindParam("sampleId", $sampleId);
+	$stmt->execute();
+	$results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+	$db = null;
+	return $results;
+}
 
 function getInstruments() {
 	$sql = "SELECT id_instrumento, id_usuario_captura,

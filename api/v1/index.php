@@ -263,7 +263,7 @@ $app->post("/plans", function() use ($app) {
 
 $app->get("/sheets(/)(:sheetId)", function($sheetId = -1) use ($app) {
 	try {
-		$userId = decodeUserToken($app->request())->uid;
+		//$userId = decodeUserToken($app->request())->uid;
 		$result = json_encode($app->request());
 		if ($sheetId > -1)
 		{

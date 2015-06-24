@@ -222,27 +222,27 @@
   <!-- PUNTOS Y RESULTADOS -->
   <div class="row">
     <div class="col-xs-12 col-sm-6"
-      data-ng-repeat="row in sheet.sheet.puntos">
-      <h5>Punto: {{row.punto}}</h5>
+      data-ng-repeat="row in sheet.sheet.muestras">
+      <h5>Punto: {{row.punto.punto}}</h5>
       <p>
         <small>
-          {{row.descripcion}}
+          {{row.punto.descripcion}}
         </small>
         <br>
-        Latitud: {{row.lat}}
+        Latitud: {{row.punto.lat}}
         <br>
-        Longitud: {{row.lng}}
+        Longitud: {{row.punto.lng}}
       </p>
       <div class="row">
         <div class="col-xs-8">
-          <label for="sampleTime{{row.id_punto}}">
+          <label for="sampleTime{{row.id_muestra}}">
             <i class="glyphicon glyphicon-time"></i>
             Hora muestreo
           </label>
           <input type="text"
             class="form-control"
-            id="sampleTime{{row.id_punto}}"
-            name="sampleTime{{row.id_punto}}"
+            id="sampleTime{{row.id_muestra}}"
+            name="sampleTime{{row.id_muestra}}"
             placeholder="HH:mm"
             required
             data-ng-model="row.fecha_muestreo"
@@ -259,17 +259,17 @@
       </div>
       <div class="row">
         <div class="col-xs-8"
-          data-ng-repeat="p in sheet.sheet.parametros"
+          data-ng-repeat="result in row.resultados"
           >
-          <label for="result{{row.id_punto}}-{{p.id_parametro}}">
-            {{p.param}}
+          <label for="result{{row.id_muestra}}_{{result.id_resultado}}">
+            {{result.param}}
           </label>
           <input type="text"
             class="form-control"
-            placeholder="{{p.id_parametro}}"
-            id="result{{row.id_punto}}-{{p.id_parametro}}"
-            name="result{{row.id_punto}}-{{p.id_parametro}}"
-            data-ng-model="p.valor"
+            placeholder="{{result.id_resultado}}"
+            id="result{{row.id_muestra}}_{{result.id_resultado}}"
+            name="result{{row.id_muestra}}_{{result.id_resultado}}"
+            data-ng-model="result.valor"
             >
         </div>
       </div>

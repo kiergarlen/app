@@ -953,15 +953,15 @@ function getSheet($sheetId) {
 	$sheet->orden = getPlainOrder($sheet->id_orden);
 	$sheet->norma = getNorm($sheet->orden->id_norma);
 	$sheet->parametros = getSamplingParametersByNorm($sheet->orden->id_norma);
- 	$sheet->puntos = getPointsByPackage($sheet->id_paquete);
- 	$sheet->recipientes = getContainersByPlan($sheet->id_plan);
+	$sheet->puntos = getPointsByPackage($sheet->id_paquete);
+	$sheet->recipientes = getContainersByPlan($sheet->id_plan);
 	$sheet->muestras = getSamplesBySheet($sheetId);
-	$l = count($sheet->muestras);
+	$l = count((array) $sheet->muestras);
 	for ($i = 0; $i < $l; $i++) {
-		$pointId = $sheet->muestras[$i]
-		$sheet->muestras->punto = getPoint($pointId);
-		$sampleId = $sheet->muestras[$i]
-		$sheet->muestras->resultados = getSamplingResultsBySample($sampleId);
+		$pointId = $sheet->muestras[$i]["id_punto"];
+		$sheet->muestras[$i]["punto"] = getPoint($pointId);
+		$sampleId = $sheet->muestras[$i]["id_muestra"];
+		$sheet->muestras[$i]["resultados"] = getSamplingResultsBySample($sampleId);
 	}
 	$sheet->resultados = getResultsBySheet($sheetId);
 	return $sheet;

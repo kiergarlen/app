@@ -1863,7 +1863,8 @@ function getResultsBySheet($sheetId) {
 	$sql = "SELECT id_hoja, id_muestra, id_estudio, id_cliente,
 		id_orden, id_plan, id_paquete, id_resultado, id_parametro,
 		id_tipo_valor, valor, id_punto, punto, lat, lng, id_area
-		FROM viewResultadoHoja";
+		FROM viewResultadoHoja
+		WHERE id_hoja = :sheetId";
 	$db = getConnection();
 	$stmt = $db->prepare($sql);
 	$stmt->bindParam("sheetId", $sheetId);

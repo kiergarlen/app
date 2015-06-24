@@ -1231,7 +1231,7 @@
 
     function submitForm() {
       if (isFormValid() && !vm.isDataSubmitted) {
-        console.log(vm.plan);
+        ////console.log(vm.plan);
         vm.isDataSubmitted = true;
         if (vm.plan.id_estudio > 0) {
           RestUtilsService
@@ -1322,24 +1322,28 @@
     SheetService) {
     var vm = this;
     vm.user = TokenService.getUserFromToken();
-    vm.sheet = SheetService.query({sheetId: $routeParams.sheetId});
+    vm.sheet = {};
     vm.cloudCovers = CloudService.get();
     vm.windDirections = WindService.get();
     vm.waveIntensities = WaveService.get();
     vm.samplingNorms = SamplingNormService.get();
     vm.containers = ContainerService.get();
-    //SheetService
-    //  .query({sheetId: $routeParams.sheetId})
-    //  .$promise
-    //  .then(function success(response) {
-    //    vm.sheet = response;
-    //  });
     vm.isPreservationListLoaded = false;
     vm.isDataSubmitted = false;
     vm.selectPreservations = selectPreservations;
     vm.approveItem = approveItem;
     vm.rejectItem = rejectItem;
     vm.submitForm = submitForm;
+
+    SheetService
+     .query({sheetId: $routeParams.sheetId})
+     .$promise
+     .then(function success(response) {
+      vm.sheet = response;
+      // ArrayUtilsService.seItemsFromReference(
+
+      // );
+     });
 
     function selectPreservations() {
       var items = [];
@@ -1461,7 +1465,7 @@
     }
 
     function submitForm() {
-      console.log(vm.sheet);
+      ////console.log(vm.sheet);
       if (isFormValid() && !vm.isDataSubmitted) {
         vm.isDataSubmitted = true;
         if (vm.sheet.id_hoja < 1) {
@@ -1868,7 +1872,7 @@
     vm.selectRow = selectRow;
     function selectRow() {
       //TODO send to details view
-      console.log('clicked in row');
+      //console.log('clicked in row');
     }
   }
   angular
@@ -2029,7 +2033,7 @@
 
     function selectRow(e) {
       var itemId = e.currentTarget.id.split('Id')[1];
-      console.log(itemId);
+      ////console.log(itemId);
     }
   }
   angular

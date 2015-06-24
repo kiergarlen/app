@@ -953,7 +953,7 @@ function getSheet($sheetId) {
 	$sheet->orden = getPlainOrder($sheet->id_orden);
 	$sheet->norma = getNorm($sheet->orden->id_norma);
 	$sheet->parametros = getSamplingParametersByNorm($sheet->orden->id_norma);
-	$sheet->puntos = getPointsByPackage($sheet->id_paquete);
+	//$sheet->puntos = getPointsByPackage($sheet->id_paquete);
 	$sheet->recipientes = getContainersByPlan($sheet->id_plan);
 	$sheet->muestras = getSamplesBySheet($sheetId);
 	$l = count((array) $sheet->muestras);
@@ -963,7 +963,7 @@ function getSheet($sheetId) {
 		$sampleId = $sheet->muestras[$i]["id_muestra"];
 		$sheet->muestras[$i]["resultados"] = getSamplingResultsBySample($sampleId);
 	}
-	$sheet->resultados = getResultsBySheet($sheetId);
+	//$sheet->resultados = getResultsBySheet($sheetId);
 	return $sheet;
 }
 
@@ -1922,7 +1922,7 @@ function getResultsBySheet($sheetId) {
 function getSamplingResultsBySample($sampleId) {
 	$sql = "SELECT id_resultado, id_muestra, id_parametro,
 		id_tipo_resultado, id_tipo_valor, id_usuario_captura,
-		valor, activo
+		valor, activo, param
 		FROM viewResultadoMuestreoMuestra
 		WHERE id_muestra = :sampleId";
 	$db = getConnection();

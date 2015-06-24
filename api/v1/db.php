@@ -861,18 +861,47 @@ function getSamplingEmployees() {
 	return $result;
 }
 
-function getSheet($sheetId) {
-	$sheet = getPlainSheet($sheetId);
-	$sheet->orden = getPlainOrder($sheet->id_orden);
-	$sheet->norma = getNorm($sheet->orden->id_norma);
-	$sheet->parametros = getSamplingParametersByNorm($sheet->orden->id_norma);
- 	$sheet->puntos = getPointsByPackage($sheet->id_paquete);
- 	$sheet->recipientes = getContainersByPlan($sheet->id_plan);
-	$sheet->muestras = getSamplesBySheet($sheetId);
-	$sheet->resultados = getResultsBySheet($sheetId);
-	//TODO check parameters
-	//$sheet->resultados = getSamplingResultsBySample($sheetId);
-	return $sheet;
+function getSheets() {
+	$sql = "SELECT id_hoja, id_estudio, id_cliente, id_orden, id_plan,
+		id_paquete, id_nubes, id_direccion_corriente, id_oleaje,
+		id_status, id_usuario_captura, id_usuario_valida,
+		id_usuario_actualiza,
+		CONVERT(NVARCHAR, fecha_muestreo, 126) AS fecha_muestreo,
+		CONVERT(NVARCHAR, fecha_entrega, 126) AS fecha_entrega,
+		CONVERT(NVARCHAR, fecha_captura, 126) AS fecha_captura,
+		CONVERT(NVARCHAR, fecha_valida, 126) AS fecha_valida,
+		CONVERT(NVARCHAR, fecha_actualiza, 126) AS fecha_actualiza,
+		ip_captura, ip_valida, ip_actualiza, host_captura,
+		host_valida, host_actualiza, nubes_otro, comentarios,
+		motivo_rechaza, activo
+		FROM Hoja
+		WHERE activo = 1";
+	$db = getConnection();
+	$stmt = $db->prepare($sql);
+	$stmt->execute();
+	$result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+	$db = null;
+	return $result;
+}
+
+function getBlankSheet() {
+	/*
+
+"id_muestra" => 0,
+"id_estudio" => 0,
+"id_cliente" => 0,
+"id_orden" => 0,
+"id_plan" => 0,
+"id_hoja" => 0,
+"id_recepcion" => 0,
+"id_custodia" => 0,
+"id_paquete" => 0,
+"id_ubicacion" => 0,
+"id_punto" => 0,
+"fecha_muestreo" => 0,
+"comentarios" => 0,
+"activo" => 0,
+*/
 }
 
 function getPlainSheet($sheetId) {
@@ -899,27 +928,18 @@ function getPlainSheet($sheetId) {
 	return (object) $sheet;
 }
 
-function getSheets() {
-	$sql = "SELECT id_hoja, id_estudio, id_cliente, id_orden, id_plan,
-		id_paquete, id_nubes, id_direccion_corriente, id_oleaje,
-		id_status, id_usuario_captura, id_usuario_valida,
-		id_usuario_actualiza,
-		CONVERT(NVARCHAR, fecha_muestreo, 126) AS fecha_muestreo,
-		CONVERT(NVARCHAR, fecha_entrega, 126) AS fecha_entrega,
-		CONVERT(NVARCHAR, fecha_captura, 126) AS fecha_captura,
-		CONVERT(NVARCHAR, fecha_valida, 126) AS fecha_valida,
-		CONVERT(NVARCHAR, fecha_actualiza, 126) AS fecha_actualiza,
-		ip_captura, ip_valida, ip_actualiza, host_captura,
-		host_valida, host_actualiza, nubes_otro, comentarios,
-		motivo_rechaza, activo
-		FROM Hoja
-		WHERE activo = 1";
-	$db = getConnection();
-	$stmt = $db->prepare($sql);
-	$stmt->execute();
-	$result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-	$db = null;
-	return $result;
+function getSheet($sheetId) {
+	$sheet = getPlainSheet($sheetId);
+	$sheet->orden = getPlainOrder($sheet->id_orden);
+	$sheet->norma = getNorm($sheet->orden->id_norma);
+	$sheet->parametros = getSamplingParametersByNorm($sheet->orden->id_norma);
+ 	$sheet->puntos = getPointsByPackage($sheet->id_paquete);
+ 	$sheet->recipientes = getContainersByPlan($sheet->id_plan);
+	$sheet->muestras = getSamplesBySheet($sheetId);
+	$sheet->resultados = getResultsBySheet($sheetId);
+	//TODO check parameters
+	//$sheet->resultados = getSamplingResultsBySample($sheetId);
+	return $sheet;
 }
 
 function insertSheet($sheetData) {

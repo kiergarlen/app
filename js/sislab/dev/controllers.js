@@ -923,7 +923,6 @@
             [
               'id_plan_instrumento',
               'selected'
-
             ]
           );
           vm.isInstrumentListLoaded = true;
@@ -1312,13 +1311,13 @@
    * @param {Object} WindService - Proveedor de datos, Direcciones viento
    * @param {Object} WaveService - Proveedor de datos, Intensidades oleaje
    * @param {Object} SamplingNormService - Proveedor de datos, Normas muestreo
-   * @param {Object} ContainerService - Proveedor de datos, Recipientes
+   * @param {Object} PreservationService - Proveedor de datos, Preservaciones
    * @param {Object} SheetService - Proveedor de datos, Hojas de campo
    */
   function SheetController($scope, $routeParams, TokenService,
     ValidationService, RestUtilsService, ArrayUtilsService,
     DateUtilsService, CloudService, WindService,
-    WaveService, SamplingNormService, ContainerService,
+    WaveService, SamplingNormService, PreservationService,
     SheetService) {
     var vm = this;
     vm.user = TokenService.getUserFromToken();
@@ -1327,7 +1326,7 @@
     vm.windDirections = WindService.get();
     vm.waveIntensities = WaveService.get();
     vm.samplingNorms = SamplingNormService.get();
-    vm.containers = ContainerService.get();
+    vm.preservations = [];
     vm.isPreservationListLoaded = false;
     vm.isDataSubmitted = false;
     vm.selectPreservations = selectPreservations;
@@ -1336,34 +1335,53 @@
     vm.submitForm = submitForm;
 
     SheetService
-     .query({sheetId: $routeParams.sheetId})
-     .$promise
-     .then(function success(response) {
-      vm.sheet = response;
-      // ArrayUtilsService.seItemsFromReference(
-
-      // );
+      .query({sheetId: $routeParams.sheetId})
+      .$promise
+      .then(function success(response) {
+        vm.sheet = response;
+        PreservationService
+          .get()
+          .$promise
+          .then(function success(response) {
+            var i;
+            var l;
+            vm.preservations = response;
+            l = vm.preservations.length;
+            for (i = 0; i < l; i += 1) {
+              vm.preservations[i].id_hoja_preservacion = 0;
+              vm.preservations[i].id_hoja = vm.plan.id_hoja;
+              vm.preservations[i].cantidad = 0;
+              vm.preservations[i].preservado = 0;
+              vm.preservations[i].activo = 0;
+              vm.preservations[i].selected = false;
+            }
+          });
      });
 
     function selectPreservations() {
       var items = [];
-      if (vm.containers.length > 0 && vm.sheet.recipientes) {
-        if (vm.sheet.recipientes.length > 0 && !vm.isPreservationListLoaded) {
+      if (vm.preservations.length > 0 && vm.sheet.preservaciones) {
+        if (vm.sheet.preservaciones.length > 0 && !vm.isPreservationListLoaded) {
           ArrayUtilsService.seItemsFromReference(
-            vm.containers,
-            vm.sheet.recipientes,
+            vm.preservations,
+            vm.sheet.preservaciones,
             'id_preservacion',
             [
+              'id_hoja_preservacion',
+              'id_hoja',
+              'cantidad',
+              'preservado',
+              'activo',
               'selected'
             ]
           );
           vm.isPreservationListLoaded = true;
         }
         else {
-          vm.sheet.recipientes = [];
-          vm.sheet.recipientes = ArrayUtilsService
+          vm.sheet.preservaciones = [];
+          vm.sheet.preservaciones = ArrayUtilsService
             .selectItemsFromCollection(
-              vm.containers,
+              vm.preservations,
               'selected',
               true
             ).slice();
@@ -1385,8 +1403,8 @@
       var results = sampleResults.slice();
       l = results.length;
       for (i = 0; i < l; i += 1) {
-        if (results[i].valor_texto.length > 0) {
-          if (results[i].id_tipo_valor == 2 && results[i].valor_texto.length < 2) {
+        if (results[i].valor.length > 0) {
+          if (results[i].id_tipo_valor > 1 && results[i].valor.length < 2) {
             vm.message += ' Ingrese un valor para el parámetro ';
             vm.message += results[i].parametro + ' ';
             vm.message += sample.punto + ' ';
@@ -1412,7 +1430,7 @@
         l = samples.length;
         for (i = 0; i < l; i += 1) {
           if (!DateUtilsService.isValidDate(new Date(samples[i].fecha_muestreo))) {
-            vm.message += ' Ingrese una fecha/hora válida para el punto ';
+            vm.message += ' Ingrese una fecha/hora válida para la muestra en ';
             vm.message += samples[i].punto + ' ';
             return false;
           }
@@ -1420,7 +1438,7 @@
         }
       }
       else {
-        vm.message += ' Sin resultados ';
+        vm.message += ' Sin muestras ';
         return false;
       }
       return true;
@@ -1428,10 +1446,10 @@
 
     function isFormValid() {
       vm.message = '';
-      if (vm.sheet.id_norma_muestreo < 1) {
-        vm.message += ' Seleccione una Norma de referencia ';
-        return false;
-      }
+      // if (vm.sheet.id_norma_muestreo < 1) {
+      //   vm.message += ' Seleccione una Norma de referencia ';
+      //   return false;
+      // }
       if (!DateUtilsService.isValidDate(new Date(vm.sheet.fecha_muestreo))) {
         vm.message += ' Ingrese una fecha/hora de muestreo válida ';
         return false;
@@ -1497,7 +1515,7 @@
         '$scope', '$routeParams', 'TokenService',
         'ValidationService', 'RestUtilsService', 'ArrayUtilsService',
         'DateUtilsService', 'CloudService', 'WindService',
-        'WaveService', 'SamplingNormService', 'ContainerService',
+        'WaveService', 'SamplingNormService', 'PreservationService',
         'SheetService',
         SheetController
       ]

@@ -954,7 +954,7 @@ function getSheet($sheetId) {
 	$sheet->norma = getNorm($sheet->orden->id_norma);
 	$sheet->parametros = getSamplingParametersByNorm($sheet->orden->id_norma);
 	//$sheet->puntos = getPointsByPackage($sheet->id_paquete);
-	$sheet->recipientes = getContainersByPlan($sheet->id_plan);
+	$sheet->preservaciones = getPreservationsBySheet($sheetId);
 	$sheet->muestras = getSamplesBySheet($sheetId);
 	$l = count((array) $sheet->muestras);
 	for ($i = 0; $i < $l; $i++) {
@@ -2492,6 +2492,24 @@ function getPreservations() {
 	$stmt->execute();
 	$preservations = $stmt->fetchAll(PDO::FETCH_ASSOC);
 	$db = null;
+	return $preservations;
+}
+
+function getPreservationsBySheet($sheetId) {
+	$sql = "SELECT id_hoja_preservacion, id_hoja, id_preservacion,
+		cantidad, preservado, activo
+		FROM HojaPreservacion
+		WHERE activo = 1 AND id_hoja = :sheetId";
+	$db = getConnection();
+	$stmt = $db->prepare($sql);
+	$stmt->bindParam("sheetId", $sheetId);
+	$stmt->execute();
+	$preservations = $stmt->fetchAll(PDO::FETCH_ASSOC);
+	$db = null;
+	$l = count($preservations);
+	for ($i = 0; $i < $l; $i++) {
+		$preservations[$i]["selected"] = true;
+	}
 	return $preservations;
 }
 

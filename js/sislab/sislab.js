@@ -14,7 +14,7 @@
   // DATA API URL
   var API_BASE_URL = 'api/v1/';
 
-  //config.js
+  // config.js
   /**
    * @name config
    * @desc Configuración de AngularJS
@@ -224,7 +224,7 @@
     );
 
   // DIRECTIVES
-  //sislabMenu.js
+  // sislabMenu.js
   /**
    * @name sislabMenu
    * @desc Directiva para menú principal
@@ -242,7 +242,7 @@
     .module('sislabApp')
     .directive('sislabMenu', sislabMenu);
 
-  //sislabBanner.js
+  // sislabBanner.js
   /**
    * @name sislabBanner
    * @desc Directiva para banner superior
@@ -257,7 +257,7 @@
     .module('sislabApp')
     .directive('sislabBanner', sislabBanner);
 
-  //sislabFooter.js
+  // sislabFooter.js
   /**
    * @name sislabFooter
    * @desc Directiva para pie de página
@@ -272,7 +272,7 @@
     .module('sislabApp')
     .directive('sislabFooter', sislabFooter);
 
-  //sislabBannerBottom.js
+  // sislabBannerBottom.js
   /**
    * @name sislabBannerBottom
    * @desc Directiva para banner inferior
@@ -286,6 +286,7 @@
   angular
     .module('sislabApp')
     .directive('sislabBannerBottom', sislabBannerBottom);
+
   //CONTROLLERS
   //LoginController.js
   /**
@@ -305,8 +306,7 @@
 
     function submitForm() {
       vm.message = '';
-      if (!$scope.loginForm.$valid)
-      {
+      if (!$scope.loginForm.$valid) {
         vm.message = 'Ingrese usuario y/o contraseña';
         return;
       }
@@ -356,12 +356,11 @@
    * @param {Object} TaskService - Proveedor de datos, Tareas
    */
   function TaskListController(TokenService, TaskService) {
-    var vm = this,
-    userData;
+    var vm = this;
+    var userData;
     vm.userName = '';
     vm.tasks = {};
-    if (TokenService.isAuthenticated())
-    {
+    if (TokenService.isAuthenticated()) {
       userData = TokenService.getUserFromToken();
       vm.userName = userData.name;
       vm.tasks = TaskService.get();
@@ -504,42 +503,36 @@
     }
 
     function isOrderListValid() {
-      var i = 0,
-      l = 0,
-      orders = [];
-      if (vm.study.ordenes && vm.study.ordenes.length > 0)
-      {
+      var i = 0;
+      var l = 0;
+      var orders = [];
+      if (vm.study.ordenes && vm.study.ordenes.length > 0) {
         orders = vm.study.ordenes;
         l = orders.length;
         for (i = 0; i < l; i += 1) {
-          if (orders[i].id_matriz < 1)
-          {
+          if (orders[i].id_matriz < 1) {
             vm.message += ' Seleccione una matriz, para la orden ';
             vm.message += '(Ver fila ' + (i + 1) + ')';
             return false;
           }
-          if (isNaN(orders[i].cantidad_muestras) || orders[i].cantidad_muestras < 1)
-          {
+          if (isNaN(orders[i].cantidad_muestras) || orders[i].cantidad_muestras < 1) {
             vm.message += ' Ingrese cantidad de muestras, para la orden ';
             vm.message += '(Ver fila ' + (i + 1) + ')';
             return false;
           }
-          if (orders[i].id_tipo_muestreo < 1)
-          {
+          if (orders[i].id_tipo_muestreo < 1) {
             vm.message += ' Seleccione un tipo de muestreo, para la orden ';
             vm.message += '(Ver fila ' + (i + 1) + ')';
             return false;
           }
-          if (orders[i].id_norma < 1)
-          {
+          if (orders[i].id_norma < 1) {
             vm.message += ' Seleccione una norma, para la orden ';
             vm.message += '(Ver fila ' + (i + 1) + ')';
             return false;
           }
         }
       }
-      else
-      {
+      else {
         vm.message += ' Agregue una orden ';
         return false;
       }
@@ -548,42 +541,33 @@
 
     function isFormValid() {
       vm.message = '';
-      if (!DateUtilsService.isValidDate(new Date(vm.study.fecha)))
-      {
+      if (!DateUtilsService.isValidDate(new Date(vm.study.fecha))) {
         vm.message += ' Ingrese una fecha válida ';
         return false;
       }
-      if (vm.study.id_cliente < 1)
-      {
+      if (vm.study.id_cliente < 1) {
         vm.message += ' Seleccione un cliente ';
         return false;
       }
-      if (!isOrderListValid())
-      {
+      if (!isOrderListValid()) {
         return isOrderListValid();
       }
-      if (vm.study.id_origen_orden < 1)
-      {
+      if (vm.study.id_origen_orden < 1) {
         vm.message += ' Seleccione un medio de orden de muestreo ';
         return false;
       }
-      if (vm.study.id_origen_orden == 1 || vm.study.id_origen_orden == 4)
-      {
-        if (vm.study.origen_descripcion.length < 1)
-        {
+      if (vm.study.id_origen_orden == 1 || vm.study.id_origen_orden == 4) {
+        if (vm.study.origen_descripcion.length < 1) {
           vm.message += ' Ingrese oficio o emergencia ';
           return false;
         }
       }
-      if (vm.study.ubicacion.length < 1)
-      {
+      if (vm.study.ubicacion.length < 1) {
         vm.message += ' Ingrese una ubicación ';
         return false;
       }
-      if (vm.user.level < 3)
-      {
-        if (vm.study.id_status == 3 && vm.study.motivo_rechaza.length < 1)
-        {
+      if (vm.user.level < 3) {
+        if (vm.study.id_status == 3 && vm.study.motivo_rechaza.length < 1) {
           vm.message += ' Ingrese el motivo de rechazo del Informe ';
           return false;
         }
@@ -592,11 +576,9 @@
     }
 
     function submitForm() {
-      if (isFormValid() && !vm.isDataSubmitted)
-      {
+      if (isFormValid() && !vm.isDataSubmitted) {
         vm.isDataSubmitted = true;
-        if (vm.study.id_estudio < 1)
-        {
+        if (vm.study.id_estudio < 1) {
           //vm.study.$save();
           RestUtilsService
             .saveData(
@@ -605,10 +587,8 @@
               'estudio/estudio'
             );
         }
-        else
-        {
-          if (vm.user.level < 3 || vm.study.study.id_status != 2)
-          {
+        else {
+          if (vm.user.level < 3 || vm.study.study.id_status != 2) {
             //vm.study.$update();
             RestUtilsService
               .updateData(
@@ -663,7 +643,7 @@
       ]
     );
 
-  //QuoteController.js
+  // QuoteController.js
   /**
    * @name QuoteController
    * @constructor
@@ -694,14 +674,13 @@
     vm.isFormValid = isFormValid;
     vm.submitForm = submitForm;
 
-    function totalParameter(){
-      var i = 0, l = 0, t = 0;
-      if (vm.parameters && vm.quote.cliente)
-      {
+    function totalParameter() {
+      var i = 0;
+      var l = 0;
+      var t = 0;
+      if (vm.parameters && vm.quote.cliente) {
         l = vm.parameters.length;
-        for (i = 0; i < l; i += 1) {
-          if (vm.parameters[i].selected)
-          {
+        for (i = 0; i < l; i += 1) { if (vm.parameters[i].selected) {
             t = t + parseInt(vm.parameters[i].precio, 10);
           }
         }
@@ -713,16 +692,17 @@
     }
 
     function selectNormParameters() {
-      var i, l, j, m;
+      var i;
+      var l;
+      var j;
+      var m;
       l = vm.parameters.length;
-      if (l > 0 && vm.quote.parametros)
-      {
+      if (l > 0 && vm.quote.parametros) {
         for(i = 0; i < l; i += 1) {
           vm.parameters[i].selected = false;
           m = vm.quote.parametros.length;
           for (j = 0; j < m; j += 1) {
-            if (vm.parameters[i].id_parametro == vm.quote.norma.parametros[j].id_parametro)
-            {
+            if (vm.parameters[i].id_parametro == vm.quote.norma.parametros[j].id_parametro) {
               vm.parameters[i].selected = true;
               break;
             }
@@ -741,20 +721,16 @@
 
     function isFormValid() {
       vm.message = '';
-      if (vm.quote.cuerpo_receptor.length > 0 && vm.quote.tipo_cuerpo.length < 1)
-      {
+      if (vm.quote.cuerpo_receptor.length > 0 && vm.quote.tipo_cuerpo.length < 1) {
         vm.message += ' Ingrese tipo de cuerpo receptor';
         return false;
       }
-      if (vm.quote.cuerpo_receptor.length < 1 && vm.quote.tipo_cuerpo.length > 0)
-      {
+      if (vm.quote.cuerpo_receptor.length < 1 && vm.quote.tipo_cuerpo.length > 0) {
         vm.message += ' Ingrese cuerpo receptor';
         return false;
       }
-      if (vm.user.level < 3)
-      {
-        if (vm.quote.id_status == 3 && vm.quote.motivo_rechaza.length < 1)
-        {
+      if (vm.user.level < 3) {
+        if (vm.quote.id_status == 3 && vm.quote.motivo_rechaza.length < 1) {
           vm.message += ' Ingrese el motivo de rechazo de la Solicitud ';
           return false;
         }
@@ -763,11 +739,9 @@
     }
 
     function submitForm() {
-      if (isFormValid() && !vm.isDataSubmitted)
-      {
+      if (isFormValid() && !vm.isDataSubmitted) {
         vm.isDataSubmitted = true;
-        if (vm.quote.id_solicitud > 0)
-        {
+        if (vm.quote.id_solicitud > 0) {
           RestUtilsService
             .saveData(
               QuoteService,
@@ -775,10 +749,8 @@
               'muestreo/solicitud'
             );
         }
-        else
-        {
-          if (vm.user.level < 3 || vm.quote.quote.id_status !== 2)
-          {
+        else {
+          if (vm.user.level < 3 || vm.quote.quote.id_status !== 2) {
             RestUtilsService
               .updateData(
                 QuoteService,
@@ -829,7 +801,7 @@
       ]
     );
 
-  //OrderController.js
+  // OrderController.js
   /**
    * @name OrderController
    * @constructor
@@ -870,8 +842,7 @@
     }
 
     function addPlan() {
-      if (vm.order.planes)
-      {
+      if (vm.order.planes) {
         vm.order.planes.push({
           'id_plan': 0,
           'id_estudio': vm.order.id_estudio,
@@ -906,8 +877,7 @@
           'comentarios': '', 'activo': 1
         });
       }
-      else
-      {
+      else {
         vm.order.planes = [{
           'id_plan': 0,
           'id_estudio': vm.order.id_estudio,
@@ -962,41 +932,35 @@
     }
 
     function isPlanListValid() {
-      var i = 0,
-      l = 0,
-      plans = [];
-      if (vm.order.planes && vm.order.planes.length > 0)
-      {
+      var i = 0;
+      var l = 0;
+      var plans = [];
+      if (vm.order.planes && vm.order.planes.length > 0) {
         plans = vm.order.planes;
         l = plans.length;
         for (i = 0; i < l; i += 1) {
-          if (!plans[i].id_paquete)
-          {
+          if (!plans[i].id_paquete) {
             vm.message = ' No hay Paquete de puntos ';
             return false;
           }
-          if (plans[i].id_paquete < 1)
-          {
+          if (plans[i].id_paquete < 1) {
             vm.message = ' Seleccione un Paquete de puntos ';
             vm.message += '(Ver fila ' + (i + 1) + ')';
             return false;
           }
-          if (plans[i].id_supervisor_muestreo < 1)
-          {
+          if (plans[i].id_supervisor_muestreo < 1) {
             vm.message = ' Seleccione un Responsable de muestreo ';
             vm.message += '(Ver fila ' + (i + 1) + ')';
             return false;
           }
-          if (!DateUtilsService.isValidDate(new Date(plans[i].fecha_probable)))
-          {
+          if (!DateUtilsService.isValidDate(new Date(plans[i].fecha_probable))) {
             vm.message = ' Ingrese fecha y hora válidas ';
             vm.message += '(Ver fila ' + (i + 1) + ')';
             return false;
           }
         }
       }
-      else
-      {
+      else {
         vm.message += ' Agregue un plan ';
         return false;
       }
@@ -1005,14 +969,11 @@
 
     function isFormValid() {
       vm.message = '';
-      if (!isPlanListValid())
-      {
+      if (!isPlanListValid()) {
         return isPlanListValid();
       }
-      if (vm.user.level < 3)
-      {
-        if (vm.order.id_status == 3 && vm.order.motivo_rechaza.length < 1)
-        {
+      if (vm.user.level < 3) {
+        if (vm.order.id_status == 3 && vm.order.motivo_rechaza.length < 1) {
           vm.message += ' Ingrese el motivo de rechazo del Informe ';
           return false;
         }
@@ -1021,10 +982,8 @@
     }
 
     function submitForm() {
-      if (isFormValid() && !vm.isDataSubmitted)
-      {
-        if (vm.order.id_orden > 0)
-        {
+      if (isFormValid() && !vm.isDataSubmitted) {
+        if (vm.order.id_orden > 0) {
           RestUtilsService
             .saveData(
               OrderService,
@@ -1032,10 +991,8 @@
               'muestreo/orden'
             );
         }
-        else
-        {
-          if (vm.user.level < 3 || vm.order.order.id_status !== 2)
-          {
+        else {
+          if (vm.user.level < 3 || vm.order.order.id_status !== 2) {
             RestUtilsService
               .updateData(
                 OrderService,
@@ -1087,7 +1044,7 @@
       ]
     );
 
-  //PlanController.js
+  // PlanController.js
   /**
    * @name PlanController
    * @constructor
@@ -1120,14 +1077,14 @@
     vm.plan = {};
     vm.user = TokenService.getUserFromToken();
     vm.objectives = PlanObjectivesService.get();
-    vm.instruments = SamplingInstrumentService.get();
     vm.cities = [];
     vm.districts = [];
     vm.samplingEmployees = SamplingEmployeeService.get();
-    vm.containers = ContainerService.get();
-    vm.reactives = ReactiveService.get();
-    vm.materials = MaterialService.get();
-    vm.coolers = CoolerService.get();
+    vm.instruments = [];
+    vm.containers = [];
+    vm.reactives = [];
+    vm.materials = [];
+    vm.coolers = [];
     vm.isInstrumentListLoaded = false;
     vm.isContainerListLoaded = false;
     vm.isReactiveListLoaded = false;
@@ -1149,12 +1106,12 @@
       .$promise
       .then(function success(response) {
         vm.plan = response;
-        DistrictService.get()
+        DistrictService
+          .get()
           .$promise
           .then(function success(response) {
             vm.districts = response;
-            if (vm.plan.id_municipio && vm.plan.id_municipio > 0)
-            {
+            if (vm.plan.id_municipio && vm.plan.id_municipio > 0) {
               ArrayUtilsService.selectItemFromCollection(
                 vm.districts,
                 'id_municipio',
@@ -1166,8 +1123,7 @@
               .$promise
               .then(function success(response) {
                 vm.cities = response;
-                if (vm.plan.id_localidad && vm.plan.id_localidad > 0)
-                {
+                if (vm.plan.id_localidad && vm.plan.id_localidad > 0) {
                   ArrayUtilsService.selectItemFromCollection(
                     vm.cities,
                     'id_localidad',
@@ -1176,32 +1132,93 @@
                 }
               });
           });
+        SamplingInstrumentService
+          .get()
+          .$promise
+          .then(function success(response) {
+            var i;
+            var l;
+            vm.instruments = response;
+            l = vm.instruments.length;
+            for (i = 0; i < l; i += 1) {
+              vm.instruments[i].id_plan_instrumento = 0;
+              vm.instruments[i].id_plan = vm.plan.id_plan;
+            }
+          });
+        ContainerService
+          .get()
+          .$promise
+          .then(function success(response) {
+            var i;
+            var l;
+            vm.containers = response;
+            l = vm.containers.length;
+            for (i = 0; i < l; i += 1) {
+              vm.containers[i].id_plan_recipiente = 0;
+              vm.containers[i].id_plan = vm.plan.id_plan;
+            }
+          });
+        ReactiveService
+          .get()
+          .$promise
+          .then(function success(response) {
+            var i;
+            var l;
+            vm.reactives = response;
+            l = vm.reactives.length;
+            for (i = 0; i < l; i += 1) {
+              vm.reactives[i].id_plan_reactivo = 0;
+              vm.reactives[i].id_plan = vm.plan.id_plan;
+            }
+          });
+        MaterialService
+          .get()
+          .$promise
+          .then(function success(response) {
+            vm.materials = response;
+            l = vm.materials.length;
+            for (i = 0; i < l; i += 1) {
+              vm.materials[i].id_plan_material = 0;
+              vm.materials[i].id_plan = vm.plan.id_plan;
+            }
+          });
+        CoolerService
+          .get()
+          .$promise
+          .then(function success(response) {
+            vm.coolers = response;
+            l = vm.coolers.length;
+            for (i = 0; i < l; i += 1) {
+              vm.coolers[i].id_plan_hielera = 0;
+              vm.coolers[i].id_plan = vm.plan.id_plan;
+            }
+          });
       });
 
     function selectDistrict() {
-      vm.cities = CityService.query({districtId: parseInt(vm.plan.id_municipio)});
+      vm.cities = CityService.query({
+        districtId: parseInt(vm.plan.id_municipio)
+      });
     }
 
     function selectInstruments() {
       var items = [];
-      if (vm.instruments.length > 0 && vm.plan.equipos)
-      {
-        if (vm.plan.equipos.length > 0 && !vm.isInstrumentListLoaded)
-        {
+      if (vm.instruments.length > 0 && vm.plan.instrumentos) {
+        if (vm.plan.instrumentos.length > 0 && !vm.isInstrumentListLoaded) {
           ArrayUtilsService.seItemsFromReference(
             vm.instruments,
-            vm.plan.equipos,
+            vm.plan.instrumentos,
             'id_instrumento',
             [
+              'id_plan_instrumento',
               'selected'
             ]
           );
           vm.isInstrumentListLoaded = true;
         }
-        else
-        {
-          vm.plan.equipos = [];
-          vm.plan.equipos = ArrayUtilsService.selectItemsFromCollection(
+        else {
+          vm.plan.instrumentos = [];
+          vm.plan.instrumentos = ArrayUtilsService.selectItemsFromCollection(
             vm.instruments,
             'selected',
             true
@@ -1212,24 +1229,22 @@
 
     function selectContainers() {
       var items = [];
-      if (vm.containers.length > 0 && vm.plan.recipientes)
-      {
-        if (vm.plan.recipientes.length > 0 && !vm.isContainerListLoaded)
-        {
+      if (vm.containers.length > 0 && vm.plan.recipientes) {
+        if (vm.plan.recipientes.length > 0 && !vm.isContainerListLoaded) {
           ArrayUtilsService.seItemsFromReference(
             vm.containers,
             vm.plan.recipientes,
-            'id_tipo_recipiente',
+            'id_recipiente',
             [
-              'selected',
+              'id_plan_recipiente',
               'id_plan',
-              'cantidad'
+              'cantidad',
+              'selected'
             ]
           );
           vm.isContainerListLoaded = true;
         }
-        else
-        {
+        else {
           vm.plan.recipientes = [];
           vm.plan.recipientes = ArrayUtilsService.selectItemsFromCollection(
             vm.containers,
@@ -1242,25 +1257,24 @@
 
     function selectReactives() {
       var items = [];
-      if (vm.reactives.length > 0 && vm.plan.reactivos)
-      {
-        if (vm.plan.reactivos.length > 0 && !vm.isReactiveListLoaded)
-        {
+      if (vm.reactives.length > 0 && vm.plan.reactivos) {
+        if (vm.plan.reactivos.length > 0 && !vm.isReactiveListLoaded) {
           ArrayUtilsService.seItemsFromReference(
             vm.reactives,
             vm.plan.reactivos,
             'id_reactivo',
             [
-              'selected',
+              'id_plan_reactivo',
               'id_plan',
               'lote',
-              'cantidad'
+              'folio',
+              'valor',
+              'selected'
             ]
           );
           vm.isReactiveListLoaded = true;
         }
-        else
-        {
+        else {
           vm.plan.reactivos = [];
           vm.plan.reactivos = ArrayUtilsService.selectItemsFromCollection(
             vm.reactives,
@@ -1273,23 +1287,21 @@
 
     function selectMaterials() {
       var items = [];
-      if (vm.materials.length > 0 && vm.plan.materiales)
-      {
-        if (vm.plan.materiales.length > 0 && !vm.isMaterialListLoaded)
-        {
+      if (vm.materials.length > 0 && vm.plan.materiales) {
+        if (vm.plan.materiales.length > 0 && !vm.isMaterialListLoaded) {
           ArrayUtilsService.seItemsFromReference(
             vm.materials,
             vm.plan.materiales,
             'id_material',
             [
-              'selected',
-              'id_plan'
+              'id_plan_material',
+              'id_plan',
+              'selected'
             ]
           );
           vm.isMaterialListLoaded = true;
         }
-        else
-        {
+        else {
           vm.plan.materiales = [];
           vm.plan.materiales = ArrayUtilsService.selectItemsFromCollection(
             vm.materials,
@@ -1302,23 +1314,21 @@
 
     function selectCoolers() {
       var items = [];
-      if (vm.coolers.length > 0 && vm.plan.hieleras)
-      {
-        if (vm.plan.hieleras.length > 0 && !vm.isCoolerListLoaded)
-        {
+      if (vm.coolers.length > 0 && vm.plan.hieleras) {
+        if (vm.plan.hieleras.length > 0 && !vm.isCoolerListLoaded) {
           ArrayUtilsService.seItemsFromReference(
             vm.coolers,
             vm.plan.hieleras,
             'id_hielera',
             [
-              'selected',
-              'id_plan'
+              'id_plan_hielera',
+              'id_plan',
+              'selected'
             ]
           );
           vm.isCoolerListLoaded = true;
         }
-        else
-        {
+        else {
           vm.plan.hieleras = [];
           vm.plan.hieleras = ArrayUtilsService.selectItemsFromCollection(
             vm.coolers,
@@ -1338,48 +1348,41 @@
     }
 
     function isInstrumentListValid() {
-      if (vm.plan.id_responsable_calibracion < 1)
-      {
+      if (vm.plan.id_responsable_calibracion < 1) {
         vm.message += ' Seleccione una Responsable de calibración ';
         return false;
       }
-      if (!DateUtilsService.isValidDate(new Date(vm.plan.fecha_calibracion)))
-      {
+      if (!DateUtilsService.isValidDate(new Date(vm.plan.fecha_calibracion))) {
         vm.message += ' Ingrese una fecha válida de calibración ';
         return false;
       }
-      if (vm.plan.equipos.length < 1)
-      {
-        vm.message += ' Seleccione al menos un equipo ';
+      if (vm.plan.instrumentos.length < 1) {
+        vm.message += ' Seleccione al menos un instrumento ';
         return false;
       }
       return true;
     }
 
     function isContainerListValid() {
-      var i = 0,
-      l = 0,
-      containers = [];
-      if (vm.plan.id_responsable_recipientes < 1)
-      {
+      var i = 0;
+      var l = 0;
+      var containers = [];
+      if (vm.plan.id_responsable_recipientes < 1) {
         vm.message += ' Seleccione una Responsable de preparación de recipientes ';
         return false;
       }
-      if (vm.plan.recipientes && vm.plan.recipientes.length > 0)
-      {
+      if (vm.plan.recipientes && vm.plan.recipientes.length > 0) {
         containers = vm.plan.recipientes;
         l = containers.length;
         for (i = 0; i < l; i += 1) {
-          if (isNaN(containers[i].cantidad) || containers[i].cantidad < 1)
-          {
+          if (isNaN(containers[i].cantidad) || containers[i].cantidad < 1) {
             vm.message += ' Ingrese cantidad de recipientes, para la preservación ';
             vm.message += '(Ver fila ' + (i + 1) + ')';
             return false;
           }
         }
       }
-      else
-      {
+      else {
         vm.message += ' Seleccione un recipiente ';
         return false;
       }
@@ -1387,35 +1390,30 @@
     }
 
     function isReactiveListValid() {
-      var i = 0,
-      l = 0,
-      reactives = [];
-      if (vm.plan.id_responsable_reactivos < 1)
-      {
+      var i = 0;
+      var l = 0;
+      var reactives = [];
+      if (vm.plan.id_responsable_reactivos < 1) {
         vm.message += ' Seleccione una Responsable de reactivos ';
         return false;
       }
-      if (vm.plan.reactivos && vm.plan.reactivos.length > 0)
-      {
+      if (vm.plan.reactivos && vm.plan.reactivos.length > 0) {
         reactives = vm.plan.reactivos;
         l = reactives.length;
         for (i = 0; i < l; i += 1) {
-          if (isNaN(reactives[i].cantidad) || reactives[i].cantidad < 1)
-          {
+          if (isNaN(reactives[i].cantidad) || reactives[i].cantidad < 1) {
             vm.message += ' Ingrese cantidad, para el reactivo ';
             vm.message += '(Ver fila ' + (i + 1) + ')';
             return false;
           }
-          if (isNaN(reactives[i].lote) || reactives[i].lote < 1)
-          {
+          if (isNaN(reactives[i].lote) || reactives[i].lote < 1) {
             vm.message += ' Ingrese lote, para el reactivo ';
             vm.message += '(Ver fila ' + (i + 1) + ')';
             return false;
           }
         }
       }
-      else
-      {
+      else {
         vm.message += ' Seleccione un recipiente ';
         return false;
       }
@@ -1423,16 +1421,14 @@
     }
 
     function isMaterialListValid() {
-      var i = 0,
-      l = 0,
-      materials = [];
-      if (vm.plan.id_responsable_material < 1)
-      {
+      var i = 0;
+      var l = 0;
+      var materials = [];
+      if (vm.plan.id_responsable_material < 1) {
         vm.message += ' Seleccione una Responsable de preparación de material ';
         return false;
       }
-      if (vm.plan.materiales.length < 1)
-      {
+      if (vm.plan.materiales.length < 1) {
         vm.message += ' Seleccione los materiales y equipos ';
         return false;
       }
@@ -1440,16 +1436,14 @@
     }
 
     function isCoolerListValid() {
-      var i = 0,
-      l = 0,
-      coolers = [];
-      if (vm.plan.id_responsable_hieleras < 1)
-      {
+      var i = 0;
+      var l = 0;
+      var coolers = [];
+      if (vm.plan.id_responsable_hieleras < 1) {
         vm.message += ' Seleccione una Responsable de hieleras ';
         return false;
       }
-      if (vm.plan.hieleras.length < 1)
-      {
+      if (vm.plan.hieleras.length < 1) {
         vm.message += ' Seleccione hieleras ';
         return false;
       }
@@ -1458,86 +1452,64 @@
 
     function isFormValid() {
       vm.message = '';
-      if (vm.plan.id_objetivo_plan < 1)
-      {
+      if (vm.plan.id_objetivo_plan < 1) {
         vm.message += ' Seleccione un objetivo ';
         return false;
       }
-      if (vm.plan.id_objetivo_plan == 5 && vm.plan.objetivo_otro.length < 1)
-      {
+      if (vm.plan.id_objetivo_plan == 5 && vm.plan.objetivo_otro.length < 1) {
         vm.message += ' Si selecciona otro objetivo debe ingresarlo ';
         return false;
       }
-      if (vm.plan.calle.length < 1)
-      {
+      if (vm.plan.calle.length < 1) {
         vm.message += ' Ingrese una calle o ubicación ';
         return false;
       }
-      if (vm.plan.id_municipio < 1)
-      {
+      if (vm.plan.id_municipio < 1) {
         vm.message += ' Seleccione un municipio ';
         return false;
       }
-      if (vm.plan.id_localidad < 1)
-      {
+      if (vm.plan.id_localidad < 1) {
         vm.message += ' Seleccione una localidad ';
         return false;
       }
-      // if (vm.plan.estudio.id_tipo_muestreo > 1 && isNaN(vm.plan.frecuencia_muestreo))
-      // {
-      //   vm.message += ' Seleccione una frecuencia de muestreo ';
-      //   return false;
-      // }
-      if (vm.plan.id_supervisor_entrega < 1)
-      {
+      if (vm.plan.id_supervisor_entrega < 1) {
         vm.message += ' Seleccione un Responsable de muestreo ';
         return false;
       }
-      if (vm.plan.id_ayudante_entrega < 1)
-      {
+      if (vm.plan.id_ayudante_entrega < 1) {
         vm.message += ' Seleccione una Acompañante de muestreo ';
         return false;
       }
-      if (vm.plan.id_supervisor_recolecion < 1)
-      {
+      if (vm.plan.id_supervisor_recolecion < 1) {
         vm.message += ' Seleccione un Responsable de recolección ';
         return false;
       }
-      if (vm.plan.id_ayudante_recolecion < 1)
-      {
+      if (vm.plan.id_ayudante_recolecion < 1) {
         vm.message += ' Seleccione una Acompañante de recolección ';
         return false;
       }
-      if (vm.plan.id_supervisor_registro < 1)
-      {
+      if (vm.plan.id_supervisor_registro < 1) {
         vm.message += ' Seleccione un Responsable de registro de resultados ';
         return false;
       }
-      if (vm.plan.id_ayudante_registro < 1)
-      {
+      if (vm.plan.id_ayudante_registro < 1) {
         vm.message += ' Seleccione una Acompañante de registro de resultados ';
         return false;
       }
-      if (!isInstrumentListValid)
-      {
+      if (!isInstrumentListValid) {
         return false;
       }
-      if (!isContainerListValid)
-      {
+      if (!isContainerListValid) {
         return false;
       }
-      if (!isReactiveListValid)
-      {
+      if (!isReactiveListValid) {
         return false;
       }
-      if (!isCoolerListValid)
-      {
+      if (!isCoolerListValid) {
         return false;
       }
-      if (vm.user.level < 3)
-      {
-        if (vm.plan.id_status == 3 && vm.plan.motivo_rechaza.length < 1)
-        {
+      if (vm.user.level < 3) {
+        if (vm.plan.id_status == 3 && vm.plan.motivo_rechaza.length < 1) {
           vm.message += ' Ingrese el motivo de rechazo del Informe ';
           return false;
         }
@@ -1546,12 +1518,10 @@
     }
 
     function submitForm() {
-      if (isFormValid() && !vm.isDataSubmitted)
-      {
-        console.log(vm.plan);
+      if (isFormValid() && !vm.isDataSubmitted) {
+        ////console.log(vm.plan);
         vm.isDataSubmitted = true;
-        if (vm.plan.id_estudio > 0)
-        {
+        if (vm.plan.id_estudio > 0) {
           RestUtilsService
             .saveData(
               PlanService,
@@ -1559,10 +1529,8 @@
               'muestreo/plan'
             );
         }
-        else
-        {
-          if (vm.user.level < 3 || vm.plan.plan.id_status !== 2)
-          {
+        else {
+          if (vm.user.level < 3 || vm.plan.plan.id_status !== 2) {
             RestUtilsService
               .updateData(
                 PlanService,
@@ -1616,7 +1584,7 @@
       ]
     );
 
-  //SheetController.js
+  // SheetController.js
   /**
    * @name SheetController
    * @constructor
@@ -1642,18 +1610,12 @@
     SheetService) {
     var vm = this;
     vm.user = TokenService.getUserFromToken();
-    vm.sheet = SheetService.query({sheetId: $routeParams.sheetId});
+    vm.sheet = {};
     vm.cloudCovers = CloudService.get();
     vm.windDirections = WindService.get();
     vm.waveIntensities = WaveService.get();
     vm.samplingNorms = SamplingNormService.get();
-    vm.preservations = PreservationService.get();
-    //SheetService
-    //  .query({sheetId: $routeParams.sheetId})
-    //  .$promise
-    //  .then(function success(response) {
-    //    vm.sheet = response;
-    //  });
+    vm.preservations = [];
     vm.isPreservationListLoaded = false;
     vm.isDataSubmitted = false;
     vm.selectPreservations = selectPreservations;
@@ -1661,24 +1623,50 @@
     vm.rejectItem = rejectItem;
     vm.submitForm = submitForm;
 
+    SheetService
+      .query({sheetId: $routeParams.sheetId})
+      .$promise
+      .then(function success(response) {
+        vm.sheet = response;
+        PreservationService
+          .get()
+          .$promise
+          .then(function success(response) {
+            var i;
+            var l;
+            vm.preservations = response;
+            l = vm.preservations.length;
+            for (i = 0; i < l; i += 1) {
+              vm.preservations[i].id_hoja_preservacion = 0;
+              vm.preservations[i].id_hoja = vm.plan.id_hoja;
+              vm.preservations[i].cantidad = 0;
+              vm.preservations[i].preservado = 0;
+              vm.preservations[i].activo = 0;
+              vm.preservations[i].selected = false;
+            }
+          });
+     });
+
     function selectPreservations() {
       var items = [];
-      if (vm.preservations.length > 0 && vm.sheet.preservaciones)
-      {
-        if (vm.sheet.preservaciones.length > 0 && !vm.isPreservationListLoaded)
-        {
+      if (vm.preservations.length > 0 && vm.sheet.preservaciones) {
+        if (vm.sheet.preservaciones.length > 0 && !vm.isPreservationListLoaded) {
           ArrayUtilsService.seItemsFromReference(
             vm.preservations,
             vm.sheet.preservaciones,
             'id_preservacion',
             [
+              'id_hoja_preservacion',
+              'id_hoja',
+              'cantidad',
+              'preservado',
+              'activo',
               'selected'
             ]
           );
           vm.isPreservationListLoaded = true;
         }
-        else
-        {
+        else {
           vm.sheet.preservaciones = [];
           vm.sheet.preservaciones = ArrayUtilsService
             .selectItemsFromCollection(
@@ -1699,22 +1687,19 @@
     }
 
     function isResultListValid(sample, sampleResults) {
-      var i = 0,
-      l = 0,
-      results = sampleResults.slice();
+      var i = 0;
+      var l = 0;
+      var results = sampleResults.slice();
       l = results.length;
       for (i = 0; i < l; i += 1) {
-        if (results[i].valor_texto.length > 0)
-        {
-          if (results[i].id_tipo_valor == 2 && results[i].valor_texto.length < 2)
-          {
+        if (results[i].valor.length > 0) {
+          if (results[i].id_tipo_valor > 1 && results[i].valor.length < 2) {
             vm.message += ' Ingrese un valor para el parámetro ';
             vm.message += results[i].parametro + ' ';
             vm.message += sample.punto + ' ';
             return false;
           }
-          if (results[i].id_tipo_valor == 1 && isNaN(results[i].valor))
-          {
+          if (results[i].id_tipo_valor == 1 && isNaN(results[i].valor)) {
             vm.message += ' Ingrese un valor numérico para el parámetro ';
             vm.message += results[i].parametro + ' ';
             vm.message += sample.punto + ' ';
@@ -1726,26 +1711,23 @@
     }
 
     function isSampleListValid() {
-      var i = 0,
-      l = 0,
-      samples = [];
-      if (vm.sheet.muestras && vm.sheet.muestras.length > 0)
-      {
+      var i = 0;
+      var l = 0;
+      var samples = [];
+      if (vm.sheet.muestras && vm.sheet.muestras.length > 0) {
         samples = vm.sheet.muestras;
         l = samples.length;
         for (i = 0; i < l; i += 1) {
-          if (!DateUtilsService.isValidDate(new Date(samples[i].fecha_muestreo)))
-          {
-            vm.message += ' Ingrese una fecha/hora válida para el punto ';
+          if (!DateUtilsService.isValidDate(new Date(samples[i].fecha_muestreo))) {
+            vm.message += ' Ingrese una fecha/hora válida para la muestra en ';
             vm.message += samples[i].punto + ' ';
             return false;
           }
           isResultListValid(samples[i], samples[i].resultados);
         }
       }
-      else
-      {
-        vm.message += ' Sin resultados ';
+      else {
+        vm.message += ' Sin muestras ';
         return false;
       }
       return true;
@@ -1753,44 +1735,35 @@
 
     function isFormValid() {
       vm.message = '';
-      if (vm.sheet.id_norma_muestreo < 1)
-      {
-        vm.message += ' Seleccione una Norma de referencia ';
-        return false;
-      }
-      if (!DateUtilsService.isValidDate(new Date(vm.sheet.fecha_muestreo)))
-      {
+      // if (vm.sheet.id_norma_muestreo < 1) {
+      //   vm.message += ' Seleccione una Norma de referencia ';
+      //   return false;
+      // }
+      if (!DateUtilsService.isValidDate(new Date(vm.sheet.fecha_muestreo))) {
         vm.message += ' Ingrese una fecha/hora de muestreo válida ';
         return false;
       }
-      if (!isSampleListValid())
-      {
+      if (!isSampleListValid()) {
         return false;
       }
-      if (vm.sheet.id_nubes < 1)
-      {
+      if (vm.sheet.id_nubes < 1) {
         vm.message += ' Seleccione una cobertura de nubes ';
         return false;
       }
-      if (vm.sheet.id_direccion_corriente < 1)
-      {
+      if (vm.sheet.id_direccion_corriente < 1) {
         vm.message += ' Seleccione una dirección de corriente ';
         return false;
       }
-      if (vm.sheet.id_oleaje < 1)
-      {
+      if (vm.sheet.id_oleaje < 1) {
         vm.message += ' Seleccione una intensidad del oleaje ';
         return false;
       }
-      if (vm.sheet.preservaciones.length < 1)
-      {
+      if (vm.sheet.preservaciones.length < 1) {
         vm.message += ' Seleccione al menos un tipo de preservación ';
         return false;
       }
-      if (vm.user.level < 3)
-      {
-        if (vm.sheet.id_status == 3 && vm.sheet.motivo_rechaza.length < 1)
-        {
+      if (vm.user.level < 3) {
+        if (vm.sheet.id_status == 3 && vm.sheet.motivo_rechaza.length < 1) {
           vm.message += ' Ingrese el motivo de rechazo del Informe ';
           return false;
         }
@@ -1799,12 +1772,10 @@
     }
 
     function submitForm() {
-      console.log(vm.sheet);
-      if (isFormValid() && !vm.isDataSubmitted)
-      {
+      ////console.log(vm.sheet);
+      if (isFormValid() && !vm.isDataSubmitted) {
         vm.isDataSubmitted = true;
-        if (vm.sheet.id_hoja < 1)
-        {
+        if (vm.sheet.id_hoja < 1) {
           RestUtilsService
             .saveData(
               SheetService,
@@ -1812,10 +1783,8 @@
               'recepcion/hoja'
             );
         }
-        else
-        {
-          if (vm.user.level < 3 || vm.sheet.sheet.id_status !== 2)
-          {
+        else {
+          if (vm.user.level < 3 || vm.sheet.sheet.id_status !== 2) {
             RestUtilsService
               .updateData(
                 SheetService,
@@ -1868,7 +1837,7 @@
       ]
     );
 
-  //ReceptionController.js
+  // ReceptionController.js
   /**
    * @name ReceptionController
    * @constructor
@@ -1902,8 +1871,7 @@
       var i = 0, l = vm.receptionists.length;
       vm.reception.recepcionista = {};
       for (i = 0; i < l; i += 1) {
-        if (vm.receptionists[i].id_empleado == idRecepcionist)
-        {
+        if (vm.receptionists[i].id_empleado == idRecepcionist) {
           vm.reception.recepcionista = vm.receptionists[i];
           break;
         }
@@ -1922,45 +1890,36 @@
 
     function isFormValid() {
       vm.message = '';
-      if (!DateUtilsService.isValidDate(new Date(vm.reception.hoja.fecha_muestreo)))
-      {
+      if (!DateUtilsService.isValidDate(new Date(vm.reception.hoja.fecha_muestreo))) {
         vm.message += ' Ingrese una fecha/hora de muestreo válida ';
         return false;
       }
-      if (!DateUtilsService.isValidDate(new Date(vm.reception.hoja.fecha_recibe)))
-      {
+      if (!DateUtilsService.isValidDate(new Date(vm.reception.hoja.fecha_recibe))) {
         vm.message += ' Ingrese una fecha/hora de recepción válida ';
         return false;
       }
-      if (vm.reception.id_recepcionista < 1)
-      {
+      if (vm.reception.id_recepcionista < 1) {
         vm.message += ' Seleccione un responsable de la recepción ';
         return false;
       }
-      if (vm.reception.muestras.length < 1)
-      {
+      if (vm.reception.muestras.length < 1) {
         vm.message += ' Confirme la recepción de al menos una muestra ';
         return false;
       }
-      if (vm.reception.id_muestra_validacion < 1)
-      {
+      if (vm.reception.id_muestra_validacion < 1) {
         vm.message += ' Selececcione una muestra a verificar ';
         return false;
       }
-      if (vm.reception.validacion_preservaciones.length < 1)
-      {
+      if (vm.reception.validacion_preservaciones.length < 1) {
         vm.message += ' Seleccione al menos una preservación ';
         return false;
       }
-      if (vm.reception.validacion_contenedores.length < 1)
-      {
+      if (vm.reception.validacion_contenedores.length < 1) {
         vm.message += ' Seleccione al menos un tipo de análisis ';
         return false;
       }
-      if (vm.user.level < 3)
-      {
-        if (vm.reception.id_status == 3 && vm.reception.motivo_rechaza.length < 1)
-        {
+      if (vm.user.level < 3) {
+        if (vm.reception.id_status == 3 && vm.reception.motivo_rechaza.length < 1) {
           vm.message += ' Ingrese el motivo de rechazo del Informe ';
           return false;
         }
@@ -1969,11 +1928,9 @@
     }
 
     function submitForm() {
-      if (isFormValid() && !vm.isDataSubmitted)
-      {
+      if (isFormValid() && !vm.isDataSubmitted) {
         vm.isDataSubmitted = true;
-        if (vm.reception.id_recepcion < 1)
-        {
+        if (vm.reception.id_recepcion < 1) {
           RestUtilsService
             .saveData(
               ReceptionService,
@@ -1981,10 +1938,8 @@
               'recepcion/recepcion'
             );
         }
-        else
-        {
-          if (vm.user.level < 3 || vm.reception.reception.id_status !== 2)
-          {
+        else {
+          if (vm.user.level < 3 || vm.reception.reception.id_status !== 2) {
             RestUtilsService
               .updateData(
                 ReceptionService,
@@ -2034,7 +1989,7 @@
       ]
     );
 
-  //CustodyController.js
+  // CustodyController.js
   /**
    * @name CustodyController
    * @constructor
@@ -2068,11 +2023,9 @@
     }
 
     function submitForm() {
-      if (isFormValid() && !vm.isDataSubmitted)
-      {
+      if (isFormValid() && !vm.isDataSubmitted) {
         vm.isDataSubmitted = true;
-        if (vm.custody.id_custodia < 1)
-        {
+        if (vm.custody.id_custodia < 1) {
           RestUtilsService
             .saveData(
               CustodyService,
@@ -2080,10 +2033,8 @@
               'recepcion/custodia'
             );
         }
-        else
-        {
-          if (vm.user.level < 3 || vm.custody.custody.id_status !== 2)
-          {
+        else {
+          if (vm.user.level < 3 || vm.custody.custody.id_status !== 2) {
             RestUtilsService
               .updateData(
                 CustodyService,
@@ -2228,7 +2179,7 @@
     vm.selectRow = selectRow;
     function selectRow() {
       //TODO send to details view
-      console.log('clicked in row');
+      //console.log('clicked in row');
     }
   }
   angular
@@ -2389,7 +2340,7 @@
 
     function selectRow(e) {
       var itemId = e.currentTarget.id.split('Id')[1];
-      console.log(itemId);
+      ////console.log(itemId);
     }
   }
   angular
@@ -2637,6 +2588,7 @@
         ClientListController
       ]
     );
+
   // SERVICES
   //ArrayUtilsService.js
   /**
@@ -2668,8 +2620,7 @@
       l = collection.length,
       item = {};
       for (i = 0; i < l; i += 1) {
-        if (collection[i][field] == value)
-        {
+        if (collection[i][field] == value) {
           item = collection[i];
           break;
         }
@@ -2690,8 +2641,7 @@
       l = collection.length,
       items = [];
       for (i = 0; i < l; i += 1) {
-        if (collection[i][field] == value)
-        {
+        if (collection[i][field] == value) {
           items.push(collection[i]);
         }
       }
@@ -2711,8 +2661,7 @@
       l = collection.length,
       item = {};
       for (i = 0; i < l; i += 1) {
-        if (collection[i][field] == value)
-        {
+        if (collection[i][field] == value) {
           item = collection.splice(i, 1);
           break;
         }
@@ -2720,31 +2669,28 @@
       return item;
     }
 
-
     /**
      * @function seItemsFromReference
-     * @desc Cambia el valor de una propiedad de ítem de un Array, coincidiendo una propiedad y su valor desde otro Array
+     * @desc Cambia el valor de una propiedad de ítem de un Array,
+     * coincidiendo una propiedad y su valor desde otro Array
      * @param {Array} collection - Array de ítems a modificar
-     * @param {Array} referenceCollection - Array de referencia
+     * @param {Array} reference - Array de referencia
      * @param {String} matchField - Nombre de la propiedad a coincidir
      * @param {Array} fields - Nombres de las propiedades a cambiar
      * @return {Object} item - Ítem seleccionado
      */
-    function seItemsFromReference(collection, referenceCollection, matchField, fields) {
+    function seItemsFromReference(collection, reference, matchField, fields) {
       var i, l, j, m, k, n, field = '';
       l = collection.length;
       n = fields.length;
       for(i = 0; i < l; i += 1) {
-        if (referenceCollection !== undefined)
-        {
-          m = referenceCollection.length;
+        if (reference !== undefined) {
+          m = reference.length;
           for (j = 0; j < m; j += 1) {
-            if (collection[i][matchField] ==
-              referenceCollection[j][matchField])
-            {
+            if (collection[i][matchField] == reference[j][matchField]) {
               for (k = 0; k < n; k += 1) {
                 field = fields[k];
-                collection[i][field] = referenceCollection[j][field];
+                collection[i][field] = reference[j][field];
               }
             }
           }
@@ -2761,14 +2707,12 @@
      */
     function countSelectedItems(collection) {
       var i, l, count = 0;
-      if (!collection)
-      {
+      if (!collection) {
         return 0;
       }
       l = collection.length;
       for (i = 0; i < l; i += 1) {
-        if (collection[i].selected)
-        {
+        if (collection[i].selected) {
           count += 1;
         }
       }
@@ -2786,8 +2730,7 @@
       l = collection.length,
       sum = 0,
       avg = 0;
-      if (l > 0)
-      {
+      if (l > 0) {
         for (i = 0; i < l; i++) {
           sum += parseFloat(collection[i]);
         }
@@ -2832,8 +2775,7 @@
       i = 0,
       l = paddedNumber.length,
       padding = '';
-      if (l < places)
-      {
+      if (l < places) {
         l = places - l;
         for (i = 0; i < l; i += 1) {
           padding += '0';
@@ -2877,8 +2819,7 @@
      * @return {Boolean} - Resultado de la evaluación
      */
     function isValidDate(date) {
-      if (Object.prototype.toString.call(date) !== '[object Date]')
-      {
+      if (Object.prototype.toString.call(date) !== '[object Date]') {
         return false;
       }
       return !isNaN(date.getTime());
@@ -2922,12 +2863,10 @@
           $location.path(returnPath);
           return response;
         }, function error(response) {
-          if (response.status === 404)
-          {
+          if (response.status === 404) {
             return 'Recurso no encontrado';
           }
-          else
-          {
+          else {
             return 'Error no especificado';
           }
         });
@@ -2950,12 +2889,10 @@
           $location.path(returnPath);
           return response;
         }, function error(response) {
-          if (response.status === 404)
-          {
+          if (response.status === 404) {
             return 'Recurso no encontrado';
           }
-          else
-          {
+          else {
             return 'Error no especificado';
           }
         });
@@ -3000,11 +2937,10 @@
      * @function hashMessage
      * @desc Codifica un mensaje usando SHA-256
      * @param {String} message - Mensaje a codificar
-     * @return {String} hash - Mensaje codificado
+     * @return {String} - Mensaje codificado
      */
     function hashMessage(message) {
-      var hash = CryptoJS.SHA256(message);
-      return hash;
+      return CryptoJS.SHA256(message);
     }
 
     /**
@@ -3026,12 +2962,10 @@
         setToken(token);
         $location.path('main');
       }, function error(response) {
-        if (response.status === 404)
-        {
+        if (response.status === 404) {
           return 'Sin enlace al servidor';
         }
-        else
-        {
+        else {
           return 'Error no especificado';
         }
       });
@@ -3062,8 +2996,7 @@
      * @return {Object} cachedToken - Token de autenticación
      */
     function getToken() {
-      if (!cachedToken)
-      {
+      if (!cachedToken) {
         cachedToken = storage.getItem(tokenKey);
       }
       return cachedToken;
@@ -3081,7 +3014,7 @@
     /**
      * @function decodeToken
      * @desc Decodifica el token
-     * @return {Object} - Token de autenticación, decodificado
+     * @return {Object} - Token decodificado
      */
     function decodeToken() {
       var token = getToken();
@@ -3096,8 +3029,7 @@
     function getUserFromToken() {
       var decodedJwt,
       userData;
-      if (isAuthenticated())
-      {
+      if (isAuthenticated()) {
         decodedJwt = decodeToken();
         userData = {
           name: decodedJwt.nam,
@@ -3135,7 +3067,6 @@
 
     function approveItem(item, user) {
       item.id_status = 2;
-      //item.status = 'Validado';
       item.id_usuario_valida = user.id;
       item.motivo_rechaza = '';
       item.fecha_valida = DateUtilsService.dateToISOString(new Date()).slice(0,10);
@@ -3143,7 +3074,6 @@
 
     function rejectItem(item, user) {
       item.id_status = 3;
-      //item.status = 'Rechazado';
       item.id_usuario_valida = user.id;
       item.fecha_rechaza = DateUtilsService.dateToISOString(new Date()).slice(0,10);
     }

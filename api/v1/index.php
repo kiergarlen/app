@@ -299,7 +299,8 @@ $app->post("/sheets", function() use ($app) {
 		{
 			//$sheetUpdateData = processSheetUpdate($request);
 			//$sheetId = updateSheet($sheetUpdateData["sheet"]);
-			//processSheetOrderUpdate($sheetUpdateData);
+			//processSheetResultsUpdate($sheetUpdateData);
+			//processSheetPreservationsUpdate($sheetUpdateData);
 			$result = '{"id_hoja":' . $sheetId . '}';
 		}
 		$requestData = extractDataFromRequest($request);

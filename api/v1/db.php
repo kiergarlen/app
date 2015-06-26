@@ -961,11 +961,11 @@ function getSheet($sheetId) {
 	$sheet->muestras = getSamplesBySheet($sheetId);
 	$l = count((array) $sheet->muestras);
 	for ($i = 0; $i < $l; $i++) {
-		$sample = $sheet->muestras[$i];
-		$pointId = $sample["id_punto"];
-		$sample["punto"] = getPoint($pointId);
-		$sampleId = $sample["id_muestra"];
-		$sample["resultados"] = getSamplingResultsBySample($sampleId);
+		// $sample = $sheet->muestras[$i];
+		$pointId = $sheet->muestras[$i]["id_punto"];
+		$sheet->muestras[$i]["punto"] = getPoint($pointId);
+		$sampleId = $sheet->muestras[$i]["id_muestra"];
+		$sheet->muestras[$i]["resultados"] = getSamplingResultsBySample($sampleId);
 	}
 	//$sheet->resultados = getResultsBySheet($sheetId);
 	return $sheet;

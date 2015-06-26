@@ -653,14 +653,14 @@ function processPlanInstrumentsUpdate($planUpdateData) {
 	if ($l < 1)
 	{
 		for ($j = 0; $j < $m; $j++) {
-			$newInstrument = (array) $instruments[$j];
-			unset($newInstrument["id_plan_instrumento"]);
-			unset($newInstrument["instrumento"]);
-			unset($newInstrument["descripcion"]);
-			unset($newInstrument["muestreo"]);
-			unset($newInstrument["inventario"]);
-			unset($newInstrument["selected"]);
-			insertPlanInstrument($newInstrument);
+			$instrument = (array) $instruments[$j];
+			unset($instrument["id_plan_instrumento"]);
+			unset($instrument["instrumento"]);
+			unset($instrument["descripcion"]);
+			unset($instrument["muestreo"]);
+			unset($instrument["inventario"]);
+			unset($instrument["selected"]);
+			insertPlanInstrument($instrument);
 		}
 		return $planId;
 	}

@@ -1576,20 +1576,18 @@
     vm.rejectItem = rejectItem;
     vm.submitForm = submitForm;
 
-      /*
-    vm.selectSample = selectSample;
-    function selectSample() {
-      var i = 0, l = vm.receptionists.length;
-      vm.reception.recepcionista = {};
-      for (i = 0; i < l; i += 1) {
-        if (vm.receptionists[i].id_empleado == idRecepcionist) {
-          vm.reception.recepcionista = vm.receptionists[i];
-          break;
-        }
-      }
-      return vm.reception.recepcionista;
-    }
-      */
+    // vm.selectSample = selectSample;
+    // function selectSample() {
+    //   var i = 0, l = vm.receptionists.length;
+    //   vm.reception.recepcionista = {};
+    //   for (i = 0; i < l; i += 1) {
+    //     if (vm.receptionists[i].id_empleado == idRecepcionist) {
+    //       vm.reception.recepcionista = vm.receptionists[i];
+    //       break;
+    //     }
+    //   }
+    //   return vm.reception.recepcionista;
+    // }
 
     function approveItem() {
       ValidationService.approveItem(vm.reception, vm.user);

@@ -43,8 +43,8 @@ function getUsers() {
 
 function getUser($userId) {
 	$sql = "SELECT id_usuario, id_nivel, id_rol, id_area, id_puesto,
-		interno, cea, laboratorio, supervisa, analiza, muestrea, nombres,
-		apellido_paterno, apellido_materno, usr, pwd,
+		interno, cea, laboratorio, supervisa, analiza, muestrea,
+		nombres, apellido_paterno, apellido_materno, usr, pwd,
 		CONVERT(nvarchar, fecha_captura, 126) AS fecha_captura,
 		CONVERT(nvarchar, fecha_actualiza, 126) AS fecha_actualiza,
 		ip_captura, ip_actualiza,
@@ -346,9 +346,9 @@ function insertStudy($insertData) {
 		:id_usuario_valida, :id_usuario_entrega,
 		:id_usuario_actualiza, :oficio, :folio, :origen_descripcion,
 		:ubicacion, :fecha, :fecha_entrega, :fecha_captura,
-		:fecha_valida, :fecha_actualiza, :fecha_rechaza, :ip_captura, :ip_valida,
-		:ip_actualiza, :host_captura, :host_valida, :host_actualiza,
-		:motivo_rechaza, :activo)";
+		:fecha_valida, :fecha_actualiza, :fecha_rechaza, :ip_captura,
+		:ip_valida, :ip_actualiza, :host_captura, :host_valida,
+		:host_actualiza, :motivo_rechaza, :activo)";
 	$db = getConnection();
 	$stmt = $db->prepare($sql);
 	$stmt->execute($insertData);
@@ -729,8 +729,10 @@ function getPlan($planId) {
 	$study = getPlainStudy($plan->id_estudio);
 	$plan->cliente = getClient($study->id_cliente);
 	$plan->orden = getPlainOrder($plan->id_orden);
-	$plan->tipo_muestreo = getSamplingType($plan->orden->id_tipo_muestreo)->tipo_muestreo;
-	$plan->supervisor_muestreo = getSamplingEmployee($plan->id_supervisor_muestreo);
+	$samplingTypeId = $plan->orden->id_tipo_muestreo;
+	$plan->tipo_muestreo = getSamplingType($samplingTypeId)->tipo_muestreo;
+	$supervisorId = $plan->id_supervisor_muestreo;
+	$plan->supervisor_muestreo = getSamplingEmployee($supervisorId);
 	$plan->puntos = getPointsByPackage($plan->id_paquete);
 	$plan->instrumentos = getInstrumentsByPlan($planId);
 	$plan->recipientes = getContainersByPlan($planId);
@@ -952,766 +954,128 @@ function getSheet($sheetId) {
 	$sheet = getPlainSheet($sheetId);
 	$sheet->orden = getPlainOrder($sheet->id_orden);
 	$sheet->norma = getNorm($sheet->orden->id_norma);
-	$sheet->parametros = getSamplingParametersByNorm($sheet->orden->id_norma);
+	$normId = $sheet->orden->id_norma;
+	$sheet->parametros = getSamplingParametersByNorm($normId);
 	//$sheet->puntos = getPointsByPackage($sheet->id_paquete);
 	$sheet->preservaciones = getPreservationsBySheet($sheetId);
 	$sheet->muestras = getSamplesBySheet($sheetId);
 	$l = count((array) $sheet->muestras);
 	for ($i = 0; $i < $l; $i++) {
-		$pointId = $sheet->muestras[$i]["id_punto"];
-		$sheet->muestras[$i]["punto"] = getPoint($pointId);
-		$sampleId = $sheet->muestras[$i]["id_muestra"];
-		$sheet->muestras[$i]["resultados"] = getSamplingResultsBySample($sampleId);
+		$sample = $sheet->muestras[$i];
+		$pointId = $sample["id_punto"];
+		$sample["punto"] = getPoint($pointId);
+		$sampleId = $sample["id_muestra"];
+		$sample["resultados"] = getSamplingResultsBySample($sampleId);
 	}
 	//$sheet->resultados = getResultsBySheet($sheetId);
 	return $sheet;
 }
 
 function insertSheet($sheetData) {
-	return $sheetData;
+	$sql = "INSERT INTO Hoja (id_estudio, id_cliente, id_orden, id_plan,
+		id_paquete, id_nubes, id_direccion_corriente, id_oleaje,
+		id_status, id_usuario_captura, id_usuario_valida,
+		id_usuario_actualiza, fecha_muestreo, fecha_entrega,
+		fecha_captura, fecha_valida, fecha_actualiza, ip_captura,
+		ip_valida, ip_actualiza, host_captura, host_valida,
+		host_actualiza, nubes_otro, comentarios, motivo_rechaza,
+		activo)
+		VALUES (:id_estudio, :id_cliente, :id_orden, :id_plan,
+		:id_paquete, :id_nubes, :id_direccion_corriente, :id_oleaje,
+		:id_status, :id_usuario_captura, :id_usuario_valida,
+		:id_usuario_actualiza, :fecha_muestreo, :fecha_entrega,
+		:fecha_captura, :fecha_valida, :fecha_actualiza, :ip_captura,
+		:ip_valida, :ip_actualiza, :host_captura, :host_valida,
+		:host_actualiza, :nubes_otro, :comentarios, :motivo_rechaza,
+		:activo)";
+	$db = getConnection();
+	$stmt = $db->prepare($sql);
+	$stmt->execute($sheetData);
+	$sheetId = $db->lastInsertId();
+	$db = null;
+	return $sheetId;
 }
 
 function updateSheet($updateData) {
-	return $updateData;
-}
-
-function getReception($receptionId) {
-	$json = '
-			{
-				"id_recepcion":1,
-				"id_hoja":1,
-				"id_recepcionista":13,
-				"id_verificador":13,
-				"id_muestra_validacion":1,
-				"id_status":1,
-				"fecha_recibe":"2015-03-24T13:05-06:00",
-				"fecha_verifica":"2015-03-23T13:06-06:00",
-				"fecha_captura":"2015-03-23T14:25-06:00",
-				"ip_captura":"[::1]",
-				"host_captura":"localhost",
-				"fecha_valida":"2015-03-23T14:25-06:00",
-				"ip_valida":"[::1]",
-				"host_valida":"localhost",
-				"fecha_actualiza":"2015-03-23T14:25-06:00",
-				"ip_actualiza":"[::1]",
-				"host_actualiza":"localhost",
-				"fecha_rechaza":"",
-				"comentarios":"Sin observaciones",
-				"motivo_rechaza":"",
-				"activo":1,
-				"plan":
-				{
-					"id_plan":1,
-					"folio":"CEA-437/2014",
-					"fecha_plan":"2015-03-23T09:12-06:00"
-				},
-				"hoja":
-				{
-					"id_hoja":1,
-					"fecha_muestreo":"2015-03-24T08:12-06:00",
-					"fecha_recibe":"2015-03-24T13:05-06:00"
-				},
-				"muestras":
-				[
-					{
-						"id_muestra_validacion":1,
-						"id_muestra":1,
-						"id_estudio":1,
-						"id_cliente":1,
-						"id_solicitud":1,
-						"id_orden":1,
-						"id_plan":1,
-						"id_hoja":1,
-						"id_recepcion":1,
-						"id_custodia":0,
-						"id_paquete_puntos":1,
-						"id_punto":1,
-						"id_status":1,
-						"id_ejercicio":2015,
-						"id_municipio":14063,
-						"id_localidad":140630001,
-						"folio":"0419/2015",
-						"punto":"Ocotlán",
-						"descripcion":"Ocotlán",
-						"lat":20.346928,
-						"lng":-102.779392,
-						"alt":0,
-						"municipio":"municipio 14063",
-						"localidad":"localidad 140630001",
-						"fecha_muestreo":"2015-03-23T09:00-06:00",
-						"selected":true,
-						"comentarios_muestreo":""
-					},
-					{
-						"id_muestra_validacion":2,
-						"id_muestra":2,
-						"id_estudio":1,
-						"id_cliente":1,
-						"id_solicitud":1,
-						"id_orden":1,
-						"id_plan":1,
-						"id_hoja":1,
-						"id_recepcion":1,
-						"id_recepcion":0,
-						"id_custodia":0,
-						"id_paquete_puntos":1,
-						"id_punto":2,
-						"id_status":1,
-						"id_ejercicio":2015,
-						"id_municipio":14030,
-						"id_localidad":140300038,
-						"folio":"0420/2015",
-						"punto":"Presa Corona",
-						"descripcion":"Cortina Presa Corona - Poncitlán",
-						"lat":20.399667,
-						"lng":-103.090619,
-						"alt":0,
-						"municipio":"municipio 14030",
-						"localidad":"localidad 140300038",
-						"fecha_muestreo":"2015-03-23T10:40-06:00",
-						"selected":true,
-						"comentarios_muestreo":""
-					},
-					{
-						"id_muestra_validacion":3,
-						"id_muestra":3,
-						"id_estudio":1,
-						"id_cliente":1,
-						"id_solicitud":1,
-						"id_orden":1,
-						"id_plan":1,
-						"id_hoja":1,
-						"id_recepcion":1,
-						"id_recepcion":0,
-						"id_custodia":0,
-						"id_paquete_puntos":1,
-						"id_punto":3,
-						"id_status":1,
-						"id_ejercicio":2015,
-						"id_municipio":14051,
-						"id_localidad":140510013,
-						"folio":"0421/2015",
-						"punto":"Ex-hacienda Zap.",
-						"descripcion":"Ex-hacienda de Zapotlanejo",
-						"lat":20.442003,
-						"lng":-103.143814,
-						"alt":0,
-						"municipio":"municipio 14051",
-						"localidad":"localidad 140510013",
-						"fecha_muestreo":"2015-03-23T11:23-06:00",
-						"selected":true,
-						"comentarios_muestreo":""
-					},
-					{
-						"id_muestra_validacion":4,
-						"id_muestra":4,
-						"id_estudio":1,
-						"id_cliente":1,
-						"id_solicitud":1,
-						"id_orden":1,
-						"id_plan":1,
-						"id_hoja":1,
-						"id_recepcion":1,
-						"id_recepcion":0,
-						"id_custodia":0,
-						"id_paquete_puntos":1,
-						"id_punto":4,
-						"id_status":1,
-						"id_ejercicio":2015,
-						"id_municipio":14051,
-						"id_localidad":140510001,
-						"folio":"0422/2015",
-						"punto":"Salto-Juanacatlán",
-						"descripcion":"Compuerta - Puente El Salto-Juanacatlán",
-						"lat":20.512825,
-						"lng":-103.174558,
-						"alt":0,
-						"municipio":"municipio 14051",
-						"localidad":"localidad 140510001",
-						"fecha_muestreo":"2015-03-23T12:40-06:00",
-						"selected":true,
-						"comentarios_muestreo":""
-					},
-					{
-						"id_muestra_validacion":5,
-						"id_muestra":5,
-						"id_estudio":1,
-						"id_cliente":1,
-						"id_solicitud":1,
-						"id_orden":1,
-						"id_plan":1,
-						"id_hoja":1,
-						"id_recepcion":1,
-						"id_recepcion":0,
-						"id_custodia":0,
-						"id_paquete_puntos":1,
-						"id_punto":5,
-						"id_status":1,
-						"id_ejercicio":2015,
-						"id_municipio":14101,
-						"id_localidad":141010026,
-						"folio":"0423/2015",
-						"punto":"Puente Grande",
-						"descripcion":"Puente Grande",
-						"lat":20.571036,
-						"lng":-103.147283,
-						"alt":0,
-						"municipio":"municipio 14101",
-						"localidad":"localidad 141010026",
-						"fecha_muestreo":"2015-03-23T13:14-06:00",
-						"selected":true,
-						"comentarios_muestreo":""
-					},
-					{
-						"id_muestra_validacion":6,
-						"id_muestra":6,
-						"id_estudio":1,
-						"id_cliente":1,
-						"id_solicitud":1,
-						"id_orden":1,
-						"id_plan":1,
-						"id_hoja":1,
-						"id_recepcion":1,
-						"id_recepcion":0,
-						"id_custodia":0,
-						"id_paquete_puntos":1,
-						"id_punto":6,
-						"id_status":1,
-						"id_ejercicio":2015,
-						"id_municipio":14101,
-						"id_localidad":141010009,
-						"folio":"0424/2015",
-						"punto":"Matatlán",
-						"descripcion":"Vertedero Controlado Matatlán",
-						"lat":20.668289,
-						"lng":-103.187169,
-						"alt":0,
-						"municipio":"municipio 14101",
-						"localidad":"localidad 141010009",
-						"fecha_muestreo":"2015-03-23T13:51-06:00",
-						"selected":true,
-						"comentarios_muestreo":""
-					}
-				],
-				"validacion_preservaciones":
-				[
-					{
-						"id_validacion_preservacion":1,
-						"id_recepcion":1,
-						"id_preservacion":1,
-						"id_clase_parametro":1,
-						"clase_parametro":"Fisicoquímico",
-						"clase_param":"FQ",
-						"preservacion":"Hielo, 4°C",
-						"tipo_preservacion":"Fisicoquímico",
-						"descripcion":"Hielo, 4°C",
-						"preservado":true,
-						"selected":true,
-						"cantidad":0,
-						"activo":1
-					},
-					{
-						"id_validacion_preservacion":2,
-						"id_recepcion":1,
-						"id_preservacion":2,
-						"id_clase_parametro":2,
-						"clase_parametro":"Oxígeno disuelto",
-						"clase_param":"OD",
-						"preservacion":"2 ml MnSo4 + 2 ml Álcali Ioduro + 2 ml H2So4",
-						"tipo_preservacion":"Oxígeno disuelto",
-						"descripcion":"2 ml MnSo4 + 2 ml Álcali Ioduro + 2 ml H2So4",
-						"preservado":true,
-						"selected":true,
-						"cantidad":0,
-						"activo":1
-					},
-					{
-						"id_validacion_preservacion":3,
-						"id_recepcion":1,
-						"id_preservacion":3,
-						"id_clase_parametro":3,
-						"clase_parametro":"Sustancias activas al azul de metileno",
-						"clase_param":"SAAM",
-						"preservacion":"H2SO4, 4°C, pH<2",
-						"tipo_preservacion":"Sustancias activas al azul de metileno",
-						"descripcion":"H2SO4, 4°C, pH<2",
-						"preservado":true,
-						"selected":true,
-						"cantidad":0,
-						"activo":1
-					},
-					{
-						"id_validacion_preservacion":4,
-						"id_recepcion":1,
-						"id_preservacion":4,
-						"id_clase_parametro":4,
-						"clase_parametro":"Fenoles",
-						"clase_param":"FEN",
-						"preservacion":"5ml H2SO4 + CuSO4, 4°C, pH<2",
-						"tipo_preservacion":"Fenoles",
-						"descripcion":"5ml H2SO4 + CuSO4, 4°C, pH<2",
-						"preservado":true,
-						"selected":true,
-						"cantidad":0,
-						"activo":1
-					},
-					{
-						"id_validacion_preservacion":5,
-						"id_recepcion":1,
-						"id_preservacion":5,
-						"id_clase_parametro":5,
-						"clase_parametro":"Dureza",
-						"clase_param":"DZA",
-						"preservacion":"HNO3, pH<2",
-						"tipo_preservacion":"Dureza",
-						"descripcion":"HNO3, pH<2",
-						"preservado":false,
-						"selected":false,
-						"cantidad":0,
-						"activo":1
-					},
-					{
-						"id_validacion_preservacion":6,
-						"id_recepcion":1,
-						"id_preservacion":6,
-						"id_clase_parametro":6,
-						"clase_parametro":"Sulfuros",
-						"clase_param":"Sulfuros",
-						"preservacion":"6.5 ml de Acetato de Zn 2N, NaOH 6N pH≥9, 4°C",
-						"tipo_preservacion":"Sulfuros",
-						"descripcion":"6.5 ml de Acetato de Zn 2N, NaOH 6N pH≥9, 4°C",
-						"preservado":false,
-						"selected":false,
-						"cantidad":0,
-						"activo":1
-					},
-					{
-						"id_validacion_preservacion":8,
-						"id_recepcion":1,
-						"id_preservacion":8,
-						"id_clase_parametro":8,
-						"clase_parametro":"Grasas y aceites",
-						"clase_param":"GyA",
-						"preservacion":"HCL 1:1, 4°C, pH<2",
-						"tipo_preservacion":"Grasas y aceites",
-						"descripcion":"HCL1:1, 4°C, pH<2",
-						"preservado":false,
-						"selected":false,
-						"cantidad":0,
-						"activo":1
-					}
-				],
-				"validacion_contenedores":
-				[
-					{
-						"id_validacion_contenedor":1,
-						"id_recepcion":1,
-						"id_muestra":5,
-						"id_area":1,
-						"area":"Fisicoquímicos",
-						"volumen":true,
-						"vigencia":true,
-						"contenedor":true,
-						"selected":true
-					},
-					{
-						"id_validacion_contenedor":2,
-						"id_recepcion":1,
-						"id_muestra":5,
-						"id_area":2,
-						"area":"Metales Pesados",
-						"volumen":true,
-						"vigencia":true,
-						"contenedor":true,
-						"selected":true
-					},
-					{
-						"id_validacion_contenedor":3,
-						"id_recepcion":1,
-						"id_muestra":5,
-						"id_area":3,
-						"area":"Microbiología",
-						"volumen":true,
-						"vigencia":true,
-						"contenedor":true,
-						"selected":true
-					}
-				]
-			}
-	';
-	return json_decode($json);
+	$sql = "UPDATE Hoja SET id_estudio = :id_estudio,
+		id_cliente = :id_cliente, id_orden = :id_orden,
+		id_plan = :id_plan, id_paquete = :id_paquete, id_nubes = :id_nubes,
+		id_direccion_corriente = :id_direccion_corriente,
+		id_oleaje = :id_oleaje, id_status = :id_status,
+		id_usuario_captura = :id_usuario_captura,
+		id_usuario_valida = :id_usuario_valida,
+		id_usuario_actualiza = :id_usuario_actualiza,
+		fecha_muestreo = :fecha_muestreo, fecha_entrega = :fecha_entrega,
+		fecha_captura = :fecha_captura, fecha_valida = :fecha_valida,
+		fecha_actualiza = :fecha_actualiza, ip_captura = :ip_captura,
+		ip_valida = :ip_valida, ip_actualiza = :ip_actualiza,
+		host_captura = :host_captura, host_valida = :host_valida,
+		host_actualiza = :host_actualiza, nubes_otro = :nubes_otro,
+		comentarios = :comentarios, motivo_rechaza = :motivo_rechaza,
+		activo = :activo
+		WHERE id_hoja = :id_hoja";
+	$db = getConnection();
+	$stmt = $db->prepare($sql);
+	$stmt->execute($updateData);
+	$db = null;
+	return $updateData["id_hoja"];
 }
 
 function getReceptions() {
-	$json = '
-		[
-			{
-				"id_recepcion":1,
-				"id_hoja":1,
-				"id_recepcionista":13,
-				"id_verificador":13,
-				"id_muestra_validacion":1,
-				"id_status":1,
-				"fecha_recibe":"2015-03-24T13:05-06:00",
-				"fecha_verifica":"2015-03-23T13:06-06:00",
-				"fecha_captura":"2015-03-23T14:25-06:00",
-				"ip_captura":"[::1]",
-				"host_captura":"localhost",
-				"fecha_valida":"2015-03-23T14:25-06:00",
-				"ip_valida":"[::1]",
-				"host_valida":"localhost",
-				"fecha_actualiza":"2015-03-23T14:25-06:00",
-				"ip_actualiza":"[::1]",
-				"host_actualiza":"localhost",
-				"fecha_rechaza":"",
-				"comentarios":"Sin observaciones",
-				"motivo_rechaza":"",
-				"activo":1,
-				"plan":
-				{
-					"id_plan":1,
-					"folio":"CEA-437/2014",
-					"fecha_plan":"2015-03-23T09:12-06:00"
-				},
-				"hoja":
-				{
-					"id_hoja":1,
-					"fecha_muestreo":"2015-03-24T08:12-06:00",
-					"fecha_recibe":"2015-03-24T13:05-06:00"
-				},
-				"muestras":
-				[
-					{
-						"id_muestra_validacion":1,
-						"id_muestra":1,
-						"id_estudio":1,
-						"id_cliente":1,
-						"id_solicitud":1,
-						"id_orden":1,
-						"id_plan":1,
-						"id_hoja":1,
-						"id_recepcion":1,
-						"id_custodia":0,
-						"id_paquete_puntos":1,
-						"id_punto":1,
-						"id_status":1,
-						"id_ejercicio":2015,
-						"id_municipio":14063,
-						"id_localidad":140630001,
-						"folio":"0419/2015",
-						"punto":"Ocotlán",
-						"descripcion":"Ocotlán",
-						"lat":20.346928,
-						"lng":-102.779392,
-						"alt":0,
-						"municipio":"municipio 14063",
-						"localidad":"localidad 140630001",
-						"fecha_muestreo":"2015-03-23T09:00-06:00",
-						"selected":true,
-						"comentarios_muestreo":""
-					},
-					{
-						"id_muestra_validacion":2,
-						"id_muestra":2,
-						"id_estudio":1,
-						"id_cliente":1,
-						"id_solicitud":1,
-						"id_orden":1,
-						"id_plan":1,
-						"id_hoja":1,
-						"id_recepcion":1,
-						"id_recepcion":0,
-						"id_custodia":0,
-						"id_paquete_puntos":1,
-						"id_punto":2,
-						"id_status":1,
-						"id_ejercicio":2015,
-						"id_municipio":14030,
-						"id_localidad":140300038,
-						"folio":"0420/2015",
-						"punto":"Presa Corona",
-						"descripcion":"Cortina Presa Corona - Poncitlán",
-						"lat":20.399667,
-						"lng":-103.090619,
-						"alt":0,
-						"municipio":"municipio 14030",
-						"localidad":"localidad 140300038",
-						"fecha_muestreo":"2015-03-23T10:40-06:00",
-						"selected":true,
-						"comentarios_muestreo":""
-					},
-					{
-						"id_muestra_validacion":3,
-						"id_muestra":3,
-						"id_estudio":1,
-						"id_cliente":1,
-						"id_solicitud":1,
-						"id_orden":1,
-						"id_plan":1,
-						"id_hoja":1,
-						"id_recepcion":1,
-						"id_recepcion":0,
-						"id_custodia":0,
-						"id_paquete_puntos":1,
-						"id_punto":3,
-						"id_status":1,
-						"id_ejercicio":2015,
-						"id_municipio":14051,
-						"id_localidad":140510013,
-						"folio":"0421/2015",
-						"punto":"Ex-hacienda Zap.",
-						"descripcion":"Ex-hacienda de Zapotlanejo",
-						"lat":20.442003,
-						"lng":-103.143814,
-						"alt":0,
-						"municipio":"municipio 14051",
-						"localidad":"localidad 140510013",
-						"fecha_muestreo":"2015-03-23T11:23-06:00",
-						"selected":true,
-						"comentarios_muestreo":""
-					},
-					{
-						"id_muestra_validacion":4,
-						"id_muestra":4,
-						"id_estudio":1,
-						"id_cliente":1,
-						"id_solicitud":1,
-						"id_orden":1,
-						"id_plan":1,
-						"id_hoja":1,
-						"id_recepcion":1,
-						"id_recepcion":0,
-						"id_custodia":0,
-						"id_paquete_puntos":1,
-						"id_punto":4,
-						"id_status":1,
-						"id_ejercicio":2015,
-						"id_municipio":14051,
-						"id_localidad":140510001,
-						"folio":"0422/2015",
-						"punto":"Salto-Juanacatlán",
-						"descripcion":"Compuerta - Puente El Salto-Juanacatlán",
-						"lat":20.512825,
-						"lng":-103.174558,
-						"alt":0,
-						"municipio":"municipio 14051",
-						"localidad":"localidad 140510001",
-						"fecha_muestreo":"2015-03-23T12:40-06:00",
-						"selected":true,
-						"comentarios_muestreo":""
-					},
-					{
-						"id_muestra_validacion":5,
-						"id_muestra":5,
-						"id_estudio":1,
-						"id_cliente":1,
-						"id_solicitud":1,
-						"id_orden":1,
-						"id_plan":1,
-						"id_hoja":1,
-						"id_recepcion":1,
-						"id_recepcion":0,
-						"id_custodia":0,
-						"id_paquete_puntos":1,
-						"id_punto":5,
-						"id_status":1,
-						"id_ejercicio":2015,
-						"id_municipio":14101,
-						"id_localidad":141010026,
-						"folio":"0423/2015",
-						"punto":"Puente Grande",
-						"descripcion":"Puente Grande",
-						"lat":20.571036,
-						"lng":-103.147283,
-						"alt":0,
-						"municipio":"municipio 14101",
-						"localidad":"localidad 141010026",
-						"fecha_muestreo":"2015-03-23T13:14-06:00",
-						"selected":true,
-						"comentarios_muestreo":""
-					},
-					{
-						"id_muestra_validacion":6,
-						"id_muestra":6,
-						"id_estudio":1,
-						"id_cliente":1,
-						"id_solicitud":1,
-						"id_orden":1,
-						"id_plan":1,
-						"id_hoja":1,
-						"id_recepcion":1,
-						"id_recepcion":0,
-						"id_custodia":0,
-						"id_paquete_puntos":1,
-						"id_punto":6,
-						"id_status":1,
-						"id_ejercicio":2015,
-						"id_municipio":14101,
-						"id_localidad":141010009,
-						"folio":"0424/2015",
-						"punto":"Matatlán",
-						"descripcion":"Vertedero Controlado Matatlán",
-						"lat":20.668289,
-						"lng":-103.187169,
-						"alt":0,
-						"municipio":"municipio 14101",
-						"localidad":"localidad 141010009",
-						"fecha_muestreo":"2015-03-23T13:51-06:00",
-						"selected":true,
-						"comentarios_muestreo":""
-					}
-				],
-				"validacion_preservaciones":
-				[
-					{
-						"id_validacion_preservacion":1,
-						"id_recepcion":1,
-						"id_preservacion":1,
-						"id_clase_parametro":1,
-						"clase_parametro":"Fisicoquímico",
-						"clase_param":"FQ",
-						"preservacion":"Hielo, 4°C",
-						"tipo_preservacion":"Fisicoquímico",
-						"descripcion":"Hielo, 4°C",
-						"preservado":true,
-						"selected":true,
-						"cantidad":0,
-						"activo":1
-					},
-					{
-						"id_validacion_preservacion":2,
-						"id_recepcion":1,
-						"id_preservacion":2,
-						"id_clase_parametro":2,
-						"clase_parametro":"Oxígeno disuelto",
-						"clase_param":"OD",
-						"preservacion":"2 ml MnSo4 + 2 ml Álcali Ioduro + 2 ml H2So4",
-						"tipo_preservacion":"Oxígeno disuelto",
-						"descripcion":"2 ml MnSo4 + 2 ml Álcali Ioduro + 2 ml H2So4",
-						"preservado":true,
-						"selected":true,
-						"cantidad":0,
-						"activo":1
-					},
-					{
-						"id_validacion_preservacion":3,
-						"id_recepcion":1,
-						"id_preservacion":3,
-						"id_clase_parametro":3,
-						"clase_parametro":"Sustancias activas al azul de metileno",
-						"clase_param":"SAAM",
-						"preservacion":"H2SO4, 4°C, pH<2",
-						"tipo_preservacion":"Sustancias activas al azul de metileno",
-						"descripcion":"H2SO4, 4°C, pH<2",
-						"preservado":true,
-						"selected":true,
-						"cantidad":0,
-						"activo":1
-					},
-					{
-						"id_validacion_preservacion":4,
-						"id_recepcion":1,
-						"id_preservacion":4,
-						"id_clase_parametro":4,
-						"clase_parametro":"Fenoles",
-						"clase_param":"FEN",
-						"preservacion":"5ml H2SO4 + CuSO4, 4°C, pH<2",
-						"tipo_preservacion":"Fenoles",
-						"descripcion":"5ml H2SO4 + CuSO4, 4°C, pH<2",
-						"preservado":true,
-						"selected":true,
-						"cantidad":0,
-						"activo":1
-					},
-					{
-						"id_validacion_preservacion":5,
-						"id_recepcion":1,
-						"id_preservacion":5,
-						"id_clase_parametro":5,
-						"clase_parametro":"Dureza",
-						"clase_param":"DZA",
-						"preservacion":"HNO3, pH<2",
-						"tipo_preservacion":"Dureza",
-						"descripcion":"HNO3, pH<2",
-						"preservado":false,
-						"selected":false,
-						"cantidad":0,
-						"activo":1
-					},
-					{
-						"id_validacion_preservacion":6,
-						"id_recepcion":1,
-						"id_preservacion":6,
-						"id_clase_parametro":6,
-						"clase_parametro":"Sulfuros",
-						"clase_param":"Sulfuros",
-						"preservacion":"6.5 ml de Acetato de Zn 2N, NaOH 6N pH≥9, 4°C",
-						"tipo_preservacion":"Sulfuros",
-						"descripcion":"6.5 ml de Acetato de Zn 2N, NaOH 6N pH≥9, 4°C",
-						"preservado":false,
-						"selected":false,
-						"cantidad":0,
-						"activo":1
-					},
-					{
-						"id_validacion_preservacion":8,
-						"id_recepcion":1,
-						"id_preservacion":8,
-						"id_clase_parametro":8,
-						"clase_parametro":"Grasas y aceites",
-						"clase_param":"GyA",
-						"preservacion":"HCL 1:1, 4°C, pH<2",
-						"tipo_preservacion":"Grasas y aceites",
-						"descripcion":"HCL1:1, 4°C, pH<2",
-						"preservado":false,
-						"selected":false,
-						"cantidad":0,
-						"activo":1
-					}
-				],
-				"validacion_contenedores":
-				[
-					{
-						"id_validacion_contenedor":1,
-						"id_recepcion":1,
-						"id_muestra":5,
-						"id_area":1,
-						"area":"Fisicoquímicos",
-						"volumen":true,
-						"vigencia":true,
-						"contenedor":true,
-						"selected":true
-					},
-					{
-						"id_validacion_contenedor":2,
-						"id_recepcion":1,
-						"id_muestra":5,
-						"id_area":2,
-						"area":"Metales Pesados",
-						"volumen":true,
-						"vigencia":true,
-						"contenedor":true,
-						"selected":true
-					},
-					{
-						"id_validacion_contenedor":3,
-						"id_recepcion":1,
-						"id_muestra":5,
-						"id_area":3,
-						"area":"Microbiología",
-						"volumen":true,
-						"vigencia":true,
-						"contenedor":true,
-						"selected":true
-					}
-				]
-			}
-		]
-	';
-	return json_decode($json);
+	$sql = "SELECT id_recepcion, id_orden, id_plan, id_hoja,
+		id_recepcionista, id_verificador, id_muestra_validacion,
+		id_status, id_usuario_captura, id_usuario_valida,
+		id_usuario_entrega, id_usuario_actualiza, fecha_entrega,
+		fecha_recibe, fecha_verifica, fecha_captura, fecha_valida,
+		fecha_actualiza, ip_captura, ip_valida, ip_actualiza,
+		host_captura, host_valida, host_actualiza, comentarios,
+		motivo_rechaza, activo
+		FROM Recepcion
+		WHERE activo = 1";
+	$db = getConnection();
+	$stmt = $db->prepare($sql);
+	$stmt->execute();
+	$receptions = $stmt->fetchAll(PDO::FETCH_ASSOC);
+	$db = null;
+	return $receptions;
 }
 
+function getPlainReception($receptionId) {
+	$sql = "SELECT id_recepcion, id_orden, id_plan, id_hoja,
+		id_recepcionista, id_verificador, id_muestra_validacion,
+		id_status, id_usuario_captura, id_usuario_valida,
+		id_usuario_entrega, id_usuario_actualiza, fecha_entrega,
+		fecha_recibe, fecha_verifica, fecha_captura, fecha_valida,
+		fecha_actualiza, ip_captura, ip_valida, ip_actualiza,
+		host_captura, host_valida, host_actualiza, comentarios,
+		motivo_rechaza, activo
+		FROM Recepcion
+		WHERE activo = 1 AND id_recepcion = :receptionId";
+	$db = getConnection();
+	$stmt = $db->prepare($sql);
+	$stmt->bindParam("receptionId", $receptionId);
+	$stmt->execute();
+	$reception = (array) $stmt->fetchAll(PDO::FETCH_OBJ)[0];
+	return (object) $reception;
+}
 
+function getReception($receptionId) {
+	$reception = getPlainReception($receptionId);
+	$sheet = getPlainSheet($reception->id_hoja);
+	// //id_recepcion_muestra
+	// //id_recepcion
+	// //id_muestra
+	// $reception->muestras = getSamplesByReception($receptionId);
+	// //id_recepcion_preservacion
+	// //id_recepcion
+	// //id_preservacion
+	// $reception->preservaciones = getPreservationsByReception($receptionId);
+	// //id_recepcion_recipiente
+	// //id_recepcion
+	// //id_recipiente
+	// $reception->recipientes = getContainersByReception($receptionId);
+	return $reception;
+}
 function getCustody($custodyId) {
 	$json = '
 		{}
@@ -2253,12 +1617,10 @@ function deletePlanReactives($planId) {
 }
 
 function getMaterialsByPlan($planId) {
-	$sql = "SELECT p.id_plan, pm.id_plan_material, m.id_material,
-		m.material, m.activo
-		FROM [Plan] p INNER JOIN
-		PlanMaterial pm ON p.id_plan = pm.id_plan INNER JOIN
-		Material m ON pm.id_material = m.id_material
-		WHERE p.id_plan = :planId";
+	$sql = "SELECT id_plan, id_plan_material, id_material,
+		material, activo
+		FROM viewMaterialPlan
+		WHERE id_plan = :planId";
 	$db = getConnection();
 	$stmt = $db->prepare($sql);
 	$stmt->bindParam("planId", $planId);
@@ -2296,12 +1658,10 @@ function deletePlanMaterials($planId) {
 }
 
 function getCoolersByPlan($planId) {
-	$sql = "SELECT p.id_plan, ph.id_plan_hielera, h.id_hielera,
-		h.hielera, h.activo, 'true' AS selected
-		FROM [Plan] p INNER JOIN
-		PlanHielera ph ON p.id_plan = ph.id_plan INNER JOIN
-		Hielera h ON ph.id_hielera = h.id_hielera
-		WHERE p.id_plan = :planId";
+	$sql = "SELECT id_plan, id_plan_hielera, id_hielera,
+		hielera, activo
+		FROM viewHieleraPlan
+		WHERE id_plan = :planId";
 	$db = getConnection();
 	$stmt = $db->prepare($sql);
 	$stmt->bindParam("planId", $planId);
@@ -2340,8 +1700,8 @@ function deletePlanCoolers($planId) {
 
 function getEmployees() {
 	$sql = "SELECT id_usuario, id_nivel, id_rol, id_area, id_puesto,
-		interno, cea, laboratorio, supervisa, analiza, muestrea, nombres,
-		apellido_paterno, apellido_materno, activo
+		interno, cea, laboratorio, supervisa, analiza, muestrea,
+		nombres, apellido_paterno, apellido_materno, activo
 		FROM Usuario
 		WHERE activo = 1 AND laboratorio = 1";
 	$db = getConnection();
@@ -2354,8 +1714,8 @@ function getEmployees() {
 
 function getSamplingEmployee($userId) {
 	$sql = "SELECT id_usuario, id_nivel, id_rol, id_area, id_puesto,
-		interno, cea, laboratorio, supervisa, analiza, muestrea, nombres,
-		apellido_paterno, apellido_materno, activo
+		interno, cea, laboratorio, supervisa, analiza, muestrea,
+		nombres, apellido_paterno, apellido_materno, activo
 		FROM Usuario
 		WHERE activo = 1 AND id_area = 4 AND id_usuario = :userId";
 	$db = getConnection();
@@ -2531,7 +1891,7 @@ function getSamplingInstruments() {
 }
 
 function getContainerKinds() {
-	$sql = "SELECT  id_recipiente, recipiente, tipo_recipiente, activo,
+	$sql = "SELECT id_recipiente, recipiente, tipo_recipiente, activo,
 		'0' AS cantidad, 'false' AS selected
 		FROM Recipiente
 		WHERE activo = 1";
@@ -2544,7 +1904,7 @@ function getContainerKinds() {
 }
 
 function getReactives() {
-	$sql = "SELECT   id_reactivo, id_tipo_reactivo, reactivo,
+	$sql = "SELECT id_reactivo, id_tipo_reactivo, reactivo,
 		registra_valor, lote, folio, activo,
 		'0' AS valor
 		FROM Reactivo

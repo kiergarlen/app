@@ -297,11 +297,12 @@ $app->post("/sheets", function() use ($app) {
 		}
 		else
 		{
-			//$sheetUpdateData = processSheetUpdate($request);
+			$sheetUpdateData = processSheetUpdate($request);
+			$result = json_encode($sheetUpdateData);
 			//$sheetId = updateSheet($sheetUpdateData["sheet"]);
 			//processSheetResultsUpdate($sheetUpdateData);
 			//processSheetPreservationsUpdate($sheetUpdateData);
-			$result = '{"id_hoja":' . $sheetId . '}';
+			//$result = '{"id_hoja":' . $sheetId . '}';
 		}
 		$requestData = extractDataFromRequest($request);
 		$result = json_encode($requestData);

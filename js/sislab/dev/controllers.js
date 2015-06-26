@@ -1349,7 +1349,7 @@
             l = vm.preservations.length;
             for (i = 0; i < l; i += 1) {
               vm.preservations[i].id_hoja_preservacion = 0;
-              vm.preservations[i].id_hoja = vm.plan.id_hoja;
+              vm.preservations[i].id_hoja = vm.sheet.id_hoja;
               vm.preservations[i].cantidad = 0;
               vm.preservations[i].preservado = 0;
               vm.preservations[i].activo = 0;

@@ -356,14 +356,18 @@
   </div>
   <div class="row">
     <div class="col-xs-12 col-sm-6"
-      data-ng-repeat="container in sheet.containers">
+      data-ng-repeat="preservation in sheet.preservations">
       <label>
         <input type="checkbox"
-          value="{{container.selected}}"
-          data-ng-model="container.selected"
+          value="{{preservation.selected}}"
+          data-ng-model="preservation.selected"
           >
-          {{container.recipiente}}
+          {{preservation.preservacion}}
       </label>
+      <br>
+      <small class="text-muted">
+        {{preservation.descripcion}}
+      </small>
     </div>
   </div>
   <div class="row">

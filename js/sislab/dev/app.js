@@ -1,6 +1,6 @@
 
   'use strict';
-  // ANGULAR MODULE SETTER
+  //ANGULAR MODULE SETTER
   angular
     .module('sislabApp', [
       'ngRoute',
@@ -11,10 +11,10 @@
     ]
   );
 
-  // DATA API URL
+  //DATA API URL
   var API_BASE_URL = 'api/v1/';
 
-  // config.js
+  //config.js
   /**
    * @name config
    * @desc Configuración de AngularJS
@@ -224,7 +224,7 @@
     );
 
   // DIRECTIVES
-  // sislabMenu.js
+  //sislabMenu.js
   /**
    * @name sislabMenu
    * @desc Directiva para menú principal
@@ -242,7 +242,7 @@
     .module('sislabApp')
     .directive('sislabMenu', sislabMenu);
 
-  // sislabBanner.js
+  //sislabBanner.js
   /**
    * @name sislabBanner
    * @desc Directiva para banner superior
@@ -257,7 +257,7 @@
     .module('sislabApp')
     .directive('sislabBanner', sislabBanner);
 
-  // sislabFooter.js
+  //sislabFooter.js
   /**
    * @name sislabFooter
    * @desc Directiva para pie de página
@@ -272,7 +272,7 @@
     .module('sislabApp')
     .directive('sislabFooter', sislabFooter);
 
-  // sislabBannerBottom.js
+  //sislabBannerBottom.js
   /**
    * @name sislabBannerBottom
    * @desc Directiva para banner inferior

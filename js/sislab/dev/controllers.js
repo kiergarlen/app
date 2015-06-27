@@ -354,7 +354,7 @@
       ]
     );
 
-  // QuoteController.js
+  //QuoteController.js
   /**
    * @name QuoteController
    * @constructor
@@ -512,7 +512,7 @@
       ]
     );
 
-  // OrderController.js
+  //OrderController.js
   /**
    * @name OrderController
    * @constructor
@@ -755,7 +755,7 @@
       ]
     );
 
-  // PlanController.js
+  //PlanController.js
   /**
    * @name PlanController
    * @constructor
@@ -1295,7 +1295,7 @@
       ]
     );
 
-  // SheetController.js
+  //SheetController.js
   /**
    * @name SheetController
    * @constructor
@@ -1483,7 +1483,6 @@
     }
 
     function submitForm() {
-      ////console.log(vm.sheet);
       if (isFormValid() && !vm.isDataSubmitted) {
         vm.isDataSubmitted = true;
         if (vm.sheet.id_hoja < 1) {
@@ -1548,7 +1547,7 @@
       ]
     );
 
-  // ReceptionController.js
+  //ReceptionController.js
   /**
    * @name ReceptionController
    * @constructor
@@ -1672,6 +1671,7 @@
       ]
     );
 
+  //CustodyController.js
   /**
    * @name CustodyListController
    * @constructor
@@ -1698,7 +1698,7 @@
       ]
     );
 
-  // CustodyController.js
+  //CustodyController.js
   /**
    * @name CustodyController
    * @constructor

@@ -811,37 +811,45 @@ function processPlanCoolersUpdate($planUpdateData) {
 function processSheetUpdate($request) {
 	$token = decodeUserToken($request);
 	$update = (array) json_decode($request->getBody());
-	// $client = $update["cliente"];
-	// $study = $update["estudio"];
-	// $plans = $update["planes"];
+	//mark for deletion...
+	$order = $update["orden"];
+	$norm = $update["norma"];
+	$parameters = $update["parametros"];
+	//keep these
+	$preservations = $update["preservaciones"];
+	$samples = $update["muestras"];
 
-	// unset($update["cliente"]);
-	// unset($update["estudio"]);
-	// unset($update["planes"]);
-	// unset($update["status"]);
-	// unset($update["id_usuario_captura"]);
-	// unset($update["fecha_captura"]);
-	// unset($update["ip_captura"]);
-	// unset($update["host_captura"]);
+	unset($update["orden"]);
+	unset($update["norma"]);
+	unset($update["parametros"]);
+	unset($update["preservaciones"]);
+	unset($update["muestras"]);
 
-	// $update["id_usuario_actualiza"] = $token->uid;
-	// $update["fecha_actualiza"] = date('Y-m-d H:i:s');
-	// $update["ip_actualiza"] = $request->getIp();
-	// $update["host_actualiza"] = $request->getUrl();
-	// $update["fecha"] = isoDateToMsSql($update["fecha"]);
-	// $update["fecha_rechaza"] = isoDateToMsSql($update["fecha_rechaza"]);
+	unset($update["id_usuario_captura"]);
+	unset($update["fecha_captura"]);
+	unset($update["ip_captura"]);
+	unset($update["host_captura"]);
 
-	// if ($update["id_status"] == 2 && strlen($update["ip_valida"]) < 1)
-	// {
-	// 	$update["ip_valida"] = $request->getIp();
-	// 	$update["host_valida"] = $request->getUrl();
-	// 	$update["fecha_valida"] = isoDateToMsSql($update["fecha_valida"]);
-	// }
+	$update["id_usuario_actualiza"] = $token->uid;
+	$update["fecha_actualiza"] = date('Y-m-d H:i:s');
+	$update["ip_actualiza"] = $request->getIp();
+	$update["host_actualiza"] = $request->getUrl();
 
-	// $sheetUpdateData = array(
-	// 	"sheet" => $update,
-	// 	"plans" => $plans
-	// );
-	// return $sheetUpdateData;
-	return $update;
+	$update["fecha_muestreo"] = isoDateToMsSql($update["fecha_muestreo"]);
+	$update["fecha_entrega"] = isoDateToMsSql($update["fecha_entrega"]);
+	$update["fecha_rechaza"] = isoDateToMsSql($update["fecha_rechaza"]);
+
+	if ($update["id_status"] == 2 && strlen($update["ip_valida"]) < 1)
+	{
+		$update["ip_valida"] = $request->getIp();
+		$update["host_valida"] = $request->getUrl();
+		$update["fecha_valida"] = isoDateToMsSql($update["fecha_valida"]);
+	}
+
+	$sheetUpdateData = array(
+		"sheet" => $update,
+		"preservations" => $preservations,
+		"samples" => $samples
+	);
+	return $sheetUpdateData;
 }

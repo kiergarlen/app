@@ -1,4 +1,4 @@
-  // SERVICES
+  //SERVICES
   //ArrayUtilsService.js
   /**
    * @name ArrayUtilsService
@@ -25,9 +25,9 @@
      * @return {Object} item - Ítem seleccionado
      */
     function selectItemFromCollection(collection, field, value) {
-      var i = 0,
-      l = collection.length,
-      item = {};
+      var i = 0;
+      var l = collection.length;
+      var item = {};
       for (i = 0; i < l; i += 1) {
         if (collection[i][field] == value) {
           item = collection[i];
@@ -46,9 +46,9 @@
      * @return {Array} items - Array de ítems seleccionados
      */
     function selectItemsFromCollection(collection, field, value) {
-      var i = 0,
-      l = collection.length,
-      items = [];
+      var i = 0;
+      var l = collection.length;
+      var items = [];
       for (i = 0; i < l; i += 1) {
         if (collection[i][field] == value) {
           items.push(collection[i]);
@@ -66,9 +66,9 @@
      * @return {Object} item - Item extraído
      */
     function extractItemFromCollection(collection, field, value) {
-      var i = 0,
-      l = collection.length,
-      item = {};
+      var i = 0;
+      var l = collection.length;
+      var item = {};
       for (i = 0; i < l; i += 1) {
         if (collection[i][field] == value) {
           item = collection.splice(i, 1);
@@ -89,7 +89,13 @@
      * @return {Object} item - Ítem seleccionado
      */
     function seItemsFromReference(collection, reference, matchField, fields) {
-      var i, l, j, m, k, n, field = '';
+      var i;
+      var l;
+      var j;
+      var m;
+      var k;
+      var n;
+      var field = '';
       l = collection.length;
       n = fields.length;
       for(i = 0; i < l; i += 1) {
@@ -115,7 +121,9 @@
      * @return {Number} count - Cantidad de objetos que cumplen la condición
      */
     function countSelectedItems(collection) {
-      var i, l, count = 0;
+      var i;
+      var l;
+      var count = 0;
       if (!collection) {
         return 0;
       }
@@ -135,10 +143,10 @@
      * @return {Number} avg - Cantidad de objetos que cumplen la condición
      */
     function averageFromValues(collection) {
-      var i = 0,
-      l = collection.length,
-      sum = 0,
-      avg = 0;
+      var i = 0;
+      var l = collection.length;
+      var sum = 0;
+      var avg = 0;
       if (l > 0) {
         for (i = 0; i < l; i++) {
           sum += parseFloat(collection[i]);
@@ -180,16 +188,19 @@
      * @return {Object} paddedNumber - cadena de la longitud dada
      */
     function padNumber(number, places) {
-      var paddedNumber = String(number),
-      i = 0,
-      l = paddedNumber.length,
-      padding = '';
+      var paddedNumber = String(number);
+      var i = 0;
+      var l = paddedNumber.length;
+      var padding = '';
       if (l < places) {
         l = places - l;
         for (i = 0; i < l; i += 1) {
           padding += '0';
         }
-        return padding + '' + paddedNumber;
+        return [
+          padding,
+          paddedNumber
+        ].join('');
       }
       return paddedNumber;
     }
@@ -328,10 +339,10 @@
    * @return {TokenService} Token - Métodos para manejo de token
    */
   function TokenService($window, $http, $location, jwtHelper) {
-    var tokenKey = 'sislab-token',
-    storage = $window.localStorage,
-    cachedToken,
-    Token = {};
+    var tokenKey = 'sislab-token';
+    var storage = $window.localStorage;
+    var cachedToken;
+    var Token = {};
 
     Token.hashMessage = hashMessage;
     Token.authenticateUser = authenticateUser;
@@ -436,8 +447,8 @@
      * @return {Object} userData - Datos del usuario
      */
     function getUserFromToken() {
-      var decodedJwt,
-      userData;
+      var decodedJwt;
+      var userData;
       if (isAuthenticated()) {
         decodedJwt = decodeToken();
         userData = {

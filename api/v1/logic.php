@@ -575,7 +575,6 @@ function processOrderPlansUpdate($orderUpdateData) {
 				$plan["fecha_actualiza"] = date('Y-m-d H:i:s');
 				$plan["ip_actualiza"] = $updateIp;
 				$plan["host_actualiza"] = $updateUrl;
-				$plan["comentarios"] = "...something old, renewed";
 				//return "...something old, renewed";
 				//return $plan;
 				updatePlan($plan);
@@ -701,6 +700,7 @@ function processPlanInstrumentsUpdate($planUpdateData) {
 	}
 	return $planId;
 }
+
 function processPlanContainersUpdate($planUpdateData) {
 	$containers = (array) $planUpdateData["containers"];
 	$planId = $planUpdateData["plan"]["id_plan"];
@@ -852,4 +852,116 @@ function processSheetUpdate($request) {
 		"samples" => $samples
 	);
 	return $sheetUpdateData;
+}
+
+function processSheetPreservationsUpdate($sheetUpdateData) {
+	$preservations = (array) $sheetUpdateData["preservations"];
+	$sheetId = $sheetUpdateData["sheet"]["id_hoja"];
+	$storedPreservations = getPreservationsBySheet($sheetId);
+
+	$i = 0;
+	$j = 0;
+	$l = count($storedPreservations);
+	$m = count($preservations);
+
+	if ($l < 1)
+	{
+		for ($j = 0; $j < $m; $j++) {
+			$preservation = (array) $preservations[$j];
+			unset($preservation["id_hoja_preservacion"]);
+			unset($preservation["id_tipo_preservacion"]);
+			unset($preservation["preservacion"]);
+			unset($preservation["descripcion"]);
+			unset($preservation["selected"]);
+			insertSheetPreservation($preservation);
+		}
+		return $sheetId;
+	}
+	else
+	{
+		for ($i = 0; $i < $l; $i++) {
+			unset($storedPreservations[$i]["id_tipo_preservacion"]);
+			unset($storedPreservations[$i]["preservacion"]);
+			unset($storedPreservations[$i]["descripcion"]);
+			unset($storedPreservations[$i]["selected"]);
+			$storedPreservations[$i]["activo"] = 0;
+			updateSheetPreservation($storedPreservations[$i]);
+		}
+		return $storedPreservations;
+		for ($j = 0; $j < $m; $j++) {
+			$preservation = (array) $preservations[$j];
+			if ($preservation["id_hoja_preservacion"] == 0)
+			{
+				unset($preservation["id_hoja_preservacion"]);
+				unset($preservation["id_tipo_preservacion"]);
+				unset($preservation["preservacion"]);
+				unset($preservation["descripcion"]);
+				unset($preservation["selected"]);
+				insertSheetPreservation($preservation);
+			}
+			else
+			{
+				unset($preservation["id_tipo_preservacion"]);
+				unset($preservation["preservacion"]);
+				unset($preservation["descripcion"]);
+				unset($preservation["selected"]);
+				$preservation["activo"] = 1;
+				updateSheetPreservation($preservation);
+			}
+		}
+	}
+	return $sheetId;
+}
+
+function processSheetSamplesUpdate($sheetUpdateData) {
+	$samples = (array) $sheetUpdateData["samples"];
+	$sheetId = $sheetUpdateData["sheet"]["id_hoja"];
+	$storedSamples = getSamplesBySheet($sheetId);
+
+	$i = 0;
+	$j = 0;
+	$l = count($storedSamples);
+	$m = count($samples);
+
+	if ($l < 1)
+	{
+		for ($j = 0; $j < $m; $j++) {
+			$sample = (array) $samples[$j];
+			unset($sample["punto"]);
+			unset($sample["resultados"]);
+			unset($sample['$$hashKey']);
+			insertSheetSample($sample);
+		}
+		return $sheetId;
+	}
+	else
+	{
+		for ($i = 0; $i < $l; $i++) {
+			unset($storedSamples[$i]["punto"]);
+			unset($storedSamples[$i]["resultados"]);
+			unset($storedSamples[$i]['$$hashKey']);
+			$storedSamples[$i]["activo"] = 0;
+			updateSheetSample($storedSamples[$i]);
+		}
+		return $storedSamples;
+		for ($j = 0; $j < $m; $j++) {
+			$sample = (array) $samples[$j];
+			if ($sample["id_muestra"] == 0)
+			{
+				unset($sample["punto"]);
+				unset($sample["resultados"]);
+				unset($sample['$$hashKey']);
+				insertSheetSample($sample);
+			}
+			else
+			{
+				unset($sample["punto"]);
+				unset($sample["resultados"]);
+				unset($sample['$$hashKey']);
+				$sample["activo"] = 1;
+				updateSheetSample($sample);
+			}
+		}
+	}
+	return $sheetId;
 }

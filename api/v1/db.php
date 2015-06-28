@@ -934,6 +934,7 @@ function getPlainSheet($sheetId) {
 		CONVERT(NVARCHAR, fecha_captura, 126) AS fecha_captura,
 		CONVERT(NVARCHAR, fecha_valida, 126) AS fecha_valida,
 		CONVERT(NVARCHAR, fecha_actualiza, 126) AS fecha_actualiza,
+		CONVERT(NVARCHAR, fecha_rechaza, 126) AS fecha_rechaza,
 		ip_captura, ip_valida, ip_actualiza, host_captura,
 		host_valida, host_actualiza, nubes_otro, comentarios,
 		motivo_rechaza, activo
@@ -976,7 +977,8 @@ function insertSheet($sheetData) {
 		id_paquete, id_nubes, id_direccion_corriente, id_oleaje,
 		id_status, id_usuario_captura, id_usuario_valida,
 		id_usuario_actualiza, fecha_muestreo, fecha_entrega,
-		fecha_captura, fecha_valida, fecha_actualiza, ip_captura,
+		fecha_captura, fecha_valida, fecha_actualiza,
+		fecha_rechaza, ip_captura,
 		ip_valida, ip_actualiza, host_captura, host_valida,
 		host_actualiza, nubes_otro, comentarios, motivo_rechaza,
 		activo)
@@ -984,7 +986,8 @@ function insertSheet($sheetData) {
 		:id_paquete, :id_nubes, :id_direccion_corriente, :id_oleaje,
 		:id_status, :id_usuario_captura, :id_usuario_valida,
 		:id_usuario_actualiza, :fecha_muestreo, :fecha_entrega,
-		:fecha_captura, :fecha_valida, :fecha_actualiza, :ip_captura,
+		:fecha_captura, :fecha_valida, :fecha_actualiza,
+		fecha_rechaza, :ip_captura,
 		:ip_valida, :ip_actualiza, :host_captura, :host_valida,
 		:host_actualiza, :nubes_otro, :comentarios, :motivo_rechaza,
 		:activo)";
@@ -1002,17 +1005,15 @@ function updateSheet($updateData) {
 		id_plan = :id_plan, id_paquete = :id_paquete, id_nubes = :id_nubes,
 		id_direccion_corriente = :id_direccion_corriente,
 		id_oleaje = :id_oleaje, id_status = :id_status,
-		id_usuario_captura = :id_usuario_captura,
 		id_usuario_valida = :id_usuario_valida,
 		id_usuario_actualiza = :id_usuario_actualiza,
 		fecha_muestreo = :fecha_muestreo, fecha_entrega = :fecha_entrega,
-		fecha_captura = :fecha_captura, fecha_valida = :fecha_valida,
-		fecha_actualiza = :fecha_actualiza, ip_captura = :ip_captura,
-		ip_valida = :ip_valida, ip_actualiza = :ip_actualiza,
-		host_captura = :host_captura, host_valida = :host_valida,
-		host_actualiza = :host_actualiza, nubes_otro = :nubes_otro,
-		comentarios = :comentarios, motivo_rechaza = :motivo_rechaza,
-		activo = :activo
+		fecha_valida = :fecha_valida, fecha_actualiza = :fecha_actualiza,
+		fecha_rechaza = :fecha_rechaza, ip_valida = :ip_valida,
+		ip_actualiza = :ip_actualiza, host_valida = :host_valida,
+		host_actualiza = :host_actualiza,
+		nubes_otro = :nubes_otro, comentarios = :comentarios,
+		motivo_rechaza = :motivo_rechaza, activo = :activo
 		WHERE id_hoja = :id_hoja";
 	$db = getConnection();
 	$stmt = $db->prepare($sql);
@@ -1871,6 +1872,43 @@ function getPreservationsBySheet($sheetId) {
 		$preservations[$i]["selected"] = true;
 	}
 	return $preservations;
+}
+
+function insertSheetPreservation($preservationData) {
+	$sql = "INSERT INTO HojaPreservacion (id_hoja, id_preservacion,
+		cantidad, preservado, activo)
+		VALUES (:id_hoja, :id_preservacion,
+		:cantidad, :preservado, :activo)";
+	$db = getConnection();
+	$stmt = $db->prepare($sql);
+	$stmt->execute($preservationData);
+	$preservationId = $db->lastInsertId();
+	$db = null;
+	return $preservationId;
+}
+
+function updateSheetPreservation($updateData) {
+	$sql = "UPDATE HojaPreservacion SET id_hoja = :id_hoja,
+		id_preservacion = :id_preservacion, cantidad = :cantidad,
+		preservado = :preservado, activo = :activo,
+		WHERE id_hoja_preservacion = :id_hoja_preservacion";
+	$db = getConnection();
+	$stmt = $db->prepare($sql);
+	$stmt->execute($updateData);
+	$db = null;
+	return $updateData["id_hoja"];
+}
+
+function deleteSheetPreservations($sheetId) {
+	$sql = "DELETE
+		FROM HojaPreservacion
+		WHERE id_hoja = :sheetId";
+	$db = getConnection();
+	$stmt = $db->prepare($sql);
+	$stmt->bindParam("sheetId", $sheetId);
+	$stmt->execute();
+	$db = null;
+	return $sheetId;
 }
 
 function getSamplingInstruments() {

@@ -263,7 +263,7 @@ $app->post("/plans", function() use ($app) {
 
 $app->get("/sheets(/)(:sheetId)", function($sheetId = -1) use ($app) {
 	try {
-		//$userId = decodeUserToken($app->request())->uid;
+		$userId = decodeUserToken($app->request())->uid;
 		$result = json_encode($app->request());
 		if ($sheetId > -1)
 		{
@@ -298,14 +298,15 @@ $app->post("/sheets", function() use ($app) {
 		else
 		{
 			$sheetUpdateData = processSheetUpdate($request);
-			$result = json_encode($sheetUpdateData);
+			//$result = json_encode($sheetUpdateData);
 			//$sheetId = updateSheet($sheetUpdateData["sheet"]);
-			//processSheetResultsUpdate($sheetUpdateData);
+			//processSheetSamplesUpdate($sheetUpdateData);
 			//processSheetPreservationsUpdate($sheetUpdateData);
+			$result = json_encode(processSheetSamplesUpdate($sheetUpdateData));
 			//$result = '{"id_hoja":' . $sheetId . '}';
 		}
-		$requestData = extractDataFromRequest($request);
-		$result = json_encode($requestData);
+		//$requestData = extractDataFromRequest($request);
+		//$result = json_encode($requestData);
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
 		//$result = ")]}',\n" . $result;

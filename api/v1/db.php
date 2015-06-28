@@ -600,19 +600,19 @@ function getPlans() {
 	$stmt->execute();
 	$plans = $stmt->fetchAll(PDO::FETCH_ASSOC);
 	$db = null;
-	// $i = 0;
-	// $l = count($plans);
-	// for ($i = 0; $i < $l; $i++) {
-	// 	$plans[$i]["cliente"] = getClient($clientId);
-	// 	$plans[$i]["orden"] = getPlainOrder($orderId);
-	// 	$plans[$i]["supervisor_muestreo"] = getSamplingSupervisor($supervisorId);
-	// 	$plans[$i]["puntos"] = getPointsByPackage($packageId);
-	// 	$plans[$i]["equipos"] = getEquipmentByPlan($planId);
-	// 	$plans[$i]["recipientes"] = getContainersByPlan($planId);
-	// 	$plans[$i]["reactivos"] = getReactivesByPlan($planId);
-	// 	$plans[$i]["materiales"] = getMaterialsByPlan($planId);
-	// 	$plans[$i]["hieleras"] = getCoolersByPlan($planId);
-	// }
+	//$i = 0;
+	//$l = count($plans);
+	//for ($i = 0; $i < $l; $i++) {
+	//	$plans[$i]["cliente"] = getClient($clientId);
+	//	$plans[$i]["orden"] = getPlainOrder($orderId);
+	//	$plans[$i]["supervisor_muestreo"] = getSamplingSupervisor($supervisorId);
+	//	$plans[$i]["puntos"] = getPointsByPackage($packageId);
+	//	$plans[$i]["equipos"] = getEquipmentByPlan($planId);
+	//	$plans[$i]["recipientes"] = getContainersByPlan($planId);
+	//	$plans[$i]["reactivos"] = getReactivesByPlan($planId);
+	//	$plans[$i]["materiales"] = getMaterialsByPlan($planId);
+	//	$plans[$i]["hieleras"] = getCoolersByPlan($planId);
+	//}
 	return $plans;
 }
 
@@ -1741,106 +1741,41 @@ function getPointKinds() {
 }
 
 function getDistricts() {
-	$json = '
-		[
-			{
-				"id_municipio":14001,
-				"municipio":"Acatic"
-			},
-			{
-				"id_municipio":14030,
-				"municipio":"Chapala"
-			},
-			{
-				"id_municipio":14039,
-				"municipio":"Guadalajara"
-			},
-			{
-				"id_municipio":14120,
-				"municipio":"Zapopan"
-			},
-			{
-				"id_municipio":14123,
-				"municipio":"Zapotlan El Grande"
-			},
-			{
-				"id_municipio":14124,
-				"municipio":"Zapotlanejo"
-			}
-		]
-	';
-	return json_decode($json);
+	$sql = "SELECT id_municipio, municipio
+		FROM Municipio
+		WHERE id_estado = 14";
+	$db = getConnection();
+	$stmt = $db->prepare($sql);
+	$stmt->execute();
+	$districts = $stmt->fetchAll(PDO::FETCH_ASSOC);
+	$db = null;
+	return $districts;
 }
 
-function getDistrict() {
-	if ($districtId == 14001)
-	{
-		$json = '
-			{
-				"id_municipio":14001,
-				"municipio":"Acatic"
-			}
-		';
-	}
-	else if ($districtId == 14030)
-	{
-		$json = '
-			{
-				"id_municipio":14030,
-				"municipio":"Chapala"
-			}
-		';
-	}
-	else if ($districtId == 14039)
-	{
-		$json = '
-			{
-				"id_municipio":14039,
-				"municipio":"Guadalajara"
-			}
-		';
-	}
-	else if ($districtId == 14120)
-	{
-		$json = '
-			{
-				"id_municipio":14120,
-				"municipio":"Zapopan"
-			}
-		';
-	}
-	else if ($districtId == 14123)
-	{
-		$json = '
-			{
-				"id_municipio":14123,
-				"municipio":"Zapotlan El Grande"
-			}
-		';
-	}
-	else
-	{
-		$json = '
-			{
-				"id_municipio":14124,
-				"municipio":"Zapotlanejo"
-			}
-		';
-	}
-	return json_decode($json);
+function getDistrict($districtId) {
+	$sql = "SELECT id_municipio, municipio
+		FROM Municipio
+		WHERE id_municipio = :districtId";
+	$db = getConnection();
+	$stmt = $db->prepare($sql);
+	$stmt->bindParam("districtId", $districtId);
+	$stmt->execute();
+	$district = (array) $stmt->fetchAll(PDO::FETCH_OBJ)[0];
+	$db = null;
+	return (object) $district;
 }
 
 function getCitiesByDistrictId($districtId) {
-	$json = '
-		[
-			{
-				"id_municipio":' . $districtId . ',
-				"id_localidad":' . $districtId . '0001,
-				"localidad": "Localidad municipio ' . $districtId . '"
-			}
-		]
-	';
-	return json_decode($json);
+	$sql = "SELECT id_municipio, id_localidad, localidad
+		FROM Localidad
+		WHERE id_municipio = :districtId";
+	$db = getConnection();
+	$stmt = $db->prepare($sql);
+	$stmt->bindParam("districtId", $districtId);
+	$stmt->execute();
+	$districts = $stmt->fetchAll(PDO::FETCH_ASSOC);
+	$db = null;
+	return $districts;
 }
 
 function getPreservations() {

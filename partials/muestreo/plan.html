@@ -73,15 +73,21 @@
           <ul class="list-inline">
             <li>
               Folio:
-              <strong>{{::plan.plan.orden.id_orden}}</strong>
+              <strong>
+                {{::plan.plan.orden.id_orden}}
+              </strong>
             </li>
             <li>
               Fecha:
-              <strong>{{::plan.plan.orden.fecha_captura | date: 'yyyy-MM-dd'}}</strong>
+              <strong>
+                {{::plan.plan.orden.fecha_captura | date: 'yyyy-MM-dd'}}
+              </strong>
             </li>
             <li>
               Matriz:
-              <strong>{{::plan.plan.orden.id_matriz}}</strong>
+              <strong>
+                {{::plan.plan.orden.id_matriz}}
+              </strong>
             </li>
           </ul>
         </div>
@@ -91,12 +97,16 @@
             <ul class="list-inline">
               <li>
                 Cliente:
-                <strong>{{::plan.plan.orden.cliente.cliente}}</strong>
+                <strong>
+                  {{::plan.plan.orden.cliente.cliente}}
+                </strong>
                 {{::plan.plan.orden.cliente.area}}
               </li>
               <li>
                 Contacto:
-                <strong>{{::plan.plan.orden.cliente.contacto}}</strong>
+                <strong>
+                  {{::plan.plan.orden.cliente.contacto}}
+                /strong>
               </li>
             </ul>
           </div>

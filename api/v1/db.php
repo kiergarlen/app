@@ -966,7 +966,11 @@ function getSheet($sheetId) {
 		$pointId = $sheet->muestras[$i]["id_punto"];
 		$sheet->muestras[$i]["punto"] = getPoint($pointId);
 		$sampleId = $sheet->muestras[$i]["id_muestra"];
-		$sheet->muestras[$i]["resultados"] = getSamplingResultsBySample($sampleId);
+		$samplingResults = getSamplingResultsBySample($sampleId);
+		// if (count($samplingResults) < 1) {
+		// 	//$samplingResults = [A_QUERY_TO_CREATE_EMPTY_RESULTS];
+		// }
+		$sheet->muestras[$i]["resultados"] = $samplingResults;
 	}
 	//$sheet->resultados = getResultsBySheet($sheetId);
 	return $sheet;
@@ -1094,7 +1098,11 @@ function getReception($receptionId) {
 	// //id_recepcion
 	// //id_muestra
 	//$reception->muestras = getSamplesBySheet($sheetId);
-	$reception->muestras = getSamplesByReception($receptionId);
+	// $samples = getSamplesByReception($receptionId);
+	// if (count($samples) < 1) {
+	// 	$samples = getSamplesBySheet($reception->id_hoja);
+	// }
+	// $reception->muestras = $samples;
 	// //id_recepcion_preservacion
 	// //id_recepcion
 	// //id_preservacion

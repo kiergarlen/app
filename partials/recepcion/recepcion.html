@@ -88,7 +88,7 @@
   </div>
   <div class="row">
     <div class="col-xs-12">
-      <h4>Muestreo</h4>
+      <h4>Entrega</h4>
     </div>
   </div>
   <div class="row">
@@ -103,7 +103,7 @@
         name="samplingDate"
         placeholder="aaaa-mm-dd"
         required
-        data-ng-model="reception.reception.hoja.fecha_muestreo"
+        data-ng-model="reception.reception.fecha_entrega"
         data-date-format="yyyy-MM-dd"
         data-date-type="date"
         data-autoclose="1"
@@ -122,7 +122,7 @@
         name="samplingTime"
         placeholder="HH:mm"
         required
-        data-ng-model="reception.reception.hoja.fecha_muestreo"
+        data-ng-model="reception.reception.fecha_entrega"
         data-time-format="HH:mm"
         data-date-type="date"
         data-length="1"
@@ -195,7 +195,7 @@
         >
         <option
           data-ng-repeat="receptionist in reception.receptionists"
-          value="{{receptionist.id_empleado}}">
+          value="{{receptionist.id_usuario}}">
           {{::receptionist.nombres}}
           {{::receptionist.ap}}
           {{::receptionist.am}}

@@ -796,6 +796,7 @@
     vm.reactives = [];
     vm.materials = [];
     vm.coolers = [];
+    vm.message = '';
     vm.isInstrumentListLoaded = false;
     vm.isContainerListLoaded = false;
     vm.isReactiveListLoaded = false;
@@ -1327,6 +1328,7 @@
     vm.waveIntensities = WaveService.get();
     vm.samplingNorms = SamplingNormService.get();
     vm.preservations = [];
+    vm.message = '';
     vm.isPreservationListLoaded = false;
     vm.isDataSubmitted = false;
     vm.selectPreservations = selectPreservations;
@@ -1356,7 +1358,7 @@
               vm.preservations[i].selected = false;
             }
           });
-     });
+      });
 
     function selectPreservations() {
       var items = [];
@@ -1560,15 +1562,18 @@
    * @param {Object} ArrayUtilsService - Proveedor para manejo de arreglos
    * @param {Object} DateUtilsService - Proveedor para manejo de fechas
    * @param {Object} SamplingEmployeeService - Proveedor de datos, Empleados muestreo
+   * @param {Object} SheetSampleService - Proveedor de datos, Muestras por Hoja de campo
    * @param {Object} ReceptionService - Proveedor de datos, Recepción muestras
    */
   function ReceptionController($scope, $routeParams, TokenService,
     ValidationService, RestUtilsService, ArrayUtilsService,
-    DateUtilsService, SamplingEmployeeService, ReceptionService) {
+    DateUtilsService, SamplingEmployeeService, SheetSampleService,
+    ReceptionService) {
     var vm = this;
     vm.user = TokenService.getUserFromToken();
-    vm.receptionists = SamplingEmployeeService.get();
     vm.reception = ReceptionService.query({receptionId: $routeParams.receptionId});
+    vm.receptionists = SamplingEmployeeService.get();
+    vm.samples = SheetSampleService.get();
     vm.message = '';
     vm.isDataSubmitted = false;
     vm.approveItem = approveItem;
@@ -1666,7 +1671,8 @@
       [
         '$scope', '$routeParams', 'TokenService',
         'ValidationService', 'RestUtilsService', 'ArrayUtilsService',
-        'DateUtilsService','SamplingEmployeeService', 'ReceptionService',
+        'DateUtilsService','SamplingEmployeeService', 'SheetSampleService',
+        'ReceptionService',
         ReceptionController
       ]
     );

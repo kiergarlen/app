@@ -826,6 +826,20 @@ $app->get("/samples", function() use ($app) {
 	}
 });
 
+$app->get("/sheet/samples/:sheetId", function($sheetId) use ($app) {
+	try {
+		//$userId = decodeUserToken($app->request())->uid;
+		$result = json_encode(getSamplesBySheet($sheetId));
+		$app->response()->status(200);
+		$app->response()->header('Content-Type', 'application/json');
+		//$result = ")]}',\n" . $result;
+		print_r($result);
+	} catch (Exception $e) {
+		$app->response()->status(400);
+		$app->response()->header('X-Status-Reason', $e->getMessage());
+	}
+});
+
 $app->get("/instruments", function() use ($app) {
 	try {
 		$userId = decodeUserToken($app->request())->uid;

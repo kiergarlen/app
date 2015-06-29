@@ -1785,6 +1785,37 @@
       ]
     );
 
+
+  //SheetSampleService.js
+  /**
+   * @name SheetSampleService
+   * @constructor
+   * @desc Proveedor de datos, Muestras por Hoja de campo
+   * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
+   * @param {Object} TokenService - Proveedor de métodos para token
+   * @return {Object} $resource - Acceso a recursos HTTP
+   */
+  function SheetSampleService($resource, TokenService) {
+    return $resource(API_BASE_URL + 'sheet/samples/:sheetId', {}, {
+      get: {
+        method: 'GET',
+        params: {sheetId: 'id_hoja'},
+        isArray: true,
+        headers: {
+          'Auth-Token': TokenService.getToken()
+        }
+      }
+    });
+  }
+  angular
+    .module('sislabApp')
+    .factory('SheetSampleService',
+      [
+        '$resource', 'TokenService',
+        SheetSampleService
+      ]
+    );
+
   //InstrumentsListService.js
   /**
    * @name InstrumentsListService

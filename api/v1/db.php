@@ -1089,7 +1089,7 @@ function getPlainReception($receptionId) {
 
 function getReception($receptionId) {
 	$reception = getPlainReception($receptionId);
-	$sheet = getPlainSheet($reception->id_hoja);
+	$reception->hoja = getPlainSheet($reception->id_hoja);
 	// //id_recepcion_muestra
 	// //id_recepcion
 	// //id_muestra
@@ -1098,7 +1098,7 @@ function getReception($receptionId) {
 	// //id_recepcion_preservacion
 	// //id_recepcion
 	// //id_preservacion
-	// $reception->preservaciones = getPreservationsByReception($receptionId);
+	//$reception->preservaciones = getPreservationsByReception($receptionId);
 	// //id_recepcion_recipiente
 	// //id_recepcion
 	// //id_recipiente
@@ -1305,7 +1305,7 @@ function getSamplesByReception($receptionId) {
 		WHERE id_recepcion = :receptionId";
 	$db = getConnection();
 	$stmt = $db->prepare($sql);
-	$stmt->bindParam("sheetId", $sheetId);
+	$stmt->bindParam("receptionId", $receptionId);
 	$stmt->execute();
 	$samples = $stmt->fetchAll(PDO::FETCH_ASSOC);
 	$db = null;
@@ -1318,7 +1318,6 @@ function getSamplesByReception($receptionId) {
 		}
 	}
 	return $samples;
-		}
 }
 
 function getResultsBySheet($sheetId) {

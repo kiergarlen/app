@@ -300,13 +300,11 @@ $app->post("/sheets", function() use ($app) {
 			$sheetUpdateData = processSheetUpdate($request);
 			//$result = json_encode($sheetUpdateData);
 			//$sheetId = updateSheet($sheetUpdateData["sheet"]);
-			//processSheetResultsUpdate($sheetUpdateData);
-			//processSheetPreservationsUpdate($sheetUpdateData);
-			$result = json_encode(processSheetResultsUpdate($sheetUpdateData));
-			//$result = '{"id_hoja":' . $sheetId . '}';
+			//$result = json_encode(processSheetResultsUpdate($sheetUpdateData));
+			processSheetResultsUpdate($sheetUpdateData);
+			processSheetPreservationsUpdate($sheetUpdateData);
+			$result = '{"id_hoja":' . $sheetId . '}';
 		}
-		//$requestData = extractDataFromRequest($request);
-		//$result = json_encode($requestData);
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
 		//$result = ")]}',\n" . $result;

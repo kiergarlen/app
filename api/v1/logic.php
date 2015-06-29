@@ -811,11 +811,6 @@ function processPlanCoolersUpdate($planUpdateData) {
 function processSheetUpdate($request) {
 	$token = decodeUserToken($request);
 	$update = (array) json_decode($request->getBody());
-	//mark for deletion...
-	$order = $update["orden"];
-	$norm = $update["norma"];
-	$parameters = $update["parametros"];
-	//keep these
 	$preservations = $update["preservaciones"];
 	$samples = $update["muestras"];
 
@@ -915,7 +910,8 @@ function processSheetPreservationsUpdate($sheetUpdateData) {
 function processSheetResultsUpdate($sheetUpdateData) {
 	$samples = (array) $sheetUpdateData["samples"];
 	$sheetId = $sheetUpdateData["sheet"]["id_hoja"];
-	$storedResults = getSamplingResultsBySample($sheetId);
+	$userId = $sheetUpdateData["sheet"]["id_usuario_actualiza"];
+	$storedResults = getResultsBySheet($sheetId);
 	$results = array();
 
 	$i = 0;
@@ -925,15 +921,15 @@ function processSheetResultsUpdate($sheetUpdateData) {
 	$m = count($samples);
 	$n = 0;
 
-
 	for ($j = 0; $j < $m; $j++) {
 		$sample = (array) $samples[$i];
 		$sampleResults = (array) $sample["resultados"];
 		$n = count($sampleResults);
 		for ($k = 0; $k < $n; $k++) {
-			unset($sampleResults[$k]["param"]);
-			unset($sampleResults[$k]['$$hashKey']);
-			$results = array_push((array) $sampleResults[$k]);
+			$result = (array) $sampleResults[$k];
+			unset($result["param"]);
+			unset($result['$$hashKey']);
+			$results[] = $result;
 		}
 	}
 
@@ -941,6 +937,10 @@ function processSheetResultsUpdate($sheetUpdateData) {
 	{
 		for ($j = 0; $j < $m; $j++) {
 			$result = (array) $results[$j];
+			$result["id_usuario_captura"] = $userId;
+			$result["fecha_captura"] = date('Y-m-d H:i:s');
+			unset($result["id_usuario_actualiza"]);
+			unset($result["fecha_actualiza"]);
 			insertResult($result);
 		}
 		return $sheetId;
@@ -948,18 +948,32 @@ function processSheetResultsUpdate($sheetUpdateData) {
 	else
 	{
 		for ($i = 0; $i < $l; $i++) {
+			$storedResults[$i]["id_usuario_actualiza"] = $userId;
+			$storedResults[$i]["fecha_actualiza"] = date('Y-m-d H:i:s');
 			$storedResults[$i]["activo"] = 0;
+			unset($storedResults[$i]["id_usuario_captura"]);
+			unset($storedResults[$i]["fecha_captura"]);
+			unset($storedResults[$i]["param"]);
 			updateResult($storedResults[$i]);
 		}
+		$m = count($results);
 		for ($j = 0; $j < $m; $j++) {
 			$result = (array) $results[$j];
 			if ($result["id_resultado"] == 0)
 			{
+				$result["id_usuario_captura"] = $userId;
+				$result["fecha_captura"] = date('Y-m-d H:i:s');
+				unset($result["id_usuario_actualiza"]);
+				unset($result["fecha_actualiza"]);
 				insertResult($result);
 			}
 			else
 			{
+				$result["id_usuario_actualiza"] = $userId;
+				$result["fecha_actualiza"] = date('Y-m-d H:i:s');
 				$result["activo"] = 1;
+				unset($result["id_usuario_captura"]);
+				unset($result["fecha_captura"]);
 				updateResult($result);
 			}
 		}

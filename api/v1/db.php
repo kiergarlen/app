@@ -1093,7 +1093,8 @@ function getReception($receptionId) {
 	// //id_recepcion_muestra
 	// //id_recepcion
 	// //id_muestra
-	// $reception->muestras = getSamplesByReception($receptionId);
+	//$reception->muestras = getSamplesBySheet($sheetId);
+	$reception->muestras = getSamplesByReception($receptionId);
 	// //id_recepcion_preservacion
 	// //id_recepcion
 	// //id_preservacion
@@ -1296,10 +1297,35 @@ function getSamplesBySheet($sheetId) {
 	return $samples;
 }
 
+function getSamplesByReception($receptionId) {
+	$sql = "SELECT id_muestra, id_estudio, id_cliente, id_orden,
+		id_plan, id_hoja, id_recepcion, id_custodia, id_paquete,
+		id_ubicacion, id_punto, fecha_muestreo, comentarios, activo
+		FROM Muestra
+		WHERE id_recepcion = :receptionId";
+	$db = getConnection();
+	$stmt = $db->prepare($sql);
+	$stmt->bindParam("sheetId", $sheetId);
+	$stmt->execute();
+	$samples = $stmt->fetchAll(PDO::FETCH_ASSOC);
+	$db = null;
+	$l = count($samples);
+	for ($i = 0; $i < $l; $i++) {
+		if ($samples[$i]["activo"] == 0) {
+			$samples[$i]["selected"] = false;
+		} else {
+			$samples[$i]["selected"] = true;
+		}
+	}
+	return $samples;
+		}
+}
+
 function getResultsBySheet($sheetId) {
-	$sql = "SELECT id_hoja, id_muestra, id_estudio, id_cliente,
-		id_orden, id_plan, id_paquete, id_resultado, id_parametro,
-		id_tipo_valor, valor, id_punto, punto, lat, lng, id_area
+	$sql = "SELECT id_resultado, id_muestra, id_parametro,
+		id_tipo_resultado, id_tipo_valor, id_usuario_captura,
+		id_usuario_actualiza, valor, fecha_captura, fecha_actualiza,
+		activo, param
 		FROM viewResultadoHoja
 		WHERE id_hoja = :sheetId";
 	$db = getConnection();
@@ -1314,7 +1340,8 @@ function getResultsBySheet($sheetId) {
 function getSamplingResultsBySample($sampleId) {
 	$sql = "SELECT id_resultado, id_muestra, id_parametro,
 		id_tipo_resultado, id_tipo_valor, id_usuario_captura,
-		valor, activo, param
+		id_usuario_actualiza, valor, fecha_captura, fecha_actualiza,
+		activo, param
 		FROM viewResultadoMuestreoMuestra
 		WHERE id_muestra = :sampleId";
 	$db = getConnection();
@@ -1876,10 +1903,10 @@ function deleteSheetPreservations($sheetId) {
 function insertResult($resultData) {
 	$sql = "INSERT INTO Resultado (id_muestra, id_parametro,
 		id_tipo_resultado, id_tipo_valor, id_usuario_captura,
-		valor, activo)
+		valor, fecha_captura, activo)
 		VALUES (:id_muestra, :id_parametro,
 		:id_tipo_resultado, :id_tipo_valor, :id_usuario_captura,
-		:valor, :activo)";
+		:valor, :fecha_captura, :activo)";
 	$db = getConnection();
 	$stmt = $db->prepare($sql);
 	$stmt->execute($resultData);
@@ -1893,7 +1920,8 @@ function updateResult($updateData) {
 		id_parametro = :id_parametro,
 		id_tipo_resultado = :id_tipo_resultado,
 		id_tipo_valor = :id_tipo_valor,
-		id_usuario_captura = :id_usuario_captura, valor = :valor,
+		id_usuario_actualiza = :id_usuario_actualiza,
+		valor = :valor, fecha_actualiza = :fecha_actualiza,
 		activo = :activo
 		WHERE id_resultado = :id_resultado";
 	$db = getConnection();
@@ -1901,6 +1929,26 @@ function updateResult($updateData) {
 	$stmt->execute($updateData);
 	$db = null;
 	return $updateData["id_resultado"];
+}
+
+function getResultsForUpdate($updateData) {
+	$sql = "SELECT
+		id_muestra,
+		id_parametro,
+		id_tipo_resultado,
+		id_tipo_valor,
+		id_usuario_actualiza,
+		valor, fecha_actualiza,
+		activo
+		FROM Resultado
+		WHERE id_resultado = :id_resultado";
+	$db = getConnection();
+	$stmt = $db->prepare($sql);
+	$stmt->bindParam("id_resultado", $updateData["id_resultado"]);
+	$stmt->execute();
+	$result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+	$db = null;
+	return $result;
 }
 
 function getSamplingInstruments() {

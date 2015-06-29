@@ -53,7 +53,7 @@
               <th>Id Recepción</th>
               <th>Id Hoja Campo</th>
               <th>Status</th>
-              <th>Fecha Muestreo</th>
+              <th>Fecha Entrega</th>
               <th>Fecha Recepción</th>
               <th>Acciones</th>
             </tr>
@@ -81,7 +81,7 @@
                 </span>
               </td>
               <td>
-                {{item.hoja.fecha_muestreo | date: 'yyyy-MM-dd'}}
+                {{item.fecha_entrega | date: 'yyyy-MM-dd'}}
               </td>
               <td>
                 {{item.fecha_recibe | date: 'yyyy-MM-dd'}}

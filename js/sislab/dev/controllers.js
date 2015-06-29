@@ -547,7 +547,6 @@
     vm.isFormValid = isFormValid;
     vm.submitForm = submitForm;
 
-
     function getScope() {
       return vm;
     }
@@ -1563,23 +1562,44 @@
    * @param {Object} DateUtilsService - Proveedor para manejo de fechas
    * @param {Object} SamplingEmployeeService - Proveedor de datos, Empleados muestreo
    * @param {Object} SheetSampleService - Proveedor de datos, Muestras por Hoja de campo
+   * @param {Object} PointService - Proveedor de datos, Puntos
    * @param {Object} ReceptionService - Proveedor de datos, Recepción muestras
    */
   function ReceptionController($scope, $routeParams, TokenService,
     ValidationService, RestUtilsService, ArrayUtilsService,
     DateUtilsService, SamplingEmployeeService, SheetSampleService,
-    ReceptionService) {
+    PointService, ReceptionService) {
     var vm = this;
     vm.user = TokenService.getUserFromToken();
-    vm.reception = ReceptionService.query({receptionId: $routeParams.receptionId});
+    vm.reception = {}
     vm.receptionists = SamplingEmployeeService.get();
-    vm.samples = SheetSampleService.get();
+    vm.samples = [];
     vm.message = '';
     vm.isDataSubmitted = false;
     vm.approveItem = approveItem;
     vm.rejectItem = rejectItem;
     vm.submitForm = submitForm;
 
+    ReceptionService
+      .query({receptionId: $routeParams.receptionId})
+      .$promise
+      .then(function success(response) {
+        vm.reception = response;
+        SheetSampleService
+          .get({sheetId: vm.reception.id_hoja})
+          .$promise
+          .then(function success(response) {
+            var i = 0;
+            var l = 0;
+            vm.samples = response;
+            l = vm.samples.length;
+            for (i = 0; i < l; i += 1) {
+              vm.samples[i].punto = PointService.query({
+                pointId: vm.samples[i].id_punto
+              });
+            }
+          });
+      });
     // vm.selectSample = selectSample;
     // function selectSample() {
     //   var i = 0, l = vm.receptionists.length;
@@ -1672,7 +1692,7 @@
         '$scope', '$routeParams', 'TokenService',
         'ValidationService', 'RestUtilsService', 'ArrayUtilsService',
         'DateUtilsService','SamplingEmployeeService', 'SheetSampleService',
-        'ReceptionService',
+        'PointService', 'ReceptionService',
         ReceptionController
       ]
     );

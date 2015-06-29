@@ -763,7 +763,7 @@ $app->get("/sampling/norms", function() use ($app) {
 	}
 });
 
-$app->get("/points(/)(:pointid)", function($pointId = -1) use ($app) {
+$app->get("/points(/)(:pointId)", function($pointId = -1) use ($app) {
 	try {
 		$userId = decodeUserToken($app->request())->uid;
 		if ($pointId > -1)

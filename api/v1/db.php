@@ -1022,6 +1022,33 @@ function updateSheet($updateData) {
 	return $updateData["id_hoja"];
 }
 
+function insertSheetSample($sheetData) {
+	$sql = "INSERT INTO Hoja (id_estudio, id_cliente, id_orden, id_plan,
+		id_paquete, id_nubes, id_direccion_corriente, id_oleaje,
+		id_status, id_usuario_captura, id_usuario_valida,
+		id_usuario_actualiza, fecha_muestreo, fecha_entrega,
+		fecha_captura, fecha_valida, fecha_actualiza,
+		fecha_rechaza, ip_captura,
+		ip_valida, ip_actualiza, host_captura, host_valida,
+		host_actualiza, nubes_otro, comentarios, motivo_rechaza,
+		activo)
+		VALUES (:id_estudio, :id_cliente, :id_orden, :id_plan,
+		:id_paquete, :id_nubes, :id_direccion_corriente, :id_oleaje,
+		:id_status, :id_usuario_captura, :id_usuario_valida,
+		:id_usuario_actualiza, :fecha_muestreo, :fecha_entrega,
+		:fecha_captura, :fecha_valida, :fecha_actualiza,
+		fecha_rechaza, :ip_captura,
+		:ip_valida, :ip_actualiza, :host_captura, :host_valida,
+		:host_actualiza, :nubes_otro, :comentarios, :motivo_rechaza,
+		:activo)";
+	$db = getConnection();
+	$stmt = $db->prepare($sql);
+	$stmt->execute($sheetData);
+	$sheetId = $db->lastInsertId();
+	$db = null;
+	return $sheetId;
+}
+
 function getReceptions() {
 	$sql = "SELECT id_recepcion, id_orden, id_plan, id_hoja,
 		id_recepcionista, id_verificador, id_muestra_validacion,
@@ -1825,7 +1852,7 @@ function insertSheetPreservation($preservationData) {
 function updateSheetPreservation($updateData) {
 	$sql = "UPDATE HojaPreservacion SET id_hoja = :id_hoja,
 		id_preservacion = :id_preservacion, cantidad = :cantidad,
-		preservado = :preservado, activo = :activo,
+		preservado = :preservado, activo = :activo
 		WHERE id_hoja_preservacion = :id_hoja_preservacion";
 	$db = getConnection();
 	$stmt = $db->prepare($sql);
@@ -1844,6 +1871,36 @@ function deleteSheetPreservations($sheetId) {
 	$stmt->execute();
 	$db = null;
 	return $sheetId;
+}
+
+function insertResult($resultData) {
+	$sql = "INSERT INTO Resultado (id_muestra, id_parametro,
+		id_tipo_resultado, id_tipo_valor, id_usuario_captura,
+		valor, activo)
+		VALUES (:id_muestra, :id_parametro,
+		:id_tipo_resultado, :id_tipo_valor, :id_usuario_captura,
+		:valor, :activo)";
+	$db = getConnection();
+	$stmt = $db->prepare($sql);
+	$stmt->execute($resultData);
+	$preservationId = $db->lastInsertId();
+	$db = null;
+	return $preservationId;
+}
+
+function updateResult($updateData) {
+	$sql = "UPDATE Resultado SET id_muestra = :id_muestra,
+		id_parametro = :id_parametro,
+		id_tipo_resultado = :id_tipo_resultado,
+		id_tipo_valor = :id_tipo_valor,
+		id_usuario_captura = :id_usuario_captura, valor = :valor,
+		activo = :activo
+		WHERE id_resultado = :id_resultado";
+	$db = getConnection();
+	$stmt = $db->prepare($sql);
+	$stmt->execute($updateData);
+	$db = null;
+	return $updateData["id_resultado"];
 }
 
 function getSamplingInstruments() {

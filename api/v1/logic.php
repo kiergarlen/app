@@ -887,7 +887,6 @@ function processSheetPreservationsUpdate($sheetUpdateData) {
 			$storedPreservations[$i]["activo"] = 0;
 			updateSheetPreservation($storedPreservations[$i]);
 		}
-		return $storedPreservations;
 		for ($j = 0; $j < $m; $j++) {
 			$preservation = (array) $preservations[$j];
 			if ($preservation["id_hoja_preservacion"] == 0)
@@ -913,53 +912,55 @@ function processSheetPreservationsUpdate($sheetUpdateData) {
 	return $sheetId;
 }
 
-function processSheetSamplesUpdate($sheetUpdateData) {
+function processSheetResultsUpdate($sheetUpdateData) {
 	$samples = (array) $sheetUpdateData["samples"];
 	$sheetId = $sheetUpdateData["sheet"]["id_hoja"];
-	$storedSamples = getSamplesBySheet($sheetId);
+	$storedResults = getSamplingResultsBySample($sheetId);
+	$results = array();
 
 	$i = 0;
 	$j = 0;
-	$l = count($storedSamples);
+	$k = 0;
+	$l = count($storedResults);
 	$m = count($samples);
+	$n = 0;
+
+
+	for ($j = 0; $j < $m; $j++) {
+		$sample = (array) $samples[$i];
+		$sampleResults = (array) $sample["resultados"];
+		$n = count($sampleResults);
+		for ($k = 0; $k < $n; $k++) {
+			unset($sampleResults[$k]["param"]);
+			unset($sampleResults[$k]['$$hashKey']);
+			$results = array_push((array) $sampleResults[$k]);
+		}
+	}
 
 	if ($l < 1)
 	{
 		for ($j = 0; $j < $m; $j++) {
-			$sample = (array) $samples[$j];
-			unset($sample["punto"]);
-			unset($sample["resultados"]);
-			unset($sample['$$hashKey']);
-			insertSheetSample($sample);
+			$result = (array) $results[$j];
+			insertResult($result);
 		}
 		return $sheetId;
 	}
 	else
 	{
 		for ($i = 0; $i < $l; $i++) {
-			unset($storedSamples[$i]["punto"]);
-			unset($storedSamples[$i]["resultados"]);
-			unset($storedSamples[$i]['$$hashKey']);
-			$storedSamples[$i]["activo"] = 0;
-			updateSheetSample($storedSamples[$i]);
+			$storedResults[$i]["activo"] = 0;
+			updateResult($storedResults[$i]);
 		}
-		return $storedSamples;
 		for ($j = 0; $j < $m; $j++) {
-			$sample = (array) $samples[$j];
-			if ($sample["id_muestra"] == 0)
+			$result = (array) $results[$j];
+			if ($result["id_resultado"] == 0)
 			{
-				unset($sample["punto"]);
-				unset($sample["resultados"]);
-				unset($sample['$$hashKey']);
-				insertSheetSample($sample);
+				insertResult($result);
 			}
 			else
 			{
-				unset($sample["punto"]);
-				unset($sample["resultados"]);
-				unset($sample['$$hashKey']);
-				$sample["activo"] = 1;
-				updateSheetSample($sample);
+				$result["activo"] = 1;
+				updateResult($result);
 			}
 		}
 	}

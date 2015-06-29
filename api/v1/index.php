@@ -300,9 +300,9 @@ $app->post("/sheets", function() use ($app) {
 			$sheetUpdateData = processSheetUpdate($request);
 			//$result = json_encode($sheetUpdateData);
 			//$sheetId = updateSheet($sheetUpdateData["sheet"]);
-			//processSheetSamplesUpdate($sheetUpdateData);
+			//processSheetResultsUpdate($sheetUpdateData);
 			//processSheetPreservationsUpdate($sheetUpdateData);
-			$result = json_encode(processSheetSamplesUpdate($sheetUpdateData));
+			$result = json_encode(processSheetResultsUpdate($sheetUpdateData));
 			//$result = '{"id_hoja":' . $sheetId . '}';
 		}
 		//$requestData = extractDataFromRequest($request);

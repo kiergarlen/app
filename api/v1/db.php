@@ -1098,11 +1098,11 @@ function getReception($receptionId) {
 	// //id_recepcion
 	// //id_muestra
 	//$reception->muestras = getSamplesBySheet($sheetId);
-	// $samples = getSamplesByReception($receptionId);
-	// if (count($samples) < 1) {
-	// 	$samples = getSamplesBySheet($reception->id_hoja);
-	// }
-	// $reception->muestras = $samples;
+	$samples = getSamplesByReception($receptionId);
+	if (count($samples) < 1) {
+		$samples = getSamplesBySheet($reception->id_hoja);
+	}
+	$reception->muestras = $samples;
 	// //id_recepcion_preservacion
 	// //id_recepcion
 	// //id_preservacion

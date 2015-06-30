@@ -1571,7 +1571,7 @@
     PointService, ReceptionService) {
     var vm = this;
     vm.user = TokenService.getUserFromToken();
-    vm.reception = {}
+    vm.reception = {};
     vm.receptionists = SamplingEmployeeService.get();
     vm.samples = [];
     vm.message = '';
@@ -1585,20 +1585,27 @@
       .$promise
       .then(function success(response) {
         vm.reception = response;
-        SheetSampleService
-          .get({sheetId: vm.reception.id_hoja})
-          .$promise
-          .then(function success(response) {
-            var i = 0;
-            var l = 0;
-            vm.samples = response;
-            l = vm.samples.length;
-            for (i = 0; i < l; i += 1) {
-              vm.samples[i].punto = PointService.query({
-                pointId: vm.samples[i].id_punto
-              });
-            }
-          });
+        if (!vm.reception.muestras || vm.reception.muestras.length < 1) {
+          vm.reception.muestras = [];
+          SheetSampleService
+            .get({sheetId: vm.reception.id_hoja})
+            .$promise
+            .then(function success(response) {
+              var i;
+              var l;
+              vm.samples = response;
+              l = vm.samples.length;
+              for (i = 0; i < l; i += 1) {
+                vm.samples[i].id_hoja = vm.reception.id_recepcion;
+                vm.samples[i].activo = 0;
+                vm.samples[i].selected = false;
+              }
+              vm.reception.muestras = vm.samples.slice('');
+            });
+        }
+        else {
+          vm.samples = vm.reception.muestras.slice('');
+        }
       });
     // vm.selectSample = selectSample;
     // function selectSample() {

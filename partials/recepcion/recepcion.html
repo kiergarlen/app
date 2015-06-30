@@ -254,12 +254,12 @@
   </div>
   <div class="row">
     <div class="col-xs-12">
-      <h5>Conformidad por preservación</h5>
+      <h5>Conformidad por preservación  {{reception.selectPreservations()}}</h5>
     </div>
   </div>
   <div class="row">
     <div class="col-xs-12 col-sm-6"
-      data-ng-repeat="preservation in reception.reception.preservaciones">
+      data-ng-repeat="preservation in reception.preservations">
       <label>
         <input type="checkbox"
           data-ng-model="preservation.preservado"

@@ -913,7 +913,6 @@
     }
 
     function selectInstruments() {
-      var items = [];
       if (vm.instruments.length > 0 && vm.plan.instrumentos) {
         if (vm.plan.instrumentos.length > 0 && !vm.isInstrumentListLoaded) {
           ArrayUtilsService.seItemsFromReference(
@@ -939,7 +938,6 @@
     }
 
     function selectContainers() {
-      var items = [];
       if (vm.containers.length > 0 && vm.plan.recipientes) {
         if (vm.plan.recipientes.length > 0 && !vm.isContainerListLoaded) {
           ArrayUtilsService.seItemsFromReference(
@@ -967,7 +965,6 @@
     }
 
     function selectReactives() {
-      var items = [];
       if (vm.reactives.length > 0 && vm.plan.reactivos) {
         if (vm.plan.reactivos.length > 0 && !vm.isReactiveListLoaded) {
           ArrayUtilsService.seItemsFromReference(
@@ -997,7 +994,6 @@
     }
 
     function selectMaterials() {
-      var items = [];
       if (vm.materials.length > 0 && vm.plan.materiales) {
         if (vm.plan.materiales.length > 0 && !vm.isMaterialListLoaded) {
           ArrayUtilsService.seItemsFromReference(
@@ -1024,7 +1020,6 @@
     }
 
     function selectCoolers() {
-      var items = [];
       if (vm.coolers.length > 0 && vm.plan.hieleras) {
         if (vm.plan.hieleras.length > 0 && !vm.isCoolerListLoaded) {
           ArrayUtilsService.seItemsFromReference(
@@ -1360,7 +1355,6 @@
       });
 
     function selectPreservations() {
-      var items = [];
       if (vm.preservations.length > 0 && vm.sheet.preservaciones) {
         if (vm.sheet.preservaciones.length > 0 && !vm.isPreservationListLoaded) {
           ArrayUtilsService.seItemsFromReference(
@@ -1576,7 +1570,9 @@
     vm.samples = [];
     vm.preservations = [];
     vm.message = '';
+    vm.isPreservationListLoaded = true;
     vm.isDataSubmitted = false;
+    vm.selectPreservations = selectPreservations;
     vm.approveItem = approveItem;
     vm.rejectItem = rejectItem;
     vm.submitForm = submitForm;
@@ -1602,6 +1598,7 @@
                 vm.samples[i].selected = false;
               }
               vm.reception.muestras = vm.samples.slice('');
+
             });
         }
         else {
@@ -1618,44 +1615,46 @@
             for (i = 0; i < l; i += 1) {
               vm.preservations[i].id_recepcion_preservacion = 0;
               vm.preservations[i].id_recepcion = vm.reception.id_recepcion;
-              vm.preservations[i].cantidad = vm.reception.samples.length;
+              vm.preservations[i].cantidad = vm.reception.muestras.length;
               vm.preservations[i].preservado = false;
               vm.preservations[i].activo = 0;
               //TODO: delete id_tipo_preservacion, descripcion
             }
+            console.log(vm.preservations);
           });
       });
 
-    // vm.selectPreservations = selectPreservations;
-    // function selectPreservations() {
-    //   var items = [];
-    //   if (vm.preservations.length > 0 && vm.plan.preservaciones) {
-    //     if (vm.plan.preservaciones.length > 0 && !vm.isPreservationListLoaded) {
-    //       ArrayUtilsService.seItemsFromReference(
-    //         vm.preservations,
-    //         vm.plan.preservaciones,
-    //         'id_preservacion',
-    //         [
-    //           'id_recepcion_preservacion',
-    //           'id_recepcion',
-    //           'cantidad',
-    //           'preservado',
-    //           'activo',
-    //           'selected'
-    //         ]
-    //       );
-    //       vm.isPreservationListLoaded = true;
-    //     }
-    //     else {
-    //       vm.plan.preservaciones = [];
-    //       vm.plan.preservaciones = ArrayUtilsService.selectItemsFromCollection(
-    //         vm.preservations,
-    //         'selected',
-    //         true
-    //       ).slice();
-    //     }
-    //   }
-    // }
+    function selectPreservations() {
+      if (vm.preservations.length > 0 && vm.reception.preservaciones) {
+        if (vm.reception.preservaciones.length > 0 && !vm.isPreservationListLoaded) {
+          console.log(vm.preservations);
+          console.log(vm.reception.preservaciones);
+          ArrayUtilsService.seItemsFromReference(
+            vm.preservations,
+            vm.reception.preservaciones,
+            'id_preservacion',
+            [
+              'id_recepcion_preservacion',
+              'id_recepcion',
+              'cantidad',
+              'preservado',
+              'activo',
+              'selected'
+            ]
+          );
+          console.log(vm.preservations);
+          vm.isPreservationListLoaded = true;
+        }
+        else {
+          vm.reception.preservaciones = [];
+          vm.reception.preservaciones = ArrayUtilsService.selectItemsFromCollection(
+            vm.preservations,
+            'selected',
+            true
+          ).slice();
+        }
+      }
+    }
 
     // vm.selectSample = selectSample;
     // function selectSample() {

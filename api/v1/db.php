@@ -1123,16 +1123,17 @@ function getReception($receptionId) {
 	$reception->muestras = $samples;
 	$preservations = getPreservationsByReception($receptionId);
 	if (count($preservations) < 1) {
-		$preservations = getPreservationsBySheet($reception->id_hoja);
-		$l = count($preservations);
-		for ($i = 0; $i < $l; $i++) {
-			unset($preservations[$i]["id_hoja"]);
-			unset($preservations[$i]["id_hoja_recepcion"]);
-			$preservations[$i]["id_recepcion_preservacion"] = 0;
-			$preservations[$i]["id_recepcion"] = $receptionId;
-			$preservations[$i]["preservado"] = false;
-			$preservations[$i]["selected"] = false;
-		}
+		$preservations = array();
+		// $preservations = getPreservationsBySheet($reception->id_hoja);
+		// $l = count($preservations);
+		// for ($i = 0; $i < $l; $i++) {
+		// 	unset($preservations[$i]["id_hoja"]);
+		// 	unset($preservations[$i]["id_hoja_recepcion"]);
+		// 	$preservations[$i]["id_recepcion_preservacion"] = 0;
+		// 	$preservations[$i]["id_recepcion"] = $receptionId;
+		// 	$preservations[$i]["preservado"] = false;
+		// 	$preservations[$i]["selected"] = false;
+		// }
 	}
 	$reception->preservaciones = $preservations;
 	$areas = getAreasByReception($receptionId);
@@ -1968,8 +1969,9 @@ function getPreservationsByReception($receptionId) {
 	$l = count($preservations);
 	for ($i = 0; $i < $l; $i++) {
 		$preservations[$i]["selected"] = true;
-		$preservations[$i]["preservado"] = false;
-		if ($preservations[$i]["preservado"] == 1) {
+		if ($preservations[$i]["preservado"] < 1) {
+			$preservations[$i]["preservado"] = false;
+		} else {
 			$preservations[$i]["preservado"] = true;
 		}
 	}

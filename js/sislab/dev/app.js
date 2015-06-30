@@ -165,8 +165,8 @@
       }).
       when('/catalogo/area', {
         templateUrl: 'partials/catalogo/areas.html',
-        controller: 'DepartmentListController',
-        controllerAs: 'departmentsList'
+        controller: 'AreaListController',
+        controllerAs: 'areas'
       }).
       when('/catalogo/empleado', {
         templateUrl: 'partials/catalogo/empleados.html',

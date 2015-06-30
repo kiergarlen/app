@@ -223,7 +223,7 @@
               {{::sample.id_muestra}} / 2015
           </label>
           <br>
-          ({{::sample.punto}})
+          ({{::sample.punto.punto}})
         </div>
       </div>
     </div>
@@ -245,8 +245,9 @@
         >
         <option
           data-ng-repeat="sample in reception.reception.muestras"
-          value="{{sample.id_muestra_validacion}}">
-          {{::sample.descripcion}}
+          value="{{sample.id_muestra}}">
+          {{::sample.id_muestra}} -
+          ({{::sample.punto.punto}})
         </option>
       </select>
     </div>
@@ -258,7 +259,7 @@
   </div>
   <div class="row">
     <div class="col-xs-12 col-sm-6"
-      data-ng-repeat="preservation in reception.reception.validacion_preservaciones">
+      data-ng-repeat="preservation in reception.reception.preservaciones">
       <label>
         <input type="checkbox"
           data-ng-model="preservation.preservado"
@@ -287,9 +288,9 @@
     </div>
   </div>
   <div class="row"
-    data-ng-repeat="container in reception.reception.validacion_contenedores">
+    data-ng-repeat="container in reception.reception.areas">
     <div class="col-xs-12 col-sm-3">
-      {{::container.area}}
+      {{::container.id_area}}
     </div>
     <div class="col-xs-12 col-sm-3">
       <label>

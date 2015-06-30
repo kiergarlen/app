@@ -1562,13 +1562,12 @@
    * @param {Object} DateUtilsService - Proveedor para manejo de fechas
    * @param {Object} SamplingEmployeeService - Proveedor de datos, Empleados muestreo
    * @param {Object} SheetSampleService - Proveedor de datos, Muestras por Hoja de campo
-   * @param {Object} PointService - Proveedor de datos, Puntos
    * @param {Object} ReceptionService - Proveedor de datos, Recepción muestras
    */
   function ReceptionController($scope, $routeParams, TokenService,
     ValidationService, RestUtilsService, ArrayUtilsService,
     DateUtilsService, SamplingEmployeeService, SheetSampleService,
-    PointService, ReceptionService) {
+    ReceptionService) {
     var vm = this;
     vm.user = TokenService.getUserFromToken();
     vm.reception = {};
@@ -1699,7 +1698,7 @@
         '$scope', '$routeParams', 'TokenService',
         'ValidationService', 'RestUtilsService', 'ArrayUtilsService',
         'DateUtilsService','SamplingEmployeeService', 'SheetSampleService',
-        'PointService', 'ReceptionService',
+        'ReceptionService',
         ReceptionController
       ]
     );
@@ -1939,14 +1938,14 @@
    * @constructor
    * @desc Controla la vista para seleccionar captura de Análisis
    * @this {Object} $scope - Contenedor para el modelo [AngularJS]
-   * @param {Object} DepartmentService - Proveedor de datos, Áreas
+   * @param {Object} AreaService - Proveedor de datos, Áreas
    * @param {Object} ParameterService - Proveedor de datos, Parámetros
    * @param {Object} AnalysisService - Proveedor de datos, Análisis
    */
-  function AnalysisController(DepartmentService, ParameterService,
+  function AnalysisController(AreaService, ParameterService,
     AnalysisService) {
     var vm = this;
-    vm.areas = DepartmentService.get();
+    vm.areas = AreaService.get();
     vm.parameters = ParameterService.get();
     vm.analysis = AnalysisService.get();
 
@@ -1976,7 +1975,7 @@
     .module('sislabApp')
     .controller('AnalysisController',
       [
-        'DepartmentService', 'ParameterService',
+        'AreaService', 'ParameterService',
         'AnalysisService',
         AnalysisController
       ]
@@ -2094,24 +2093,24 @@
       ]
     );
 
-  //DepartmentListController.js
+  //AreaListController.js
   /**
-   * @name DepartmentListController
+   * @name AreaListController
    * @constructor
    * @desc Controla la vista para el listado de Áreas
    * @this {Object} $scope - Contenedor para el modelo [AngularJS]
-   * @param {Object} DepartmentService - Proveedor de datos, Áreas
+   * @param {Object} AreaService - Proveedor de datos, Áreas
    */
-  function DepartmentListController(DepartmentService) {
+  function AreaListController(AreaService) {
     var vm = this;
-    vm.departments = DepartmentService.get();
+    vm.areas = AreaService.get();
   }
   angular
     .module('sislabApp')
-    .controller('DepartmentListController',
+    .controller('AreaListController',
       [
-        'DepartmentService',
-        DepartmentListController
+        'AreaService',
+        AreaListController
       ]
     );
 

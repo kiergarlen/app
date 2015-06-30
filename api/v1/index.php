@@ -899,7 +899,7 @@ $app->get("/analysis/selections", function() use ($app) {
 $app->get("/areas", function() use ($app) {
 	try {
 		$userId = decodeUserToken($app->request())->uid;
-		$result = jspn_encode(getAreas());
+		$result = json_encode(getAreas());
 		$app->response()->status(200);
 		$app->response()->header('Content-Type', 'application/json');
 		//$result = ")]}',\n" . $result;

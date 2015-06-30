@@ -62,8 +62,7 @@
             <tr
               data-ng-repeat="item in receptions.receptions
               | filter:receptions.filter.$"
-              id="receptionId{{item.id_recepcion}}"
-              data-ng-click="receptions.selectRow($event)">
+              id="receptionId{{item.id_recepcion}}">
               <td>
                 {{item.id_recepcion}}
               </td>

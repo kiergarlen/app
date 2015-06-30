@@ -11,7 +11,7 @@
   </div>
 </div>
 <form class="form" role="form"
-  name="departmentsListForm"
+  name="areasForm"
   novalidate
   >
   <div class="row">
@@ -21,15 +21,20 @@
   </div>
   <div class="row">
     <div class="col-xs-12 col-sm-8">
-      <label for="areaName" class="sr-only">
-        Ingrese una búsqueda (Área, Responsable, etc.)
+      <label for="areaSearch" class="sr-only">
+        Ingrese una búsqueda (Área, Siglas, Responsable, etc.)
       </label>
-      <input type="text"
-        class="form-control"
-        placeholder="Ingrese una búsqueda (Área, Responsable, etc.)"
-        id="areaName"
-        name="areaName"
-        data-ng-model="departmentsList.filter.$">
+      <div class="input-group">
+        <div class="input-group-addon">
+          <i class="glyphicon glyphicon-search"></i>
+        </div>
+        <input type="text"
+          class="form-control"
+          placeholder="Ingrese una búsqueda (Área, Siglas, Responsable, etc.)"
+          id="areaSearch"
+          name="areaSearch"
+          data-ng-model="areas.filter.$">
+      </div>
       <br>
     </div>
   </div>
@@ -38,11 +43,11 @@
   <div class="col-xs-12">
     <div class="panel">
       <div class="panel-heading">
-        <h3 class="panel-title">Clientes</h3>
+        <h3 class="panel-title">Áreas</h3>
       </div>
       <div class="table-responsive">
         <table class="table table-hover table-condensed"
-          id="departmentsList">
+          id="areasList">
           <thead>
             <tr>
               <th>No.</th>
@@ -52,18 +57,21 @@
           </thead>
           <tbody>
             <tr
-              data-ng-repeat="item in departmentsList.departments |
-              filter:departmentsList.filter.$"
-              id="clientId{{item.id_area}}"
-              data-ng-click="departmentsList.selectRow()">
+              data-ng-repeat="item in areas.areas |
+              filter:areas.filter.$"
+              id="areaId{{item.id_area}}">
               <td>
-                <h6>{{item.id_area}}</h6>
+                {{::item.id_area}}
               </td>
               <td>
-                  {{item.area}}
+                  {{::item.area}}
+                  <br>
+                  <span class="text-muted">
+                    {{::item.siglas}}
+                  </span>
               </td>
               <td>
-                {{item.responsable}}
+                {{item.id_usuario_supervisa}}
               </td>
             </tr>
           </tbody>

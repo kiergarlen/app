@@ -1094,25 +1094,100 @@ function getPlainReception($receptionId) {
 function getReception($receptionId) {
 	$reception = getPlainReception($receptionId);
 	$reception->hoja = getPlainSheet($reception->id_hoja);
-	// //id_recepcion_muestra
-	// //id_recepcion
-	// //id_muestra
-	//$reception->muestras = getSamplesBySheet($sheetId);
 	$samples = getSamplesByReception($receptionId);
 	if (count($samples) < 1) {
 		$samples = getSamplesBySheet($reception->id_hoja);
+		$l = count($samples);
+		for ($i = 0; $i < $l; $i++) {
+			unset($samples[$i]["id_hoja"]);
+			unset($samples[$i]["id_hoja_muestra"]);
+			$samples[$i]["id_recepcion_muestra"] = 0;
+			$samples[$i]["id_recepcion"] = $receptionId;
+			$samples[$i]["selected"] = false;
+		}
+	}
+	$l = count($samples);
+	for ($i = 0; $i < $l; $i++) {
+		$samples[$i]["punto"] = getPoint($samples[$i]["id_punto"]);
 	}
 	$reception->muestras = $samples;
-	// //id_recepcion_preservacion
-	// //id_recepcion
-	// //id_preservacion
-	//$reception->preservaciones = getPreservationsByReception($receptionId);
-	// //id_recepcion_recipiente
-	// //id_recepcion
-	// //id_recipiente
-	// $reception->recipientes = getContainersByReception($receptionId);
+	$preservations = getPreservationsByReception($receptionId);
+	if (count($preservations) < 1) {
+		$preservations = getPreservationsBySheet($reception->id_hoja);
+		$l = count($preservations);
+		for ($i = 0; $i < $l; $i++) {
+			unset($preservations[$i]["id_hoja"]);
+			unset($preservations[$i]["id_hoja_recepcion"]);
+			$preservations[$i]["id_recepcion_preservacion"] = 0;
+			$preservations[$i]["id_recepcion"] = $receptionId;
+			$preservations[$i]["preservado"] = false;
+			$preservations[$i]["selected"] = false;
+		}
+	}
+	$reception->preservaciones = getAreasByReception($receptionId);
+	$areas = getContainersByReception($receptionId);
+	if (count($areas) < 1) {
+		$areas = getAreas();
+		$l = count($areas);
+		for ($i = 0; $i < $l; $i++) {
+			unset($areas[$i]["id_usuario_supervisa"]);
+			unset($areas[$i]["siglas"]);
+			unset($areas[$i]["recibe"]);
+			unset($areas[$i]["activo"]);
+			$areas[$i]["id_recepcion_area"] = 0;
+			$areas[$i]["id_recepcion"] = $receptionId;
+			$areas[$i]["id_muestra"] = 0;
+			$areas[$i]["volumen"] = false;
+			$areas[$i]["vigencia"] = false;
+			$areas[$i]["recipiente"] = false;
+		}
+	}
+	$reception->areas = $areas;
 	return $reception;
 }
+
+function getAreas() {
+	$sql = "SELECT id_area, id_usuario_supervisa, area,
+		siglas, recibe, activo
+		FROM Area
+		WHERE activo = 1";
+	$db = getConnection();
+	$stmt = $db->prepare($sql);
+	$stmt->execute();
+	$areas = $stmt->fetchAll(PDO::FETCH_ASSOC);
+	$db = null;
+	return $areas;
+}
+
+function getAreasByReception($receptionId) {
+	$sql = "SELECT  id_recepcion_area, id_recepcion, id_area,
+		id_muestra, volumen, vigencia, recipiente
+		FROM RecepcionArea
+		WHERE id_recepcion = :receptionId";
+	$db = getConnection();
+	$stmt = $db->prepare($sql);
+	$stmt->bindParam("receptionId", $receptionId);
+	$stmt->execute();
+	$areas = $stmt->fetchAll(PDO::FETCH_ASSOC);
+	$db = null;
+	$l = count($samples);
+	for ($i = 0; $i < $l; $i++) {
+		$samples[$i]["volumen"] = false;
+		if ($samples[$i]["volumen"] == 1) {
+			$samples[$i]["volumen"] = true;
+		}
+		$samples[$i]["vigencia"] = false;
+		if ($samples[$i]["vigencia"] == 1) {
+			$samples[$i]["vigencia"] = true;
+		}
+		$samples[$i]["recipiente"] = false;
+		if ($samples[$i]["recipiente"] == 1) {
+			$samples[$i]["recipiente"] = true;
+		}
+	}
+	return $areas;
+}
+
 function getCustody($custodyId) {
 	$json = '
 		{}
@@ -1319,9 +1394,8 @@ function getSamplesByReception($receptionId) {
 	$db = null;
 	$l = count($samples);
 	for ($i = 0; $i < $l; $i++) {
-		if ($samples[$i]["activo"] == 0) {
-			$samples[$i]["selected"] = false;
-		} else {
+		$samples[$i]["selected"] = false;
+		if ($samples[$i]["activo"] == 1) {
 			$samples[$i]["selected"] = true;
 		}
 	}
@@ -1866,6 +1940,28 @@ function getPreservationsBySheet($sheetId) {
 	$l = count($preservations);
 	for ($i = 0; $i < $l; $i++) {
 		$preservations[$i]["selected"] = true;
+	}
+	return $preservations;
+}
+
+function getPreservationsByReception($receptionId) {
+	$sql = "SELECT id_recepcion_preservacion, id_recepcion,
+		id_preservacion, cantidad, preservado, activo
+		FROM RecepcionPreservacion
+		WHERE activo = 1 AND id_recepcion = :receptionId";
+	$db = getConnection();
+	$stmt = $db->prepare($sql);
+	$stmt->bindParam("receptionId", $receptionId);
+	$stmt->execute();
+	$preservations = $stmt->fetchAll(PDO::FETCH_ASSOC);
+	$db = null;
+	$l = count($preservations);
+	for ($i = 0; $i < $l; $i++) {
+		$preservations[$i]["selected"] = true;
+		$preservations[$i]["preservado"] = false;
+		if ($preservations[$i]["preservado"] == 1) {
+			$preservations[$i]["preservado"] = true;
+		}
 	}
 	return $preservations;
 }

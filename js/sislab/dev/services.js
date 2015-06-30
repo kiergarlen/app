@@ -285,8 +285,7 @@
         }, function error(response) {
           if (response.status === 404) {
             return 'Recurso no encontrado';
-          }
-          else {
+          } else {
             return 'Error no especificado';
           }
         });
@@ -311,8 +310,7 @@
         }, function error(response) {
           if (response.status === 404) {
             return 'Recurso no encontrado';
-          }
-          else {
+          } else {
             return 'Error no especificado';
           }
         });
@@ -384,8 +382,7 @@
       }, function error(response) {
         if (response.status === 404) {
           return 'Sin enlace al servidor';
-        }
-        else {
+        } else {
           return 'Error no especificado';
         }
       });

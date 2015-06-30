@@ -101,7 +101,7 @@
         class="form-control"
         id="samplingDate"
         name="samplingDate"
-        placeholder="aaaa-mm-dd"
+        placeholder="aaaa-MM-dd"
         required
         data-ng-model="reception.reception.fecha_entrega"
         data-date-format="yyyy-MM-dd"
@@ -140,7 +140,7 @@
     </div>
   </div>
   <div class="row">
-    <div class="col-xs-6 col-sm-4">
+    <div class="col-xs-6 col-sm-5">
       <label for="receptionDate">
         <i class="glyphicon glyphicon-calendar"></i>
         Fecha
@@ -181,46 +181,41 @@
         data-bs-timepicker
         >
     </div>
-  </div>
-  <div class="row">
-    <div class="col-xs-12 col-sm-6 col-md-5 col-lg-5">
+    <div class="col-xs-12 col-sm-8">
       <label for="receptionistSelect">
         Responsable recepción
       </label>
       <select class="form-control"
         id="receptionistSelect"
         name="receptionistSelect"
-        required
         data-ng-model="reception.reception.id_recepcionista"
         >
         <option
           data-ng-repeat="receptionist in reception.receptionists"
           value="{{receptionist.id_usuario}}">
           {{::receptionist.nombres}}
-          {{::receptionist.ap}}
-          {{::receptionist.am}}
+          {{::receptionist.apellido_paterno}}
+          {{::receptionist.apellido_materno}}
         </option>
       </select>
     </div>
   </div>
   <div class="row">
     <div class="col-xs-12">
-      <h4>Muestras recibidas</h4>
+      <h4>Muestras recibidas {reception.selectSamples()}</h4>
     </div>
   </div>
   <div class="row">
-    <div class="col-xs-12">
+    <div class="col-xs-12 col-sm-6"
+      data-ng-repeat="sample in reception.samples">
       <div class="row">
-        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3"
-          data-ng-repeat="sample in reception.reception.muestras"
-          >
+        <div class="col-xs-12 col-sm-4">
           <label>
-            <input type="checkbox"
+           <input type="checkbox"
+              value="{{sample.selected}}"
               data-ng-model="sample.selected"
-              name="{{::sample.id_muestra}}"
-              title="{{::sample.punto}}"
-              />
-              {{::sample.id_muestra}} / 2015
+              >
+              {{::sample.id_muestra}}
           </label>
           <br>
           ({{::sample.punto.punto}})
@@ -244,98 +239,206 @@
         data-ng-model="reception.reception.id_muestra_validacion"
         >
         <option
-          data-ng-repeat="sample in reception.reception.muestras"
+          data-ng-repeat="sample in reception.validationSamples"
           value="{{sample.id_muestra}}">
           {{::sample.id_muestra}} -
-          ({{::sample.punto.punto}})
+          ({::sample.punto.punto})
         </option>
       </select>
     </div>
   </div>
   <div class="row">
     <div class="col-xs-12">
-      <h5>Conformidad por preservación  {{reception.selectPreservations()}}</h5>
+      <h5>Conformidad por preservación {reception.selectPreservations()}</h5>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12 col-sm-4"
+      data-ng-repeat="preservation in reception.preservations">
+      <div class="row">
+        <div class="col-xs-12">
+          <label>
+            <input type="checkbox"
+              value="{{preservation.preservado}}"
+              data-ng-model="preservation.preservado"
+              >
+              {{::preservation.preservacion}}
+          </label>
+        </div>
+      </div>
+    </div>
+    <div class="col-xs-12">
+      Recipientes:
+      <strong>
+      {{reception.reception.recipientes.length * reception.reception.puntos.length}}
+      </strong>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12">
+      <h5>Reactivos y soluciones {{reception.selectReactives()}}</h5>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12 col-sm-6">
+      <label for="reactiveSupervisorSelect" class="sr-only">
+        Encargado de reactivos
+      </label>
+      <select class="form-control"
+        id="reactiveSupervisorSelect"
+        name="reactiveSupervisorSelect"
+        data-ng-model="reception.reception.id_responsable_reactivos"
+        >
+        <option
+          data-ng-repeat="reactiveSupervisor in reception.samplingEmployees"
+          value="{{reactiveSupervisor.id_usuario}}">
+          {{::reactiveSupervisor.nombres}}
+          {{::reactiveSupervisor.apellido_paterno}}
+          {{::reactiveSupervisor.apellido_materno}}
+        </option>
+      </select>
     </div>
   </div>
   <div class="row">
     <div class="col-xs-12 col-sm-6"
-      data-ng-repeat="preservation in reception.preservations">
-      <label>
-        <input type="checkbox"
-          data-ng-model="preservation.preservado"
-          >
-          {{preservation.preservacion}}
-      </label>
+      data-ng-repeat="reactive in reception.reactives">
+      <div class="row">
+        <div class="col-xs-12 col-sm-9">
+          <label>
+            <input type="checkbox"
+              value="{{reactive.selected}}"
+              data-ng-model="reactive.selected"
+              >
+              {{reactive.reactivo}}
+          </label>
+          <br>
+          <span class="text-muted"
+            data-ng-show="reactive.lote.length > 0"
+            >
+            Lote: {{reactive.lote}}
+          </span>
+          <span class="text-muted"
+            data-ng-show="reactive.folio.length > 0"
+            >
+            Folio: {{reactive.folio}}
+          </span>
+        </div>
+        <div class="col-xs-12 col-sm-3">
+          <label
+            for="reactiveValue{{reactive.id_reactivo}}"
+            data-ng-show="reactive.registra_valor > 0"
+            >
+            Valor
+          </label>
+          <input type="text"
+            class="form-control"
+            placeholder="0"
+            id="reactiveValue{{reactive.id_reactivo}}"
+            name="reactiveValue{{reactive.id_reactivo}}"
+            data-ng-model="reactive.valor"
+            data-ng-show="reactive.registra_valor > 0"
+            >
+        </div>
+      </div>
+    </div>
+    <div class="col-xs-12">
+      Reactivos y soluciones:
+      <strong>
+      {{reception.reception.reactivos.length}}
+      </strong>
+    </div>
+    <div class="col-xs-12">
+      <small class="text-muted">* Soluciones para verificar la calibración</small>
     </div>
   </div>
   <div class="row">
     <div class="col-xs-12">
-      <h5>Conformidad por tipo análisis</h5>
+      <h5>Preparación de material y equipo {{reception.selectMaterials()}}</h5>
     </div>
   </div>
   <div class="row">
-    <div class="col-xs-3">
-      <strong>Tipo análisis</strong>
-    </div>
-    <div class="col-xs-3">
-      <strong>Volumen</strong>
-    </div>
-    <div class="col-xs-3">
-      <strong>Vigencia</strong>
-    </div>
-    <div class="col-xs-3">
-      <strong>Contenedor</strong>
-    </div>
-  </div>
-  <div class="row"
-    data-ng-repeat="container in reception.reception.areas">
-    <div class="col-xs-12 col-sm-3">
-      {{::container.id_area}}
-    </div>
-    <div class="col-xs-12 col-sm-3">
-      <label>
-        <input type="checkbox"
-          data-ng-model="container.volumen"
-          >
-          Conforme
+    <div class="col-xs-12 col-sm-6">
+      <label for="materialsSupervisorSelect" class="sr-only">
+        Encargado de preparación
       </label>
-    </div>
-    <div class="col-xs-12 col-sm-3">
-      <label>
-        <input type="checkbox"
-          data-ng-model="container.vigencia"
-          >
-          Conforme
-      </label>
-    </div>
-    <div class="col-xs-12 col-sm-3">
-      <label>
-        <input type="checkbox"
-          data-ng-model="container.contenedor"
-          >
-          Conforme
-      </label>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-xs-12">
-      <h4>Comentarios</h4>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-xs-12">
-      <label for="sampleCommentsText">
-        Comentarios
-      </label>
-      <textarea rows="2" class="form-control well well-sm"
-        id="sampleCommentsText"
-        name="sampleCommentsText"
-        data-ng-model="reception.reception.comentarios"
+      <select class="form-control"
+        id="materialsSupervisorSelect"
+        name="materialsSupervisorSelect"
+        data-ng-model="reception.reception.id_responsable_material"
         >
-      </textarea>
+        <option
+          data-ng-repeat="materialsSupervisor in reception.samplingEmployees"
+          value="{{materialsSupervisor.id_usuario}}">
+          {{::materialsSupervisor.nombres}}
+          {{::materialsSupervisor.apellido_paterno}}
+          {{::materialsSupervisor.apellido_materno}}
+        </option>
+      </select>
     </div>
   </div>
-  <br>
+  <div class="row">
+    <div class="col-xs-12 col-sm-6"
+      data-ng-repeat="material in reception.materials"
+      >
+      <label>
+        <input type="checkbox"
+          value="{{material.selected}}"
+          data-ng-model="material.selected"
+          >
+          {{material.material}}
+      </label>
+    </div>
+    <div class="col-xs-12">
+      Materiales:
+      <strong>
+      {{reception.reception.materiales.length}}
+      </strong>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12">
+      <h5>Hieleras {{reception.selectCoolers()}}</h5>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12 col-sm-6">
+      <label for="coolersSupervisorSelect" class="sr-only">
+        Encargado de hieleras
+      </label>
+      <select class="form-control"
+        id="coolersSupervisorSelect"
+        name="coolersSupervisorSelect"
+        data-ng-model="reception.reception.id_responsable_hieleras"
+        >
+        <option
+          data-ng-repeat="coolersSupervisor in reception.samplingEmployees"
+          value="{{coolersSupervisor.id_usuario}}">
+          {{::coolersSupervisor.nombres}}
+          {{::coolersSupervisor.apellido_paterno}}
+          {{::coolersSupervisor.apellido_materno}}
+        </option>
+      </select>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3"
+      data-ng-repeat="cooler in reception.coolers"
+      >
+      <label>
+        <input type="checkbox"
+          name="{{cooler.selected}}"
+          data-ng-model="cooler.selected"
+          >
+          {{cooler.hielera}}
+      </label>
+    </div>
+    <div class="col-xs-12">
+      Hieleras:
+      <strong>
+      {{reception.reception.hieleras.length}}
+      </strong>
+    </div>
+  </div>
   <div class="row"
     data-ng-show="reception.user.level < 3">
     <div class="col-xs-12">

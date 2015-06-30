@@ -242,8 +242,7 @@
             return false;
           }
         }
-      }
-      else {
+      } else {
         vm.message += ' Agregue una orden ';
         return false;
       }
@@ -297,8 +296,7 @@
               vm.study,
               'estudio/estudio'
             );
-        }
-        else {
+        } else {
           if (vm.user.level < 3 || vm.study.study.id_status != 2) {
             //vm.study.$update();
             RestUtilsService
@@ -459,8 +457,7 @@
               vm.quote,
               'muestreo/solicitud'
             );
-        }
-        else {
+        } else {
           if (vm.user.level < 3 || vm.quote.quote.id_status !== 2) {
             RestUtilsService
               .updateData(
@@ -586,8 +583,7 @@
           'objetivo_otro': '', 'motivo_rechaza': '',
           'comentarios': '', 'activo': 1
         });
-      }
-      else {
+      } else {
         vm.order.planes = [{
           'id_plan': 0,
           'id_estudio': vm.order.id_estudio,
@@ -669,8 +665,7 @@
             return false;
           }
         }
-      }
-      else {
+      } else {
         vm.message += ' Agregue un plan ';
         return false;
       }
@@ -700,8 +695,7 @@
               vm.order,
               'muestreo/orden'
             );
-        }
-        else {
+        } else {
           if (vm.user.level < 3 || vm.order.order.id_status !== 2) {
             RestUtilsService
               .updateData(
@@ -925,8 +919,7 @@
             ]
           );
           vm.isInstrumentListLoaded = true;
-        }
-        else {
+        } else {
           vm.plan.instrumentos = [];
           vm.plan.instrumentos = ArrayUtilsService.selectItemsFromCollection(
             vm.instruments,
@@ -952,8 +945,7 @@
             ]
           );
           vm.isContainerListLoaded = true;
-        }
-        else {
+        } else {
           vm.plan.recipientes = [];
           vm.plan.recipientes = ArrayUtilsService.selectItemsFromCollection(
             vm.containers,
@@ -981,8 +973,7 @@
             ]
           );
           vm.isReactiveListLoaded = true;
-        }
-        else {
+        } else {
           vm.plan.reactivos = [];
           vm.plan.reactivos = ArrayUtilsService.selectItemsFromCollection(
             vm.reactives,
@@ -1007,8 +998,7 @@
             ]
           );
           vm.isMaterialListLoaded = true;
-        }
-        else {
+        } else {
           vm.plan.materiales = [];
           vm.plan.materiales = ArrayUtilsService.selectItemsFromCollection(
             vm.materials,
@@ -1033,8 +1023,7 @@
             ]
           );
           vm.isCoolerListLoaded = true;
-        }
-        else {
+        } else {
           vm.plan.hieleras = [];
           vm.plan.hieleras = ArrayUtilsService.selectItemsFromCollection(
             vm.coolers,
@@ -1087,8 +1076,7 @@
             return false;
           }
         }
-      }
-      else {
+      } else {
         vm.message += ' Seleccione un recipiente ';
         return false;
       }
@@ -1118,8 +1106,7 @@
             return false;
           }
         }
-      }
-      else {
+      } else {
         vm.message += ' Seleccione un recipiente ';
         return false;
       }
@@ -1234,8 +1221,7 @@
               vm.plan,
               'muestreo/plan'
             );
-        }
-        else {
+        } else {
           if (vm.user.level < 3 || vm.plan.plan.id_status !== 2) {
             RestUtilsService
               .updateData(
@@ -1371,8 +1357,7 @@
             ]
           );
           vm.isPreservationListLoaded = true;
-        }
-        else {
+        } else {
           vm.sheet.preservaciones = [];
           vm.sheet.preservaciones = ArrayUtilsService
             .selectItemsFromCollection(
@@ -1431,8 +1416,7 @@
           }
           isResultListValid(samples[i], samples[i].resultados);
         }
-      }
-      else {
+      } else {
         vm.message += ' Sin muestras ';
         return false;
       }
@@ -1487,8 +1471,7 @@
               vm.sheet,
               'recepcion/hoja'
             );
-        }
-        else {
+        } else {
           if (vm.user.level < 3 || vm.sheet.sheet.id_status !== 2) {
             RestUtilsService
               .updateData(
@@ -1568,6 +1551,7 @@
     vm.reception = {};
     vm.receptionists = SamplingEmployeeService.get();
     vm.samples = [];
+    vm.validationSamples = [];
     vm.preservations = [];
     vm.message = '';
     vm.isPreservationListLoaded = true;
@@ -1591,18 +1575,17 @@
               var i = 0;
               var l = 0;
               vm.samples = response;
+              vm.validationSamples = response;
               l = vm.samples.length;
               for (i = 0; i < l; i += 1) {
                 vm.samples[i].id_hoja = vm.reception.id_recepcion;
                 vm.samples[i].activo = 0;
                 vm.samples[i].selected = false;
               }
-              vm.reception.muestras = vm.samples.slice('');
-
+              //vm.reception.muestras = vm.samples.slice('');
             });
-        }
-        else {
-          vm.samples = vm.reception.muestras.slice('');
+        } else {
+          //vm.samples = vm.reception.muestras.slice('');
         }
         PreservationService
           .get()
@@ -1644,8 +1627,7 @@
           );
           console.log(vm.preservations);
           vm.isPreservationListLoaded = true;
-        }
-        else {
+        } else {
           vm.reception.preservaciones = [];
           vm.reception.preservaciones = ArrayUtilsService.selectItemsFromCollection(
             vm.preservations,
@@ -1726,8 +1708,7 @@
               vm.reception,
               'recepcion/recepcion'
             );
-        }
-        else {
+        } else {
           if (vm.user.level < 3 || vm.reception.reception.id_status !== 2) {
             RestUtilsService
               .updateData(
@@ -1823,8 +1804,7 @@
               vm.custody,
               'recepcion/custodia'
             );
-        }
-        else {
+        } else {
           if (vm.user.level < 3 || vm.custody.custody.id_status !== 2) {
             RestUtilsService
               .updateData(

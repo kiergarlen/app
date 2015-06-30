@@ -1124,8 +1124,8 @@ function getReception($receptionId) {
 			$preservations[$i]["selected"] = false;
 		}
 	}
-	$reception->preservaciones = getAreasByReception($receptionId);
-	$areas = getContainersByReception($receptionId);
+	$reception->preservaciones = $preservations;
+	$areas = getAreasByReception($receptionId);
 	if (count($areas) < 1) {
 		$areas = getAreas();
 		$l = count($areas);
@@ -1170,19 +1170,19 @@ function getAreasByReception($receptionId) {
 	$stmt->execute();
 	$areas = $stmt->fetchAll(PDO::FETCH_ASSOC);
 	$db = null;
-	$l = count($samples);
+	$l = count($areas);
 	for ($i = 0; $i < $l; $i++) {
-		$samples[$i]["volumen"] = false;
-		if ($samples[$i]["volumen"] == 1) {
-			$samples[$i]["volumen"] = true;
+		$areas[$i]["volumen"] = false;
+		if ($areas[$i]["volumen"] == 1) {
+			$areas[$i]["volumen"] = true;
 		}
-		$samples[$i]["vigencia"] = false;
-		if ($samples[$i]["vigencia"] == 1) {
-			$samples[$i]["vigencia"] = true;
+		$areas[$i]["vigencia"] = false;
+		if ($areas[$i]["vigencia"] == 1) {
+			$areas[$i]["vigencia"] = true;
 		}
-		$samples[$i]["recipiente"] = false;
-		if ($samples[$i]["recipiente"] == 1) {
-			$samples[$i]["recipiente"] = true;
+		$areas[$i]["recipiente"] = false;
+		if ($areas[$i]["recipiente"] == 1) {
+			$areas[$i]["recipiente"] = true;
 		}
 	}
 	return $areas;

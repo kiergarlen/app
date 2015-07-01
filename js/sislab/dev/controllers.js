@@ -841,8 +841,8 @@
           .get()
           .$promise
           .then(function success(response) {
-            var i;
-            var l;
+            var i = 0;
+            var l = 0;
             vm.instruments = response;
             l = vm.instruments.length;
             for (i = 0; i < l; i += 1) {
@@ -1566,27 +1566,27 @@
       .$promise
       .then(function success(response) {
         vm.reception = response;
-        if (!vm.reception.muestras || vm.reception.muestras.length < 1) {
-          vm.reception.muestras = [];
-          SheetSampleService
-            .get({sheetId: vm.reception.id_hoja})
-            .$promise
-            .then(function success(response) {
-              var i = 0;
-              var l = 0;
-              vm.samples = response;
-              vm.validationSamples = response;
-              l = vm.samples.length;
-              for (i = 0; i < l; i += 1) {
-                vm.samples[i].id_hoja = vm.reception.id_recepcion;
-                vm.samples[i].activo = 0;
-                vm.samples[i].selected = false;
-              }
-              //vm.reception.muestras = vm.samples.slice('');
-            });
-        } else {
-          //vm.samples = vm.reception.muestras.slice('');
-        }
+        // if (!vm.reception.muestras || vm.reception.muestras.length < 1) {
+        //   vm.reception.muestras = [];
+        //   SheetSampleService
+        //     .get({sheetId: vm.reception.id_hoja})
+        //     .$promise
+        //     .then(function success(response) {
+        //       var i = 0;
+        //       var l = 0;
+        //       vm.samples = response;
+        //       vm.validationSamples = response;
+        //       l = vm.samples.length;
+        //       for (i = 0; i < l; i += 1) {
+        //         vm.samples[i].id_hoja = vm.reception.id_recepcion;
+        //         vm.samples[i].activo = 0;
+        //         vm.samples[i].selected = false;
+        //       }
+        //       //vm.reception.muestras = vm.samples.slice('');
+        //     });
+        // } else {
+        //   //vm.samples = vm.reception.muestras.slice('');
+        // }
         PreservationService
           .get()
           .$promise
@@ -1603,15 +1603,12 @@
               vm.preservations[i].activo = 0;
               //TODO: delete id_tipo_preservacion, descripcion
             }
-            console.log(vm.preservations);
           });
       });
 
     function selectPreservations() {
       if (vm.preservations.length > 0 && vm.reception.preservaciones) {
         if (vm.reception.preservaciones.length > 0 && !vm.isPreservationListLoaded) {
-          console.log(vm.preservations);
-          console.log(vm.reception.preservaciones);
           ArrayUtilsService.seItemsFromReference(
             vm.preservations,
             vm.reception.preservaciones,
@@ -1625,7 +1622,6 @@
               'selected'
             ]
           );
-          console.log(vm.preservations);
           vm.isPreservationListLoaded = true;
         } else {
           vm.reception.preservaciones = [];

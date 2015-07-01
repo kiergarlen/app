@@ -298,9 +298,7 @@ $app->post("/sheets", function() use ($app) {
 		else
 		{
 			$sheetUpdateData = processSheetUpdate($request);
-			//$result = json_encode($sheetUpdateData);
-			//$sheetId = updateSheet($sheetUpdateData["sheet"]);
-			//$result = json_encode(processSheetResultsUpdate($sheetUpdateData));
+			$sheetId = updateSheet($sheetUpdateData["sheet"]);
 			processSheetResultsUpdate($sheetUpdateData);
 			processSheetPreservationsUpdate($sheetUpdateData);
 			$result = '{"id_hoja":' . $sheetId . '}';

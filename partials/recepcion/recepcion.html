@@ -111,7 +111,7 @@
         data-bs-datepicker
         >
     </div>
-    <div class="col-xs-6 col-sm-2">
+    <div class="col-xs-6 col-sm-3">
       <label for="samplingTime">
         <i class="glyphicon glyphicon-time"></i>
         Hora
@@ -140,7 +140,7 @@
     </div>
   </div>
   <div class="row">
-    <div class="col-xs-6 col-sm-5">
+    <div class="col-xs-6 col-sm-4">
       <label for="receptionDate">
         <i class="glyphicon glyphicon-calendar"></i>
         Fecha
@@ -159,7 +159,7 @@
         data-bs-datepicker
         >
     </div>
-    <div class="col-xs-6 col-sm-2">
+    <div class="col-xs-6 col-sm-3">
       <label for="receptionTime">
         <i class="glyphicon glyphicon-time"></i>
         Hora
@@ -181,7 +181,7 @@
         data-bs-timepicker
         >
     </div>
-    <div class="col-xs-12 col-sm-8">
+    <div class="col-xs-12 col-sm-6">
       <label for="receptionistSelect">
         Responsable recepción
       </label>
@@ -249,23 +249,23 @@
   </div>
   <div class="row">
     <div class="col-xs-12">
-      <h5>Conformidad por preservación {reception.selectPreservations()}</h5>
+      <h5>Conformidad por preservación {{reception.selectPreservations()}}</h5>
     </div>
   </div>
   <div class="row">
-    <div class="col-xs-12 col-sm-4"
+    <div class="col-xs-12 col-sm-6"
       data-ng-repeat="preservation in reception.preservations">
-      <div class="row">
-        <div class="col-xs-12">
-          <label>
-            <input type="checkbox"
-              value="{{preservation.preservado}}"
-              data-ng-model="preservation.preservado"
-              >
-              {{::preservation.preservacion}}
-          </label>
-        </div>
-      </div>
+      <label>
+        <input type="checkbox"
+          value="{{preservation.preservado}}"
+          data-ng-model="preservation.preservado"
+          >
+          {{::preservation.preservacion}}
+      </label>
+      <br>
+      <small class="text-muted">
+        {{::preservation.descripcion}}
+      </small>
     </div>
   </div>
   <div class="row">

@@ -1594,21 +1594,27 @@
             var i = 0;
             var l = 0;
             vm.preservations = response;
-            l = vm.preservations.length;
-            for (i = 0; i < l; i += 1) {
-              vm.preservations[i].id_recepcion_preservacion = 0;
-              vm.preservations[i].id_recepcion = vm.reception.id_recepcion;
-              vm.preservations[i].cantidad = vm.reception.muestras.length;
-              vm.preservations[i].preservado = false;
-              vm.preservations[i].activo = 0;
-              //TODO: delete id_tipo_preservacion, descripcion
-            }
+            ArrayUtilsService.seItemsFromReference(
+              vm.preservations,
+              vm.reception.preservaciones,
+              'id_preservacion',
+              [
+                'id_recepcion_preservacion',
+                'id_recepcion',
+                'cantidad',
+                'preservado',
+                'activo',
+                'selected'
+              ]
+            );
           });
       });
 
     function selectPreservations() {
       if (vm.preservations.length > 0 && vm.reception.preservaciones) {
+        console.log(vm.preservations);
         if (vm.reception.preservaciones.length > 0 && !vm.isPreservationListLoaded) {
+          console.log(vm.preservations);
           ArrayUtilsService.seItemsFromReference(
             vm.preservations,
             vm.reception.preservaciones,

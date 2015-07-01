@@ -434,13 +434,13 @@ function getOrdersByStudy($studyId) {
 	$stmt->execute();
 	$orders = $stmt->fetchAll(PDO::FETCH_ASSOC);
 	$db = null;
-	// $i = 0;
-	// $l = count($orders);
-	// for ($i = 0; $i < $l; $i++) {
-	// 	$orders[$i]["cliente"] = getClient($orders[$i]['id_cliente']);
-	// 	$orders[$i]["estudio"] = getPlainStudy($orders[$i]['id_estudio']);
-	// 	$orders[$i]["planes"] = getPlansByOrder($orders[$i]['id_orden']);
-	// }
+	$i = 0;
+	$l = count($orders);
+	for ($i = 0; $i < $l; $i++) {
+		$orders[$i]["cliente"] = getClient($orders[$i]['id_cliente']);
+		$orders[$i]["estudio"] = getPlainStudy($orders[$i]['id_estudio']);
+		$orders[$i]["planes"] = getPlansByOrder($orders[$i]['id_orden']);
+	}
 	return $orders;
 }
 
@@ -472,11 +472,12 @@ function getOrder($orderId) {
 	$order = getPlainOrder($orderId);
 	$order->cliente = getClient($order->id_cliente);
 	$order->estudio = getPlainStudy($order->id_estudio);
-	$order->planes = array((object) getBlankPlan());
-	if (count(getPlansByOrder($orderId)) > 0)
+	$plans = getPlansByOrder($orderId);
+	if (count($plans) < 1)
 	{
-		$order->planes = getPlansByOrder($orderId);
+		$plans = array((object) getBlankPlan());
 	}
+	$order->planes = $plans;
 	return $order;
 }
 

@@ -1540,12 +1540,13 @@
    * @param {Object} SamplingEmployeeService - Proveedor de datos, Empleados muestreo
    * @param {Object} SheetSampleService - Proveedor de datos, Muestras por Hoja de campo
    * @param {Object} PreservationService - Proveedor de datos, Preservaciones
+   * @param {Object} AreaService - Proveedor de datos, Áreas
    * @param {Object} ReceptionService - Proveedor de datos, Recepción muestras
    */
   function ReceptionController($scope, $routeParams, TokenService,
     ValidationService, RestUtilsService, ArrayUtilsService,
     DateUtilsService, SamplingEmployeeService, SheetSampleService,
-    PreservationService, ReceptionService) {
+    PreservationService, AreaService, ReceptionService) {
     var vm = this;
     vm.user = TokenService.getUserFromToken();
     vm.reception = {};
@@ -1553,13 +1554,14 @@
     vm.samples = [];
     vm.validationSamples = [];
     vm.preservations = [];
+    vm.areas = [];
     vm.message = '';
-    vm.isPreservationListLoaded = true;
     vm.isDataSubmitted = false;
-    vm.selectPreservations = selectPreservations;
     vm.approveItem = approveItem;
     vm.rejectItem = rejectItem;
     vm.submitForm = submitForm;
+
+    /*
 
     ReceptionService
       .query({receptionId: $routeParams.receptionId})
@@ -1610,6 +1612,7 @@
           });
       });
 
+
     function selectPreservations() {
       if (vm.preservations.length > 0 && vm.reception.preservaciones) {
         console.log(vm.preservations);
@@ -1639,19 +1642,56 @@
         }
       }
     }
+    */
 
-    // vm.selectSample = selectSample;
-    // function selectSample() {
-    //   var i = 0, l = vm.receptionists.length;
-    //   vm.reception.recepcionista = {};
-    //   for (i = 0; i < l; i += 1) {
-    //     if (vm.receptionists[i].id_empleado == idRecepcionist) {
-    //       vm.reception.recepcionista = vm.receptionists[i];
-    //       break;
-    //     }
-    //   }
-    //   return vm.reception.recepcionista;
-    // }
+    ReceptionService
+      .query({receptionId: $routeParams.receptionId})
+      .$promise
+      .then(function success(response) {
+        vm.reception = response;
+        PreservationService
+          .get()
+          .$promise
+          .then(function success(response) {
+            var i = 0;
+            var l = 0;
+            vm.preservations = response;
+            ArrayUtilsService.seItemsFromReference(
+              vm.preservations,
+              vm.reception.preservaciones,
+              'id_preservacion',
+              [
+                'id_recepcion_preservacion',
+                'id_recepcion',
+                'cantidad',
+                'preservado',
+                'activo',
+                'selected'
+              ]
+            );
+          });
+        PreservationService
+          .get()
+          .$promise
+          .then(function success(response) {
+            var i = 0;
+            var l = 0;
+            vm.preservations = response;
+            ArrayUtilsService.seItemsFromReference(
+              vm.preservations,
+              vm.reception.preservaciones,
+              'id_preservacion',
+              [
+                'id_recepcion_preservacion',
+                'id_recepcion',
+                'cantidad',
+                'preservado',
+                'activo',
+                'selected'
+              ]
+            );
+          });
+      });
 
     function approveItem() {
       ValidationService.approveItem(vm.reception, vm.user);
@@ -1731,7 +1771,7 @@
         '$scope', '$routeParams', 'TokenService',
         'ValidationService', 'RestUtilsService', 'ArrayUtilsService',
         'DateUtilsService','SamplingEmployeeService', 'SheetSampleService',
-        'PreservationService', 'ReceptionService',
+        'PreservationService', 'AreaService', 'ReceptionService',
         ReceptionController
       ]
     );

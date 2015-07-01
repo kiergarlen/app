@@ -1684,17 +1684,17 @@
       ]
     );
 
-  //ExpirationService.js
+  //AreaService.js
   /**
-   * @name ExpirationService
+   * @name AreaService
    * @constructor
-   * @desc Proveedor de datos, Vigencias
+   * @desc Proveedor de datos, Áreas
    * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @param {Object} TokenService - Proveedor de métodos para token
    * @return {Object} $resource - Acceso a recursos HTTP
    */
-  function ExpirationService($resource, TokenService) {
-    return $resource(API_BASE_URL + 'expirations', {}, {
+  function AreaService($resource, TokenService) {
+    return $resource(API_BASE_URL + 'areas', {}, {
       get: {
         method: 'GET',
         params: {},
@@ -1707,10 +1707,10 @@
   }
   angular
     .module('sislabApp')
-    .factory('ExpirationService',
+    .factory('AreaService',
       [
         '$resource', 'TokenService',
-        ExpirationService
+        AreaService
       ]
     );
 

@@ -1186,15 +1186,15 @@ function getAreasByReception($receptionId) {
 	$l = count($areas);
 	for ($i = 0; $i < $l; $i++) {
 		$areas[$i]["volumen"] = false;
-		if ($areas[$i]["volumen"] == 1) {
+		if ($areas[$i]["volumen"] < 0) {
 			$areas[$i]["volumen"] = true;
 		}
 		$areas[$i]["vigencia"] = false;
-		if ($areas[$i]["vigencia"] == 1) {
+		if ($areas[$i]["vigencia"] < 0) {
 			$areas[$i]["vigencia"] = true;
 		}
 		$areas[$i]["recipiente"] = false;
-		if ($areas[$i]["recipiente"] == 1) {
+		if ($areas[$i]["recipiente"] < 0) {
 			$areas[$i]["recipiente"] = true;
 		}
 	}

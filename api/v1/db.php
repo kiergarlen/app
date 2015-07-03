@@ -2,11 +2,12 @@
 //DB FUNCTIONS
 
 /**
- * [Conecta a la base de datos, regresa una instancia de PDO]
+ * Conecta a la base de datos, regresa una instancia de PDOObject
  * @return PDOObject $dbConnection
  */
 function getConnection() {
 	try {
+		////MYSQL style
 		// $dsn = "mysql:host=";
 		// $dsn .= DB_HOST . ";";
 		// $dsn .= "port=" . DB_PORT . ";";
@@ -18,16 +19,17 @@ function getConnection() {
 		$dbConnection = new PDO($dsn, DB_USER, DB_PASSWORD);
 		$dbConnection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 	} catch(PDOException $e) {
+		////Error logging, for development
 		//error_log($e->getMessage(), 3, '/var/tmp/php.log');
-		//echo '{"error":{"text":'. $e->getMessage() .'}}';
 		$output = '{"error":"' . $e->getMessage() . '"}';
+		//print_r($output);
 	}
 	return $dbConnection;
 }
 
 /**
- * [Obtiene Usuarios activos]
- * @return Array $result
+ * Obtiene los Usuarios activos
+ * @return Array $result Array de Usuarios activos
  */
 function getUsers() {
 	$sql = "SELECT id_usuario, id_nivel, id_rol, id_area, id_puesto,
@@ -50,8 +52,8 @@ function getUsers() {
 }
 
 /**
- * [Obtiene un Usuario, por Id]
- * @param  integer $userId [Id del usuario a obteners]
+ * Obtiene un Usuario, por $userId
+ * @param  integer $userId Id del usuario a obtener
  * @return stdClass $user
  */
 function getUser($userId) {
@@ -74,9 +76,9 @@ function getUser($userId) {
 }
 
 /**
- * [Obtiene las credenciales de un Usuario, por $userName y $userPassword]
- * @param  string $userName [Nombre de Usuario]
- * @param  string $userPassword [Contraseña del Usuario]
+ * Obtiene las credenciales de un Usuario, por $userName y $userPassword
+ * @param  string $userName Nombre de Usuario
+ * @param  string $userPassword Password del Usuario
  * @return stdClass $user
  */
 function getUserByCredentials($userName, $userPassword) {
@@ -99,6 +101,11 @@ function getUserByCredentials($userName, $userPassword) {
 	return $user;
 }
 
+/**
+ * Inserta un nuevo Usuario desde $userData
+ * @param  Array $userData Array con los datos del Usuario a insertar
+ * @return integer $userId Id del Usuario insertado
+ */
 function insertUser($userData) {
 	$sql = "INSERT INTO Usuario (id_nivel, id_rol, id_area, id_puesto,
 		interno, cea, laboratorio, supervisa, analiza, muestrea,
@@ -111,7 +118,7 @@ function insertUser($userData) {
 		:nombres, :apellido_paterno, :apellido_materno, :usr, :pwd,
 		:fecha_captura, :fecha_actualiza,
 		:ip_captura, :ip_actualiza,
-		:host_captura, :host_actualiza, :activo,)";
+		:host_captura, :host_actualiza, :activo)";
 	$db = getConnection();
 	$stmt = $db->prepare($sql);
 	$stmt->execute($userData);
@@ -120,6 +127,11 @@ function insertUser($userData) {
 	return $userId;
 }
 
+/**
+ * Actualiza un Usuario desde $updateData
+ * @param  Array $updateData Array con los datos del Usuario a actualizar
+ * @return integer $userId Id del Usuario actualizado
+ */
 function updateUser($updateData) {
 	$sql = "UPDATE Usuario SET id_nivel = :id_nivel, id_rol = :id_rol,
 		id_area = :id_area, id_puesto = :id_puesto,interno = :interno,
@@ -137,9 +149,15 @@ function updateUser($updateData) {
 	$stmt = $db->prepare($sql);
 	$stmt->execute($updateData);
 	$db = null;
-	return $updateData["id_usuario"];
+	$userId = $updateData["id_usuario"];
+	return $userId;
 }
 
+/**
+ * Obtiene los elementos del Menu/Submenu asignados a $userId
+ * @param  $userId integer Id del Usuario
+ * @return $result Array Elementos del menu de $userId
+ */
 function getMenu($userId) {
 	$sql = "SELECT
 		id_usuario, id_menu, id_submenu, orden, orden_submenu,

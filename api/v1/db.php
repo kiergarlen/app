@@ -1,6 +1,10 @@
 <?php
 //DB FUNCTIONS
 
+/**
+ * [Conecta a la base de datos, regresa una instancia de PDO]
+ * @return PDOObject $dbConnection
+ */
 function getConnection() {
 	try {
 		// $dsn = "mysql:host=";
@@ -21,6 +25,10 @@ function getConnection() {
 	return $dbConnection;
 }
 
+/**
+ * [Obtiene Usuarios activos]
+ * @return Array $result
+ */
 function getUsers() {
 	$sql = "SELECT id_usuario, id_nivel, id_rol, id_area, id_puesto,
 		interno, cea, laboratorio, supervisa, analiza, muestrea,
@@ -41,6 +49,11 @@ function getUsers() {
 	return $result;
 }
 
+/**
+ * [Obtiene un Usuario, por Id]
+ * @param  integer $userId [Id del usuario a obteners]
+ * @return stdClass $user
+ */
 function getUser($userId) {
 	$sql = "SELECT id_usuario, id_nivel, id_rol, id_area, id_puesto,
 		interno, cea, laboratorio, supervisa, analiza, muestrea,
@@ -55,11 +68,17 @@ function getUser($userId) {
 	$stmt = $db->prepare($sql);
 	$stmt->bindParam("userId", $userId);
 	$stmt->execute();
-	$user = (array) $stmt->fetchAll(PDO::FETCH_OBJ)[0];
+	$user = $stmt->fetch(PDO::FETCH_OBJ);
 	$db = null;
-	return (object) $user;
+	return $user;
 }
 
+/**
+ * [Obtiene las credenciales de un Usuario, por $userName y $userPassword]
+ * @param  string $userName [Nombre de Usuario]
+ * @param  string $userPassword [Contraseña del Usuario]
+ * @return stdClass $user
+ */
 function getUserByCredentials($userName, $userPassword) {
 	$sql = "SELECT id_usuario, id_nivel, id_rol, id_area, id_puesto,
 		interno, cea, laboratorio, supervisa, analiza, muestrea,
@@ -75,9 +94,9 @@ function getUserByCredentials($userName, $userPassword) {
 	$stmt->bindParam("userName", $userName);
 	$stmt->bindParam("userPassword", $userPassword);
 	$stmt->execute();
-	$user = (array) $stmt->fetchAll(PDO::FETCH_OBJ)[0];
+	$user = $stmt->fetch(PDO::FETCH_OBJ);
 	$db = null;
-	return (object) $user;
+	return $user;
 }
 
 function insertUser($userData) {
@@ -182,9 +201,9 @@ function getClient($clientId) {
 	$stmt = $db->prepare($sql);
 	$stmt->bindParam("clientId", $clientId);
 	$stmt->execute();
-	$client = (array) $stmt->fetchAll(PDO::FETCH_OBJ)[0];
+	$client = $stmt->fetch(PDO::FETCH_OBJ);
 	$db = null;
-	return (object) $client;
+	return $client;
 }
 
 function getStudies() {
@@ -293,9 +312,9 @@ function getPlainStudy($studyId) {
 	$stmt = $db->prepare($sql);
 	$stmt->bindParam("studyId", $studyId);
 	$stmt->execute();
-	$study = (array) $stmt->fetchAll(PDO::FETCH_OBJ)[0];
+	$study = $stmt->fetch(PDO::FETCH_OBJ);
 	$db = null;
-	return (object) $study;
+	return $study;
 }
 
 function getStudy($studyId) {
@@ -327,9 +346,9 @@ function getLastStudyByYear($yearId) {
 	$stmt = $db->prepare($sql);
 	$stmt->bindParam("yearId", $yearId);
 	$stmt->execute();
-	$result = (array) $stmt->fetchAll(PDO::FETCH_OBJ)[0];
+	$result = $stmt->fetch(PDO::FETCH_OBJ);
 	$db = null;
-	return (object) $result;
+	return $result;
 }
 
 function insertStudy($insertData) {
@@ -463,9 +482,9 @@ function getPlainOrder($orderId) {
 	$stmt = $db->prepare($sql);
 	$stmt->bindParam("orderId", $orderId);
 	$stmt->execute();
-	$order = (array) $stmt->fetchAll(PDO::FETCH_OBJ)[0];
+	$order = $stmt->fetch(PDO::FETCH_OBJ);
 	$db = null;
-	return (object) $order;
+	return $order;
 }
 
 function getOrder($orderId) {
@@ -945,9 +964,9 @@ function getPlainSheet($sheetId) {
 	$stmt = $db->prepare($sql);
 	$stmt->bindParam("sheetId", $sheetId);
 	$stmt->execute();
-	$sheet = (array) $stmt->fetchAll(PDO::FETCH_OBJ)[0];
+	$sheet = $stmt->fetch(PDO::FETCH_OBJ);
 	$db = null;
-	return (object) $sheet;
+	return $sheet;
 }
 
 function getSheet($sheetId) {
@@ -1253,9 +1272,9 @@ function getPoint($pointId) {
 	$stmt = $db->prepare($sql);
 	$stmt->bindParam("pointId", $pointId);
 	$stmt->execute();
-	$point = (array) $stmt->fetchAll(PDO::FETCH_OBJ)[0];
+	$point = $stmt->fetch(PDO::FETCH_OBJ);
 	$db = null;
-	return (object) $point;
+	return $point;
 }
 
 function getPointPackages() {
@@ -1311,9 +1330,9 @@ function getMethod($methodId) {
 	$stmt = $db->prepare($sql);
 	$stmt->bindParam("methodId", $methodId);
 	$stmt->execute();
-	$method = (array) $stmt->fetchAll(PDO::FETCH_OBJ)[0];
+	$method = $stmt->fetch(PDO::FETCH_OBJ);
 	$db = null;
-	return (object) $method;
+	return $method;
 }
 
 function getParameters() {
@@ -1519,9 +1538,9 @@ function getParameter($parameterId) {
 	$stmt = $db->prepare($sql);
 	$stmt->bindParam("parameterId", $parameterId);
 	$stmt->execute();
-	$parameter = (array) $stmt->fetchAll(PDO::FETCH_OBJ)[0];
+	$parameter = $stmt->fetch(PDO::FETCH_OBJ);
 	$db = null;
-	return (object) $parameter;
+	return $parameter;
 }
 
 function getParametersByNorm($normId) {
@@ -1578,9 +1597,9 @@ function getNorm($normId) {
 	$stmt = $db->prepare($sql);
 	$stmt->bindParam("normId", $normId);
 	$stmt->execute();
-	$norm = (array) $stmt->fetchAll(PDO::FETCH_OBJ)[0];
+	$norm = $stmt->fetch(PDO::FETCH_OBJ);
 	$db = null;
-	return (object) $norm;
+	return $norm;
 }
 
 function getSamplingTypes() {
@@ -1603,9 +1622,9 @@ function getSamplingType($samplingTypeId) {
 	$stmt = $db->prepare($sql);
 	$stmt->bindParam("samplingTypeId", $samplingTypeId);
 	$stmt->execute();
-	$samplingType = (array) $stmt->fetchAll(PDO::FETCH_OBJ)[0];
+	$samplingType = $stmt->fetch(PDO::FETCH_OBJ);
 	$db = null;
-	return (object) $samplingType;
+	return $samplingType;
 }
 
 function getMatrices() {
@@ -1630,9 +1649,9 @@ function getMatrix($matrixId) {
 	$stmt = $db->prepare($sql);
 	$stmt->bindParam("matrixId", $matrixId);
 	$stmt->execute();
-	$matrix = (array) $stmt->fetchAll(PDO::FETCH_OBJ)[0];
+	$matrix = $stmt->fetch(PDO::FETCH_OBJ);
 	$db = null;
-	return (object) $matrix;
+	return $matrix;
 }
 
 function getContainers() {
@@ -1871,9 +1890,9 @@ function getSamplingEmployee($userId) {
 	$stmt = $db->prepare($sql);
 	$stmt->bindParam("userId", $userId);
 	$stmt->execute();
-	$samplingEmployee = (array) $stmt->fetchAll(PDO::FETCH_OBJ)[0];
+	$samplingEmployee = $stmt->fetch(PDO::FETCH_OBJ);
 	$db = null;
-	return (object) $samplingEmployee;
+	return $samplingEmployee;
 }
 
 function getPointKinds() {
@@ -1908,9 +1927,9 @@ function getDistrict($districtId) {
 	$stmt = $db->prepare($sql);
 	$stmt->bindParam("districtId", $districtId);
 	$stmt->execute();
-	$district = (array) $stmt->fetchAll(PDO::FETCH_OBJ)[0];
+	$district = $stmt->fetch(PDO::FETCH_OBJ);
 	$db = null;
-	return (object) $district;
+	return $district;
 }
 
 function getCitiesByDistrictId($districtId) {

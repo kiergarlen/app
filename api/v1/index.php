@@ -334,6 +334,20 @@ $app->get("/receptions(/)(:receptionId)", function($receptionId = -1) use ($app)
 	}
 });
 
+$app->get("/areas/reception", function() use ($app) {
+	try {
+		//$userId = decodeUserToken($app->request())->uid;
+		$result = json_encode(getReceivingAreas());
+		$app->response()->status(200);
+		$app->response()->header('Content-Type', 'application/json');
+		//$result = ")]}',\n" . $result;
+		print_r($result);
+	} catch (Exception $e) {
+		$app->response()->status(400);
+		$app->response()->header('X-Status-Reason', $e->getMessage());
+	}
+});
+
 $app->post("/receptions", function() use ($app) {
 	try {
 		$userId = decodeUserToken($app->request())->uid;

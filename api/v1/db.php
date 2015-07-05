@@ -1209,6 +1209,18 @@ function getAreas() {
 	return $areas;
 }
 
+function getReceivingAreas() {
+	$sql = "SELECT id_area, area, activo
+		FROM Area
+		WHERE activo = 1 AND recibe = 1";
+	$db = getConnection();
+	$stmt = $db->prepare($sql);
+	$stmt->execute();
+	$areas = $stmt->fetchAll(PDO::FETCH_ASSOC);
+	$db = null;
+	return $areas;
+}
+
 function getAreasByReception($receptionId) {
 	$sql = "SELECT  id_recepcion_area, id_recepcion, id_area,
 		id_muestra, volumen, vigencia, recipiente
@@ -1222,18 +1234,9 @@ function getAreasByReception($receptionId) {
 	$db = null;
 	$l = count($areas);
 	for ($i = 0; $i < $l; $i++) {
-		$areas[$i]["volumen"] = false;
-		if ($areas[$i]["volumen"] < 0) {
-			$areas[$i]["volumen"] = true;
-		}
-		$areas[$i]["vigencia"] = false;
-		if ($areas[$i]["vigencia"] < 0) {
-			$areas[$i]["vigencia"] = true;
-		}
-		$areas[$i]["recipiente"] = false;
-		if ($areas[$i]["recipiente"] < 0) {
-			$areas[$i]["recipiente"] = true;
-		}
+		$areas[$i]["volumen"] = ($areas[$i]["volumen"] > 0);
+		$areas[$i]["vigencia"] = ($areas[$i]["vigencia"] > 0);
+		$areas[$i]["recipiente"] = ($areas[$i]["recipiente"] > 0);
 	}
 	return $areas;
 }

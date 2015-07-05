@@ -1540,13 +1540,13 @@
    * @param {Object} SamplingEmployeeService - Proveedor de datos, Empleados muestreo
    * @param {Object} SheetSampleService - Proveedor de datos, Muestras por Hoja de campo
    * @param {Object} PreservationService - Proveedor de datos, Preservaciones
-   * @param {Object} AreaService - Proveedor de datos, Áreas
+   * @param {Object} ReceivingAreaService - Proveedor de datos, Áreas receptoras
    * @param {Object} ReceptionService - Proveedor de datos, Recepción muestras
    */
   function ReceptionController($scope, $routeParams, TokenService,
     ValidationService, RestUtilsService, ArrayUtilsService,
     DateUtilsService, SamplingEmployeeService, SheetSampleService,
-    PreservationService, AreaService, ReceptionService) {
+    PreservationService, ReceivingAreaService, ReceptionService) {
     var vm = this;
     vm.user = TokenService.getUserFromToken();
     vm.reception = {};
@@ -1561,34 +1561,12 @@
     vm.rejectItem = rejectItem;
     vm.submitForm = submitForm;
 
-    /*
-
     ReceptionService
       .query({receptionId: $routeParams.receptionId})
       .$promise
       .then(function success(response) {
         vm.reception = response;
-        // if (!vm.reception.muestras || vm.reception.muestras.length < 1) {
-        //   vm.reception.muestras = [];
-        //   SheetSampleService
-        //     .get({sheetId: vm.reception.id_hoja})
-        //     .$promise
-        //     .then(function success(response) {
-        //       var i = 0;
-        //       var l = 0;
-        //       vm.samples = response;
-        //       vm.validationSamples = response;
-        //       l = vm.samples.length;
-        //       for (i = 0; i < l; i += 1) {
-        //         vm.samples[i].id_hoja = vm.reception.id_recepcion;
-        //         vm.samples[i].activo = 0;
-        //         vm.samples[i].selected = false;
-        //       }
-        //       //vm.reception.muestras = vm.samples.slice('');
-        //     });
-        // } else {
-        //   //vm.samples = vm.reception.muestras.slice('');
-        // }
+        /*
         PreservationService
           .get()
           .$promise
@@ -1596,6 +1574,15 @@
             var i = 0;
             var l = 0;
             vm.preservations = response;
+            l = vm.preservations.length;
+            for (i = 0; i < l; i += 1) {
+              vm.preservations[i].id_recepcion_preservacion = 0;
+              vm.preservations[i].id_recepcion = vm.reception.id_recepcion;
+              vm.preservations[i].cantidad = 0;
+              vm.preservations[i].preservado = 0;
+              vm.preservations[i].activo = 0;
+              vm.preservations[i].selected = false;
+            }
             ArrayUtilsService.seItemsFromReference(
               vm.preservations,
               vm.reception.preservaciones,
@@ -1610,45 +1597,7 @@
               ]
             );
           });
-      });
-
-
-    function selectPreservations() {
-      if (vm.preservations.length > 0 && vm.reception.preservaciones) {
-        console.log(vm.preservations);
-        if (vm.reception.preservaciones.length > 0 && !vm.isPreservationListLoaded) {
-          console.log(vm.preservations);
-          ArrayUtilsService.seItemsFromReference(
-            vm.preservations,
-            vm.reception.preservaciones,
-            'id_preservacion',
-            [
-              'id_recepcion_preservacion',
-              'id_recepcion',
-              'cantidad',
-              'preservado',
-              'activo',
-              'selected'
-            ]
-          );
-          vm.isPreservationListLoaded = true;
-        } else {
-          vm.reception.preservaciones = [];
-          vm.reception.preservaciones = ArrayUtilsService.selectItemsFromCollection(
-            vm.preservations,
-            'selected',
-            true
-          ).slice();
-        }
-      }
-    }
-    */
-
-    ReceptionService
-      .query({receptionId: $routeParams.receptionId})
-      .$promise
-      .then(function success(response) {
-        vm.reception = response;
+        */
         PreservationService
           .get()
           .$promise
@@ -1656,6 +1605,15 @@
             var i = 0;
             var l = 0;
             vm.preservations = response;
+            l = vm.preservations.length;
+            for (i = 0; i < l; i += 1) {
+              vm.preservations[i].id_recepcion_preservacion = 0;
+              vm.preservations[i].id_recepcion = vm.reception.id_recepcion;
+              vm.preservations[i].cantidad = 0;
+              vm.preservations[i].preservado = 0;
+              vm.preservations[i].activo = 0;
+              vm.preservations[i].selected = false;
+            }
             ArrayUtilsService.seItemsFromReference(
               vm.preservations,
               vm.reception.preservaciones,
@@ -1670,24 +1628,32 @@
               ]
             );
           });
-        PreservationService
+        ReceivingAreaService
           .get()
           .$promise
           .then(function success(response) {
             var i = 0;
             var l = 0;
-            vm.preservations = response;
+            vm.areas = response;
+            l = vm.areas.length;
+            for (i = 0; i < l; i += 1) {
+              vm.areas[i].id_recepcion_area = 0;
+              vm.areas[i].id_recepcion = vm.reception.id_recepcion;
+              vm.areas[i].id_muestra = 0;
+              vm.areas[i].volumen = false;
+              vm.areas[i].vigencia = false;
+              vm.areas[i].recipiente = false;
+            }
             ArrayUtilsService.seItemsFromReference(
-              vm.preservations,
-              vm.reception.preservaciones,
-              'id_preservacion',
+              vm.areas,
+              vm.reception.areas,
+              'id_area',
               [
-                'id_recepcion_preservacion',
-                'id_recepcion',
-                'cantidad',
-                'preservado',
-                'activo',
-                'selected'
+                'id_recepcion_area',
+                'id_muestra',
+                'volumen',
+                'vigencia',
+                'recipiente'
               ]
             );
           });
@@ -1771,7 +1737,7 @@
         '$scope', '$routeParams', 'TokenService',
         'ValidationService', 'RestUtilsService', 'ArrayUtilsService',
         'DateUtilsService','SamplingEmployeeService', 'SheetSampleService',
-        'PreservationService', 'AreaService', 'ReceptionService',
+        'PreservationService', 'ReceivingAreaService', 'ReceptionService',
         ReceptionController
       ]
     );

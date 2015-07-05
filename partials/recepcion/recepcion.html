@@ -207,7 +207,7 @@
   </div>
   <div class="row">
     <div class="col-xs-12 col-sm-6"
-      data-ng-repeat="sample in reception.samples">
+      data-ng-repeat="sample in reception.reception.muestras">
       <div class="row">
         <div class="col-xs-12 col-sm-4">
           <label>
@@ -215,10 +215,10 @@
               value="{{sample.selected}}"
               data-ng-model="sample.selected"
               >
-              {{::sample.id_muestra}}
+              {{sample.id_muestra}}
           </label>
           <br>
-          ({{::sample.punto.punto}})
+          ({{sample.punto.punto}})
         </div>
       </div>
     </div>
@@ -231,7 +231,7 @@
   <div class="row">
     <div class="col-xs-12 col-sm-6">
       <label for="sampleSelect">
-        Muestra a verificar
+        Muestra a verificar {{reception.reception.id_muestra_validacion}}
       </label>
       <select class="form-control"
         id="sampleSelect"
@@ -239,10 +239,11 @@
         data-ng-model="reception.reception.id_muestra_validacion"
         >
         <option
-          data-ng-repeat="sample in reception.validationSamples"
-          value="{{sample.id_muestra}}">
-          {{::sample.id_muestra}} -
-          ({::sample.punto.punto})
+          data-ng-repeat="validationSample in reception.reception.muestras"
+          value="{{validationSample.id_muestra}}">
+          {{validationSample.id_muestra}}
+          -
+          ({{validationSample.punto.punto}})
         </option>
       </select>
     </div>
@@ -288,14 +289,14 @@
     </div>
   </div>
   <div class="row"
-    data-ng-repeat="container in reception.reception.areas">
+    data-ng-repeat="area in reception.areas">
     <div class="col-xs-12 col-sm-3">
-      {{::container.id_area}}
+      {{::area.area}}
     </div>
     <div class="col-xs-12 col-sm-3">
       <label>
         <input type="checkbox"
-          data-ng-model="container.volumen"
+          data-ng-model="area.volumen"
           >
           Conforme
       </label>
@@ -303,7 +304,7 @@
     <div class="col-xs-12 col-sm-3">
       <label>
         <input type="checkbox"
-          data-ng-model="container.vigencia"
+          data-ng-model="area.vigencia"
           >
           Conforme
       </label>
@@ -311,7 +312,7 @@
     <div class="col-xs-12 col-sm-3">
       <label>
         <input type="checkbox"
-          data-ng-model="container.contenedor"
+          data-ng-model="area.recipiente"
           >
           Conforme
       </label>

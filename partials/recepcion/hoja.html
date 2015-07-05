@@ -310,7 +310,8 @@
         required
         data-ng-model="sheet.sheet.id_nubes"
         >
-        <option data-ng-repeat="cloudCover in sheet.cloudCovers"
+        <option
+          data-ng-repeat="cloudCover in sheet.cloudCovers"
           value="{{cloudCover.id_nubes}}">
           {{::cloudCover.nubes}}
         </option>
@@ -326,7 +327,8 @@
         required
         data-ng-model="sheet.sheet.id_direccion_corriente"
         >
-        <option data-ng-repeat="windDirection in sheet.windDirections"
+        <option
+          data-ng-repeat="windDirection in sheet.windDirections"
           value="{{windDirection.id_direccion_corriente}}">
           {{::windDirection.direccion_corriente}}
         </option>
@@ -342,7 +344,8 @@
         required
         data-ng-model="sheet.sheet.id_oleaje"
         >
-        <option data-ng-repeat="waveIntensity in sheet.waveIntensities"
+        <option
+          data-ng-repeat="waveIntensity in sheet.waveIntensities"
           value="{{waveIntensity.id_oleaje}}">
           {{::waveIntensity.oleaje}}
         </option>

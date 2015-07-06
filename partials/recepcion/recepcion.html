@@ -229,6 +229,26 @@
     </div>
   </div>
   <div class="row">
+    <div class="col-xs-12">
+      <label for="sampleNewSelect">
+        Muestra a verificar {{reception.reception.id_muestra_validacion}}
+      </label>
+      <select class="form-control"
+        id="sampleNewSelect"
+        name="sampleNewSelect"
+        data-ng-model="reception.reception.id_muestra_validacion"
+        >
+        <option
+          data-ng-repeat="receptionist in reception.reception.muestras"
+          value="{{receptionist.id_muestra}}">
+          {{::receptionist.id_muestra}}
+          -
+          {{::receptionist.id_punto}}
+        </option>
+      </select>
+    </div>
+  </div>
+  <div class="row">
     <div class="col-xs-12 col-sm-6">
       <label for="sampleSelect">
         Muestra a verificar {{reception.reception.id_muestra_validacion}}

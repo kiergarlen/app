@@ -1824,7 +1824,7 @@
    */
   function SheetSampleService($resource, TokenService) {
     return $resource(API_BASE_URL + 'sheet/samples/:sheetId', {}, {
-      get: {
+      query: {
         method: 'GET',
         params: {sheetId: 'id_hoja'},
         isArray: true,

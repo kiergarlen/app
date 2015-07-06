@@ -1566,38 +1566,14 @@
       .$promise
       .then(function success(response) {
         vm.reception = response;
-        /*
-        PreservationService
-          .get()
+
+        SheetSampleService
+          .query({sheetId: vm.reception.id_hoja})
           .$promise
           .then(function success(response) {
-            var i = 0;
-            var l = 0;
-            vm.preservations = response;
-            l = vm.preservations.length;
-            for (i = 0; i < l; i += 1) {
-              vm.preservations[i].id_recepcion_preservacion = 0;
-              vm.preservations[i].id_recepcion = vm.reception.id_recepcion;
-              vm.preservations[i].cantidad = 0;
-              vm.preservations[i].preservado = 0;
-              vm.preservations[i].activo = 0;
-              vm.preservations[i].selected = false;
-            }
-            ArrayUtilsService.seItemsFromReference(
-              vm.preservations,
-              vm.reception.preservaciones,
-              'id_preservacion',
-              [
-                'id_recepcion_preservacion',
-                'id_recepcion',
-                'cantidad',
-                'preservado',
-                'activo',
-                'selected'
-              ]
-            );
+            vm.samples = response;
           });
-        */
+
         PreservationService
           .get()
           .$promise

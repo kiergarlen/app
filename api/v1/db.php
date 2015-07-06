@@ -1448,7 +1448,7 @@ function getSamplesByReception($receptionId) {
 	$l = count($samples);
 	for ($i = 0; $i < $l; $i++) {
 		$samples[$i]["selected"] = false;
-		if ($samples[$i]["activo"] == 1) {
+		if ($samples[$i]["activo"] > 0) {
 			$samples[$i]["selected"] = true;
 		}
 	}

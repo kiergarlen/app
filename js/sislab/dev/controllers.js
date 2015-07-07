@@ -1552,7 +1552,6 @@
     vm.reception = {};
     vm.receptionists = SamplingEmployeeService.get();
     vm.samples = [];
-    vm.validationSamples = [];
     vm.preservations = [];
     vm.areas = [];
     vm.message = '';
@@ -1566,14 +1565,31 @@
       .$promise
       .then(function success(response) {
         vm.reception = response;
-
         SheetSampleService
           .query({sheetId: vm.reception.id_hoja})
           .$promise
           .then(function success(response) {
+            var i = 0;
+            var l = 0;
             vm.samples = response;
+            l = vm.samples.length;
+            for (i = 0; i < l; i += 1) {
+              vm.samples[i].id_recepcion = $routeParams.receptionId;
+              vm.samples[i].selected = false;
+              vm.samples[i].punto = {};
+            }
+            ArrayUtilsService.seItemsFromReference(
+              vm.samples,
+              vm.reception.muestras,
+              'id_muestra',
+              [
+                'id_recepcion_muestra',
+                'id_recepcion',
+                'punto',
+                'selected'
+              ]
+            );
           });
-
         PreservationService
           .get()
           .$promise

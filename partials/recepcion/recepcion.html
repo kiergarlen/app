@@ -202,12 +202,12 @@
   </div>
   <div class="row">
     <div class="col-xs-12">
-      <h4>Muestras recibidas {reception.selectSamples()}</h4>
+      <h4>Muestras recibidas</h4>
     </div>
   </div>
   <div class="row">
     <div class="col-xs-12 col-sm-6"
-      data-ng-repeat="sample in reception.reception.muestras">
+      data-ng-repeat="sample in reception.samples">
       <div class="row">
         <div class="col-xs-12 col-sm-4">
           <label>
@@ -228,122 +228,25 @@
       <h4>Verificación</h4>
     </div>
   </div>
-
-
   <div class="row">
-    <div class="col-xs-12 col-sm-6">
-      <!--
-      <label for="sampleSelect">
-        Muestra a verificar {{reception.reception.id_muestra_validacion}}
+    <div class="col-xs-8">
+      <label for="verifiedSampleSelect">
+        Muestra seleccionada
+        <!-- TODO: It does not select pre-loaded ID, must fix -->
       </label>
       <select class="form-control"
-        id="sampleSelect"
-        name="sampleSelect"
+        id="validationSampleSelect"
+        name="validationSampleSelect"
         data-ng-model="reception.reception.id_muestra_validacion"
         >
         <option
-          data-ng-repeat="validationSample in reception.reception.muestras"
+          data-ng-repeat="validationSample in reception.samples"
           value="{{validationSample.id_muestra}}">
           {{validationSample.id_muestra}}
           -
           ({{validationSample.punto.punto}})
         </option>
       </select>
-      -->
-      <h4>ID MUESTRA VALIDACION: {{reception.reception.id_muestra_validacion}}</h4>
-      <select class="form-control"
-        data-ng-model="reception.reception.id_muestra_validacion"
-        >
-        <option
-          data-ng-repeat="vs in reception.samples"
-          value="{{vs.id_muestra}}">
-          {{vs.id_muestra}}
-          -
-          ({{vs.punto.punto}})
-        </option>
-      </select>
-      <table class="table table-hover table-condensed">
-        <tr>
-          <th>id_muestra</th>
-          <th>id_estudio</th>
-          <th>id_cliente</th>
-          <th>id_orden</th>
-          <th>id_plan</th>
-          <th>id_hoja</th>
-          <th>id_recepcion</th>
-          <th>id_custodia</th>
-          <th>id_paquete</th>
-          <th>id_ubicacion</th>
-          <th>id_punto</th>
-          <th>fecha_muestreo</th>
-          <th>comentarios</th>
-          <th>activo</th>
-        </tr>
-        <tbody>
-          <tr
-            data-ng-repeat="vsa in reception.samples"
-            >
-            <td>{{vsa.id_muestra}}</td>
-            <td>{{vsa.id_estudio}}</td>
-            <td>{{vsa.id_cliente}}</td>
-            <td>{{vsa.id_orden}}</td>
-            <td>{{vsa.id_plan}}</td>
-            <td>{{vsa.id_hoja}}</td>
-            <td>{{vsa.id_recepcion}}</td>
-            <td>{{vsa.id_custodia}}</td>
-            <td>{{vsa.id_paquete}}</td>
-            <td>{{vsa.id_ubicacion}}</td>
-            <td>{{vsa.id_punto}}</td>
-            <td>{{vsa.fecha_muestreo}}</td>
-            <td>{{vsa.comentarios}}</td>
-            <td>{{vsa.activo}}</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-xs-12">
-      <table class="table table-hover table-condensed">
-        <tr>
-          <th>id_muestra</th>
-          <th>id_estudio</th>
-          <th>id_cliente</th>
-          <th>id_orden</th>
-          <th>id_plan</th>
-          <th>id_hoja</th>
-          <th>id_recepcion</th>
-          <th>id_custodia</th>
-          <th>id_paquete</th>
-          <th>id_ubicacion</th>
-          <th>id_punto</th>
-          <th>fecha_muestreo</th>
-          <th>comentarios</th>
-          <th>activo</th>
-          <th>selected</th>
-        </tr>
-        <tbody>
-          <tr
-            data-ng-repeat="vsb in reception.reception.muestras"
-            >
-            <td>{{vsb.id_muestra}}</td>
-            <td>{{vsb.id_estudio}}</td>
-            <td>{{vsb.id_cliente}}</td>
-            <td>{{vsb.id_orden}}</td>
-            <td>{{vsb.id_plan}}</td>
-            <td>{{vsb.id_hoja}}</td>
-            <td>{{vsb.id_recepcion}}</td>
-            <td>{{vsb.id_custodia}}</td>
-            <td>{{vsb.id_paquete}}</td>
-            <td>{{vsb.id_ubicacion}}</td>
-            <td>{{vsb.id_punto}}</td>
-            <td>{{vsb.fecha_muestreo}}</td>
-            <td>{{vsb.comentarios}}</td>
-            <td>{{vsb.activo}}</td>
-            <td>{{vsb.selected}}</td>
-          </tr>
-        </tbody>
-      </table>
     </div>
   </div>
   <div class="row">

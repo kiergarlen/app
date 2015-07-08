@@ -215,10 +215,10 @@
               value="{{sample.selected}}"
               data-ng-model="sample.selected"
               >
-              {{sample.id_muestra}}
+              {{::sample.id_muestra}}
           </label>
           <br>
-          ({{sample.punto.punto}})
+          ({{::sample.punto.punto}})
         </div>
       </div>
     </div>
@@ -228,27 +228,7 @@
       <h4>Verificación</h4>
     </div>
   </div>
-  <div class="row">
-    <div class="col-xs-8">
-      <label for="verifiedSampleSelect">
-        Muestra seleccionada
-        <!-- TODO: It does not select pre-loaded ID, must fix -->
-      </label>
-      <select class="form-control"
-        id="validationSampleSelect"
-        name="validationSampleSelect"
-        data-ng-model="reception.reception.id_muestra_validacion"
-        >
-        <option
-          data-ng-repeat="validationSample in reception.samples"
-          value="{{validationSample.id_muestra}}">
-          {{validationSample.id_muestra}}
-          -
-          ({{validationSample.punto.punto}})
-        </option>
-      </select>
-    </div>
-  </div>
+
   <div class="row">
     <div class="col-xs-12">
       <h5>Conformidad por preservación</h5>

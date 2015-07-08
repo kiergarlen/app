@@ -59,11 +59,11 @@
 
     /**
      * @function extractItemFromCollection
-     * @desc Extrae un ítem de un Array, coincidiendo una propiedad y su valor
-     * @param {Array} collection - Array de ítems a extraer
+     * @desc Extrae un ítem de un Array, coincidiendo el valor de una propiedad
+     * @param {Array} collection - Array de origen
      * @param {String} field - Nombre de la propiedad a coincidir
      * @param {Object} value - Valor de la propiedad a coincidir
-     * @return {Object} item - Item extraído
+     * @return {Object} item - Ítem extraído
      */
     function extractItemFromCollection(collection, field, value) {
       var i = 0;
@@ -80,8 +80,7 @@
 
     /**
      * @function seItemsFromReference
-     * @desc Cambia el valor de una propiedad de ítem de un Array,
-     * coincidiendo una propiedad y su valor desde otro Array
+     * @desc Cambia las propiedades de ítem de un Array desde otro Array de referencia
      * @param {Array} collection - Array de ítems a modificar
      * @param {Array} reference - Array de referencia
      * @param {String} matchField - Nombre de la propiedad a coincidir

@@ -1571,6 +1571,7 @@
           .then(function success(response) {
             var i = 0;
             var l = 0;
+            var sampleSource = [];
             vm.samples = response;
             l = vm.samples.length;
             for (i = 0; i < l; i += 1) {

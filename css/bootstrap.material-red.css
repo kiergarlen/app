@@ -1,5 +1,5 @@
-/*
 @import url("http://fonts.googleapis.com/css?family=Roboto:300,400,500");
+/*
 */
 /*!
  * bootswatch v3.3.0
@@ -3982,6 +3982,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 }
 .navbar-brand > img {
   display: block;
+  margin-top: -14px;
 }
 @media (min-width: 768px) {
   .navbar > .container .navbar-brand,

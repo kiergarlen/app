@@ -1665,11 +1665,11 @@
 
     function isFormValid() {
       vm.message = '';
-      if (!DateUtilsService.isValidDate(new Date(vm.reception.hoja.fecha_muestreo))) {
-        vm.message += ' Ingrese una fecha/hora de muestreo válida ';
+      if (!DateUtilsService.isValidDate(new Date(vm.reception.fecha_entrega))) {
+        vm.message += ' Ingrese una fecha/hora de entrega válida ';
         return false;
       }
-      if (!DateUtilsService.isValidDate(new Date(vm.reception.hoja.fecha_recibe))) {
+      if (!DateUtilsService.isValidDate(new Date(vm.reception.fecha_recibe))) {
         vm.message += ' Ingrese una fecha/hora de recepción válida ';
         return false;
       }
@@ -1678,21 +1678,21 @@
         return false;
       }
       if (vm.reception.muestras.length < 1) {
-        vm.message += ' Confirme la recepción de al menos una muestra ';
+        vm.message += ' Confirme la recepción de una muestra ';
         return false;
       }
       if (vm.reception.id_muestra_validacion < 1) {
-        vm.message += ' Selececcione una muestra a verificar ';
+        vm.message += ' Seleccione una muestra a verificar ';
         return false;
       }
-      if (vm.reception.validacion_preservaciones.length < 1) {
-        vm.message += ' Seleccione al menos una preservación ';
-        return false;
-      }
-      if (vm.reception.validacion_contenedores.length < 1) {
-        vm.message += ' Seleccione al menos un tipo de análisis ';
-        return false;
-      }
+      // if (vm.reception.preservaciones.length < 1) {
+      //   // vm.message += ' Seleccione al menos una preservación ';
+      //   // return false;
+      // }
+      // if (vm.reception.areas.length < 1) {
+      //   // vm.message += ' Seleccione al menos un tipo de análisis ';
+      //   // return false;
+      // }
       if (vm.user.level < 3) {
         if (vm.reception.id_status == 3 && vm.reception.motivo_rechaza.length < 1) {
           vm.message += ' Ingrese el motivo de rechazo del Informe ';

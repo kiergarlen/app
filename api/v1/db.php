@@ -860,7 +860,8 @@ function updatePlan($updateData) {
 		id_usuario_actualiza = :id_usuario_actualiza, fecha = :fecha,
 		fecha_probable = :fecha_probable,
 		fecha_calibracion = :fecha_calibracion,
-		fecha_valida = :fecha_valida, fecha_actualiza = :fecha_actualiza,
+		fecha_valida = :fecha_valida,
+		fecha_actualiza = :fecha_actualiza,
 		fecha_rechaza = :fecha_rechaza, ip_valida = :ip_valida,
 		ip_actualiza = :ip_actualiza, host_valida = :host_valida,
 		host_actualiza = :host_actualiza, calle = :calle,
@@ -872,8 +873,9 @@ function updatePlan($updateData) {
 		cantidad_equipos = :cantidad_equipos,
 		cantidad_recipientes = :cantidad_recipientes,
 		cantidad_reactivos = :cantidad_reactivos,
-		cantidad_hieleras = :cantidad_hieleras, frecuencia = :frecuencia,
-		objetivo_otro = :objetivo_otro, motivo_rechaza = :motivo_rechaza,
+		cantidad_hieleras = :cantidad_hieleras,
+		frecuencia = :frecuencia, objetivo_otro = :objetivo_otro,
+		motivo_rechaza = :motivo_rechaza,
 		comentarios = :comentarios, activo = :activo
 		WHERE id_plan = :id_plan";
 	$db = getConnection();
@@ -1015,9 +1017,9 @@ function getSheet($sheetId) {
 }
 
 function insertSheet($sheetData) {
-	$sql = "INSERT INTO Hoja (id_estudio, id_cliente, id_orden, id_plan,
-		id_paquete, id_nubes, id_direccion_corriente, id_oleaje,
-		id_status, id_usuario_captura, id_usuario_valida,
+	$sql = "INSERT INTO Hoja (id_estudio, id_cliente, id_orden,
+		id_plan, id_paquete, id_nubes, id_direccion_corriente,
+		id_oleaje, id_status, id_usuario_captura, id_usuario_valida,
 		id_usuario_actualiza, fecha_muestreo, fecha_entrega,
 		fecha_captura, fecha_valida, fecha_actualiza,
 		fecha_rechaza, ip_captura,
@@ -1044,13 +1046,16 @@ function insertSheet($sheetData) {
 function updateSheet($updateData) {
 	$sql = "UPDATE Hoja SET id_estudio = :id_estudio,
 		id_cliente = :id_cliente, id_orden = :id_orden,
-		id_plan = :id_plan, id_paquete = :id_paquete, id_nubes = :id_nubes,
+		id_plan = :id_plan, id_paquete = :id_paquete,
+		id_nubes = :id_nubes,
 		id_direccion_corriente = :id_direccion_corriente,
 		id_oleaje = :id_oleaje, id_status = :id_status,
 		id_usuario_valida = :id_usuario_valida,
 		id_usuario_actualiza = :id_usuario_actualiza,
-		fecha_muestreo = :fecha_muestreo, fecha_entrega = :fecha_entrega,
-		fecha_valida = :fecha_valida, fecha_actualiza = :fecha_actualiza,
+		fecha_muestreo = :fecha_muestreo,
+		fecha_entrega = :fecha_entrega,
+		fecha_valida = :fecha_valida,
+		fecha_actualiza = :fecha_actualiza,
 		fecha_rechaza = :fecha_rechaza, ip_valida = :ip_valida,
 		ip_actualiza = :ip_actualiza, host_valida = :host_valida,
 		host_actualiza = :host_actualiza,
@@ -1065,9 +1070,9 @@ function updateSheet($updateData) {
 }
 
 function insertSheetSample($sheetData) {
-	$sql = "INSERT INTO Hoja (id_estudio, id_cliente, id_orden, id_plan,
-		id_paquete, id_nubes, id_direccion_corriente, id_oleaje,
-		id_status, id_usuario_captura, id_usuario_valida,
+	$sql = "INSERT INTO Hoja (id_estudio, id_cliente, id_orden,
+		id_plan, id_paquete, id_nubes, id_direccion_corriente,
+		id_oleaje, id_status, id_usuario_captura, id_usuario_valida,
 		id_usuario_actualiza, fecha_muestreo, fecha_entrega,
 		fecha_captura, fecha_valida, fecha_actualiza,
 		fecha_rechaza, ip_captura,
@@ -1194,6 +1199,57 @@ function getReception($receptionId) {
 	// }
 	$reception->areas = $areas;
 	return $reception;
+}
+
+function insertReception($receptionData) {
+	$sql = "INSERT INTO Recepcion (id_orden, id_plan, id_hoja,
+		id_recepcionista, id_verificador, id_muestra_validacion,
+		id_status, id_usuario_captura, id_usuario_valida,
+		id_usuario_entrega, id_usuario_actualiza,
+		fecha_entrega, fecha_recibe, fecha_verifica, fecha_captura,
+		fecha_valida, fecha_actualiza
+		ip_captura, ip_valida, ip_actualiza,
+		host_captura, host_valida, host_actualiza,
+		comentarios, motivo_rechaza, activo)
+		VALUES (:id_orden, :id_plan, :id_hoja,
+		:id_recepcionista, :id_verificador, :id_muestra_validacion,
+		:id_status, :id_usuario_captura, :id_usuario_valida,
+		:id_usuario_entrega, :id_usuario_actualiza,
+		:fecha_entrega, :fecha_recibe, :fecha_verifica, :fecha_captura,
+		:fecha_valida, :fecha_actualiza,
+		:ip_captura, :ip_valida, :ip_actualiza,
+		:host_captura, :host_valida, :host_actualiza,
+		:comentarios, :motivo_rechaza, :activo)";
+	$db = getConnection();
+	$stmt = $db->prepare($sql);
+	$stmt->execute($receptionData);
+	$receptionId = $db->lastInsertId();
+	$db = null;
+	return $receptionId;
+}
+
+function updateReception($updateData) {
+	$sql = "UPDATE Reception SET id_orden = :id_orden,
+		id_plan = :id_plan, id_hoja = :id_hoja,
+		id_recepcionista = :id_recepcionista,
+		id_verificador = :id_verificador,
+		id_muestra_validacion = :id_muestra_validacion,
+		id_status = :id_status, id_usuario_valida = :id_usuario_valida,
+		id_usuario_entrega = :id_usuario_entrega,
+		id_usuario_actualiza = :id_usuario_actualiza,
+		fecha_entrega = :fecha_entrega, fecha_recibe = :fecha_recibe,
+		fecha_verifica = :fecha_verifica, fecha_valida = :fecha_valida,
+		fecha_actualiza = :fecha_actualiza,
+		ip_valida = :ip_valida, ip_actualiza = :ip_actualiza,
+		host_valida = :host_valida, host_actualiza = :host_actualiza,
+		comentarios = :comentarios, motivo_rechaza = :motivo_rechaza,
+		activo = :activo
+		WHERE id_recepcion = :id_recepcion";
+	$db = getConnection();
+	$stmt = $db->prepare($sql);
+	$stmt->execute($updateData);
+	$db = null;
+	return $updateData["id_recepcion"];
 }
 
 function getAreas() {

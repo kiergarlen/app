@@ -980,3 +980,104 @@ function processSheetResultsUpdate($sheetUpdateData) {
 	}
 	return $sheetId;
 }
+
+//TODO: workout how to inert automatically elements: Sheet, Reception, etc
+function processReceptionInsert($request) {
+	return $request;
+}
+
+function processReceptionUpdate($request) {
+	$token = decodeUserToken($request);
+	$update = (array) json_decode($request->getBody());
+	$samples = $update["muestras"];
+	$preservations = $update["preservaciones"];
+	$areas = $update["areas"];
+
+	// //MODEL
+	// id_orden,
+	// id_plan,
+	// id_hoja,
+	// id_recepcionista,
+	// id_verificador,
+	// id_muestra_validacion,
+	// id_status,
+	// id_usuario_valida,
+	// id_usuario_entrega,
+	// id_usuario_actualiza,
+	// fecha_entrega,
+	// fecha_recibe,
+	// fecha_verifica,
+	// fecha_valida,
+	// fecha_actualiza,
+	// ip_valida,
+	// ip_actualiza,
+	// host_valida,
+	// host_actualiza,
+	// comentarios,
+	// motivo_rechaza,
+	// activo
+	// 
+	// //RECEIVED DATA
+	// 
+	// 
+	// unset($update["orden"]);
+	// unset($update["norma"]);
+	// unset($update["parametros"]);
+	// unset($update["preservaciones"]);
+	// unset($update["muestras"]);
+
+	// unset($update["id_usuario_captura"]);
+	// unset($update["fecha_captura"]);
+	// unset($update["ip_captura"]);
+	// unset($update["host_captura"]);
+
+	// $update["id_usuario_actualiza"] = $token->uid;
+	// $update["fecha_actualiza"] = date('Y-m-d H:i:s');
+	// $update["ip_actualiza"] = $request->getIp();
+	// $update["host_actualiza"] = $request->getUrl();
+
+	// $update["fecha_muestreo"] = isoDateToMsSql($update["fecha_muestreo"]);
+	// $update["fecha_entrega"] = isoDateToMsSql($update["fecha_entrega"]);
+	// $update["fecha_rechaza"] = isoDateToMsSql($update["fecha_rechaza"]);
+
+	// if ($update["id_status"] == 2 && strlen($update["ip_valida"]) < 1)
+	// {
+	// 	$update["ip_valida"] = $request->getIp();
+	// 	$update["host_valida"] = $request->getUrl();
+	// 	$update["fecha_valida"] = isoDateToMsSql($update["fecha_valida"]);
+	// }
+
+	$receptionUpdateData = array(
+		"reception" = $update,
+		"samples" = $samples,
+		"preservations" = $preservations,
+		"areas" = $areas,
+	);
+	return $receptionUpdateData;
+}
+
+function processReceptionSamplesUpdate($receptionUpdateData) {
+	$samples = (array) $receptionUpdateData["samples"];
+	$receptionId = $receptionUpdateData["reception"]["id_reception"];
+	$storedSamples = getSamplesByReception($receptionId);
+
+	$i = 0;
+	$j = 0;
+	$l = count($storedSamples);
+	$m = count($samples);
+
+	// if ($l < 1)
+	// {
+	// 	for ($j = 0; $j < $m; $j++) {
+	// 		$sample = (array) $samples[$j];
+	// 		unset($sample["id_hoja_preservacion"]);
+	// 		unset($sample["id_tipo_preservacion"]);
+	// 		unset($sample["preservacion"]);
+	// 		unset($sample["descripcion"]);
+	// 		unset($sample["selected"]);
+	// 		insertReceptionSample($sample);
+	// 	}
+	// 	return $receptionId;
+	// }
+	return $receptionId;
+}

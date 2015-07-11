@@ -621,8 +621,8 @@
     }
 
     function removePlan(event) {
-      var field = '$$hashKey',
-      quoteRow = ArrayUtilsService.extractItemFromCollection(
+      var field = '$$hashKey';
+      return ArrayUtilsService.extractItemFromCollection(
         vm.order.planes,
         field,
         event[field]
@@ -1555,6 +1555,7 @@
     vm.preservations = [];
     vm.areas = [];
     vm.message = '';
+    vm.id_muestra_validacion = 0;
     vm.isDataSubmitted = false;
     vm.approveItem = approveItem;
     vm.rejectItem = rejectItem;
@@ -1565,13 +1566,13 @@
       .$promise
       .then(function success(response) {
         vm.reception = response;
+        vm.id_muestra_validacion = vm.reception.id_muestra_validacion;
         SheetSampleService
           .query({sheetId: vm.reception.id_hoja})
           .$promise
           .then(function success(response) {
             var i = 0;
             var l = 0;
-            var sampleSource = [];
             vm.samples = response;
             l = vm.samples.length;
             for (i = 0; i < l; i += 1) {

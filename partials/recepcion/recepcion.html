@@ -224,6 +224,29 @@
     </div>
   </div>
   <div class="row">
+    <div class="col-xs-12 col-sm-6">
+      <label for="sampleSelect">
+        Muestra verificada
+      </label>
+      <select class="form-control"
+        id="sampleSelect"
+        name="sampleSelect"
+        required
+        >
+        <!--
+        data-ng-model="id_muestra-verificacion"
+        -->
+        <option
+          data-ng-repeat="sample in reception.samples"
+          value="{{sample.id_muestra}}">
+          {{::sample.id_muestra}}
+          -
+          ({{::sample.punto.punto}})
+        </option>
+      </select>
+    </div>
+  </div>
+  <div class="row">
     <div class="col-xs-12">
       <h4>Verificación</h4>
     </div>

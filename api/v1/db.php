@@ -1107,6 +1107,7 @@ function getReceptions() {
 		CONVERT(nvarchar, fecha_captura, 126) AS fecha_captura,
 		CONVERT(nvarchar, fecha_valida, 126) AS fecha_valida,
 		CONVERT(nvarchar, fecha_actualiza, 126) AS fecha_actualiza,
+		CONVERT(nvarchar, fecha_rechaza, 126) AS fecha_rechaza,
 		ip_captura, ip_valida, ip_actualiza,
 		host_captura, host_valida, host_actualiza, comentarios,
 		motivo_rechaza, activo
@@ -1131,6 +1132,7 @@ function getPlainReception($receptionId) {
 		CONVERT(nvarchar, fecha_captura, 126) AS fecha_captura,
 		CONVERT(nvarchar, fecha_valida, 126) AS fecha_valida,
 		CONVERT(nvarchar, fecha_actualiza, 126) AS fecha_actualiza,
+		CONVERT(nvarchar, fecha_rechaza, 126) AS fecha_rechaza,
 		ip_captura, ip_valida, ip_actualiza,
 		host_captura, host_valida, host_actualiza, comentarios,
 		motivo_rechaza, activo
@@ -1207,7 +1209,7 @@ function insertReception($receptionData) {
 		id_status, id_usuario_captura, id_usuario_valida,
 		id_usuario_entrega, id_usuario_actualiza,
 		fecha_entrega, fecha_recibe, fecha_verifica, fecha_captura,
-		fecha_valida, fecha_actualiza
+		fecha_valida, fecha_actualiza, fecha_rechaza,
 		ip_captura, ip_valida, ip_actualiza,
 		host_captura, host_valida, host_actualiza,
 		comentarios, motivo_rechaza, activo)
@@ -1216,7 +1218,7 @@ function insertReception($receptionData) {
 		:id_status, :id_usuario_captura, :id_usuario_valida,
 		:id_usuario_entrega, :id_usuario_actualiza,
 		:fecha_entrega, :fecha_recibe, :fecha_verifica, :fecha_captura,
-		:fecha_valida, :fecha_actualiza,
+		:fecha_valida, :fecha_actualiza, fecha_rechaza,
 		:ip_captura, :ip_valida, :ip_actualiza,
 		:host_captura, :host_valida, :host_actualiza,
 		:comentarios, :motivo_rechaza, :activo)";
@@ -1240,6 +1242,7 @@ function updateReception($updateData) {
 		fecha_entrega = :fecha_entrega, fecha_recibe = :fecha_recibe,
 		fecha_verifica = :fecha_verifica, fecha_valida = :fecha_valida,
 		fecha_actualiza = :fecha_actualiza,
+		fecha_rechaza = :fecha_rechaza,
 		ip_valida = :ip_valida, ip_actualiza = :ip_actualiza,
 		host_valida = :host_valida, host_actualiza = :host_actualiza,
 		comentarios = :comentarios, motivo_rechaza = :motivo_rechaza,

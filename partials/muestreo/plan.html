@@ -129,7 +129,8 @@
         name="objectiveSelect"
         data-ng-model="plan.plan.id_objetivo_plan"
         >
-        <option data-ng-repeat="objective in plan.objectives"
+        <option
+          data-ng-repeat="objective in plan.objectives"
           value="{{objective.id_objetivo_plan}}">
           {{::objective.objetivo_plan}}
         </option>

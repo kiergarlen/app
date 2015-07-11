@@ -234,9 +234,9 @@
         data-ng-model="reception.reception.id_muestra_validacion"
         >
         <option
-          data-ng-repeat="validationSample in reception.reception.muestras"
+          data-ng-repeat="validationSample in reception.samples"
           value="{{validationSample.id_muestra_validacion}}">
-          {{::validationSample.id_muestra_validacion}}
+          {{validationSample.id_muestra_validacion}}
           -
           ({{::validationSample.punto.punto}})
         </option>

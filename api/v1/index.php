@@ -365,8 +365,10 @@ $app->post("/receptions", function() use ($app) {
 			$receptionUpdateData = processReceptionUpdate($request);
 			$result = json_encode($receptionUpdateData);
 			//$receptionId = updateReception($receptionUpdateData["reception"]);
-			//processReceptionOrderUpdate($receptionUpdateData);
-			$result = '{"id_recepcion":' . $receptionId . '}';
+			//$result = processReceptionSamplesUpdate($receptionUpdateData);
+			//$result = processReceptionPreservations($receptionUpdateData);
+			//$result = processReceptionAreas($receptionUpdateData);
+			//$result = '{"id_recepcion":' . $receptionId . '}';
 		}
 		$requestData = extractDataFromRequest($request);
 		$result = json_encode($requestData);

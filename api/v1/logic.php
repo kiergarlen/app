@@ -993,30 +993,6 @@ function processReceptionUpdate($request) {
 	$preservations = $update["preservaciones"];
 	$areas = $update["areas"];
 
-	// //MODEL
-	// id_orden,
-	// id_plan,
-	// id_hoja,
-	// id_recepcionista,
-	// id_verificador,
-	// id_muestra_validacion,
-	// id_status,
-	// id_usuario_valida,
-	// id_usuario_entrega,
-	// id_usuario_actualiza,
-	// fecha_entrega,
-	// fecha_recibe,
-	// fecha_verifica,
-	// fecha_valida,
-	// fecha_actualiza,
-	// ip_valida,
-	// ip_actualiza,
-	// host_valida,
-	// host_actualiza,
-	// comentarios,
-	// motivo_rechaza,
-	// activo
-
 	unset($update["hoja"]);
 	unset($update["muestras"]);
 	unset($update["preservaciones"]);
@@ -1047,12 +1023,13 @@ function processReceptionUpdate($request) {
 		$update["fecha_valida"] = isoDateToMsSql($update["fecha_valida"]);
 	}
 
-	$receptionUpdateData = array(
-		"reception" => $update,
-		"samples" => $samples,
-		"preservations" => $preservations,
-		"areas" => $areas,
-	);
+	// $receptionUpdateData = array(
+	// 	"reception" => $update,
+	// 	"samples" => $samples,
+	// 	"preservations" => $preservations,
+	// 	"areas" => $areas,
+	// );
+	$receptionUpdateData = $update;
 	return $receptionUpdateData;
 }
 
@@ -1080,4 +1057,12 @@ function processReceptionSamplesUpdate($receptionUpdateData) {
 	// 	return $receptionId;
 	// }
 	return $receptionId;
+}
+
+function processReceptionPreservations($receptionUpdateData) {
+	return $receptionUpdateData;
+}
+
+function processReceptionAreas($receptionUpdateData) {
+	return $receptionUpdateData;
 }

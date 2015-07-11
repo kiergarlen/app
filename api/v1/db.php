@@ -1218,7 +1218,7 @@ function insertReception($receptionData) {
 		:id_status, :id_usuario_captura, :id_usuario_valida,
 		:id_usuario_entrega, :id_usuario_actualiza,
 		:fecha_entrega, :fecha_recibe, :fecha_verifica, :fecha_captura,
-		:fecha_valida, :fecha_actualiza, fecha_rechaza,
+		:fecha_valida, :fecha_actualiza, :fecha_rechaza,
 		:ip_captura, :ip_valida, :ip_actualiza,
 		:host_captura, :host_valida, :host_actualiza,
 		:comentarios, :motivo_rechaza, :activo)";

@@ -1048,10 +1048,10 @@ function processReceptionUpdate($request) {
 	// }
 
 	$receptionUpdateData = array(
-		"reception" = $update,
-		"samples" = $samples,
-		"preservations" = $preservations,
-		"areas" = $areas,
+		"reception" => $update,
+		"samples" => $samples,
+		"preservations" => $preservations,
+		"areas" => $areas,
 	);
 	return $receptionUpdateData;
 }

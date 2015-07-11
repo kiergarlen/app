@@ -1016,36 +1016,36 @@ function processReceptionUpdate($request) {
 	// comentarios,
 	// motivo_rechaza,
 	// activo
-	// 
-	// //RECEIVED DATA
-	// 
-	// 
-	// unset($update["orden"]);
-	// unset($update["norma"]);
-	// unset($update["parametros"]);
-	// unset($update["preservaciones"]);
-	// unset($update["muestras"]);
 
-	// unset($update["id_usuario_captura"]);
-	// unset($update["fecha_captura"]);
-	// unset($update["ip_captura"]);
-	// unset($update["host_captura"]);
+	unset($update["hoja"]);
+	unset($update["muestras"]);
+	unset($update["preservaciones"]);
+	unset($update["areas"]);
 
-	// $update["id_usuario_actualiza"] = $token->uid;
-	// $update["fecha_actualiza"] = date('Y-m-d H:i:s');
-	// $update["ip_actualiza"] = $request->getIp();
-	// $update["host_actualiza"] = $request->getUrl();
+	unset($update["id_usuario_captura"]);
+	unset($update["fecha_captura"]);
+	unset($update["ip_captura"]);
+	unset($update["host_captura"]);
 
-	// $update["fecha_muestreo"] = isoDateToMsSql($update["fecha_muestreo"]);
-	// $update["fecha_entrega"] = isoDateToMsSql($update["fecha_entrega"]);
-	// $update["fecha_rechaza"] = isoDateToMsSql($update["fecha_rechaza"]);
+	$update["id_usuario_actualiza"] = $token->uid;
+	$update["fecha_actualiza"] = date('Y-m-d H:i:s');
+	$update["ip_actualiza"] = $request->getIp();
+	$update["host_actualiza"] = $request->getUrl();
 
-	// if ($update["id_status"] == 2 && strlen($update["ip_valida"]) < 1)
-	// {
-	// 	$update["ip_valida"] = $request->getIp();
-	// 	$update["host_valida"] = $request->getUrl();
-	// 	$update["fecha_valida"] = isoDateToMsSql($update["fecha_valida"]);
-	// }
+	$update["fecha_entrega"] = isoDateToMsSql($update["fecha_entrega"]);
+	$update["fecha_recibe"] = isoDateToMsSql($update["fecha_recibe"]);
+	$update["fecha_recibe"] = isoDateToMsSql($update["fecha_recibe"]);
+	////No input in form por this date/time setting to reception date/time
+	//$update["fecha_verifica"] = isoDateToMsSql($update["fecha_verifica"]);
+	$update["fecha_verifica"] = $update["fecha_recibe"];
+	$update["fecha_rechaza"] = isoDateToMsSql($update["fecha_rechaza"]);
+
+	if ($update["id_status"] == 2 && strlen($update["ip_valida"]) < 1)
+	{
+		$update["ip_valida"] = $request->getIp();
+		$update["host_valida"] = $request->getUrl();
+		$update["fecha_valida"] = isoDateToMsSql($update["fecha_valida"]);
+	}
 
 	$receptionUpdateData = array(
 		"reception" => $update,

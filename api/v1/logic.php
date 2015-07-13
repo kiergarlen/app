@@ -1023,13 +1023,12 @@ function processReceptionUpdate($request) {
 		$update["fecha_valida"] = isoDateToMsSql($update["fecha_valida"]);
 	}
 
-	// $receptionUpdateData = array(
-	// 	"reception" => $update,
-	// 	"samples" => $samples,
-	// 	"preservations" => $preservations,
-	// 	"areas" => $areas,
-	// );
-	$receptionUpdateData = $update;
+	$receptionUpdateData = array(
+		"reception" => $update,
+		"samples" => $samples,
+		"preservations" => $preservations,
+		"areas" => $areas,
+	);
 	return $receptionUpdateData;
 }
 

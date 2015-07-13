@@ -1231,7 +1231,7 @@ function insertReception($receptionData) {
 }
 
 function updateReception($updateData) {
-	$sql = "UPDATE Reception SET id_orden = :id_orden,
+	$sql = "UPDATE Recepcion SET id_orden = :id_orden,
 		id_plan = :id_plan, id_hoja = :id_hoja,
 		id_recepcionista = :id_recepcionista,
 		id_verificador = :id_verificador,

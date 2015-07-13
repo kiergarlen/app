@@ -981,7 +981,7 @@ function processSheetResultsUpdate($sheetUpdateData) {
 	return $sheetId;
 }
 
-//TODO: workout how to inert automatically elements: Sheet, Reception, etc
+//TODO: workout how to insert automatically elements: Sheet, Reception, etc
 function processReceptionInsert($request) {
 	return $request;
 }
@@ -1034,27 +1034,18 @@ function processReceptionUpdate($request) {
 
 function processReceptionSamplesUpdate($receptionUpdateData) {
 	$samples = (array) $receptionUpdateData["samples"];
-	$receptionId = $receptionUpdateData["reception"]["id_reception"];
-	$storedSamples = getSamplesByReception($receptionId);
-
+	$receptionId = $receptionUpdateData["reception"]["id_recepcion"];
+	deleteReceptionSamples($receptionId);
 	$i = 0;
-	$j = 0;
-	$l = count($storedSamples);
-	$m = count($samples);
-
-	// if ($l < 1)
-	// {
-	// 	for ($j = 0; $j < $m; $j++) {
-	// 		$sample = (array) $samples[$j];
-	// 		unset($sample["id_hoja_preservacion"]);
-	// 		unset($sample["id_tipo_preservacion"]);
-	// 		unset($sample["preservacion"]);
-	// 		unset($sample["descripcion"]);
-	// 		unset($sample["selected"]);
-	// 		insertReceptionSample($sample);
-	// 	}
-	// 	return $receptionId;
-	// }
+	$l = count($samples);
+	for ($i = 0; $i < $l; $i++) {
+		insertReceptionSample(
+			array(
+				"id_recepcion" => $samples[$i]["id_recepcion"],
+				"id_muestra" => $samples[$i]["id_muestra"]
+			)
+		);
+	}
 	return $receptionId;
 }
 

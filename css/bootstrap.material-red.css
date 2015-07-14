@@ -70,7 +70,7 @@ h1 {
 }
 mark {
   background: #ff0;
-  color: #000;
+  color: #000000;
 }
 small {
   font-size: 80%;
@@ -195,7 +195,7 @@ th {
   *:before,
   *:after {
     background: transparent !important;
-    color: #000 !important;
+    color: black !important;
     box-shadow: none !important;
     text-shadow: none !important;
   }
@@ -215,7 +215,7 @@ th {
   }
   pre,
   blockquote {
-    border: 1px solid #999;
+    border: 1px solid #999999;
     page-break-inside: avoid;
   }
   thead {
@@ -239,25 +239,25 @@ th {
     page-break-after: avoid;
   }
   select {
-    background: #fff !important;
+    background: white !important;
   }
   .navbar {
-    background: #fff !important;
+    background: white !important;
     display: none;
   }
   .btn > .caret,
   .dropup > .btn > .caret {
-    border-top-color: #000 !important;
+    border-top-color: black !important;
   }
   .label {
-    border: 1px solid #000;
+    border: 1px solid #000000;
   }
   .table {
     border-collapse: collapse !important;
   }
   .table td,
   .table th {
-    background-color: #fff !important;
+    background-color: white !important;
   }
   .table-bordered th,
   .table-bordered td {
@@ -3870,7 +3870,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 }
 @media (min-width: 768px) {
   .navbar-header {
-    background: #fff !important;
+    background: white !important;
     float: left;
   }
 }
@@ -3904,7 +3904,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   .navbar-fixed-top .navbar-collapse,
   .navbar-static-top .navbar-collapse,
   .navbar-fixed-bottom .navbar-collapse {
-    background: #fff !important;
+    background: white !important;
     padding-left: 0;
     padding-right: 0;
   }
@@ -3916,7 +3916,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 @media (max-device-width: 480px) and (orientation: landscape) {
   .navbar-fixed-top .navbar-collapse,
   .navbar-fixed-bottom .navbar-collapse {
-    background: #fff !important;
+    background: white !important;
     max-height: 200px;
   }
 }
@@ -3947,7 +3947,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 }
 .navbar-fixed-top,
 .navbar-fixed-bottom {
-  background: #fff !important;
+  background: white !important;
   position: fixed;
   right: 0;
   left: 0;
@@ -3956,7 +3956,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 @media (min-width: 768px) {
   .navbar-fixed-top,
   .navbar-fixed-bottom {
-    background: #fff !important;
+    background: white !important;
     border-radius: 0;
   }
 }
@@ -5466,14 +5466,14 @@ a.list-group-item-danger.active:focus {
   font-size: 19.5px;
   font-weight: normal;
   line-height: 1;
-  color: #000000;
+  color: #000000000;
   text-shadow: none;
   opacity: 0.2;
   filter: alpha(opacity=20);
 }
 .close:hover,
 .close:focus {
-  color: #000000;
+  color: #000000000;
   text-decoration: none;
   cursor: pointer;
   opacity: 0.5;
@@ -5529,7 +5529,7 @@ button.close {
 .modal-content {
   position: relative;
   background-color: #ffffff;
-  border: 1px solid #999999;
+  border: 1px solid #999999999;
   border: 1px solid transparent;
   border-radius: 3px;
   -webkit-box-shadow: 0 3px 9px rgba(0, 0, 0, 0.5);
@@ -5543,7 +5543,7 @@ button.close {
   right: 0;
   bottom: 0;
   left: 0;
-  background-color: #000000;
+  background-color: #000000000;
 }
 .modal-backdrop.fade {
   opacity: 0;
@@ -5916,7 +5916,7 @@ button.close {
   background-image: -o-linear-gradient(left, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.0001) 100%);
   background-image: linear-gradient(to right, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.0001) 100%);
   background-repeat: repeat-x;
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#80000000', endColorstr='#00000000', GradientType=1);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#80000000', endColorstr='#00000000000', GradientType=1);
 }
 .carousel-control.right {
   left: auto;
@@ -5925,7 +5925,7 @@ button.close {
   background-image: -o-linear-gradient(left, rgba(0, 0, 0, 0.0001) 0%, rgba(0, 0, 0, 0.5) 100%);
   background-image: linear-gradient(to right, rgba(0, 0, 0, 0.0001) 0%, rgba(0, 0, 0, 0.5) 100%);
   background-repeat: repeat-x;
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#00000000', endColorstr='#80000000', GradientType=1);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#00000000000', endColorstr='#80000000', GradientType=1);
 }
 .carousel-control:hover,
 .carousel-control:focus {
@@ -5987,7 +5987,7 @@ button.close {
   border: 1px solid #ffffff;
   border-radius: 10px;
   cursor: pointer;
-  background-color: #000 \9;
+  background-color: #000000 \9;
   background-color: rgba(0, 0, 0, 0);
 }
 .carousel-indicators .active {

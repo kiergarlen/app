@@ -1300,6 +1300,31 @@ function getAreasByReception($receptionId) {
 	return $areas;
 }
 
+function insertReceptionArea($areaData) {
+	$sql = "INSERT INTO RecepcionArea (id_recepcion, id_area,
+		id_muestra, volumen, vigencia, recipiente)
+		VALUES (:id_recepcion, :id_area,
+		:id_muestra, :volumen, :vigencia, :recipiente)";
+	$db = getConnection();
+	$stmt = $db->prepare($sql);
+	$stmt->execute($areaData);
+	$receptionAreaId = $db->lastInsertId();
+	$db = null;
+	return $receptionAreaId;
+}
+
+function deleteReceptionAreas($receptionId) {
+	$sql = "DELETE
+		FROM RecepcionArea
+		WHERE id_recepcion = :receptionId";
+	$db = getConnection();
+	$stmt = $db->prepare($sql);
+	$stmt->bindParam("receptionId", $receptionId);
+	$stmt->execute();
+	$db = null;
+	return $receptionId;
+}
+
 function getCustody($custodyId) {
 	$json = '
 		{}
@@ -1513,6 +1538,29 @@ function getSamplesByReception($receptionId) {
 		}
 	}
 	return $samples;
+}
+
+function insertReceptionSample($receptionData) {
+	$sql = "INSERT INTO RecepcionMuestra (id_recepcion, id_muestra)
+		VALUES (:id_recepcion, :id_muestra)";
+	$db = getConnection();
+	$stmt = $db->prepare($sql);
+	$stmt->execute($receptionData);
+	$receptionSampleId = $db->lastInsertId();
+	$db = null;
+	return $receptionSampleId;
+}
+
+function deleteReceptionSamples($receptionId) {
+	$sql = "DELETE
+		FROM RecepcionMuestra
+		WHERE id_recepcion = :receptionId";
+	$db = getConnection();
+	$stmt = $db->prepare($sql);
+	$stmt->bindParam("receptionId", $receptionId);
+	$stmt->execute();
+	$db = null;
+	return $receptionId;
 }
 
 function getResultsBySheet($sheetId) {
@@ -2059,9 +2107,9 @@ function getPreservationsBySheet($sheetId) {
 
 function getPreservationsByReception($receptionId) {
 	$sql = "SELECT id_recepcion_preservacion, id_recepcion,
-		id_preservacion, cantidad, preservado, activo
+		id_preservacion, cantidad, preservado
 		FROM RecepcionPreservacion
-		WHERE activo = 1 AND id_recepcion = :receptionId";
+		WHERE id_recepcion = :receptionId";
 	$db = getConnection();
 	$stmt = $db->prepare($sql);
 	$stmt->bindParam("receptionId", $receptionId);
@@ -2115,6 +2163,31 @@ function deleteSheetPreservations($sheetId) {
 	$stmt->execute();
 	$db = null;
 	return $sheetId;
+}
+
+function insertReceptionPreservation($preservationData) {
+	$sql = "INSERT INTO RecepcionPreservacion (id_recepcion,
+		id_preservacion, cantidad, preservado)
+		VALUES (:id_recepcion, :id_preservacion,
+		:cantidad, :preservado)";
+	$db = getConnection();
+	$stmt = $db->prepare($sql);
+	$stmt->execute($preservationData);
+	$receptionPreservationId = $db->lastInsertId();
+	$db = null;
+	return $receptionPreservationId;
+}
+
+function deleteReceptionPreservations($receptionId) {
+	$sql = "DELETE
+		FROM RecepcionPreservacion
+		WHERE id_recepcion = :receptionId";
+	$db = getConnection();
+	$stmt = $db->prepare($sql);
+	$stmt->bindParam("receptionId", $receptionId);
+	$stmt->execute();
+	$db = null;
+	return $receptionId;
 }
 
 function insertResult($resultData) {

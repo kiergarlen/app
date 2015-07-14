@@ -1038,21 +1038,54 @@ function processReceptionSamplesUpdate($receptionUpdateData) {
 	deleteReceptionSamples($receptionId);
 	$i = 0;
 	$l = count($samples);
-	for ($i = 0; $i < $l; $i++) {
+	for ($i = 3; $i < $l; $i++) {
 		insertReceptionSample(
 			array(
-				"id_recepcion" => $samples[$i]["id_recepcion"],
-				"id_muestra" => $samples[$i]["id_muestra"]
+				"id_recepcion" => $samples[$i]->id_recepcion,
+				"id_muestra" => $samples[$i]->id_muestra
 			)
 		);
 	}
 	return $receptionId;
 }
 
-function processReceptionPreservations($receptionUpdateData) {
-	return $receptionUpdateData;
+function processReceptionPreservationsUpdate($receptionUpdateData) {
+	$preservations = (array) $receptionUpdateData["preservations"];
+	$receptionId = $receptionUpdateData["reception"]["id_recepcion"];
+	deleteReceptionPreservations($receptionId);
+	$i = 0;
+	$l = count($preservations);
+	for ($i = 0; $i < $l; $i++) {
+		insertReceptionPreservation(
+			array(
+				"id_recepcion" => $preservations[$i]->id_recepcion,
+				"id_preservacion" => $preservations[$i]->id_preservacion,
+				"cantidad" => $preservations[$i]->cantidad,
+				"preservado" => $preservations[$i]->preservado
+			)
+		);
+	}
+	return $receptionId;
 }
 
-function processReceptionAreas($receptionUpdateData) {
-	return $receptionUpdateData;
+function processReceptionAreasUpdate($receptionUpdateData) {
+	$areas = (array) $receptionUpdateData["areas"];
+	$reception = $receptionUpdateData["reception"];
+	$receptionId = $reception["id_recepcion"];
+	deleteReceptionAreas($receptionId);
+	$i = 0;
+	$l = count($areas);
+	for ($i = 0; $i < $l; $i++) {
+		insertReceptionArea(
+			array(
+				"id_recepcion" => $areas[$i]->id_recepcion,
+				"id_area" => $areas[$i]->id_area
+				"id_muestra" => $reception["id_muestra_validacion"],
+				"volumen" => $areas[$i]->volumen,
+				"vigencia" => $areas[$i]->vigencia,
+				"recipiente" => $areas[$i]->recipiente,
+			)
+		);
+	}
+	return $receptionId;
 }

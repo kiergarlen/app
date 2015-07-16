@@ -1,4 +1,4 @@
-(function () {
+(function() {
   'use strict';
   //ANGULAR MODULE SETTER
   angular
@@ -26,7 +26,7 @@
     $collapseProvider) {
     $routeProvider
       .otherwise({
-       redirectTo: '/sistema/login'
+        redirectTo: '/sistema/login'
       }).
       when('/sistema/login', {
         templateUrl: 'partials/sistema/login.html',
@@ -386,7 +386,7 @@
       var field = '';
       l = collection.length;
       n = fields.length;
-      for(i = 0; i < l; i += 1) {
+      for (i = 0; i < l; i += 1) {
         if (reference !== undefined) {
           m = reference.length;
           for (j = 0; j < m; j += 1) {
@@ -513,11 +513,11 @@
         ':',
         padNumber(date.getSeconds(), 2)
       ].join('');
-        // '.',
-        // (date.getMilliseconds() / 1000).toFixed(3).slice(2, 5),
-        // (date.getTimezoneOffset() / 60 > -1) ? '+' : '-',
-        // padNumber(date.getTimezoneOffset() / 60, 2),
-        // ':00'
+      // '.',
+      // (date.getMilliseconds() / 1000).toFixed(3).slice(2, 5),
+      // (date.getTimezoneOffset() / 60 > -1) ? '+' : '-',
+      // padNumber(date.getTimezoneOffset() / 60, 2),
+      // ':00'
     }
 
     /**
@@ -774,13 +774,13 @@
       item.id_status = 2;
       item.id_usuario_valida = user.id;
       item.motivo_rechaza = '';
-      item.fecha_valida = DateUtilsService.dateToISOString(new Date()).slice(0,10);
+      item.fecha_valida = DateUtilsService.dateToISOString(new Date()).slice(0, 10);
     }
 
     function rejectItem(item, user) {
       item.id_status = 3;
       item.id_usuario_valida = user.id;
-      item.fecha_rechaza = DateUtilsService.dateToISOString(new Date()).slice(0,10);
+      item.fecha_rechaza = DateUtilsService.dateToISOString(new Date()).slice(0, 10);
     }
 
     return Validation;
@@ -907,7 +907,6 @@
         StudyService
       ]
     );
-
 
   //QuoteService.js
   /**
@@ -1581,7 +1580,6 @@
       ]
     );
 
-
   //PlanObjectivesService.js
   /**
    * @name PlanObjectivesService
@@ -2100,7 +2098,6 @@
       ]
     );
 
-
   //SheetSampleService.js
   /**
    * @name SheetSampleService
@@ -2550,8 +2547,6 @@
         UserProfileService
       ]
     );
-
-
 
   //CloudService.js
   /**
@@ -3065,8 +3060,8 @@
       if (vm.parameters && vm.quote.cliente) {
         l = vm.parameters.length;
         for (i = 0; i < l; i += 1) { if (vm.parameters[i].selected) {
-            t = t + parseInt(vm.parameters[i].precio, 10);
-          }
+          t = t + parseInt(vm.parameters[i].precio, 10);
+        }
         }
         t = t * vm.quote.cliente.tasa * vm.quote.cantidad_muestras;
         vm.totalCost = (Math.round(t * 100) / 100);
@@ -3082,7 +3077,7 @@
       var m;
       l = vm.parameters.length;
       if (l > 0 && vm.quote.parametros) {
-        for(i = 0; i < l; i += 1) {
+        for (i = 0; i < l; i += 1) {
           vm.parameters[i].selected = false;
           m = vm.quote.parametros.length;
           for (j = 0; j < m; j += 1) {
@@ -3914,12 +3909,12 @@
     .module('sislabApp')
     .controller('PlanController',
       [
-        '$scope','$routeParams','TokenService',
-        'ValidationService','RestUtilsService','ArrayUtilsService',
-        'DateUtilsService','PlanObjectivesService','DistrictService',
-        'CityService','SamplingEmployeeService','ContainerService',
-        'ReactiveService','MaterialService','CoolerService',
-        'SamplingInstrumentService','PlanService',
+        '$scope', '$routeParams', 'TokenService',
+        'ValidationService', 'RestUtilsService', 'ArrayUtilsService',
+        'DateUtilsService', 'PlanObjectivesService', 'DistrictService',
+        'CityService', 'SamplingEmployeeService', 'ContainerService',
+        'ReactiveService', 'MaterialService', 'CoolerService',
+        'SamplingInstrumentService', 'PlanService',
         PlanController
       ]
     );
@@ -4407,7 +4402,7 @@
       [
         '$scope', '$routeParams', 'TokenService',
         'ValidationService', 'RestUtilsService', 'ArrayUtilsService',
-        'DateUtilsService','SamplingEmployeeService', 'SheetSampleService',
+        'DateUtilsService', 'SamplingEmployeeService', 'SheetSampleService',
         'PreservationService', 'ReceivingAreaService', 'ReceptionService',
         ReceptionController
       ]
@@ -4507,7 +4502,6 @@
         CustodyController
       ]
     );
-
 
   //SampleListController.js
   /**
@@ -5138,7 +5132,7 @@
       var field = '';
       l = collection.length;
       n = fields.length;
-      for(i = 0; i < l; i += 1) {
+      for (i = 0; i < l; i += 1) {
         if (reference !== undefined) {
           m = reference.length;
           for (j = 0; j < m; j += 1) {
@@ -5265,11 +5259,11 @@
         ':',
         padNumber(date.getSeconds(), 2)
       ].join('');
-        // '.',
-        // (date.getMilliseconds() / 1000).toFixed(3).slice(2, 5),
-        // (date.getTimezoneOffset() / 60 > -1) ? '+' : '-',
-        // padNumber(date.getTimezoneOffset() / 60, 2),
-        // ':00'
+      // '.',
+      // (date.getMilliseconds() / 1000).toFixed(3).slice(2, 5),
+      // (date.getTimezoneOffset() / 60 > -1) ? '+' : '-',
+      // padNumber(date.getTimezoneOffset() / 60, 2),
+      // ':00'
     }
 
     /**
@@ -5526,13 +5520,13 @@
       item.id_status = 2;
       item.id_usuario_valida = user.id;
       item.motivo_rechaza = '';
-      item.fecha_valida = DateUtilsService.dateToISOString(new Date()).slice(0,10);
+      item.fecha_valida = DateUtilsService.dateToISOString(new Date()).slice(0, 10);
     }
 
     function rejectItem(item, user) {
       item.id_status = 3;
       item.id_usuario_valida = user.id;
-      item.fecha_rechaza = DateUtilsService.dateToISOString(new Date()).slice(0,10);
+      item.fecha_rechaza = DateUtilsService.dateToISOString(new Date()).slice(0, 10);
     }
 
     return Validation;
@@ -5659,7 +5653,6 @@
         StudyService
       ]
     );
-
 
   //QuoteService.js
   /**
@@ -6333,7 +6326,6 @@
       ]
     );
 
-
   //PlanObjectivesService.js
   /**
    * @name PlanObjectivesService
@@ -6852,7 +6844,6 @@
       ]
     );
 
-
   //SheetSampleService.js
   /**
    * @name SheetSampleService
@@ -7302,8 +7293,6 @@
         UserProfileService
       ]
     );
-
-
 
   //CloudService.js
   /**
@@ -7817,8 +7806,8 @@
       if (vm.parameters && vm.quote.cliente) {
         l = vm.parameters.length;
         for (i = 0; i < l; i += 1) { if (vm.parameters[i].selected) {
-            t = t + parseInt(vm.parameters[i].precio, 10);
-          }
+          t = t + parseInt(vm.parameters[i].precio, 10);
+        }
         }
         t = t * vm.quote.cliente.tasa * vm.quote.cantidad_muestras;
         vm.totalCost = (Math.round(t * 100) / 100);
@@ -7834,7 +7823,7 @@
       var m;
       l = vm.parameters.length;
       if (l > 0 && vm.quote.parametros) {
-        for(i = 0; i < l; i += 1) {
+        for (i = 0; i < l; i += 1) {
           vm.parameters[i].selected = false;
           m = vm.quote.parametros.length;
           for (j = 0; j < m; j += 1) {
@@ -8666,12 +8655,12 @@
     .module('sislabApp')
     .controller('PlanController',
       [
-        '$scope','$routeParams','TokenService',
-        'ValidationService','RestUtilsService','ArrayUtilsService',
-        'DateUtilsService','PlanObjectivesService','DistrictService',
-        'CityService','SamplingEmployeeService','ContainerService',
-        'ReactiveService','MaterialService','CoolerService',
-        'SamplingInstrumentService','PlanService',
+        '$scope', '$routeParams', 'TokenService',
+        'ValidationService', 'RestUtilsService', 'ArrayUtilsService',
+        'DateUtilsService', 'PlanObjectivesService', 'DistrictService',
+        'CityService', 'SamplingEmployeeService', 'ContainerService',
+        'ReactiveService', 'MaterialService', 'CoolerService',
+        'SamplingInstrumentService', 'PlanService',
         PlanController
       ]
     );
@@ -9159,7 +9148,7 @@
       [
         '$scope', '$routeParams', 'TokenService',
         'ValidationService', 'RestUtilsService', 'ArrayUtilsService',
-        'DateUtilsService','SamplingEmployeeService', 'SheetSampleService',
+        'DateUtilsService', 'SamplingEmployeeService', 'SheetSampleService',
         'PreservationService', 'ReceivingAreaService', 'ReceptionService',
         ReceptionController
       ]
@@ -9259,7 +9248,6 @@
         CustodyController
       ]
     );
-
 
   //SampleListController.js
   /**

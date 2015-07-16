@@ -1,4 +1,3 @@
-
   'use strict';
   //ANGULAR MODULE SETTER
   angular
@@ -26,7 +25,7 @@
     $collapseProvider) {
     $routeProvider
       .otherwise({
-       redirectTo: '/sistema/login'
+        redirectTo: '/sistema/login'
       }).
       when('/sistema/login', {
         templateUrl: 'partials/sistema/login.html',

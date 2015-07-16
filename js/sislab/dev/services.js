@@ -97,7 +97,7 @@
       var field = '';
       l = collection.length;
       n = fields.length;
-      for(i = 0; i < l; i += 1) {
+      for (i = 0; i < l; i += 1) {
         if (reference !== undefined) {
           m = reference.length;
           for (j = 0; j < m; j += 1) {
@@ -224,11 +224,11 @@
         ':',
         padNumber(date.getSeconds(), 2)
       ].join('');
-        // '.',
-        // (date.getMilliseconds() / 1000).toFixed(3).slice(2, 5),
-        // (date.getTimezoneOffset() / 60 > -1) ? '+' : '-',
-        // padNumber(date.getTimezoneOffset() / 60, 2),
-        // ':00'
+      // '.',
+      // (date.getMilliseconds() / 1000).toFixed(3).slice(2, 5),
+      // (date.getTimezoneOffset() / 60 > -1) ? '+' : '-',
+      // padNumber(date.getTimezoneOffset() / 60, 2),
+      // ':00'
     }
 
     /**
@@ -485,13 +485,13 @@
       item.id_status = 2;
       item.id_usuario_valida = user.id;
       item.motivo_rechaza = '';
-      item.fecha_valida = DateUtilsService.dateToISOString(new Date()).slice(0,10);
+      item.fecha_valida = DateUtilsService.dateToISOString(new Date()).slice(0, 10);
     }
 
     function rejectItem(item, user) {
       item.id_status = 3;
       item.id_usuario_valida = user.id;
-      item.fecha_rechaza = DateUtilsService.dateToISOString(new Date()).slice(0,10);
+      item.fecha_rechaza = DateUtilsService.dateToISOString(new Date()).slice(0, 10);
     }
 
     return Validation;
@@ -618,61 +618,6 @@
         StudyService
       ]
     );
-
-
-  //QuoteService.js
-  /**
-   * @name QuoteService
-   * @constructor
-   * @desc Proveedor de datos, Solicitudes
-   * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
-   * @param {Object} TokenService - Proveedor de métodos para token
-   * @return {Object} $resource - Acceso a recursos HTTP
-   */
-  function QuoteService($resource, TokenService) {
-    return $resource(API_BASE_URL + 'quotes/:quoteId', {}, {
-      query: {
-        method: 'GET',
-        params: {quoteId:'id_solicitud'},
-        isArray: false,
-        headers: {
-          'Auth-Token': TokenService.getToken()
-        }
-      },
-      get: {
-        method: 'GET',
-        params: {},
-        isArray: true,
-        headers: {
-          'Auth-Token': TokenService.getToken()
-        }
-      },
-      update: {
-        method: 'POST',
-        params: {},
-        isArray: false,
-        headers: {
-          'Auth-Token': TokenService.getToken()
-        }
-      },
-      save: {
-        method: 'POST',
-        params: {},
-        isArray: false,
-        headers: {
-          'Auth-Token': TokenService.getToken()
-        }
-      }
-    });
-  }
-  angular
-    .module('sislabApp')
-    .factory('QuoteService',
-    [
-      '$resource', 'TokenService',
-      QuoteService
-    ]
-   );
 
   //OrderService.js
   /**
@@ -1292,7 +1237,6 @@
       ]
     );
 
-
   //PlanObjectivesService.js
   /**
    * @name PlanObjectivesService
@@ -1811,7 +1755,6 @@
       ]
     );
 
-
   //SheetSampleService.js
   /**
    * @name SheetSampleService
@@ -2261,8 +2204,6 @@
         UserProfileService
       ]
     );
-
-
 
   //CloudService.js
   /**

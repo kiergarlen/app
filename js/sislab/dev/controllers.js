@@ -324,164 +324,6 @@
       ]
     );
 
-  //QuoteListController.js
-  /**
-   * @name QuoteListController
-   * @constructor
-   * @desc Controla la vista para el listado de Solicitudes/Cotizaciones
-   * @this {Object} $scope - Contenedor para el modelo [AngularJS]
-   * @param {Object} $location - Manejo de URL [AngularJS]
-   * @param {Object} QuoteService - Proveedor de datos, Solicitud
-   */
-  function QuoteListController($location, QuoteService) {
-    var vm = this;
-    vm.quotes = QuoteService.get();
-    vm.viewQuote = viewQuote;
-
-    function viewQuote(id) {
-      var itemId = parseInt(id);
-      $location.path('/muestreo/solicitud/' + itemId);
-    }
-  }
-  angular
-    .module('sislabApp')
-    .controller('QuoteListController',
-      [
-        '$location', 'QuoteService',
-        QuoteListController
-      ]
-    );
-
-  //QuoteController.js
-  /**
-   * @name QuoteController
-   * @constructor
-   * @desc Controla la vista para capturar una Solicitud
-   * @this {Object} $scope - Contenedor para el modelo [AngularJS]
-   * @param {Object} $routeParams - Proveedor de parámetros de ruta [AngularJS]
-   * @param {Object} TokenService - Proveedor para manejo del token
-   * @param {Object} ValidationService - Proveedor para manejo de validación
-   * @param {Object} RestUtilsService - Proveedor para manejo de servicios REST
-   * @param {Object} ArrayUtilsService - Proveedor para manejo de arreglos
-   * @param {Object} ParameterService - Proveedor de datos, Parámetros de análisis
-   * @param {Object} QuoteService - Proveedor de datos, Solicitudes
-   */
-  function QuoteController($scope, $routeParams, TokenService,
-    ValidationService, RestUtilsService, ArrayUtilsService,
-    ParameterService, QuoteService) {
-    var vm = this;
-    vm.quote = QuoteService.query({quoteId: $routeParams.quoteId});
-    vm.user = TokenService.getUserFromToken();
-    vm.parameters = ParameterService.get();
-    vm.totalCost = 0;
-    vm.message = '';
-    vm.isDataSubmitted = false;
-    vm.totalParameter = totalParameter;
-    vm.selectNormParameters = selectNormParameters;
-    vm.approveItem = approveItem;
-    vm.rejectItem = rejectItem;
-    vm.isFormValid = isFormValid;
-    vm.submitForm = submitForm;
-
-    function totalParameter() {
-      var i = 0;
-      var l = 0;
-      var t = 0;
-      if (vm.parameters && vm.quote.cliente) {
-        l = vm.parameters.length;
-        for (i = 0; i < l; i += 1) { if (vm.parameters[i].selected) {
-            t = t + parseInt(vm.parameters[i].precio, 10);
-          }
-        }
-        t = t * vm.quote.cliente.tasa * vm.quote.cantidad_muestras;
-        vm.totalCost = (Math.round(t * 100) / 100);
-        vm.quote.total = vm.totalCost;
-      }
-      return vm.totalCost;
-    }
-
-    function selectNormParameters() {
-      var i;
-      var l;
-      var j;
-      var m;
-      l = vm.parameters.length;
-      if (l > 0 && vm.quote.parametros) {
-        for(i = 0; i < l; i += 1) {
-          vm.parameters[i].selected = false;
-          m = vm.quote.parametros.length;
-          for (j = 0; j < m; j += 1) {
-            if (vm.parameters[i].id_parametro == vm.quote.norma.parametros[j].id_parametro) {
-              vm.parameters[i].selected = true;
-              break;
-            }
-          }
-        }
-      }
-    }
-
-    function approveItem() {
-      ValidationService.approveItem(vm.quote, vm.user);
-    }
-
-    function rejectItem() {
-      ValidationService.rejectItem(vm.quote, vm.user);
-    }
-
-    function isFormValid() {
-      vm.message = '';
-      if (vm.quote.cuerpo_receptor.length > 0 && vm.quote.tipo_cuerpo.length < 1) {
-        vm.message += ' Ingrese tipo de cuerpo receptor';
-        return false;
-      }
-      if (vm.quote.cuerpo_receptor.length < 1 && vm.quote.tipo_cuerpo.length > 0) {
-        vm.message += ' Ingrese cuerpo receptor';
-        return false;
-      }
-      if (vm.user.level < 3) {
-        if (vm.quote.id_status == 3 && vm.quote.motivo_rechaza.length < 1) {
-          vm.message += ' Ingrese el motivo de rechazo de la Solicitud ';
-          return false;
-        }
-      }
-      return true;
-    }
-
-    function submitForm() {
-      if (isFormValid() && !vm.isDataSubmitted) {
-        vm.isDataSubmitted = true;
-        if (vm.quote.id_solicitud > 0) {
-          RestUtilsService
-            .saveData(
-              QuoteService,
-              vm.quote,
-              'muestreo/solicitud'
-            );
-        } else {
-          if (vm.user.level < 3 || vm.quote.quote.id_status !== 2) {
-            RestUtilsService
-              .updateData(
-                QuoteService,
-                vm.quote,
-                'muestreo/solicitud',
-                'id_solicitud'
-              );
-          }
-        }
-      }
-    }
-  }
-  angular
-    .module('sislabApp')
-    .controller('QuoteController',
-      [
-        '$scope', '$routeParams', 'TokenService',
-        'ValidationService', 'RestUtilsService', 'ArrayUtilsService',
-        'ParameterService', 'QuoteService',
-        QuoteController
-      ]
-    );
-
   //OrderListController.js
   /**
    * @name OrderListController
@@ -1239,12 +1081,12 @@
     .module('sislabApp')
     .controller('PlanController',
       [
-        '$scope','$routeParams','TokenService',
-        'ValidationService','RestUtilsService','ArrayUtilsService',
-        'DateUtilsService','PlanObjectivesService','DistrictService',
-        'CityService','SamplingEmployeeService','ContainerService',
-        'ReactiveService','MaterialService','CoolerService',
-        'SamplingInstrumentService','PlanService',
+        '$scope', '$routeParams', 'TokenService',
+        'ValidationService', 'RestUtilsService', 'ArrayUtilsService',
+        'DateUtilsService', 'PlanObjectivesService', 'DistrictService',
+        'CityService', 'SamplingEmployeeService', 'ContainerService',
+        'ReactiveService', 'MaterialService', 'CoolerService',
+        'SamplingInstrumentService', 'PlanService',
         PlanController
       ]
     );
@@ -1732,7 +1574,7 @@
       [
         '$scope', '$routeParams', 'TokenService',
         'ValidationService', 'RestUtilsService', 'ArrayUtilsService',
-        'DateUtilsService','SamplingEmployeeService', 'SheetSampleService',
+        'DateUtilsService', 'SamplingEmployeeService', 'SheetSampleService',
         'PreservationService', 'ReceivingAreaService', 'ReceptionService',
         ReceptionController
       ]
@@ -1832,7 +1674,6 @@
         CustodyController
       ]
     );
-
 
   //SampleListController.js
   /**

@@ -363,12 +363,10 @@ $app->post("/receptions", function() use ($app) {
 		else
 		{
 			$receptionUpdateData = processReceptionUpdate($request);
-			$result = json_encode($receptionUpdateData);
-			// $receptionId = updateReception($receptionUpdateData["reception"]);
-			// processReceptionSamplesUpdate($receptionUpdateData);
-			// processReceptionPreservationsUpdate($receptionUpdateData);
-			// processReceptionAreasUpdate($receptionUpdateData);
-			// processReceptionPreservations($receptionUpdateData);
+			$receptionId = updateReception($receptionUpdateData["reception"]);
+			processReceptionSamplesUpdate($receptionUpdateData);
+			processReceptionPreservationsUpdate($receptionUpdateData);
+			processReceptionAreasUpdate($receptionUpdateData);
 			$result = '{"id_recepcion":' . $receptionId . '}';
 		}
 		$app->response()->status(200);

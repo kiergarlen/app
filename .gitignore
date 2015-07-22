@@ -1,6 +1,6 @@
 # Libraries #
 #############
-api/libs/
+/api/libs/*
 
 # Compiled source #
 ###################

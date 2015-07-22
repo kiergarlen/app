@@ -1,7 +1,3 @@
-# Libraries #
-#############
-/api/libs/*
-
 # Compiled source #
 ###################
 *.com

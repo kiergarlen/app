@@ -1459,7 +1459,8 @@ function getReceptionists() {
 function getSamples() {
   $sql = "SELECT id_muestra, id_estudio, id_cliente, id_orden,
     id_plan, id_hoja, id_recepcion, id_custodia, id_paquete,
-    id_ubicacion, id_punto, fecha_muestreo, comentarios, activo
+    id_ubicacion, id_punto, fecha_muestreo, fecha_recibe,
+    comentarios, activo
     FROM Muestra
     WHERE activo = 1";
   $db = getConnection();
@@ -1473,7 +1474,8 @@ function getSamples() {
 function getSamplesBySheet($sheetId) {
   $sql = "SELECT id_muestra, id_estudio, id_cliente, id_orden,
     id_plan, id_hoja, id_recepcion, id_custodia, id_paquete,
-    id_ubicacion, id_punto, fecha_muestreo, comentarios, activo
+    id_ubicacion, id_punto, fecha_muestreo, fecha_recibe,
+    comentarios, activo
     FROM Muestra
     WHERE activo = 1 AND id_hoja = :sheetId";
   $db = getConnection();
@@ -1488,8 +1490,8 @@ function getSamplesBySheet($sheetId) {
 function getSamplesByReception($receptionId) {
   $sql = "SELECT id_muestra, id_estudio, id_cliente, id_orden,
     id_plan, id_hoja, id_recepcion, id_custodia, id_paquete,
-    id_ubicacion, id_punto, fecha_muestreo, comentarios, activo,
-    id_muestra AS id_muestra_validacion
+    id_ubicacion, id_punto, fecha_muestreo, fecha_recibe,
+    comentarios, activo
     FROM Muestra
     WHERE id_recepcion = :receptionId";
   $db = getConnection();

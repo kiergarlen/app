@@ -1,4 +1,4 @@
-(function(window, document, undefined, angular) {
+(function(window, document, undefined) {
   'use strict';
   //ANGULAR MODULE SETTER
   angular
@@ -1709,9 +1709,7 @@
             for (i = 0; i < l; i += 1) {
               vm.samples[i].id_recepcion = $routeParams.receptionId;
               vm.samples[i].selected = false;
-              vm.samples[i].id_muestra_validacion = vm.samples[i].id_muestra;
               vm.samples[i].punto = {};
-
             }
             ArrayUtilsService.seItemsFromReference(
               vm.samples,

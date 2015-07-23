@@ -6,12 +6,6 @@ require "./db.php";
 // cd372fb85148700fa88095e3492d3f9f5beb43e555e5ff26d95f5a6adc36f8e6
 define("KEY", "m0oxUT7L8Unn93hXMUGHpwq_jTSKVBjQfEVCUe8jZ38KUU4VSAfmsNk4JJYcJl7CukrY6QMlixxwat7AZSpDcSQ");
 
-define("DB_DRIVER", "sqlsrv");
-define("DB_HOST", "localhost");
-define("DB_USER", "sislab");
-define("DB_PASSWORD", "sislab");
-define("DB_DATA_BASE", "Sislab");
-
 \Slim\Slim::registerAutoloader();
 $app = new \Slim\Slim();
 

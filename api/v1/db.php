@@ -1,5 +1,9 @@
 <?php
 //DB FUNCTIONS
+define("DB_HOST", "localhost");
+define("DB_USER", "sislab");
+define("DB_PASSWORD", "sislab");
+define("DB_DATA_BASE", "Sislab");
 
 /**
  * Conecta a la base de datos, regresa una instancia de PDOObject
@@ -7,11 +11,6 @@
  */
 function getConnection() {
   try {
-    ////MYSQL style
-    // $dsn = "mysql:host=";
-    // $dsn .= DB_HOST . ";";
-    // $dsn .= "port=" . DB_PORT . ";";
-    // $dsn .= "dbname=" . DB_DATA_BASE;
     $dsn = "sqlsrv:server=";
     $dsn .= DB_HOST . ";Database=";
     $dsn .= DB_DATA_BASE;
@@ -1167,38 +1166,8 @@ function getReception($receptionId) {
   }
   $reception->muestras = $samples;
   $preservations = getPreservationsByReception($receptionId);
-  // $preservations = array();
-  // if (count($preservations) < 1) {
-  //  $preservations = getPreservationsBySheet($reception->id_hoja);
-  //  $l = count($preservations);
-  //  for ($i = 0; $i < $l; $i++) {
-  //    unset($preservations[$i]["id_hoja"]);
-  //    unset($preservations[$i]["id_hoja_recepcion"]);
-  //    $preservations[$i]["id_recepcion_preservacion"] = 0;
-  //    $preservations[$i]["id_recepcion"] = $receptionId;
-  //    $preservations[$i]["preservado"] = false;
-  //    $preservations[$i]["selected"] = false;
-  //  }
-  // }
   $reception->preservaciones = $preservations;
   $areas = getAreasByReception($receptionId);
-  // $areas = array();
-  // if (count($areas) < 1) {
-  //  $areas = getAreas();
-  //  $l = count($areas);
-  //  for ($i = 0; $i < $l; $i++) {
-  //    unset($areas[$i]["id_usuario_supervisa"]);
-  //    unset($areas[$i]["siglas"]);
-  //    unset($areas[$i]["recibe"]);
-  //    unset($areas[$i]["activo"]);
-  //    $areas[$i]["id_recepcion_area"] = 0;
-  //    $areas[$i]["id_recepcion"] = $receptionId;
-  //    $areas[$i]["id_muestra"] = 0;
-  //    $areas[$i]["volumen"] = false;
-  //    $areas[$i]["vigencia"] = false;
-  //    $areas[$i]["recipiente"] = false;
-  //  }
-  // }
   $reception->areas = $areas;
   return $reception;
 }
@@ -1469,7 +1438,6 @@ function getParametersField() {
   $db = null;
   return $parameters;
 }
-
 
 function getReceptionists() {
   $sql = "SELECT id_usuario, id_nivel, id_rol, id_empleado,

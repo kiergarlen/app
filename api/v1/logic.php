@@ -1,4 +1,6 @@
 <?php
+//PROCESSING FUNCTIONS
+
 function processUserJwt($request) {
   $input = json_decode($request->getbody());
   $usr = $input->username;

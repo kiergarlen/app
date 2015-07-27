@@ -6,8 +6,8 @@ define("DB_PASSWORD", "sislab");
 define("DB_DATA_BASE", "Sislab");
 
 /**
- * Conecta a la base de datos, regresa una instancia de PDOObject
- * @return PDOObject $dbConnection
+ * Conecta a la base de datos, regresa una instancia de PDO
+ * @return PDO $dbConnection
  */
 function getConnection() {
   try {
@@ -1226,7 +1226,7 @@ function updateReception($updateData) {
 
 function getAreas() {
   $sql = "SELECT id_area, id_usuario_supervisa, area,
-    siglas, recibe, activo
+    siglas, entrega, recibe, activo
     FROM Area
     WHERE activo = 1";
   $db = getConnection();

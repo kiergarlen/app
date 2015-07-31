@@ -1294,6 +1294,31 @@ function deleteReceptionAreas($receptionId) {
   return $receptionId;
 }
 
+function getJob($jobId) {
+  $sql = "SELECT *
+    FROM OrdenTrabajo
+    WHERE activo = 1 AND id_orden_trabajo = :jobId";
+  $db = getConnection();
+  $stmt = $db->prepare($sql);
+  $stmt->bindParam("jobId", $jobId);
+  $stmt->execute();
+  $user = $stmt->fetch(PDO::FETCH_OBJ);
+  $db = null;
+  return $user;
+}
+
+function getJobs() {
+  $sql = "SELECT *
+    FROM OrdenTrabajo
+    WHERE activo = 1";
+    $db = getConnection();
+    $stmt = $db->prepare($sql);
+  $stmt->execute();
+  $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+  $db = null;
+  return $result;
+}
+
 function getCustody($custodyId) {
   $json = '
     {}

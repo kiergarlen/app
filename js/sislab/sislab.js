@@ -98,6 +98,16 @@
         controller: 'ReceptionController',
         controllerAs: 'reception'
       }).
+      when('/recepcion/trabajo', {
+        templateUrl: 'partials/recepcion/trabajos.html',
+        controller: 'JobListController',
+        controllerAs: 'jobs'
+      }).
+      when('/recepcion/trabajo/:jobId', {
+        templateUrl: 'partials/recepcion/trabajo.html',
+        controller: 'JobController',
+        controllerAs: 'job'
+      }).
       when('/recepcion/custodia', {
         templateUrl: 'partials/recepcion/custodias.html',
         controller: 'CustodyListController',
@@ -1867,7 +1877,102 @@
       ]
     );
 
-  //CustodyController.js
+  //JobListController.js
+  /**
+   * @name JobListController
+   * @constructor
+   * @desc Controla la vista para el listado de Órdenes de Trabajo
+   * @this {Object} $scope - Contenedor para el modelo [AngularJS]
+   * @param {Object} $location - Manejo de URL [AngularJS]
+   * @param {Object} JobService - Proveedor de datos, Órdenes de Trabajo
+   */
+  function JobListController($location, JobService) {
+    var vm = this;
+    vm.custodies = JobService.get();
+    vm.viewJob = viewJob;
+
+    function viewJob(id) {
+      $location.path('/recepcion/trabajo/' + parseInt(id));
+    }
+  }
+  angular
+    .module('sislabApp')
+    .controller('JobListController',
+      [
+        '$location', 'JobService',
+        JobListController
+      ]
+    );
+
+  //JobController.js
+  /**
+   * @name JobController
+   * @constructor
+   * @desc Controla la vista para capturar las Órdenes de Trabajo
+   * @this {Object} $scope - Contenedor para el modelo [AngularJS]
+   * @param {Object} $routeParams - Proveedor de parámetros de ruta [AngularJS]
+   * @param {Object} TokenService - Proveedor para manejo del token
+   * @param {Object} JobService - Proveedor de datos, Órdenes de Trabajo
+   */
+  function JobController($scope, $routeParams, TokenService,
+    ValidationService, RestUtilsService, ArrayUtilsService,
+    DateUtilsService, JobService) {
+    var vm = this;
+    vm.user = TokenService.getUserFromToken();
+    vm.job = JobService.query({jobId: $routeParams.jobId});
+    vm.isDataSubmitted = false;
+    vm.approveItem = approveItem;
+    vm.rejectItem = rejectItem;
+    vm.submitForm = submitForm;
+
+    function approveItem() {
+      ValidationService.approveItem(vm.job, vm.user);
+    }
+
+    function rejectItem() {
+      ValidationService.rejectItem(vm.job, vm.user);
+    }
+
+    function isFormValid() {
+      return true;
+    }
+
+    function submitForm() {
+      if (isFormValid() && !vm.isDataSubmitted) {
+        vm.isDataSubmitted = true;
+        if (vm.job.id_orden_trabajo < 1) {
+          RestUtilsService
+            .saveData(
+              JobService,
+              vm.job,
+              'recepcion/trabajo'
+            );
+        } else {
+          if (vm.user.level < 3 || vm.job.job.id_status !== 2) {
+            RestUtilsService
+              .updateData(
+                JobService,
+                vm.job,
+                'recepcion/trabajo',
+                'id_orden_trabajo'
+              );
+          }
+        }
+      }
+    }
+  }
+  angular
+    .module('sislabApp')
+    .controller('JobController',
+      [
+        '$scope', '$routeParams', 'TokenService',
+        'ValidationService', 'RestUtilsService', 'ArrayUtilsService',
+        'DateUtilsService', 'JobService',
+        JobController
+      ]
+    );
+
+  //CustodyListController.js
   /**
    * @name CustodyListController
    * @constructor
@@ -1898,7 +2003,7 @@
   /**
    * @name CustodyController
    * @constructor
-   * @desc Controla la vista para capturar las Hojas de custodia
+   * @desc Controla la vista para capturar las Cadenas de custodia
    * @this {Object} $scope - Contenedor para el modelo [AngularJS]
    * @param {Object} $routeParams - Proveedor de parámetros de ruta [AngularJS]
    * @param {Object} TokenService - Proveedor para manejo del token
@@ -1955,7 +2060,7 @@
     .module('sislabApp')
     .controller('CustodyController',
       [
-        '$scope', '4routeParams', 'TokenService',
+        '$scope', '$routeParams', 'TokenService',
         'ValidationService', 'RestUtilsService', 'ArrayUtilsService',
         'DateUtilsService', 'CustodyService',
         CustodyController
@@ -3326,6 +3431,60 @@
       [
         '$resource', 'TokenService',
         ReceptionService
+      ]
+    );
+
+  //JobService.js
+  /**
+   * @name JobService
+   * @constructor
+   * @desc Proveedor de datos, Órdenes de Trabajo
+   * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
+   * @param {Object} TokenService - Proveedor de métodos para token
+   * @return {Object} $resource - Acceso a recursos HTTP
+   */
+  function JobService($resource, TokenService) {
+    return $resource(API_BASE_URL + 'jobs/:jobId', {}, {
+      query: {
+        method: 'GET',
+        params: {jobId: 'id_orden_trabajo'},
+        isArray: false,
+        headers: {
+          'Auth-Token': TokenService.getToken()
+        }
+      },
+      get: {
+        method: 'GET',
+        params: {},
+        isArray: true,
+        headers: {
+          'Auth-Token': TokenService.getToken()
+        }
+      },
+      update: {
+        method: 'POST',
+        params: {},
+        isArray: false,
+        headers: {
+          'Auth-Token': TokenService.getToken()
+        }
+      },
+      save: {
+        method: 'POST',
+        params: {},
+        isArray: false,
+        headers: {
+          'Auth-Token': TokenService.getToken()
+        }
+      }
+    });
+  }
+  angular
+    .module('sislabApp')
+    .factory('JobService',
+      [
+        '$resource', 'TokenService',
+        JobService
       ]
     );
 

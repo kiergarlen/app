@@ -373,6 +373,55 @@ $app->post("/receptions", function() use ($app) {
   }
 });
 
+$app->get("/jobs(/)(:jobId)", function($jobId = -1) use ($app) {
+  try {
+    $userId = decodeUserToken($app->request())->uid;
+    if ($jobId > -1)
+    {
+      $result = json_encode(getJob($jobId));
+    }
+    else
+    {
+      $result = json_encode(getJobs());
+    }
+    $app->response()->status(200);
+    $app->response()->header('Content-Type', 'application/json');
+    //$result = ")]}',\n" . $result;
+    print_r($result);
+  } catch (Exception $e) {
+    $app->response()->status(400);
+    $app->response()->header('X-Status-Reason', $e->getMessage());
+  }
+});
+
+$app->post("/jobs", function() use ($app) {
+  try {
+    $userId = decodeUserToken($app->request())->uid;
+    $request = $app->request();
+    $jobId = extractDataFromRequest($request)->id_orden_trabajo;
+    if ($jobId < 1)
+    {
+      // // $jobInsertData = processJobInsert($request);
+      // // $jobId = insertJob($jobInsertData["job"]);
+      // // //processJobOrderInsert($jobInsertData, $jobId);
+      $result = '{"id_orden_trabajo":' . $jobId . '}';
+    }
+    else
+    {
+      // $jobUpdateData = processJobUpdate($request);
+      // $jobId = updateJob($jobUpdateData["job"]);
+      $result = '{"id_orden_trabajo":' . $jobId . '}';
+    }
+    $app->response()->status(200);
+    $app->response()->header('Content-Type', 'application/json');
+    //$result = ")]}',\n" . $result;
+    print_r($result);
+  } catch (Exception $e) {
+    $app->response()->status(400);
+    $app->response()->header('X-Status-Reason', $e->getMessage());
+  }
+});
+
 $app->get("/custodies(/)(:custodyId)", function($custodyId = -1) use ($app) {
   try {
     $userId = decodeUserToken($app->request())->uid;

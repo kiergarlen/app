@@ -1,0 +1,116 @@
+    <sislab-menu></sislab-menu>
+    <sislab-banner></sislab-banner>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-xs-12 col-lg-8 col-lg-offset-2 main item-themed-z2">
+          <div class="view-container">
+
+<div class="row">
+  <div class="col-xs-12">
+    <h2 class="page-header">Orden de Trabajo</h2>
+  </div>
+</div>
+<div class="row">
+  <div class="col-xs-12">
+    <div class="alert alert-danger item-z1" role="alert"
+      data-ng-show="job.job.id_status == 3">
+      <i class="glyphicon glyphicon-warning-sign"></i>
+      Motivo rechazo:
+      <strong>
+        {{job.job.motivo_rechaza}}
+        <span
+          data-ng-show="job.job.fecha_rechaza.length > 0">
+          ({{job.job.fecha_rechaza | date: 'yyyy-MM-dd'}})
+        </span>
+      </strong>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-xs-12">
+    <div class="alert alert-warning alert-dismissible item-z1" role="alert"
+      data-ng-show="job.message.length > 0">
+      <button type="button" class="close" aria-label="Cerrar"
+        data-ng-click="job.message = ''">
+        <span aria-hidden="true">&times;</span>
+      </button>
+      <i class="glyphicon glyphicon-warning-sign"></i>
+      <strong>
+        {{job.message}}
+      </strong>
+    </div>
+  </div>
+</div>
+<form class="form" role="form"
+  name="jobForm"
+  data-ng-submit="job.submitJobForm()"
+  novalidate
+  >
+  <div class="row">
+    <div class="col-xs-12" data-bs-collapse>
+      <h4 data-bs-collapse-toggle>
+        <a class="btn btn-default">
+          <i class="glyphicon glyphicon-chevron-down"
+            aria-hidden="true"></i>
+        </a>
+        Datos de Referencia
+      </h4>
+      <div class="row well well-sm item-z1"
+        data-bs-collapse-target
+        >
+        <div class="col-xs-12 col-sm-6">
+          <h6>Informe</h6>
+          <ul class="list-inline">
+            <li>
+              Id Informe:
+              <strong>
+                {{::job.job.id_estudio}}
+              </strong>
+            </li>
+            <li>
+              Fecha:
+              <strong>
+                {{::job.job.hoja.fecha | date: 'yyyy-MM-dd'}}
+              </strong>
+            </li>
+          </ul>
+        </div>
+        <div class="col-xs-12 col-sm-6">
+          <h6>Recepción</h6>
+          <ul class="list-inline">
+            <li>
+              Id Recepción:
+              <strong>
+                {{::job.job.id_recepcion}}
+              </strong>
+            </li>
+            <li>
+              Fecha recepción:
+              <strong>
+                {{::job.job.recepcion.fecha_recibe | date: 'yyyy-MM-dd'}}
+              </strong>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12">
+      <h4>Custodia muestras</h4>
+    </div>
+  </div>
+  <br>
+  <button type="submit" class="btn btn-primary"
+    value="Guardar" title="Guardar"
+    data-ng-click="job.validateJobForm()"
+    >
+    Guardar</button>
+</form>
+
+          </div>
+          <sislab-footer></sislab-footer>
+        </div><!-- view-container -->
+      </div><!-- row -->
+    </div><!-- container -->
+    <sislab-banner-bottom></sislab-banner-bottom>

@@ -30,8 +30,8 @@ function processUserJwt($request) {
   $token["iss"] = $request->getUrl();
   $token["aud"] = "sislab.ceajalisco.gob.mx";
   $token["iat"] = time();
-  /// Token expires 48 hours from now
-  $token["exp"] = time() + (48 * 60 * 60);
+  /// Token expires 4 hours from now
+  $token["exp"] = time() + (4 * 60 * 60);
   $jwt = JWT::encode($token, KEY);
   return $jwt;
 }
@@ -374,7 +374,6 @@ function processStudyOrderUpdate($studyUpdateData) {
 
   if ($l < 1)
   {
-    //nothing stored, insert all
     for ($j = 0; $j < $m; $j++) {
       $newOrder = (array) $orders[$j];
       unset($newOrder["id_orden"]);
@@ -398,51 +397,54 @@ function processStudyOrderUpdate($studyUpdateData) {
   }
   else
   {
-    //mark all stored as deleted, only additions/matches persist
     for ($i = 0; $i < $l; $i++) {
       unset($storedOrders[$i]['$$hashKey']);
       unset($storedOrders[$i]["id_usuario_captura"]);
       unset($storedOrders[$i]["fecha_captura"]);
       unset($storedOrders[$i]["ip_captura"]);
       unset($storedOrders[$i]["host_captura"]);
+      unset($storedOrders[$i]["cliente"]);
+      unset($storedOrders[$i]["estudio"]);
+      unset($storedOrders[$i]["planes"]);
       $storedOrders[$i]["activo"] = 0;
       $storedOrders[$i]["id_usuario_actualiza"] = $updateUserId;
       $storedOrders[$i]["fecha_actualiza"] = date('Y-m-d H:i:s');
       $storedOrders[$i]["ip_actualiza"] = $updateIp;
       $storedOrders[$i]["host_actualiza"] = $updateUrl;
-      //return $storedOrders[$i];
-      //return "delete old";
+      //return $storedOrders[0];
       updateOrder($storedOrders[$i]);
     }
     for ($j = 0; $j < $m; $j++) {
       $order = (array) $orders[$j];
       if ($order["id_orden"] == 0)
       {
-        //new, store it
         unset($order["id_orden"]);
         unset($order['$$hashKey']);
+        unset($order["cliente"]);
+        unset($order["estudio"]);
+        unset($order["planes"]);
         $order["id_usuario_captura"] = $updateUserId;
         $order["fecha_captura"] = date('Y-m-d H:i:s');
         $order["ip_captura"] = $updateIp;
         $order["host_captura"] = $updateUrl;
-        //return "...something new;
         //return $order;
         insertOrder($order);
       }
       else
       {
-        //update
         unset($order['$$hashKey']);
         unset($order["id_usuario_captura"]);
         unset($order["fecha_captura"]);
         unset($order["ip_captura"]);
         unset($order["host_captura"]);
+        unset($order["cliente"]);
+        unset($order["estudio"]);
+        unset($order["planes"]);
         $order["activo"] = 1;
         $order["id_usuario_actualiza"] = $updateUserId;
         $order["fecha_actualiza"] = date('Y-m-d H:i:s');
         $order["ip_actualiza"] = $updateIp;
         $order["host_actualiza"] = $updateUrl;
-        //return "...something old";
         //return $order;
         updateOrder($order);
       }

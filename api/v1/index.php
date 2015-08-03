@@ -99,15 +99,14 @@ $app->post("/studies", function() use ($app) {
       $studyInsertData = processStudyInsert($request);
       $studyId = insertStudy($studyInsertData["study"]);
       processStudyOrderInsert($studyInsertData, $studyId);
-      $result = '{"id_estudio":' . $studyId . '}';
     }
     else
     {
       $studyUpdateData = processStudyUpdate($request);
       $studyId = updateStudy($studyUpdateData["study"]);
       $orderData = processStudyOrderUpdate($studyUpdateData);
-      $result = '{"id_estudio":' . $studyId . '}';
     }
+    $result = '{"id_estudio":' . $studyId . '}';
     $app->response()->status(200);
     $app->response()->header('Content-Type', 'application/json');
     //$result = ")]}',\n" . $result;
@@ -157,25 +156,20 @@ $app->post("/orders", function() use ($app) {
   try {
     $userId = decodeUserToken($app->request())->uid;
     $request = $app->request();
-    //$requestData = extractDataFromRequest($request);
     $orderId = extractDataFromRequest($request)->id_orden;
     if ($orderId < 1)
     {
       $orderInsertData = processOrderInsert($request);
       $orderId = insertOrder($orderInsertData);
-      //TODO: check if processOrderPlansInsert() is needed
-      $result = '{"id_orden":' . $orderId . '}';
+      // // TODO: check if processOrderPlansInsert() is needed
     }
     else
     {
       $orderUpdateData = processOrderUpdate($request);
-      //$result = json_encode(updateOrder($orderUpdateData["order"]));
       $orderId = updateOrder($orderUpdateData["order"]);
-      //$result = json_encode(processOrderPlansUpdate($orderUpdateData));
-      //$result = processOrderPlansUpdate($orderUpdateData);
       processOrderPlansUpdate($orderUpdateData);
-      $result = '{"id_orden":' . $orderId . '}';
     }
+    $result = '{"id_orden":' . $orderId . '}';
     $app->response()->status(200);
     $app->response()->header('Content-Type', 'application/json');
     //$result = ")]}',\n" . $result;
@@ -232,7 +226,6 @@ $app->post("/plans", function() use ($app) {
     {
       // $planInsertData = processPlanInsert($request);
       // $planId = insertPlan($planInsertData["plan"]);
-      $result = '{"id_plan":' . $planId . '}';
     }
     else
     {
@@ -243,8 +236,8 @@ $app->post("/plans", function() use ($app) {
       processPlanReactivesUpdate($planUpdateData);
       processPlanMaterialsUpdate($planUpdateData);
       processPlanCoolersUpdate($planUpdateData);
-      $result = '{"id_plan":' . $planId . '}';
     }
+    $result = '{"id_plan":' . $planId . '}';
     $app->response()->status(200);
     $app->response()->header('Content-Type', 'application/json');
     //$result = ")]}',\n" . $result;
@@ -287,7 +280,6 @@ $app->post("/sheets", function() use ($app) {
       // $sheetInsertData = processSheetInsert($request);
       // $sheetId = insertSheet($sheetInsertData["sheet"]);
       // //processSheetOrderInsert($sheetInsertData, $sheetId);
-      $result = '{"id_hoja":' . $sheetId . '}';
     }
     else
     {
@@ -295,8 +287,8 @@ $app->post("/sheets", function() use ($app) {
       $sheetId = updateSheet($sheetUpdateData["sheet"]);
       processSheetResultsUpdate($sheetUpdateData);
       processSheetPreservationsUpdate($sheetUpdateData);
-      $result = '{"id_hoja":' . $sheetId . '}';
     }
+    $result = '{"id_hoja":' . $sheetId . '}';
     $app->response()->status(200);
     $app->response()->header('Content-Type', 'application/json');
     //$result = ")]}',\n" . $result;
@@ -352,7 +344,6 @@ $app->post("/receptions", function() use ($app) {
       // $receptionInsertData = processReceptionInsert($request);
       // $receptionId = insertReception($receptionInsertData["reception"]);
       // //processReceptionOrderInsert($receptionInsertData, $receptionId);
-      $result = '{"id_recepcion":' . $receptionId . '}';
     }
     else
     {
@@ -361,8 +352,8 @@ $app->post("/receptions", function() use ($app) {
       processReceptionSamplesUpdate($receptionUpdateData);
       processReceptionPreservationsUpdate($receptionUpdateData);
       processReceptionAreasUpdate($receptionUpdateData);
-      $result = '{"id_recepcion":' . $receptionId . '}';
     }
+    $result = '{"id_recepcion":' . $receptionId . '}';
     $app->response()->status(200);
     $app->response()->header('Content-Type', 'application/json');
     //$result = ")]}',\n" . $result;
@@ -404,14 +395,13 @@ $app->post("/jobs", function() use ($app) {
       // // $jobInsertData = processJobInsert($request);
       // // $jobId = insertJob($jobInsertData["job"]);
       // // //processJobOrderInsert($jobInsertData, $jobId);
-      $result = '{"id_orden_trabajo":' . $jobId . '}';
     }
     else
     {
       // $jobUpdateData = processJobUpdate($request);
       // $jobId = updateJob($jobUpdateData["job"]);
-      $result = '{"id_orden_trabajo":' . $jobId . '}';
     }
+    $result = '{"id_orden_trabajo":' . $jobId . '}';
     $app->response()->status(200);
     $app->response()->header('Content-Type', 'application/json');
     //$result = ")]}',\n" . $result;
@@ -453,15 +443,14 @@ $app->post("/custodies", function() use ($app) {
       // $custodyInsertData = processReceptionInsert($request);
       // $custodyId = insertReception($custodyInsertData["custody"]);
       // //processReceptionOrderInsert($custodyInsertData, $custodyId);
-      $result = '{"id_custody":' . $custodyId . '}';
     }
     else
     {
       //$custodyUpdateData = processReceptionUpdate($request);
       //$custodyId = updateReception($custodyUpdateData["custody"]);
       //processReceptionOrderUpdate($custodyUpdateData);
-      $result = '{"id_custody":' . $custodyId . '}';
     }
+    $result = '{"id_custody":' . $custodyId . '}';
     $requestData = extractDataFromRequest($request);
     $result = json_encode($requestData);
     $app->response()->status(200);

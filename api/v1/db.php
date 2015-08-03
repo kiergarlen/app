@@ -20,7 +20,8 @@ function getConnection() {
   } catch(PDOException $e) {
     ////Error logging, for development
     //error_log($e->getMessage(), 3, '/var/tmp/php.log');
-    $output = '{"error":"' . $e->getMessage() . '"}';
+    $output = '{"error":"' . $e->getMessage() . ', ';
+    $output .= '"statement": "' . $dbConnection . '"}';
     //print_r($output);
   }
   return $dbConnection;

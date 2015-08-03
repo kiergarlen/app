@@ -3,7 +3,7 @@ require "../libs/Slim/Slim.php";
 require "../libs/JWT/JWT.php";
 require "./logic.php";
 require "./db.php";
-// cd372fb85148700fa88095e3492d3f9f5beb43e555e5ff26d95f5a6adc36f8e6
+//define("KEY", "cd372fb85148700fa88095e3492d3f9f5beb43e555e5ff26d95f5a6adc36f8e6");
 define("KEY", "m0oxUT7L8Unn93hXMUGHpwq_jTSKVBjQfEVCUe8jZ38KUU4VSAfmsNk4JJYcJl7CukrY6QMlixxwat7AZSpDcSQ");
 
 \Slim\Slim::registerAutoloader();

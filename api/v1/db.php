@@ -1296,9 +1296,18 @@ function deleteReceptionAreas($receptionId) {
 }
 
 function getJob($jobId) {
-  $sql = "SELECT *
-    FROM OrdenTrabajo
-    WHERE activo = 1 AND id_orden_trabajo = :jobId";
+  $sql = "SELECT id_trabajo, id_plan, id_recepcion,
+    id_muestra, id_muestra_duplicada, id_area, id_usuario_entrega,
+    id_usuario_recibe, id_usuario_analiza, id_usuario_registra,
+    id_usuario_aprueba, id_usuario_valida, id_status,
+    fecha, fecha_entrega, fecha_recibe, fecha_analiza,
+    fecha_registra, fecha_aprueba, fecha_valida,
+    fecha_actualiza, fecha_rechaza,
+    ip_captura, ip_aprueba, ip_valida, ip_actualiza,
+    host_captura, host_aprueba, host_valida, host_actualiza,
+    comentarios, comentarios_calidad, activo
+    FROM Trabajo
+    WHERE activo = 1 AND id_trabajo = :jobId";
   $db = getConnection();
   $stmt = $db->prepare($sql);
   $stmt->bindParam("jobId", $jobId);
@@ -1309,8 +1318,17 @@ function getJob($jobId) {
 }
 
 function getJobs() {
-  $sql = "SELECT *
-    FROM OrdenTrabajo
+  $sql = "SELECT id_trabajo, id_plan, id_recepcion,
+    id_muestra, id_muestra_duplicada, id_area, id_usuario_entrega,
+    id_usuario_recibe, id_usuario_analiza, id_usuario_registra,
+    id_usuario_aprueba, id_usuario_valida, id_status,
+    fecha, fecha_entrega, fecha_recibe, fecha_analiza,
+    fecha_registra, fecha_aprueba, fecha_valida,
+    fecha_actualiza, fecha_rechaza,
+    ip_captura, ip_aprueba, ip_valida, ip_actualiza,
+    host_captura, host_aprueba, host_valida, host_actualiza,
+    comentarios, comentarios_calidad, activo
+    FROM Trabajo
     WHERE activo = 1";
     $db = getConnection();
     $stmt = $db->prepare($sql);

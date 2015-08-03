@@ -1,3 +1,4 @@
+/*global angular*/
 (function(window, document, undefined) {
   'use strict';
   //ANGULAR MODULE SETTER
@@ -1888,7 +1889,7 @@
    */
   function JobListController($location, JobService) {
     var vm = this;
-    vm.custodies = JobService.get();
+    vm.jobs = JobService.get();
     vm.viewJob = viewJob;
 
     function viewJob(id) {
@@ -1940,7 +1941,7 @@
     function submitForm() {
       if (isFormValid() && !vm.isDataSubmitted) {
         vm.isDataSubmitted = true;
-        if (vm.job.id_orden_trabajo < 1) {
+        if (vm.job.id_trabajo < 1) {
           RestUtilsService
             .saveData(
               JobService,
@@ -1954,7 +1955,7 @@
                 JobService,
                 vm.job,
                 'recepcion/trabajo',
-                'id_orden_trabajo'
+                'id_trabajo'
               );
           }
         }
@@ -3447,7 +3448,7 @@
     return $resource(API_BASE_URL + 'jobs/:jobId', {}, {
       query: {
         method: 'GET',
-        params: {jobId: 'id_orden_trabajo'},
+        params: {jobId: 'id_trabajo'},
         isArray: false,
         headers: {
           'Auth-Token': TokenService.getToken()

@@ -30,7 +30,7 @@ function processUserJwt($request) {
   $token["iss"] = $request->getUrl();
   $token["aud"] = "sislab.ceajalisco.gob.mx";
   $token["iat"] = time();
-  /// Token expires 4 hours from now
+  //// Token expires 4 hours from now
   $token["exp"] = time() + (4 * 60 * 60);
   $jwt = JWT::encode($token, KEY);
   return $jwt;
@@ -56,11 +56,11 @@ function decodeUserToken($request) {
     // $requestUrl = $request->getUrl();
     // if ($tokenIp === $request->getIp())
     // {
-    //  return array("success" => "Ip match");
+    //   return array("success" => "Ip match");
     // }
     // else
     // {
-    //  return array("error" => "Ip mismatch");
+    //   return array("error" => "Ip mismatch");
     // }
     return $decoded;
   } catch (Exception $e) {

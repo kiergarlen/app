@@ -47,57 +47,128 @@
   novalidate
   >
   <div class="row">
-    <div class="col-xs-12" data-bs-collapse>
-      <h4 data-bs-collapse-toggle>
-        <a class="btn btn-default">
-          <i class="glyphicon glyphicon-chevron-down"
-            aria-hidden="true"></i>
-        </a>
-        Datos de Referencia
-      </h4>
-      <div class="row well well-sm item-z1"
-        data-bs-collapse-target
+    <div class="col-xs-12">
+      <h4>Realiza Orden</h4>
+    </div>
+    <div class="col-xs-12 col-sm-6">
+      <label for="receptionistSelect">
+        Entrega Orden
+      </label>
+      <select class="form-control"
+        id="receptionistSelect"
+        name="receptionistSelect"
+        data-ng-model="job.job.id_recepcionista"
         >
-        <div class="col-xs-12 col-sm-6">
-          <h6>Informe</h6>
-          <ul class="list-inline">
-            <li>
-              Id Informe:
-              <strong>
-                {{::job.job.id_estudio}}
-              </strong>
-            </li>
-            <li>
-              Fecha:
-              <strong>
-                {{::job.job.hoja.fecha | date: 'yyyy-MM-dd'}}
-              </strong>
-            </li>
-          </ul>
-        </div>
-        <div class="col-xs-12 col-sm-6">
-          <h6>Recepción</h6>
-          <ul class="list-inline">
-            <li>
-              Id Recepción:
-              <strong>
-                {{::job.job.id_recepcion}}
-              </strong>
-            </li>
-            <li>
-              Fecha recepción:
-              <strong>
-                {{::job.job.recepcion.fecha_recibe | date: 'yyyy-MM-dd'}}
-              </strong>
-            </li>
-          </ul>
-        </div>
-      </div>
+        <option
+          data-ng-repeat="receptionist in job.receptionists"
+          value="{{receptionist.id_usuario}}">
+          {{::receptionist.nombres}}
+          {{::receptionist.apellido_paterno}}
+          {{::receptionist.apellido_materno}}
+        </option>
+      </select>
     </div>
   </div>
   <div class="row">
     <div class="col-xs-12">
-      <h4>Custodia muestras</h4>
+      <h4>Recibe Orden</h4>
+    </div>
+    <div class="col-xs-12 col-sm-6">
+      <label for="supervisorSelect">
+        Entrega Orden
+      </label>
+      <select class="form-control"
+        id="supervisorSelect"
+        name="supervisorSelect"
+        data-ng-model="job.job.id_usuario_recibe"
+        >
+        <option
+          data-ng-repeat="supervisor in job.supervisors"
+          value="{{supervisor.id_usuario}}">
+          {{::supervisor.nombres}}
+          {{::supervisor.apellido_paterno}}
+          {{::supervisor.apellido_materno}}
+        </option>
+      </select>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12">
+      <h4>Aprueba preliminares</h4>
+    </div>
+    <div class="col-xs-12 col-sm-6">
+      <label for="verifierSelect">
+        Entrega Orden
+      </label>
+      <select class="form-control"
+        id="verifierSelect"
+        name="verifierSelect"
+        data-ng-model="job.job.id_usuario_aprueba"
+        >
+        <option
+          data-ng-repeat="verifier in job.verifiers"
+          value="{{verifier.id_usuario}}">
+          {{::verifier.nombres}}
+          {{::verifier.apellido_paterno}}
+          {{::verifier.apellido_materno}}
+        </option>
+      </select>
+    </div>
+  </div>
+  <div class="row"
+    data-ng-show="job.user.level < 5 && job.user.level > 2">
+    <div class="col-xs-12">
+      <h4>Aprobación preliminares</h4>
+    </div>
+    <div class="col-xs-12 col-sm-5 well wel-sm ">
+      <button class="btn btn-success"
+        value="Aprobar" title="Aprobar"
+        data-ng-click="job.signItem()"
+        >
+        <i class="glyphicon glyphicon-ok" aria-hidden="true"></i>
+        Aprobar
+      </button>
+      <button class="btn btn-danger"
+        value="Rechazar" title="Rechazar"
+        data-ng-click="job.unsignItem()"
+        >
+        <i class="glyphicon glyphicon-remove" aria-hidden="true"></i>
+        Rechazar
+      </button>
+    </div>
+  </div>
+  <div class="row"
+    data-ng-show="job.user.level < 3">
+    <div class="col-xs-12">
+      <h4>Validación</h4>
+    </div>
+    <div class="col-xs-12 col-sm-5 well wel-sm ">
+      <button class="btn btn-success"
+        value="Validar" title="Validar"
+        data-ng-click="job.approveItem()"
+        >
+        <i class="glyphicon glyphicon-ok" aria-hidden="true"></i>
+        Validar
+      </button>
+      <button class="btn btn-danger"
+        value="Rechazar" title="Rechazar"
+        data-ng-click="job.rejectItem()"
+        >
+        <i class="glyphicon glyphicon-remove" aria-hidden="true"></i>
+        Rechazar
+      </button>
+    </div>
+    <div class="col-xs-12 col-sm-7 well wel-sm ">
+      <label class="sr-only" for="rejectText">
+        Motivo rechazo
+      </label>
+      <input type="text" class="form-control"
+        id="rejectText"
+        name="rejectText"
+        placeholder="Especifique motivo rechazo"
+        data-ng-disabled="job.job.id_status != 3"
+        data-ng-model="job.job.motivo_rechaza"
+        >
     </div>
   </div>
   <br>

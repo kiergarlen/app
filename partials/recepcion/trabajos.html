@@ -59,9 +59,9 @@
             <tr
               data-ng-repeat="item in jobs.jobs
               | filter:jobs.filter.$"
-              id="jobId{{item.id_orden_trabajo}}">
+              id="jobId{{item.id_trabajo}}">
               <td>
-                {{item.id_orden_trabajo}}
+                {{item.id_trabajo}}
               </td>
               <td>
                 <span class="label label-success"
@@ -76,7 +76,7 @@
               <td>
                 <button class="btn btn-default"
                   value="Consultar" title="Consultar"
-                  data-ng-click="jobs.viewJob(item.id_orden_trabajo)"
+                  data-ng-click="jobs.viewJob(item.id_trabajo)"
                   >
                   <i class="glyphicon glyphicon-eye-open" aria-hidden="true"></i>
                 </button>

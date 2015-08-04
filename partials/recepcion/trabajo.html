@@ -48,23 +48,64 @@
   >
   <div class="row">
     <div class="col-xs-12">
-      <h4>Realiza Orden</h4>
+      <h4>Entrega Orden</h4>
+    </div>
+    <div class="col-xs-6 col-sm-4">
+      <label for="jobDeliverDate">
+        <i class="glyphicon glyphicon-calendar"></i>
+        Fecha
+      </label>
+      <input type="text"
+        class="form-control"
+        id="jobDeliverDate"
+        name="jobDeliverDate"
+        placeholder="aaaa-mm-dd"
+        required
+        data-ng-model="job.job.fecha_entrega"
+        data-date-format="yyyy-MM-dd"
+        data-date-type="date"
+        data-autoclose="1"
+        date-use-native="true"
+        data-bs-datepicker
+        >
+    </div>
+    <div class="col-xs-6 col-sm-3">
+      <label for="jobDeliverTime">
+        <i class="glyphicon glyphicon-time"></i>
+        Hora
+      </label>
+      <input type="text"
+        class="form-control"
+        id="jobDeliverTime"
+        name="jobDeliverTime"
+        placeholder="HH:mm"
+        required
+        data-ng-model="job.job.fecha_entrega"
+        data-time-format="HH:mm"
+        data-date-type="date"
+        data-length="1"
+        data-hour-step="1"
+        data-minute-step="1"
+        data-arrow-behavior="picker"
+        data-auto-close="1"
+        data-bs-timepicker
+        >
     </div>
     <div class="col-xs-12 col-sm-6">
-      <label for="receptionistSelect">
+      <label for="delivererSelect">
         Entrega Orden
       </label>
       <select class="form-control"
-        id="receptionistSelect"
-        name="receptionistSelect"
-        data-ng-model="job.job.id_recepcionista"
+        id="delivererSelect"
+        name="delivererSelect"
+        data-ng-model="job.job.id_usuario_entrega"
         >
         <option
-          data-ng-repeat="receptionist in job.receptionists"
-          value="{{receptionist.id_usuario}}">
-          {{::receptionist.nombres}}
-          {{::receptionist.apellido_paterno}}
-          {{::receptionist.apellido_materno}}
+          data-ng-repeat="deliverer in job.deliverers"
+          value="{{deliverer.id_usuario}}">
+          {{::deliverer.nombres}}
+          {{::deliverer.apellido_paterno}}
+          {{::deliverer.apellido_materno}}
         </option>
       </select>
     </div>
@@ -73,21 +114,62 @@
     <div class="col-xs-12">
       <h4>Recibe Orden</h4>
     </div>
+    <div class="col-xs-6 col-sm-4">
+      <label for="jobReceiveDate">
+        <i class="glyphicon glyphicon-calendar"></i>
+        Fecha
+      </label>
+      <input type="text"
+        class="form-control"
+        id="jobReceiveDate"
+        name="jobReceiveDate"
+        placeholder="aaaa-mm-dd"
+        required
+        data-ng-model="job.job.fecha_recibe"
+        data-date-format="yyyy-MM-dd"
+        data-date-type="date"
+        data-autoclose="1"
+        date-use-native="true"
+        data-bs-datepicker
+        >
+    </div>
+    <div class="col-xs-6 col-sm-3">
+      <label for="jobReceiveTime">
+        <i class="glyphicon glyphicon-time"></i>
+        Hora
+      </label>
+      <input type="text"
+        class="form-control"
+        id="jobReceiveTime"
+        name="jobReceiveTime"
+        placeholder="HH:mm"
+        required
+        data-ng-model="job.job.fecha_recibe"
+        data-time-format="HH:mm"
+        data-date-type="date"
+        data-length="1"
+        data-hour-step="1"
+        data-minute-step="1"
+        data-arrow-behavior="picker"
+        data-auto-close="1"
+        data-bs-timepicker
+        >
+    </div>
     <div class="col-xs-12 col-sm-6">
-      <label for="supervisorSelect">
-        Entrega Orden
+      <label for="receiverSelect">
+        Recibe Orden
       </label>
       <select class="form-control"
-        id="supervisorSelect"
-        name="supervisorSelect"
+        id="receiverSelect"
+        name="receiverSelect"
         data-ng-model="job.job.id_usuario_recibe"
         >
         <option
-          data-ng-repeat="supervisor in job.supervisors"
-          value="{{supervisor.id_usuario}}">
-          {{::supervisor.nombres}}
-          {{::supervisor.apellido_paterno}}
-          {{::supervisor.apellido_materno}}
+          data-ng-repeat="receiver in job.receivers"
+          value="{{receiver.id_usuario}}">
+          {{::receiver.nombres}}
+          {{::receiver.apellido_paterno}}
+          {{::receiver.apellido_materno}}
         </option>
       </select>
     </div>
@@ -96,9 +178,50 @@
     <div class="col-xs-12">
       <h4>Aprueba preliminares</h4>
     </div>
+    <div class="col-xs-6 col-sm-4">
+      <label for="jobVerifyDate">
+        <i class="glyphicon glyphicon-calendar"></i>
+        Fecha
+      </label>
+      <input type="text"
+        class="form-control"
+        id="jobVerifyDate"
+        name="jobVerifyDate"
+        placeholder="aaaa-mm-dd"
+        required
+        data-ng-model="job.job.fecha_aprueba"
+        data-date-format="yyyy-MM-dd"
+        data-date-type="date"
+        data-autoclose="1"
+        date-use-native="true"
+        data-bs-datepicker
+        >
+    </div>
+    <div class="col-xs-6 col-sm-3">
+      <label for="jobVerifyTime">
+        <i class="glyphicon glyphicon-time"></i>
+        Hora
+      </label>
+      <input type="text"
+        class="form-control"
+        id="jobVerifyTime"
+        name="jobVerifyTime"
+        placeholder="HH:mm"
+        required
+        data-ng-model="job.job.fecha_aprueba"
+        data-time-format="HH:mm"
+        data-date-type="date"
+        data-length="1"
+        data-hour-step="1"
+        data-minute-step="1"
+        data-arrow-behavior="picker"
+        data-auto-close="1"
+        data-bs-timepicker
+        >
+    </div>
     <div class="col-xs-12 col-sm-6">
       <label for="verifierSelect">
-        Entrega Orden
+        Aprueba Orden
       </label>
       <select class="form-control"
         id="verifierSelect"
@@ -118,7 +241,7 @@
   <div class="row"
     data-ng-show="job.user.level < 5 && job.user.level > 2">
     <div class="col-xs-12">
-      <h4>Aprobación preliminares</h4>
+      <h4>Aprobación</h4>
     </div>
     <div class="col-xs-12 col-sm-5 well wel-sm ">
       <button class="btn btn-success"

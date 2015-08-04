@@ -52,6 +52,7 @@
             <tr>
               <th>Id Orden Trabajo</th>
               <th>Status</th>
+              <th>Área</th>
               <th>Acciones</th>
             </tr>
           </thead>
@@ -72,6 +73,9 @@
                   data-ng-show="item.fecha_captura.length < 1">
                   Falta info.
                 </span>
+              </td>
+              <td>
+                {{item.area}}
               </td>
               <td>
                 <button class="btn btn-default"

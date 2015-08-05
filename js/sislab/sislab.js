@@ -139,15 +139,35 @@
         controller: 'ContainerListController',
         controllerAs: 'containersList'
       }).
-      when('/analisis/analisis', {
-        templateUrl: 'partials/analisis/consulta.html',
-        controller: 'AnalysiListController',
-        controllerAs: 'analysisList'
+      when('/analisis/fisico', {
+        templateUrl: 'partials/analisis/fisicos.html',
+        controller: 'AnalysisPhysicalListController',
+        controllerAs: 'analysisPhysicalList'
       }).
-      when('/analisis/analisis/:analysisId', {
-        templateUrl: 'partials/analisis/analisis.html',
-        controller: 'AnalysisController',
-        controllerAs: 'analysis'
+      when('/analisis/metal', {
+        templateUrl: 'partials/analisis/metales.html',
+        controller: 'AnalysisMetalListController',
+        controllerAs: 'analysisMetalList'
+      }).
+      when('/analisis/biologico', {
+        templateUrl: 'partials/analisis/biologicos.html',
+        controller: 'AnalysisBiologicalListController',
+        controllerAs: 'analysisBiologicalList'
+      }).
+      when('/analisis/fisico/:analysisId', {
+        templateUrl: 'partials/analisis/fisico.html',
+        controller: 'AnalysisPhysicalController',
+        controllerAs: 'analysisPhysical'
+      }).
+      when('/analisis/metal/:analysisId', {
+        templateUrl: 'partials/analisis/metal.html',
+        controller: 'AnalysisMetalController',
+        controllerAs: 'analysisMetal'
+      }).
+      when('/analisis/biologico/:analysisId', {
+        templateUrl: 'partials/analisis/biologico.html',
+        controller: 'AnalysisBiologicalController',
+        controllerAs: 'analysisBiological'
       }).
       when('/reporte/reporte', {
         templateUrl: 'partials/reporte/reportes.html',

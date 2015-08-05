@@ -119,6 +119,46 @@
         controller: 'CustodyController',
         controllerAs: 'custody'
       }).
+      when('/analisis/fisico', {
+        templateUrl: 'partials/analisis/fisicos.html',
+        controller: 'PhysAnalysisListController',
+        controllerAs: 'physAnalysisList'
+      }).
+      when('/analisis/metal', {
+        templateUrl: 'partials/analisis/metales.html',
+        controller: 'MetalAnalysisListController',
+        controllerAs: 'metalAnalysisList'
+      }).
+      when('/analisis/biologico', {
+        templateUrl: 'partials/analisis/biologicos.html',
+        controller: 'BioAnalysisListController',
+        controllerAs: 'bioAnalysisList'
+      }).
+      when('/analisis/fisico/:analysisId', {
+        templateUrl: 'partials/analisis/fisico.html',
+        controller: 'physAnalysisController',
+        controllerAs: 'physAnalysis'
+      }).
+      when('/analisis/metal/:analysisId', {
+        templateUrl: 'partials/analisis/metal.html',
+        controller: 'metalAnalysisController',
+        controllerAs: 'metalAnalysis'
+      }).
+      when('/analisis/biologico/:analysisId', {
+        templateUrl: 'partials/analisis/biologico.html',
+        controller: 'bioAnalysisController',
+        controllerAs: 'bioAnalysis'
+      }).
+      when('/reporte/reporte', {
+        templateUrl: 'partials/reporte/reportes.html',
+        controller: 'ReportListController',
+        controllerAs: 'reportsList'
+      }).
+      when('/reporte/reporte/:reportId', {
+        templateUrl: 'partials/reporte/reporte.html',
+        controller: 'ReportController',
+        controllerAs: 'report'
+      }).
       when('/inventario/muestra', {
         templateUrl: 'partials/inventario/muestras.html',
         controller: 'SampleListController',
@@ -138,46 +178,6 @@
         templateUrl: 'partials/inventario/recipientes.html',
         controller: 'ContainerListController',
         controllerAs: 'containersList'
-      }).
-      when('/analisis/fisico', {
-        templateUrl: 'partials/analisis/fisicos.html',
-        controller: 'AnalysisPhysicalListController',
-        controllerAs: 'analysisPhysicalList'
-      }).
-      when('/analisis/metal', {
-        templateUrl: 'partials/analisis/metales.html',
-        controller: 'AnalysisMetalListController',
-        controllerAs: 'analysisMetalList'
-      }).
-      when('/analisis/biologico', {
-        templateUrl: 'partials/analisis/biologicos.html',
-        controller: 'AnalysisBiologicalListController',
-        controllerAs: 'analysisBiologicalList'
-      }).
-      when('/analisis/fisico/:analysisId', {
-        templateUrl: 'partials/analisis/fisico.html',
-        controller: 'AnalysisPhysicalController',
-        controllerAs: 'analysisPhysical'
-      }).
-      when('/analisis/metal/:analysisId', {
-        templateUrl: 'partials/analisis/metal.html',
-        controller: 'AnalysisMetalController',
-        controllerAs: 'analysisMetal'
-      }).
-      when('/analisis/biologico/:analysisId', {
-        templateUrl: 'partials/analisis/biologico.html',
-        controller: 'AnalysisBiologicalController',
-        controllerAs: 'analysisBiological'
-      }).
-      when('/reporte/reporte', {
-        templateUrl: 'partials/reporte/reportes.html',
-        controller: 'ReportListController',
-        controllerAs: 'reportsList'
-      }).
-      when('/reporte/reporte/:reportId', {
-        templateUrl: 'partials/reporte/reporte.html',
-        controller: 'ReportController',
-        controllerAs: 'report'
       }).
       when('/catalogo/punto', {
         templateUrl: 'partials/catalogo/puntos.html',
@@ -2088,6 +2088,84 @@
       ]
     );
 
+  /**
+   * @name PhysAnalysisListController
+   * @constructor
+   * @desc Controla la vista para el listado de Análisis Fisicoquímicos
+   * @this {Object} $scope - Contenedor para el modelo [AngularJS]
+   * @param {Object} $location - Manejo de URL [AngularJS]
+   * @param {Object} PhysAnalysisService - Proveedor de datos, Análisis Fisicoquímicos
+   */
+  function PhysAnalysisListController($location, PhysAnalysisService) {
+    var vm = this;
+    vm.analysisList = PhysAnalysisService.get();
+    vm.viewAnalysis = viewAnalysis;
+
+    function viewAnalysis(id) {
+      $location.path('/analisis/fisico/' + parseInt(id));
+    }
+  }
+  angular
+    .module('sislabApp')
+    .controller('PhysAnalysisListController',
+      [
+        '$location', 'PhysAnalysisService',
+        PhysAnalysisListController
+      ]
+    );
+
+  /**
+   * @name MetalAnalysisListController
+   * @constructor
+   * @desc Controla la vista para el listado de Análisis de Metales Pesados
+   * @this {Object} $scope - Contenedor para el modelo [AngularJS]
+   * @param {Object} $location - Manejo de URL [AngularJS]
+   * @param {Object} MetalAnalysisService - Proveedor de datos, Análisis de Metales Pesados
+   */
+  function MetalAnalysisListController($location, MetalAnalysisService) {
+    var vm = this;
+    vm.analysisList = MetalAnalysisService.get();
+    vm.viewAnalysis = viewAnalysis;
+
+    function viewAnalysis(id) {
+      $location.path('/analisis/metal/' + parseInt(id));
+    }
+  }
+  angular
+    .module('sislabApp')
+    .controller('MetalAnalysisListController',
+      [
+        '$location', 'MetalAnalysisService',
+        MetalAnalysisListController
+      ]
+    );
+
+  /**
+   * @name BioAnalysisListController
+   * @constructor
+   * @desc Controla la vista para el listado de Análisis de Microbiológicos
+   * @this {Object} $scope - Contenedor para el modelo [AngularJS]
+   * @param {Object} $location - Manejo de URL [AngularJS]
+   * @param {Object} BioAnalysisService - Proveedor de datos, Análisis de Microbiológicos
+   */
+  function BioAnalysisListController($location, BioAnalysisService) {
+    var vm = this;
+    vm.analysisList = BioAnalysisService.get();
+    vm.viewAnalysis = viewAnalysis;
+
+    function viewAnalysis(id) {
+      $location.path('/analisis/metal/' + parseInt(id));
+    }
+  }
+  angular
+    .module('sislabApp')
+    .controller('BioAnalysisListController',
+      [
+        '$location', 'BioAnalysisService',
+        BioAnalysisListController
+      ]
+    );
+
   //SampleListController.js
   /**
    * @name SampleListController
@@ -3560,6 +3638,168 @@
       [
         '$resource', 'TokenService',
         CustodyService
+      ]
+    );
+
+  //PhysAnalysisService.js
+  /**
+   * @name PhysAnalysisService
+   * @constructor
+   * @desc Proveedor de datos, Análisis Fisicoquímicos
+   * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
+   * @param {Object} TokenService - Proveedor de métodos para token
+   * @return {Object} $resource - Acceso a recursos HTTP
+   */
+  function PhysAnalysisService($resource, TokenService) {
+    return $resource(API_BASE_URL + 'analysis/physical/:analysisId', {}, {
+      query: {
+        method: 'GET',
+        params: {analysisId: 'id_analisis'},
+        isArray: false,
+        headers: {
+          'Auth-Token': TokenService.getToken()
+        }
+      },
+      get: {
+        method: 'GET',
+        params: {},
+        isArray: true,
+        headers: {
+          'Auth-Token': TokenService.getToken()
+        }
+      },
+      update: {
+        method: 'POST',
+        params: {},
+        isArray: false,
+        headers: {
+          'Auth-Token': TokenService.getToken()
+        }
+      },
+      save: {
+        method: 'POST',
+        params: {},
+        isArray: false,
+        headers: {
+          'Auth-Token': TokenService.getToken()
+        }
+      }
+    });
+  }
+  angular
+    .module('sislabApp')
+    .factory('PhysAnalysisService',
+      [
+        '$resource', 'TokenService',
+        PhysAnalysisService
+      ]
+    );
+
+  //MetalAnalysisService.js
+  /**
+   * @name MetalAnalysisService
+   * @constructor
+   * @desc Proveedor de datos, Análisis de Metales Pesados
+   * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
+   * @param {Object} TokenService - Proveedor de métodos para token
+   * @return {Object} $resource - Acceso a recursos HTTP
+   */
+  function MetalAnalysisService($resource, TokenService) {
+    return $resource(API_BASE_URL + 'analysis/metal/:analysisId', {}, {
+      query: {
+        method: 'GET',
+        params: {analysisId: 'id_analisis'},
+        isArray: false,
+        headers: {
+          'Auth-Token': TokenService.getToken()
+        }
+      },
+      get: {
+        method: 'GET',
+        params: {},
+        isArray: true,
+        headers: {
+          'Auth-Token': TokenService.getToken()
+        }
+      },
+      update: {
+        method: 'POST',
+        params: {},
+        isArray: false,
+        headers: {
+          'Auth-Token': TokenService.getToken()
+        }
+      },
+      save: {
+        method: 'POST',
+        params: {},
+        isArray: false,
+        headers: {
+          'Auth-Token': TokenService.getToken()
+        }
+      }
+    });
+  }
+  angular
+    .module('sislabApp')
+    .factory('MetalAnalysisService',
+      [
+        '$resource', 'TokenService',
+        MetalAnalysisService
+      ]
+    );
+
+  //BioAnalysisService.js
+  /**
+   * @name BioAnalysisService
+   * @constructor
+   * @desc Proveedor de datos, Análisis Microbiológicos
+   * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
+   * @param {Object} TokenService - Proveedor de métodos para token
+   * @return {Object} $resource - Acceso a recursos HTTP
+   */
+  function BioAnalysisService($resource, TokenService) {
+    return $resource(API_BASE_URL + 'analysis/biological/:analysisId', {}, {
+      query: {
+        method: 'GET',
+        params: {analysisId: 'id_analisis'},
+        isArray: false,
+        headers: {
+          'Auth-Token': TokenService.getToken()
+        }
+      },
+      get: {
+        method: 'GET',
+        params: {},
+        isArray: true,
+        headers: {
+          'Auth-Token': TokenService.getToken()
+        }
+      },
+      update: {
+        method: 'POST',
+        params: {},
+        isArray: false,
+        headers: {
+          'Auth-Token': TokenService.getToken()
+        }
+      },
+      save: {
+        method: 'POST',
+        params: {},
+        isArray: false,
+        headers: {
+          'Auth-Token': TokenService.getToken()
+        }
+      }
+    });
+  }
+  angular
+    .module('sislabApp')
+    .factory('BioAnalysisService',
+      [
+        '$resource', 'TokenService',
+        BioAnalysisService
       ]
     );
 

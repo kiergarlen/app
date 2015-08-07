@@ -2632,17 +2632,51 @@
    * @constructor
    * @desc Controla la vista para Perfil
    * @this {Object} $scope - Contenedor para el modelo [AngularJS]
-   * @param {Object} UserProfileService - Proveedor de datos, Perfil de usuario
+   * @param {Object} ProfileService - Proveedor de datos, Perfil de usuario
    */
-  function ProfileController(UserProfileService) {
+  function ProfileController(ProfileService) {
     var vm = this;
-    vm.profile = UserProfileService.get();
+    vm.plan = {};
+    vm.user = TokenService.getUserFromToken();
+    vm.profile = ProfileService.get();
+    vm.message = '';
+    vm.isDataSubmitted = false;
+    vm.submitForm = submitForm;
+
+    function isFormValid() {
+      vm.message = '';
+      return true;
+    }
+
+    function submitForm() {
+      if (isFormValid() && !vm.isDataSubmitted) {
+        vm.isDataSubmitted = true;
+        if (vm.profile.id_usuario > 0 && vm.user.level < 3) {
+          RestUtilsService
+            .saveData(
+              PlanService,
+              vm.profile,
+              'sistema/perfil'
+            );
+        } else {
+          if (vm.user.level < 3) {
+            RestUtilsService
+              .updateData(
+                PlanService,
+                vm.profile,
+                'sistema/perfil',
+                'id_usuario'
+              );
+          }
+        }
+      }
+    }
   }
   angular
     .module('sislabApp')
     .controller('ProfileController',
       [
-        'UserProfileService',
+        'ProfileService',
         ProfileController
       ]
     );
@@ -5089,21 +5123,45 @@
       ]
     );
 
-  //UserProfileService.js
+  //ProfileService.js
   /**
-   * @name UserProfileService
+   * @name ProfileService
    * @constructor
    * @desc Proveedor de datos, Perfil de usuario
    * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @param {Object} TokenService - Proveedor de métodos para token
    * @return {Object} $resource - Acceso a recursos HTTP
    */
-  function UserProfileService($resource, TokenService) {
+  function ProfileService($resource, TokenService) {
     return $resource(API_BASE_URL + 'users/:userId', {}, {
+      query: {
+        method: 'GET',
+        params: {userId: 'id_usuario'},
+        isArray: false,
+        headers: {
+          'Auth-Token': TokenService.getToken()
+        }
+      },
       get: {
         method: 'GET',
         params: {},
         isArray: true,
+        headers: {
+          'Auth-Token': TokenService.getToken()
+        }
+      },
+      update: {
+        method: 'POST',
+        params: {},
+        isArray: false,
+        headers: {
+          'Auth-Token': TokenService.getToken()
+        }
+      },
+      save: {
+        method: 'POST',
+        params: {},
+        isArray: false,
         headers: {
           'Auth-Token': TokenService.getToken()
         }
@@ -5112,10 +5170,10 @@
   }
   angular
     .module('sislabApp')
-    .factory('UserProfileService',
+    .factory('ProfileService',
       [
         '$resource', 'TokenService',
-        UserProfileService
+        ProfileService
       ]
     );
 

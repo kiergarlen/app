@@ -57,14 +57,12 @@ function getUsers() {
  * @return stdClass $user
  */
 function getUser($userId) {
-  $sql = "SELECT id_usuario, id_nivel, id_rol, id_area, id_puesto,
-    interno, cea, laboratorio, supervisa, analiza, muestrea,
-    nombres, apellido_paterno, apellido_materno, usr, pwd,
-    CONVERT(nvarchar, fecha_captura, 126) AS fecha_captura,
-    CONVERT(nvarchar, fecha_actualiza, 126) AS fecha_actualiza,
-    ip_captura, ip_actualiza,
-    host_captura, host_actualiza, activo
-    FROM Usuario
+  $sql = "SELECT id_usuario, id_nivel, id_rol, id_empleado,
+    id_trabajad, id_area, id_puesto, interno, cea, laboratorio,
+    calidad, supervisa, recibe, analiza, muestrea, nombres,
+    apellido_paterno, apellido_materno, puesto, rol,
+    usr, pwd, activo
+    FROM viewUsuarioEmpleado
     WHERE activo = 1 AND id_usuario = :userId";
   $db = getConnection();
   $stmt = $db->prepare($sql);
@@ -82,14 +80,12 @@ function getUser($userId) {
  * @return stdClass $user
  */
 function getUserByCredentials($userName, $userPassword) {
-  $sql = "SELECT id_usuario, id_nivel, id_rol, id_area, id_puesto,
-    interno, cea, laboratorio, supervisa, analiza, muestrea,
-    nombres, apellido_paterno, apellido_materno, usr, pwd,
-    CONVERT(nvarchar, fecha_captura, 126) AS fecha_captura,
-    CONVERT(nvarchar, fecha_actualiza, 126) AS fecha_actualiza,
-    ip_captura, ip_actualiza,
-    host_captura, host_actualiza, activo
-    FROM Usuario
+  $sql = "SELECT id_usuario, id_nivel, id_rol, id_empleado,
+    id_trabajad, id_area, id_puesto, interno, cea, laboratorio,
+    calidad, supervisa, recibe, analiza, muestrea, nombres,
+    apellido_paterno, apellido_materno, puesto, rol,
+    usr, pwd, activo
+    FROM viewUsuarioEmpleado
     WHERE activo = 1 AND pwd = :userPassword AND usr = :userName";
   $db = getConnection();
   $stmt = $db->prepare($sql);

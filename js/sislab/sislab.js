@@ -2632,13 +2632,16 @@
    * @constructor
    * @desc Controla la vista para Perfil
    * @this {Object} $scope - Contenedor para el modelo [AngularJS]
+   * @param {Object} $routeParams - Proveedor de parámetros de ruta [AngularJS]
+   * @param {Object} TokenService - Proveedor para manejo del token
    * @param {Object} ProfileService - Proveedor de datos, Perfil de usuario
    */
-  function ProfileController(ProfileService) {
+  function ProfileController($scope, $routeParams, TokenService,
+    ProfileService) {
     var vm = this;
     vm.plan = {};
     vm.user = TokenService.getUserFromToken();
-    vm.profile = ProfileService.get();
+    vm.profile = ProfileService.query({userId: $routeParams.userId});
     vm.message = '';
     vm.isDataSubmitted = false;
     vm.submitForm = submitForm;
@@ -2676,6 +2679,7 @@
     .module('sislabApp')
     .controller('ProfileController',
       [
+        '$scope', '$routeParams', 'TokenService',
         'ProfileService',
         ProfileController
       ]

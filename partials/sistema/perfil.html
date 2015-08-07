@@ -12,47 +12,34 @@
 </div>
 <div class="row">
   <div class="col-xs-12 col-sm-3">
-    <div class="thumbnail">
+    <div class="thumbnail item-z1">
       <img
-        data-ng-src="img/emp//{{profile.profile.id_trabajad"
+        data-ng-src="img/emp/{{profile.profile.id_trabajad}}.JPG"
+        height="90"
         alt="{{profile.profile.nombres}}"
         >
-        <!--
-        <div class="caption">
-          <h4>
-            {{profile.profile.nombres}}
-          </h4>
-          <p>
-            {{profile.profile.apellido_paterno}}
-            {{profile.profile.apellido_materno}}
-          </p>
-          <p class="muted-text">
-            {{profile.profile.puesto}}
-          </p>
-        </div>
-        -->
     </div>
   </div>
   <div class"=coll-xs-12 col-sm-9">
     <h4>
       {{profile.profile.nombres}}
+      <strong>
+      {{profile.profile.apellido_paterno}}
+      {{profile.profile.apellido_materno}}
+      </strong>
       <span class="text-muted">
-        {{profile.profile.apellido_paterno}}
-        {{profile.profile.apellido_materno}}
+        ({{profile.profile.usr}})
       </span>
-      <br>
-      <small>
-        ({{profile.profile.puesto}})
-      </small>
     </h4>
-  </div>
-</div>
-<div class="row">
-  <div class="col-xs-12">
-    Rol:
-    <strong>
-      {{profile.profile.rol}}
-    </strong>
+    <p>
+      <h6>
+        {{profile.profile.puesto}}
+      </h6>
+      Rol:
+      <strong>
+        {{profile.profile.rol}}
+      </strong>
+    </p>
   </div>
 </div>
 <form class="form" role="form"

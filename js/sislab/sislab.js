@@ -426,7 +426,7 @@
     }
 
     function viewStudy(id) {
-      $location.path('/estudio/estudio/' + parseInt(id));
+      $location.path('/estudio/estudio/' + parseInt(id, 10));
     }
   }
   angular
@@ -659,7 +659,7 @@
     vm.viewOrder = viewOrder;
 
     function viewOrder(id) {
-      $location.path('/muestreo/orden/' + parseInt(id));
+      $location.path('/muestreo/orden/' + parseInt(id, 10));
     }
   }
   angular
@@ -898,7 +898,7 @@
     vm.viewPlan = viewPlan;
 
     function viewPlan(id) {
-      $location.path('/muestreo/plan/' + parseInt(id));
+      $location.path('/muestreo/plan/' + parseInt(id, 10));
     }
   }
   angular
@@ -947,23 +947,15 @@
     vm.districts = [];
     vm.samplingEmployees = SamplingEmployeeService.get();
     vm.instruments = [];
-    vm.containers = [];
+    vm.preservations = [];
     vm.reactives = [];
     vm.materials = [];
     vm.coolers = [];
     vm.message = '';
-    vm.isInstrumentListLoaded = false;
-    vm.isContainerListLoaded = false;
-    vm.isReactiveListLoaded = false;
-    vm.isMaterialListLoaded = false;
-    vm.isCoolerListLoaded = false;
     vm.isDataSubmitted = false;
     vm.selectDistrict = selectDistrict;
     vm.selectInstruments = selectInstruments;
-    vm.selectContainers = selectContainers;
-    vm.selectReactives = selectReactives;
     vm.selectMaterials = selectMaterials;
-    vm.selectCoolers = selectCoolers;
     vm.approveItem = approveItem;
     vm.rejectItem = rejectItem;
     vm.submitForm = submitForm;
@@ -982,7 +974,7 @@
               ArrayUtilsService.selectItemFromCollection(
                 vm.districts,
                 'id_municipio',
-                parseInt(vm.plan.id_municipio)
+                parseInt(vm.plan.id_municipio, 10)
               );
             }
             CityService
@@ -994,7 +986,7 @@
                   ArrayUtilsService.selectItemFromCollection(
                     vm.cities,
                     'id_localidad',
-                    parseInt(vm.plan.id_localidad)
+                    parseInt(vm.plan.id_localidad, 10)
                   );
                 }
               });
@@ -1011,6 +1003,15 @@
               vm.instruments[i].id_plan_instrumento = 0;
               vm.instruments[i].id_plan = vm.plan.id_plan;
             }
+            ArrayUtilsService.seItemsFromReference(
+              vm.instruments,
+              vm.plan.instrumentos,
+              'id_instrumento',
+              [
+                'id_plan_instrumento',
+                'selected'
+              ]
+            );
           });
         ContainerKindService
           .get()
@@ -1018,12 +1019,23 @@
           .then(function success(response) {
             var i;
             var l;
-            vm.containers = response;
-            // l = vm.containers.length;
-            // for (i = 0; i < l; i += 1) {
-            //   vm.containers[i].id_plan_recipiente = 0;
-            //   vm.containers[i].id_plan = vm.plan.id_plan;
-            // }
+            vm.preservations = response;
+            l = vm.preservations.length;
+            for (i = 0; i < l; i += 1) {
+              vm.preservations[i].id_plan_preservacion = 0;
+              vm.preservations[i].id_plan = vm.plan.id_plan;
+            }
+            ArrayUtilsService.seItemsFromReference(
+              vm.preservations,
+              vm.plan.preservaciones,
+              'id_preservacion',
+              [
+                'id_plan_preservacion',
+                'id_plan',
+                'id_preservacion',
+                'selected'
+              ]
+            );
           });
         ReactiveService
           .get()
@@ -1037,6 +1049,19 @@
               vm.reactives[i].id_plan_reactivo = 0;
               vm.reactives[i].id_plan = vm.plan.id_plan;
             }
+            ArrayUtilsService.seItemsFromReference(
+              vm.reactives,
+              vm.plan.reactivos,
+              'id_reactivo',
+              [
+                'id_plan_reactivo',
+                'id_plan',
+                'lote',
+                'folio',
+                'valor',
+                'selected'
+              ]
+            );
           });
         MaterialService
           .get()
@@ -1050,6 +1075,16 @@
               vm.materials[i].id_plan_material = 0;
               vm.materials[i].id_plan = vm.plan.id_plan;
             }
+            ArrayUtilsService.seItemsFromReference(
+              vm.materials,
+              vm.plan.materiales,
+              'id_material',
+              [
+                'id_plan_material',
+                'id_plan',
+                'selected'
+              ]
+            );
           });
         CoolerService
           .get()
@@ -1063,142 +1098,48 @@
               vm.coolers[i].id_plan_hielera = 0;
               vm.coolers[i].id_plan = vm.plan.id_plan;
             }
+            ArrayUtilsService.seItemsFromReference(
+              vm.coolers,
+              vm.plan.hieleras,
+              'id_hielera',
+              [
+                'id_plan_hielera',
+                'id_plan',
+                'selected'
+              ]
+            );
           });
       });
 
     function selectDistrict() {
       vm.cities = CityService.query({
-        districtId: parseInt(vm.plan.id_municipio)
+        districtId: parseInt(vm.plan.id_municipio, 10)
       });
     }
 
-    function selectInstruments() {
-      if (vm.instruments.length > 0 && vm.plan.instrumentos) {
-        if (vm.plan.instrumentos.length > 0 && !vm.isInstrumentListLoaded) {
-          ArrayUtilsService.seItemsFromReference(
-            vm.instruments,
-            vm.plan.instrumentos,
-            'id_instrumento',
-            [
-              'id_plan_instrumento',
-              'selected'
-            ]
-          );
-          vm.isInstrumentListLoaded = true;
-        } else {
-          vm.plan.instrumentos = [];
-          vm.plan.instrumentos = ArrayUtilsService.selectItemsFromCollection(
-            vm.instruments,
-            'selected',
-            true
-          ).slice();
-        }
-      }
-    }
-
-    function selectContainers() {
-      // if (vm.containers.length > 0 && vm.plan.recipientes) {
-      //   if (vm.plan.recipientes.length > 0 && !vm.isContainerListLoaded) {
-      //     ArrayUtilsService.seItemsFromReference(
-      //       vm.containers,
-      //       vm.plan.recipientes,
-      //       'id_recipiente',
-      //       [
-      //         'id_plan_recipiente',
-      //         'id_plan',
-      //         'cantidad',
-      //         'selected'
-      //       ]
-      //     );
-      //     vm.isContainerListLoaded = true;
-      //   } else {
-      //     vm.plan.recipientes = [];
-      //     vm.plan.recipientes = ArrayUtilsService.selectItemsFromCollection(
-      //       vm.containers,
-      //       'selected',
-      //       true
-      //     ).slice();
-      //   }
-      // }
-    }
-
-    function selectReactives() {
-      if (vm.reactives.length > 0 && vm.plan.reactivos) {
-        if (vm.plan.reactivos.length > 0 && !vm.isReactiveListLoaded) {
-          ArrayUtilsService.seItemsFromReference(
-            vm.reactives,
-            vm.plan.reactivos,
-            'id_reactivo',
-            [
-              'id_plan_reactivo',
-              'id_plan',
-              'lote',
-              'folio',
-              'valor',
-              'selected'
-            ]
-          );
-          vm.isReactiveListLoaded = true;
-        } else {
-          vm.plan.reactivos = [];
-          vm.plan.reactivos = ArrayUtilsService.selectItemsFromCollection(
-            vm.reactives,
-            'selected',
-            true
-          ).slice();
-        }
-      }
-    }
-
-    function selectMaterials() {
-      if (vm.materials.length > 0 && vm.plan.materiales) {
-        if (vm.plan.materiales.length > 0 && !vm.isMaterialListLoaded) {
-          ArrayUtilsService.seItemsFromReference(
-            vm.materials,
-            vm.plan.materiales,
-            'id_material',
-            [
-              'id_plan_material',
-              'id_plan',
-              'selected'
-            ]
-          );
-          vm.isMaterialListLoaded = true;
-        } else {
-          vm.plan.materiales = [];
-          vm.plan.materiales = ArrayUtilsService.selectItemsFromCollection(
-            vm.materials,
-            'selected',
-            true
-          ).slice();
-        }
-      }
-    }
-
-    function selectCoolers() {
-      if (vm.coolers.length > 0 && vm.plan.hieleras) {
-        if (vm.plan.hieleras.length > 0 && !vm.isCoolerListLoaded) {
-          ArrayUtilsService.seItemsFromReference(
-            vm.coolers,
-            vm.plan.hieleras,
-            'id_hielera',
-            [
-              'id_plan_hielera',
-              'id_plan',
-              'selected'
-            ]
-          );
-          vm.isCoolerListLoaded = true;
-        } else {
-          vm.plan.hieleras = [];
-          vm.plan.hieleras = ArrayUtilsService.selectItemsFromCollection(
-            vm.coolers,
-            'selected',
-            true
-          ).slice();
-        }
-      }
-    }
+    // function selectInstruments() {
+    //   if (vm.instruments.length > 0 && vm.plan.instrumentos) {
+    //     if (vm.plan.instrumentos.length > 0 && !vm.isInstrumentListLoaded) {
+    //       ArrayUtilsService.seItemsFromReference(
+    //         vm.instruments,
+    //         vm.plan.instrumentos,
+    //         'id_instrumento',
+    //         [
+    //           'id_plan_instrumento',
+    //           'selected'
+    //         ]
+    //       );
+    //       vm.isInstrumentListLoaded = true;
+    //     } else {
+    //       vm.plan.instrumentos = [];
+    //       vm.plan.instrumentos = ArrayUtilsService.selectItemsFromCollection(
+    //         vm.instruments,
+    //         'selected',
+    //         true
+    //       ).slice();
+    //     }
+    //   }
+    // }
 
     function approveItem() {
       ValidationService.approveItem(vm.plan, vm.user);
@@ -1430,7 +1371,7 @@
     vm.viewSheet = viewSheet;
 
     function viewSheet(id) {
-      $location.path('/recepcion/hoja/' + parseInt(id));
+      $location.path('/recepcion/hoja/' + parseInt(id, 10));
     }
   }
   angular
@@ -1679,7 +1620,7 @@
     vm.viewReception = viewReception;
 
     function viewReception(id) {
-      $location.path('/recepcion/recepcion/' + parseInt(id));
+      $location.path('/recepcion/recepcion/' + parseInt(id, 10));
     }
   }
   angular
@@ -1917,7 +1858,7 @@
     vm.viewJob = viewJob;
 
     function viewJob(id) {
-      $location.path('/recepcion/trabajo/' + parseInt(id));
+      $location.path('/recepcion/trabajo/' + parseInt(id, 10));
     }
   }
   angular
@@ -2012,7 +1953,7 @@
     vm.viewCustody = viewCustody;
 
     function viewCustody(id) {
-      $location.path('/recepcion/custodia/' + parseInt(id));
+      $location.path('/recepcion/custodia/' + parseInt(id, 10));
     }
   }
   angular
@@ -2106,7 +2047,7 @@
     vm.viewAnalysis = viewAnalysis;
 
     function viewAnalysis(id) {
-      $location.path('/analisis/fisico/' + parseInt(id));
+      $location.path('/analisis/fisico/' + parseInt(id, 10));
     }
   }
   angular
@@ -2132,7 +2073,7 @@
     vm.viewAnalysis = viewAnalysis;
 
     function viewAnalysis(id) {
-      $location.path('/analisis/metal/' + parseInt(id));
+      $location.path('/analisis/metal/' + parseInt(id, 10));
     }
   }
   angular
@@ -2158,7 +2099,7 @@
     vm.viewAnalysis = viewAnalysis;
 
     function viewAnalysis(id) {
-      $location.path('/analisis/metal/' + parseInt(id));
+      $location.path('/analisis/metal/' + parseInt(id, 10));
     }
   }
   angular
@@ -2185,7 +2126,7 @@
     vm.viewSample = viewSample;
 
     function viewSample(id) {
-      $location.path('/inventario/muestra/' + parseInt(id));
+      $location.path('/inventario/muestra/' + parseInt(id, 10));
     }
   }
   angular

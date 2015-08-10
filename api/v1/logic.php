@@ -591,55 +591,56 @@ function processOrderPlansUpdate($orderUpdateData) {
 function processPlanUpdate($request) {
   $token = decodeUserToken($request);
   $plan = (array) json_decode($request->getBody());
-  $instruments = $plan["instrumentos"];
-  $containers = $plan["recipientes"];
-  $reactives = $plan["reactivos"];
-  $materials = $plan["materiales"];
-  $coolers = $plan["hieleras"];
+  $planUpdateData = $plan;
+  // $instruments = $plan["instrumentos"];
+  // $containers = $plan["recipientes"];
+  // $reactives = $plan["reactivos"];
+  // $materials = $plan["materiales"];
+  // $coolers = $plan["hieleras"];
 
-  unset($plan["cliente"]);
-  unset($plan["orden"]);
-  unset($plan["supervisor_muestreo"]);
-  unset($plan["puntos"]);
-  unset($plan["instrumentos"]);
-  unset($plan["recipientes"]);
-  unset($plan["reactivos"]);
-  unset($plan["materiales"]);
-  unset($plan["hieleras"]);
-  unset($plan["planes"]);
-  unset($plan["tipo_muestreo"]);
-  unset($plan["id_usuario_captura"]);
-  unset($plan["fecha_captura"]);
-  unset($plan["ip_captura"]);
-  unset($plan["host_captura"]);
+  // unset($plan["cliente"]);
+  // unset($plan["orden"]);
+  // unset($plan["supervisor_muestreo"]);
+  // unset($plan["puntos"]);
+  // unset($plan["instrumentos"]);
+  // unset($plan["recipientes"]);
+  // unset($plan["reactivos"]);
+  // unset($plan["materiales"]);
+  // unset($plan["hieleras"]);
+  // unset($plan["planes"]);
+  // unset($plan["tipo_muestreo"]);
+  // unset($plan["id_usuario_captura"]);
+  // unset($plan["fecha_captura"]);
+  // unset($plan["ip_captura"]);
+  // unset($plan["host_captura"]);
 
-  $plan["id_usuario_actualiza"] = $token->uid;
-  $plan["fecha_actualiza"] = date('Y-m-d H:i:s');
-  $plan["ip_actualiza"] = $request->getIp();
-  $plan["host_actualiza"] = $request->getUrl();
+  // $plan["id_usuario_actualiza"] = $token->uid;
+  // $plan["fecha_actualiza"] = date('Y-m-d H:i:s');
+  // $plan["ip_actualiza"] = $request->getIp();
+  // $plan["host_actualiza"] = $request->getUrl();
 
-  if ($plan["id_status"] == 2 && strlen($plan["ip_valida"]) < 1)
-  {
-    $plan["ip_valida"] = $request->getIp();
-    $plan["host_valida"] = $request->getUrl();
-    $plan["fecha_valida"] = date('Y-m-d H:i:s');
-    //TODO: create <blank> Sheet, Reception for this Plan
-  }
+  // if ($plan["id_status"] == 2 && strlen($plan["ip_valida"]) < 1)
+  // {
+  //   $plan["ip_valida"] = $request->getIp();
+  //   $plan["host_valida"] = $request->getUrl();
+  //   $plan["fecha_valida"] = date('Y-m-d H:i:s');
+  //   //TODO: create <blank> Sheet, Reception for this Plan
+  // }
 
-  $plan["fecha"] = isoDateToMsSql($plan["fecha"]);
-  $plan["fecha_probable"] = isoDateToMsSql($plan["fecha_probable"]);
-  $plan["fecha_calibracion"] = isoDateToMsSql($plan["fecha_calibracion"]);
-  $plan["fecha_valida"] = isoDateToMsSql($plan["fecha_valida"]);
-  $plan["fecha_rechaza"] = isoDateToMsSql($plan["fecha_rechaza"]);
+  // $plan["fecha"] = isoDateToMsSql($plan["fecha"]);
+  // $plan["fecha_probable"] = isoDateToMsSql($plan["fecha_probable"]);
+  // $plan["fecha_calibracion"] = isoDateToMsSql($plan["fecha_calibracion"]);
+  // $plan["fecha_valida"] = isoDateToMsSql($plan["fecha_valida"]);
+  // $plan["fecha_rechaza"] = isoDateToMsSql($plan["fecha_rechaza"]);
 
-  $planUpdateData = array (
-    "plan" => $plan,
-    "instruments" => $instruments,
-    "containers" => $containers,
-    "reactives" => $reactives,
-    "materials" => $materials,
-    "coolers" => $coolers
-  );
+  // $planUpdateData = array (
+  //   "plan" => $plan,
+  //   "instruments" => $instruments,
+  //   "containers" => $containers,
+  //   "reactives" => $reactives,
+  //   "materials" => $materials,
+  //   "coolers" => $coolers
+  // );
   return $planUpdateData;
 }
 

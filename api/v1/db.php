@@ -1856,8 +1856,7 @@ function getPreservationsByPlan($planId) {
 
 function insertPlanPreservation($preservationData) {
   $sql = "INSERT INTO PlanPreservacion (id_plan, id_preservacion, activo)
-    VALUES (:id_plan, :id_preservacion,
-    :cantidad, :activo)";
+    VALUES (:id_plan, :id_preservacion, :activo)";
   $db = getConnection();
   $stmt = $db->prepare($sql);
   $stmt->execute($preservationData);

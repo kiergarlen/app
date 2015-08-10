@@ -710,7 +710,6 @@ function processPlanPreservationsUpdate($planUpdateData) {
   $preservations = (array) $planUpdateData["preservations"];
   $planId = $planUpdateData["plan"]["id_plan"];
   $storedPreservations = getPreservationsByPlan($planId);
-
   $i = 0;
   $j = 0;
   $l = count($storedPreservations);

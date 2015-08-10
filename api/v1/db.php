@@ -769,7 +769,7 @@ function getPlan($planId) {
   $plan->supervisor_muestreo = getSamplingEmployee($supervisorId);
   $plan->puntos = getPointsByPackage($plan->id_paquete);
   $plan->instrumentos = getInstrumentsByPlan($planId);
-  $plan->recipientes = getContainersByPlan($planId);
+  $plan->preservaciones = getPreservationsByPlan($planId);
   $plan->reactivos = getReactivesByPlan($planId);
   $plan->materiales = getMaterialsByPlan($planId);
   $plan->hieleras = getCoolersByPlan($planId);
@@ -1837,47 +1837,44 @@ function getPrices() {
   return $prices;
 }
 
-function getContainersByPlan($planId) {
-  $sql = "SELECT id_plan_recipiente, id_plan, id_recipiente,
-    cantidad, activo
-    FROM PlanRecipiente
+function getPreservationsByPlan($planId) {
+  $sql = "SELECT id_plan_preservacion, id_plan, id_preservacion, activo
+    FROM PlanPreservacion
     WHERE activo = 1 AND id_plan = :planId";
   $db = getConnection();
   $stmt = $db->prepare($sql);
   $stmt->bindParam("planId", $planId);
   $stmt->execute();
-  $containers = $stmt->fetchAll(PDO::FETCH_ASSOC);
+  $preservations = $stmt->fetchAll(PDO::FETCH_ASSOC);
   $db = null;
-  $l = count($containers);
+  $l = count($preservations);
   for ($i = 0; $i < $l; $i++) {
-    $containers[$i]["selected"] = true;
+    $preservations[$i]["selected"] = true;
   }
-  return $containers;
+  return $preservations;
 }
 
-function insertPlanContainer($containerData) {
-  $sql = "INSERT INTO PlanRecipiente (id_plan, id_recipiente,
-    cantidad, activo)
-    VALUES (:id_plan, :id_recipiente,
+function insertPlanPreservation($preservationData) {
+  $sql = "INSERT INTO PlanPreservacion (id_plan, id_preservacion, activo)
+    VALUES (:id_plan, :id_preservacion,
     :cantidad, :activo)";
   $db = getConnection();
   $stmt = $db->prepare($sql);
-  $stmt->execute($containerData);
-  $instrumentId = $db->lastInsertId();
+  $stmt->execute($preservationData);
+  $preservationId = $db->lastInsertId();
   $db = null;
-  return $instrumentId;
+  return $preservationId;
 }
 
-function updatePlanContainer($updateData) {
-  $sql = "UPDATE PlanRecipiente SET id_plan = :id_plan,
-    id_recipiente = :id_recipiente,
-    cantidad = :cantidad, activo = :activo
-    WHERE id_plan_recipiente = :id_plan_recipiente";
+function updatePlanPreservation($updateData) {
+  $sql = "UPDATE PlanPreservacion SET id_plan = :id_plan,
+    id_preservacion = :id_preservacion, activo = :activo
+    WHERE id_plan_preservacion = :id_plan_preservacion";
   $db = getConnection();
   $stmt = $db->prepare($sql);
   $stmt->execute($updateData);
   $db = null;
-  return $updateData["id_plan_recipiente"];
+  return $updateData["id_plan_preservacion"];
 }
 
 function getReactivesByPlan($planId) {

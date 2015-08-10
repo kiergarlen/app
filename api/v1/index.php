@@ -196,7 +196,7 @@ $app->get("/order/sources", function() use ($app) {
 
 $app->get("/plans(/)(:planId)", function($planId = -1) use ($app) {
   try {
-    $userId = decodeUserToken($app->request())->uid;
+    //$userId = decodeUserToken($app->request())->uid;
     if ($planId > -1)
     {
       $result = json_encode(getPlan($planId));
@@ -230,12 +230,12 @@ $app->post("/plans", function() use ($app) {
     else
     {
       $planUpdateData = processPlanUpdate($request);
-      // $planId = updatePlan($planUpdateData["plan"]);
-      // processPlanInstrumentsUpdate($planUpdateData);
-      // processPlanContainersUpdate($planUpdateData);
-      // processPlanReactivesUpdate($planUpdateData);
-      // processPlanMaterialsUpdate($planUpdateData);
-      // processPlanCoolersUpdate($planUpdateData);
+      $planId = updatePlan($planUpdateData["plan"]);
+      processPlanInstrumentsUpdate($planUpdateData);
+      processPlanPreservationsUpdate($planUpdateData);
+      processPlanReactivesUpdate($planUpdateData);
+      processPlanMaterialsUpdate($planUpdateData);
+      processPlanCoolersUpdate($planUpdateData);
     }
     $result = '{"id_plan":' . $planId . '}';
     $app->response()->status(200);

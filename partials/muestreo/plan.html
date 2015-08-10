@@ -529,7 +529,7 @@
   </div>
   <div class="row">
     <div class="col-xs-12">
-      <h4>Equipo {{plan.selectInstruments()}}</h4>
+      <h4>Equipo</h4>
     </div>
   </div>
   <div class="row">
@@ -569,7 +569,7 @@
   </div>
   <div class="row">
     <div class="col-xs-12">
-      <h5>Preparación de recipientes {{plan.selectContainers()}}</h5>
+      <h5>Preparación de recipientes</h5>
     </div>
   </div>
   <div class="row">
@@ -599,19 +599,19 @@
   </div>
   <div class="row">
     <div class="col-xs-12 col-sm-6"
-      data-ng-repeat="container in plan.containers">
+      data-ng-repeat="preservation in plan.preservations">
       <div class="row">
         <div class="col-xs-12">
           <label>
             <input type="checkbox"
-              value="{{container.selected}}"
-              data-ng-model="container.selected"
+              value="{{preservation.selected}}"
+              data-ng-model="preservation.selected"
               >
-              {{container.preservacion}}
+              {{preservation.preservacion}}
           </label>
           <br>
           <small class="text-muted">
-            {{::container.descripcion}}
+            {{::preservation.descripcion}}
           </small>
         </div>
       </div>
@@ -619,13 +619,13 @@
     <div class="col-xs-12">
       Recipientes:
       <strong>
-      {{plan.plan.recipientes.length * plan.plan.puntos.length}}
+      {{plan.plan.preservaciones.length * plan.plan.puntos.length}}
       </strong>
     </div>
   </div>
   <div class="row">
     <div class="col-xs-12">
-      <h5>Reactivos y soluciones {{plan.selectReactives()}}</h5>
+      <h5>Reactivos y soluciones</h5>
     </div>
   </div>
   <div class="row">
@@ -702,7 +702,7 @@
   </div>
   <div class="row">
     <div class="col-xs-12">
-      <h5>Preparación de material y equipo {{plan.selectMaterials()}}</h5>
+      <h5>Preparación de material y equipo</h5>
     </div>
   </div>
   <div class="row">
@@ -746,7 +746,7 @@
   </div>
   <div class="row">
     <div class="col-xs-12">
-      <h5>Hieleras {{plan.selectCoolers()}}</h5>
+      <h5>Hieleras</h5>
     </div>
   </div>
   <div class="row">

@@ -592,55 +592,55 @@ function processPlanUpdate($request) {
   $token = decodeUserToken($request);
   $plan = (array) json_decode($request->getBody());
   $planUpdateData = $plan;
-  // $instruments = $plan["instrumentos"];
-  // $containers = $plan["recipientes"];
-  // $reactives = $plan["reactivos"];
-  // $materials = $plan["materiales"];
-  // $coolers = $plan["hieleras"];
+  $instruments = $plan["instrumentos"];
+  $preservations = $plan["preservaciones"];
+  $reactives = $plan["reactivos"];
+  $materials = $plan["materiales"];
+  $coolers = $plan["hieleras"];
 
-  // unset($plan["cliente"]);
-  // unset($plan["orden"]);
-  // unset($plan["supervisor_muestreo"]);
-  // unset($plan["puntos"]);
-  // unset($plan["instrumentos"]);
-  // unset($plan["recipientes"]);
-  // unset($plan["reactivos"]);
-  // unset($plan["materiales"]);
-  // unset($plan["hieleras"]);
-  // unset($plan["planes"]);
-  // unset($plan["tipo_muestreo"]);
-  // unset($plan["id_usuario_captura"]);
-  // unset($plan["fecha_captura"]);
-  // unset($plan["ip_captura"]);
-  // unset($plan["host_captura"]);
+  unset($plan["cliente"]);
+  unset($plan["orden"]);
+  unset($plan["supervisor_muestreo"]);
+  unset($plan["puntos"]);
+  unset($plan["instrumentos"]);
+  unset($plan["preservaciones"]);
+  unset($plan["reactivos"]);
+  unset($plan["materiales"]);
+  unset($plan["hieleras"]);
+  unset($plan["planes"]);
+  unset($plan["tipo_muestreo"]);
+  unset($plan["id_usuario_captura"]);
+  unset($plan["fecha_captura"]);
+  unset($plan["ip_captura"]);
+  unset($plan["host_captura"]);
 
-  // $plan["id_usuario_actualiza"] = $token->uid;
-  // $plan["fecha_actualiza"] = date('Y-m-d H:i:s');
-  // $plan["ip_actualiza"] = $request->getIp();
-  // $plan["host_actualiza"] = $request->getUrl();
+  $plan["id_usuario_actualiza"] = $token->uid;
+  $plan["fecha_actualiza"] = date('Y-m-d H:i:s');
+  $plan["ip_actualiza"] = $request->getIp();
+  $plan["host_actualiza"] = $request->getUrl();
 
-  // if ($plan["id_status"] == 2 && strlen($plan["ip_valida"]) < 1)
-  // {
-  //   $plan["ip_valida"] = $request->getIp();
-  //   $plan["host_valida"] = $request->getUrl();
-  //   $plan["fecha_valida"] = date('Y-m-d H:i:s');
-  //   //TODO: create <blank> Sheet, Reception for this Plan
-  // }
+  if ($plan["id_status"] == 2 && strlen($plan["ip_valida"]) < 1)
+  {
+    $plan["ip_valida"] = $request->getIp();
+    $plan["host_valida"] = $request->getUrl();
+    $plan["fecha_valida"] = date('Y-m-d H:i:s');
+    //TODO: create <blank> Sheet, Reception for this Plan
+  }
 
-  // $plan["fecha"] = isoDateToMsSql($plan["fecha"]);
-  // $plan["fecha_probable"] = isoDateToMsSql($plan["fecha_probable"]);
-  // $plan["fecha_calibracion"] = isoDateToMsSql($plan["fecha_calibracion"]);
-  // $plan["fecha_valida"] = isoDateToMsSql($plan["fecha_valida"]);
-  // $plan["fecha_rechaza"] = isoDateToMsSql($plan["fecha_rechaza"]);
+  $plan["fecha"] = isoDateToMsSql($plan["fecha"]);
+  $plan["fecha_probable"] = isoDateToMsSql($plan["fecha_probable"]);
+  $plan["fecha_calibracion"] = isoDateToMsSql($plan["fecha_calibracion"]);
+  $plan["fecha_valida"] = isoDateToMsSql($plan["fecha_valida"]);
+  $plan["fecha_rechaza"] = isoDateToMsSql($plan["fecha_rechaza"]);
 
-  // $planUpdateData = array (
-  //   "plan" => $plan,
-  //   "instruments" => $instruments,
-  //   "containers" => $containers,
-  //   "reactives" => $reactives,
-  //   "materials" => $materials,
-  //   "coolers" => $coolers
-  // );
+  $planUpdateData = array (
+    "plan" => $plan,
+    "instruments" => $instruments,
+    "preservations" => $preservations,
+    "reactives" => $reactives,
+    "materials" => $materials,
+    "coolers" => $coolers
+  );
   return $planUpdateData;
 }
 
@@ -706,54 +706,48 @@ function processPlanInstrumentsUpdate($planUpdateData) {
   return $planId;
 }
 
-function processPlanContainersUpdate($planUpdateData) {
-  $containers = (array) $planUpdateData["containers"];
+function processPlanPreservationsUpdate($planUpdateData) {
+  $preservations = (array) $planUpdateData["preservations"];
   $planId = $planUpdateData["plan"]["id_plan"];
-  $storedContainers = getContainersByPlan($planId);
+  $storedPreservations = getPreservationsByPlan($planId);
 
   $i = 0;
   $j = 0;
-  $l = count($storedContainers);
-  $m = count($containers);
+  $l = count($storedPreservations);
+  $m = count($preservations);
 
   if ($l < 1)
   {
     for ($j = 0; $j < $m; $j++) {
-      $newContainer = (array) $containers[$j];
-      unset($newContainer["id_plan_recipiente"]);
-      unset($newContainer["recipiente"]);
-      unset($newContainer["tipo_recipiente"]);
-      unset($newContainer["selected"]);
-      insertPlanContainer($newContainer);
+      $newPreservation = (array) $preservations[$j];
+      unset($newPreservation["id_plan_preservacion"]);
+      unset($newPreservation["preservacion"]);
+      unset($newPreservation["selected"]);
+      insertPlanPreservation($newPreservation);
     }
     return $planId;
   }
   else
   {
     for ($i = 0; $i < $l; $i++) {
-      unset($storedContainers[$i]["recipiente"]);
-      unset($storedContainers[$i]["tipo_recipiente"]);
-      unset($storedContainers[$i]["selected"]);
-      $storedContainers[$i]["activo"] = 0;
-      updatePlanContainer($storedContainers[$i]);
+      unset($storedPreservations[$i]["preservacion"]);
+      unset($storedPreservations[$i]["selected"]);
+      $storedPreservations[$i]["activo"] = 0;
+      updatePlanPreservation($storedPreservations[$i]);
     }
     for ($j = 0; $j < $m; $j++) {
-      $container = (array) $containers[$j];
-      if ($container["id_plan_recipiente"] == 0)
+      $preservation = (array) $preservations[$j];
+      unset($preservation["preservacion"]);
+      unset($preservation["selected"]);
+      if ($preservation["id_plan_preservacion"] < 1)
       {
-        unset($container["id_plan_recipiente"]);
-        unset($container["recipiente"]);
-        unset($container["tipo_recipiente"]);
-        unset($container["selected"]);
-        insertPlanContainer($container);
+        unset($preservation["id_plan_preservacion"]);
+        insertPlanPreservation($preservation);
       }
       else
       {
-        unset($container["recipiente"]);
-        unset($container["tipo_recipiente"]);
-        unset($container["selected"]);
-        $container["activo"] = 1;
-        updatePlanContainer($container);
+        $preservation["activo"] = 1;
+        updatePlanPreservation($preservation);
       }
     }
   }
@@ -889,21 +883,17 @@ function processSheetPreservationsUpdate($sheetUpdateData) {
     }
     for ($j = 0; $j < $m; $j++) {
       $preservation = (array) $preservations[$j];
-      if ($preservation["id_hoja_preservacion"] == 0)
+      unset($preservation["id_tipo_preservacion"]);
+      unset($preservation["preservacion"]);
+      unset($preservation["descripcion"]);
+      unset($preservation["selected"]);
+      if ($preservation["id_hoja_preservacion"] < 1                                           )
       {
         unset($preservation["id_hoja_preservacion"]);
-        unset($preservation["id_tipo_preservacion"]);
-        unset($preservation["preservacion"]);
-        unset($preservation["descripcion"]);
-        unset($preservation["selected"]);
         insertSheetPreservation($preservation);
       }
       else
       {
-        unset($preservation["id_tipo_preservacion"]);
-        unset($preservation["preservacion"]);
-        unset($preservation["descripcion"]);
-        unset($preservation["selected"]);
         $preservation["activo"] = 1;
         updateSheetPreservation($preservation);
       }
@@ -986,7 +976,7 @@ function processSheetResultsUpdate($sheetUpdateData) {
   return $sheetId;
 }
 
-//TODO: workout how to insert automatically elements: Sheet, Reception, etc
+//TODO: insert elements: Sheet, Reception, etc
 function processReceptionInsert($request) {
   return $request;
 }

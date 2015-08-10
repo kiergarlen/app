@@ -926,7 +926,7 @@
    * @param {Object} DistrictService - Proveedor de datos, Municipios
    * @param {Object} CityService - Proveedor de datos, Localidades
    * @param {Object} SamplingEmployeeService - Proveedor de datos, Empleados muestreo
-   * @param {Object} ContainerKindService - Proveedor de datos, Clases de Recipientes
+   * @param {Object} Proveedor de datos, Preservaciones
    * @param {Object} ReactiveService - Proveedor de datos, Reactivos
    * @param {Object} MaterialService - Proveedor de datos, Material
    * @param {Object} CoolerService - Proveedor de datos, Hieleras
@@ -936,7 +936,7 @@
   function PlanController($scope, $routeParams, TokenService,
     ValidationService, RestUtilsService, ArrayUtilsService,
     DateUtilsService, PlanObjectivesService, DistrictService,
-    CityService, SamplingEmployeeService, ContainerKindService,
+    CityService, SamplingEmployeeService, PreservationService,
     ReactiveService, MaterialService, CoolerService,
     SamplingInstrumentService, PlanService) {
     var vm = this;
@@ -954,8 +954,6 @@
     vm.message = '';
     vm.isDataSubmitted = false;
     vm.selectDistrict = selectDistrict;
-    vm.selectInstruments = selectInstruments;
-    vm.selectMaterials = selectMaterials;
     vm.approveItem = approveItem;
     vm.rejectItem = rejectItem;
     vm.submitForm = submitForm;
@@ -1013,7 +1011,7 @@
               ]
             );
           });
-        ContainerKindService
+        PreservationService
           .get()
           .$promise
           .then(function success(response) {
@@ -1024,6 +1022,7 @@
             for (i = 0; i < l; i += 1) {
               vm.preservations[i].id_plan_preservacion = 0;
               vm.preservations[i].id_plan = vm.plan.id_plan;
+              vm.preservations[i].selected = false;
             }
             ArrayUtilsService.seItemsFromReference(
               vm.preservations,
@@ -1349,7 +1348,7 @@
         '$scope', '$routeParams', 'TokenService',
         'ValidationService', 'RestUtilsService', 'ArrayUtilsService',
         'DateUtilsService', 'PlanObjectivesService', 'DistrictService',
-        'CityService', 'SamplingEmployeeService', 'ContainerKindService',
+        'CityService', 'SamplingEmployeeService', 'PreservationService',
         'ReactiveService', 'MaterialService', 'CoolerService',
         'SamplingInstrumentService', 'PlanService',
         PlanController

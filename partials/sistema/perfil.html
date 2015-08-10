@@ -15,7 +15,6 @@
     <div class="thumbnail item-z1">
       <img
         data-ng-src="img/emp/{{profile.profile.id_trabajad}}.JPG"
-        height="90"
         alt="{{profile.profile.nombres}}"
         >
     </div>
@@ -26,20 +25,17 @@
       <strong>
       {{profile.profile.apellido_paterno}}
       {{profile.profile.apellido_materno}}
-      </strong>
-      <span class="text-muted">
-        ({{profile.profile.usr}})
-      </span>
+      </strong><br>
+      <small>{{profile.profile.puesto}}</small>
     </h4>
-    <p>
-      <h6>
-        {{profile.profile.puesto}}
-      </h6>
-      Rol:
-      <strong>
-        {{profile.profile.rol}}
-      </strong>
-    </p>
+    <ul class="list-unstyled">
+      <li>
+        Rol: <strong>{{profile.profile.rol}}</strong>
+      </li>
+      <li>
+        Usuario: <strong>{{profile.profile.usr}}</strong>
+      </li>
+    </ul>
   </div>
 </div>
 <form class="form" role="form"

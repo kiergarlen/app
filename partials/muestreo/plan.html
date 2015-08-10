@@ -45,6 +45,7 @@
   name="planForm"
   novalidate
   >
+  <!--
   <div class="row">
     <div class="col-xs-12" data-bs-collapse>
       <h4 data-bs-collapse-toggle>
@@ -114,6 +115,7 @@
       </div>
     </div>
   </div>
+  -->
   <div class="row">
     <div class="col-xs-12">
       <h4>Objetivo</h4>
@@ -596,7 +598,7 @@
     </div>
   </div>
   <div class="row">
-    <div class="col-xs-12 col-sm-4"
+    <div class="col-xs-12 col-sm-6"
       data-ng-repeat="container in plan.containers">
       <div class="row">
         <div class="col-xs-12">
@@ -605,25 +607,13 @@
               value="{{container.selected}}"
               data-ng-model="container.selected"
               >
-              {{container.recipiente}}
+              {{container.preservacion}}
           </label>
+          <br>
+          <small class="text-muted">
+            {{::container.descripcion}}
+          </small>
         </div>
-        <!--
-        <div class="col-xs-5">
-          <label
-            for="containerQuantity{{container.id_preservacion}}"
-            >Cantidad
-          </label>
-          <input type="text"
-            class="form-control"
-            placeholder="0"
-            id="containerQuantity{{container.id_preservacion}}"
-            name="containerQuantity{{container.id_preservacion}}"
-            data-ng-model="container.cantidad"
-            data-ng-disabled="!container.selected"
-            >
-        </div>
-        -->
       </div>
     </div>
     <div class="col-xs-12">

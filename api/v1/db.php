@@ -2269,15 +2269,23 @@ function getSamplingInstruments() {
 }
 
 function getContainerKinds() {
-  $sql = "SELECT id_recipiente, recipiente, tipo_recipiente, activo,
-    '0' AS cantidad, 'false' AS selected
-    FROM Recipiente
+  $sql = "SELECT id_preservacion, id_tipo_preservacion, preservacion,
+    descripcion, activo
+    FROM Preservacion
     WHERE activo = 1";
+  // $sql = "SELECT id_recipiente, recipiente, tipo_recipiente, activo
+  //   FROM Recipiente
+  //   WHERE activo = 1";
   $db = getConnection();
   $stmt = $db->prepare($sql);
   $stmt->execute();
   $containerKinds = $stmt->fetchAll(PDO::FETCH_ASSOC);
   $db = null;
+  $l = count($containerKinds);
+  for ($i = 0; $i < $l; $i++) {
+    $containerKinds[$i]["selected"] = false;
+    $containerKinds[$i]["cantidad"] = 0;
+  }
   return $containerKinds;
 }
 

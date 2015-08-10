@@ -926,7 +926,7 @@
    * @param {Object} DistrictService - Proveedor de datos, Municipios
    * @param {Object} CityService - Proveedor de datos, Localidades
    * @param {Object} SamplingEmployeeService - Proveedor de datos, Empleados muestreo
-   * @param {Object} ContainerService - Proveedor de datos, Recipientes
+   * @param {Object} ContainerKindService - Proveedor de datos, Clases de Recipientes
    * @param {Object} ReactiveService - Proveedor de datos, Reactivos
    * @param {Object} MaterialService - Proveedor de datos, Material
    * @param {Object} CoolerService - Proveedor de datos, Hieleras
@@ -936,7 +936,7 @@
   function PlanController($scope, $routeParams, TokenService,
     ValidationService, RestUtilsService, ArrayUtilsService,
     DateUtilsService, PlanObjectivesService, DistrictService,
-    CityService, SamplingEmployeeService, ContainerService,
+    CityService, SamplingEmployeeService, ContainerKindService,
     ReactiveService, MaterialService, CoolerService,
     SamplingInstrumentService, PlanService) {
     var vm = this;
@@ -1012,18 +1012,18 @@
               vm.instruments[i].id_plan = vm.plan.id_plan;
             }
           });
-        ContainerService
+        ContainerKindService
           .get()
           .$promise
           .then(function success(response) {
             var i;
             var l;
             vm.containers = response;
-            l = vm.containers.length;
-            for (i = 0; i < l; i += 1) {
-              vm.containers[i].id_plan_recipiente = 0;
-              vm.containers[i].id_plan = vm.plan.id_plan;
-            }
+            // l = vm.containers.length;
+            // for (i = 0; i < l; i += 1) {
+            //   vm.containers[i].id_plan_recipiente = 0;
+            //   vm.containers[i].id_plan = vm.plan.id_plan;
+            // }
           });
         ReactiveService
           .get()
@@ -1042,6 +1042,8 @@
           .get()
           .$promise
           .then(function success(response) {
+            var i;
+            var l;
             vm.materials = response;
             l = vm.materials.length;
             for (i = 0; i < l; i += 1) {
@@ -1053,6 +1055,8 @@
           .get()
           .$promise
           .then(function success(response) {
+            var i;
+            var l;
             vm.coolers = response;
             l = vm.coolers.length;
             for (i = 0; i < l; i += 1) {
@@ -1093,29 +1097,29 @@
     }
 
     function selectContainers() {
-      if (vm.containers.length > 0 && vm.plan.recipientes) {
-        if (vm.plan.recipientes.length > 0 && !vm.isContainerListLoaded) {
-          ArrayUtilsService.seItemsFromReference(
-            vm.containers,
-            vm.plan.recipientes,
-            'id_recipiente',
-            [
-              'id_plan_recipiente',
-              'id_plan',
-              'cantidad',
-              'selected'
-            ]
-          );
-          vm.isContainerListLoaded = true;
-        } else {
-          vm.plan.recipientes = [];
-          vm.plan.recipientes = ArrayUtilsService.selectItemsFromCollection(
-            vm.containers,
-            'selected',
-            true
-          ).slice();
-        }
-      }
+      // if (vm.containers.length > 0 && vm.plan.recipientes) {
+      //   if (vm.plan.recipientes.length > 0 && !vm.isContainerListLoaded) {
+      //     ArrayUtilsService.seItemsFromReference(
+      //       vm.containers,
+      //       vm.plan.recipientes,
+      //       'id_recipiente',
+      //       [
+      //         'id_plan_recipiente',
+      //         'id_plan',
+      //         'cantidad',
+      //         'selected'
+      //       ]
+      //     );
+      //     vm.isContainerListLoaded = true;
+      //   } else {
+      //     vm.plan.recipientes = [];
+      //     vm.plan.recipientes = ArrayUtilsService.selectItemsFromCollection(
+      //       vm.containers,
+      //       'selected',
+      //       true
+      //     ).slice();
+      //   }
+      // }
     }
 
     function selectReactives() {
@@ -1404,7 +1408,7 @@
         '$scope', '$routeParams', 'TokenService',
         'ValidationService', 'RestUtilsService', 'ArrayUtilsService',
         'DateUtilsService', 'PlanObjectivesService', 'DistrictService',
-        'CityService', 'SamplingEmployeeService', 'ContainerService',
+        'CityService', 'SamplingEmployeeService', 'ContainerKindService',
         'ReactiveService', 'MaterialService', 'CoolerService',
         'SamplingInstrumentService', 'PlanService',
         PlanController
@@ -2251,11 +2255,11 @@
    * @constructor
    * @desc Controla la vista para el listado de Recipientes
    * @this {Object} $scope - Contenedor para el modelo [AngularJS]
-   * @param {Object} ContainerService - Proveedor de datos, Recipientes
+   * @param {Object} ContainerKindService - Proveedor de datos, Clases de Recipientes
    */
-  function ContainerListController(ContainerService) {
+  function ContainerListController(ContainerKindService) {
     var vm = this;
-    vm.pricesList = ContainerService.get();
+    vm.pricesList = ContainerKindService.get();
     vm.selectRow = selectRow;
 
     function selectRow() {
@@ -2266,7 +2270,7 @@
     .module('sislabApp')
     .controller('ContainerListController',
       [
-        'ContainerService',
+        'ContainerKindService',
         ContainerListController
       ]
     );
@@ -4369,16 +4373,16 @@
       ]
     );
 
-  //ContainerService.js
+  //ContainerKindService.js
   /**
-   * @name ContainerService
+   * @name ContainerKindService
    * @constructor
-   * @desc Proveedor de datos, Recipientes
+   * @desc Proveedor de datos, Clases de Recipientes
    * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @param {Object} TokenService - Proveedor de métodos para token
    * @return {Object} $resource - Acceso a recursos HTTP
    */
-  function ContainerService($resource, TokenService) {
+  function ContainerKindService($resource, TokenService) {
     return $resource(API_BASE_URL + 'containers/kinds', {}, {
       get: {
         method: 'GET',
@@ -4392,10 +4396,10 @@
   }
   angular
     .module('sislabApp')
-    .factory('ContainerService',
+    .factory('ContainerKindService',
       [
         '$resource', 'TokenService',
-        ContainerService
+        ContainerKindService
       ]
     );
 
@@ -4771,7 +4775,7 @@
   /**
    * @name ContainersListService
    * @constructor
-   * @desc Proveedor de datos, Recipientes
+   * @desc Proveedor de datos, Clases de Recipientes
    * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @param {Object} TokenService - Proveedor de métodos para token
    * @return {Object} $resource - Acceso a recursos HTTP

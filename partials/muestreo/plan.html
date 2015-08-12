@@ -252,58 +252,21 @@
   <div class="row">
     <div class="col-xs-12 col-sm-4"
       data-ng-repeat="point in plan.plan.puntos">
-      <strong>{{point.punto}}</strong>
-      <br>
-      Lat:
-      {{::point.lat}}
-      <br>
-      Long:
-      {{::point.lng}}
+      <ul class="list-unstyled">
+        <li>
+          <strong>{{point.punto}}</strong>
+        </li>
+        <li>
+          {{point.descripcion}}
+        </li>
+        <li>
+          Lat: {{::point.lat}}
+        </li>
+        <li>
+          Long: {{::point.lng}}
+        </li>
+      </ul>
     </div>
-    <!--
-      <div class="col-xs-12 col-sm-4">
-        <label>Tipo de muestreo</label>
-        <div class="radio">
-          <label>
-            <input type="radio"
-              name="samplingTypeRadios{{point.id_punto_muestreo}}"
-              data-ng-model="point.id_tipo_muestreo"
-              value="1"
-              >
-              Simple
-          </label>
-          <label>
-            <input type="radio"
-              name="samplingTypeRadios{{point.id_punto_muestreo}}"
-              data-ng-model="point.id_tipo_muestreo"
-              value="2"
-              >
-              Compuesto
-          </label>
-        </div>
-      </div>
-      <div class="col-xs-12 col-sm-4">
-        <label for="samplingFrequency{{point.id_punto_muestreo}}">
-          Frecuencia (horas)
-        </label>
-        <select class="form-control"
-          id="samplingFrequency{{point.id_punto_muestreo}}"
-          name="samplingFrequency{{point.id_punto_muestreo}}"
-          data-ng-disabled="point.id_tipo_muestreo < 2"
-          data-ng-model="point.frecuencia"
-          >
-          <option value="2">
-            2
-          </option>
-          <option value="4">
-            4
-          </option>
-          <option value="6">
-            6
-          </option>
-        </select>
-      </div>
-    -->
     <div class="col-xs-12">
       Puntos:
       <strong>
@@ -546,17 +509,7 @@
           </label>
         </div>
         <div class="col-xs-12 col-sm-8">
-          {{equipment.descripcion}}<br>
-          <!--
-          Bitácora:
-          <strong>
-            {{equipment.bitacora}}
-          </strong><br>
-          Folio:
-          <strong>
-            {{equipment.folio}}
-          </strong>
-          -->
+          {{equipment.descripcion}}
         </div>
       </div>
     </div>

@@ -770,6 +770,7 @@ function getPlan($planId) {
   $plan->puntos = getPointsByPackage($plan->id_paquete);
   $plan->instrumentos = getInstrumentsByPlan($planId);
   $plan->preservaciones = getPreservationsByPlan($planId);
+  $plan->recipientes = getContainersByPlan($planId);
   $plan->reactivos = getReactivesByPlan($planId);
   $plan->materiales = getMaterialsByPlan($planId);
   $plan->hieleras = getCoolersByPlan($planId);
@@ -1824,11 +1825,46 @@ function getContainersByPlan($planId) {
   return $containers;
 }
 
+function insertContainer($containerData) {
+  $sql = "INSERT INTO Recipiente (id_plan, id_recepcion, id_muestra,
+    id_tipo_recipiente, id_preservacion, id_almacenamiento,
+    id_status_recipiente, id_usuario_actualiza, volumen, volumen_inicial,
+    fecha_actualizacion, ip_actualiza, host_actualiza, activo)
+    VALUES (:id_plan, :id_recepcion, :id_muestra, :id_tipo_recipiente,
+    :id_preservacion, :id_almacenamiento, :id_status_recipiente,
+    :id_usuario_actualiza, :volumen, :volumen_inicial, :fecha_actualizacion,
+    :ip_actualiza, :host_actualiza, :activo)";
+  $db = getConnection();
+  $stmt = $db->prepare($sql);
+  $stmt->execute($containerData);
+  $containerId = $db->lastInsertId();
+  $db = null;
+  return $containerId;
+}
+
+function updateContainer($updateData) {
+  $sql = "UPDATE Recipiente SET id_plan = :id_plan,
+    id_recepcion = :id_recepcion, id_muestra = :id_muestra,
+    id_tipo_recipiente = :id_tipo_recipiente,
+    id_preservacion = :id_preservacion,
+    id_almacenamiento = :id_almacenamiento,
+    id_status_recipiente = :id_status_recipiente,
+    id_usuario_actualiza = :id_usuario_actualiza, volumen = :volumen,
+    volumen_inicial = :volumen_inicial,
+    fecha_actualizacion = :fecha_actualizacion,
+    ip_actualiza = :ip_actualiza, host_actualiza = :host_actualiza,
+    activo = :activo
+    WHERE id_recipiente = :id_recipiente";
+  $db = getConnection();
+  $stmt = $db->prepare($sql);
+  $stmt->execute($updateData);
+  $db = null;
+  return $updateData["id_recipiente"];
+}
+
 function insertPlanContainer($containerData) {
-  $sql = "INSERT INTO PlanRecipiente (id_plan_recipiente, id_plan,
-    id_recipiente, activo)
-    VALUES (:id_plan_recipiente, :id_plan,
-    :id_recipiente, :activo)";
+  $sql = "INSERT INTO PlanRecipiente (id_plan, id_recipiente, activo)
+    VALUES (:id_plan, :id_recipiente, :activo)";
   $db = getConnection();
   $stmt = $db->prepare($sql);
   $stmt->execute($containerData);
@@ -2305,27 +2341,6 @@ function getSamplingInstruments() {
     $instruments[$i]["selected"] = false;
   }
   return $instruments;
-}
-
-function getContainerKinds() {
-  $sql = "SELECT id_preservacion, id_tipo_preservacion, preservacion,
-    descripcion, activo
-    FROM Preservacion
-    WHERE activo = 1";
-  // $sql = "SELECT id_recipiente, recipiente, tipo_recipiente, activo
-  //   FROM Recipiente
-  //   WHERE activo = 1";
-  $db = getConnection();
-  $stmt = $db->prepare($sql);
-  $stmt->execute();
-  $containerKinds = $stmt->fetchAll(PDO::FETCH_ASSOC);
-  $db = null;
-  $l = count($containerKinds);
-  for ($i = 0; $i < $l; $i++) {
-    $containerKinds[$i]["selected"] = false;
-    $containerKinds[$i]["cantidad"] = 0;
-  }
-  return $containerKinds;
 }
 
 function getReactives() {

@@ -753,6 +753,53 @@ function processPlanPreservationsUpdate($planUpdateData) {
   return $planId;
 }
 
+function processPlanContainersUpdate($planUpdateData) {
+  $containers = (array) $planUpdateData["containers"];
+  $planId = $planUpdateData["plan"]["id_plan"];
+  $storedContainers = getContainersByPlan($planId);
+  $i = 0;
+  $j = 0;
+  $l = count($storedContainers);
+  $m = count($containers);
+
+  if ($l < 1)
+  {
+    for ($j = 0; $j < $m; $j++) {
+      $newContainer = (array) $containers[$j];
+      unset($newContainer["id_plan_recipiente"]);
+      unset($newContainer["recipiente"]);
+      unset($newContainer["selected"]);
+      insertPlanContainer($newContainer);
+    }
+    return $planId;
+  }
+  else
+  {
+    for ($i = 0; $i < $l; $i++) {
+      unset($storedContainers[$i]["recipiente"]);
+      unset($storedContainers[$i]["selected"]);
+      $storedContainers[$i]["activo"] = 0;
+      updatePlanContainer($storedContainers[$i]);
+    }
+    for ($j = 0; $j < $m; $j++) {
+      $container = (array) $containers[$j];
+      unset($container["recipiente"]);
+      unset($container["selected"]);
+      if ($container["id_plan_recipiente"] < 1)
+      {
+        unset($container["id_plan_recipiente"]);
+        insertPlanContainer($container);
+      }
+      else
+      {
+        $container["activo"] = 1;
+        updatePlanContainer($container);
+      }
+    }
+  }
+  return $planId;
+}
+
 function processPlanReactivesUpdate($planUpdateData) {
   $reactives = (array) $planUpdateData["reactives"];
   $planId = $planUpdateData["plan"]["id_plan"];

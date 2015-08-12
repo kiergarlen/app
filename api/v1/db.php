@@ -1794,7 +1794,10 @@ function getMatrix($matrixId) {
 }
 
 function getContainers() {
-  $sql = "SELECT id_recipiente, recipiente, tipo_recipiente, activo
+  $sql = "SELECT id_recipiente, id_plan, id_recepcion, id_muestra,
+    id_tipo_recipiente, id_preservacion, id_almacenamiento,
+    id_status_recipiente, id_usuario_actualiza, volumen, volumen_inicial,
+    fecha_actualizacion, ip_actualiza, host_actualiza, activo
     FROM Recipiente
     WHERE activo = 1";
   $db = getConnection();
@@ -1803,6 +1806,46 @@ function getContainers() {
   $containers = $stmt->fetchAll(PDO::FETCH_ASSOC);
   $db = null;
   return $containers;
+}
+
+function getContainersByPlan($planId) {
+  $sql = "SELECT id_recipiente, id_plan, id_recepcion, id_muestra,
+    id_tipo_recipiente, id_preservacion, id_almacenamiento,
+    id_status_recipiente, id_usuario_actualiza, volumen, volumen_inicial,
+    fecha_actualizacion, ip_actualiza, host_actualiza, activo
+    FROM Recipiente
+    WHERE activo = 1 AND id_plan = :planId";
+  $db = getConnection();
+  $stmt = $db->prepare($sql);
+  $stmt->bindParam("planId", $planId);
+  $stmt->execute();
+  $containers = $stmt->fetchAll(PDO::FETCH_ASSOC);
+  $db = null;
+  return $containers;
+}
+
+function insertPlanContainer($containerData) {
+  $sql = "INSERT INTO PlanRecipiente (id_plan_recipiente, id_plan,
+    id_recipiente, activo)
+    VALUES (:id_plan_recipiente, :id_plan,
+    :id_recipiente, :activo)";
+  $db = getConnection();
+  $stmt = $db->prepare($sql);
+  $stmt->execute($containerData);
+  $containerId = $db->lastInsertId();
+  $db = null;
+  return $containerId;
+}
+
+function updatePlanContainer($updateData) {
+  $sql = "UPDATE PlanRecipiente SET id_plan = :id_plan,
+    id_recipiente = :id_recipiente, activo = :activo
+    WHERE id_plan_recipiente = :id_plan_recipiente";
+  $db = getConnection();
+  $stmt = $db->prepare($sql);
+  $stmt->execute($updateData);
+  $db = null;
+  return $updateData["id_plan_recipiente"];
 }
 
 function getAnalysis() {

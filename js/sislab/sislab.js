@@ -2195,11 +2195,11 @@
    * @constructor
    * @desc Controla la vista para el listado de Recipientes
    * @this {Object} $scope - Contenedor para el modelo [AngularJS]
-   * @param {Object} ContainerKindService - Proveedor de datos, Clases de Recipientes
+   * @param {Object} ContainerService - Proveedor de datos, Recipientes
    */
-  function ContainerListController(ContainerKindService) {
+  function ContainerListController(ContainerService) {
     var vm = this;
-    vm.pricesList = ContainerKindService.get();
+    vm.containers = ContainerService.get();
     vm.selectRow = selectRow;
 
     function selectRow() {
@@ -2210,7 +2210,7 @@
     .module('sislabApp')
     .controller('ContainerListController',
       [
-        'ContainerKindService',
+        'ContainerService',
         ContainerListController
       ]
     );
@@ -4313,21 +4313,45 @@
       ]
     );
 
-  //ContainerKindService.js
+  //ContainerService.js
   /**
-   * @name ContainerKindService
+   * @name ContainerService
    * @constructor
-   * @desc Proveedor de datos, Clases de Recipientes
+   * @desc Proveedor de datos, Recipientes
    * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @param {Object} TokenService - Proveedor de métodos para token
    * @return {Object} $resource - Acceso a recursos HTTP
    */
-  function ContainerKindService($resource, TokenService) {
-    return $resource(API_BASE_URL + 'containers/kinds', {}, {
+  function ContainerService($resource, TokenService) {
+    return $resource(API_BASE_URL + 'containers/:containerId', {}, {
+      query: {
+        method: 'GET',
+        params: {planId: 'id_recipiente'},
+        isArray: false,
+        headers: {
+          'Auth-Token': TokenService.getToken()
+        }
+      },
       get: {
         method: 'GET',
         params: {},
         isArray: true,
+        headers: {
+          'Auth-Token': TokenService.getToken()
+        }
+      },
+      update: {
+        method: 'POST',
+        params: {},
+        isArray: false,
+        headers: {
+          'Auth-Token': TokenService.getToken()
+        }
+      },
+      save: {
+        method: 'POST',
+        params: {},
+        isArray: false,
         headers: {
           'Auth-Token': TokenService.getToken()
         }
@@ -4336,10 +4360,10 @@
   }
   angular
     .module('sislabApp')
-    .factory('ContainerKindService',
+    .factory('ContainerService',
       [
         '$resource', 'TokenService',
-        ContainerKindService
+        ContainerService
       ]
     );
 
@@ -4708,36 +4732,6 @@
       [
         '$resource', 'TokenService',
         InstrumentsListService
-      ]
-    );
-
-  //ContainersListService.js
-  /**
-   * @name ContainersListService
-   * @constructor
-   * @desc Proveedor de datos, Clases de Recipientes
-   * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
-   * @param {Object} TokenService - Proveedor de métodos para token
-   * @return {Object} $resource - Acceso a recursos HTTP
-   */
-  function ContainersListService($resource, TokenService) {
-    return $resource(API_BASE_URL + 'containers', {}, {
-      get: {
-        method: 'GET',
-        params: {},
-        isArray: true,
-        headers: {
-          'Auth-Token': TokenService.getToken()
-        }
-      }
-    });
-  }
-  angular
-    .module('sislabApp')
-    .factory('ContainersListService',
-      [
-        '$resource', 'TokenService',
-        ContainersListService
       ]
     );
 

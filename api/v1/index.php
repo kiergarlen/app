@@ -232,6 +232,7 @@ $app->post("/plans", function() use ($app) {
       $planUpdateData = processPlanUpdate($request);
       $planId = updatePlan($planUpdateData["plan"]);
       processPlanInstrumentsUpdate($planUpdateData);
+      processPlanPreservationsUpdate($planUpdateData);
       processPlanContainersUpdate($planUpdateData);
       processPlanReactivesUpdate($planUpdateData);
       processPlanMaterialsUpdate($planUpdateData);
@@ -681,10 +682,17 @@ $app->get("/preservations", function() use ($app) {
   }
 });
 
-$app->get("/containers/kinds", function() use ($app) {
+$app->get("/containers(/)(:containerId)", function($containerId = -1) use ($app) {
   try {
     $userId = decodeUserToken($app->request())->uid;
-    $result = json_encode(getContainerKinds());
+    if ($containerId > 0)
+    {
+      $result = json_encode(getContainer($containerId));
+    }
+    else
+    {
+      $result = json_encode(getContainers());
+    }
     $app->response()->status(200);
     $app->response()->header('Content-Type', 'application/json');
     //$result = ")]}',\n" . $result;

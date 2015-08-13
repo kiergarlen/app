@@ -593,6 +593,7 @@ function processPlanUpdate($request) {
   $plan = (array) json_decode($request->getBody());
   $planUpdateData = $plan;
   $instruments = $plan["instrumentos"];
+  $containers = $plan["recipientes"];
   $preservations = $plan["preservaciones"];
   $reactives = $plan["reactivos"];
   $materials = $plan["materiales"];
@@ -603,6 +604,7 @@ function processPlanUpdate($request) {
   unset($plan["supervisor_muestreo"]);
   unset($plan["puntos"]);
   unset($plan["instrumentos"]);
+  unset($plan["recipientes"]);
   unset($plan["preservaciones"]);
   unset($plan["reactivos"]);
   unset($plan["materiales"]);
@@ -636,6 +638,7 @@ function processPlanUpdate($request) {
   $planUpdateData = array (
     "plan" => $plan,
     "instruments" => $instruments,
+    "containers" => $containers,
     "preservations" => $preservations,
     "reactives" => $reactives,
     "materials" => $materials,
@@ -764,38 +767,33 @@ function processPlanContainersUpdate($planUpdateData) {
 
   if ($l < 1)
   {
-    for ($j = 0; $j < $m; $j++) {
-      $newContainer = (array) $containers[$j];
-      unset($newContainer["id_plan_recipiente"]);
-      unset($newContainer["recipiente"]);
-      unset($newContainer["selected"]);
-      insertPlanContainer($newContainer);
-    }
-    return $planId;
+    // for ($j = 0; $j < $m; $j++) {
+    //   $newContainer = (array) $containers[$j];
+    //   unset($newContainer["id_plan_recipiente"]);
+    //   insertPlanContainer($newContainer);
+    // }
+    // return $planId;
   }
   else
   {
     for ($i = 0; $i < $l; $i++) {
-      unset($storedContainers[$i]["recipiente"]);
-      unset($storedContainers[$i]["selected"]);
       $storedContainers[$i]["activo"] = 0;
-      updatePlanContainer($storedContainers[$i]);
+      //updatePlanContainer($storedContainers[$i]);
     }
     for ($j = 0; $j < $m; $j++) {
       $container = (array) $containers[$j];
-      unset($container["recipiente"]);
-      unset($container["selected"]);
       if ($container["id_plan_recipiente"] < 1)
       {
         unset($container["id_plan_recipiente"]);
-        insertPlanContainer($container);
+        //insertPlanContainer($container);
       }
       else
       {
         $container["activo"] = 1;
-        updatePlanContainer($container);
+        //updatePlanContainer($container);
       }
     }
+    return 'plan';
   }
   return $planId;
 }

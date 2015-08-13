@@ -948,6 +948,7 @@
     vm.samplingEmployees = SamplingEmployeeService.get();
     vm.instruments = [];
     vm.preservations = [];
+    vm.containers = [];
     vm.reactives = [];
     vm.materials = [];
     vm.coolers = [];
@@ -1017,12 +1018,22 @@
           .then(function success(response) {
             var i;
             var l;
+            // var j;
+            // var m = vm.plan.puntos.length;
             vm.preservations = response;
             l = vm.preservations.length;
             for (i = 0; i < l; i += 1) {
               vm.preservations[i].id_plan_preservacion = 0;
               vm.preservations[i].id_plan = vm.plan.id_plan;
               vm.preservations[i].selected = false;
+              // for (j = 0; j < m; j += 1) {
+              //   vm.containers.push({
+              //     'id_plan_recipiente': 0,
+              //     'id_plan': vm.plan.id_plan,
+              //     'id_recipiente': 0,
+              //     'activo': 0
+              //   });
+              // }
             }
             ArrayUtilsService.seItemsFromReference(
               vm.preservations,
@@ -1035,6 +1046,29 @@
                 'selected'
               ]
             );
+            // ArrayUtilsService.seItemsFromReference(
+            //   vm.containers,
+            //   vm.plan.recipientes,
+            //   'id_recipiente',
+            //   [
+            //     'id_plan_recipiente',
+            //     'id_plan',
+            //     'id_recipiente',
+            //     'activo'
+            //   ]
+            // );
+            // ContainerService
+            //   .get()
+            //   .$promise
+            //   .then(function success(response) {
+            //     var i;
+            //     var l;
+            //     vm.containers = response;
+            //     l = vm.containers.length;
+            //     for (i = 0; i < l; i += 1) {
+            //       vm.containers[i].id_plan_recipiente = 0;
+            //     }
+            // });
           });
         ReactiveService
           .get()
@@ -1115,30 +1149,6 @@
         districtId: parseInt(vm.plan.id_municipio, 10)
       });
     }
-
-    // function selectInstruments() {
-    //   if (vm.instruments.length > 0 && vm.plan.instrumentos) {
-    //     if (vm.plan.instrumentos.length > 0 && !vm.isInstrumentListLoaded) {
-    //       ArrayUtilsService.seItemsFromReference(
-    //         vm.instruments,
-    //         vm.plan.instrumentos,
-    //         'id_instrumento',
-    //         [
-    //           'id_plan_instrumento',
-    //           'selected'
-    //         ]
-    //       );
-    //       vm.isInstrumentListLoaded = true;
-    //     } else {
-    //       vm.plan.instrumentos = [];
-    //       vm.plan.instrumentos = ArrayUtilsService.selectItemsFromCollection(
-    //         vm.instruments,
-    //         'selected',
-    //         true
-    //       ).slice();
-    //     }
-    //   }
-    // }
 
     function approveItem() {
       ValidationService.approveItem(vm.plan, vm.user);

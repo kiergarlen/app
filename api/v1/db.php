@@ -722,7 +722,6 @@ function getPlansByOrder($orderId) {
 }
 
 function getPlainPlan($planId) {
-  //TODO: agregar id_estado, id_municipio, id_localidad
   $sql = "SELECT id_plan, id_estudio, id_orden, id_ubicacion,
     id_paquete, id_objetivo_plan, id_norma_muestreo,
     id_estado, id_municipio, id_localidad,
@@ -787,6 +786,19 @@ function getPlanObjectives() {
   $planObjectives = $stmt->fetchAll(PDO::FETCH_ASSOC);
   $db = null;
   return $planObjectives;
+}
+
+function getContainersByPlan($planId) {
+  $sql = "SELECT id_plan_recipiente, id_recipiente, id_plan, activo
+    FROM PlanRecipiente
+    WHERE activo = 1 AND id_plan = :planId";
+  $db = getConnection();
+  $stmt = $db->prepare($sql);
+  $stmt->bindParam("planId", $planId);
+  $stmt->execute();
+  $containers = $stmt->fetchAll(PDO::FETCH_ASSOC);
+  $db = null;
+  return $containers;
 }
 
 function insertPlan($planData) {
@@ -1809,7 +1821,7 @@ function getContainers() {
   return $containers;
 }
 
-function getContainersByPlan($planId) {
+function getPlanContainers($planId) {
   $sql = "SELECT id_recipiente, id_plan, id_recepcion, id_muestra,
     id_tipo_recipiente, id_preservacion, id_almacenamiento,
     id_status_recipiente, id_usuario_actualiza, volumen, volumen_inicial,

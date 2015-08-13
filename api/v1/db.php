@@ -1821,6 +1821,42 @@ function getContainers() {
   return $containers;
 }
 
+function getContainer($containerId) {
+  $sql = "SELECT id_recipiente, id_plan, id_recepcion, id_muestra,
+    id_tipo_recipiente, id_preservacion, id_almacenamiento,
+    id_status_recipiente, id_usuario_actualiza, volumen, volumen_inicial,
+    fecha_actualizacion, ip_actualiza, host_actualiza, activo
+    FROM Recipiente
+    WHERE activo = 1 AND id_recipiente = :containerId";
+  $db = getConnection();
+  $stmt = $db->prepare($sql);
+  $stmt->bindParam("containerId", $containerId);
+  $stmt->execute();
+  $container = $stmt->fetch(PDO::FETCH_OBJ);
+  $db = null;
+  return $container;
+}
+
+function getBlankContainer() {
+  return array(
+    "id_recipiente" => 0,
+    "id_plan" => 1,
+    "id_recepcion" => 0,
+    "id_muestra" => 0,
+    "id_tipo_recipiente" => 1,
+    "id_preservacion" => 1,
+    "id_almacenamiento" => 1,
+    "id_status_recipiente" => 1,
+    "id_usuario_actualiza" => 1,
+    "volumen" => 0,
+    "volumen_inicial" => 0,
+    "fecha_actualizacion" => "",
+    "ip_actualiza" => "",
+    "host_actualiza" => "",
+    "activo" => 1
+  );
+}
+
 function getPlanContainers($planId) {
   $sql = "SELECT id_recipiente, id_plan, id_recepcion, id_muestra,
     id_tipo_recipiente, id_preservacion, id_almacenamiento,

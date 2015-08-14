@@ -595,6 +595,7 @@ function processPlanUpdate($request) {
   $instruments = $plan["instrumentos"];
   $containers = $plan["recipientes"];
   $preservations = $plan["preservaciones"];
+  $points = $plan["puntos"];
   $reactives = $plan["reactivos"];
   $materials = $plan["materiales"];
   $coolers = $plan["hieleras"];
@@ -640,6 +641,7 @@ function processPlanUpdate($request) {
     "instruments" => $instruments,
     "containers" => $containers,
     "preservations" => $preservations,
+    "points" => $points,
     "reactives" => $reactives,
     "materials" => $materials,
     "coolers" => $coolers
@@ -758,42 +760,73 @@ function processPlanPreservationsUpdate($planUpdateData) {
 
 function processPlanContainersUpdate($planUpdateData) {
   $containers = (array) $planUpdateData["containers"];
+  $preservations = (array) $planUpdateData["preservations"];
+  $points = (array) $planUpdateData["points"];
   $planId = $planUpdateData["plan"]["id_plan"];
   $storedContainers = getContainersByPlan($planId);
   $i = 0;
   $j = 0;
+  $k = 0;
   $l = count($storedContainers);
   $m = count($containers);
+  $n = count($preservations);
+  $o = count($points);
 
   if ($l < 1)
   {
-    // for ($j = 0; $j < $m; $j++) {
-    //   $newContainer = (array) $containers[$j];
-    //   unset($newContainer["id_plan_recipiente"]);
-    //   insertPlanContainer($newContainer);
-    // }
-    // return $planId;
+    for ($i = 0; $i < $o; $i++) {
+      for ($j = 0; $j < $n; $j++) {
+        insertContainer(array(
+          "id_plan" => $planId,
+          "id_recepcion" => 1,
+          "id_muestra" => 1,
+          "id_tipo_recipiente" => 1,
+          "id_preservacion" => $preservations[$j]->id_preservacion,
+          "id_almacenamiento" => 1,
+          "id_status_recipiente" => 1,
+          "id_usuario_actualiza" => 1,
+          "volumen" => 0,
+          "volumen_inicial" => 0,
+          "fecha_actualizacion" => "",
+          "ip_actualiza" => "",
+          "host_actualiza" => "",
+          "activo" => 1
+        ));
+      }
+    }
+
+    $storedContainers = getPlanContainers($planId);
+    $l = count($storedContainers);
+
+    for ($i = 0; $i < $l; $i++) {
+      $newContainer = array(
+        "id_recipiente" => $storedContainers[$i]["id_recipiente"],
+        "id_plan" => $storedContainers[$i]["id_plan"],
+        "activo" => 1
+      );
+      insertPlanContainer($newContainer);
+    }
+    return $planId;
   }
   else
   {
     for ($i = 0; $i < $l; $i++) {
       $storedContainers[$i]["activo"] = 0;
-      //updatePlanContainer($storedContainers[$i]);
+      updatePlanContainer($storedContainers[$i]);
     }
     for ($j = 0; $j < $m; $j++) {
       $container = (array) $containers[$j];
       if ($container["id_plan_recipiente"] < 1)
       {
         unset($container["id_plan_recipiente"]);
-        //insertPlanContainer($container);
+        insertPlanContainer($container);
       }
       else
       {
         $container["activo"] = 1;
-        //updatePlanContainer($container);
+        updatePlanContainer($container);
       }
     }
-    return 'plan';
   }
   return $planId;
 }

@@ -1837,26 +1837,6 @@ function getContainer($containerId) {
   return $container;
 }
 
-function getBlankContainer() {
-  return array(
-    "id_recipiente" => 0,
-    "id_plan" => 1,
-    "id_recepcion" => 0,
-    "id_muestra" => 0,
-    "id_tipo_recipiente" => 1,
-    "id_preservacion" => 1,
-    "id_almacenamiento" => 1,
-    "id_status_recipiente" => 1,
-    "id_usuario_actualiza" => 1,
-    "volumen" => 0,
-    "volumen_inicial" => 0,
-    "fecha_actualizacion" => "",
-    "ip_actualiza" => "",
-    "host_actualiza" => "",
-    "activo" => 1
-  );
-}
-
 function getPlanContainers($planId) {
   $sql = "SELECT id_recipiente, id_plan, id_recepcion, id_muestra,
     id_tipo_recipiente, id_preservacion, id_almacenamiento,

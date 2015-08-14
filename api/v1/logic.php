@@ -520,6 +520,18 @@ function processOrderPlansUpdate($orderUpdateData) {
       unset($plan["id_plan"]);
       unset($plan['$$hashKey']);
       $plan["id_orden"] = $orderId;
+      $supervisorId = $plan["id_supervisor_muestreo"];
+      $plan["id_supervisor_entrega"] = $supervisorId;
+      $plan["id_supervisor_recoleccion"] = $supervisorId;
+      $plan["id_supervisor_registro"] = $supervisorId;
+      $plan["id_ayudante_entrega"] = $supervisorId;
+      $plan["id_ayudante_recoleccion"] = $supervisorId;
+      $plan["id_ayudante_registro"] = $supervisorId;
+      $plan["id_responsable_calibracion"] = $supervisorId;
+      $plan["id_responsable_recipientes"] = $supervisorId;
+      $plan["id_responsable_reactivos"] = $supervisorId;
+      $plan["id_responsable_material"] = $supervisorId;
+      $plan["id_responsable_hieleras"] = $supervisorId;
       $plan["id_usuario_captura"] = $updateUserId;
       $plan["fecha_captura"] = date('Y-m-d H:i:s');
       $plan["ip_captura"] = $updateIp;

@@ -1036,18 +1036,6 @@
                 'selected'
               ]
             );
-            ContainerService
-              .get()
-              .$promise
-              .then(function success(response) {
-                var i;
-                var l;
-                vm.containers = response;
-                l = vm.containers.length;
-                for (i = 0; i < l; i += 1) {
-                  vm.containers[i].id_plan_recipiente = 0;
-                }
-            });
           });
         ReactiveService
           .get()

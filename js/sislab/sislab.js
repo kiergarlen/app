@@ -955,6 +955,18 @@
     vm.message = '';
     vm.isDataSubmitted = false;
     vm.selectDistrict = selectDistrict;
+
+    vm.isInstrumentListLoaded = false;
+    vm.isContainerListLoaded = false;
+    vm.isReactiveListLoaded = false;
+    vm.isMaterialListLoaded = false;
+    vm.isCoolerListLoaded = false;
+    vm.selectInstruments = selectInstruments;
+    vm.selectContainers = selectContainers;
+    vm.selectReactives = selectReactives;
+    vm.selectMaterials = selectMaterials;
+    vm.selectCoolers = selectCoolers;
+
     vm.approveItem = approveItem;
     vm.rejectItem = rejectItem;
     vm.submitForm = submitForm;
@@ -1012,6 +1024,19 @@
               ]
             );
           });
+        // ContainerService
+        //   .get()
+        //   .$promise
+        //   .then(function success(response) {
+        //     var i;
+        //     var l;
+        //     vm.containers = response;
+        //     l = vm.containers.length;
+        //     for (i = 0; i < l; i += 1) {
+        //       vm.containers[i].id_plan_recipiente = 0;
+        //       vm.containers[i].id_plan = vm.plan.id_plan;
+        //     }
+        //   });
         PreservationService
           .get()
           .$promise
@@ -1115,6 +1140,134 @@
       vm.cities = CityService.query({
         districtId: parseInt(vm.plan.id_municipio, 10)
       });
+    }
+
+    function selectInstruments() {
+      // if (vm.instruments.length > 0 && vm.plan.instrumentos) {
+      //   if (vm.plan.instrumentos.length > 0 && !vm.isInstrumentListLoaded) {
+      //     ArrayUtilsService.seItemsFromReference(
+      //       vm.instruments,
+      //       vm.plan.instrumentos,
+      //       'id_instrumento',
+      //       [
+      //         'id_plan_instrumento',
+      //         'selected'
+      //       ]
+      //     );
+      //     vm.isInstrumentListLoaded = true;
+      //   } else {
+      //     vm.plan.instrumentos = [];
+      //     vm.plan.instrumentos = ArrayUtilsService.selectItemsFromCollection(
+      //       vm.instruments,
+      //       'selected',
+      //       true
+      //     ).slice();
+      //   }
+      // }
+    }
+
+    function selectContainers() {
+      // if (vm.containers.length > 0 && vm.plan.recipientes) {
+      //   if (vm.plan.recipientes.length > 0 && !vm.isContainerListLoaded) {
+      //     ArrayUtilsService.seItemsFromReference(
+      //       vm.containers,
+      //       vm.plan.recipientes,
+      //       'id_recipiente',
+      //       [
+      //         'id_plan_recipiente',
+      //         'id_plan',
+      //         'cantidad',
+      //         'selected'
+      //       ]
+      //     );
+      //     vm.isContainerListLoaded = true;
+      //   } else {
+      //     vm.plan.recipientes = [];
+      //     vm.plan.recipientes = ArrayUtilsService.selectItemsFromCollection(
+      //       vm.containers,
+      //       'selected',
+      //       true
+      //     ).slice();
+      //   }
+      // }
+    }
+
+    function selectReactives() {
+      // if (vm.reactives.length > 0 && vm.plan.reactivos) {
+      //   if (vm.plan.reactivos.length > 0 && !vm.isReactiveListLoaded) {
+      //     ArrayUtilsService.seItemsFromReference(
+      //       vm.reactives,
+      //       vm.plan.reactivos,
+      //       'id_reactivo',
+      //       [
+      //         'id_plan_reactivo',
+      //         'id_plan',
+      //         'lote',
+      //         'folio',
+      //         'valor',
+      //         'selected'
+      //       ]
+      //     );
+      //     vm.isReactiveListLoaded = true;
+      //   } else {
+      //     vm.plan.reactivos = [];
+      //     vm.plan.reactivos = ArrayUtilsService.selectItemsFromCollection(
+      //       vm.reactives,
+      //       'selected',
+      //       true
+      //     ).slice();
+      //   }
+      // }
+    }
+
+    function selectMaterials() {
+      // if (vm.materials.length > 0 && vm.plan.materiales) {
+      //   if (vm.plan.materiales.length > 0 && !vm.isMaterialListLoaded) {
+      //     ArrayUtilsService.seItemsFromReference(
+      //       vm.materials,
+      //       vm.plan.materiales,
+      //       'id_material',
+      //       [
+      //         'id_plan_material',
+      //         'id_plan',
+      //         'selected'
+      //       ]
+      //     );
+      //     vm.isMaterialListLoaded = true;
+      //   } else {
+      //     vm.plan.materiales = [];
+      //     vm.plan.materiales = ArrayUtilsService.selectItemsFromCollection(
+      //       vm.materials,
+      //       'selected',
+      //       true
+      //     ).slice();
+      //   }
+      // }
+    }
+
+    function selectCoolers() {
+      // if (vm.coolers.length > 0 && vm.plan.hieleras) {
+      //   if (vm.plan.hieleras.length > 0 && !vm.isCoolerListLoaded) {
+      //     ArrayUtilsService.seItemsFromReference(
+      //       vm.coolers,
+      //       vm.plan.hieleras,
+      //       'id_hielera',
+      //       [
+      //         'id_plan_hielera',
+      //         'id_plan',
+      //         'selected'
+      //       ]
+      //     );
+      //     vm.isCoolerListLoaded = true;
+      //   } else {
+      //     vm.plan.hieleras = [];
+      //     vm.plan.hieleras = ArrayUtilsService.selectItemsFromCollection(
+      //       vm.coolers,
+      //       'selected',
+      //       true
+      //     ).slice();
+      //   }
+      // }
     }
 
     function approveItem() {

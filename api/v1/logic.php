@@ -808,26 +808,26 @@ function processPlanContainersUpdate($planUpdateData) {
     }
     return $planId;
   }
-  else
-  {
-    for ($i = 0; $i < $l; $i++) {
-      $storedContainers[$i]["activo"] = 0;
-      updatePlanContainer($storedContainers[$i]);
-    }
-    for ($j = 0; $j < $m; $j++) {
-      $container = (array) $containers[$j];
-      if ($container["id_plan_recipiente"] < 1)
-      {
-        unset($container["id_plan_recipiente"]);
-        insertPlanContainer($container);
-      }
-      else
-      {
-        $container["activo"] = 1;
-        updatePlanContainer($container);
-      }
-    }
-  }
+  // else
+  // {
+  //   for ($i = 0; $i < $l; $i++) {
+  //     $storedContainers[$i]["activo"] = 0;
+  //     updatePlanContainer($storedContainers[$i]);
+  //   }
+  //   for ($j = 0; $j < $m; $j++) {
+  //     $container = (array) $containers[$j];
+  //     // if ($container["id_plan_recipiente"] < 1)
+  //     // {
+  //     //   unset($container["id_plan_recipiente"]);
+  //     //   insertPlanContainer($container);
+  //     // }
+  //     if ($container["id_plan_recipiente"] > 0)
+  //     {
+  //       $container["activo"] = 1;
+  //       updatePlanContainer($container);
+  //     }
+  //   }
+  // }
   return $planId;
 }
 

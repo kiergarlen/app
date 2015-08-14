@@ -45,6 +45,7 @@
   name="orderForm"
   novalidate
   >
+  <!--
   <div class="row">
     <div class="col-xs-12" data-bs-collapse>
       <h4 data-bs-collapse-toggle>
@@ -86,34 +87,10 @@
           Contacto:
           <strong>{{::order.order.cliente.contacto}}</strong>
         </div>
-        <!--
-        <div class="col-xs-12">
-          <h6>Solicitud</h6>
-          <ul class="list-inline">
-            <li>
-              Folio:
-              <strong>{{::order.order.solicitud.folio}}</strong>
-            </li>
-            <li data-ng-show="order.order.solicitud.fecha_captura.length > 0">
-              Fecha captura:
-              <strong>{{::order.order.solicitud.fecha_captura}}</strong>
-            </li>
-            <li data-ng-show="order.order.solicitud.fecha_valida.length > 0">
-              Fecha valida:
-              <strong>{{order.order.solicitud.fecha_valida}}</strong>
-            </li>
-          </ul>
-          <br>
-          <span class="label label-success"
-            data-ng-show="order.order.solicitud.status == 2">
-            <i class="glyphicon glyphicon-ok"></i>
-            {{order.order.solicitud.status}}
-          </span>
-        </div>
-        -->
       </div>
     </div>
   </div>
+  -->
   <div class="row">
     <div class="col-xs-12">
       <h4>Cuerpo receptor</h4>
@@ -143,35 +120,6 @@
         >
     </div>
   </div>
-  <!--
-  <div class="row">
-    <div class="col-xs-12" data-bs-collapse>
-      <h4 data-bs-collapse-toggle>
-        <a class="btn btn-default">
-          <i class="glyphicon glyphicon-chevron-down"
-            aria-hidden="true"></i>
-        </a>
-        Parámetros seleccionados
-      </h4>
-      <div class="well wel-sm item-z1" data-bs-collapse-target>
-        <div class="row">
-          <div class="col-xs-12 col-sm-6"
-            data-ng-repeat="parameter in order.order.parametros">
-            <div class="row">
-              <div class="col-xs-6">
-                {{parameter.parametro}}
-                <br>
-                <small class="hidden-xs hidden-sm text-muted">
-                  {{parameter.metodo}}
-                </small>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  -->
   <div class="row">
     <div class="col-xs-12">
       <h4>Solicitar Plan de muestreo</h4>
@@ -239,7 +187,7 @@
     <div class="col-xs-6 col-sm-2">
       <label for="samplingTime{{::row.id_plan}}">
         <i class="glyphicon glyphicon-time"></i>
-        Hora
+        Hora inicio
       </label>
       <input type="text"
         class="form-control"

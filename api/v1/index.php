@@ -230,14 +230,14 @@ $app->post("/plans", function() use ($app) {
     else
     {
       $planUpdateData = processPlanUpdate($request);
-      // $planId = updatePlan($planUpdateData["plan"]);
-      // processPlanInstrumentsUpdate($planUpdateData);
-      // processPlanPreservationsUpdate($planUpdateData);
-      // processPlanContainersUpdate($planUpdateData);
+      $planId = updatePlan($planUpdateData["plan"]);
+      processPlanInstrumentsUpdate($planUpdateData);
+      processPlanPreservationsUpdate($planUpdateData);
+      processPlanContainersUpdate($planUpdateData);
       $result = json_encode(processPlanContainersUpdate($planUpdateData));
-      // processPlanReactivesUpdate($planUpdateData);
-      // processPlanMaterialsUpdate($planUpdateData);
-      // processPlanCoolersUpdate($planUpdateData);
+      processPlanReactivesUpdate($planUpdateData);
+      processPlanMaterialsUpdate($planUpdateData);
+      processPlanCoolersUpdate($planUpdateData);
     }
     //$result = '{"id_plan":' . $planId . '}';
     $app->response()->status(200);

@@ -569,7 +569,7 @@
 
     function isFormValid() {
       vm.message = '';
-      vm.study.fecha = DateUtilsService.dateToIsoString(vm.study.fecha);
+      vm.study.fecha = DateUtilsService.dateToIsoString(new Date(vm.study.fecha));
       if (!DateUtilsService.isValidDate(new Date(vm.study.fecha))) {
         vm.message += ' Ingrese una fecha válida ';
         return false;

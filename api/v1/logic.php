@@ -235,6 +235,7 @@ function isoDateToMsSql1($dateString) {
 
 function processStudyInsert($request) {
   $token = decodeUserToken($request);
+
   $insertData = (array) json_decode($request->getBody());
   $lastStudyNumber = 0;
   $currentYear = date("Y");
@@ -265,6 +266,7 @@ function processStudyInsert($request) {
   $insertData["fecha"] = isoDateToMsSql($insertData["fecha"]);
   $insertData["fecha_captura"] = date('Y-m-d H:i:s');
 
+  return $insertData;
   $studyInsertData = array(
     "study" => $insertData,
     "orders" => $orders

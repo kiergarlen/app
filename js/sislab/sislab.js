@@ -503,9 +503,9 @@
         'id_usuario_captura':0, 'id_usuario_valida':0,
         'id_usuario_actualiza':0, 'cantidad_muestras':0,
         'costo_total':0, 'cuerpo_receptor':'',
-        'tipo_cuerpo':'', 'fecha':'',
-        'fecha_captura':'', 'fecha_valida':'',
-        'fecha_actualiza':'', 'fecha_rechaza':'',
+        'tipo_cuerpo':'', 'fecha':'NULL',
+        'fecha_captura':'NULL', 'fecha_valida':'NULL',
+        'fecha_actualiza':'NULL', 'fecha_rechaza':'NULL',
         'ip_captura':'', 'ip_valida':'',
         'ip_actualiza':'', 'host_captura':'',
         'host_valida':'', 'host_actualiza':'',
@@ -524,12 +524,10 @@
     }
 
     function approveItem() {
-      vm.study.id_etapa = 2;
       ValidationService.approveItem(vm.study, vm.user);
     }
 
     function rejectItem() {
-      vm.study.id_etapa = 1;
       ValidationService.rejectItem(vm.study, vm.user);
     }
 
@@ -571,6 +569,7 @@
 
     function isFormValid() {
       vm.message = '';
+      vm.study.fecha = DateUtilsService.dateToIsoString(vm.study.fecha);
       if (!DateUtilsService.isValidDate(new Date(vm.study.fecha))) {
         vm.message += ' Ingrese una fecha válida ';
         return false;
@@ -728,10 +727,10 @@
           'id_responsable_reactivos': 0, 'id_responsable_material': 0,
           'id_responsable_hieleras': 0, 'id_status': 1,
           'id_usuario_captura': 0, 'id_usuario_valida': 0,
-          'id_usuario_actualiza': 0, 'fecha': '',
-          'fecha_probable': '', 'fecha_calibracion': '',
-          'fecha_captura': '', 'fecha_valida': '',
-          'fecha_actualiza': '', 'fecha_rechaza': '',
+          'id_usuario_actualiza': 0, 'fecha': '2015-01-01',
+          'fecha_probable': '2015-01-01', 'fecha_calibracion': '2015-01-01',
+          'fecha_captura': '2015-01-01', 'fecha_valida': '2015-01-01',
+          'fecha_actualiza': '2015-01-01', 'fecha_rechaza': '2015-01-01',
           'ip_captura': '', 'ip_valida': '',
           'ip_actualiza': '', 'host_captura': '',
           'host_valida': '', 'host_actualiza': '',
@@ -762,10 +761,10 @@
           'id_responsable_reactivos': 0, 'id_responsable_material': 0,
           'id_responsable_hieleras': 0, 'id_status': 1,
           'id_usuario_captura': 0, 'id_usuario_valida': 0,
-          'id_usuario_actualiza': 0, 'fecha': '',
-          'fecha_probable': '', 'fecha_calibracion': '',
-          'fecha_captura': '', 'fecha_valida': '',
-          'fecha_actualiza': '', 'fecha_rechaza': '',
+          'id_usuario_actualiza': 0, 'fecha': '2015-01-01',
+          'fecha_probable': '2015-01-01', 'fecha_calibracion': '2015-01-01',
+          'fecha_captura': '2015-01-01', 'fecha_valida': '2015-01-01',
+          'fecha_actualiza': '2015-01-01', 'fecha_rechaza': '2015-01-01',
           'ip_captura': '', 'ip_valida': '',
           'ip_actualiza': '', 'host_captura': '',
           'host_valida': '', 'host_actualiza': '',
@@ -957,11 +956,13 @@
     vm.selectDistrict = selectDistrict;
 
     vm.isInstrumentListLoaded = false;
+    vm.isPreservationListLoaded = false;
     vm.isContainerListLoaded = false;
     vm.isReactiveListLoaded = false;
     vm.isMaterialListLoaded = false;
     vm.isCoolerListLoaded = false;
     vm.selectInstruments = selectInstruments;
+    vm.selectPreservations = selectPreservations;
     vm.selectContainers = selectContainers;
     vm.selectReactives = selectReactives;
     vm.selectMaterials = selectMaterials;
@@ -1051,17 +1052,17 @@
               vm.preservations[i].id_plan = vm.plan.id_plan;
               vm.preservations[i].selected = false;
             }
-            ArrayUtilsService.seItemsFromReference(
-              vm.preservations,
-              vm.plan.preservaciones,
-              'id_preservacion',
-              [
-                'id_plan_preservacion',
-                'id_plan',
-                'id_preservacion',
-                'selected'
-              ]
-            );
+            // ArrayUtilsService.seItemsFromReference(
+            //   vm.preservations,
+            //   vm.plan.preservaciones,
+            //   'id_preservacion',
+            //   [
+            //     'id_plan_preservacion',
+            //     'id_plan',
+            //     'id_preservacion',
+            //     'selected'
+            //   ]
+            // );
           });
         ReactiveService
           .get()
@@ -1144,53 +1145,78 @@
     }
 
     function selectInstruments() {
-      // if (vm.instruments.length > 0 && vm.plan.instrumentos) {
-      //   if (vm.plan.instrumentos.length > 0 && !vm.isInstrumentListLoaded) {
-      //     ArrayUtilsService.seItemsFromReference(
-      //       vm.instruments,
-      //       vm.plan.instrumentos,
-      //       'id_instrumento',
-      //       [
-      //         'id_plan_instrumento',
-      //         'selected'
-      //       ]
-      //     );
-      //     vm.isInstrumentListLoaded = true;
-      //   } else {
-      //     vm.plan.instrumentos = [];
-      //     vm.plan.instrumentos = ArrayUtilsService.selectItemsFromCollection(
-      //       vm.instruments,
-      //       'selected',
-      //       true
-      //     ).slice();
-      //   }
-      // }
+      if (vm.instruments.length > 0 && vm.plan.instrumentos) {
+        if (vm.plan.instrumentos.length > 0 && !vm.isInstrumentListLoaded) {
+          ArrayUtilsService.seItemsFromReference(
+            vm.instruments,
+            vm.plan.instrumentos,
+            'id_instrumento',
+            [
+              'id_plan_instrumento',
+              'selected'
+            ]
+          );
+          vm.isInstrumentListLoaded = true;
+        } else {
+          vm.plan.instrumentos = [];
+          vm.plan.instrumentos = ArrayUtilsService.selectItemsFromCollection(
+            vm.instruments,
+            'selected',
+            true
+          ).slice();
+        }
+      }
+    }
+
+    function selectPreservations() {
+      if (vm.preservations.length > 0 && vm.plan.preservaciones) {
+        if (vm.plan.preservaciones.length > 0 && !vm.isPreservationListLoaded) {
+          ArrayUtilsService.seItemsFromReference(
+            vm.preservations,
+            vm.plan.preservaciones,
+            'id_preservacion',
+            [
+              'id_plan_preservacion',
+              'id_plan',
+              'selected'
+            ]
+          );
+          vm.isPreservationListLoaded = true;
+        } else {
+          vm.plan.preservaciones = [];
+          vm.plan.preservaciones = ArrayUtilsService.selectItemsFromCollection(
+            vm.preservations,
+            'selected',
+            true
+          ).slice();
+        }
+      }
     }
 
     function selectContainers() {
-      // if (vm.containers.length > 0 && vm.plan.recipientes) {
-      //   if (vm.plan.recipientes.length > 0 && !vm.isContainerListLoaded) {
-      //     ArrayUtilsService.seItemsFromReference(
-      //       vm.containers,
-      //       vm.plan.recipientes,
-      //       'id_recipiente',
-      //       [
-      //         'id_plan_recipiente',
-      //         'id_plan',
-      //         'cantidad',
-      //         'selected'
-      //       ]
-      //     );
-      //     vm.isContainerListLoaded = true;
-      //   } else {
-      //     vm.plan.recipientes = [];
-      //     vm.plan.recipientes = ArrayUtilsService.selectItemsFromCollection(
-      //       vm.containers,
-      //       'selected',
-      //       true
-      //     ).slice();
-      //   }
-      // }
+      if (vm.containers.length > 0 && vm.plan.recipientes) {
+        if (vm.plan.recipientes.length > 0 && !vm.isContainerListLoaded) {
+          ArrayUtilsService.seItemsFromReference(
+            vm.containers,
+            vm.plan.recipientes,
+            'id_recipiente',
+            [
+              'id_plan_recipiente',
+              'id_plan',
+              'cantidad',
+              'selected'
+            ]
+          );
+          vm.isContainerListLoaded = true;
+        } else {
+          vm.plan.recipientes = [];
+          vm.plan.recipientes = ArrayUtilsService.selectItemsFromCollection(
+            vm.containers,
+            'selected',
+            true
+          ).slice();
+        }
+      }
     }
 
     function selectReactives() {
@@ -2987,7 +3013,7 @@
     var DateUtils = {};
 
     DateUtils.padNumber = padNumber;
-    DateUtils.dateToISOString = dateToISOString;
+    DateUtils.dateToIsoString = dateToIsoString;
     DateUtils.isValidDate = isValidDate;
 
     /**
@@ -3016,12 +3042,12 @@
     }
 
     /**
-     * @function dateToISOString
+     * @function dateToIsoString
      * @desc Convierte una fecha local a una cadena con formato ISO 8601
      * @param {Date} date - Fecha a convertir
      * @return {String} - Cadena de fecha con formato ISO 8601
      */
-    function dateToISOString(date) {
+    function dateToIsoString(date) {
       return [
         date.getFullYear(),
         '-',
@@ -3034,12 +3060,12 @@
         padNumber(date.getMinutes(), 2),
         ':',
         padNumber(date.getSeconds(), 2)
+        // ,'.',
+        // (date.getMilliseconds() / 1000).toFixed(3).slice(2, 5),
+        // (date.getTimezoneOffset() / 60 > -1) ? '+' : '-',
+        // padNumber(date.getTimezoneOffset() / 60, 2),
+        // ':00'
       ].join('');
-      // '.',
-      // (date.getMilliseconds() / 1000).toFixed(3).slice(2, 5),
-      // (date.getTimezoneOffset() / 60 > -1) ? '+' : '-',
-      // padNumber(date.getTimezoneOffset() / 60, 2),
-      // ':00'
     }
 
     /**
@@ -3296,13 +3322,13 @@
       item.id_status = 2;
       item.id_usuario_valida = user.id;
       item.motivo_rechaza = '';
-      item.fecha_valida = DateUtilsService.dateToISOString(new Date()).slice(0, 10);
+      item.fecha_valida = DateUtilsService.dateToIsoString(new Date()).slice(0, 10);
     }
 
     function rejectItem(item, user) {
       item.id_status = 3;
       item.id_usuario_valida = user.id;
-      item.fecha_rechaza = DateUtilsService.dateToISOString(new Date()).slice(0, 10);
+      item.fecha_rechaza = DateUtilsService.dateToIsoString(new Date()).slice(0, 10);
     }
 
     return Validation;

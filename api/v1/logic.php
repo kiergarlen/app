@@ -976,7 +976,7 @@ function processSheetPreservationsUpdate($sheetUpdateData) {
       unset($preservation["preservacion"]);
       unset($preservation["descripcion"]);
       unset($preservation["selected"]);
-      if ($preservation["id_hoja_preservacion"] < 1                                           )
+      if ($preservation["id_hoja_preservacion"] < 1)
       {
         unset($preservation["id_hoja_preservacion"]);
         insertSheetPreservation($preservation);

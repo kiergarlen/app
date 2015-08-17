@@ -1,6 +1,25 @@
 # Libraries #
 #############
-#/api/libs/*
+/api/libs/*
+/css/angular-motion/*
+/css/bootstrap-additions.min.css
+/css/bootstrap.min.css
+/css/bootstrap.material-red.css
+/fonts/*
+/js/angular/*
+/js/angular-animate/*
+/js/angular-jwt/*
+/js/angular-locale/*
+/js/angular-resource/*
+/js/angular-route/*
+/js/angular-strap/*
+/js/bootstrap/*
+/js/crypto/*
+/js/jquery/*
+/css/angular/*
+/js/angular/*
+/js/angular/*
+/img/*
 
 # Compiled source #
 ###################

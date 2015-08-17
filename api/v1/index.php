@@ -250,10 +250,23 @@ $app->post("/plans", function() use ($app) {
   }
 });
 
+$app->get("/plans/containers/:planId", function($planId) use ($app) {
+  try {
+    //$userId = decodeUserToken($app->request())->uid;
+    $result = json_encode(getContainersByPlan($planId));
+    $app->response()->status(200);
+    $app->response()->header('Content-Type', 'application/json');
+    //$result = ")]}',\n" . $result;
+    print_r($result);
+  } catch (Exception $e) {
+    $app->response()->status(400);
+    $app->response()->header('X-Status-Reason', $e->getMessage());
+  }
+});
+
 $app->get("/sheets(/)(:sheetId)", function($sheetId = -1) use ($app) {
   try {
     $userId = decodeUserToken($app->request())->uid;
-    $result = json_encode($app->request());
     if ($sheetId > -1)
     {
       $result = json_encode(getSheet($sheetId));

@@ -727,10 +727,10 @@
           'id_responsable_reactivos': 0, 'id_responsable_material': 0,
           'id_responsable_hieleras': 0, 'id_status': 1,
           'id_usuario_captura': 0, 'id_usuario_valida': 0,
-          'id_usuario_actualiza': 0, 'fecha': '2015-01-01',
-          'fecha_probable': '2015-01-01', 'fecha_calibracion': '2015-01-01',
-          'fecha_captura': '2015-01-01', 'fecha_valida': '2015-01-01',
-          'fecha_actualiza': '2015-01-01', 'fecha_rechaza': '2015-01-01',
+          'id_usuario_actualiza': 0, 'fecha': null,
+          'fecha_probable': null, 'fecha_calibracion': null,
+          'fecha_captura': null, 'fecha_valida': null,
+          'fecha_actualiza': null, 'fecha_rechaza': null,
           'ip_captura': '', 'ip_valida': '',
           'ip_actualiza': '', 'host_captura': '',
           'host_valida': '', 'host_actualiza': '',
@@ -761,10 +761,10 @@
           'id_responsable_reactivos': 0, 'id_responsable_material': 0,
           'id_responsable_hieleras': 0, 'id_status': 1,
           'id_usuario_captura': 0, 'id_usuario_valida': 0,
-          'id_usuario_actualiza': 0, 'fecha': '2015-01-01',
-          'fecha_probable': '2015-01-01', 'fecha_calibracion': '2015-01-01',
-          'fecha_captura': '2015-01-01', 'fecha_valida': '2015-01-01',
-          'fecha_actualiza': '2015-01-01', 'fecha_rechaza': '2015-01-01',
+          'id_usuario_actualiza': 0, 'fecha': null,
+          'fecha_probable': null, 'fecha_calibracion': null,
+          'fecha_captura': null, 'fecha_valida': null,
+          'fecha_actualiza': null, 'fecha_rechaza': null,
           'ip_captura': '', 'ip_valida': '',
           'ip_actualiza': '', 'host_captura': '',
           'host_valida': '', 'host_actualiza': '',
@@ -921,27 +921,28 @@
    * @param {Object} RestUtilsService - Proveedor para manejo de servicios REST
    * @param {Object} ArrayUtilsService - Proveedor para manejo de arreglos
    * @param {Object} DateUtilsService - Proveedor para manejo de fechas
-   * @param {Object} PlanObjectivesService - Proveedor de datos, Objetivos Plan de muestreo
+   * @param {Object} PlanObjectiveService - Proveedor de datos, Objetivos Plan
    * @param {Object} DistrictService - Proveedor de datos, Municipios
    * @param {Object} CityService - Proveedor de datos, Localidades
    * @param {Object} SamplingEmployeeService - Proveedor de datos, Empleados muestreo
    * @param {Object} PreservationService - Proveedor de datos, Preservaciones
+   * @param {Object} PlanContainersService - Proveedor de datos, Recipientes de Plan
    * @param {Object} ReactiveService - Proveedor de datos, Reactivos
    * @param {Object} MaterialService - Proveedor de datos, Material
    * @param {Object} CoolerService - Proveedor de datos, Hieleras
-   * @param {Object} SamplingInstrumentService - Proveedor de datos, Equipos de muestreo
+   * @param {Object} SamplingInstrumentService - Proveedor de datos, Equipos muestreo
    * @param {Object} PlanService - Proveedor de datos, Plan de muestreo
    */
   function PlanController($scope, $routeParams, TokenService,
     ValidationService, RestUtilsService, ArrayUtilsService,
-    DateUtilsService, PlanObjectivesService, DistrictService,
+    DateUtilsService, PlanObjectiveService, DistrictService,
     CityService, SamplingEmployeeService, PreservationService,
-    ReactiveService, MaterialService, CoolerService,
-    SamplingInstrumentService, PlanService) {
+    PlanContainersService, ReactiveService, MaterialService,
+    CoolerService, SamplingInstrumentService, PlanService) {
     var vm = this;
     vm.plan = {};
     vm.user = TokenService.getUserFromToken();
-    vm.objectives = PlanObjectivesService.get();
+    vm.objectives = PlanObjectiveService.get();
     vm.cities = [];
     vm.districts = [];
     vm.samplingEmployees = SamplingEmployeeService.get();
@@ -1028,7 +1029,7 @@
             //   ]
             // );
           });
-        // ContainerService
+        // PlanContainersService
         //   .get()
         //   .$promise
         //   .then(function success(response) {
@@ -1518,10 +1519,10 @@
       [
         '$scope', '$routeParams', 'TokenService',
         'ValidationService', 'RestUtilsService', 'ArrayUtilsService',
-        'DateUtilsService', 'PlanObjectivesService', 'DistrictService',
+        'DateUtilsService', 'PlanObjectiveService', 'DistrictService',
         'CityService', 'SamplingEmployeeService', 'PreservationService',
-        'ReactiveService', 'MaterialService', 'CoolerService',
-        'SamplingInstrumentService', 'PlanService',
+        'PlanContainersService', 'ReactiveService', 'MaterialService',
+        'CoolerService', 'SamplingInstrumentService', 'PlanService',
         PlanController
       ]
     );
@@ -3578,6 +3579,37 @@
       ]
     );
 
+  //PlanContainersService.js
+  /**
+   * @name PlanContainersService
+   * @constructor
+   * @desc Proveedor de datos, Recipientes de Plan
+   * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
+   * @param {Object} TokenService - Proveedor de métodos para token
+   * @return {Object} $resource - Acceso a recursos HTTP
+   */
+  function PlanContainersService($resource, TokenService) {
+    return $resource(API_BASE_URL + 'plans/containers/:planId', {}, {
+      query: {
+        method: 'GET',
+        params: {planId: 'id_plan'},
+        isArray: true,
+        headers: {
+          'Auth-Token': TokenService.getToken()
+        }
+      }
+    });
+  }
+  angular
+    .module('sislabApp')
+    .factory('PlanContainersService',
+      [
+        '$resource', 'TokenService',
+        PlanContainersService
+      ]
+    );
+
+
   //SheetService.js
   /**
    * @name SheetService
@@ -4304,16 +4336,16 @@
       ]
     );
 
-  //PlanObjectivesService.js
+  //PlanObjectiveService.js
   /**
-   * @name PlanObjectivesService
+   * @name PlanObjectiveService
    * @constructor
-   * @desc Proveedor de datos, Objetivos plan
+   * @desc Proveedor de datos, Objetivos de Plan
    * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
    * @param {Object} TokenService - Proveedor de métodos para token
    * @return {Object} $resource - Acceso a recursos HTTP
    */
-  function PlanObjectivesService($resource, TokenService) {
+  function PlanObjectiveService($resource, TokenService) {
     return $resource(API_BASE_URL + 'plan/objectives', {}, {
       get: {
         method: 'GET',
@@ -4327,10 +4359,10 @@
   }
   angular
     .module('sislabApp')
-    .factory('PlanObjectivesService',
+    .factory('PlanObjectiveService',
       [
         '$resource', 'TokenService',
-        PlanObjectivesService
+        PlanObjectiveService
       ]
     );
 

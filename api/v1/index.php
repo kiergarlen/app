@@ -91,15 +91,14 @@ $app->get("/studies(/)(:studyId)", function($studyId = -1) use ($app) {
 
 $app->post("/studies", function() use ($app) {
   try {
-    // $userId = decodeUserToken($app->request())->uid;
+    $userId = decodeUserToken($app->request())->uid;
     $request = $app->request();
     $studyId = extractDataFromRequest($request)->id_estudio;
     if ($studyId < 1)
     {
       $studyInsertData = processStudyInsert($request);
-      // $studyId = insertStudy($studyInsertData["study"]);
-      // processStudyOrderInsert($studyInsertData, $studyId);
-      $result = json_encode($studyInsertData);
+      $studyId = insertStudy($studyInsertData["study"]);
+      processStudyOrderInsert($studyInsertData, $studyId);
     }
     else
     {
@@ -107,8 +106,7 @@ $app->post("/studies", function() use ($app) {
       $studyId = updateStudy($studyUpdateData["study"]);
       $orderData = processStudyOrderUpdate($studyUpdateData);
     }
-    // $result = '{"id_estudio":' . $studyId . '}';
-
+    $result = '{"id_estudio":' . $studyId . '}';
     $app->response()->status(200);
     $app->response()->header('Content-Type', 'application/json');
     //$result = ")]}',\n" . $result;
@@ -198,7 +196,7 @@ $app->get("/order/sources", function() use ($app) {
 
 $app->get("/plans(/)(:planId)", function($planId = -1) use ($app) {
   try {
-    //$userId = decodeUserToken($app->request())->uid;
+    $userId = decodeUserToken($app->request())->uid;
     if ($planId > -1)
     {
       $result = json_encode(getPlan($planId));

@@ -574,8 +574,6 @@
       <strong>
       {{plan.plan.recipientes.length * plan.plan.puntos.length}}
       </strong>
-      <br>
-      {{plan.plan.recipientes}}
     </div>
   </div>
   <div class="row">
@@ -678,6 +676,17 @@
           {{::materialsSupervisor.apellido_materno}}
         </option>
       </select>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12">
+      <label>
+        <input type="checkbox"
+          value="{{plan.isAllMaterialsListSelected}}"
+          data-ng-click="plan.selectAllMaterials()"
+          />
+          Seleccionar todos los materiales
+      </label>
     </div>
   </div>
   <div class="row">

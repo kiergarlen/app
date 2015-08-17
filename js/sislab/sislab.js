@@ -961,12 +961,14 @@
     vm.isReactiveListLoaded = false;
     vm.isMaterialListLoaded = false;
     vm.isCoolerListLoaded = false;
+    vm.isAllMaterialsListSelected = false;
     vm.selectInstruments = selectInstruments;
     vm.selectPreservations = selectPreservations;
     vm.selectContainers = selectContainers;
     vm.selectReactives = selectReactives;
     vm.selectMaterials = selectMaterials;
     vm.selectCoolers = selectCoolers;
+    vm.selectAllMaterials = selectAllMaterials;
 
     vm.approveItem = approveItem;
     vm.rejectItem = rejectItem;
@@ -1293,6 +1295,18 @@
             'selected',
             true
           ).slice();
+        }
+      }
+    }
+
+    function selectAllMaterials() {
+      var i = 0;
+      var l = 0;
+      if (vm.materials && vm.materials.length > 0) {
+        l = vm.materials.length;
+        vm.isAllMaterialsListSelected = !vm.isAllMaterialsListSelected;
+        for (i = 0; i < l; i += 1) {
+          vm.materials[i].selected = vm.isAllMaterialsListSelected;
         }
       }
     }

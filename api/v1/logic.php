@@ -69,49 +69,6 @@ function decodeUserToken($request) {
   }
 }
 
-// function processResultToJson($items, $isArrayOutputExpected) {
-//  $output = "";
-//  if ($isArrayOutputExpected)
-//  {
-//    $output .= "[";
-//  }
-//  $i = 0;
-//  $l = count($items);
-//  foreach ($items as $item) {
-//    $i++;
-//    $j = 0;
-//    $item = (array)$item;
-//    $m = count($item);
-//    $output .= "{";
-//    foreach ($item as $key => $value) {
-//      $j++;
-//      $output .= '"' . $key . '":';
-//      $v = $value;
-//      if (!is_numeric($v) && strtotime($v))
-//      {
-//        $dateArray = explode(" ", $v);
-//        //$v = $dateArray[0] . 'T'. substr($dateArray[1], 0, 5) . '-06:00';
-//        $v = $dateArray[0] . 'T'. substr($dateArray[1], 0, 5);
-//      }
-//      $output .= '"' . $v .'"';
-//      if ($j < $m)
-//      {
-//        $output .= ",";
-//      }
-//    }
-//    $output .= "}";
-//    if ($isArrayOutputExpected && $i < $l)
-//    {
-//      $output .= ",";
-//    }
-//  }
-//  if ($isArrayOutputExpected)
-//  {
-//    $output .= "]";
-//  }
-//  return $output;
-// }
-
 function processMenuToJson($items) {
   $output = '';
   $i = 0;
@@ -129,8 +86,8 @@ function processMenuToJson($items) {
   {
     if ($currentItem["id_menu"] == $items[$i]["id_menu"])
     {
-      $output .= ',';
       // add submenu
+      $output .= ',';
       $currentItem = $items[$i];
     }
     else
@@ -171,71 +128,11 @@ function isoDateToMsSql($dateString) {
     $date = DateTime::createFromFormat('Y-m-d', $dateString);
     return $date->format($format);
   }
-  return "2015-01-01 00:00";
-}
-
-function isoDateToMsSql1($dateString) {
-  $format = "c";
-  $outputFormat = "Y-m-d H:i:s P";
-  $datePart = "2015-01-01";
-  $hoursPart = "00:00:00";
-  $secondsPart = ".000";
-  $offsetPart = "";
-
-  if (DateTime::createFromFormat($outputFormat, $dateString)) {
-    return $dateString;
-  }
-
-  if (DateTime::createFromFormat($format, $dateString)) {
-    $date = DateTime::createFromFormat($format, $dateString);
-    return $date->format($outputFormat);
-  }
-
-  if (DateTime::createFromFormat("Y-m-d", $dateString))
-  {
-    $date = DateTime::createFromFormat("Y-m-d", $dateString);
-    return $date->format($format) . " 00:00";
-  }
-
-  if (count(explode("T", $dateString)) > 1) {
-
-    $dateStringArray = explode("T", $dateString);
-    $datePart = $dateStringArray[0];
-    $dateStringTime = $dateStringArray[1];
-    if (count(explode("+", $dateStringTime)) > 1) {
-      $dateStringTimeArray = explode("+", $dateStringTime);
-      $timeString = $dateStringTimeArray[0];
-      $hoursPart = substr($timeString, 0, 8);
-      $secondsPart = substr($timeString, 8, strlen($timeString));
-      //$offsetPart = "+" . $dateStringTimeArray[1];
-    }
-
-    if (count(explode("-", $dateStringTime)) > 1) {
-      $dateStringTimeArray = explode("-", $dateStringTime);
-      $timeString = $dateStringTimeArray[0];
-      $hoursPart = substr($timeString, 0, 8);
-      $secondsPart = substr($timeString, 8, strlen($timeString));
-      //$offsetPart = "-" . $dateStringTimeArray[1];
-    }
-
-    $dateStringDate = $datePart . " ";
-    $dateStringDate .= $hoursPart . "";
-    //$dateStringDate .= " " . $offsetPart;
-
-    if (DateTime::createFromFormat('Y-m-d H:i:s', $dateStringDate)) {
-      $dateStringDate = $datePart . " ";
-      $dateStringDate .= $hoursPart . "";
-      $dateStringDate .= $secondsPart . "";
-      //$dateStringDate .= " " . $offsetPart;
-      return $dateStringDate;
-    }
-  }
-  return "2015-01-01 00:00:00";
+  return NULL;
 }
 
 function processStudyInsert($request) {
   $token = decodeUserToken($request);
-
   $insertData = (array) json_decode($request->getBody());
   $lastStudyNumber = 0;
   $currentYear = date("Y");
@@ -245,6 +142,10 @@ function processStudyInsert($request) {
   unset($insertData["id_estudio"]);
   unset($insertData["cliente"]);
   unset($insertData["ordenes"]);
+  unset($insertData["id_usuario_actualiza"]);
+  unset($insertData["fecha_actualiza"]);
+  unset($insertData["host_actualiza"]);
+  unset($insertData["ip_actualiza"]);
 
   $lastStudy = (array) getLastStudyByYear($currentYear);
   if (is_numeric($lastStudy["oficio"]))
@@ -256,17 +157,34 @@ function processStudyInsert($request) {
   $folio = "CEA-" . str_pad($lastStudyNumber, 3, "0", STR_PAD_LEFT);
   $folio .= "-" . $currentYear;
 
-  $insertData["id_usuario_captura"] = $token->uid;
-  $insertData["ip_captura"] = $request->getIp();
-  $insertData["host_captura"] = $request->getUrl();
   $insertData["id_status"] = 1;
   $insertData["id_etapa"] = 1;
   $insertData["oficio"] = $lastStudyNumber;
   $insertData["folio"] = $folio;
   $insertData["fecha"] = isoDateToMsSql($insertData["fecha"]);
+  $insertData["id_usuario_captura"] = $token->uid;
+  $insertData["ip_captura"] = $request->getIp();
+  $insertData["host_captura"] = $request->getUrl();
   $insertData["fecha_captura"] = date('Y-m-d H:i:s');
+  $insertData["fecha_entrega"] = NULL;
+  $insertData["fecha_rechaza"] = NULL;
 
-  return $insertData;
+  if ($insertData["id_status"] == 3) {
+    $insertData["fecha_rechaza"] = $insertData["fecha"];
+    $insertData["id_usuario_rechaza"] = $insertData["id_usuario_captura"];
+    $insertData["ip_rechaza"] = $insertData["ip_captura"];
+    $insertData["host_rechaza"] = $insertData["host_captura"];
+  }
+
+  $insertData["fecha_valida"] = NULL;
+
+  if ($insertData["id_status"] == 2) {
+    $insertData["fecha_valida"] = $insertData["fecha"];
+    $insertData["id_usuario_valida"] = $insertData["id_usuario_captura"];
+    $insertData["ip_valida"] = $insertData["ip_captura"];
+    $insertData["host_valida"] = $insertData["host_captura"];
+  }
+
   $studyInsertData = array(
     "study" => $insertData,
     "orders" => $orders
@@ -282,18 +200,19 @@ function processStudyOrderInsert($studyInsertData, $studyId) {
   $insertIp = $studyInsertData["study"]["ip_captura"];
   $insertUrl = $studyInsertData["study"]["host_captura"];
 
-  $blankPlan = getBlankPlan();
-  unset($blankPlan["id_plan"]);
-  $blankPlan["id_estudio"] = $studyId;
-  $blankPlan["id_usuario_captura"] = $insertUserId;
-  $blankPlan["fecha_captura"] = $insertDate;
-  $blankPlan["ip_captura"] = $insertIp;
-  $blankPlan["host_captura"] = $insertUrl;
+  // $blankPlan = getBlankPlan();
+  // unset($blankPlan["id_plan"]);
+  // $blankPlan["id_estudio"] = $studyId;
+  // $blankPlan["id_usuario_captura"] = $insertUserId;
+  // $blankPlan["fecha_captura"] = $insertDate;
+  // $blankPlan["ip_captura"] = $insertIp;
+  // $blankPlan["host_captura"] = $insertUrl;
 
   $i = 0;
   $l = count($orders);
 
-  for ($i = 0; $i < $l; $i++) {
+  for ($i = 0; $i < $l; $i++)
+  {
     $order = (array) $orders[$i];
 
     unset($order['$$hashKey']);
@@ -314,10 +233,11 @@ function processStudyOrderInsert($studyInsertData, $studyId) {
     $order["host_captura"] = $insertUrl;
     $order["activo"] = 1;
 
+    return $order;
     $orderId = insertOrder($order);
-    //assign this order's ID to blank plan
-    $blankPlan["id_orden"] = $orderId;
-    $planId = insertPlan($blankPlan);
+    // //assign this order's ID to blank plan
+    // $blankPlan["id_orden"] = $orderId;
+    // $planId = insertPlan($blankPlan);
   }
 }
 
@@ -390,9 +310,9 @@ function processStudyOrderUpdate($studyUpdateData) {
       $newOrder["fecha_captura"] = date('Y-m-d H:i:s');
       $newOrder["ip_captura"] = $updateIp;
       $newOrder["host_captura"] = $updateUrl;
-      $newOrder["fecha_valida"] = "";
-      $newOrder["fecha_actualiza"] = "";
-      $newOrder["fecha_rechaza"] = "";
+      $newOrder["fecha_valida"] = NULL;
+      $newOrder["fecha_actualiza"] = NULL;
+      $newOrder["fecha_rechaza"] = NULL;
       insertOrder($newOrder);
     }
     return $studyId;
@@ -516,11 +436,12 @@ function processOrderPlansUpdate($orderUpdateData) {
   //TODO: use single transaction
   if ($l < 1)
   {
-    //nothing stored, insert all
+    //insert all
     for ($j = 0; $j < $m; $j++) {
       $plan = (array) $plans[$j];
       unset($plan["id_plan"]);
       unset($plan['$$hashKey']);
+      $plan["id_estudio"] = $orderData["id_estudio"];
       $plan["id_orden"] = $orderId;
       $supervisorId = $plan["id_supervisor_muestreo"];
       $plan["id_supervisor_entrega"] = $supervisorId;
@@ -538,19 +459,19 @@ function processOrderPlansUpdate($orderUpdateData) {
       $plan["fecha_captura"] = date('Y-m-d H:i:s');
       $plan["ip_captura"] = $updateIp;
       $plan["host_captura"] = $updateUrl;
-      $plan["fecha"] = "";
+      $plan["fecha"] = NULL;
       $plan["fecha_probable"] = isoDateToMsSql($plan["fecha_probable"]);
-      $plan["fecha_calibracion"] = "";
-      $plan["fecha_valida"] = "";
-      $plan["fecha_actualiza"] = "";
-      $plan["fecha_rechaza"] = "";
+      $plan["fecha_calibracion"] = NULL;
+      $plan["fecha_valida"] = NULL;
+      $plan["fecha_actualiza"] = NULL;
+      $plan["fecha_rechaza"] = NULL;
       insertPlan($plan);
     }
     return $orderId;
   }
   else
   {
-    //mark all stored as deleted, only additions/matches persist
+    //mark all stored as deleted
     for ($i = 0; $i < $l; $i++) {
       unset($storedPlans[$i]['$$hashKey']);
       unset($storedPlans[$i]["id_usuario_captura"]);
@@ -562,22 +483,18 @@ function processOrderPlansUpdate($orderUpdateData) {
       $storedPlans[$i]["fecha_actualiza"] = date('Y-m-d H:i:s');
       $storedPlans[$i]["ip_actualiza"] = $updateIp;
       $storedPlans[$i]["host_actualiza"] = $updateUrl;
-      //return "delete old";
       updatePlan($storedPlans[$i]);
     }
     for ($j = 0; $j < $m; $j++) {
       $plan = (array) $plans[$j];
       if ($plan["id_plan"] == 0)
       {
-        //new, store it
         unset($plan["id_plan"]);
         unset($plan['$$hashKey']);
         $plan["id_usuario_captura"] = $updateUserId;
         $plan["fecha_captura"] = date('Y-m-d H:i:s');
         $plan["ip_captura"] = $updateIp;
         $plan["host_captura"] = $updateUrl;
-        //return "something new... again";
-        //return $plan;
         insertPlan($plan);
       }
       else
@@ -593,8 +510,6 @@ function processOrderPlansUpdate($orderUpdateData) {
         $plan["fecha_actualiza"] = date('Y-m-d H:i:s');
         $plan["ip_actualiza"] = $updateIp;
         $plan["host_actualiza"] = $updateUrl;
-        //return "...something old, renewed";
-        //return $plan;
         updatePlan($plan);
       }
     }

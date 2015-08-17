@@ -369,19 +369,19 @@ function insertStudy($insertData) {
   $sql = "INSERT INTO Estudio (id_cliente, id_origen_orden, id_ubicacion,
     id_ejercicio, id_status, id_etapa, id_usuario_captura,
     id_usuario_valida, id_usuario_entrega,
-    id_usuario_actualiza, oficio, folio, origen_descripcion,
+    oficio, folio, origen_descripcion,
     ubicacion, fecha, fecha_entrega, fecha_captura,
-    fecha_valida, fecha_actualiza, fecha_rechaza, ip_captura,
-    ip_valida, ip_actualiza, host_captura, host_valida,
-    host_actualiza, motivo_rechaza, activo)
+    fecha_valida, fecha_rechaza, ip_captura,
+    ip_valida, host_captura, host_valida,
+    motivo_rechaza, activo)
     VALUES (:id_cliente, :id_origen_orden, :id_ubicacion,
     :id_ejercicio, :id_status, :id_etapa, :id_usuario_captura,
     :id_usuario_valida, :id_usuario_entrega,
-    :id_usuario_actualiza, :oficio, :folio, :origen_descripcion,
+    :oficio, :folio, :origen_descripcion,
     :ubicacion, :fecha, :fecha_entrega, :fecha_captura,
-    :fecha_valida, :fecha_actualiza, :fecha_rechaza, :ip_captura,
-    :ip_valida, :ip_actualiza, :host_captura, :host_valida,
-    :host_actualiza, :motivo_rechaza, :activo)";
+    :fecha_valida,  :fecha_rechaza, :ip_captura,
+    :ip_valida, :host_captura, :host_valida,
+    :motivo_rechaza, :activo)";
   $db = getConnection();
   $stmt = $db->prepare($sql);
   $stmt->execute($insertData);
@@ -753,8 +753,9 @@ function getPlainPlan($planId) {
   $stmt = $db->prepare($sql);
   $stmt->bindParam("planId", $planId);
   $stmt->execute();
-  $plan = (array) $stmt->fetchAll(PDO::FETCH_OBJ)[0];
-  return (object) $plan;
+  $plan = $stmt->fetch(PDO::FETCH_OBJ);
+  $db = null;
+  return $plan;
 }
 
 function getPlan($planId) {
@@ -811,11 +812,11 @@ function insertPlan($planData) {
     id_responsable_calibracion, id_responsable_recipientes,
     id_responsable_reactivos, id_responsable_material,
     id_responsable_hieleras, id_status, id_usuario_captura,
-    id_usuario_valida, id_usuario_actualiza, fecha,
+    id_usuario_valida, fecha,
     fecha_probable, fecha_calibracion, fecha_captura,
-    fecha_valida, fecha_actualiza, fecha_rechaza, ip_captura,
-    ip_valida, ip_actualiza, host_captura, host_valida,
-    host_actualiza, calle, numero, colonia, codigo_postal,
+    fecha_valida, fecha_rechaza, ip_captura,
+    ip_valida, host_captura, host_valida,
+    calle, numero, colonia, codigo_postal,
     telefono, contacto, email, comentarios_ubicacion,
     cantidad_puntos, cantidad_equipos, cantidad_recipientes,
     cantidad_reactivos, cantidad_hieleras, frecuencia,
@@ -829,11 +830,11 @@ function insertPlan($planData) {
     :id_responsable_calibracion, :id_responsable_recipientes,
     :id_responsable_reactivos, :id_responsable_material,
     :id_responsable_hieleras, :id_status, :id_usuario_captura,
-    :id_usuario_valida, :id_usuario_actualiza, :fecha,
+    :id_usuario_valida, :fecha,
     :fecha_probable, :fecha_calibracion, :fecha_captura,
-    :fecha_valida, :fecha_actualiza, :fecha_rechaza, :ip_captura,
-    :ip_valida, :ip_actualiza, :host_captura, :host_valida,
-    :host_actualiza, :calle, :numero, :colonia, :codigo_postal,
+    :fecha_valida, :fecha_rechaza, :ip_captura,
+    :ip_valida, :host_captura, :host_valida,
+    :calle, :numero, :colonia, :codigo_postal,
     :telefono, :contacto, :email, :comentarios_ubicacion,
     :cantidad_puntos, :cantidad_equipos, :cantidad_recipientes,
     :cantidad_reactivos, :cantidad_hieleras, :frecuencia,
@@ -1151,8 +1152,9 @@ function getPlainReception($receptionId) {
   $stmt = $db->prepare($sql);
   $stmt->bindParam("receptionId", $receptionId);
   $stmt->execute();
-  $reception = (array) $stmt->fetchAll(PDO::FETCH_OBJ)[0];
-  return (object) $reception;
+  $reception = $stmt->fetch(PDO::FETCH_OBJ);
+  $db = null;
+  return $reception;
 }
 
 function getReception($receptionId) {

@@ -1490,7 +1490,6 @@
 
     function submitForm() {
       if (isFormValid() && !vm.isDataSubmitted) {
-        ////console.log(vm.plan);
         vm.isDataSubmitted = true;
         if (vm.plan.id_estudio > 0) {
           RestUtilsService

@@ -667,9 +667,9 @@ function getBlankPlan() {
     "id_responsable_hieleras" => 0, "id_status" => 1,
     "id_usuario_captura" => 0, "id_usuario_valida" => 0,
     "id_usuario_actualiza" => 0, "fecha" => "",
-    "fecha_probable" => "2015-01-01", "fecha_calibracion" => "2015-01-01",
-    "fecha_captura" => "2015-01-01", "fecha_valida" => "NULL",
-    "fecha_actualiza" => "NULL", "fecha_rechaza" => "NULL",
+    "fecha_probable" => NULL, "fecha_calibracion" => NULL,
+    "fecha_captura" => NULL, "fecha_valida" => NULL,
+    "fecha_actualiza" => NULL, "fecha_rechaza" => NULL,
     "ip_captura" => "", "ip_valida" => "",
     "ip_actualiza" => "", "host_captura" => "",
     "host_valida" => "", "host_actualiza" => "",
@@ -2366,10 +2366,6 @@ function getSamplingInstruments() {
   $stmt->execute();
   $instruments = $stmt->fetchAll(PDO::FETCH_ASSOC);
   $db = null;
-  $l = count($instruments);
-  for ($i = 0; $i < $l; $i++) {
-    $instruments[$i]["selected"] = false;
-  }
   return $instruments;
 }
 

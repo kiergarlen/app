@@ -980,6 +980,7 @@
       .$promise
       .then(function success(response) {
         vm.plan = response;
+        /*
         DistrictService
           .get()
           .$promise
@@ -1013,35 +1014,40 @@
             var i = 0;
             var l = 0;
             vm.instruments = response;
+            vm.isInstrumentListLoaded = true;
             l = vm.instruments.length;
             for (i = 0; i < l; i += 1) {
               vm.instruments[i].id_plan_instrumento = 0;
               vm.instruments[i].id_plan = vm.plan.id_plan;
-              vm.instruments[i].selected = true;
+              vm.instruments[i].selected = false;
             }
-            // ArrayUtilsService.seItemsFromReference(
-            //   vm.instruments,
-            //   vm.plan.instrumentos,
-            //   'id_instrumento',
-            //   [
-            //     'id_plan_instrumento',
-            //     'selected'
-            //   ]
-            // );
+            ArrayUtilsService.seItemsFromReference(
+              vm.instruments,
+              vm.plan.instrumentos,
+              'id_instrumento',
+              [
+                'id_plan_instrumento',
+                'selected'
+              ]
+            );
           });
-        // PlanContainersService
-        //   .get()
-        //   .$promise
-        //   .then(function success(response) {
-        //     var i;
-        //     var l;
-        //     vm.containers = response;
-        //     l = vm.containers.length;
-        //     for (i = 0; i < l; i += 1) {
-        //       vm.containers[i].id_plan_recipiente = 0;
-        //       vm.containers[i].id_plan = vm.plan.id_plan;
-        //     }
-        //   });
+        */
+        PlanContainersService
+          .get()
+          .$promise
+          .then(function success(response) {
+            var i;
+            var l;
+            vm.containers = response;
+            vm.isPreservationListLoaded = true;
+            l = vm.containers.length;
+            for (i = 0; i < l; i += 1) {
+              vm.containers[i].id_plan_recipiente = 0;
+              vm.containers[i].id_plan = vm.plan.id_plan;
+            }
+
+          });
+        /*
         PreservationService
           .get()
           .$promise
@@ -1139,6 +1145,7 @@
               ]
             );
           });
+        */
       });
 
     function selectDistrict() {
@@ -1148,51 +1155,46 @@
     }
 
     function selectInstruments() {
-      if (vm.instruments.length > 0 && vm.plan.instrumentos) {
-        if (vm.plan.instrumentos.length > 0 && !vm.isInstrumentListLoaded) {
-          ArrayUtilsService.seItemsFromReference(
-            vm.instruments,
-            vm.plan.instrumentos,
-            'id_instrumento',
-            [
-              'id_plan_instrumento',
-              'selected'
-            ]
-          );
-          vm.isInstrumentListLoaded = true;
-        } else {
-          vm.plan.instrumentos = [];
-          vm.plan.instrumentos = ArrayUtilsService.selectItemsFromCollection(
-            vm.instruments,
-            'selected',
-            true
-          ).slice();
-        }
+      if (vm.isInstrumentListLoaded) {
+        vm.plan.instrumentos = [];
+        vm.plan.instrumentos = ArrayUtilsService.selectItemsFromCollection(
+          vm.instruments,
+          'selected',
+          true
+        ).slice();
       }
     }
 
     function selectPreservations() {
-      if (vm.preservations.length > 0 && vm.plan.preservaciones) {
-        if (vm.plan.preservaciones.length > 0 && !vm.isPreservationListLoaded) {
-          ArrayUtilsService.seItemsFromReference(
-            vm.preservations,
-            vm.plan.preservaciones,
-            'id_preservacion',
-            [
-              'id_plan_preservacion',
-              'id_plan',
-              'selected'
-            ]
-          );
-          vm.isPreservationListLoaded = true;
-        } else {
-          vm.plan.preservaciones = [];
-          vm.plan.preservaciones = ArrayUtilsService.selectItemsFromCollection(
-            vm.preservations,
-            'selected',
-            true
-          ).slice();
-        }
+      // if (vm.preservations.length > 0 && vm.plan.preservaciones) {
+      //   if (vm.plan.preservaciones.length > 0 && !vm.isPreservationListLoaded) {
+      //     ArrayUtilsService.seItemsFromReference(
+      //       vm.preservations,
+      //       vm.plan.preservaciones,
+      //       'id_preservacion',
+      //       [
+      //         'id_plan_preservacion',
+      //         'id_plan',
+      //         'selected'
+      //       ]
+      //     );
+      //     vm.isPreservationListLoaded = true;
+      //   } else {
+      //     vm.plan.preservaciones = [];
+      //     vm.plan.preservaciones = ArrayUtilsService.selectItemsFromCollection(
+      //       vm.preservations,
+      //       'selected',
+      //       true
+      //     ).slice();
+      //   }
+      // }
+      if (vm.isPreservationListLoaded) {
+        vm.plan.preservaciones = [];
+        vm.plan.preservaciones = ArrayUtilsService.selectItemsFromCollection(
+          vm.preservations,
+          'selected',
+          true
+        ).slice();
       }
     }
 

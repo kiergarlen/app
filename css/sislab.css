@@ -402,7 +402,7 @@ Firefox Fix For Freaky Fieldset
 }
 
 
-/* Angula-strap */
+/* Angular-strap */
 .collapse.am-collapse {
   animation-duration: .3s;
   animation-timing-function: ease;
@@ -415,4 +415,22 @@ Firefox Fix For Freaky Fieldset
   &.in-add {
     animation-name: expand;
   }
+}
+
+.toast {
+  position: fixed;
+  top: 85px;
+  left: 5px;
+  min-width: 200px;
+  height: auto;
+  z-index: 2000;
+}
+
+.toast-warning {
+  position: fixed;
+  top: 140px;
+  left: 5px;
+  min-width: 200px;
+  height: auto;
+  z-index: 2000;
 }

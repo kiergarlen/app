@@ -1,55 +1,47 @@
     <sislab-menu></sislab-menu>
-    <!--
     <sislab-banner></sislab-banner>
-    -->
     <div class="container-fluid">
       <div class="row">
         <div class="col-xs-12 col-lg-8 col-lg-offset-2 main item-themed-z2">
           <div class="view-container">
 
-<!--
 <div class="row">
   <div class="col-xs-12">
     <h2 class="page-header">Plan de muestreo</h2>
   </div>
 </div>
-<div class="row">
-  <div class="col-xs-12">
-    <div class="alert alert-danger item-z1" role="alert"
-      data-ng-show="plan.plan.id_status == 3">
-      <i class="glyphicon glyphicon-warning-sign"></i>
-      Motivo rechazo:
-      <strong>
-        {{plan.plan.motivo_rechaza}}
-        <span
-          data-ng-show="plan.plan.fecha_rechaza.length > 0">
-          ({{plan.plan.fecha_rechaza | date: 'yyyy-MM-dd'}})
-        </span>
-      </strong>
-    </div>
+<div class="toast">
+  <div class="alert alert-danger item-z1" role="alert"
+    data-ng-show="plan.plan.id_status == 3">
+    <i class="glyphicon glyphicon-ban-circle"></i>
+    Motivo rechazo:
+    <strong>
+      {{plan.plan.motivo_rechaza}}
+      <span
+        data-ng-show="plan.plan.fecha_rechaza.length > 0">
+        ({{plan.plan.fecha_rechaza | date: 'yyyy-MM-dd'}})
+      </span>
+    </strong>
   </div>
 </div>
-<div class="row">
-  <div class="col-xs-12">
-    <div class="alert alert-warning alert-dismissible item-z1" role="alert"
-      data-ng-show="plan.message.length > 0">
-      <button type="button" class="close" aria-label="Cerrar"
-        data-ng-click="plan.message = ''">
-        <span aria-hidden="true">&times;</span>
-      </button>
-      <i class="glyphicon glyphicon-warning-sign"></i>
-      <strong>
-        {{plan.message}}
-      </strong>
-    </div>
+<div class="toast-warning">
+  <div class="alert alert-warning alert-dismissible item-z1" role="alert"
+    data-ng-show="plan.message.length > 0">
+    <button type="button" class="close" aria-label="Cerrar"
+      data-ng-click="plan.message = ''">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    <i class="glyphicon glyphicon-warning-sign"></i>
+    <strong>
+      {{plan.message}}
+    </strong>
   </div>
 </div>
--->
+
 <form class="form" role="form"
   name="planForm"
   novalidate
   >
-  <!--
   <div class="row">
     <div class="col-xs-12" data-bs-collapse>
       <h4 data-bs-collapse-toggle>
@@ -119,8 +111,6 @@
       </div>
     </div>
   </div>
-  -->
-<!--
   <div class="row">
     <div class="col-xs-12">
       <h4>Objetivo</h4>
@@ -525,13 +515,11 @@
       </strong>
     </div>
   </div>
--->
   <div class="row">
     <div class="col-xs-12">
       <h5>Preparación de recipientes {{plan.selectContainers()}}</h5>
     </div>
   </div>
-  <!--
   <div class="row">
     <div class="col-xs-12 col-sm-6">
       <label for="preparationSupervisorSelect" class="sr-only">
@@ -557,7 +545,6 @@
       <h5>Recipientes {{plan.selectContainers()}}</h5>
     </div>
   </div>
-  -->
   <div class="row">
     <div class="col-xs-12 col-sm-6"
       data-ng-repeat="preservation in plan.preservations">
@@ -584,7 +571,6 @@
       </strong>
     </div>
   </div>
-<!--
   <div class="row">
     <div class="col-xs-12">
       <h5>Reactivos y soluciones {{plan.selectReactives()}}</h5>
@@ -795,7 +781,6 @@
         >
     </div>
   </div>
--->
   <br>
   <button type="submit" class="btn btn-primary"
     value="Guardar" title="Guardar"
@@ -807,12 +792,8 @@
 </form>
 
           </div>
-          <!--
           <sislab-footer></sislab-footer>
-          -->
         </div><!-- view-container -->
       </div><!-- row -->
     </div><!-- container -->
-    <!--
     <sislab-banner-bottom></sislab-banner-bottom>
-    -->

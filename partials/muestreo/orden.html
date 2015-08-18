@@ -10,35 +10,31 @@
     <h2 class="page-header">Orden de muestreo</h2>
   </div>
 </div>
-<div class="row">
-  <div class="col-xs-12">
-    <div class="alert alert-danger item-z1" role="alert"
-      data-ng-show="order.order.id_status == 3">
-      <i class="glyphicon glyphicon-warning-sign"></i>
-      Motivo rechazo:
-      <strong>
-        {{order.order.motivo_rechaza}}
-        <span
-          data-ng-show="order.order.fecha_rechaza.length > 0">
+<div class="toast">
+  <div class="alert alert-danger item-z2" role="alert"
+    data-ng-show="order.order.id_status == 3">
+    <i class="glyphicon glyphicon-ban-circle"></i>
+    Motivo rechazo:
+    <strong>
+      {{order.order.motivo_rechaza}}
+      <span
+        data-ng-show="order.order.fecha_rechaza.length > 0">
           ({{order.order.fecha_rechaza | date: 'yyyy-MM-dd'}})
-        </span>
-      </strong>
-    </div>
+      </span>
+    </strong>
   </div>
 </div>
-<div class="row">
-  <div class="col-xs-12">
-    <div class="alert alert-warning alert-dismissible item-z1" role="alert"
-      data-ng-show="order.message.length > 0">
-      <button type="button" class="close" aria-label="Cerrar"
-        data-ng-click="order.message = ''">
-        <span aria-hidden="true">&times;</span>
-      </button>
-      <i class="glyphicon glyphicon-warning-sign"></i>
-      <strong>
-        {{order.message}}
-      </strong>
-    </div>
+<div class="toast-warning">
+  <div class="alert alert-warning alert-dismissible item-z2" role="alert"
+    data-ng-show="order.message.length > 0">
+    <button type="button" class="close" aria-label="Cerrar"
+      data-ng-click="order.message = ''">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    <i class="glyphicon glyphicon-warning-sign"></i>
+    <strong>
+      {{order.message}}
+    </strong>
   </div>
 </div>
 <form class="form" role="form"

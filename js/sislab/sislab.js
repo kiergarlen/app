@@ -1033,7 +1033,7 @@
           });
         */
         PlanContainersService
-          .get()
+          .query({planId: $routeParams.planId})
           .$promise
           .then(function success(response) {
             var i;

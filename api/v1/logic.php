@@ -112,23 +112,24 @@ function processMenuToJson($items) {
 }
 
 function isoDateToMsSql($dateString) {
-  $format = 'Y-m-d H:i:s';
-  if (strlen($dateString) > 18)
-  {
-    $dateString = substr($dateString, 0, 19);
-    $dateString = str_replace("T", " ", $dateString);
-    if (DateTime::createFromFormat($format, $dateString))
-    {
-      $date = DateTime::createFromFormat($format, $dateString);
-      return $date->format($format);
-    }
-  }
-  if (strlen($dateString) == 10)
-  {
-    $date = DateTime::createFromFormat('Y-m-d', $dateString);
-    return $date->format($format);
-  }
-  return NULL;
+  // $format = 'Y-m-d H:i:s';
+  // if (strlen($dateString) > 18)
+  // {
+  //   $dateString = substr($dateString, 0, 19);
+  //   $dateString = str_replace("T", " ", $dateString);
+  //   if (DateTime::createFromFormat($format, $dateString))
+  //   {
+  //     $date = DateTime::createFromFormat($format, $dateString);
+  //     return $date->format($format);
+  //   }
+  // }
+  // if (strlen($dateString) == 10)
+  // {
+  //   $date = DateTime::createFromFormat('Y-m-d', $dateString);
+  //   return $date->format($format);
+  // }
+  // return NULL;
+  return $dateString;
 }
 
 function processStudyInsert($request) {
@@ -185,10 +186,11 @@ function processStudyInsert($request) {
     $insertData["host_valida"] = $insertData["host_captura"];
   }
 
-  $studyInsertData = array(
-    "study" => $insertData,
-    "orders" => $orders
-  );
+  // $studyInsertData = array(
+  //   "study" => $insertData,
+  //   "orders" => $orders
+  // );
+  $studyUpdateData = $insetData;
   return $studyInsertData;
 }
 

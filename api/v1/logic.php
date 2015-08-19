@@ -112,24 +112,25 @@ function processMenuToJson($items) {
 }
 
 function isoDateToMsSql($dateString) {
-  // $format = 'Y-m-d H:i:s';
-  // if (strlen($dateString) > 18)
-  // {
-  //   $dateString = substr($dateString, 0, 19);
-  //   $dateString = str_replace("T", " ", $dateString);
-  //   if (DateTime::createFromFormat($format, $dateString))
-  //   {
-  //     $date = DateTime::createFromFormat($format, $dateString);
-  //     return $date->format($format);
-  //   }
-  // }
-  // if (strlen($dateString) == 10)
-  // {
-  //   $date = DateTime::createFromFormat('Y-m-d', $dateString);
-  //   return $date->format($format);
-  // }
-  // return NULL;
-  return $dateString;
+  $format = 'Y-m-d H:i:s';
+  if (strlen($dateString) > 10)
+  {
+    return $dateString;
+    // $dateString = substr($dateString, 0, 19);
+    // $dateString = str_replace("T", " ", $dateString);
+    if (DateTime::createFromFormat($format, $dateString))
+    {
+      // $date = DateTime::createFromFormat($format, $dateString);
+      // return $date->format($format);
+    }
+  }
+  if (strlen($dateString) == 10)
+  {
+    // $date = DateTime::createFromFormat('Y-m-d', $dateString);
+    return $dateString;
+    // return $date->format($format);
+  }
+  return NULL;
 }
 
 function processStudyInsert($request) {
@@ -140,13 +141,15 @@ function processStudyInsert($request) {
   $clientId = $insertData["id_cliente"];
   $orders = $insertData["ordenes"];
 
-  unset($insertData["id_estudio"]);
   unset($insertData["cliente"]);
   unset($insertData["ordenes"]);
+  unset($insertData["id_estudio"]);
   unset($insertData["id_usuario_actualiza"]);
   unset($insertData["fecha_actualiza"]);
   unset($insertData["host_actualiza"]);
   unset($insertData["ip_actualiza"]);
+  unset($insertData["fecha_captura"]);
+  unset($insertData["fecha_entrega"]);
 
   $lastStudy = (array) getLastStudyByYear($currentYear);
   if (is_numeric($lastStudy["oficio"]))
@@ -166,8 +169,6 @@ function processStudyInsert($request) {
   $insertData["id_usuario_captura"] = $token->uid;
   $insertData["ip_captura"] = $request->getIp();
   $insertData["host_captura"] = $request->getUrl();
-  $insertData["fecha_captura"] = date('Y-m-d H:i:s');
-  $insertData["fecha_entrega"] = NULL;
   $insertData["fecha_rechaza"] = NULL;
 
   if ($insertData["id_status"] == 3) {
@@ -178,19 +179,17 @@ function processStudyInsert($request) {
   }
 
   $insertData["fecha_valida"] = NULL;
-
   if ($insertData["id_status"] == 2) {
-    $insertData["fecha_valida"] = $insertData["fecha"];
+    $insertData["fecha_valida"] = $insertData["fecha_valida"];
     $insertData["id_usuario_valida"] = $insertData["id_usuario_captura"];
     $insertData["ip_valida"] = $insertData["ip_captura"];
     $insertData["host_valida"] = $insertData["host_captura"];
   }
 
-  // $studyInsertData = array(
-  //   "study" => $insertData,
-  //   "orders" => $orders
-  // );
-  $studyUpdateData = $insetData;
+  $studyInsertData = array(
+    "study" => $insertData,
+    "orders" => $orders
+  );
   return $studyInsertData;
 }
 
@@ -198,7 +197,7 @@ function processStudyOrderInsert($studyInsertData, $studyId) {
   $orders = (array) $studyInsertData["orders"];
   $clientId = $studyInsertData["study"]["id_cliente"];
   $insertUserId = $studyInsertData["study"]["id_usuario_captura"];
-  $insertDate = $studyInsertData["study"]["fecha_captura"];
+  // $insertDate = $studyInsertData["study"]["fecha_captura"];
   $insertIp = $studyInsertData["study"]["ip_captura"];
   $insertUrl = $studyInsertData["study"]["host_captura"];
 
@@ -210,6 +209,8 @@ function processStudyOrderInsert($studyInsertData, $studyId) {
   // $blankPlan["ip_captura"] = $insertIp;
   // $blankPlan["host_captura"] = $insertUrl;
 
+  //return $orders;
+
   $i = 0;
   $l = count($orders);
 
@@ -219,10 +220,10 @@ function processStudyOrderInsert($studyInsertData, $studyId) {
 
     unset($order['$$hashKey']);
     unset($order["id_orden"]);
-    if (isset($order["fecha_entrega"]))
-    {
-      unset($order["fecha_entrega"]);
-    }
+    unset($order["id_usuario_actualiza"]);
+    unset($order["fecha_actualiza"]);
+    unset($order["ip_actualiza"]);
+    unset($order["host_actualiza"]);
 
     $order["id_estudio"] = $studyId;
     $order["id_cliente"] = $clientId;
@@ -230,17 +231,20 @@ function processStudyOrderInsert($studyInsertData, $studyId) {
     $order["id_status"] = 1;
     $order["costo_total"] = 0;
     $order["id_usuario_captura"] = $insertUserId;
-    $order["fecha_captura"] = $insertDate;
+    // $order["fecha_captura"] = $insertDate;
+    unset($order["fecha_captura"]);
+    $order["fecha"] = isoDateToMsSql($order["fecha"]);
+    $order["fecha_valida"] = isoDateToMsSql($order["fecha_valida"]);
+    $order["fecha_rechaza"] = isoDateToMsSql($order["fecha_rechaza"]);
     $order["ip_captura"] = $insertIp;
     $order["host_captura"] = $insertUrl;
     $order["activo"] = 1;
-
-    return $order;
     $orderId = insertOrder($order);
     // //assign this order's ID to blank plan
     // $blankPlan["id_orden"] = $orderId;
     // $planId = insertPlan($blankPlan);
   }
+  return $studyId;
 }
 
 function processStudyUpdate($request) {
@@ -250,16 +254,16 @@ function processStudyUpdate($request) {
   $clientId = $updateData["id_cliente"];
   $orders = $updateData["ordenes"];
 
-  unset($updateData["id_usuario_captura"]);
-  unset($updateData["fecha_captura"]);
-  unset($updateData["ip_captura"]);
-  unset($updateData["host_captura"]);
   unset($updateData["cliente"]);
   unset($updateData["ordenes"]);
   unset($updateData["status"]);
+  unset($updateData["id_usuario_captura"]);
+  unset($updateData["fecha_captura"]);
+  unset($updateData["fecha_actualiza"]);
+  unset($updateData["ip_captura"]);
+  unset($updateData["host_captura"]);
 
   $updateData["id_usuario_actualiza"] = $token->uid;
-  $updateData["fecha_actualiza"] = date('Y-m-d H:i:s');
   $updateData["ip_actualiza"] = $request->getIp();
   $updateData["host_actualiza"] = $request->getUrl();
 
@@ -289,7 +293,10 @@ function processStudyOrderUpdate($studyUpdateData) {
   $updateDate = $studyUpdateData["study"]["fecha_actualiza"];
   $updateIp = $studyUpdateData["study"]["ip_actualiza"];
   $updateUrl = $studyUpdateData["study"]["host_actualiza"];
+
   $storedOrders = getOrdersByStudy($studyId);
+
+  return $storedOrders;
 
   $i = 0;
   $j = 0;
@@ -315,7 +322,8 @@ function processStudyOrderUpdate($studyUpdateData) {
       $newOrder["fecha_valida"] = NULL;
       $newOrder["fecha_actualiza"] = NULL;
       $newOrder["fecha_rechaza"] = NULL;
-      insertOrder($newOrder);
+      return $newOrder;
+      //insertOrder($newOrder);
     }
     return $studyId;
   }
@@ -335,8 +343,8 @@ function processStudyOrderUpdate($studyUpdateData) {
       $storedOrders[$i]["fecha_actualiza"] = date('Y-m-d H:i:s');
       $storedOrders[$i]["ip_actualiza"] = $updateIp;
       $storedOrders[$i]["host_actualiza"] = $updateUrl;
-      //return $storedOrders[0];
-      updateOrder($storedOrders[$i]);
+      return $storedOrders[$i];
+      //updateOrder($storedOrders[$i]);
     }
     for ($j = 0; $j < $m; $j++) {
       $order = (array) $orders[$j];
@@ -351,8 +359,8 @@ function processStudyOrderUpdate($studyUpdateData) {
         $order["fecha_captura"] = date('Y-m-d H:i:s');
         $order["ip_captura"] = $updateIp;
         $order["host_captura"] = $updateUrl;
-        //return $order;
-        insertOrder($order);
+        return $order;
+        //insertOrder($order);
       }
       else
       {
@@ -369,8 +377,8 @@ function processStudyOrderUpdate($studyUpdateData) {
         $order["fecha_actualiza"] = date('Y-m-d H:i:s');
         $order["ip_actualiza"] = $updateIp;
         $order["host_actualiza"] = $updateUrl;
-        //return $order;
-        updateOrder($order);
+        return $order;
+        //updateOrder($order);
       }
     }
   }

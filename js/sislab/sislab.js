@@ -616,7 +616,7 @@
               'estudio/estudio'
             );
         } else {
-          if (vm.user.level < 3 || vm.study.study.id_status != 2) {
+          if (vm.user.level < 3 || vm.study.id_status != 2) {
             //vm.study.$update();
             RestUtilsService
               .updateData(
@@ -857,7 +857,7 @@
               'muestreo/orden'
             );
         } else {
-          if (vm.user.level < 3 || vm.order.order.id_status !== 2) {
+          if (vm.user.level < 3 || vm.order.id_status !== 2) {
             RestUtilsService
               .updateData(
                 OrderService,
@@ -1501,7 +1501,7 @@
               'muestreo/plan'
             );
         } else {
-          if (vm.user.level < 3 || vm.plan.plan.id_status !== 2) {
+          if (vm.user.level < 3 || vm.plan.id_status !== 2) {
             RestUtilsService
               .updateData(
                 PlanService,
@@ -1751,7 +1751,7 @@
               'recepcion/hoja'
             );
         } else {
-          if (vm.user.level < 3 || vm.sheet.sheet.id_status !== 2) {
+          if (vm.user.level < 3 || vm.sheet.id_status !== 2) {
             RestUtilsService
               .updateData(
                 SheetService,
@@ -1990,7 +1990,7 @@
               'recepcion/recepcion'
             );
         } else {
-          if (vm.user.level < 3 || vm.reception.reception.id_status !== 2) {
+          if (vm.user.level < 3 || vm.reception.id_status !== 2) {
             RestUtilsService
               .updateData(
                 ReceptionService,
@@ -2086,7 +2086,7 @@
               'recepcion/trabajo'
             );
         } else {
-          if (vm.user.level < 3 || vm.job.job.id_status !== 2) {
+          if (vm.user.level < 3 || vm.job.id_status !== 2) {
             RestUtilsService
               .updateData(
                 JobService,
@@ -2181,7 +2181,7 @@
               'recepcion/custodia'
             );
         } else {
-          if (vm.user.level < 3 || vm.custody.custody.id_status !== 2) {
+          if (vm.user.level < 3 || vm.custody.id_status !== 2) {
             RestUtilsService
               .updateData(
                 CustodyService,
@@ -3078,7 +3078,7 @@
         padNumber(date.getSeconds(), 2),
         '.',
         (date.getMilliseconds() / 1000).toFixed(3).slice(2, 5),
-        (date.getTimezoneOffset() / 60 > -1) ? '+' : '-',
+        (date.getTimezoneOffset() / 60 > -1) ? '-' : '+',
         padNumber(date.getTimezoneOffset() / 60, 2),
         ':00'
       ].join('');
@@ -3338,13 +3338,15 @@
       item.id_status = 2;
       item.id_usuario_valida = user.id;
       item.motivo_rechaza = '';
-      item.fecha_valida = DateUtilsService.dateToIsoString(new Date()).slice(0, 10);
+      // item.fecha_valida = DateUtilsService.dateToIsoString(new Date()).slice(0, 10);
+      item.fecha_valida = DateUtilsService.dateToIsoString(new Date());
     }
 
     function rejectItem(item, user) {
       item.id_status = 3;
       item.id_usuario_valida = user.id;
-      item.fecha_rechaza = DateUtilsService.dateToIsoString(new Date()).slice(0, 10);
+      // item.fecha_rechaza = DateUtilsService.dateToIsoString(new Date()).slice(0, 10);
+      item.fecha_rechaza = DateUtilsService.dateToIsoString(new Date());
     }
 
     return Validation;

@@ -91,23 +91,23 @@ $app->get("/studies(/)(:studyId)", function($studyId = -1) use ($app) {
 
 $app->post("/studies", function() use ($app) {
   try {
-    //$userId = decodeUserToken($app->request())->uid;
+    $userId = decodeUserToken($app->request())->uid;
     $request = $app->request();
     $studyId = extractDataFromRequest($request)->id_estudio;
     if ($studyId < 1)
     {
       $studyInsertData = processStudyInsert($request);
-      // $studyId = insertStudy($studyInsertData["study"]);
-      // processStudyOrderInsert($studyInsertData, $studyId);
+      $studyId = insertStudy($studyInsertData["study"]);
+      processStudyOrderInsert($studyInsertData, $studyId);
     }
     else
     {
       $studyUpdateData = processStudyUpdate($request);
-      // $studyId = updateStudy($studyUpdateData["study"]);
-      // $orderData = processStudyOrderUpdate($studyUpdateData);
+      //$studyId = updateStudy($studyUpdateData["study"]);
+      //$orderData = processStudyOrderUpdate($studyUpdateData);
+      $result = json_encode(processStudyOrderUpdate($studyUpdateData));
     }
     // $result = '{"id_estudio":' . $studyId . '}';
-    $result = json_encode($studyInsertData);
     $app->response()->status(200);
     $app->response()->header('Content-Type', 'application/json');
     //$result = ")]}',\n" . $result;

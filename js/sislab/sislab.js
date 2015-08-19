@@ -3075,12 +3075,12 @@
         ':',
         padNumber(date.getMinutes(), 2),
         ':',
-        padNumber(date.getSeconds(), 2)
-        // ,'.',
-        // (date.getMilliseconds() / 1000).toFixed(3).slice(2, 5),
-        // (date.getTimezoneOffset() / 60 > -1) ? '+' : '-',
-        // padNumber(date.getTimezoneOffset() / 60, 2),
-        // ':00'
+        padNumber(date.getSeconds(), 2),
+        '.',
+        (date.getMilliseconds() / 1000).toFixed(3).slice(2, 5),
+        (date.getTimezoneOffset() / 60 > -1) ? '+' : '-',
+        padNumber(date.getTimezoneOffset() / 60, 2),
+        ':00'
       ].join('');
     }
 

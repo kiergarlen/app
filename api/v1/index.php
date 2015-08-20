@@ -157,13 +157,7 @@ $app->post("/orders", function() use ($app) {
     $userId = decodeUserToken($app->request())->uid;
     $request = $app->request();
     $orderId = extractDataFromRequest($request)->id_orden;
-    if ($orderId < 1)
-    {
-      $orderInsertData = processOrderInsert($request);
-      $orderId = insertOrder($orderInsertData);
-      // // TODO: check if processOrderPlansInsert() is needed
-    }
-    else
+    if ($orderId > 0)
     {
       $orderUpdateData = processOrderUpdate($request);
       $orderId = updateOrder($orderUpdateData["order"]);

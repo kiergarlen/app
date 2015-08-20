@@ -197,7 +197,6 @@ function processStudyOrderInsert($studyInsertData, $studyId) {
   $orders = (array) $studyInsertData["orders"];
   $clientId = $studyInsertData["study"]["id_cliente"];
   $insertUserId = $studyInsertData["study"]["id_usuario_captura"];
-  // $insertDate = $studyInsertData["study"]["fecha_captura"];
   $insertIp = $studyInsertData["study"]["ip_captura"];
   $insertUrl = $studyInsertData["study"]["host_captura"];
 
@@ -209,8 +208,6 @@ function processStudyOrderInsert($studyInsertData, $studyId) {
   // $blankPlan["ip_captura"] = $insertIp;
   // $blankPlan["host_captura"] = $insertUrl;
 
-  //return $orders;
-
   $i = 0;
   $l = count($orders);
 
@@ -220,6 +217,7 @@ function processStudyOrderInsert($studyInsertData, $studyId) {
 
     unset($order['$$hashKey']);
     unset($order["id_orden"]);
+    unset($order["fecha_captura"]);
     unset($order["id_usuario_actualiza"]);
     unset($order["fecha_actualiza"]);
     unset($order["ip_actualiza"]);
@@ -231,8 +229,6 @@ function processStudyOrderInsert($studyInsertData, $studyId) {
     $order["id_status"] = 1;
     $order["costo_total"] = 0;
     $order["id_usuario_captura"] = $insertUserId;
-    // $order["fecha_captura"] = $insertDate;
-    unset($order["fecha_captura"]);
     $order["fecha"] = isoDateToMsSql($order["fecha"]);
     $order["fecha_valida"] = isoDateToMsSql($order["fecha_valida"]);
     $order["fecha_rechaza"] = isoDateToMsSql($order["fecha_rechaza"]);
@@ -290,7 +286,6 @@ function processStudyOrderUpdate($studyUpdateData) {
   $studyId = $studyUpdateData["study"]["id_estudio"];
   $clientId = $studyUpdateData["study"]["id_cliente"];
   $updateUserId = $studyUpdateData["study"]["id_usuario_actualiza"];
-  //$updateDate = $studyUpdateData["study"]["fecha_actualiza"];
   $updateIp = $studyUpdateData["study"]["ip_actualiza"];
   $updateUrl = $studyUpdateData["study"]["host_actualiza"];
   $storedOrders = getOrdersByStudy($studyId);
@@ -413,13 +408,13 @@ function processOrderUpdate($request) {
   unset($update["estudio"]);
   unset($update["planes"]);
   unset($update["status"]);
+  unset($update["fecha_actualiza"]);
   unset($update["id_usuario_captura"]);
   unset($update["fecha_captura"]);
   unset($update["ip_captura"]);
   unset($update["host_captura"]);
 
   $update["id_usuario_actualiza"] = $token->uid;
-  $update["fecha_actualiza"] = date('Y-m-d H:i:s');
   $update["ip_actualiza"] = $request->getIp();
   $update["host_actualiza"] = $request->getUrl();
   $update["fecha"] = isoDateToMsSql($update["fecha"]);
@@ -453,15 +448,14 @@ function processOrderPlansUpdate($orderUpdateData) {
   $l = count($storedPlans);
   $m = count($plans);
 
-  //TODO: refactor with array_walk()
-  //TODO: use single transaction
+  //TODO: refactor with array_walk() & use single transaction
   if ($l < 1)
   {
-    //insert all
     for ($j = 0; $j < $m; $j++) {
       $plan = (array) $plans[$j];
       unset($plan["id_plan"]);
       unset($plan['$$hashKey']);
+      unset($plan["fecha_captura"]);
       unset($plan["id_usuario_actualiza"]);
       unset($plan["fecha_actualiza"]);
       unset($plan["ip_actualiza"]);
@@ -481,7 +475,6 @@ function processOrderPlansUpdate($orderUpdateData) {
       $plan["id_responsable_material"] = $supervisorId;
       $plan["id_responsable_hieleras"] = $supervisorId;
       $plan["id_usuario_captura"] = $updateUserId;
-      $plan["fecha_captura"] = date('Y-m-d H:i:s');
       $plan["ip_captura"] = $updateIp;
       $plan["host_captura"] = $updateUrl;
       $plan["fecha"] = NULL;
@@ -495,16 +488,15 @@ function processOrderPlansUpdate($orderUpdateData) {
   }
   else
   {
-    //mark all stored as deleted
     for ($i = 0; $i < $l; $i++) {
       unset($storedPlans[$i]['$$hashKey']);
+      unset($storedPlans[$i]["fecha_actualiza"]);
       unset($storedPlans[$i]["id_usuario_captura"]);
       unset($storedPlans[$i]["fecha_captura"]);
       unset($storedPlans[$i]["ip_captura"]);
       unset($storedPlans[$i]["host_captura"]);
       $storedPlans[$i]["activo"] = 0;
       $storedPlans[$i]["id_usuario_actualiza"] = $updateUserId;
-      $storedPlans[$i]["fecha_actualiza"] = date('Y-m-d H:i:s');
       $storedPlans[$i]["ip_actualiza"] = $updateIp;
       $storedPlans[$i]["host_actualiza"] = $updateUrl;
       updatePlan($storedPlans[$i]);
@@ -513,10 +505,10 @@ function processOrderPlansUpdate($orderUpdateData) {
       $plan = (array) $plans[$j];
       if ($plan["id_plan"] == 0)
       {
-        unset($plan["id_plan"]);
         unset($plan['$$hashKey']);
+        unset($plan["id_plan"]);
+        unset($plan["fehca_captura"]);
         $plan["id_usuario_captura"] = $updateUserId;
-        $plan["fecha_captura"] = date('Y-m-d H:i:s');
         $plan["ip_captura"] = $updateIp;
         $plan["host_captura"] = $updateUrl;
         insertPlan($plan);
@@ -525,13 +517,13 @@ function processOrderPlansUpdate($orderUpdateData) {
       {
         //update
         unset($plan['$$hashKey']);
+        unset($plan["fecha_actualiza"]);
         unset($plan["id_usuario_captura"]);
         unset($plan["fecha_captura"]);
         unset($plan["ip_captura"]);
         unset($plan["host_captura"]);
         $plan["activo"] = 1;
         $plan["id_usuario_actualiza"] = $updateUserId;
-        $plan["fecha_actualiza"] = date('Y-m-d H:i:s');
         $plan["ip_actualiza"] = $updateIp;
         $plan["host_actualiza"] = $updateUrl;
         updatePlan($plan);
@@ -569,9 +561,9 @@ function processPlanUpdate($request) {
   unset($plan["fecha_captura"]);
   unset($plan["ip_captura"]);
   unset($plan["host_captura"]);
+  unset($plan["fecha_actualiza"]);
 
   $plan["id_usuario_actualiza"] = $token->uid;
-  $plan["fecha_actualiza"] = date('Y-m-d H:i:s');
   $plan["ip_actualiza"] = $request->getIp();
   $plan["host_actualiza"] = $request->getUrl();
 
@@ -579,7 +571,7 @@ function processPlanUpdate($request) {
   {
     $plan["ip_valida"] = $request->getIp();
     $plan["host_valida"] = $request->getUrl();
-    $plan["fecha_valida"] = date('Y-m-d H:i:s');
+    $plan["fecha_valida"] = isoDateToMsSql($plan["fecha_valida"]);
     //TODO: create <blank> Sheet, Reception for this Plan
   }
 

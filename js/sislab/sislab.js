@@ -825,6 +825,7 @@
             vm.message += '(Ver fila ' + (i + 1) + ')';
             return false;
           }
+          plans[i].fecha_probable = DateUtilsService.dateToIsoString(plans[i].fecha_probable);
         }
       } else {
         vm.message += ' Agregue un plan ';

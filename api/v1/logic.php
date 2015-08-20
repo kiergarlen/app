@@ -453,8 +453,8 @@ function processOrderPlansUpdate($orderUpdateData) {
   {
     for ($j = 0; $j < $m; $j++) {
       $plan = (array) $plans[$j];
-      unset($plan["id_plan"]);
       unset($plan['$$hashKey']);
+      unset($plan["id_plan"]);
       unset($plan["fecha_captura"]);
       unset($plan["id_usuario_actualiza"]);
       unset($plan["fecha_actualiza"]);
@@ -507,15 +507,37 @@ function processOrderPlansUpdate($orderUpdateData) {
       {
         unset($plan['$$hashKey']);
         unset($plan["id_plan"]);
-        unset($plan["fehca_captura"]);
+        unset($plan["fecha_captura"]);
+        unset($plan["id_usuario_actualiza"]);
+        unset($plan["fecha_actualiza"]);
+        unset($plan["ip_actualiza"]);
+        unset($plan["host_actualiza"]);
+        $plan["id_estudio"] = $orderData["id_estudio"];
+        $plan["id_orden"] = $orderId;
+        $supervisorId = $plan["id_supervisor_muestreo"];
+        $plan["id_supervisor_entrega"] = $supervisorId;
+        $plan["id_supervisor_recoleccion"] = $supervisorId;
+        $plan["id_supervisor_registro"] = $supervisorId;
+        $plan["id_ayudante_entrega"] = $supervisorId;
+        $plan["id_ayudante_recoleccion"] = $supervisorId;
+        $plan["id_ayudante_registro"] = $supervisorId;
+        $plan["id_responsable_calibracion"] = $supervisorId;
+        $plan["id_responsable_recipientes"] = $supervisorId;
+        $plan["id_responsable_reactivos"] = $supervisorId;
+        $plan["id_responsable_material"] = $supervisorId;
+        $plan["id_responsable_hieleras"] = $supervisorId;
         $plan["id_usuario_captura"] = $updateUserId;
         $plan["ip_captura"] = $updateIp;
         $plan["host_captura"] = $updateUrl;
+        $plan["fecha"] = NULL;
+        $plan["fecha_probable"] = isoDateToMsSql($plan["fecha_probable"]);
+        $plan["fecha_calibracion"] = NULL;
+        $plan["fecha_valida"] = NULL;
+        $plan["fecha_rechaza"] = NULL;
         insertPlan($plan);
       }
       else
       {
-        //update
         unset($plan['$$hashKey']);
         unset($plan["fecha_actualiza"]);
         unset($plan["id_usuario_captura"]);

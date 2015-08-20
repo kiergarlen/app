@@ -160,10 +160,11 @@ $app->post("/orders", function() use ($app) {
     if ($orderId > 0)
     {
       $orderUpdateData = processOrderUpdate($request);
-      $orderId = updateOrder($orderUpdateData["order"]);
-      processOrderPlansUpdate($orderUpdateData);
+      //$orderId = updateOrder($orderUpdateData["order"]);
+      //processOrderPlansUpdate($orderUpdateData);
     }
-    $result = '{"id_orden":' . $orderId . '}';
+    $result = json_encode(processOrderPlansUpdate($orderUpdateData));
+    //$result = '{"id_orden":' . $orderId . '}';
     $app->response()->status(200);
     $app->response()->header('Content-Type', 'application/json');
     //$result = ")]}',\n" . $result;

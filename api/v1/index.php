@@ -103,11 +103,10 @@ $app->post("/studies", function() use ($app) {
     else
     {
       $studyUpdateData = processStudyUpdate($request);
-      //$studyId = updateStudy($studyUpdateData["study"]);
-      //$orderData = processStudyOrderUpdate($studyUpdateData);
-      $result = json_encode(processStudyOrderUpdate($studyUpdateData));
+      $studyId = updateStudy($studyUpdateData["study"]);
+      $orderData = processStudyOrderUpdate($studyUpdateData);
     }
-    // $result = '{"id_estudio":' . $studyId . '}';
+    $result = '{"id_estudio":' . $studyId . '}';
     $app->response()->status(200);
     $app->response()->header('Content-Type', 'application/json');
     //$result = ")]}',\n" . $result;

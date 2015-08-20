@@ -547,7 +547,7 @@ function insertOrder($orderData) {
     fecha_valida, fecha_rechaza, ip_captura,
     ip_valida, host_captura, host_valida,
     motivo_rechaza, comentarios, activo)
-    VALUES ( :id_estudio, :id_cliente, :id_matriz,
+    VALUES (:id_estudio, :id_cliente, :id_matriz,
     :id_tipo_muestreo, :id_norma, :id_cuerpo_receptor,
     :id_status, :id_usuario_captura, :id_usuario_valida,
     :cantidad_muestras, :costo_total,

@@ -1080,17 +1080,17 @@
               vm.preservations[i].id_plan = vm.plan.id_plan;
               vm.preservations[i].selected = false;
             }
-            // ArrayUtilsService.seItemsFromReference(
-            //   vm.preservations,
-            //   vm.plan.preservaciones,
-            //   'id_preservacion',
-            //   [
-            //     'id_plan_preservacion',
-            //     'id_plan',
-            //     'id_preservacion',
-            //     'selected'
-            //   ]
-            // );
+            ArrayUtilsService.seItemsFromReference(
+              vm.preservations,
+              vm.plan.preservaciones,
+              'id_preservacion',
+              [
+                'id_plan_preservacion',
+                'id_plan',
+                'id_preservacion',
+                'selected'
+              ]
+            );
           });
         ReactiveService
           .get()
@@ -1184,28 +1184,6 @@
     }
 
     function selectPreservations() {
-      // if (vm.preservations.length > 0 && vm.plan.preservaciones) {
-      //   if (vm.plan.preservaciones.length > 0 && !vm.isPreservationListLoaded) {
-      //     ArrayUtilsService.seItemsFromReference(
-      //       vm.preservations,
-      //       vm.plan.preservaciones,
-      //       'id_preservacion',
-      //       [
-      //         'id_plan_preservacion',
-      //         'id_plan',
-      //         'selected'
-      //       ]
-      //     );
-      //     vm.isPreservationListLoaded = true;
-      //   } else {
-      //     vm.plan.preservaciones = [];
-      //     vm.plan.preservaciones = ArrayUtilsService.selectItemsFromCollection(
-      //       vm.preservations,
-      //       'selected',
-      //       true
-      //     ).slice();
-      //   }
-      // }
       if (vm.isPreservationListLoaded) {
         vm.plan.preservaciones = [];
         vm.plan.preservaciones = ArrayUtilsService.selectItemsFromCollection(

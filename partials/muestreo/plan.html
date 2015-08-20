@@ -313,8 +313,6 @@
     <div class="col-xs-12">
       <h5>Muestreo y entrega</h5>
     </div>
-  </div>
-  <div class="row">
     <div class="col-xs-12 col-sm-6">
       <label for="samplingSupervisorSelect">
         Responsable
@@ -356,8 +354,6 @@
     <div class="col-xs-12">
       <h5>Recolección</h5>
     </div>
-  </div>
-  <div class="row">
     <div class="col-xs-12 col-sm-6">
       <label for="collectingSupervisorSelect">
         Responsable
@@ -399,8 +395,6 @@
     <div class="col-xs-12">
       <h5>Registro resultados</h5>
     </div>
-  </div>
-  <div class="row">
     <div class="col-xs-12 col-sm-6">
       <label for="loggingSupervisorSelect">
         Responsable
@@ -447,8 +441,6 @@
     <div class="col-xs-12">
       <h5>Calibración y verificación de equipo</h5>
     </div>
-  </div>
-  <div class="row">
     <div class="col-xs-12 col-sm-6">
       <label for="calibratorSelect">
         Responsable calibración
@@ -491,8 +483,6 @@
     <div class="col-xs-12">
       <h4>Equipo {{plan.selectInstruments()}}</h4>
     </div>
-  </div>
-  <div class="row">
     <div class="col-xs-12 col-sm-6"
       data-ng-repeat="equipment in plan.instruments">
       <div class="row">
@@ -519,10 +509,8 @@
   </div>
   <div class="row">
     <div class="col-xs-12">
-      <h5>Preparación de recipientes {{plan.selectContainers()}}</h5>
+      <h5>Preparación de recipientes</h5>
     </div>
-  </div>
-  <div class="row">
     <div class="col-xs-12 col-sm-6">
       <label for="preparationSupervisorSelect" class="sr-only">
         Encargado de preparación
@@ -544,10 +532,8 @@
   </div>
   <div class="row">
     <div class="col-xs-12">
-      <h5>Recipientes {{plan.selectContainers()}}</h5>
+      <h5>Recipientes {{plan.selectPreservations()}}</h5>
     </div>
-  </div>
-  <div class="row">
     <div class="col-xs-12 col-sm-6"
       data-ng-repeat="preservation in plan.preservations">
       <div class="row">
@@ -567,9 +553,15 @@
       </div>
     </div>
     <div class="col-xs-12">
+      Recipientes por punto:
+      <strong>
+      {{plan.plan.preservaciones.length}}
+      </strong>
+    </div>
+    <div class="col-xs-12">
       Recipientes:
       <strong>
-      {{plan.plan.recipientes.length * plan.plan.puntos.length}}
+      {{plan.plan.recipientes.length}}
       </strong>
     </div>
   </div>
@@ -685,8 +677,6 @@
           Seleccionar todos los materiales
       </label>
     </div>
-  </div>
-  <div class="row">
     <div class="col-xs-12 col-sm-6"
       data-ng-repeat="material in plan.materials"
       >

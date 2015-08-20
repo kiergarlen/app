@@ -51,9 +51,7 @@ $app->get("/menu", function() use ($app) {
 $app->get("/tasks", function() use ($app) {
   try {
     $userId = decodeUserToken($app->request())->uid;
-    $result = getTasks($userId);
-    //TODO: Once Tasks table is in DB, replace for this:
-    //$result = json_encode(getTasks($userId));
+    $result = json_encode(getTasks($userId));
     $app->response()->status(200);
     $app->response()->header('Content-Type', 'application/json');
     //$result = ")]}',\n" . $result;
@@ -160,11 +158,10 @@ $app->post("/orders", function() use ($app) {
     if ($orderId > 0)
     {
       $orderUpdateData = processOrderUpdate($request);
-      //$orderId = updateOrder($orderUpdateData["order"]);
-      //processOrderPlansUpdate($orderUpdateData);
+      $orderId = updateOrder($orderUpdateData["order"]);
+      processOrderPlansUpdate($orderUpdateData);
     }
-    $result = json_encode(processOrderPlansUpdate($orderUpdateData));
-    //$result = '{"id_orden":' . $orderId . '}';
+    $result = '{"id_orden":' . $orderId . '}';
     $app->response()->status(200);
     $app->response()->header('Content-Type', 'application/json');
     //$result = ")]}',\n" . $result;

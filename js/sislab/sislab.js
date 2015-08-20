@@ -412,17 +412,37 @@
    * @constructor
    * @desc Controla la vista para el listado de Estudios
    * @this {Object} $scope - Contenedor para el modelo [AngularJS]
+   * @param {Object} $window - Acceso a Objeto Window [AngularJS]
    * @param {Object} $location - Manejo de URL [AngularJS]
+   * @param {Object} TokenService - Proveedor para manejo del token
+   * @param {Object} RestUtilsService - Proveedor para manejo de servicios REST
    * @param {Object} StudyService - Proveedor de datos, Estudios
    */
-  function StudyListController($location, StudyService) {
+  function StudyListController($window, $location, TokenService,
+    RestUtilsService, StudyService) {
     var vm = this;
+    vm.user = TokenService.getUserFromToken();
     vm.studies = StudyService.get();
     vm.addStudy = addStudy;
+    vm.removeStudy = removeStudy;
     vm.viewStudy = viewStudy;
 
     function addStudy() {
       $location.path('/estudio/estudio/0');
+    }
+
+    function removeStudy(item) {
+      if (vm.user.level < 3 && item.id_status != 2) {
+        item.activo = 0;
+        RestUtilsService
+          .updateData(
+            StudyService,
+            item,
+            'estudio/estudio',
+            'id_estudio'
+          );
+        $window.location.reload();
+      }
     }
 
     function viewStudy(id) {
@@ -433,7 +453,8 @@
     .module('sislabApp')
     .controller('StudyListController',
       [
-        '$location', 'StudyService',
+        '$window', '$location', 'TokenService',
+        'RestUtilsService', 'StudyService',
         StudyListController
       ]
     );
@@ -3120,6 +3141,7 @@
 
     RestUtils.saveData = saveData;
     RestUtils.updateData = updateData;
+    RestUtils.deleteData = deleteData;
 
     /**
      * @function saveData
@@ -3155,6 +3177,31 @@
     function updateData(service, data, returnPath, itemIdName) {
       service
         .update(JSON.stringify(data))
+        .$promise
+        .then(function success(response) {
+          //$location.path(returnPath + '/' + response[itemIdName]);
+          $location.path(returnPath);
+          return response;
+        }, function error(response) {
+          if (response.status === 404) {
+            return 'Recurso no encontrado';
+          } else {
+            return 'Error no especificado';
+          }
+        });
+    }
+
+    /**
+     * @function deleteData
+     * @desc Envía los datos vía POST para borrado lógico de un recurso en el servicio
+     * @param {Object} service - Proveedor de datos a usar
+     * @param {String} data - JSON a enviar al servicio
+     * @param {String} returnPath - Ruta de la vista a desplegar, éxito
+     * @param {String} itemIdName - Nombre del identificador del recurso
+     */
+    function deleteData(service, data, returnPath, itemIdName) {
+      service
+        .delete(JSON.stringify(data))
         .$promise
         .then(function success(response) {
           //$location.path(returnPath + '/' + response[itemIdName]);

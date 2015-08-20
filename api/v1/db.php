@@ -150,7 +150,7 @@ function updateUser($updateData) {
 }
 
 /**
- * Obtiene los elementos del Menu/Submenu asignados a $userId
+ * Obtiene los elementos del Menu/Submenu asignados al usuario $userId
  * @param  $userId integer Id del Usuario
  * @return $result Array Elementos del menu de $userId
  */
@@ -171,7 +171,7 @@ function getMenu($userId) {
 }
 
 function getTasks($userId) {
-  $result = '[]';
+  $result = array();
   // $sql = "SELECT * FROM Tarea WHERE activo = 1";
   // $db = getConnection();
   // $stmt = $db->prepare($sql);

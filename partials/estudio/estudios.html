@@ -101,6 +101,16 @@
                   >
                   <i class="glyphicon glyphicon-eye-open" aria-hidden="true"></i>
                 </button>
+                <button class="btn btn-danger"
+                  id="removeButtonId{{item.id_estudio}}"
+                  name="removeButtonId{{item.id_estudio}}"
+                  value="Eliminar" title="Eliminar"
+                  data-ng-click="studies.removeStudy(item)"
+                  data-ng-disabled="item.id_status == 2"
+                  data-ng-show="studies.user.level < 3"
+                  >
+                  <i class="glyphicon glyphicon-remove" aria-hidden="true"></i>
+                </button>
               </td>
             </tr>
           </tbody>

@@ -3137,7 +3137,6 @@
 
     RestUtils.saveData = saveData;
     RestUtils.updateData = updateData;
-    RestUtils.deleteData = deleteData;
 
     /**
      * @function saveData
@@ -3176,30 +3175,6 @@
         .$promise
         .then(function success(response) {
           //$location.path(returnPath + '/' + response[itemIdName]);
-          $location.path(returnPath);
-          return response;
-        }, function error(response) {
-          if (response.status === 404) {
-            return 'Recurso no encontrado';
-          } else {
-            return 'Error no especificado';
-          }
-        });
-    }
-
-    /**
-     * @function deleteData
-     * @desc Envía los datos vía POST para borrado lógico de un recurso en el servicio
-     * @param {Object} service - Proveedor de datos a usar
-     * @param {String} data - JSON a enviar al servicio
-     * @param {String} returnPath - Ruta de la vista a desplegar, éxito
-     * @param {String} itemIdName - Nombre del identificador del recurso
-     */
-    function deleteData(service, data, returnPath, itemIdName) {
-      service
-        .delete(JSON.stringify(data))
-        .$promise
-        .then(function success(response) {
           $location.path(returnPath);
           return response;
         }, function error(response) {
@@ -3498,17 +3473,8 @@
           'Auth-Token': TokenService.getToken()
         }
       },
-      delete: {
-        method: 'DELETE',
-        params: {studyId: 'id_estudio'},
-        isArray: false,
-        headers: {
-          'Auth-Token': TokenService.getToken(),
-          'Delete': true
-        }
-      },
       save: {
-        method: 'PUT',
+        method: 'POST',
         params: {},
         isArray: false,
         headers: {

@@ -814,6 +814,7 @@ function insertPlan($planData) {
     id_responsable_hieleras, id_status, id_usuario_captura,
     id_usuario_valida, fecha,
     fecha_probable, fecha_calibracion, fecha_captura,
+    fecha_actualiza,
     fecha_valida, fecha_rechaza, ip_captura,
     ip_valida, host_captura, host_valida,
     calle, numero, colonia, codigo_postal,
@@ -832,6 +833,7 @@ function insertPlan($planData) {
     :id_responsable_hieleras, :id_status, :id_usuario_captura,
     :id_usuario_valida, :fecha,
     :fecha_probable, :fecha_calibracion, SYSDATETIMEOFFSET(),
+    :fecha_actualiza,
     :fecha_valida, :fecha_rechaza, :ip_captura,
     :ip_valida, :host_captura, :host_valida,
     :calle, :numero, :colonia, :codigo_postal,
@@ -893,24 +895,6 @@ function updatePlan($updateData) {
   $stmt->execute($updateData);
   $db = null;
   return $updateData["id_plan"];
-}
-
-function getSamplingEmployees() {
-  $sql = "SELECT id_usuario, id_nivel, id_rol, id_area, id_puesto,
-    interno, cea, laboratorio, supervisa, analiza, muestrea,
-    nombres, apellido_paterno, apellido_materno,
-    CONVERT(nvarchar, fecha_captura, 126) AS fecha_captura,
-    CONVERT(nvarchar, fecha_actualiza, 126) AS fecha_actualiza,
-    ip_captura, ip_actualiza,
-    host_captura, host_actualiza, activo
-    FROM Usuario
-    WHERE activo = 1 AND id_area = 4";
-  $db = getConnection();
-  $stmt = $db->prepare($sql);
-  $stmt->execute();
-  $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-  $db = null;
-  return $result;
 }
 
 function getSheets() {
@@ -2122,6 +2106,24 @@ function getEmployees() {
   $samplingEmployees = $stmt->fetchAll(PDO::FETCH_ASSOC);
   $db = null;
   return $samplingEmployees;
+}
+
+function getSamplingEmployees() {
+  $sql = "SELECT id_usuario, id_nivel, id_rol, id_area, id_puesto,
+    interno, cea, laboratorio, supervisa, analiza, muestrea,
+    nombres, apellido_paterno, apellido_materno,
+    CONVERT(nvarchar, fecha_captura, 126) AS fecha_captura,
+    CONVERT(nvarchar, fecha_actualiza, 126) AS fecha_actualiza,
+    ip_captura, ip_actualiza,
+    host_captura, host_actualiza, activo
+    FROM Usuario
+    WHERE activo = 1 AND id_area = 4";
+  $db = getConnection();
+  $stmt = $db->prepare($sql);
+  $stmt->execute();
+  $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+  $db = null;
+  return $result;
 }
 
 function getSamplingEmployee($userId) {

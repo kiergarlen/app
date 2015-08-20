@@ -1002,7 +1002,6 @@
       .$promise
       .then(function success(response) {
         vm.plan = response;
-        /*
         DistrictService
           .get()
           .$promise
@@ -1053,7 +1052,6 @@
               ]
             );
           });
-        */
         PlanContainersService
           .query({planId: $routeParams.planId})
           .$promise
@@ -1069,7 +1067,6 @@
             }
 
           });
-        /*
         PreservationService
           .get()
           .$promise
@@ -1167,7 +1164,6 @@
               ]
             );
           });
-        */
       });
 
     function selectDistrict() {
@@ -3204,7 +3200,6 @@
         .delete(JSON.stringify(data))
         .$promise
         .then(function success(response) {
-          //$location.path(returnPath + '/' + response[itemIdName]);
           $location.path(returnPath);
           return response;
         }, function error(response) {
@@ -3503,8 +3498,17 @@
           'Auth-Token': TokenService.getToken()
         }
       },
+      delete: {
+        method: 'DELETE',
+        params: {studyId: 'id_estudio'},
+        isArray: false,
+        headers: {
+          'Auth-Token': TokenService.getToken(),
+          'Delete': true
+        }
+      },
       save: {
-        method: 'POST',
+        method: 'PUT',
         params: {},
         isArray: false,
         headers: {

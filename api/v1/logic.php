@@ -347,6 +347,7 @@ function processStudyOrderUpdate($studyUpdateData) {
       $storedOrders[$i]["host_actualiza"] = $updateUrl;
       updateOrder($storedOrders[$i]);
     }
+
     for ($j = 0; $j < $m; $j++) {
       $order = (array) $orders[$j];
       if ($order["id_orden"] < 1)
@@ -368,27 +369,27 @@ function processStudyOrderUpdate($studyUpdateData) {
         $order["id_usuario_captura"] = $updateUserId;
         $order["ip_captura"] = $updateIp;
         $order["host_captura"] = $updateUrl;
-        $order["fecha_valida"] = isoDateToMsSql($order["fecha"]);
-        $order["fecha_rechaza"] = isoDateToMsSql($order["fecha"]);
+        $order["fecha_valida"] = isoDateToMsSql($order["fecha_valida"]);
+        $order["fecha_rechaza"] = isoDateToMsSql($order["fecha_rechaza"]);
         insertOrder($order);
       }
       else
       {
-        unset($order[$i]["cliente"]);
-        unset($order[$i]["estudio"]);
-        unset($order[$i]["planes"]);
-        unset($order[$i]['$$hashKey']);
-        unset($order[$i]["id_usuario_captura"]);
-        unset($order[$i]["fecha_actualiza"]);
-        unset($order[$i]["fecha_captura"]);
-        unset($order[$i]["ip_captura"]);
-        unset($order[$i]["host_captura"]);
-        $order[$i]["activo"] = 0;
-        $order[$i]["fecha"] = isoDateToMsSql($order[$i]["fecha"]);
-        $order[$i]["id_usuario_actualiza"] = $updateUserId;
-        $order[$i]["ip_actualiza"] = $updateIp;
-        $order[$i]["host_actualiza"] = $updateUrl;
-        updateOrder($order[$i]);
+        unset($order["cliente"]);
+        unset($order["estudio"]);
+        unset($order["planes"]);
+        unset($order['$$hashKey']);
+        unset($order["id_usuario_captura"]);
+        unset($order["fecha_actualiza"]);
+        unset($order["fecha_captura"]);
+        unset($order["ip_captura"]);
+        unset($order["host_captura"]);
+        $order["activo"] = 1;
+        $order["fecha"] = isoDateToMsSql($order["fecha"]);
+        $order["id_usuario_actualiza"] = $updateUserId;
+        $order["ip_actualiza"] = $updateIp;
+        $order["host_actualiza"] = $updateUrl;
+        updateOrder($order);
       }
     }
   }

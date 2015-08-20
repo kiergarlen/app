@@ -149,7 +149,6 @@ function processStudyInsert($request) {
   unset($insertData["host_actualiza"]);
   unset($insertData["ip_actualiza"]);
   unset($insertData["fecha_captura"]);
-  unset($insertData["fecha_entrega"]);
 
   $lastStudy = (array) getLastStudyByYear($currentYear);
   if (is_numeric($lastStudy["oficio"]))

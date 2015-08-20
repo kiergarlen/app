@@ -244,8 +244,9 @@ $app->post("/plans", function() use ($app) {
 
 $app->get("/plans/containers/:planId", function($planId) use ($app) {
   try {
-    //$userId = decodeUserToken($app->request())->uid;
-    $result = json_encode(getContainersByPlan($planId));
+    // $userId = decodeUserToken($app->request())->uid;
+    // $result = json_encode(getContainersByPlan($planId));
+    $result = json_encode(getPlanContainers($planId));
     $app->response()->status(200);
     $app->response()->header('Content-Type', 'application/json');
     //$result = ")]}',\n" . $result;

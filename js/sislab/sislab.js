@@ -1061,11 +1061,10 @@
             vm.containers = response;
             vm.isPreservationListLoaded = true;
             l = vm.containers.length;
-            for (i = 0; i < l; i += 1) {
-              vm.containers[i].id_plan_recipiente = 0;
-              vm.containers[i].id_plan = vm.plan.id_plan;
-            }
-
+            // for (i = 0; i < l; i += 1) {
+            //   vm.containers[i].id_plan_recipiente = 0;
+            //   vm.containers[i].id_plan = vm.plan.id_plan;
+            // }
           });
         PreservationService
           .get()
@@ -1195,28 +1194,13 @@
     }
 
     function selectContainers() {
-      if (vm.containers.length > 0 && vm.plan.recipientes) {
-        if (vm.plan.recipientes.length > 0 && !vm.isContainerListLoaded) {
-          ArrayUtilsService.seItemsFromReference(
-            vm.containers,
-            vm.plan.recipientes,
-            'id_recipiente',
-            [
-              'id_plan_recipiente',
-              'id_plan',
-              'cantidad',
-              'selected'
-            ]
-          );
-          vm.isContainerListLoaded = true;
-        } else {
-          vm.plan.recipientes = [];
-          vm.plan.recipientes = ArrayUtilsService.selectItemsFromCollection(
-            vm.containers,
-            'selected',
-            true
-          ).slice();
-        }
+      if (vm.isContainerListLoaded) {
+        vm.plan.recipientes = [];
+        vm.plan.recipientes = ArrayUtilsService.selectItemsFromCollection(
+          vm.containers,
+          'selected',
+          true
+        ).slice();
       }
     }
 

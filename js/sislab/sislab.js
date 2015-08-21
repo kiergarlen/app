@@ -1495,8 +1495,8 @@
         'ValidationService', 'RestUtilsService', 'ArrayUtilsService',
         'DateUtilsService', 'PlanObjectiveService', 'DistrictService',
         'CityService', 'SamplingEmployeeService', 'PreservationService',
-        'PlanContainersService', 'ReactiveService', 'MaterialService',
-        'CoolerService', 'SamplingInstrumentService', 'PlanService',
+        'ReactiveService', 'MaterialService', 'CoolerService',
+        'SamplingInstrumentService', 'PlanService',
         PlanController
       ]
     );

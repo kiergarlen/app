@@ -22,6 +22,7 @@
    * @param {Object} $routeProvider - Proveedor, manejo de rutas de la applicación
    * @param {Object} $httpProvider - Proveedor, manejo de peticiones HTTP
    * @param {Object} jwtInterceptorProvider - Proveedor, intercepción de JWT
+   * @param {Object} $collapseProvider - Proveedor, Angular-strap Collapse
    */
   function config($routeProvider, $httpProvider, jwtInterceptorProvider,
     $collapseProvider) {
@@ -948,7 +949,6 @@
    * @param {Object} CityService - Proveedor de datos, Localidades
    * @param {Object} SamplingEmployeeService - Proveedor de datos, Empleados muestreo
    * @param {Object} PreservationService - Proveedor de datos, Preservaciones
-   * @param {Object} PlanContainersService - Proveedor de datos, Recipientes de Plan
    * @param {Object} ReactiveService - Proveedor de datos, Reactivos
    * @param {Object} MaterialService - Proveedor de datos, Material
    * @param {Object} CoolerService - Proveedor de datos, Hieleras
@@ -959,8 +959,8 @@
     ValidationService, RestUtilsService, ArrayUtilsService,
     DateUtilsService, PlanObjectiveService, DistrictService,
     CityService, SamplingEmployeeService, PreservationService,
-    PlanContainersService, ReactiveService, MaterialService,
-    CoolerService, SamplingInstrumentService, PlanService) {
+    ReactiveService, MaterialService, CoolerService,
+    SamplingInstrumentService, PlanService) {
     var vm = this;
     vm.plan = {};
     vm.user = TokenService.getUserFromToken();
@@ -970,7 +970,7 @@
     vm.samplingEmployees = SamplingEmployeeService.get();
     vm.instruments = [];
     vm.preservations = [];
-    vm.containers = [];
+    // vm.containers = [];
     vm.reactives = [];
     vm.materials = [];
     vm.coolers = [];
@@ -987,7 +987,7 @@
     vm.isAllMaterialsListSelected = false;
     vm.selectInstruments = selectInstruments;
     vm.selectPreservations = selectPreservations;
-    vm.selectContainers = selectContainers;
+    // vm.selectContainers = selectContainers;
     vm.selectReactives = selectReactives;
     vm.selectMaterials = selectMaterials;
     vm.selectCoolers = selectCoolers;
@@ -1052,20 +1052,13 @@
               ]
             );
           });
-        PlanContainersService
-          .query({planId: $routeParams.planId})
-          .$promise
-          .then(function success(response) {
-            var i;
-            var l;
-            vm.containers = response;
-            vm.isPreservationListLoaded = true;
-            l = vm.containers.length;
-            // for (i = 0; i < l; i += 1) {
-            //   vm.containers[i].id_plan_recipiente = 0;
-            //   vm.containers[i].id_plan = vm.plan.id_plan;
-            // }
-          });
+        // PlanContainersService
+        //   .query({planId: $routeParams.planId})
+        //   .$promise
+        //   .then(function success(response) {
+        //     vm.containers = response;
+        //     vm.isPreservationListLoaded = true;
+        //   });
         PreservationService
           .get()
           .$promise
@@ -1193,16 +1186,16 @@
       }
     }
 
-    function selectContainers() {
-      if (vm.isContainerListLoaded) {
-        vm.plan.recipientes = [];
-        vm.plan.recipientes = ArrayUtilsService.selectItemsFromCollection(
-          vm.containers,
-          'selected',
-          true
-        ).slice();
-      }
-    }
+    // function selectContainers() {
+    //   if (vm.isContainerListLoaded) {
+    //     vm.plan.recipientes = [];
+    //     vm.plan.recipientes = ArrayUtilsService.selectItemsFromCollection(
+    //       vm.containers,
+    //       'selected',
+    //       true
+    //     ).slice();
+    //   }
+    // }
 
     function selectReactives() {
       if (vm.reactives.length > 0 && vm.plan.reactivos) {
@@ -3571,26 +3564,26 @@
    * @param {Object} TokenService - Proveedor de métodos para token
    * @return {Object} $resource - Acceso a recursos HTTP
    */
-  function PlanContainersService($resource, TokenService) {
-    return $resource(API_BASE_URL + 'plans/containers/:planId', {}, {
-      query: {
-        method: 'GET',
-        params: {planId: 'id_plan'},
-        isArray: true,
-        headers: {
-          'Auth-Token': TokenService.getToken()
-        }
-      }
-    });
-  }
-  angular
-    .module('sislabApp')
-    .factory('PlanContainersService',
-      [
-        '$resource', 'TokenService',
-        PlanContainersService
-      ]
-    );
+  // function PlanContainersService($resource, TokenService) {
+  //   return $resource(API_BASE_URL + 'plans/containers/:planId', {}, {
+  //     query: {
+  //       method: 'GET',
+  //       params: {planId: 'id_plan'},
+  //       isArray: true,
+  //       headers: {
+  //         'Auth-Token': TokenService.getToken()
+  //       }
+  //     }
+  //   });
+  // }
+  // angular
+  //   .module('sislabApp')
+  //   .factory('PlanContainersService',
+  //     [
+  //       '$resource', 'TokenService',
+  //       PlanContainersService
+  //     ]
+  //   );
 
 
   //SheetService.js

@@ -532,7 +532,7 @@
   </div>
   <div class="row">
     <div class="col-xs-12">
-      <h5>Recipientes por tipo de preservación {{plan.selectPreservations()}}</h5>
+      <h5>Recipientes por preservación {{plan.selectPreservations()}}</h5>
     </div>
     <div class="col-xs-12 col-sm-6"
       data-ng-repeat="preservation in plan.preservations">
@@ -558,39 +558,11 @@
       {{plan.plan.preservaciones.length}}
       </strong>
     </div>
-  </div>
-  <div class="row">
     <div class="col-xs-12">
-      <div class="row">
-        <div class="col-xs-12">
-          <h5>Recipientes para recepción</h5>
-        </div>
-        <div class="col-xs-12"
-          data-ng-repeat="container in plan.containers">
-          id_recipiente: <strong>{{container.id_recipiente}}</strong> \\
-          id_plan: <strong>{{container.id_plan}}</strong> \\
-          id_recepcion: <strong>{{container.id_recepcion}}</strong> \\
-          id_muestra: <strong>{{container.id_muestra}}</strong> \\
-          id_tipo_recipiente: <strong>{{container.id_tipo_recipiente}}</strong> \\
-          id_preservacion: <strong>{{container.id_preservacion}}</strong> \\
-          id_almacenamiento: <strong>{{container.id_almacenamiento}}</strong> \\
-          id_status_recipiente: <strong>{{container.id_status_recipiente}}</strong> \\
-          id_usuario_actualiza: <strong>{{container.id_usuario_actualiza}}</strong> \\
-          volumen: <strong>{{container.volumen}}</strong> \\
-          volumen_inicial: <strong>{{container.volumen_inicial}}</strong> \\
-          fecha_actualizacion: <strong>{{container.fecha_actualizacion}}</strong> \\
-          ip_actualiza: <strong>{{container.ip_actualiza}}</strong> \\
-          host_actualiza: <strong>{{container.host_actualiza}}</strong> \\
-          activo: <strong>{{container.activo}}</strong>
-          <br><br>
-        </div>
-        <div class="col-xs-12">
-          Recipientes totales:
-          <strong>
-          {{plan.plan.recipientes.length}}
-          </strong>
-        </div>
-      </div>
+      Recipientes totales:
+      <strong>
+      {{plan.plan.recipientes.length}}
+      </strong>
     </div>
   </div>
   <div class="row">

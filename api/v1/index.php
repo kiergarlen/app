@@ -188,7 +188,7 @@ $app->get("/order/sources", function() use ($app) {
 
 $app->get("/plans(/)(:planId)", function($planId = -1) use ($app) {
   try {
-    //$userId = decodeUserToken($app->request())->uid;
+    $userId = decodeUserToken($app->request())->uid;
     if ($planId > -1)
     {
       $result = json_encode(getPlan($planId));
@@ -244,7 +244,7 @@ $app->post("/plans", function() use ($app) {
 
 $app->get("/plans/containers/:planId", function($planId) use ($app) {
   try {
-    // $userId = decodeUserToken($app->request())->uid;
+    $userId = decodeUserToken($app->request())->uid;
     // $result = json_encode(getContainersByPlan($planId));
     $result = json_encode(getPlanContainers($planId));
     $app->response()->status(200);
@@ -330,7 +330,7 @@ $app->get("/receptions(/)(:receptionId)", function($receptionId = -1) use ($app)
 
 $app->get("/areas/reception", function() use ($app) {
   try {
-    //$userId = decodeUserToken($app->request())->uid;
+    $userId = decodeUserToken($app->request())->uid;
     $result = json_encode(getReceivingAreas());
     $app->response()->status(200);
     $app->response()->header('Content-Type', 'application/json');
@@ -740,7 +740,7 @@ $app->get("/materials", function() use ($app) {
 
 $app->get("/instruments/sampling", function() use ($app) {
   try {
-    //$userId = decodeUserToken($app->request())->uid;
+    $userId = decodeUserToken($app->request())->uid;
     $result = json_encode(getSamplingInstruments());
     $app->response()->status(200);
     $app->response()->header('Content-Type', 'application/json');
@@ -887,7 +887,7 @@ $app->get("/samples", function() use ($app) {
 
 $app->get("/sheet/samples/:sheetId", function($sheetId) use ($app) {
   try {
-    //$userId = decodeUserToken($app->request())->uid;
+    $userId = decodeUserToken($app->request())->uid;
     $result = json_encode(getSamplesBySheet($sheetId));
     $app->response()->status(200);
     $app->response()->header('Content-Type', 'application/json');

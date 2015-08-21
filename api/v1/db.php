@@ -920,6 +920,30 @@ function getSheets() {
   return $result;
 }
 
+function getSheetsByPlan($planID) {
+  $sql = "SELECT id_hoja, id_estudio, id_cliente, id_orden, id_plan,
+    id_paquete, id_nubes, id_direccion_corriente, id_oleaje,
+    id_status, id_usuario_captura, id_usuario_valida,
+    id_usuario_actualiza,
+    CONVERT(NVARCHAR, fecha_muestreo, 126) AS fecha_muestreo,
+    CONVERT(NVARCHAR, fecha_entrega, 126) AS fecha_entrega,
+    CONVERT(NVARCHAR, fecha_captura, 126) AS fecha_captura,
+    CONVERT(NVARCHAR, fecha_valida, 126) AS fecha_valida,
+    CONVERT(NVARCHAR, fecha_actualiza, 126) AS fecha_actualiza,
+    ip_captura, ip_valida, ip_actualiza, host_captura,
+    host_valida, host_actualiza, nubes_otro, comentarios,
+    motivo_rechaza, activo
+    FROM Hoja
+    WHERE activo = 1 AND id_plan = :planId";
+  $db = getConnection();
+  $stmt = $db->prepare($sql);
+  $stmt->bindParam("planId", $planId);
+  $stmt->execute();
+  $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+  $db = null;
+  return $result;
+}
+
 function getBlankSheet() {
   return array(
     "id_hoja" => 0, "id_estudio" => 1,

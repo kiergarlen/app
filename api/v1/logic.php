@@ -30,8 +30,8 @@ function processUserJwt($request) {
   $token["iss"] = $request->getUrl();
   $token["aud"] = "sislab.ceajalisco.gob.mx";
   $token["iat"] = time();
-  //// Token expires 4 hours from now
-  $token["exp"] = time() + (96 * 60 * 60);
+  //// Token expires 192 hours from now
+  $token["exp"] = time() + (192 * 60 * 60);
   $jwt = JWT::encode($token, KEY);
   return $jwt;
 }
@@ -594,6 +594,7 @@ function processPlanUpdate($request) {
     $plan["host_valida"] = $request->getUrl();
     $plan["fecha_valida"] = isoDateToMsSql($plan["fecha_valida"]);
     //TODO: create <blank> Sheet, Reception for this Plan
+    insertPlanBlankElements($plan);
   }
 
   $plan["fecha"] = isoDateToMsSql($plan["fecha"]);

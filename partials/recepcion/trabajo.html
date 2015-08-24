@@ -264,6 +264,7 @@
     <div class="col-xs-12 col-sm-5 well wel-sm ">
       <button class="btn btn-success"
         value="Validar" title="Validar"
+        data-ng-disabled="job.job.id_status == 2"
         data-ng-click="job.approveItem()"
         >
         <i class="glyphicon glyphicon-ok" aria-hidden="true"></i>
@@ -271,6 +272,7 @@
       </button>
       <button class="btn btn-danger"
         value="Rechazar" title="Rechazar"
+        data-ng-disabled="job.job.id_status == 3"
         data-ng-click="job.rejectItem()"
         >
         <i class="glyphicon glyphicon-remove" aria-hidden="true"></i>

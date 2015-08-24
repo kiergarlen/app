@@ -225,7 +225,6 @@ $app->post("/plans", function() use ($app) {
       processPlanInstrumentsUpdate($planUpdateData);
       processPlanPreservationsUpdate($planUpdateData);
       processPlanContainersUpdate($planUpdateData);
-      // $result = json_encode(processPlanContainersUpdate($planUpdateData));
       processPlanReactivesUpdate($planUpdateData);
       processPlanMaterialsUpdate($planUpdateData);
       processPlanCoolersUpdate($planUpdateData);

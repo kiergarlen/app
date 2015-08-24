@@ -1057,7 +1057,6 @@
         //   .$promise
         //   .then(function success(response) {
         //     vm.containers = response;
-        //     vm.isPreservationListLoaded = true;
         //   });
         PreservationService
           .get()
@@ -1066,6 +1065,7 @@
             var i;
             var l;
             vm.preservations = response;
+            vm.isPreservationListLoaded = true;
             l = vm.preservations.length;
             for (i = 0; i < l; i += 1) {
               vm.preservations[i].id_plan_preservacion = 0;

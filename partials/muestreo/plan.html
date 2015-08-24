@@ -481,7 +481,7 @@
   </div>
   <div class="row">
     <div class="col-xs-12">
-      <h4>Equipo {{plan.selectInstruments()}}</h4>
+      <h5>Equipo {{plan.selectInstruments()}}</h5>
     </div>
     <div class="col-xs-12 col-sm-6"
       data-ng-repeat="equipment in plan.instruments">
@@ -509,7 +509,7 @@
   </div>
   <div class="row">
     <div class="col-xs-12">
-      <h5>Preparación de recipientes</h5>
+      <h5>Preparación de recipiente {{plan.selectPreservations()}}</h5>
     </div>
     <div class="col-xs-12 col-sm-6">
       <label for="preparationSupervisorSelect" class="sr-only">
@@ -532,7 +532,7 @@
   </div>
   <div class="row">
     <div class="col-xs-12">
-      <h5>Recipientes por preservación {{plan.selectPreservations()}}</h5>
+      <h5>Recipientes por preservación</h5>
     </div>
     <div class="col-xs-12 col-sm-6"
       data-ng-repeat="preservation in plan.preservations">

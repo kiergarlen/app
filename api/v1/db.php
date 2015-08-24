@@ -14,7 +14,6 @@ function getConnection() {
     $dsn = "sqlsrv:server=";
     $dsn .= DB_HOST . ";Database=";
     $dsn .= DB_DATA_BASE;
-
     $dbConnection = new PDO($dsn, DB_USER, DB_PASSWORD);
     $dbConnection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
   } catch(PDOException $e) {
@@ -106,15 +105,11 @@ function insertUser($userData) {
   $sql = "INSERT INTO Usuario (id_nivel, id_rol, id_area, id_puesto,
     interno, cea, laboratorio, supervisa, analiza, muestrea,
     nombres, apellido_paterno, apellido_materno, usr, pwd,
-    fecha_captura, fecha_actualiza,
-    ip_captura, ip_actualiza,
-    host_captura, host_actualiza, activo)
+    fecha_captura, ip_captura,host_captura, activo)
     VALUES (:id_nivel, :id_rol, :id_area, :id_puesto,
     :interno, :cea, :laboratorio, :supervisa, :analiza, :muestrea,
     :nombres, :apellido_paterno, :apellido_materno, :usr, :pwd,
-    :fecha_captura, :fecha_actualiza,
-    :ip_captura, :ip_actualiza,
-    :host_captura, :host_actualiza, :activo)";
+    SYSDATETIMEOFFSET(), :ip_captura, :host_captura, :activo)";
   $db = getConnection();
   $stmt = $db->prepare($sql);
   $stmt->execute($userData);
@@ -136,7 +131,7 @@ function updateUser($updateData) {
     apellido_paterno = :apellido_paterno,
     apellido_materno = :apellido_materno, usr = :usr,
     pwd = :pwd, fecha_captura = :fecha_captura,
-    fecha_actualiza = :fecha_actualiza,
+    fecha_actualiza = SYSDATETIMEOFFSET(),
     ip_captura = :ip_captura,
     ip_actualiza = :ip_actualiza,host_captura = :host_captura,
     host_actualiza = :host_actualiza, activo = :activo
@@ -656,7 +651,7 @@ function getBlankPlan() {
     "id_orden" => 1, "id_ubicacion" => 1,
     "id_paquete" => 1, "id_objetivo_plan" => 1,
     "id_norma_muestreo" => 1, "id_estado" => 14,
-    "id_municipio" => 1, "id_localidad" => 1,
+    "id_municipio" => 14001, "id_localidad" => 140010001,
     "id_supervisor_muestreo" => 1,
     "id_supervisor_entrega" => 1, "id_supervisor_recoleccion" => 1,
     "id_supervisor_registro" => 1, "id_ayudante_entrega" => 1,
@@ -814,7 +809,6 @@ function insertPlan($planData) {
     id_responsable_hieleras, id_status, id_usuario_captura,
     id_usuario_valida, fecha,
     fecha_probable, fecha_calibracion, fecha_captura,
-    fecha_actualiza,
     fecha_valida, fecha_rechaza, ip_captura,
     ip_valida, host_captura, host_valida,
     calle, numero, colonia, codigo_postal,
@@ -833,7 +827,6 @@ function insertPlan($planData) {
     :id_responsable_hieleras, :id_status, :id_usuario_captura,
     :id_usuario_valida, :fecha,
     :fecha_probable, :fecha_calibracion, SYSDATETIMEOFFSET(),
-    :fecha_actualiza,
     :fecha_valida, :fecha_rechaza, :ip_captura,
     :ip_valida, :host_captura, :host_valida,
     :calle, :numero, :colonia, :codigo_postal,
@@ -946,41 +939,58 @@ function getSheetsByPlan($planID) {
 
 function getBlankSheet() {
   return array(
-    "id_hoja" => 0, "id_estudio" => 1,
-    "id_cliente" => 1, "id_orden" => 1,
-    "id_plan" => 1, "id_paquete" => 1,
-    "id_nubes" => 1, "id_direccion_corriente" => 1,
-    "id_oleaje" => 1, "id_status" => 1,
-    "id_usuario_captura" => 1, "id_usuario_valida" => 0,
-    "id_usuario_actualiza" => 0, "fecha_muestreo" => NULL,
-    "fecha_entrega" => NULL, "fecha_captura" => NULL,
-    "fecha_valida" => NULL, "fecha_actualiza" => NULL,
-    "ip_captura" => "", "ip_valida" => "",
-    "ip_actualiza" => "", "host_captura" => "",
-    "host_valida" => "", "host_actualiza" => "",
-    "nubes_otro" => "", "comentarios" => "",
-    "motivo_rechaza" => "", "activo" => 1,
-    "muestras" => array(
-      array(
-        "id_muestra" => 0, "id_estudio" => 1,
-        "id_cliente" => 1, "id_orden" => 1,
-        "id_plan" => 1, "id_hoja" => 0,
-        "id_recepcion" => 1, "id_custodia" => 1,
-        "id_paquete" => 1, "id_ubicacion" => 1,
-        "id_punto" => 1, "fecha_muestreo" => NULL,
-        "comentarios" => "", "activo" => 1,
-        "resultados" => array (
-          array(
-            "id_resultado" => 0, "id_muestra" => 0,
-            "id_parametro" => 1, "id_tipo_resultado" => 1,
-            "id_tipo_valor" => 1, "id_usuario_captura" => 0,
-            "valor" => "0", "activo" => 1
-          )
-        )
-      )
-    )
+    "id_hoja" => 0, "id_estudio" => 0, "id_cliente" => 0, "id_orden" => 0,
+    "id_plan" => 0, "id_paquete" => 0, "id_nubes" => 1,
+    "id_direccion_corriente" => 1, "id_oleaje" => 1, "id_status" => 1,
+    "id_usuario_captura" => 0, "id_usuario_valida" => 0,
+    "id_usuario_actualiza" => 0,
+    "fecha_muestreo" => NULL, "fecha_entrega" => NULL,
+    "fecha_captura" => NULL, "fecha_valida" => NULL,
+    "fecha_actualiza" => NULL, "fecha_rechaza" => NULL,
+    "ip_captura" => "", "ip_valida" => "", "ip_actualiza" => "",
+    "host_captura" => "", "host_valida" => "", "host_actualiza" => "",
+    "nubes_otro" => "", "comentarios" => "", "motivo_rechaza" => "",
+    "activo" => 1
   );
 }
+
+// function getBlankSheet() {
+//   return array(
+//     "id_hoja" => 0, "id_estudio" => 1,
+//     "id_cliente" => 1, "id_orden" => 1,
+//     "id_plan" => 1, "id_paquete" => 1,
+//     "id_nubes" => 1, "id_direccion_corriente" => 1,
+//     "id_oleaje" => 1, "id_status" => 1,
+//     "id_usuario_captura" => 1, "id_usuario_valida" => 0,
+//     "id_usuario_actualiza" => 0, "fecha_muestreo" => NULL,
+//     "fecha_entrega" => NULL, "fecha_captura" => NULL,
+//     "fecha_valida" => NULL, "fecha_actualiza" => NULL,
+//     "ip_captura" => "", "ip_valida" => "",
+//     "ip_actualiza" => "", "host_captura" => "",
+//     "host_valida" => "", "host_actualiza" => "",
+//     "nubes_otro" => "", "comentarios" => "",
+//     "motivo_rechaza" => "", "activo" => 1,
+//     "muestras" => array(
+//       array(
+//         "id_muestra" => 0, "id_estudio" => 1,
+//         "id_cliente" => 1, "id_orden" => 1,
+//         "id_plan" => 1, "id_hoja" => 0,
+//         "id_recepcion" => 1, "id_custodia" => 1,
+//         "id_paquete" => 1, "id_ubicacion" => 1,
+//         "id_punto" => 1, "fecha_muestreo" => NULL,
+//         "comentarios" => "", "activo" => 1,
+//         "resultados" => array (
+//           array(
+//             "id_resultado" => 0, "id_muestra" => 0,
+//             "id_parametro" => 1, "id_tipo_resultado" => 1,
+//             "id_tipo_valor" => 1, "id_usuario_captura" => 0,
+//             "valor" => "0", "activo" => 1
+//           )
+//         )
+//       )
+//     )
+//   );
+// }
 
 function getPlainSheet($sheetId) {
   $sql = "SELECT id_hoja, id_estudio, id_cliente, id_orden, id_plan,
@@ -1038,21 +1048,17 @@ function insertSheet($sheetData) {
   $sql = "INSERT INTO Hoja (id_estudio, id_cliente, id_orden,
     id_plan, id_paquete, id_nubes, id_direccion_corriente,
     id_oleaje, id_status, id_usuario_captura, id_usuario_valida,
-    id_usuario_actualiza, fecha_muestreo, fecha_entrega,
-    fecha_captura, fecha_valida, fecha_actualiza,
-    fecha_rechaza, ip_captura,
-    ip_valida, ip_actualiza, host_captura, host_valida,
-    host_actualiza, nubes_otro, comentarios, motivo_rechaza,
-    activo)
+    fecha_muestreo, fecha_entrega,
+    SYSDATETIMEOFFSET(), fecha_valida, fecha_rechaza, ip_captura,
+    ip_valida, host_captura, host_valida, nubes_otro,
+    comentarios, motivo_rechaza, activo)
     VALUES (:id_estudio, :id_cliente, :id_orden, :id_plan,
     :id_paquete, :id_nubes, :id_direccion_corriente, :id_oleaje,
     :id_status, :id_usuario_captura, :id_usuario_valida,
-    :id_usuario_actualiza, :fecha_muestreo, :fecha_entrega,
-    :fecha_captura, :fecha_valida, :fecha_actualiza,
-    fecha_rechaza, :ip_captura,
-    :ip_valida, :ip_actualiza, :host_captura, :host_valida,
-    :host_actualiza, :nubes_otro, :comentarios, :motivo_rechaza,
-    :activo)";
+    :fecha_muestreo, :fecha_entrega,
+    :fecha_captura, :fecha_valida, fecha_rechaza, :ip_captura,
+    :ip_valida, :host_captura, :host_valida, :nubes_otro,
+    :comentarios, :motivo_rechaza, :activo)";
   $db = getConnection();
   $stmt = $db->prepare($sql);
   $stmt->execute($sheetData);
@@ -1073,7 +1079,7 @@ function updateSheet($updateData) {
     fecha_muestreo = :fecha_muestreo,
     fecha_entrega = :fecha_entrega,
     fecha_valida = :fecha_valida,
-    fecha_actualiza = :fecha_actualiza,
+    fecha_actualiza = SYSDATETIMEOFFSET(),
     fecha_rechaza = :fecha_rechaza, ip_valida = :ip_valida,
     ip_actualiza = :ip_actualiza, host_valida = :host_valida,
     host_actualiza = :host_actualiza,
@@ -1091,21 +1097,17 @@ function insertSheetSample($sheetData) {
   $sql = "INSERT INTO Hoja (id_estudio, id_cliente, id_orden,
     id_plan, id_paquete, id_nubes, id_direccion_corriente,
     id_oleaje, id_status, id_usuario_captura, id_usuario_valida,
-    id_usuario_actualiza, fecha_muestreo, fecha_entrega,
-    fecha_captura, fecha_valida, fecha_actualiza,
-    fecha_rechaza, ip_captura,
-    ip_valida, ip_actualiza, host_captura, host_valida,
-    host_actualiza, nubes_otro, comentarios, motivo_rechaza,
-    activo)
+    fecha_muestreo, fecha_entrega,
+    SYSDATETIMEOFFSET(), fecha_valida, fecha_rechaza, ip_captura,
+    ip_valida, host_captura, host_valida, nubes_otro,
+    comentarios, motivo_rechaza, activo)
     VALUES (:id_estudio, :id_cliente, :id_orden, :id_plan,
     :id_paquete, :id_nubes, :id_direccion_corriente, :id_oleaje,
     :id_status, :id_usuario_captura, :id_usuario_valida,
-    :id_usuario_actualiza, :fecha_muestreo, :fecha_entrega,
-    :fecha_captura, :fecha_valida, :fecha_actualiza,
-    fecha_rechaza, :ip_captura,
-    :ip_valida, :ip_actualiza, :host_captura, :host_valida,
-    :host_actualiza, :nubes_otro, :comentarios, :motivo_rechaza,
-    :activo)";
+    :fecha_muestreo, :fecha_entrega,
+    :fecha_captura, :fecha_valida, fecha_rechaza, :ip_captura,
+    :ip_valida, :host_captura, :host_valida, :nubes_otro,
+    :comentarios, :motivo_rechaza, :activo)";
   $db = getConnection();
   $stmt = $db->prepare($sql);
   $stmt->execute($sheetData);
@@ -1139,6 +1141,22 @@ function getReceptions() {
   return $receptions;
 }
 
+function getBlankReception() {
+  return array(
+    "id_orden" => 0, "id_plan" => 0, "id_hoja" => 0,
+    "id_recepcionista" => 0, "id_verificador" => 0,
+    "id_muestra_validacion" => 0, "id_status" => 1, "id_usuario_captura" => 0,
+    "id_usuario_valida" => 0, "id_usuario_entrega" => 0,
+    "id_usuario_actualiza" => 0,
+    "fecha_entrega" => NULL, "fecha_recibe" => NULL, "fecha_verifica" => NULL,
+    "fecha_captura" => NULL, "fecha_valida" => NULL, "fecha_actualiza" => NULL,
+    "fecha_rechaza" => NULL,
+    "ip_captura" => "", "ip_valida" => "", "ip_actualiza" => "",
+    "host_captura" => "", "host_valida" => "", "host_actualiza" => "",
+    "comentarios" => "", "motivo_rechaza" => "", "activo" => 1
+  );
+}
+
 function getPlainReception($receptionId) {
   $sql = "SELECT id_recepcion, id_orden, id_plan, id_hoja,
     id_recepcionista, id_verificador, id_muestra_validacion,
@@ -1163,6 +1181,19 @@ function getPlainReception($receptionId) {
   $reception = $stmt->fetch(PDO::FETCH_OBJ);
   $db = null;
   return $reception;
+}
+
+function getReceptionsByPlan($planId) {
+  $sql = "SELECT COUNT(id_recepcion) AS cantidad
+    FROM Recepcion
+    WHERE activo = 1 AND id_plan = :planId";
+  $db = getConnection();
+  $stmt = $db->prepare($sql);
+  $stmt->bindParam("planId", $planId);
+  $stmt->execute();
+  $receptions = $stmt->fetchAll(PDO::FETCH_ASSOC);
+  $db = null;
+  return $receptions;
 }
 
 function getReception($receptionId) {
@@ -1195,22 +1226,16 @@ function getReception($receptionId) {
 function insertReception($receptionData) {
   $sql = "INSERT INTO Recepcion (id_orden, id_plan, id_hoja,
     id_recepcionista, id_verificador, id_muestra_validacion,
-    id_status, id_usuario_captura, id_usuario_valida,
-    id_usuario_entrega, id_usuario_actualiza,
+    id_status, id_usuario_captura, id_usuario_valida, id_usuario_entrega,
     fecha_entrega, fecha_recibe, fecha_verifica, fecha_captura,
-    fecha_valida, fecha_actualiza, fecha_rechaza,
-    ip_captura, ip_valida, ip_actualiza,
-    host_captura, host_valida, host_actualiza,
-    comentarios, motivo_rechaza, activo)
+    fecha_valida, fecha_rechaza, ip_captura, ip_valida, host_captura,
+    host_valida, comentarios, motivo_rechaza, activo)
     VALUES (:id_orden, :id_plan, :id_hoja,
     :id_recepcionista, :id_verificador, :id_muestra_validacion,
-    :id_status, :id_usuario_captura, :id_usuario_valida,
-    :id_usuario_entrega, :id_usuario_actualiza,
-    :fecha_entrega, :fecha_recibe, :fecha_verifica, :fecha_captura,
-    :fecha_valida, :fecha_actualiza, :fecha_rechaza,
-    :ip_captura, :ip_valida, :ip_actualiza,
-    :host_captura, :host_valida, :host_actualiza,
-    :comentarios, :motivo_rechaza, :activo)";
+    :id_status, :id_usuario_captura, :id_usuario_valida, :id_usuario_entrega,
+    :fecha_entrega, :fecha_recibe, :fecha_verifica, SYSDATETIMEOFFSET(),
+    :fecha_valida, :fecha_rechaza, :ip_captura, :ip_valida, :host_captura,
+    :host_valida, :comentarios, :motivo_rechaza, :activo)";
   $db = getConnection();
   $stmt = $db->prepare($sql);
   $stmt->execute($receptionData);
@@ -1230,7 +1255,7 @@ function updateReception($updateData) {
     id_usuario_actualiza = :id_usuario_actualiza,
     fecha_entrega = :fecha_entrega, fecha_recibe = :fecha_recibe,
     fecha_verifica = :fecha_verifica, fecha_valida = :fecha_valida,
-    fecha_actualiza = :fecha_actualiza,
+    fecha_actualiza = SYSDATETIMEOFFSET(),
     fecha_rechaza = :fecha_rechaza,
     ip_valida = :ip_valida, ip_actualiza = :ip_actualiza,
     host_valida = :host_valida, host_actualiza = :host_actualiza,
@@ -1866,12 +1891,12 @@ function getPlanContainers($planId) {
 function insertContainer($containerData) {
   $sql = "INSERT INTO Recipiente (id_plan, id_recepcion, id_muestra,
     id_tipo_recipiente, id_preservacion, id_almacenamiento,
-    id_status_recipiente, id_usuario_actualiza, volumen, volumen_inicial,
-    fecha_actualizacion, ip_actualiza, host_actualiza, activo)
+    id_status_recipiente, id_usuario_captura, volumen, volumen_inicial,
+    fecha_captura, ip_captura, host_captura, activo)
     VALUES (:id_plan, :id_recepcion, :id_muestra, :id_tipo_recipiente,
     :id_preservacion, :id_almacenamiento, :id_status_recipiente,
-    :id_usuario_actualiza, :volumen, :volumen_inicial, :fecha_actualizacion,
-    :ip_actualiza, :host_actualiza, :activo)";
+    :id_usuario_captura, :volumen, :volumen_inicial, SYSDATETIMEOFFSET(),
+    :ip_captura, :host_captura, :activo)";
   $db = getConnection();
   $stmt = $db->prepare($sql);
   $stmt->execute($containerData);
@@ -1889,7 +1914,7 @@ function updateContainer($updateData) {
     id_status_recipiente = :id_status_recipiente,
     id_usuario_actualiza = :id_usuario_actualiza, volumen = :volumen,
     volumen_inicial = :volumen_inicial,
-    fecha_actualizacion = :fecha_actualizacion,
+    fecha_actualiza = SYSDATETIMEOFFSET(),
     ip_actualiza = :ip_actualiza, host_actualiza = :host_actualiza,
     activo = :activo
     WHERE id_recipiente = :id_recipiente";
@@ -2337,7 +2362,7 @@ function insertResult($resultData) {
     valor, fecha_captura, activo)
     VALUES (:id_muestra, :id_parametro,
     :id_tipo_resultado, :id_tipo_valor, :id_usuario_captura,
-    :valor, :fecha_captura, :activo)";
+    :valor, SYSDATETIMEOFFSET(), :activo)";
   $db = getConnection();
   $stmt = $db->prepare($sql);
   $stmt->execute($resultData);
@@ -2352,7 +2377,7 @@ function updateResult($updateData) {
     id_tipo_resultado = :id_tipo_resultado,
     id_tipo_valor = :id_tipo_valor,
     id_usuario_actualiza = :id_usuario_actualiza,
-    valor = :valor, fecha_actualiza = :fecha_actualiza,
+    valor = :valor, fecha_actualiza = SYSDATETIMEOFFSET(),
     activo = :activo
     WHERE id_resultado = :id_resultado";
   $db = getConnection();
@@ -2362,7 +2387,7 @@ function updateResult($updateData) {
   return $updateData["id_resultado"];
 }
 
-function getResultsForUpdate($updateData) {
+function getResultsForUpdate($resultId) {
   $sql = "SELECT
     id_muestra,
     id_parametro,
@@ -2372,12 +2397,12 @@ function getResultsForUpdate($updateData) {
     valor, fecha_actualiza,
     activo
     FROM Resultado
-    WHERE id_resultado = :id_resultado";
+    WHERE id_resultado = :resultId";
   $db = getConnection();
   $stmt = $db->prepare($sql);
-  $stmt->bindParam("id_resultado", $updateData["id_resultado"]);
+  $stmt->bindParam("resultId", $resultId);
   $stmt->execute();
-  $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+  $result = $stmt->fetchAll(PDO::FETCH_OBJ);
   $db = null;
   return $result;
 }

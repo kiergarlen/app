@@ -558,6 +558,7 @@ function processPlanUpdate($request) {
   $token = decodeUserToken($request);
   $plan = (array) json_decode($request->getBody());
   $planUpdateData = $plan;
+  $client = $plan["cliente"];
   $instruments = $plan["instrumentos"];
   $containers = $plan["recipientes"];
   $preservations = $plan["preservaciones"];
@@ -593,8 +594,31 @@ function processPlanUpdate($request) {
     $plan["ip_valida"] = $request->getIp();
     $plan["host_valida"] = $request->getUrl();
     $plan["fecha_valida"] = isoDateToMsSql($plan["fecha_valida"]);
-    //TODO: create <blank> Sheet, Reception for this Plan
-    insertPlanBlankElements($plan);
+    //TODO: advance Study stage
+  }
+
+  if (count(getSheetsByPlan($planId)) > 0)
+  {
+    $sheetData = getBlankSheet();
+    unset($sheetData["id_hoja"]);
+    unset($sheetData["fecha_captura"]);
+    $sheetData["id_estudio"] = $plan["id_estudio"];
+
+    $sheetData["id_cliente"] = $client->id_cliente;
+    $sheetData["id_orden"] = $order->id_orden;
+    $sheetData["id_plan"] = $plan["id_plan"];
+    $sheetData["id_paquete"] = $plan["id_paquete"];
+    $sheetData["id_usuario_captura"] = $plan["id_usuario_actualiza"];
+    $sheetData["ip_captura"] = $plan["ip_captura"];
+    $sheetData["host_captura"] = $plan["host_captura"];
+
+    insertSheet($sheetData);
+  }
+
+  if (count(getReceptionsByPlan($planId)) > 0)
+  {
+    $receptionData = getBlankReception();
+    insertReception($receptionData);
   }
 
   $plan["fecha"] = isoDateToMsSql($plan["fecha"]);
@@ -868,13 +892,13 @@ function processSheetUpdate($request) {
   unset($update["preservaciones"]);
   unset($update["muestras"]);
 
+  unset($update["fecha_actualiza"]);
   unset($update["id_usuario_captura"]);
   unset($update["fecha_captura"]);
   unset($update["ip_captura"]);
   unset($update["host_captura"]);
 
   $update["id_usuario_actualiza"] = $token->uid;
-  $update["fecha_actualiza"] = date('Y-m-d H:i:s');
   $update["ip_actualiza"] = $request->getIp();
   $update["host_actualiza"] = $request->getUrl();
 

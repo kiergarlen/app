@@ -606,6 +606,9 @@ function processPlanUpdate($request) {
 }
 
 function processPlanSheetInsert($planUpdateData) {
+  $plan = (array) $planUpdateData["plan"];
+  $client = (array) $planUpdateData["client"];
+  $planId = $plan["id_plan"];
   if (count(getSheetsByPlan($planId)) < 1)
   {
     $sheetData = getBlankSheet();
@@ -619,7 +622,7 @@ function processPlanSheetInsert($planUpdateData) {
     unset($sheetData["fecha_captura"]);
 
     $sheetData["id_estudio"] = $plan["id_estudio"];
-    $sheetData["id_cliente"] = $client->id_cliente;
+    $sheetData["id_cliente"] = $client["id_cliente"];
     $sheetData["id_orden"] = $plan["id_orden"];
     $sheetData["id_plan"] = $plan["id_plan"];
     $sheetData["id_paquete"] = $plan["id_paquete"];
@@ -633,6 +636,9 @@ function processPlanSheetInsert($planUpdateData) {
 }
 
 function processPlanReceptionInsert($planUpdateData) {
+  $plan = (array) $planUpdateData["plan"];
+  $sheet = (array) $planUpdateData["sheet"];
+  $planId = $plan["id_plan"];
   if (count(getReceptionsByPlan($planId)) < 1)
   {
     $sheet = getSheetsByPlan($planId)[0];
@@ -648,7 +654,7 @@ function processPlanReceptionInsert($planUpdateData) {
 
     $receptionData["id_orden"] = $plan["id_orden"];
     $receptionData["id_plan"] = $plan["id_plan"];
-    $receptionData["id_hoja"] = $sheet->id_hoja;
+    $receptionData["id_hoja"] = $sheet["id_hoja"];
     $receptionData["id_recepcionista"] = 14;
     $receptionData["id_verificador"] = 14;
     $receptionData["id_usuario_captura"] = $plan["id_usuario_actualiza"];

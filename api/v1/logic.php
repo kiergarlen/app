@@ -144,11 +144,11 @@ function processStudyInsert($request) {
   unset($insertData["cliente"]);
   unset($insertData["ordenes"]);
   unset($insertData["id_estudio"]);
+  unset($insertData["fecha_captura"]);
   unset($insertData["id_usuario_actualiza"]);
   unset($insertData["fecha_actualiza"]);
   unset($insertData["host_actualiza"]);
   unset($insertData["ip_actualiza"]);
-  unset($insertData["fecha_captura"]);
 
   $lastStudy = (array) getLastStudyByYear($currentYear);
   if (is_numeric($lastStudy["oficio"]))
@@ -168,10 +168,10 @@ function processStudyInsert($request) {
   $insertData["id_usuario_captura"] = $token->uid;
   $insertData["ip_captura"] = $request->getIp();
   $insertData["host_captura"] = $request->getUrl();
-  $insertData["fecha_rechaza"] = NULL;
 
+  $insertData["fecha_rechaza"] = NULL;
   if ($insertData["id_status"] == 3) {
-    $insertData["fecha_rechaza"] = $insertData["fecha"];
+    $insertData["fecha_rechaza"] = isoDateToMsSql($insertData["fecha"]);
     $insertData["id_usuario_rechaza"] = $insertData["id_usuario_captura"];
     $insertData["ip_rechaza"] = $insertData["ip_captura"];
     $insertData["host_rechaza"] = $insertData["host_captura"];
@@ -179,7 +179,7 @@ function processStudyInsert($request) {
 
   $insertData["fecha_valida"] = NULL;
   if ($insertData["id_status"] == 2) {
-    $insertData["fecha_valida"] = $insertData["fecha_valida"];
+    $insertData["fecha_valida"] = isoDateToMsSql($insertData["fecha_valida"]);
     $insertData["id_usuario_valida"] = $insertData["id_usuario_captura"];
     $insertData["ip_valida"] = $insertData["ip_captura"];
     $insertData["host_valida"] = $insertData["host_captura"];
@@ -199,21 +199,12 @@ function processStudyOrderInsert($studyInsertData, $studyId) {
   $insertIp = $studyInsertData["study"]["ip_captura"];
   $insertUrl = $studyInsertData["study"]["host_captura"];
 
-  // $blankPlan = getBlankPlan();
-  // unset($blankPlan["id_plan"]);
-  // $blankPlan["id_estudio"] = $studyId;
-  // $blankPlan["id_usuario_captura"] = $insertUserId;
-  // $blankPlan["fecha_captura"] = $insertDate;
-  // $blankPlan["ip_captura"] = $insertIp;
-  // $blankPlan["host_captura"] = $insertUrl;
-
   $i = 0;
   $l = count($orders);
 
   for ($i = 0; $i < $l; $i++)
   {
     $order = (array) $orders[$i];
-
     unset($order['$$hashKey']);
     unset($order["id_orden"]);
     unset($order["fecha_captura"]);
@@ -235,9 +226,6 @@ function processStudyOrderInsert($studyInsertData, $studyId) {
     $order["host_captura"] = $insertUrl;
     $order["activo"] = 1;
     $orderId = insertOrder($order);
-    // //assign this order's ID to blank plan
-    // $blankPlan["id_orden"] = $orderId;
-    // $planId = insertPlan($blankPlan);
   }
   return $studyId;
 }
@@ -597,30 +585,6 @@ function processPlanUpdate($request) {
     //TODO: advance Study stage
   }
 
-  if (count(getSheetsByPlan($planId)) > 0)
-  {
-    $sheetData = getBlankSheet();
-    unset($sheetData["id_hoja"]);
-    unset($sheetData["fecha_captura"]);
-    $sheetData["id_estudio"] = $plan["id_estudio"];
-
-    $sheetData["id_cliente"] = $client->id_cliente;
-    $sheetData["id_orden"] = $order->id_orden;
-    $sheetData["id_plan"] = $plan["id_plan"];
-    $sheetData["id_paquete"] = $plan["id_paquete"];
-    $sheetData["id_usuario_captura"] = $plan["id_usuario_actualiza"];
-    $sheetData["ip_captura"] = $plan["ip_captura"];
-    $sheetData["host_captura"] = $plan["host_captura"];
-
-    insertSheet($sheetData);
-  }
-
-  if (count(getReceptionsByPlan($planId)) > 0)
-  {
-    $receptionData = getBlankReception();
-    insertReception($receptionData);
-  }
-
   $plan["fecha"] = isoDateToMsSql($plan["fecha"]);
   $plan["fecha_probable"] = isoDateToMsSql($plan["fecha_probable"]);
   $plan["fecha_calibracion"] = isoDateToMsSql($plan["fecha_calibracion"]);
@@ -629,6 +593,7 @@ function processPlanUpdate($request) {
 
   $planUpdateData = array (
     "plan" => $plan,
+    "client" => $client,
     "instruments" => $instruments,
     "containers" => $containers,
     "preservations" => $preservations,
@@ -638,6 +603,61 @@ function processPlanUpdate($request) {
     "coolers" => $coolers
   );
   return $planUpdateData;
+}
+
+function processPlanSheetInsert($planUpdateData) {
+  if (count(getSheetsByPlan($planId)) < 1)
+  {
+    $sheetData = getBlankSheet();
+
+    unset($sheetData["id_hoja"]);
+    unset($sheetData["fecha_captura"]);
+    unset($sheetData["id_usuario_actualiza"]);
+    unset($sheetData["fecha_actualiza"]);
+    unset($sheetData["ip_actualiza"]);
+    unset($sheetData["host_actualiza"]);
+    unset($sheetData["fecha_captura"]);
+
+    $sheetData["id_estudio"] = $plan["id_estudio"];
+    $sheetData["id_cliente"] = $client->id_cliente;
+    $sheetData["id_orden"] = $plan["id_orden"];
+    $sheetData["id_plan"] = $plan["id_plan"];
+    $sheetData["id_paquete"] = $plan["id_paquete"];
+    $sheetData["id_usuario_captura"] = $plan["id_usuario_actualiza"];
+    $sheetData["ip_captura"] = $plan["ip_actualiza"];
+    $sheetData["host_captura"] = $plan["host_actualiza"];
+
+    return insertSheet($sheetData);
+  }
+  return 0;
+}
+
+function processPlanReceptionInsert($planUpdateData) {
+  if (count(getReceptionsByPlan($planId)) < 1)
+  {
+    $sheet = getSheetsByPlan($planId)[0];
+    $receptionData = getBlankReception();
+
+    unset($receptionData["id_recepcion"]);
+    unset($receptionData["fecha_captura"]);
+    unset($receptionData["id_usuario_actualiza"]);
+    unset($receptionData["fecha_actualiza"]);
+    unset($receptionData["ip_actualiza"]);
+    unset($receptionData["host_actualiza"]);
+    unset($receptionData["fecha_captura"]);
+
+    $receptionData["id_orden"] = $plan["id_orden"];
+    $receptionData["id_plan"] = $plan["id_plan"];
+    $receptionData["id_hoja"] = $sheet->id_hoja;
+    $receptionData["id_recepcionista"] = 14;
+    $receptionData["id_verificador"] = 14;
+    $receptionData["id_usuario_captura"] = $plan["id_usuario_actualiza"];
+    $receptionData["ip_captura"] = $plan["ip_actualiza"];
+    $receptionData["host_captura"] = $plan["host_actualiza"];
+
+    return insertReception($receptionData);
+  }
+  return 0;
 }
 
 function processPlanInstrumentsUpdate($planUpdateData) {
@@ -760,6 +780,9 @@ function processPlanContainersUpdate($planUpdateData) {
   $planId = $planUpdateData["plan"]["id_plan"];
   $storedPreservations = getPreservationsByPlan($planId);
   $storedContainers = getContainersByPlan($planId);
+  $userId = $planUpdateData["plan"]["id_usuario_actualiza"];
+  $ip = $planUpdateData["plan"]["ip_actualiza"];
+  $url = $planUpdateData["plan"]["host_actualiza"];
 
   $i = 0;
   $j = 0;
@@ -773,31 +796,30 @@ function processPlanContainersUpdate($planUpdateData) {
   {
     for ($i = 0; $i < $o; $i++) {
       for ($j = 0; $j < $n; $j++) {
-        insertContainer(array(
-          "id_plan" => $planId,
-          "id_recepcion" => 1,
-          "id_muestra" => 1,
-          "id_tipo_recipiente" => 1,
-          "id_preservacion" => $preservations[$j]->id_preservacion,
-          "id_almacenamiento" => 1,
-          "id_status_recipiente" => 1,
-          "id_usuario_actualiza" => 1,
-          "volumen" => 0,
-          "volumen_inicial" => 0,
-          "fecha_actualizacion" => null,
-          "ip_actualiza" => "",
-          "host_actualiza" => "",
-          "activo" => 1
-        ));
+        insertContainer(
+          array(
+            "id_plan" => $planId,
+            "id_recepcion" => 0,
+            "id_muestra" => 0,
+            "id_tipo_recipiente" => 1,
+            "id_preservacion" => $preservations[$j]->id_preservacion,
+            "id_almacenamiento" => 1,
+            "id_status_recipiente" => 1,
+            "id_usuario_captura" => $userId,
+            "ip_captura" => $ip,
+            "host_captura" => $url,
+            "activo" => 1
+          )
+        );
       }
     }
 
-    $storedContainers = getPlanContainers($planId);
-    $l = count($storedContainers);
+    $newContainers = getPlanContainers($planId);
+    $l = count($newContainers);
     for ($i = 0; $i < $l; $i++) {
       $newContainer = array(
-        "id_recipiente" => $storedContainers[$i]["id_recipiente"],
-        "id_plan" => $storedContainers[$i]["id_plan"],
+        "id_recipiente" => $newContainers[$i]["id_recipiente"],
+        "id_plan" => $newContainers[$i]["id_plan"],
         "activo" => 1
       );
       insertPlanContainer($newContainer);
@@ -807,8 +829,10 @@ function processPlanContainersUpdate($planUpdateData) {
   else
   {
     for ($i = 0; $i < $l; $i++) {
-      $storedContainers[$i]["activo"] = 0;
-      updatePlanContainer($storedContainers[$i]);
+      // if ($storedContainers[$i]["id_recepcion"] < 1) {
+        $storedContainers[$i]["activo"] = 0;
+        updatePlanContainer($storedContainers[$i]);
+      // }
     }
     for ($j = 0; $j < $m; $j++) {
       $container = (array) $containers[$j];
@@ -1006,8 +1030,8 @@ function processSheetResultsUpdate($sheetUpdateData) {
     for ($j = 0; $j < $m; $j++) {
       $result = (array) $results[$j];
       $result["id_usuario_captura"] = $userId;
-      $result["fecha_captura"] = date('Y-m-d H:i:s');
       unset($result["id_usuario_actualiza"]);
+      unset($result["fecha_captura"]);
       unset($result["fecha_actualiza"]);
       insertResult($result);
     }
@@ -1017,10 +1041,10 @@ function processSheetResultsUpdate($sheetUpdateData) {
   {
     for ($i = 0; $i < $l; $i++) {
       $storedResults[$i]["id_usuario_actualiza"] = $userId;
-      $storedResults[$i]["fecha_actualiza"] = date('Y-m-d H:i:s');
       $storedResults[$i]["activo"] = 0;
       unset($storedResults[$i]["id_usuario_captura"]);
       unset($storedResults[$i]["fecha_captura"]);
+      unset($storedResults[$i]["fecha_actualiza"]);
       unset($storedResults[$i]["param"]);
       updateResult($storedResults[$i]);
     }
@@ -1030,28 +1054,23 @@ function processSheetResultsUpdate($sheetUpdateData) {
       if ($result["id_resultado"] == 0)
       {
         $result["id_usuario_captura"] = $userId;
-        $result["fecha_captura"] = date('Y-m-d H:i:s');
         unset($result["id_usuario_actualiza"]);
+        unset($result["fecha_captura"]);
         unset($result["fecha_actualiza"]);
         insertResult($result);
       }
       else
       {
         $result["id_usuario_actualiza"] = $userId;
-        $result["fecha_actualiza"] = date('Y-m-d H:i:s');
         $result["activo"] = 1;
         unset($result["id_usuario_captura"]);
         unset($result["fecha_captura"]);
+        unset($result["fecha_actualiza"]);
         updateResult($result);
       }
     }
   }
   return $sheetId;
-}
-
-//TODO: insert elements: Sheet, Reception, etc
-function processReceptionInsert($request) {
-  return $request;
 }
 
 function processReceptionUpdate($request) {

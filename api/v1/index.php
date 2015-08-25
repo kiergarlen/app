@@ -58,15 +58,12 @@ $app->get("/tasks", function() use ($app) {
 $app->get("/studies(/)(:studyId)", function($studyId = -1) use ($app) {
   try {
     $userId = decodeUserToken($app->request())->uid;
+    $result = json_encode(getBlankStudy());
     if ($studyId > 0)
     {
       $result = json_encode(getStudy($studyId));
     }
-    else if ($studyId == 0)
-    {
-      $result = json_encode(getBlankStudy());
-    }
-    else
+    if ($studyId < 0)
     {
       $result = json_encode(getStudies());
     }
@@ -215,6 +212,8 @@ $app->post("/plans", function() use ($app) {
     {
       $planUpdateData = processPlanUpdate($request);
       $planId = updatePlan($planUpdateData["plan"]);
+      processPlanSheetInsert($planUpdateData);
+      processPlanReceptionInsert($planUpdateData);
       processPlanInstrumentsUpdate($planUpdateData);
       processPlanPreservationsUpdate($planUpdateData);
       processPlanContainersUpdate($planUpdateData);

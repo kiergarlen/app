@@ -443,6 +443,7 @@ function processOrderPlansUpdate($orderUpdateData) {
       unset($plan['$$hashKey']);
       unset($plan["id_plan"]);
       unset($plan["fecha_captura"]);
+      unset($plan["fecha_actualiza"]);
       unset($plan["id_usuario_actualiza"]);
       unset($plan["ip_actualiza"]);
       unset($plan["host_actualiza"]);
@@ -466,7 +467,6 @@ function processOrderPlansUpdate($orderUpdateData) {
       $plan["fecha"] = NULL;
       $plan["fecha_probable"] = isoDateToMsSql($plan["fecha_probable"]);
       $plan["fecha_calibracion"] = NULL;
-      $plan["fecha_actualiza"] = NULL;
       $plan["fecha_valida"] = NULL;
       $plan["fecha_rechaza"] = NULL;
       insertPlan($plan);
@@ -495,6 +495,7 @@ function processOrderPlansUpdate($orderUpdateData) {
         unset($plan['$$hashKey']);
         unset($plan["id_plan"]);
         unset($plan["fecha_captura"]);
+        unset($plan["fecha_actualiza"]);
         unset($plan["id_usuario_actualiza"]);
         unset($plan["ip_actualiza"]);
         unset($plan["host_actualiza"]);
@@ -518,7 +519,6 @@ function processOrderPlansUpdate($orderUpdateData) {
         $plan["fecha"] = NULL;
         $plan["fecha_probable"] = isoDateToMsSql($plan["fecha_probable"]);
         $plan["fecha_calibracion"] = NULL;
-        $plan["fecha_actualiza"] = NULL;
         $plan["fecha_valida"] = NULL;
         $plan["fecha_rechaza"] = NULL;
         insertPlan($plan);

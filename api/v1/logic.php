@@ -998,6 +998,9 @@ function processSheetPreservationsUpdate($sheetUpdateData) {
   {
     for ($j = 0; $j < $m; $j++) {
       $preservation = (array) $preservations[$j];
+      $preservation["cantidad"] = count($sheetUpdateData["samples"]);
+      $preservation["preservado"] = $preservation["selected"];
+      $preservation["activo"] = 1;
       unset($preservation["id_hoja_preservacion"]);
       unset($preservation["id_tipo_preservacion"]);
       unset($preservation["preservacion"]);
@@ -1019,6 +1022,9 @@ function processSheetPreservationsUpdate($sheetUpdateData) {
     }
     for ($j = 0; $j < $m; $j++) {
       $preservation = (array) $preservations[$j];
+      $preservation["cantidad"] = count($sheetUpdateData["samples"]);
+      $preservation["preservado"] = $preservation["selected"];
+      $preservation["activo"] = 1;
       unset($preservation["id_tipo_preservacion"]);
       unset($preservation["preservacion"]);
       unset($preservation["descripcion"]);
@@ -1069,6 +1075,7 @@ function processSheetResultsUpdate($sheetUpdateData) {
     for ($j = 0; $j < $m; $j++) {
       $result = (array) $results[$j];
       $result["id_usuario_captura"] = $userId;
+      unset($result["id_resultado"]);
       unset($result["id_usuario_actualiza"]);
       unset($result["fecha_captura"]);
       unset($result["fecha_actualiza"]);
@@ -1093,6 +1100,7 @@ function processSheetResultsUpdate($sheetUpdateData) {
       if ($result["id_resultado"] == 0)
       {
         $result["id_usuario_captura"] = $userId;
+        unset($result["id_resultado"]);
         unset($result["id_usuario_actualiza"]);
         unset($result["fecha_captura"]);
         unset($result["fecha_actualiza"]);
@@ -1105,6 +1113,7 @@ function processSheetResultsUpdate($sheetUpdateData) {
         unset($result["id_usuario_captura"]);
         unset($result["fecha_captura"]);
         unset($result["fecha_actualiza"]);
+        unset($result["param"]);
         updateResult($result);
       }
     }

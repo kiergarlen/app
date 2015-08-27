@@ -202,12 +202,7 @@ $app->post("/plans", function() use ($app) {
     $userId = decodeUserToken($app->request())->uid;
     $request = $app->request();
     $planId = extractDataFromRequest($request)->id_plan;
-    if ($planId < 1)
-    {
-      // $planInsertData = processPlanInsert($request);
-      // $planId = insertPlan($planInsertData["plan"]);
-    }
-    else
+    if ($planId > 0)
     {
       $planUpdateData = processPlanUpdate($request);
       $planId = updatePlan($planUpdateData["plan"]);
@@ -249,7 +244,7 @@ $app->get("/plans/containers/:planId", function($planId) use ($app) {
 
 $app->get("/sheets(/)(:sheetId)", function($sheetId = -1) use ($app) {
   try {
-    //$userId = decodeUserToken($app->request())->uid;
+    $userId = decodeUserToken($app->request())->uid;
     if ($sheetId > -1)
     {
       $result = json_encode(getSheet($sheetId));
@@ -273,13 +268,7 @@ $app->post("/sheets", function() use ($app) {
     $userId = decodeUserToken($app->request())->uid;
     $request = $app->request();
     $sheetId = extractDataFromRequest($request)->id_hoja;
-    if ($sheetId < 1)
-    {
-      // $sheetInsertData = processSheetInsert($request);
-      // $sheetId = insertSheet($sheetInsertData["sheet"]);
-      // //processSheetOrderInsert($sheetInsertData, $sheetId);
-    }
-    else
+    if ($sheetId > 0)
     {
       $sheetUpdateData = processSheetUpdate($request);
       $sheetId = updateSheet($sheetUpdateData["sheet"]);

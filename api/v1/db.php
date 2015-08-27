@@ -989,7 +989,6 @@ function getSheet($sheetId) {
   $normId = $sheet->orden->id_norma;
   $parameters = (array) getSamplingParametersByNorm($normId);
   $sheet->parametros = $parameters;
-  //$sheet->puntos = getPointsByPackage($sheet->id_paquete);
   $sheet->preservaciones = getPreservationsBySheet($sheetId);
   $samples = getSamplesBySheet($sheetId);
   $sheet->muestras = $samples;
@@ -1017,7 +1016,6 @@ function getSheet($sheetId) {
     }
     $sheet->muestras[$i]["resultados"] = $samplingResults;
   }
-  //$sheet->resultados = getResultsBySheet($sheetId);
   return $sheet;
 }
 

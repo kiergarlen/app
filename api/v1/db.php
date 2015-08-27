@@ -1522,6 +1522,19 @@ function getSamples() {
   return $samples;
 }
 
+function getBlankSample() {
+  return array(
+    "id_muestra" => 0, "id_estudio" => 0,
+    "id_cliente" => 0, "id_orden" => 0,
+    "id_plan" => 0, "id_hoja" => 0,
+    "id_recepcion" => 0, "id_custodia" => 0,
+    "id_paquete" => 0, "id_ubicacion" => 0,
+    "id_punto" => 0, "fecha_muestreo" => NULL,
+    "fecha_recibe" => NULL, "comentarios" => "",
+    "activo" => 1
+  );
+}
+
 function getSamplesBySheet($sheetId) {
   $sql = "SELECT id_muestra, id_estudio, id_cliente, id_orden,
     id_plan, id_hoja, id_recepcion, id_custodia, id_paquete,
@@ -1559,6 +1572,23 @@ function getSamplesByReception($receptionId) {
     }
   }
   return $samples;
+}
+
+function insertSample($sampleData) {
+  $sql = "INSERT INTO Muestra (id_estudio, id_cliente, id_orden,
+    id_plan, id_hoja, id_recepcion, id_custodia,
+    id_paquete, id_ubicacion, id_punto, fecha_muestreo,
+    fecha_recibe, comentarios, activo)
+    VALUES (:id_estudio, :id_cliente, :id_orden,
+    :id_plan, :id_hoja, :id_recepcion, :id_custodia,
+    :id_paquete, :id_ubicacion, :id_punto, :fecha_muestreo,
+    :fecha_recibe, :comentarios, :activo)";
+  $db = getConnection();
+  $stmt = $db->prepare($sql);
+  $stmt->execute($sampleData);
+  $sampleId = $db->lastInsertId();
+  $db = null;
+  return $sampleId;
 }
 
 function insertReceptionSample($receptionData) {

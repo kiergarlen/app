@@ -609,8 +609,9 @@ function processPlanSheetInsert($planUpdateData) {
   $plan = (array) $planUpdateData["plan"];
   $client = (array) $planUpdateData["client"];
   $planId = $plan["id_plan"];
+  $sheets = getSheetsByPlan($planId);
 
-  if (count(getSheetsByPlan($planId)) < 1)
+  if (count($sheets) < 1)
   {
     $sheetData = getBlankSheet();
 
@@ -630,11 +631,42 @@ function processPlanSheetInsert($planUpdateData) {
     $sheetData["ip_captura"] = $plan["ip_actualiza"];
     $sheetData["host_captura"] = $plan["host_actualiza"];
 
-    $sheetId = insertSheet($sheetData);
-
-
+    return insertSheet($sheetData);
   }
-  return 0;
+  return $sheets[0]->id_hoja;
+}
+
+function processPlanSheetSampleInsert($planUpdateData) {
+  $plan = (array) $planUpdateData["plan"];
+  $client = (array) $planUpdateData["client"];
+  $planId = $plan["id_plan"];
+  $sheets = (array) getSheetsByPlan($planId);
+  $sheetId = $sheets[0]["id_hoja"];
+  $samples = getSamplesBySheet($sheetId);
+  $sampleId = 0;
+
+  if (count($samples) < 1)
+  {
+    $sampleData = (array) getBlankSample();
+
+    unset($sampleData["id_muestra"]);
+    $sampleData["id_estudio"] = $plan["id_estudio"];
+    $sampleData["id_cliente"] = $client["id_cliente"];
+    $sampleData["id_orden"] = $plan["id_orden"];
+    $sampleData["id_plan"] = $plan["id_plan"];
+    $sampleData["id_hoja"] = $sheetId;
+    $sampleData["id_paquete"] = $plan["id_paquete"];
+    $sampleData["id_ubicacion"] = $plan["id_ubicacion"];
+
+    $packagePoints = getPointsByPackage($plan["id_paquete"]);
+    $i = 0;
+    $l = count($packagePoints);
+    for ($i = 0; $i < $l; $i++) {
+      $sampleData["id_punto"] = $packagePoints[$i]["id_punto"];
+      $sampleId = insertSample($sampleData);
+    }
+  }
+  return $sampleId;
 }
 
 function processPlanReceptionInsert($planUpdateData) {

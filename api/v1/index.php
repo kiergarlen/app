@@ -213,6 +213,7 @@ $app->post("/plans", function() use ($app) {
       $planId = updatePlan($planUpdateData["plan"]);
       processPlanSheetInsert($planUpdateData);
       processPlanReceptionInsert($planUpdateData);
+      processPlanSheetSampleInsert($planUpdateData);
       processPlanInstrumentsUpdate($planUpdateData);
       processPlanPreservationsUpdate($planUpdateData);
       processPlanContainersUpdate($planUpdateData);
@@ -248,7 +249,7 @@ $app->get("/plans/containers/:planId", function($planId) use ($app) {
 
 $app->get("/sheets(/)(:sheetId)", function($sheetId = -1) use ($app) {
   try {
-    //$userId = decodeUserToken($app->request())->uid;
+    $userId = decodeUserToken($app->request())->uid;
     if ($sheetId > -1)
     {
       $result = json_encode(getSheet($sheetId));
@@ -876,7 +877,7 @@ $app->get("/samples", function() use ($app) {
 
 $app->get("/sheet/samples/:sheetId", function($sheetId) use ($app) {
   try {
-    //$userId = decodeUserToken($app->request())->uid;
+    $userId = decodeUserToken($app->request())->uid;
     $result = json_encode(getSamplesBySheet($sheetId));
     $app->response()->status(200);
     $app->response()->header("Content-Type", "application/json");

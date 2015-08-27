@@ -201,29 +201,26 @@ $app->post("/plans", function() use ($app) {
   try {
     $userId = decodeUserToken($app->request())->uid;
     $request = $app->request();
-    $requestData = extractDataFromRequest($request);
-    $result = json_encode($requestData);
-    // $planId = extractDataFromRequest($request)->id_plan;
-    // if ($planId < 1)
-    // {
-    //   // $planInsertData = processPlanInsert($request);
-    //   // $planId = insertPlan($planInsertData["plan"]);
-    // }
-    // else
-    // {
-    //   $planUpdateData = processPlanUpdate($request);
-    //   //$planId = updatePlan($planUpdateData["plan"]);
-    //   // processPlanSheetInsert($planUpdateData);
-    //   // processPlanReceptionInsert($planUpdateData);
-    //   // processPlanInstrumentsUpdate($planUpdateData);
-    //   // processPlanPreservationsUpdate($planUpdateData);
-    //   // processPlanContainersUpdate($planUpdateData);
-    //   // processPlanReactivesUpdate($planUpdateData);
-    //   // processPlanMaterialsUpdate($planUpdateData);
-    //   // processPlanCoolersUpdate($planUpdateData);
-    // }
-    // //$result = "{\"id_plan\":" . $planId . "}";
-    // $result = json_encode($planUpdateData);
+    $planId = extractDataFromRequest($request)->id_plan;
+    if ($planId < 1)
+    {
+      // $planInsertData = processPlanInsert($request);
+      // $planId = insertPlan($planInsertData["plan"]);
+    }
+    else
+    {
+      $planUpdateData = processPlanUpdate($request);
+      $planId = updatePlan($planUpdateData["plan"]);
+      processPlanSheetInsert($planUpdateData);
+      processPlanReceptionInsert($planUpdateData);
+      processPlanInstrumentsUpdate($planUpdateData);
+      processPlanPreservationsUpdate($planUpdateData);
+      processPlanContainersUpdate($planUpdateData);
+      processPlanReactivesUpdate($planUpdateData);
+      processPlanMaterialsUpdate($planUpdateData);
+      processPlanCoolersUpdate($planUpdateData);
+    }
+    $result = "{\"id_plan\":" . $planId . "}";
     $app->response()->status(200);
     $app->response()->header("Content-Type", "application/json");
     //$result = ")]}',\n" . $result;

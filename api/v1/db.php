@@ -913,7 +913,7 @@ function getSheets() {
   return $result;
 }
 
-function getSheetsByPlan($planID) {
+function getSheetsByPlan($planId) {
   $sql = "SELECT id_hoja, id_estudio, id_cliente, id_orden, id_plan,
     id_paquete, id_nubes, id_direccion_corriente, id_oleaje,
     id_status, id_usuario_captura, id_usuario_valida,
@@ -1011,14 +1011,14 @@ function insertSheet($sheetData) {
     id_plan, id_paquete, id_nubes, id_direccion_corriente,
     id_oleaje, id_status, id_usuario_captura, id_usuario_valida,
     fecha_muestreo, fecha_entrega,
-    SYSDATETIMEOFFSET(), fecha_valida, fecha_rechaza, ip_captura,
+    fecha_captura, fecha_valida, fecha_rechaza, ip_captura,
     ip_valida, host_captura, host_valida, nubes_otro,
     comentarios, motivo_rechaza, activo)
     VALUES (:id_estudio, :id_cliente, :id_orden, :id_plan,
     :id_paquete, :id_nubes, :id_direccion_corriente, :id_oleaje,
     :id_status, :id_usuario_captura, :id_usuario_valida,
     :fecha_muestreo, :fecha_entrega,
-    :fecha_captura, :fecha_valida, fecha_rechaza, :ip_captura,
+    SYSDATETIMEOFFSET(), :fecha_valida, :fecha_rechaza, :ip_captura,
     :ip_valida, :host_captura, :host_valida, :nubes_otro,
     :comentarios, :motivo_rechaza, :activo)";
   $db = getConnection();

@@ -590,7 +590,7 @@ function processPlanUpdate($request) {
   $plan["fecha_calibracion"] = isoDateToMsSql($plan["fecha_calibracion"]);
   $plan["fecha_valida"] = isoDateToMsSql($plan["fecha_valida"]);
   $plan["fecha_rechaza"] = isoDateToMsSql($plan["fecha_rechaza"]);
-  
+
   $planUpdateData = array (
     "plan" => $plan,
     "client" => $client,
@@ -609,7 +609,7 @@ function processPlanSheetInsert($planUpdateData) {
   $plan = (array) $planUpdateData["plan"];
   $client = (array) $planUpdateData["client"];
   $planId = $plan["id_plan"];
-  
+
   if (count(getSheetsByPlan($planId)) < 1)
   {
     $sheetData = getBlankSheet();
@@ -620,7 +620,7 @@ function processPlanSheetInsert($planUpdateData) {
     unset($sheetData["fecha_actualiza"]);
     unset($sheetData["ip_actualiza"]);
     unset($sheetData["host_actualiza"]);
-    
+
     $sheetData["id_estudio"] = $plan["id_estudio"];
     $sheetData["id_cliente"] = $client["id_cliente"];
     $sheetData["id_orden"] = $plan["id_orden"];
@@ -630,7 +630,9 @@ function processPlanSheetInsert($planUpdateData) {
     $sheetData["ip_captura"] = $plan["ip_actualiza"];
     $sheetData["host_captura"] = $plan["host_actualiza"];
 
-    return insertSheet($sheetData);
+    $sheetId = insertSheet($sheetData);
+
+
   }
   return 0;
 }
@@ -639,7 +641,7 @@ function processPlanReceptionInsert($planUpdateData) {
   $plan = (array) $planUpdateData["plan"];
   $planId = $plan["id_plan"];
   $sheet = getSheetsByPlan($planId)[0];
-  
+
   if (count(getReceptionsByPlan($planId)) < 1)
   {
     $receptionData = getBlankReception();

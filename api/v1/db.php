@@ -1056,26 +1056,14 @@ function updateSheet($updateData) {
 }
 
 function insertSheetSample($sheetData) {
-  $sql = "INSERT INTO Hoja (id_estudio, id_cliente, id_orden,
-    id_plan, id_paquete, id_nubes, id_direccion_corriente,
-    id_oleaje, id_status, id_usuario_captura, id_usuario_valida,
-    fecha_muestreo, fecha_entrega,
-    SYSDATETIMEOFFSET(), fecha_valida, fecha_rechaza, ip_captura,
-    ip_valida, host_captura, host_valida, nubes_otro,
-    comentarios, motivo_rechaza, activo)
-    VALUES (:id_estudio, :id_cliente, :id_orden, :id_plan,
-    :id_paquete, :id_nubes, :id_direccion_corriente, :id_oleaje,
-    :id_status, :id_usuario_captura, :id_usuario_valida,
-    :fecha_muestreo, :fecha_entrega,
-    :fecha_captura, :fecha_valida, fecha_rechaza, :ip_captura,
-    :ip_valida, :host_captura, :host_valida, :nubes_otro,
-    :comentarios, :motivo_rechaza, :activo)";
+  $sql = "INSERT INTO HojaMuestra (id_hoja, id_muestra)
+    VALUES (:id_hoja, :id_muestra)";
   $db = getConnection();
   $stmt = $db->prepare($sql);
   $stmt->execute($sheetData);
-  $sheetId = $db->lastInsertId();
+  $sheetSampleId = $db->lastInsertId();
   $db = null;
-  return $sheetId;
+  return $sheetSampleId;
 }
 
 function getReceptions() {

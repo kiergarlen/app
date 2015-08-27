@@ -982,24 +982,39 @@ function getPlainSheet($sheetId) {
 function getSheet($sheetId) {
   $i = 0;
   $l = 0;
+
   $sheet = getPlainSheet($sheetId);
   $sheet->orden = getPlainOrder($sheet->id_orden);
   $sheet->norma = getNorm($sheet->orden->id_norma);
   $normId = $sheet->orden->id_norma;
-  $sheet->parametros = getSamplingParametersByNorm($normId);
+  $parameters = (array) getSamplingParametersByNorm($normId);
+  $sheet->parametros = $parameters;
   //$sheet->puntos = getPointsByPackage($sheet->id_paquete);
   $sheet->preservaciones = getPreservationsBySheet($sheetId);
-  $sheet->muestras = getSamplesBySheet($sheetId);
-  $l = count((array) $sheet->muestras);
-  for ($i = 0; $i < $l; $i++) {
-    // $sample = $sheet->muestras[$i];
+  $samples = getSamplesBySheet($sheetId);
+  $sheet->muestras = $samples;
+  $l = count($samples);
+  
+  $blankSamplingResult = getBlankSamplingResult();
+  $blankSamplingResult["id_usuario_captura"] =  $sheet->id_usuario_captura;
+  $blankSamplingResult["id_usuario_actualiza"] =  $sheet->id_usuario_captura;
+  
+  for($i = 0; $i < $l; $i++) {
     $pointId = $sheet->muestras[$i]["id_punto"];
     $sheet->muestras[$i]["punto"] = getPoint($pointId);
     $sampleId = $sheet->muestras[$i]["id_muestra"];
     $samplingResults = getSamplingResultsBySample($sampleId);
-    // if (count($samplingResults) < 1) {
-    //  //$samplingResults = [A_QUERY_TO_CREATE_EMPTY_RESULTS];
-    // }
+    if (count($samplingResults) < 1) {
+      $j = 0;
+      $m = count($parameters);
+      for ($j = 0; $j < $m; $j++) {
+        $blankSamplingResult["id_muestra"] = $sampleId;
+        $blankSamplingResult["id_parametro"] = $parameters[$j]["id_parametro"];
+        $blankSamplingResult["id_tipo_valor"] = $parameters[$j]["id_tipo_valor"];
+        $blankSamplingResult["param"] = $parameters[$j]["param"];
+        $samplingResults[] = $blankSamplingResult;
+      }
+    }
     $sheet->muestras[$i]["resultados"] = $samplingResults;
   }
   //$sheet->resultados = getResultsBySheet($sheetId);
@@ -1628,6 +1643,16 @@ function getResultsBySheet($sheetId) {
   $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
   $db = null;
   return $results;
+}
+
+function getBlankSamplingResult() {
+  return array(
+    "id_resultado" => 0, "id_muestra" => 0, "id_parametro" => 0,
+    "id_tipo_resultado" => 1, "id_tipo_valor" => 1,
+    "id_usuario_captura" => 0, "id_usuario_actualiza" => 0,
+    "valor" => 0, "fecha_captura" => NULL, "fecha_actualiza" => NULL,
+    "activo" => 1, "param" => "",
+  );
 }
 
 function getSamplingResultsBySample($sampleId) {

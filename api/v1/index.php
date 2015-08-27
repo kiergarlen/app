@@ -249,7 +249,7 @@ $app->get("/plans/containers/:planId", function($planId) use ($app) {
 
 $app->get("/sheets(/)(:sheetId)", function($sheetId = -1) use ($app) {
   try {
-    $userId = decodeUserToken($app->request())->uid;
+    //$userId = decodeUserToken($app->request())->uid;
     if ($sheetId > -1)
     {
       $result = json_encode(getSheet($sheetId));

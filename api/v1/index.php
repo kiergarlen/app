@@ -326,13 +326,7 @@ $app->post("/receptions", function() use ($app) {
     $userId = decodeUserToken($app->request())->uid;
     $request = $app->request();
     $receptionId = extractDataFromRequest($request)->id_recepcion;
-    if ($receptionId < 1)
-    {
-      // $receptionInsertData = processReceptionInsert($request);
-      // $receptionId = insertReception($receptionInsertData["reception"]);
-      // //processReceptionOrderInsert($receptionInsertData, $receptionId);
-    }
-    else
+    if ($receptionId > 0)
     {
       $receptionUpdateData = processReceptionUpdate($request);
       $receptionId = updateReception($receptionUpdateData["reception"]);

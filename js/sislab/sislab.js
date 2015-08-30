@@ -591,22 +591,13 @@
 
     function isFormValid() {
       vm.message = '';
-      vm.study.fecha = DateU
-
-
-      vm.study.fecha = DateUtilsService.dateToIso(new Date(vm.study.fecha));
-      if (!DateUtilsService.isValidDate(new Date(vm.study.fecha))) {
-      item.fecha_valida = DateUtilsService.dateToIso(new Date());
-    }
-      item.fecha_rechaza = DateUtilsService.dateToIso(new Date());
-    }
-
-
-      tilsService.dateToIso(new Date(vm.study.fecha));
       if (!DateUtilsService.isValidDate(new Date(vm.study.fecha))) {
         vm.message += ' Ingrese una fecha válida ';
         return false;
       }
+      vm.study.fecha = DateUtilsService.dateToIso(
+        new Date(vm.study.fecha)
+      );
       if (vm.study.id_cliente < 1) {
         vm.message += ' Seleccione un cliente ';
         return false;

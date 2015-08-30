@@ -2377,10 +2377,10 @@ function deleteReceptionPreservations($receptionId) {
 function insertResult($resultData) {
   $sql = "INSERT INTO Resultado (id_muestra, id_parametro,
     id_tipo_resultado, id_tipo_valor, id_usuario_captura,
-    valor, fecha_captura, activo)
+    valor, fecha_captura, fecha_actualiza, activo)
     VALUES (:id_muestra, :id_parametro,
     :id_tipo_resultado, :id_tipo_valor, :id_usuario_captura,
-    :valor, SYSDATETIMEOFFSET(), :activo)";
+    :valor, SYSDATETIMEOFFSET(), NULL, :activo)";
   $db = getConnection();
   $stmt = $db->prepare($sql);
   $stmt->execute($resultData);

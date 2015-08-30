@@ -112,23 +112,24 @@ function processMenuToJson($items) {
 }
 
 function isoDateToMsSql($dateString) {
-  $format = 'Y-m-d H:i:s';
-  if (strlen($dateString) > 10)
-  {
+  //$format = "Y-m-d";
+  //if (strlen($dateString) > 10)
+  //{
+  //  $parsedDate = substr($dateString, 0, 19);
+  //  $parsedDate = str_replace("T", " ", $parsedDate);
+  //  if (DateTime::createFromFormat($format .  " H:i:s", $parsedDate))
+  //  {
+  //    $date = DateTime::createFromFormat($format, $parsedDate);
+  //    return $date->format($format);
+  //  }
+  //}
+  //if (strlen($dateString) == 10)
+  //{
+  //  $date = DateTime::createFromFormat('Y-m-d', $dateString);
+  //  return $date->format($format);
+  //}
+  if (strlen($dateString) > 9) {
     return $dateString;
-    // $dateString = substr($dateString, 0, 19);
-    // $dateString = str_replace("T", " ", $dateString);
-    if (DateTime::createFromFormat($format, $dateString))
-    {
-      // $date = DateTime::createFromFormat($format, $dateString);
-      // return $date->format($format);
-    }
-  }
-  if (strlen($dateString) == 10)
-  {
-    // $date = DateTime::createFromFormat('Y-m-d', $dateString);
-    return $dateString;
-    // return $date->format($format);
   }
   return NULL;
 }
@@ -516,7 +517,7 @@ function processOrderPlansUpdate($orderUpdateData) {
         $plan["id_usuario_captura"] = $updateUserId;
         $plan["ip_captura"] = $updateIp;
         $plan["host_captura"] = $updateUrl;
-        $plan["fecha"] = NULL;
+        $plan["fecha"] = isoDateToMsSql($plan["fecha_probable"]);;
         $plan["fecha_probable"] = isoDateToMsSql($plan["fecha_probable"]);
         $plan["fecha_calibracion"] = NULL;
         $plan["fecha_valida"] = NULL;
@@ -610,11 +611,9 @@ function processPlanSheetInsert($planUpdateData) {
   $client = (array) $planUpdateData["client"];
   $planId = $plan["id_plan"];
   $sheets = getSheetsByPlan($planId);
-
   if (count($sheets) < 1)
   {
     $sheetData = getBlankSheet();
-
     unset($sheetData["id_hoja"]);
     unset($sheetData["fecha_captura"]);
     unset($sheetData["id_usuario_actualiza"]);
@@ -630,51 +629,17 @@ function processPlanSheetInsert($planUpdateData) {
     $sheetData["id_usuario_captura"] = $plan["id_usuario_actualiza"];
     $sheetData["ip_captura"] = $plan["ip_actualiza"];
     $sheetData["host_captura"] = $plan["host_actualiza"];
-
     return insertSheet($sheetData);
   }
-  return $sheets[0]->id_hoja;
-}
-
-function processPlanSheetSampleInsert($planUpdateData) {
-  $plan = (array) $planUpdateData["plan"];
-  $client = (array) $planUpdateData["client"];
-  $planId = $plan["id_plan"];
-  $sheets = (array) getSheetsByPlan($planId);
-  $sheetId = $sheets[0]["id_hoja"];
-  $samples = getSamplesBySheet($sheetId);
-  $sampleId = 0;
-
-  if (count($samples) < 1)
-  {
-    $sampleData = (array) getBlankSample();
-
-    unset($sampleData["id_muestra"]);
-    $sampleData["id_estudio"] = $plan["id_estudio"];
-    $sampleData["id_cliente"] = $client["id_cliente"];
-    $sampleData["id_orden"] = $plan["id_orden"];
-    $sampleData["id_plan"] = $plan["id_plan"];
-    $sampleData["id_hoja"] = $sheetId;
-    $sampleData["id_paquete"] = $plan["id_paquete"];
-    $sampleData["id_ubicacion"] = $plan["id_ubicacion"];
-
-    $packagePoints = getPointsByPackage($plan["id_paquete"]);
-    $i = 0;
-    $l = count($packagePoints);
-    for ($i = 0; $i < $l; $i++) {
-      $sampleData["id_punto"] = $packagePoints[$i]["id_punto"];
-      $sampleId = insertSample($sampleData);
-    }
-  }
-  return $sampleId;
+  return $sheets[0]["id_hoja"];
 }
 
 function processPlanReceptionInsert($planUpdateData) {
   $plan = (array) $planUpdateData["plan"];
   $planId = $plan["id_plan"];
   $sheet = getSheetsByPlan($planId)[0];
-
-  if (count(getReceptionsByPlan($planId)) < 1)
+  $receptions = (array) getReceptionsByPlan($planId);
+  if (count($receptions) < 1)
   {
     $receptionData = getBlankReception();
     unset($receptionData["id_recepcion"]);
@@ -693,10 +658,45 @@ function processPlanReceptionInsert($planUpdateData) {
     $receptionData["id_usuario_captura"] = $plan["id_usuario_actualiza"];
     $receptionData["ip_captura"] = $plan["ip_actualiza"];
     $receptionData["host_captura"] = $plan["host_actualiza"];
-
     return insertReception($receptionData);
   }
-  return 0;
+  return $receptions[0]["id_recepcion"];
+}
+
+function processPlanSheetSampleInsert($planUpdateData) {
+  $plan = (array) $planUpdateData["plan"];
+  $client = (array) $planUpdateData["client"];
+  $planId = $plan["id_plan"];
+  $sheets = (array) getSheetsByPlan($planId);
+  $sheetId = $sheets[0]["id_hoja"];
+  $samples = (array) getSamplesBySheet($sheetId);
+  $sampleId = 0;
+
+  if (count($samples) < 1)
+  {
+    $receptions = (array) getReceptionsByPlan($planId);
+    $receptionId = $receptions[0]["id_recepcion"];
+    $points = getPointsByPackage($plan["id_paquete"]);
+    $i = 0;
+    $l = count($points);
+    $sampleData = (array) getBlankSample();
+
+    unset($sampleData["id_muestra"]);
+    $sampleData["id_estudio"] = $plan["id_estudio"];
+    $sampleData["id_cliente"] = $client["id_cliente"];
+    $sampleData["id_orden"] = $plan["id_orden"];
+    $sampleData["id_plan"] = $plan["id_plan"];
+    $sampleData["id_hoja"] = $sheetId;
+    $sampleData["id_recepcion"] = $receptionId;
+    $sampleData["id_paquete"] = $plan["id_paquete"];
+    $sampleData["id_ubicacion"] = $plan["id_ubicacion"];
+
+    for ($i = 0; $i < $l; $i++) {
+      $sampleData["id_punto"] = $points[$i]["id_punto"];
+      $sampleId = insertSample($sampleData);
+    }
+  }
+  return $samples[count($samples) - 1]["id_muestra"];
 }
 
 function processPlanInstrumentsUpdate($planUpdateData) {
@@ -984,11 +984,87 @@ function processSheetUpdate($request) {
   return $sheetUpdateData;
 }
 
+function processSheetResultsUpdate($sheetUpdateData) {
+  $samples = (array) $sheetUpdateData["samples"];
+  $sheetId = $sheetUpdateData["sheet"]["id_hoja"];
+  $userId = $sheetUpdateData["sheet"]["id_usuario_actualiza"];
+  $storedResults = getResultsBySheet($sheetId);
+  $results = array();
+  $i = 0;
+  $j = 0;
+  $k = 0;
+  $l = count($storedResults);
+  $m = count($samples);
+  $n = 0;
+  
+  for ($j = 0; $j < $m; $j++) {
+    $sample = (array) $samples[$j];
+    $sampleResults = (array) $sample["resultados"];
+    $n = count($sampleResults);
+    for ($k = 0; $k < $n; $k++) {
+      $result = (array) $sampleResults[$k];
+      unset($result["param"]);
+      unset($result['$$hashKey']);
+      $results[] = $result;
+    }
+  }
+
+  if ($l < 1)
+  {
+    $m = count($results);
+    for ($j = 0; $j < $m; $j++) {
+      $results[$j]["id_usuario_captura"] = $userId;
+      unset($results[$j]["id_resultado"]);
+      unset($results[$j]["id_usuario_actualiza"]);
+      unset($results[$j]["fecha_captura"]);
+      unset($results[$j]["fecha_actualiza"]);
+      insertResult($results[$j]);
+    }
+    return $sheetId;
+  }
+  else
+  {
+    for ($i = 0; $i < $l; $i++) {
+      $storedResults[$i]["id_usuario_actualiza"] = $userId;
+      $storedResults[$i]["activo"] = 0;
+      unset($storedResults[$i]["id_usuario_captura"]);
+      unset($storedResults[$i]["fecha_captura"]);
+      unset($storedResults[$i]["fecha_actualiza"]);
+      unset($storedResults[$i]["param"]);
+      updateResult($storedResults[$i]);
+    }
+    
+    $m = count($results);
+    for ($j = 0; $j < $m; $j++) {
+      $result = (array) $results[$j];
+      if ($result["id_resultado"] == 0)
+      {
+        $result["id_usuario_captura"] = $userId;
+        unset($result["id_resultado"]);
+        unset($result["id_usuario_actualiza"]);
+        unset($result["fecha_captura"]);
+        unset($result["fecha_actualiza"]);
+        insertResult($result);
+      }
+      else
+      {
+        $result["id_usuario_actualiza"] = $userId;
+        $result["activo"] = 1;
+        unset($result["id_usuario_captura"]);
+        unset($result["fecha_captura"]);
+        unset($result["fecha_actualiza"]);
+        unset($result["param"]);
+        updateResult($result);
+      }
+    }
+  }
+  return $sheetId;
+}
+
 function processSheetPreservationsUpdate($sheetUpdateData) {
   $preservations = (array) $sheetUpdateData["preservations"];
   $sheetId = $sheetUpdateData["sheet"]["id_hoja"];
-  $storedPreservations = getPreservationsBySheet($sheetId);
-
+  $storedPreservations = (array) getPreservationsBySheet($sheetId);
   $i = 0;
   $j = 0;
   $l = count($storedPreservations);
@@ -1038,83 +1114,6 @@ function processSheetPreservationsUpdate($sheetUpdateData) {
       {
         $preservation["activo"] = 1;
         updateSheetPreservation($preservation);
-      }
-    }
-  }
-  return $sheetId;
-}
-
-function processSheetResultsUpdate($sheetUpdateData) {
-  $samples = (array) $sheetUpdateData["samples"];
-  $sheetId = $sheetUpdateData["sheet"]["id_hoja"];
-  $userId = $sheetUpdateData["sheet"]["id_usuario_actualiza"];
-  $storedResults = getResultsBySheet($sheetId);
-  $results = array();
-
-  $i = 0;
-  $j = 0;
-  $k = 0;
-  $l = count($storedResults);
-  $m = count($samples);
-  $n = 0;
-
-  for ($j = 0; $j < $m; $j++) {
-    $sample = (array) $samples[$i];
-    $sampleResults = (array) $sample["resultados"];
-    $n = count($sampleResults);
-    for ($k = 0; $k < $n; $k++) {
-      $result = (array) $sampleResults[$k];
-      unset($result["param"]);
-      unset($result['$$hashKey']);
-      $results[] = $result;
-    }
-  }
-
-  if ($l < 1)
-  {
-    for ($j = 0; $j < $m; $j++) {
-      $result = (array) $results[$j];
-      $result["id_usuario_captura"] = $userId;
-      unset($result["id_resultado"]);
-      unset($result["id_usuario_actualiza"]);
-      unset($result["fecha_captura"]);
-      unset($result["fecha_actualiza"]);
-      insertResult($result);
-    }
-    return $sheetId;
-  }
-  else
-  {
-    for ($i = 0; $i < $l; $i++) {
-      $storedResults[$i]["id_usuario_actualiza"] = $userId;
-      $storedResults[$i]["activo"] = 0;
-      unset($storedResults[$i]["id_usuario_captura"]);
-      unset($storedResults[$i]["fecha_captura"]);
-      unset($storedResults[$i]["fecha_actualiza"]);
-      unset($storedResults[$i]["param"]);
-      updateResult($storedResults[$i]);
-    }
-    $m = count($results);
-    for ($j = 0; $j < $m; $j++) {
-      $result = (array) $results[$j];
-      if ($result["id_resultado"] == 0)
-      {
-        $result["id_usuario_captura"] = $userId;
-        unset($result["id_resultado"]);
-        unset($result["id_usuario_actualiza"]);
-        unset($result["fecha_captura"]);
-        unset($result["fecha_actualiza"]);
-        insertResult($result);
-      }
-      else
-      {
-        $result["id_usuario_actualiza"] = $userId;
-        $result["activo"] = 1;
-        unset($result["id_usuario_captura"]);
-        unset($result["fecha_captura"]);
-        unset($result["fecha_actualiza"]);
-        unset($result["param"]);
-        updateResult($result);
       }
     }
   }

@@ -178,7 +178,7 @@ $app->get("/order/sources", function() use ($app) {
 
 $app->get("/plans(/)(:planId)", function($planId = -1) use ($app) {
   try {
-    $userId = decodeUserToken($app->request())->uid;
+    //$userId = decodeUserToken($app->request())->uid;
     if ($planId > -1)
     {
       $result = json_encode(getPlan($planId));
@@ -244,7 +244,7 @@ $app->get("/plans/containers/:planId", function($planId) use ($app) {
 
 $app->get("/sheets(/)(:sheetId)", function($sheetId = -1) use ($app) {
   try {
-    $userId = decodeUserToken($app->request())->uid;
+    //$userId = decodeUserToken($app->request())->uid;
     if ($sheetId > -1)
     {
       $result = json_encode(getSheet($sheetId));
@@ -326,7 +326,13 @@ $app->post("/receptions", function() use ($app) {
     $userId = decodeUserToken($app->request())->uid;
     $request = $app->request();
     $receptionId = extractDataFromRequest($request)->id_recepcion;
-    if ($receptionId > 0)
+    if ($receptionId < 1)
+    {
+      // $receptionInsertData = processReceptionInsert($request);
+      // $receptionId = insertReception($receptionInsertData["reception"]);
+      // //processReceptionOrderInsert($receptionInsertData, $receptionId);
+    }
+    else
     {
       $receptionUpdateData = processReceptionUpdate($request);
       $receptionId = updateReception($receptionUpdateData["reception"]);

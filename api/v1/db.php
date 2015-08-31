@@ -1002,7 +1002,7 @@ function getSheet($sheetId) {
     $pointId = $sheet->muestras[$i]["id_punto"];
     $sheet->muestras[$i]["punto"] = getPoint($pointId);
     $sampleId = $sheet->muestras[$i]["id_muestra"];
-    $samplingResults = getSamplingResultsBySample($sampleId);
+    $samplingResults = getResultsBySample($sampleId);
     if (count($samplingResults) < 1) {
       $j = 0;
       $m = count($parameters);
@@ -1320,9 +1320,15 @@ function getJob($jobId) {
     id_muestra, id_muestra_duplicada, id_area, id_usuario_entrega,
     id_usuario_recibe, id_usuario_analiza, id_usuario_registra,
     id_usuario_aprueba, id_usuario_valida, id_status,
-    fecha, fecha_entrega, fecha_recibe, fecha_analiza,
-    fecha_registra, fecha_aprueba, fecha_valida,
-    fecha_actualiza, fecha_rechaza,
+    CONVERT(NVARCHAR, fecha, 126) AS fecha,
+    CONVERT(NVARCHAR, fecha_entrega, 126) AS fecha_entrega,
+    CONVERT(NVARCHAR, fecha_recibe, 126) AS fecha_recibe,
+    CONVERT(NVARCHAR, fecha_analiza, 126) AS fecha_analiza,
+    CONVERT(NVARCHAR, fecha_registra, 126) AS fecha_registra,
+    CONVERT(NVARCHAR, fecha_aprueba, 126) AS fecha_aprueba,
+    CONVERT(NVARCHAR, fecha_valida 126) AS fecha_valida,
+    CONVERT(NVARCHAR, fecha_actualiza, 126) AS fecha_actualiza,
+    CONVERT(NVARCHAR, fecha_rechaza, 126) AS fecha_rechaza,
     ip_captura, ip_aprueba, ip_valida, ip_actualiza,
     host_captura, host_aprueba, host_valida, host_actualiza,
     comentarios, comentarios_calidad, activo
@@ -1342,9 +1348,15 @@ function getJobs() {
     id_muestra, id_muestra_duplicada, id_area, id_usuario_entrega,
     id_usuario_recibe, id_usuario_analiza, id_usuario_registra,
     id_usuario_aprueba, id_usuario_valida, id_status,
-    fecha, fecha_entrega, fecha_recibe, fecha_analiza,
-    fecha_registra, fecha_aprueba, fecha_valida,
-    fecha_actualiza, fecha_rechaza,
+    CONVERT(NVARCHAR, fecha, 126) AS fecha,
+    CONVERT(NVARCHAR, fecha_entrega, 126) AS fecha_entrega,
+    CONVERT(NVARCHAR, fecha_recibe, 126) AS fecha_recibe,
+    CONVERT(NVARCHAR, fecha_analiza, 126) AS fecha_analiza,
+    CONVERT(NVARCHAR, fecha_registra, 126) AS fecha_registra,
+    CONVERT(NVARCHAR, fecha_aprueba, 126) AS fecha_aprueba,
+    CONVERT(NVARCHAR, fecha_valida 126) AS fecha_valida,
+    CONVERT(NVARCHAR, fecha_actualiza, 126) AS fecha_actualiza,
+    CONVERT(NVARCHAR, fecha_rechaza, 126) AS fecha_rechaza,
     ip_captura, ip_aprueba, ip_valida, ip_actualiza,
     host_captura, host_aprueba, host_valida, host_actualiza,
     comentarios, comentarios_calidad, activo
@@ -1508,7 +1520,9 @@ function getReceptionists() {
     id_area, id_puesto, interno, cea, laboratorio, calidad,
     supervisa, recibe, analiza, muestrea, nombres,
     apellido_paterno, apellido_materno,
-    fecha_captura, fecha_actualiza, ip_captura, ip_actualiza,
+    CONVERT(NVARCHAR, fecha_captura, 126) AS fecha_captura,
+    CONVERT(NVARCHAR, fecha_actualiza, 126) AS fecha_actualiza,
+    ip_captura, ip_actualiza,
     host_captura, host_actualiza, activo
     FROM Usuario
     WHERE activo = 1 AND recibe = 1";
@@ -1523,7 +1537,9 @@ function getReceptionists() {
 function getSamples() {
   $sql = "SELECT id_muestra, id_estudio, id_cliente, id_orden,
     id_plan, id_hoja, id_recepcion, id_custodia, id_paquete,
-    id_ubicacion, id_punto, fecha_muestreo, fecha_recibe,
+    id_ubicacion, id_punto,
+    CONVERT(NVARCHAR, fecha_muestreo, 126) AS fecha_muestreo,
+    CONVERT(NVARCHAR, fecha_recibe, 126) AS fecha_recibe,
     comentarios, activo
     FROM Muestra
     WHERE activo = 1";
@@ -1551,7 +1567,9 @@ function getBlankSample() {
 function getSamplesBySheet($sheetId) {
   $sql = "SELECT id_muestra, id_estudio, id_cliente, id_orden,
     id_plan, id_hoja, id_recepcion, id_custodia, id_paquete,
-    id_ubicacion, id_punto, fecha_muestreo, fecha_recibe,
+    id_ubicacion, id_punto,
+    CONVERT(NVARCHAR, fecha_muestreo, 126) AS fecha_muestreo,
+    CONVERT(NVARCHAR, fecha_recibe, 126) AS fecha_recibe,
     comentarios, activo
     FROM Muestra
     WHERE activo = 1 AND id_hoja = :sheetId";
@@ -1567,7 +1585,9 @@ function getSamplesBySheet($sheetId) {
 function getSamplesByReception($receptionId) {
   $sql = "SELECT id_muestra, id_estudio, id_cliente, id_orden,
     id_plan, id_hoja, id_recepcion, id_custodia, id_paquete,
-    id_ubicacion, id_punto, fecha_muestreo, fecha_recibe,
+    id_ubicacion, id_punto,
+    CONVERT(NVARCHAR,fecha_muestreo, 126) AS fecha_muestreo,
+    CONVERT(NVARCHAR, fecha_recibe, 126) AS fecha_recibe,
     comentarios, activo
     FROM Muestra
     WHERE id_recepcion = :receptionId";
@@ -1630,13 +1650,33 @@ function deleteReceptionSamples($receptionId) {
 function getResultsBySheet($sheetId) {
   $sql = "SELECT id_resultado, id_muestra, id_parametro,
     id_tipo_resultado, id_tipo_valor, id_usuario_captura,
-    id_usuario_actualiza, valor, fecha_captura, fecha_actualiza,
+    id_usuario_actualiza, valor,
+    CONVERT(NVARCHAR, fecha_captura, 126) AS fecha_captura,
+    CONVERT(NVARCHAR, fecha_actualiza, 126) AS  fecha_actualiza,
     activo, param
     FROM viewResultadoHoja
-    WHERE id_hoja = :sheetId";
+    WHERE activo = 1 AND id_hoja = :sheetId";
   $db = getConnection();
   $stmt = $db->prepare($sql);
   $stmt->bindParam("sheetId", $sheetId);
+  $stmt->execute();
+  $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+  $db = null;
+  return $results;
+}
+
+function getResultsBySample($sampleId) {
+  $sql = "SELECT id_resultado, id_muestra, id_parametro,
+    id_tipo_resultado, id_tipo_valor, id_usuario_captura,
+    id_usuario_actualiza, valor,
+    CONVERT(NVARCHAR, fecha_captura, 126) AS fecha_captura,
+    CONVERT(NVARCHAR, fecha_actualiza, 126) AS  fecha_actualiza,
+    activo, param
+    FROM viewResultadoParametro
+    WHERE activo = 1 AND id_muestra = :sampleId";
+  $db = getConnection();
+  $stmt = $db->prepare($sql);
+  $stmt->bindParam("sampleId", $sampleId);
   $stmt->execute();
   $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
   $db = null;
@@ -1656,10 +1696,12 @@ function getBlankSamplingResult() {
 function getSamplingResultsBySample($sampleId) {
   $sql = "SELECT id_resultado, id_muestra, id_parametro,
     id_tipo_resultado, id_tipo_valor, id_usuario_captura,
-    id_usuario_actualiza, valor, fecha_captura, fecha_actualiza,
+    id_usuario_actualiza, valor,
+    CONVERT(NVARCHAR, fecha_captura, 126) AS fecha_captura,
+    CONVERT(NVARCHAR, fecha_actualiza, 126) AS  fecha_actualiza,
     activo, param
     FROM viewResultadoMuestreoMuestra
-    WHERE id_muestra = :sampleId";
+    WHERE activo = 1 AND id_muestra = :sampleId";
   $db = getConnection();
   $stmt = $db->prepare($sql);
   $stmt->bindParam("sampleId", $sampleId);
@@ -1673,7 +1715,8 @@ function getInstruments() {
   $sql = "SELECT id_instrumento, id_usuario_captura,
     id_usuario_actualiza, instrumento, descripcion, muestreo,
     laboratorio, inventario, bitacora, folio,
-    fecha_captura, fecha_actualiza,
+    CONVERT(NVARCHAR, fecha_captura, 126) AS fecha_captura,
+    CONVERT(NVARCHAR, fecha_actualiza, 126) AS  fecha_actualiza,
     ip_captura, ip_actualiza, host_captura, host_actualiza,
     comentarios, activo
     FROM Instrumento
@@ -1861,7 +1904,9 @@ function getContainers() {
   $sql = "SELECT id_recipiente, id_plan, id_recepcion, id_muestra,
     id_tipo_recipiente, id_preservacion, id_almacenamiento,
     id_status_recipiente, id_usuario_captura, id_usuario_actualiza,
-    volumen, volumen_inicial, fecha_captura, fecha_actualiza,
+    volumen, volumen_inicial,
+        CONVERT(NVARCHAR, fecha_captura, 126) AS fecha_captura,
+    CONVERT(NVARCHAR, fecha_actualiza, 126) AS  fecha_actualiza,
     ip_captura, ip_actualiza, host_captura, host_actualiza, activo
     FROM Recipiente
     WHERE activo = 1";
@@ -1877,7 +1922,9 @@ function getContainer($containerId) {
   $sql = "SELECT id_recipiente, id_plan, id_recepcion, id_muestra,
     id_tipo_recipiente, id_preservacion, id_almacenamiento,
     id_status_recipiente, id_usuario_captura, id_usuario_actualiza,
-    volumen, volumen_inicial, fecha_captura, fecha_actualiza,
+    volumen, volumen_inicial,
+        CONVERT(NVARCHAR, fecha_captura, 126) AS fecha_captura,
+    CONVERT(NVARCHAR, fecha_actualiza, 126) AS  fecha_actualiza,
     ip_captura, ip_actualiza, host_captura, host_actualiza, activo
     FROM Recipiente
     WHERE activo = 1 AND id_recipiente = :containerId";
@@ -1894,7 +1941,9 @@ function getPlanContainers($planId) {
   $sql = "SELECT id_recipiente, id_plan, id_recepcion, id_muestra,
     id_tipo_recipiente, id_preservacion, id_almacenamiento,
     id_status_recipiente, id_usuario_captura, id_usuario_actualiza,
-    volumen, volumen_inicial, fecha_captura, fecha_actualiza,
+    volumen, volumen_inicial
+        CONVERT(NVARCHAR, fecha_captura, 126) AS fecha_captura,
+    CONVERT(NVARCHAR, fecha_actualiza, 126) AS  fecha_actualiza,
     ip_captura, ip_actualiza, host_captura, host_actualiza, activo
     FROM Recipiente
     WHERE activo = 1 AND id_plan = :planId";

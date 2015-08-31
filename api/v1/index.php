@@ -178,7 +178,7 @@ $app->get("/order/sources", function() use ($app) {
 
 $app->get("/plans(/)(:planId)", function($planId = -1) use ($app) {
   try {
-    //$userId = decodeUserToken($app->request())->uid;
+    $userId = decodeUserToken($app->request())->uid;
     if ($planId > -1)
     {
       $result = json_encode(getPlan($planId));
@@ -244,7 +244,7 @@ $app->get("/plans/containers/:planId", function($planId) use ($app) {
 
 $app->get("/sheets(/)(:sheetId)", function($sheetId = -1) use ($app) {
   try {
-    //$userId = decodeUserToken($app->request())->uid;
+    $userId = decodeUserToken($app->request())->uid;
     if ($sheetId > -1)
     {
       $result = json_encode(getSheet($sheetId));
@@ -288,7 +288,7 @@ $app->post("/sheets", function() use ($app) {
 
 $app->get("/receptions(/)(:receptionId)", function($receptionId = -1) use ($app) {
   try {
-    $userId = decodeUserToken($app->request())->uid;
+    //$userId = decodeUserToken($app->request())->uid;
     if ($receptionId > -1)
     {
       $result = json_encode(getReception($receptionId));
@@ -309,7 +309,7 @@ $app->get("/receptions(/)(:receptionId)", function($receptionId = -1) use ($app)
 
 $app->get("/areas/reception", function() use ($app) {
   try {
-    $userId = decodeUserToken($app->request())->uid;
+    //$userId = decodeUserToken($app->request())->uid;
     $result = json_encode(getReceivingAreas());
     $app->response()->status(200);
     $app->response()->header("Content-Type", "application/json");
@@ -326,13 +326,7 @@ $app->post("/receptions", function() use ($app) {
     $userId = decodeUserToken($app->request())->uid;
     $request = $app->request();
     $receptionId = extractDataFromRequest($request)->id_recepcion;
-    if ($receptionId < 1)
-    {
-      // $receptionInsertData = processReceptionInsert($request);
-      // $receptionId = insertReception($receptionInsertData["reception"]);
-      // //processReceptionOrderInsert($receptionInsertData, $receptionId);
-    }
-    else
+    if ($receptionId > 0)
     {
       $receptionUpdateData = processReceptionUpdate($request);
       $receptionId = updateReception($receptionUpdateData["reception"]);

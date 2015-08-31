@@ -231,7 +231,7 @@
   <div class="row">
     <div class="col-xs-12 col-sm-6">
       <label for="sampleSelect">
-        Muestra verificada
+        Muestra verificada {{reception.reception.id_muestra_validacion}}
       </label>
       <select class="form-control"
         id="sampleSelect"
@@ -240,9 +240,9 @@
         >
         <option
           data-ng-repeat="validationSample in reception.samples"
-          value="{{validationSample.id_muestra_validacion}}">
-          {{validationSample.id_muestra_validacion}}
-          -
+          value="{{validationSample.id_muestra}}">
+          {{validationSample.id_muestra}}
+          - 2015
           ({{::validationSample.punto.punto}})
         </option>
       </select>

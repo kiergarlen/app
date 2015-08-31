@@ -595,9 +595,6 @@
         vm.message += ' Ingrese una fecha válida ';
         return false;
       }
-      vm.study.fecha = DateUtilsService.dateToIso(
-        new Date(vm.study.fecha)
-      );
       if (vm.study.id_cliente < 1) {
         vm.message += ' Seleccione un cliente ';
         return false;
@@ -849,9 +846,6 @@
             vm.message += '(Ver fila ' + (i + 1) + ')';
             return false;
           }
-          plans[i].fecha_probable = DateUtilsService.dateToIso(
-            new Date(plans[i].fecha_probable)
-          );
         }
       } else {
         vm.message += ' Agregue un plan ';
@@ -1312,9 +1306,6 @@
         vm.message += ' Seleccione al menos un instrumento ';
         return false;
       }
-      vm.plan.fehca_calibracion = DateUtilsService.dateToIso(
-        new Date(vm.plan.fehca_calibracion)
-      );
       return true;
     }
 
@@ -1673,9 +1664,6 @@
             vm.message += samples[i].punto + ' ';
             return false;
           }
-          samples[i].fecha_muestreo = DateUtilsService.dateToIso(
-            new Date(samples[i].fecha_muestreo)
-          );
           isResultListValid(samples[i], samples[i].resultados);
         }
       } else {
@@ -1695,16 +1683,10 @@
         vm.message += ' Ingrese una fecha/hora de muestreo válida ';
         return false;
       }
-      vm.sheet.fecha_muestreo = DateUtilsService.dateToIso(
-        vm.sheet.fecha_muestreo
-      );
       if (!DateUtilsService.isValidDate(new Date(vm.sheet.fecha_entrega))) {
         vm.message += ' Ingrese una fecha/hora de entrega válida ';
         return false;
       }
-      vm.sheet.fecha_entrega = DateUtilsService.dateToIso(
-        vm.sheet.fecha_entrega
-      );
       if (!isSampleListValid()) {
         return false;
       }
@@ -1827,7 +1809,7 @@
     vm.preservations = [];
     vm.areas = [];
     vm.message = '';
-    vm.id_muestra_validacion = 0;
+    vm.id_muestra_validacion = 8;
     vm.isDataSubmitted = false;
     vm.approveItem = approveItem;
     vm.rejectItem = rejectItem;
@@ -1939,16 +1921,10 @@
         vm.message += ' Ingrese una fecha/hora de entrega válida ';
         return false;
       }
-      vm.reception.fecha_entrega = DateUtilsService.dateToIso(
-        new Date(vm.reception.fecha_entrega)
-      );
       if (!DateUtilsService.isValidDate(new Date(vm.reception.fecha_recibe))) {
         vm.message += ' Ingrese una fecha/hora de recepción válida ';
         return false;
       }
-      vm.reception.fecha_recibe = DateUtilsService.dateToIso(
-        new Date(vm.reception.fecha_recibe)
-      );
       if (vm.reception.id_recepcionista < 1) {
         vm.message += ' Seleccione un responsable de la recepción ';
         return false;

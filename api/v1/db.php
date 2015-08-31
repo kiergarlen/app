@@ -993,11 +993,11 @@ function getSheet($sheetId) {
   $samples = getSamplesBySheet($sheetId);
   $sheet->muestras = $samples;
   $l = count($samples);
-  
+
   $blankSamplingResult = getBlankSamplingResult();
   $blankSamplingResult["id_usuario_captura"] =  $sheet->id_usuario_captura;
   $blankSamplingResult["id_usuario_actualiza"] =  $sheet->id_usuario_captura;
-  
+
   for($i = 0; $i < $l; $i++) {
     $pointId = $sheet->muestras[$i]["id_punto"];
     $sheet->muestras[$i]["punto"] = getPoint($pointId);
@@ -1174,7 +1174,6 @@ function getReceptionsByPlan($planId) {
 
 function getReception($receptionId) {
   $reception = getPlainReception($receptionId);
-  $reception->hoja = getPlainSheet($reception->id_hoja);
   $samples = getSamplesByReception($receptionId);
   if (count($samples) < 1) {
     $samples = getSamplesBySheet($reception->id_hoja);
@@ -1194,8 +1193,7 @@ function getReception($receptionId) {
   $reception->muestras = $samples;
   $preservations = getPreservationsByReception($receptionId);
   $reception->preservaciones = $preservations;
-  $areas = getAreasByReception($receptionId);
-  $reception->areas = $areas;
+  $reception->areas = getAreasByReception($receptionId);
   return $reception;
 }
 
@@ -1272,7 +1270,7 @@ function getReceivingAreas() {
 
 function getAreasByReception($receptionId) {
   $sql = "SELECT  id_recepcion_area, id_recepcion, id_area,
-    id_muestra, volumen, vigencia, recipiente
+    id_muestra, volumen, vigencia, recipiente, activo
     FROM RecepcionArea
     WHERE id_recepcion = :receptionId";
   $db = getConnection();
@@ -1292,15 +1290,26 @@ function getAreasByReception($receptionId) {
 
 function insertReceptionArea($areaData) {
   $sql = "INSERT INTO RecepcionArea (id_recepcion, id_area,
-    id_muestra, volumen, vigencia, recipiente)
+    id_muestra, volumen, vigencia, recipiente, activo)
     VALUES (:id_recepcion, :id_area,
-    :id_muestra, :volumen, :vigencia, :recipiente)";
+    :id_muestra, :volumen, :vigencia, :recipiente, 1)";
   $db = getConnection();
   $stmt = $db->prepare($sql);
   $stmt->execute($areaData);
   $receptionAreaId = $db->lastInsertId();
   $db = null;
   return $receptionAreaId;
+}
+
+function updateReceptionArea($updateData) {
+  $sql = "UPDATE RecepcionArea SET id_recepcion = :id_recepcion,
+    id_area = :id_area, id_muestra = :id_muestra, volumen = :volumen,
+    vigencia = :vigencia, recipiente = :recipiente, activo = :activo
+    WHERE id_recepcion_area = :id_recepcion_area";
+  $db = getConnection();
+  $stmt = $db->prepare($sql);
+  $stmt->execute($updateData);
+  $recep
 }
 
 function deleteReceptionAreas($receptionId) {

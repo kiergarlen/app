@@ -1809,7 +1809,7 @@
     vm.preservations = [];
     vm.areas = [];
     vm.message = '';
-    vm.id_muestra_validacion = 8;
+    vm.id_muestra_validacion = 0;
     vm.isDataSubmitted = false;
     vm.approveItem = approveItem;
     vm.rejectItem = rejectItem;
@@ -1891,6 +1891,7 @@
               vm.areas[i].volumen = false;
               vm.areas[i].vigencia = false;
               vm.areas[i].recipiente = false;
+              vm.areas[i].activo = false;
             }
             ArrayUtilsService.seItemsFromReference(
               vm.areas,
@@ -1901,7 +1902,8 @@
                 'id_muestra',
                 'volumen',
                 'vigencia',
-                'recipiente'
+                'recipiente',
+                'activo'
               ]
             );
           });

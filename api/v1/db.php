@@ -1212,7 +1212,7 @@ function insertReception($receptionData) {
     :host_valida, :comentarios, :motivo_rechaza, :activo)";
   $db = getConnection();
   $stmt = $db->prepare($sql);
-  $stmt->execute($receptionData);
+  $stmt->execute($receptionDataonData);
   $receptionId = $db->lastInsertId();
   $db = null;
   return $receptionId;
@@ -1269,7 +1269,7 @@ function getReceivingAreas() {
 }
 
 function getAreasByReception($receptionId) {
-  $sql = "SELECT  id_recepcion_area, id_recepcion, id_area,
+  $sql = "SELECT id_recepcion_area, id_recepcion, id_area,
     id_muestra, volumen, vigencia, recipiente, activo
     FROM RecepcionArea
     WHERE id_recepcion = :receptionId";
@@ -1377,6 +1377,23 @@ function getJobs() {
   $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
   $db = null;
   return $result;
+}
+
+function getJobsByReception($receptionId) {
+  $sql = "SELECT id_recepcion_trabajo, id_recepcion, id_trabajo, activo
+    FROM RecepcionTrabajo
+    WHERE id_recepcion = :receptionId";
+  $db = getConnection();
+  $stmt = $db->prepare($sql);
+  $stmt->bindParam("receptionId", $receptionId);
+  $stmt->execute();
+  $jobs = $stmt->fetchAll(PDO::FETCH_ASSOC);
+  $db = null;
+  $l = count($jobs);
+  for ($i = 0; $i < $l; $i++) {
+    $jobs[$i]["selected"] = ($jobs[$i]["selected"] > 0);
+  }
+  return $jobs;
 }
 
 function getCustody($custodyId) {

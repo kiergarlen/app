@@ -333,18 +333,18 @@
       </h5>
     </div>
     <div class="col-xs-12 col-sm-7"
-      data-ng-repeat="jobArea in reception.areasTrabajo">
+      data-ng-repeat="job in reception.jobs">
       <label>
         <input type="checkbox"
-          value="{{jobArea.selected}}"
-          data-ng-model="jobArea.selected"
+          value="{{job.selected}}"
+          data-ng-model="job.selected"
           >
-          {{:jobArea.area}}
+          {{:job.area}}
           <br>
           <small class="text-muted">
-            {{:jobArea.recibe.nombres}}
-            {{:jobArea.recibe.apellido_paterno}}
-            {{:jobArea.recibe.apellido_materno}}
+            {{:job.recibe.nombres}}
+            {{:job.recibe.apellido_paterno}}
+            {{:job.recibe.apellido_materno}}
           </small>
       </label>
     </div>

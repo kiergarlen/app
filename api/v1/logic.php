@@ -1170,16 +1170,16 @@ function processReceptionSamplesUpdate($receptionUpdateData) {
   $samples = (array) $receptionUpdateData["samples"];
   $receptionId = $receptionUpdateData["reception"]["id_recepcion"];
   //deleteReceptionSamples($receptionId);
-  $i = 0;
-  $l = count($samples);
-  for ($i = 3; $i < $l; $i++) {
-    // insertReceptionSample(
-    //  array(
-    //    "id_recepcion" => $samples[$i]->id_recepcion,
-    //    "id_muestra" => $samples[$i]->id_muestra
-    //  )
-    // );
-  }
+  // $i = 0;
+  // $l = count($samples);
+  // for ($i = 3; $i < $l; $i++) {
+  //   // insertReceptionSample(
+  //   //  array(
+  //   //    "id_recepcion" => $samples[$i]->id_recepcion,
+  //   //    "id_muestra" => $samples[$i]->id_muestra
+  //   //  )
+  //   // );
+  // }
   return $receptionId;
 }
 

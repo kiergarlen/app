@@ -329,12 +329,12 @@ $app->post("/receptions", function() use ($app) {
     if ($receptionId > 0)
     {
       $receptionUpdateData = processReceptionUpdate($request);
-      $receptionId = updateReception($receptionUpdateData["reception"]);
-      $result = json_encode($receptionUpdateData);
+      // $receptionId = updateReception($receptionUpdateData["reception"]);
       // processReceptionSamplesUpdate($receptionUpdateData);
       // processReceptionPreservationsUpdate($receptionUpdateData);
       // processReceptionAreasUpdate($receptionUpdateData);
     }
+    $result = json_encode(processReceptionSamplesUpdate($receptionUpdateData));
     // $result = "{\"id_recepcion\":" . $receptionId . "}";
     $app->response()->status(200);
     $app->response()->header("Content-Type", "application/json");

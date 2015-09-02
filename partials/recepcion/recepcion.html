@@ -223,7 +223,7 @@
     </div>
     <div class="col-xs-12 col-sm-6">
       <label for="sampleSelect">
-        Muestra verificada {{reception.reception.id_muestra_validacion}}
+        Muestra verificada
       </label>
       <select class="form-control"
         id="sampleSelect"
@@ -268,16 +268,16 @@
   </div>
   <div class="row">
     <div class="col-xs-3">
-      <strong>Tipo análisis</strong>
+      <h6>Tipo análisis</h6>
     </div>
     <div class="col-xs-3">
-      <strong>Volumen</strong>
+      <h6>Volumen</h6>
     </div>
     <div class="col-xs-3">
-      <strong>Vigencia</strong>
+      <h6>Vigencia</h6>
     </div>
     <div class="col-xs-3">
-      <strong>Contenedor</strong>
+      <h6>Contenedor</h6>
     </div>
   </div>
   <div class="row"
@@ -312,17 +312,23 @@
   </div>
   <div class="row">
     <div class="col-xs-12">
-      <h4>Comentarios</h4>
+      <h4>Asignar Orden de trabajo</h4>
     </div>
     <div class="col-xs-12">
-      <textarea rows="2" class="form-control well well-sm"
-        id="sampleCommentsText"
-        name="sampleCommentsText"
-        data-ng-model="reception.reception.comentarios"
-        >
-      </textarea>
+      <div class="row"
+        data-ng-repeat="area in reception.areas">
+        <div class="col-xs-12 col-sm-7">
+          <label>
+            <input type="checkbox"
+              data-ng-model="area.trabajo"
+              >
+              {{::area.area}}
+          </label>
+        </div>
+      </div>
     </div>
   </div>
+  <!--
   <div class="row">
     <div class="col-xs-12">
       <h4>Orden de Trabajo</h4>
@@ -347,6 +353,20 @@
             {{:job.recibe.apellido_materno}}
           </small>
       </label>
+    </div>
+  </div>
+  -->
+  <div class="row">
+    <div class="col-xs-12">
+      <h4>Comentarios</h4>
+    </div>
+    <div class="col-xs-12">
+      <textarea rows="2" class="form-control well well-sm"
+        id="sampleCommentsText"
+        name="sampleCommentsText"
+        data-ng-model="reception.reception.comentarios"
+        >
+      </textarea>
     </div>
   </div>
   <br>

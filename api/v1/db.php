@@ -1193,7 +1193,7 @@ function getReception($receptionId) {
   $reception->muestras = $samples;
   $preservations = getPreservationsByReception($receptionId);
   $reception->preservaciones = $preservations;
-  $reception->areas = getAreasByReception($receptionId);
+  $reception->areas = getReceptionAreas($receptionId);
   return $reception;
 }
 
@@ -1268,9 +1268,9 @@ function getReceivingAreas() {
   return $areas;
 }
 
-function getAreasByReception($receptionId) {
+function getReceptionAreas($receptionId) {
   $sql = "SELECT id_recepcion_area, id_recepcion, id_area,
-    id_muestra, volumen, vigencia, recipiente, activo
+    id_muestra, volumen, vigencia, recipiente, trabajo, activo
     FROM RecepcionArea
     WHERE id_recepcion = :receptionId";
   $db = getConnection();
@@ -1284,13 +1284,15 @@ function getAreasByReception($receptionId) {
     $areas[$i]["volumen"] = ($areas[$i]["volumen"] > 0);
     $areas[$i]["vigencia"] = ($areas[$i]["vigencia"] > 0);
     $areas[$i]["recipiente"] = ($areas[$i]["recipiente"] > 0);
+    $areas[$i]["trabajo"] = ($areas[$i]["trabajo"] > 0);
+    $areas[$i]["activo"] = ($areas[$i]["activo"] > 0);
   }
   return $areas;
 }
 
 function insertReceptionArea($areaData) {
   $sql = "INSERT INTO RecepcionArea (id_recepcion, id_area,
-    id_muestra, volumen, vigencia, recipiente, activo)
+    id_muestra, volumen, vigencia, recipiente, trabajo, activo)
     VALUES (:id_recepcion, :id_area,
     :id_muestra, :volumen, :vigencia, :recipiente, 1)";
   $db = getConnection();
@@ -1309,7 +1311,8 @@ function updateReceptionArea($updateData) {
   $db = getConnection();
   $stmt = $db->prepare($sql);
   $stmt->execute($updateData);
-  $recep
+  $db = null;
+  return $updateData["id_recepcion"];
 }
 
 function deleteReceptionAreas($receptionId) {

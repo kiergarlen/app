@@ -996,7 +996,7 @@ function processSheetResultsUpdate($sheetUpdateData) {
   $l = count($storedResults);
   $m = count($samples);
   $n = 0;
-  
+
   for ($j = 0; $j < $m; $j++) {
     $sample = (array) $samples[$j];
     $sampleResults = (array) $sample["resultados"];
@@ -1033,7 +1033,7 @@ function processSheetResultsUpdate($sheetUpdateData) {
       unset($storedResults[$i]["param"]);
       updateResult($storedResults[$i]);
     }
-    
+
     $m = count($results);
     for ($j = 0; $j < $m; $j++) {
       $result = (array) $results[$j];
@@ -1127,7 +1127,7 @@ function processReceptionUpdate($request) {
   $preservations = $update["preservaciones"];
   $areas = $update["areas"];
 
-  unset($update["hoja"]);
+  // unset($update["hoja"]);
   unset($update["muestras"]);
   unset($update["preservaciones"]);
   unset($update["areas"]);
@@ -1136,9 +1136,9 @@ function processReceptionUpdate($request) {
   unset($update["fecha_captura"]);
   unset($update["ip_captura"]);
   unset($update["host_captura"]);
+  unset($update["fecha_actualiza"]);
 
   $update["id_usuario_actualiza"] = $token->uid;
-  $update["fecha_actualiza"] = date('Y-m-d H:i:s');
   $update["ip_actualiza"] = $request->getIp();
   $update["host_actualiza"] = $request->getUrl();
 
@@ -1161,7 +1161,7 @@ function processReceptionUpdate($request) {
     "reception" => $update,
     "samples" => $samples,
     "preservations" => $preservations,
-    "areas" => $areas,
+    "areas" => $areas
   );
   return $receptionUpdateData;
 }

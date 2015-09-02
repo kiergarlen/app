@@ -1808,7 +1808,6 @@
     vm.samples = [];
     vm.preservations = [];
     vm.areas = [];
-    vm.receivingAreas = [];
     vm.message = '';
     vm.id_muestra_validacion = 0;
     vm.isDataSubmitted = false;
@@ -1884,7 +1883,6 @@
             var i = 0;
             var l = 0;
             vm.areas = response;
-            vm.receivingAreas = response;
             l = vm.areas.length;
             for (i = 0; i < l; i += 1) {
               vm.areas[i].id_recepcion_area = 0;
@@ -1893,6 +1891,7 @@
               vm.areas[i].volumen = false;
               vm.areas[i].vigencia = false;
               vm.areas[i].recipiente = false;
+              vm.areas[i].trabajo = false;
               vm.areas[i].activo = false;
             }
             ArrayUtilsService.seItemsFromReference(
@@ -1905,6 +1904,7 @@
                 'volumen',
                 'vigencia',
                 'recipiente',
+                'trabajo',
                 'activo'
               ]
             );

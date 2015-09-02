@@ -330,11 +330,12 @@ $app->post("/receptions", function() use ($app) {
     {
       $receptionUpdateData = processReceptionUpdate($request);
       $receptionId = updateReception($receptionUpdateData["reception"]);
-      processReceptionSamplesUpdate($receptionUpdateData);
-      processReceptionPreservationsUpdate($receptionUpdateData);
-      processReceptionAreasUpdate($receptionUpdateData);
+      $result = json_encode($receptionUpdateData);
+      // processReceptionSamplesUpdate($receptionUpdateData);
+      // processReceptionPreservationsUpdate($receptionUpdateData);
+      // processReceptionAreasUpdate($receptionUpdateData);
     }
-    $result = "{\"id_recepcion\":" . $receptionId . "}";
+    // $result = "{\"id_recepcion\":" . $receptionId . "}";
     $app->response()->status(200);
     $app->response()->header("Content-Type", "application/json");
     //$result = ")]}',\n" . $result;

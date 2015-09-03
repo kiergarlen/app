@@ -1653,9 +1653,22 @@ function insertSample($sampleData) {
   return $sampleId;
 }
 
+function getReceptionSamples($receptionId) {
+  $sql = "SELECT id_recepcion_muestra, id_recepcion, id_muestra, activo
+    FROM RecepcionMuestra
+    WHERE activo = 1 AND id_recepcion = :receptionId";
+  $db = getConnection();
+  $stmt = $db->prepare($sql);
+  $stmt->bindParam("receptionId", $receptionId);
+  $stmt->execute();
+  $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+  $db = null;
+  return $results;
+}
+
 function insertReceptionSample($receptionData) {
-  $sql = "INSERT INTO RecepcionMuestra (id_recepcion, id_muestra)
-    VALUES (:id_recepcion, :id_muestra)";
+  $sql = "INSERT INTO RecepcionMuestra (id_recepcion, id_muestra, activo)
+    VALUES (:id_recepcion, :id_muestra, 1)";
   $db = getConnection();
   $stmt = $db->prepare($sql);
   $stmt->execute($receptionData);
@@ -1668,6 +1681,16 @@ function deleteReceptionSamples($receptionId) {
   $sql = "DELETE
     FROM RecepcionMuestra
     WHERE id_recepcion = :receptionId";
+  $db = getConnection();
+  $stmt = $db->prepare($sql);
+  $stmt->bindParam("receptionId", $receptionId);
+  $stmt->execute();
+  $db = null;
+  return $receptionId;
+}
+
+function disableReceptionSamples($receptionId) {
+  $sql = "UPDATE RecepcionMuestra SET activo = 0 WHERE id_recepcion = :receptionId";
   $db = getConnection();
   $stmt = $db->prepare($sql);
   $stmt->bindParam("receptionId", $receptionId);

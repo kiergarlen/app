@@ -309,7 +309,7 @@ $app->get("/receptions(/)(:receptionId)", function($receptionId = -1) use ($app)
 
 $app->get("/areas/reception", function() use ($app) {
   try {
-    //$userId = decodeUserToken($app->request())->uid;
+    $userId = decodeUserToken($app->request())->uid;
     $result = json_encode(getReceivingAreas());
     $app->response()->status(200);
     $app->response()->header("Content-Type", "application/json");

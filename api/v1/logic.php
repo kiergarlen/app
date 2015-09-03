@@ -1127,7 +1127,6 @@ function processReceptionUpdate($request) {
   $preservations = $update["preservaciones"];
   $areas = $update["areas"];
 
-  // unset($update["hoja"]);
   unset($update["muestras"]);
   unset($update["preservaciones"]);
   unset($update["areas"]);
@@ -1169,17 +1168,64 @@ function processReceptionUpdate($request) {
 function processReceptionSamplesUpdate($receptionUpdateData) {
   $samples = (array) $receptionUpdateData["samples"];
   $receptionId = $receptionUpdateData["reception"]["id_recepcion"];
-  //deleteReceptionSamples($receptionId);
-  // $i = 0;
-  // $l = count($samples);
-  // for ($i = 3; $i < $l; $i++) {
-  //   // insertReceptionSample(
-  //   //  array(
-  //   //    "id_recepcion" => $samples[$i]->id_recepcion,
-  //   //    "id_muestra" => $samples[$i]->id_muestra
-  //   //  )
-  //   // );
-  // }
+  $storedSamples = getReceptionSamples($receptionId);
+
+  $i = 0;
+  $j = 0;
+  $l = count($storedSamples);
+  $m = count($samples);
+  if ($l < 1) {
+    for ($i = 0; $i < $m; $i++) {
+      $sample = (array) $samples[$i];
+      unset($sample["id_estudio"]);
+      unset($sample["id_cliente"]);
+      unset($sample["id_orden"]);
+      unset($sample["id_plan"]);
+      unset($sample["id_hoja"]);
+      unset($sample["id_custodia"]);
+      unset($sample["id_paquete"]);
+      unset($sample["id_ubicacion"]);
+      unset($sample["id_punto"]);
+      unset($sample["fecha_muestreo"]);
+      unset($sample["fecha_recibe"]);
+      unset($sample["comentarios"]);
+      unset($sample["activo"]);
+      unset($sample["selected"]);
+      unset($sample["punto"]);
+      insertReceptionSample($sample);
+    }
+  } else {
+    disableReceptionSamples($receptionId);
+    for ($j = 0; $j < $m; $i++) {
+      $sample = (array) $samples[$i];
+      unset($sample["id_estudio"]);
+      unset($sample["id_cliente"]);
+      unset($sample["id_orden"]);
+      unset($sample["id_plan"]);
+      unset($sample["id_hoja"]);
+      unset($sample["id_custodia"]);
+      unset($sample["id_paquete"]);
+      unset($sample["id_ubicacion"]);
+      unset($sample["id_punto"]);
+      unset($sample["fecha_muestreo"]);
+      unset($sample["fecha_recibe"]);
+      unset($sample["comentarios"]);
+      unset($sample["activo"]);
+      unset($sample["selected"]);
+      unset($sample["punto"]);
+      return $sample;
+      if ($sample["id_recepcion_muestra"] < 1)
+      {
+        unset($sample["id_recepcion_muestra"]);
+        insertReceptionSample($sample);
+      }
+      else
+      {
+        $sample["activo"] = 1;
+        updateReceptionSample($sample);
+      }
+    }
+  }
   return $receptionId;
 }
 

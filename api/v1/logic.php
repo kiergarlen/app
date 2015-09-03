@@ -1213,7 +1213,6 @@ function processReceptionSamplesUpdate($receptionUpdateData) {
       unset($sample["activo"]);
       unset($sample["selected"]);
       unset($sample["punto"]);
-      return $sample;
       if ($sample["id_recepcion_muestra"] < 1)
       {
         unset($sample["id_recepcion_muestra"]);

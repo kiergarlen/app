@@ -1273,7 +1273,7 @@ function getReceivingAreas() {
 
 function getReceptionAreas($receptionId) {
   $sql = "SELECT id_recepcion_area, id_recepcion, id_area,
-    id_muestra, volumen, vigencia, recipiente, trabajo, activo
+    id_muestra, volumen, vigencia, recipiente, activo
     FROM RecepcionArea
     WHERE id_recepcion = :receptionId";
   $db = getConnection();
@@ -1287,7 +1287,6 @@ function getReceptionAreas($receptionId) {
     $areas[$i]["volumen"] = ($areas[$i]["volumen"] > 0);
     $areas[$i]["vigencia"] = ($areas[$i]["vigencia"] > 0);
     $areas[$i]["recipiente"] = ($areas[$i]["recipiente"] > 0);
-    $areas[$i]["trabajo"] = ($areas[$i]["trabajo"] > 0);
     $areas[$i]["activo"] = ($areas[$i]["activo"] > 0);
   }
   return $areas;
@@ -1295,7 +1294,7 @@ function getReceptionAreas($receptionId) {
 
 function insertReceptionArea($areaData) {
   $sql = "INSERT INTO RecepcionArea (id_recepcion, id_area,
-    id_muestra, volumen, vigencia, recipiente, trabajo, activo)
+    id_muestra, volumen, vigencia, recipiente, activo)
     VALUES (:id_recepcion, :id_area,
     :id_muestra, :volumen, :vigencia, :recipiente, 1)";
   $db = getConnection();
@@ -1316,6 +1315,17 @@ function updateReceptionArea($updateData) {
   $stmt->execute($updateData);
   $db = null;
   return $updateData["id_recepcion"];
+}
+
+function disableReceptionAreas($receptionId) {
+  $sql = "UPDATE RecepcionArea SET activo = 0
+    WHERE id_recepcion = :receptionId";
+  $db = getConnection();
+  $stmt = $db->prepare($sql);
+  $stmt->bindParam("receptionId", $receptionId);
+  $stmt->execute();
+  $db = null;
+  return $receptionId;
 }
 
 function deleteReceptionAreas($receptionId) {
@@ -2395,9 +2405,9 @@ function getPreservationsBySheet($sheetId) {
 
 function getReceptionPreservations($receptionId) {
   $sql = "SELECT id_recepcion_preservacion, id_recepcion,
-    id_preservacion, cantidad, preservado, activo
+    id_preservacion, cantidad, activo
     FROM RecepcionPreservacion
-    WHERE id_recepcion = :receptionId";
+    WHERE activo = 1 AND id_recepcion = :receptionId";
   $db = getConnection();
   $stmt = $db->prepare($sql);
   $stmt->bindParam("receptionId", $receptionId);
@@ -2407,43 +2417,16 @@ function getReceptionPreservations($receptionId) {
   $l = count($preservations);
   for ($i = 0; $i < $l; $i++) {
     $preservations[$i]["selected"] = true;
-    if ($preservations[$i]["preservado"] < 1) {
-      $preservations[$i]["preservado"] = false;
-    } else {
-      $preservations[$i]["preservado"] = true;
-    }
-  }
-  return $preservations;
-}
-
-function getPreservationsByReception($receptionId) {
-  $sql = "SELECT id_recepcion_preservacion, id_recepcion,
-    id_preservacion, cantidad, preservado
-    FROM RecepcionPreservacion
-    WHERE id_recepcion = :receptionId";
-  $db = getConnection();
-  $stmt = $db->prepare($sql);
-  $stmt->bindParam("receptionId", $receptionId);
-  $stmt->execute();
-  $preservations = $stmt->fetchAll(PDO::FETCH_ASSOC);
-  $db = null;
-  $l = count($preservations);
-  for ($i = 0; $i < $l; $i++) {
-    $preservations[$i]["selected"] = true;
-    if ($preservations[$i]["preservado"] < 1) {
-      $preservations[$i]["preservado"] = false;
-    } else {
-      $preservations[$i]["preservado"] = true;
-    }
   }
   return $preservations;
 }
 
 function insertReceptionPreservation($preservationData) {
   $sql = "INSERT INTO RecepcionPreservacion (id_recepcion,
-    id_preservacion, cantidad, preservado)
+    id_preservacion,
+    cantidad activo)
     VALUES (:id_recepcion, :id_preservacion,
-    :cantidad, :preservado)";
+    :cantidad, 1)";
   $db = getConnection();
   $stmt = $db->prepare($sql);
   $stmt->execute($preservationData);

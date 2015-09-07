@@ -1858,7 +1858,6 @@
               vm.preservations[i].id_recepcion_preservacion = 0;
               vm.preservations[i].id_recepcion = vm.reception.id_recepcion;
               vm.preservations[i].cantidad = 0;
-              vm.preservations[i].preservado = 0;
               vm.preservations[i].activo = 0;
               vm.preservations[i].selected = false;
             }
@@ -1870,7 +1869,6 @@
                 'id_recepcion_preservacion',
                 'id_recepcion',
                 'cantidad',
-                'preservado',
                 'activo',
                 'selected'
               ]
@@ -1891,7 +1889,6 @@
               vm.areas[i].volumen = false;
               vm.areas[i].vigencia = false;
               vm.areas[i].recipiente = false;
-              vm.areas[i].trabajo = false;
               vm.areas[i].activo = false;
             }
             ArrayUtilsService.seItemsFromReference(
@@ -1904,7 +1901,6 @@
                 'volumen',
                 'vigencia',
                 'recipiente',
-                'trabajo',
                 'activo'
               ]
             );

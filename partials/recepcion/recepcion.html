@@ -250,8 +250,8 @@
       data-ng-repeat="preservation in reception.preservations">
       <label>
         <input type="checkbox"
-          value="{{preservation.preservado}}"
-          data-ng-model="preservation.preservado"
+          value="{{preservation.selected}}"
+          data-ng-model="preservation.selected"
           >
           {{::preservation.preservacion}}
       </label>

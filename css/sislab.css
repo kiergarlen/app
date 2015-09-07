@@ -263,16 +263,13 @@ Firefox Fix For Freaky Fieldset
           box-shadow:0 17px 50px #560f27;
 }
 .item-themed-z2 {
-  /*
   box-shadow: 0 8px 17px rgba(0, 0, 0, 0.2);
+  /*
   box-shadow:0 0 25px #560f27;
      -moz-box-shadow:0 8px 17px #560f27;
   -webkit-box-shadow:0 8px 17px #560f27;
           box-shadow:0 8px 17px #560f27;
   */
-     -moz-box-shadow:0 8px 17px #000000;
-  -webkit-box-shadow:0 8px 17px #000000;
-          box-shadow:0 8px 17px #000000;
 }
 .item-themed-z1 {
   /*

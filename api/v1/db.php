@@ -1176,12 +1176,12 @@ function getReception($receptionId) {
   $reception = getPlainReception($receptionId);
   $samples = (array) getReceptionSamples($receptionId);
   $sheetSamples = getSamplesBySheet($reception->id_hoja);
-  
+
   $i = 0;
   $j = 0;
   $l = count($samples);
   $m = count($sheetSamples);
-  
+
   for ($i = 0; $i < $l; $i++) {
     for ($j = 0; $j < $m; $j++) {
       if ($samples[$i]["id_muestra"] == $sheetSamples[$j]["id_muestra"]) {
@@ -1197,6 +1197,7 @@ function getReception($receptionId) {
   $preservations = getReceptionPreservations($receptionId);
   $reception->preservaciones = $preservations;
   $reception->areas = getReceptionAreas($receptionId);
+  $reception->trabajos = getReceptionJobs($receptionId);
   return $reception;
 }
 
@@ -1344,7 +1345,8 @@ function getJob($jobId) {
   $sql = "SELECT id_trabajo, id_plan, id_recepcion,
     id_muestra, id_muestra_duplicada, id_area, id_usuario_entrega,
     id_usuario_recibe, id_usuario_analiza, id_usuario_registra,
-    id_usuario_aprueba, id_usuario_valida, id_status,
+    id_usuario_aprueba, id_usuario_captura, id_usuario_valida,
+    id_usuario_actualiza, id_status,
     CONVERT(NVARCHAR, fecha, 126) AS fecha,
     CONVERT(NVARCHAR, fecha_entrega, 126) AS fecha_entrega,
     CONVERT(NVARCHAR, fecha_recibe, 126) AS fecha_recibe,
@@ -1372,7 +1374,8 @@ function getJobs() {
   $sql = "SELECT id_trabajo, id_plan, id_recepcion,
     id_muestra, id_muestra_duplicada, id_area, id_usuario_entrega,
     id_usuario_recibe, id_usuario_analiza, id_usuario_registra,
-    id_usuario_aprueba, id_usuario_valida, id_status,
+    id_usuario_aprueba, id_usuario_captura, id_usuario_valida,
+    id_usuario_actualiza, id_status,
     CONVERT(NVARCHAR, fecha, 126) AS fecha,
     CONVERT(NVARCHAR, fecha_entrega, 126) AS fecha_entrega,
     CONVERT(NVARCHAR, fecha_recibe, 126) AS fecha_recibe,
@@ -1387,18 +1390,57 @@ function getJobs() {
     comentarios, comentarios_calidad, activo
     FROM Trabajo
     WHERE activo = 1";
-    $db = getConnection();
-    $stmt = $db->prepare($sql);
+  $db = getConnection();
+  $stmt = $db->prepare($sql);
   $stmt->execute();
-  $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+  $jobs = $stmt->fetchAll(PDO::FETCH_ASSOC);
   $db = null;
-  return $result;
+  return $jobs;
+}
+
+function getBlankJob() {
+  return array(
+    "id_trabajo" => 0, "id_plan" => 1,
+    "id_recepcion" => 1, "id_muestra" => 1,
+    "id_muestra_duplicada" => 1, "id_area" => 1,
+    "id_usuario_entrega" => 1, "id_usuario_recibe" => 1,
+    "id_usuario_analiza" => 1, "id_usuario_registra" => 1,
+    "id_usuario_aprueba" => 1, "id_usuario_captura" => 1,
+    "id_usuario_valida" => 1, "id_usuario_actualiza" => 1,
+    "id_status" => 1,
+    "fecha" => NULL, "fecha_entrega" => NULL,
+    "fecha_recibe" => NULL, "fecha_analiza" => NULL,
+    "fecha_registra" => NULL, "fecha_aprueba" => NULL,
+    "fecha_captura" => NULL, "fecha_valida" => NULL,
+    "fecha_actualiza" => NULL, "fecha_rechaza" => NULL,
+    "ip_captura" => "", "ip_aprueba" => "",
+    "ip_valida" => "", "ip_actualiza" => "",
+    "host_captura" => "", "host_aprueba" => "",
+    "host_valida" => "", "host_actualiza" => "",
+    "comentarios" => "", "comentarios_calidad" => "", "activo" => "1"
+  );
 }
 
 function getJobsByReception($receptionId) {
-  $sql = "SELECT id_recepcion_trabajo, id_recepcion, id_trabajo, activo
-    FROM RecepcionTrabajo
-    WHERE id_recepcion = :receptionId";
+  $sql = "SELECT id_trabajo, id_plan, id_recepcion,
+    id_muestra, id_muestra_duplicada, id_area, id_usuario_entrega,
+    id_usuario_recibe, id_usuario_analiza, id_usuario_registra,
+    id_usuario_aprueba, id_usuario_valida, id_status,
+    CONVERT(NVARCHAR, fecha, 126) AS fecha,
+    CONVERT(NVARCHAR, fecha_entrega, 126) AS fecha_entrega,
+    CONVERT(NVARCHAR, fecha_recibe, 126) AS fecha_recibe,
+    CONVERT(NVARCHAR, fecha_analiza, 126) AS fecha_analiza,
+    CONVERT(NVARCHAR, fecha_registra, 126) AS fecha_registra,
+    CONVERT(NVARCHAR, fecha_aprueba, 126) AS fecha_aprueba,
+    CONVERT(NVARCHAR, fecha_captura, 126) AS fecha_captura,
+    CONVERT(NVARCHAR, fecha_valida, 126) AS fecha_valida,
+    CONVERT(NVARCHAR, fecha_actualiza, 126) AS fecha_actualiza,
+    CONVERT(NVARCHAR, fecha_rechaza, 126) AS fecha_rechaza,
+    ip_captura, ip_aprueba, ip_valida, ip_actualiza,
+    host_captura, host_aprueba, host_valida, host_actualiza,
+    comentarios, comentarios_calidad, activo
+    FROM Trabajo
+    WHERE activo = 1 AND id_recepcion = :recepcionId";
   $db = getConnection();
   $stmt = $db->prepare($sql);
   $stmt->bindParam("receptionId", $receptionId);
@@ -1410,6 +1452,56 @@ function getJobsByReception($receptionId) {
     $jobs[$i]["selected"] = ($jobs[$i]["selected"] > 0);
   }
   return $jobs;
+}
+
+function getReceptionJobs($receptionId) {
+  $sql = "SELECT id_recepcion_trabajo, id_recepcion, id_trabajo, activo
+    FROM RecepcionTrabajo
+    WHERE activo = 1 AND id_recepcion = :receptionId";
+  $db = getConnection();
+  $stmt = $db->prepare($sql);
+  $stmt->bindParam("receptionId", $receptionId);
+  $stmt->execute();
+  $jobs = $stmt->fetchAll(PDO::FETCH_ASSOC);
+  $db = null;
+  $l = count($jobs);
+  for ($i = 0; $i < $l; $i++) {
+    $jobs[$i]["selected"] = ($jobs[$i]["selected"] > 0);
+  }
+  return $jobs;
+}
+
+function insertReceptionJob($jobData) {
+  $sql = "INSERT INTO RecepcionTrabajo (id_recepcion, id_trabajo, activo)
+    VALUES (:id_recepcion, :id_trabajo, 1)";
+  $db = getConnection();
+  $stmt = $db->prepare($sql);
+  $stmt->execute($jobData);
+  $receptionJobId = $db->lastInsertId();
+  $db = null;
+  return $receptionJobId;
+}
+
+function updateReceptionArea($updateData) {
+  $sql = "UPDATE RecepcionTrabajo SET id_recepcion = :id_recepcion,
+    id_trabajo = :id_trabajo, activo = :activo
+    WHERE id_recepcion_area = :id_recepcion_area";
+  $db = getConnection();
+  $stmt = $db->prepare($sql);
+  $stmt->execute($updateData);
+  $db = null;
+  return $updateData["id_recepcion"];
+}
+
+function disableReceptionJobs($receptionId) {
+  $sql = "UPDATE RecepcionTrabajo SET activo = 0
+    WHERE id_recepcion = :receptionId";
+  $db = getConnection();
+  $stmt = $db->prepare($sql);
+  $stmt->bindParam("receptionId", $receptionId);
+  $stmt->execute();
+  $db = null;
+  return $receptionId;
 }
 
 function getCustody($custodyId) {

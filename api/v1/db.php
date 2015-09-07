@@ -1174,24 +1174,27 @@ function getReceptionsByPlan($planId) {
 
 function getReception($receptionId) {
   $reception = getPlainReception($receptionId);
-  $samples = getSamplesByReception($receptionId);
-  if (count($samples) < 1) {
-    $samples = getSamplesBySheet($reception->id_hoja);
-    $l = count($samples);
-    for ($i = 0; $i < $l; $i++) {
-      unset($samples[$i]["id_hoja"]);
-      unset($samples[$i]["id_hoja_muestra"]);
-      $samples[$i]["id_recepcion_muestra"] = 0;
-      $samples[$i]["id_recepcion"] = $receptionId;
-      $samples[$i]["selected"] = false;
-    }
-  }
+  $samples = (array) getReceptionSamples($receptionId);
+  $sheetSamples = getSamplesBySheet($reception->id_hoja);
+  
+  $i = 0;
+  $j = 0;
   $l = count($samples);
+  $m = count($sheetSamples);
+  
   for ($i = 0; $i < $l; $i++) {
+    for ($j = 0; $j < $m; $j++) {
+      if ($samples[$i]["id_muestra"] == $sheetSamples[$j]["id_muestra"]) {
+        $samples[$i]["id_punto"] = $sheetSamples[$j]["id_punto"];
+        break;
+      }
+    }
     $samples[$i]["punto"] = getPoint($samples[$i]["id_punto"]);
+    $samples[$i]["selected"] = true;
   }
+
   $reception->muestras = $samples;
-  $preservations = getPreservationsByReception($receptionId);
+  $preservations = getReceptionPreservations($receptionId);
   $reception->preservaciones = $preservations;
   $reception->areas = getReceptionAreas($receptionId);
   return $reception;
@@ -2390,6 +2393,29 @@ function getPreservationsBySheet($sheetId) {
   return $preservations;
 }
 
+function getReceptionPreservations($receptionId) {
+  $sql = "SELECT id_recepcion_preservacion, id_recepcion,
+    id_preservacion, cantidad, preservado, activo
+    FROM RecepcionPreservacion
+    WHERE id_recepcion = :receptionId";
+  $db = getConnection();
+  $stmt = $db->prepare($sql);
+  $stmt->bindParam("receptionId", $receptionId);
+  $stmt->execute();
+  $preservations = $stmt->fetchAll(PDO::FETCH_ASSOC);
+  $db = null;
+  $l = count($preservations);
+  for ($i = 0; $i < $l; $i++) {
+    $preservations[$i]["selected"] = true;
+    if ($preservations[$i]["preservado"] < 1) {
+      $preservations[$i]["preservado"] = false;
+    } else {
+      $preservations[$i]["preservado"] = true;
+    }
+  }
+  return $preservations;
+}
+
 function getPreservationsByReception($receptionId) {
   $sql = "SELECT id_recepcion_preservacion, id_recepcion,
     id_preservacion, cantidad, preservado
@@ -2411,6 +2437,54 @@ function getPreservationsByReception($receptionId) {
     }
   }
   return $preservations;
+}
+
+function insertReceptionPreservation($preservationData) {
+  $sql = "INSERT INTO RecepcionPreservacion (id_recepcion,
+    id_preservacion, cantidad, preservado)
+    VALUES (:id_recepcion, :id_preservacion,
+    :cantidad, :preservado)";
+  $db = getConnection();
+  $stmt = $db->prepare($sql);
+  $stmt->execute($preservationData);
+  $receptionPreservationId = $db->lastInsertId();
+  $db = null;
+  return $receptionPreservationId;
+}
+
+function deleteReceptionPreservations($receptionId) {
+  $sql = "DELETE
+    FROM RecepcionPreservacion
+    WHERE id_recepcion = :receptionId";
+  $db = getConnection();
+  $stmt = $db->prepare($sql);
+  $stmt->bindParam("receptionId", $receptionId);
+  $stmt->execute();
+  $db = null;
+  return $receptionId;
+}
+
+function disableReceptionPreservations($receptionId) {
+  $sql = "UPDATE RecepcionPreservacion SET activo = 0
+    WHERE id_recepcion = :receptionId";
+  $db = getConnection();
+  $stmt = $db->prepare($sql);
+  $stmt->bindParam("receptionId", $receptionId);
+  $stmt->execute();
+  $db = null;
+  return $receptionId;
+}
+
+function updateReceptionPreservation($updateData) {
+  $sql = "UPDATE RecepcionPreservacion SET id_recepcion = :id_recepcion,
+    id_preservacion = :id_preservacion, cantidad = :cantidad,
+    preservado = :preservado, activo = :activo
+    WHERE id_recepcion_preservacion = :id_recepcion_preservacion";
+  $db = getConnection();
+  $stmt = $db->prepare($sql);
+  $stmt->execute($updateData);
+  $db = null;
+  return $updateData["id_recepcion"];
 }
 
 function insertSheetPreservation($preservationData) {
@@ -2448,31 +2522,6 @@ function deleteSheetPreservations($sheetId) {
   $stmt->execute();
   $db = null;
   return $sheetId;
-}
-
-function insertReceptionPreservation($preservationData) {
-  $sql = "INSERT INTO RecepcionPreservacion (id_recepcion,
-    id_preservacion, cantidad, preservado)
-    VALUES (:id_recepcion, :id_preservacion,
-    :cantidad, :preservado)";
-  $db = getConnection();
-  $stmt = $db->prepare($sql);
-  $stmt->execute($preservationData);
-  $receptionPreservationId = $db->lastInsertId();
-  $db = null;
-  return $receptionPreservationId;
-}
-
-function deleteReceptionPreservations($receptionId) {
-  $sql = "DELETE
-    FROM RecepcionPreservacion
-    WHERE id_recepcion = :receptionId";
-  $db = getConnection();
-  $stmt = $db->prepare($sql);
-  $stmt->bindParam("receptionId", $receptionId);
-  $stmt->execute();
-  $db = null;
-  return $receptionId;
 }
 
 function insertResult($resultData) {

@@ -1937,10 +1937,11 @@
         vm.message += ' Confirme la recepción de una muestra ';
         return false;
       }
-      if (vm.reception.id_muestra_validacion < 1) {
+      if (vm.id_muestra_validacion < 1) {
         vm.message += ' Seleccione una muestra a verificar ';
         return false;
       }
+      vm.reception.id_muestra_validacion = vm.id_muestra_validacion;
       // if (vm.reception.preservaciones.length < 1) {
       //   // vm.message += ' Seleccione al menos una preservación ';
       //   // return false;

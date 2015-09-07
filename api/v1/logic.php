@@ -1123,6 +1123,7 @@ function processSheetPreservationsUpdate($sheetUpdateData) {
 function processReceptionUpdate($request) {
   $token = decodeUserToken($request);
   $update = (array) json_decode($request->getBody());
+
   $samples = $update["muestras"];
   $preservations = $update["preservaciones"];
   $areas = $update["areas"];
@@ -1169,7 +1170,6 @@ function processReceptionSamplesUpdate($receptionUpdateData) {
   $samples = (array) $receptionUpdateData["samples"];
   $receptionId = $receptionUpdateData["reception"]["id_recepcion"];
   $storedSamples = getReceptionSamples($receptionId);
-
   $i = 0;
   $j = 0;
   $l = count($storedSamples);
@@ -1177,18 +1177,7 @@ function processReceptionSamplesUpdate($receptionUpdateData) {
   if ($l < 1) {
     for ($i = 0; $i < $m; $i++) {
       $sample = (array) $samples[$i];
-      unset($sample["id_estudio"]);
-      unset($sample["id_cliente"]);
-      unset($sample["id_orden"]);
-      unset($sample["id_plan"]);
-      unset($sample["id_hoja"]);
-      unset($sample["id_custodia"]);
-      unset($sample["id_paquete"]);
-      unset($sample["id_ubicacion"]);
       unset($sample["id_punto"]);
-      unset($sample["fecha_muestreo"]);
-      unset($sample["fecha_recibe"]);
-      unset($sample["comentarios"]);
       unset($sample["activo"]);
       unset($sample["selected"]);
       unset($sample["punto"]);
@@ -1198,18 +1187,7 @@ function processReceptionSamplesUpdate($receptionUpdateData) {
     disableReceptionSamples($receptionId);
     for ($j = 0; $j < $m; $i++) {
       $sample = (array) $samples[$i];
-      unset($sample["id_estudio"]);
-      unset($sample["id_cliente"]);
-      unset($sample["id_orden"]);
-      unset($sample["id_plan"]);
-      unset($sample["id_hoja"]);
-      unset($sample["id_custodia"]);
-      unset($sample["id_paquete"]);
-      unset($sample["id_ubicacion"]);
       unset($sample["id_punto"]);
-      unset($sample["fecha_muestreo"]);
-      unset($sample["fecha_recibe"]);
-      unset($sample["comentarios"]);
       unset($sample["activo"]);
       unset($sample["selected"]);
       unset($sample["punto"]);
@@ -1231,18 +1209,33 @@ function processReceptionSamplesUpdate($receptionUpdateData) {
 function processReceptionPreservationsUpdate($receptionUpdateData) {
   $preservations = (array) $receptionUpdateData["preservations"];
   $receptionId = $receptionUpdateData["reception"]["id_recepcion"];
-  deleteReceptionPreservations($receptionId);
+  $storedPreservations = getReceptionPreservations($receptionId);
+  disableReceptionPreservations($receptionId);
+  //deleteReceptionPreservations($receptionId);
   $i = 0;
   $l = count($preservations);
-  for ($i = 0; $i < $l; $i++) {
-    insertReceptionPreservation(
-      array(
-        "id_recepcion" => $preservations[$i]->id_recepcion,
-        "id_preservacion" => $preservations[$i]->id_preservacion,
-        "cantidad" => $preservations[$i]->cantidad,
-        "preservado" => $preservations[$i]->preservado
-      )
-    );
+  if ($l < 1) {
+    for ($i = 0; $i < $l; $i++) {
+      insertReceptionPreservation(
+        array(
+          "id_recepcion" => $preservations[$i]->id_recepcion,
+          "id_preservacion" => $preservations[$i]->id_preservacion,
+          "cantidad" => $preservations[$i]->cantidad,
+          "preservado" => $preservations[$i]->preservado
+        )
+      );
+    }
+  } else {
+    for ($i = 0; $i < $l; $i++) {
+      insertReceptionPreservation(
+        array(
+          "id_recepcion" => $preservations[$i]->id_recepcion,
+          "id_preservacion" => $preservations[$i]->id_preservacion,
+          "cantidad" => $preservations[$i]->cantidad,
+          "preservado" => $preservations[$i]->preservado
+        )
+      );
+    }
   }
   return $receptionId;
 }

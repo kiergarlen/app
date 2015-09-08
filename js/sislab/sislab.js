@@ -2026,12 +2026,34 @@
    * @desc Controla la vista para el listado de Órdenes de Trabajo
    * @this {Object} $scope - Contenedor para el modelo [AngularJS]
    * @param {Object} $location - Manejo de URL [AngularJS]
+   * @param {Object} ReceivingAreaService - Proveedor de datos, Áreas receptoras
+   * @param {Object} ArrayUtilsService - Proveedor para manejo de arreglos
    * @param {Object} JobService - Proveedor de datos, Órdenes de Trabajo
    */
-  function JobListController($location, JobService) {
+  function JobListController($location, ReceivingAreaService, ArrayUtilsService,
+    JobService) {
     var vm = this;
-    vm.jobs = JobService.get();
+    vm.jobs = [];
+    vm.areas = ReceivingAreaService.get();
     vm.viewJob = viewJob;
+
+    JobService
+      .get()
+      .$promise
+      .then(function success(response) {
+        vm.jobs = response;
+        for (i = 0; i < l; i += 1) {
+          vm.jobs[i].area = "";
+        }
+        ArrayUtilsService.seItemsFromReference(
+          vm.jobs,
+          vm.areas,
+          'id_area',
+          [
+            'area'
+          ]
+        );
+      })
 
     function viewJob(id) {
       $location.path('/recepcion/trabajo/' + parseInt(id, 10));
@@ -2041,7 +2063,8 @@
     .module('sislabApp')
     .controller('JobListController',
       [
-        '$location', 'JobService',
+        '$location', 'ReceivingAreaService', 'ArrayUtilsService',
+        'JobService',
         JobListController
       ]
     );

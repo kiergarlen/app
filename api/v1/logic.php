@@ -1334,42 +1334,51 @@ function processReceptionJobsInsert($receptionUpdateData) {
 
 function processReceptionJobsUpdate($receptionUpdateData) {
   $jobs = (array) $receptionUpdateData["jobs"];
+  return $jobs;
   $reception = (array) $receptionUpdateData["reception"];
   $receptionId = $reception["id_recepcion"];
   $storedJobs = getReceptionJobs($receptionId);
-  $i = 0;
-  $l = count($storedJobs);
-  $m = count($jobs);
-  if ($l < 1)
-  {
-    for ($i = 0; $i < $m; $i++) {
-      $job = array(
-        "id_recepcion" => $jobs[$i]->id_recepcion,
-        "id_trabajo" => $jobs[$i]->id_trabajo
-      );
-      insertReceptionJob($job);
-    }
-  }
-  else
-  {
-    disableReceptionJobs($receptionId);
-    for ($i = 0; $i < $m; $i++) {
-      $job = array(
-        "id_recepcion_trabajo" => $jobs[$i]->id_recepcion_trabajo,
-        "id_recepcion" => $jobs[$i]->id_recepcion,
-        "id_trabajo" => $jobs[$i]->id_trabajo
-      );
-      if ($job["id_recepcion_trabajo"] < 1)
-      {
-        unset($job["id_recepcion_trabajo"]);
-        insertReceptionJob($job);
-      }
-      else
-      {
-        $job["activo"] = 1;
-        updateReceptionJob($job);
-      }
-    }
-  }
-  return $receptionId;
+  $jobsByReception = getJobsByReception($receptionId);
+  // $i = 0;
+  // $l = count($storedJobs);
+  // $m = count($jobs);
+  // $n = count($jobsByReception);
+  // if ($l < 1 && $n < 1)
+  // {
+  //   for ($i = 0; $i < $m; $i++) {
+  //     $jobId = $jobs[$i]->id_trabajo;
+  //     if ($jobId < 1)
+  //     {
+  //       $newJob = processReceptionJobsInsert($receptionUpdateData);
+  //       $jobId = $newJob->id_trabajo;
+  //     }
+  //     $job = array(
+  //       "id_recepcion" => $jobs[$i]->id_recepcion,
+  //       "id_trabajo" => $jobId
+  //     );
+  //     insertReceptionJob($job);
+  //   }
+  // }
+  // else
+  // {
+  //   disableReceptionJobs($receptionId);
+  //   for ($i = 0; $i < $m; $i++) {
+  //     $job = array(
+  //       "id_recepcion_trabajo" => $jobs[$i]->id_recepcion_trabajo,
+  //       "id_recepcion" => $jobs[$i]->id_recepcion,
+  //       "id_trabajo" => $jobs[$i]->id_trabajo
+  //     );
+  //     if ($job["id_recepcion_trabajo"] < 1)
+  //     {
+  //       unset($job["id_recepcion_trabajo"]);
+  //       insertReceptionJob($job);
+  //     }
+  //     else
+  //     {
+  //       $job["activo"] = 1;
+  //       updateReceptionJob($job);
+  //     }
+  //   }
+  // }
+  // return $receptionId;
 }

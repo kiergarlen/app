@@ -315,31 +315,11 @@
   </div>
   <div class="row">
     <div class="col-xs-12">
-      <h4>Asignar Orden de trabajo</h4>
-    </div>
-    <div class="col-xs-12">
-      <div class="row"
-        data-ng-repeat="area in reception.areas">
-        <div class="col-xs-12 col-sm-7">
-          <label>
-            <input type="checkbox"
-              value="{{area.trabajo}}"
-              data-ng-model="area.trabajo"
-              >
-              {{::area.area}}
-          </label>
-        </div>
-      </div>
-    </div>
-  </div>
-  <!--
-  <div class="row">
-    <div class="col-xs-12">
       <h4>Orden de Trabajo</h4>
     </div>
     <div class="col-xs-12">
       <h5>
-        Generar orden de trabajo
+        Asignar Orden de Trabajo
       </h5>
     </div>
     <div class="col-xs-12 col-sm-7"
@@ -351,15 +331,13 @@
           >
           {{:job.area}}
           <br>
-          <small class="text-muted">
-            {{:job.recibe.nombres}}
-            {{:job.recibe.apellido_paterno}}
-            {{:job.recibe.apellido_materno}}
+          <small class="text-muted"
+            data-ng-show="job.fecha_entrega.length > 9">
+            Entregada: {{:job.fecha_entrega}}
           </small>
       </label>
     </div>
   </div>
-  -->
   <div class="row">
     <div class="col-xs-12">
       <h4>Comentarios</h4>

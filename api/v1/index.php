@@ -329,13 +329,14 @@ $app->post("/receptions", function() use ($app) {
     if ($receptionId > 0)
     {
       $receptionUpdateData = processReceptionUpdate($request);
-      $receptionId = updateReception($receptionUpdateData["reception"]);
-      processReceptionSamplesUpdate($receptionUpdateData);
-      processReceptionPreservationsUpdate($receptionUpdateData);
-      processReceptionAreasUpdate($receptionUpdateData);
+      // $receptionId = updateReception($receptionUpdateData["reception"]);
+      // processReceptionSamplesUpdate($receptionUpdateData);
+      // processReceptionPreservationsUpdate($receptionUpdateData);
+      // processReceptionAreasUpdate($receptionUpdateData);
+      // processReceptionJobsUpdate($receptionUpdateData);
     }
-    //$result = json_encode(processReceptionPreservationsUpdate($receptionUpdateData));
-    $result = "{\"id_recepcion\":" . $receptionId . "}";
+    $result = json_encode(processReceptionJobsUpdate($receptionUpdateData));
+    // $result = "{\"id_recepcion\":" . $receptionId . "}";
     $app->response()->status(200);
     $app->response()->header("Content-Type", "application/json");
     //$result = ")]}',\n" . $result;
@@ -372,16 +373,10 @@ $app->post("/jobs", function() use ($app) {
     $userId = decodeUserToken($app->request())->uid;
     $request = $app->request();
     $jobId = extractDataFromRequest($request)->id_orden_trabajo;
-    if ($jobId < 1)
+    if ($jobId > 0)
     {
-      // // $jobInsertData = processJobInsert($request);
-      // // $jobId = insertJob($jobInsertData["job"]);
-      // // //processJobOrderInsert($jobInsertData, $jobId);
-    }
-    else
-    {
-      // $jobUpdateData = processJobUpdate($request);
-      // $jobId = updateJob($jobUpdateData["job"]);
+      $jobUpdateData = processJobUpdate($request);
+      $jobId = updateJob($jobUpdateData["job"]);
     }
     $result = "{\"id_orden_trabajo\":" . $jobId . "}";
     $app->response()->status(200);

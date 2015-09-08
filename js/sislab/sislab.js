@@ -2034,7 +2034,7 @@
     JobService) {
     var vm = this;
     vm.jobs = [];
-    vm.areas = ReceivingAreaService.get();
+    vm.areas = [];
     vm.viewJob = viewJob;
 
     JobService
@@ -2042,17 +2042,26 @@
       .$promise
       .then(function success(response) {
         vm.jobs = response;
-        for (i = 0; i < l; i += 1) {
-          vm.jobs[i].area = "";
-        }
-        ArrayUtilsService.seItemsFromReference(
-          vm.jobs,
-          vm.areas,
-          'id_area',
-          [
-            'area'
-          ]
-        );
+        ReceivingAreaService
+          .get()
+          .$promise
+          .then(function success(response) {
+            var i = 0;
+            var l = 0;
+            vm.areas = response;
+            l = vm.jobs.length;
+            for (i = 0; i < l; i += 1) {
+              vm.jobs[i].area = "";
+            }
+            ArrayUtilsService.seItemsFromReference(
+              vm.jobs,
+              vm.areas,
+              'id_area',
+              [
+                'area'
+              ]
+            );
+          });
       })
 
     function viewJob(id) {

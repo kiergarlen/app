@@ -1306,6 +1306,55 @@ function processReceptionAreasUpdate($receptionUpdateData) {
 
 function processReceptionJobsInsert($receptionUpdateData) {
   return $receptionUpdateData;
+    /*
+      array(
+        "id_trabajo" => 0, "id_plan" => 1,
+        "id_recepcion" => 1, "id_muestra" => 1,
+        "id_muestra_duplicada" => 1, "id_area" => 1,
+        "id_usuario_entrega" => 1, "id_usuario_recibe" => 1,
+        "id_usuario_analiza" => 1, "id_usuario_registra" => 1,
+        "id_usuario_aprueba" => 1, "id_usuario_captura" => 1,
+        "id_usuario_valida" => 1, "id_usuario_actualiza" => 1,
+        "id_status" => 1,
+        "fecha" => NULL, "fecha_entrega" => NULL,
+        "fecha_recibe" => NULL, "fecha_analiza" => NULL,
+        "fecha_registra" => NULL, "fecha_aprueba" => NULL,
+        "fecha_captura" => NULL, "fecha_valida" => NULL,
+        "fecha_actualiza" => NULL, "fecha_rechaza" => NULL,
+        "ip_captura" => "", "ip_aprueba" => "",
+        "ip_valida" => "", "ip_actualiza" => "",
+        "host_captura" => "", "host_aprueba" => "",
+        "host_valida" => "", "host_actualiza" => "",
+        "comentarios" => "", "comentarios_calidad" => "",
+        "activo" => 1
+      );
+  $reception = (array) $receptionUpdateData["reception"];
+  $receptionId = $reception["id_recepcion"];
+  $sheet = getSheetsByreception($receptionId)[0];
+  $receptionJobs = (array) getJobsByreception($receptionId);
+  if (count($receptions) < 1)
+  {
+    $jobData = getBlankJob();
+    unset($jobData["id_recepcion"]);
+    unset($jobData["fecha_captura"]);
+    unset($jobData["id_usuario_actualiza"]);
+    unset($jobData["fecha_actualiza"]);
+    unset($jobData["ip_actualiza"]);
+    unset($jobData["host_actualiza"]);
+    unset($jobData["fecha_captura"]);
+
+    $jobData["id_orden"] = $reception["id_orden"];
+    $jobData["id_recepcion"] = $reception["id_recepcion"];
+    $jobData["id_hoja"] = $sheet["id_hoja"];
+    $jobData["id_recepcionista"] = 14;
+    $jobData["id_verificador"] = 14;
+    $jobData["id_usuario_captura"] = $reception["id_usuario_actualiza"];
+    $jobData["ip_captura"] = $reception["ip_actualiza"];
+    $jobData["host_captura"] = $reception["host_actualiza"];
+    return insertReception($jobData);
+  }
+  return $receptionJobs[0]["id_recepcion"];
+    */
   // $reception = (array) $receptionUpdateData["reception"];
   // $receptionId = $reception["id_reception"];
   // $sheet = getSheetsByPlan($receptionId)[0];

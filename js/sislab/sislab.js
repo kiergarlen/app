@@ -1893,6 +1893,9 @@
               vm.areas[i].vigencia = false;
               vm.areas[i].recipiente = false;
               vm.areas[i].activo = false;
+              vm.jobs[i].area = vm.areas[i].area;
+              vm.jobs[i].fecha_entrega = null;
+              vm.jobs[i].selected = false;
             }
             ArrayUtilsService.seItemsFromReference(
               vm.areas,
@@ -1908,6 +1911,7 @@
               ]
             );
           });
+        /*
         JobService
           .get()
           .$promise
@@ -1935,6 +1939,7 @@
               ]
             );
           });
+          */
       });
 
     function approveItem() {

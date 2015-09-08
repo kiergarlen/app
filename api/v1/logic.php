@@ -1305,6 +1305,7 @@ function processReceptionAreasUpdate($receptionUpdateData) {
 }
 
 function processReceptionJobsInsert($receptionUpdateData) {
+  return $receptionUpdateData;
   // $reception = (array) $receptionUpdateData["reception"];
   // $receptionId = $reception["id_reception"];
   // $sheet = getSheetsByPlan($receptionId)[0];

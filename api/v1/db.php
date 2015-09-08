@@ -1197,7 +1197,7 @@ function getReception($receptionId) {
   $preservations = getReceptionPreservations($receptionId);
   $reception->preservaciones = $preservations;
   $reception->areas = getReceptionAreas($receptionId);
-  $reception->trabajos = getReceptionJobs($receptionId);
+  $reception->trabajos = getReceptionJobsByReception($receptionId);
   return $reception;
 }
 
@@ -1538,6 +1538,24 @@ function disableJobsByReception($receptionId) {
 function getReceptionJobs($receptionId) {
   $sql = "SELECT id_recepcion_trabajo, id_recepcion, id_trabajo, activo
     FROM RecepcionTrabajo
+    WHERE activo = 1 AND id_recepcion = :receptionId";
+  $db = getConnection();
+  $stmt = $db->prepare($sql);
+  $stmt->bindParam("receptionId", $receptionId);
+  $stmt->execute();
+  $jobs = $stmt->fetchAll(PDO::FETCH_ASSOC);
+  $db = null;
+  $l = count($jobs);
+  for ($i = 0; $i < $l; $i++) {
+    $jobs[$i]["selected"] = ($jobs[$i]["selected"] > 0);
+  }
+  return $jobs;
+}
+
+function getReceptionJobsByReception($receptionId) {
+  $sql = "SELECT id_recepcion_trabajo, id_recepcion, id_trabajo, id_area,
+    activo, area, fecha_entrega
+    FROM viewTrabajoRecepcion
     WHERE activo = 1 AND id_recepcion = :receptionId";
   $db = getConnection();
   $stmt = $db->prepare($sql);

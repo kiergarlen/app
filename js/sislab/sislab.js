@@ -1795,14 +1795,12 @@
    * @param {Object} SheetSampleService - Proveedor de datos, Muestras por Hoja de campo
    * @param {Object} PreservationService - Proveedor de datos, Preservaciones
    * @param {Object} ReceivingAreaService - Proveedor de datos, Áreas receptoras
-   * @param {Object} JobService - Proveedor de datos, Órdenes de Trabajo
    * @param {Object} ReceptionService - Proveedor de datos, Recepción muestras
    */
   function ReceptionController($scope, $routeParams, TokenService,
     ValidationService, RestUtilsService, ArrayUtilsService,
     DateUtilsService, SamplingEmployeeService, SheetSampleService,
-    PreservationService, ReceivingAreaService, JobService,
-    ReceptionService) {
+    PreservationService, ReceivingAreaService, ReceptionService) {
     var vm = this;
     vm.user = TokenService.getUserFromToken();
     vm.reception = {};
@@ -1893,6 +1891,10 @@
               vm.areas[i].vigencia = false;
               vm.areas[i].recipiente = false;
               vm.areas[i].activo = false;
+              vm.jobs[i].id_recepcion_trabajo = 0;
+              vm.jobs[i].id_recepcion = vm.reception.id_recepcion;
+              vm.jobs[i].id_trabajo = 0;
+              vm.jobs[i].id_area = vm.areas[i].id_area;
               vm.jobs[i].area = vm.areas[i].area;
               vm.jobs[i].fecha_entrega = null;
               vm.jobs[i].selected = false;
@@ -1910,36 +1912,19 @@
                 'activo'
               ]
             );
-          });
-        /*
-        JobService
-          .get()
-          .$promise
-          .then(function success(response) {
-            var i = 0;
-            var l = 0;
-            vm.jobs = response;
-            l = vm.jobs.length;
-            for (i = 0; i < l; i += 1) {
-              vm.jobs[i].id_recepcion_trabajo = 0;
-              vm.jobs[i].id_recepcion = vm.reception.id_recepcion;
-              vm.jobs[i].id_trabajo = 0;
-              vm.jobs[i].fecha_entrega = null;
-              vm.jobs[i].selected = false;
-            }
             ArrayUtilsService.seItemsFromReference(
               vm.jobs,
               vm.reception.jobs,
-              'id_trabajo',
+              'id_area',
               [
                 'id_recepcion_trabajo',
                 'id_recepcion',
+                'id_trabajo',
                 'fecha_entrega',
                 'selected'
               ]
             );
           });
-          */
       });
 
     function approveItem() {
@@ -2021,8 +2006,7 @@
         '$scope', '$routeParams', 'TokenService',
         'ValidationService', 'RestUtilsService', 'ArrayUtilsService',
         'DateUtilsService', 'SamplingEmployeeService', 'SheetSampleService',
-        'PreservationService', 'ReceivingAreaService', 'JobService',
-        'ReceptionService',
+        'PreservationService', 'ReceivingAreaService', 'ReceptionService',
         ReceptionController
       ]
     );

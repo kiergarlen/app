@@ -288,7 +288,7 @@ $app->post("/sheets", function() use ($app) {
 
 $app->get("/receptions(/)(:receptionId)", function($receptionId = -1) use ($app) {
   try {
-    //$userId = decodeUserToken($app->request())->uid;
+    $userId = decodeUserToken($app->request())->uid;
     if ($receptionId > -1)
     {
       $result = json_encode(getReception($receptionId));

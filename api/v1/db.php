@@ -1404,8 +1404,8 @@ function getJobs() {
 function getBlankJob() {
   return array(
     "id_trabajo" => 0, "id_plan" => 1,
-    "id_recepcion" => 1, "id_muestra" => 1,
-    "id_muestra_duplicada" => 1, "id_area" => 1,
+    "id_recepcion" => 1, "id_muestra" => NULL,
+    "id_muestra_duplicada" => NULL, "id_area" => 1,
     "id_usuario_entrega" => 1, "id_usuario_recibe" => 1,
     "id_usuario_analiza" => 1, "id_usuario_registra" => 1,
     "id_usuario_aprueba" => 1, "id_usuario_captura" => 1,
@@ -1446,7 +1446,7 @@ function getJobsByReception($receptionId) {
     host_valida, host_actualiza, comentarios,
     comentarios_calidad, activo
     FROM Trabajo
-    WHERE activo = 1 AND id_recepcion = :recepcionId";
+    WHERE activo = 1 AND id_recepcion = :receptionId";
   $db = getConnection();
   $stmt = $db->prepare($sql);
   $stmt->bindParam("receptionId", $receptionId);
@@ -1461,7 +1461,7 @@ function getJobsByReception($receptionId) {
 }
 
 function insertJob($jobData) {
-  $sql = "INSERT INTO Trabajo (id_trabajo, id_plan, id_recepcion,
+  $sql = "INSERT INTO Trabajo (id_plan, id_recepcion,
     id_muestra, id_muestra_duplicada, id_area,
     id_usuario_entrega, id_usuario_recibe, id_usuario_analiza,
     id_usuario_registra, id_usuario_aprueba, id_usuario_captura,
@@ -1473,7 +1473,7 @@ function insertJob($jobData) {
     host_captura, host_aprueba,
     host_valida, comentarios,
     comentarios_calidad, activo)
-    VALUES (:id_trabajo, :id_plan, :id_recepcion,
+    VALUES (:id_plan, :id_recepcion,
     :id_muestra, :id_muestra_duplicada, :id_area,
     :id_usuario_entrega, :id_usuario_recibe, :id_usuario_analiza,
     :id_usuario_registra, :id_usuario_aprueba, :id_usuario_captura,
@@ -1547,7 +1547,7 @@ function getReceptionJobs($receptionId) {
   $db = null;
   $l = count($jobs);
   for ($i = 0; $i < $l; $i++) {
-    $jobs[$i]["selected"] = ($jobs[$i]["selected"] > 0);
+    $jobs[$i]["selected"] = true;
   }
   return $jobs;
 }
@@ -1571,8 +1571,8 @@ function getReceptionJobsByReception($receptionId) {
 }
 
 function insertReceptionJob($jobData) {
-  $sql = "INSERT INTO RecepcionTrabajo (id_recepcion, id_trabajo, activo)
-    VALUES (:id_recepcion, :id_trabajo, 1)";
+  $sql = "INSERT INTO RecepcionTrabajo (id_recepcion, id_trabajo)
+    VALUES (:id_recepcion, :id_trabajo)";
   $db = getConnection();
   $stmt = $db->prepare($sql);
   $stmt->execute($jobData);
@@ -1584,7 +1584,7 @@ function insertReceptionJob($jobData) {
 function updateReceptionJob($updateData) {
   $sql = "UPDATE RecepcionTrabajo SET id_recepcion = :id_recepcion,
     id_trabajo = :id_trabajo, activo = :activo
-    WHERE id_recepcion_area = :id_recepcion_area";
+    WHERE id_recepcion_trabajo = :id_recepcion_trabajo";
   $db = getConnection();
   $stmt = $db->prepare($sql);
   $stmt->execute($updateData);

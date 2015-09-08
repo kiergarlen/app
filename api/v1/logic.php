@@ -1311,7 +1311,6 @@ function processReceptionJobsInsert($receptionUpdateData) {
   $reception = (array) $receptionUpdateData["reception"];
   $jobs = (array) $receptionUpdateData["jobs"];
   $receptionId = $reception["id_recepcion"];
-  $jobsByReception = (array) getJobsByreception($receptionId);
   $i = 0;
   $l = count($jobs);
 
@@ -1333,6 +1332,30 @@ function processReceptionJobsInsert($receptionUpdateData) {
     $newJobIds[] = insertJob($jobData);
   }
   return $newJobIds;
+}
+
+function processReceptionJobInsert($receptionUpdateData, $areaId) {
+  $reception = (array) $receptionUpdateData["reception"];
+  $jobs = (array) $receptionUpdateData["jobs"];
+  $receptionId = $reception["id_recepcion"];
+  $i = 0;
+  $l = count($jobs);
+
+  $jobData = getBlankJob();
+  $jobData["id_recepcion"] = $reception["id_recepcion"];
+  $jobData["id_plan"] = $reception["id_plan"];
+  $jobData["id_usuario_captura"] = $reception["id_usuario_actualiza"];
+  $jobData["ip_captura"] = $reception["ip_actualiza"];
+  $jobData["host_captura"] = $reception["host_actualiza"];
+  unset($jobData["id_trabajo"]);
+  unset($jobData["fecha_captura"]);
+  unset($jobData["id_usuario_actualiza"]);
+  unset($jobData["fecha_actualiza"]);
+  unset($jobData["ip_actualiza"]);
+  unset($jobData["host_actualiza"]);
+
+  $jobData["id_area"] = $areaId;
+  return insertJob($jobData);
 }
 
 function processReceptionJobsUpdate($receptionUpdateData) {
@@ -1369,8 +1392,14 @@ function processReceptionJobsUpdate($receptionUpdateData) {
       );
       if ($job["id_recepcion_trabajo"] < 1)
       {
-        // unset($job["id_recepcion_trabajo"]);
-        // insertReceptionJob($job);
+        if ($job["id_trabajo"] < 1)
+        {
+          $areaId = $jobs[$i]->id_area;
+          $jobId = processReceptionJobInsert($receptionUpdateData, $areaId);
+        }
+        $job["id_trabajo"] = $jobId;
+        unset($job["id_recepcion_trabajo"]);
+        insertReceptionJob($job);
       }
       else
       {

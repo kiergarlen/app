@@ -319,7 +319,7 @@
     </div>
     <div class="col-xs-12">
       <h5>
-        Asignar Orden de Trabajo, por Área
+        Asignar Orden por Área
       </h5>
     </div>
     <div class="col-xs-12 col-sm-7"
@@ -329,11 +329,10 @@
           value="{{job.selected}}"
           data-ng-model="job.selected"
           >
-          {{:job.area}}
-          <br>
+          {{job.area}}
           <small class="text-muted"
             data-ng-show="job.fecha_entrega.length > 9">
-            Entregada: {{:job.fecha_entrega}}
+            Entregada: {{job.fecha_entrega}}
           </small>
       </label>
     </div>

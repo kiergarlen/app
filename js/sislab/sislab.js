@@ -1891,13 +1891,16 @@
               vm.areas[i].vigencia = false;
               vm.areas[i].recipiente = false;
               vm.areas[i].activo = false;
-              vm.jobs[i].id_recepcion_trabajo = 0;
-              vm.jobs[i].id_recepcion = vm.reception.id_recepcion;
-              vm.jobs[i].id_trabajo = 0;
-              vm.jobs[i].id_area = vm.areas[i].id_area;
-              vm.jobs[i].area = vm.areas[i].area;
-              vm.jobs[i].fecha_entrega = null;
-              vm.jobs[i].selected = false;
+              vm.jobs[i] = {
+                id_recepcion_trabajo: 0,
+                id_recepcion: vm.reception.id_recepcion,
+                id_trabajo: 0,
+                id_area: vm.areas[i].id_area,
+                area: vm.areas[i].area,
+                fecha_entrega: null,
+                activo: 0,
+                selected: false
+              };
             }
             ArrayUtilsService.seItemsFromReference(
               vm.areas,
@@ -1914,13 +1917,14 @@
             );
             ArrayUtilsService.seItemsFromReference(
               vm.jobs,
-              vm.reception.jobs,
+              vm.reception.trabajos,
               'id_area',
               [
                 'id_recepcion_trabajo',
                 'id_recepcion',
                 'id_trabajo',
                 'fecha_entrega',
+                'activo',
                 'selected'
               ]
             );
@@ -1966,6 +1970,10 @@
       //   // vm.message += ' Seleccione al menos un tipo de análisis ';
       //   // return false;
       // }
+      if (vm.reception.trabajos.length < 1) {
+        vm.message += ' Seleccione al menos un área receptora ';
+        return false;
+      }
       if (vm.user.level < 3) {
         if (vm.reception.id_status == 3 && vm.reception.motivo_rechaza.length < 1) {
           vm.message += ' Ingrese el motivo de rechazo del Informe ';

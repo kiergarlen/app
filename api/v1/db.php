@@ -1455,7 +1455,7 @@ function getJobsByReception($receptionId) {
   $db = null;
   $l = count($jobs);
   for ($i = 0; $i < $l; $i++) {
-    $jobs[$i]["selected"] = ($jobs[$i]["selected"] > 0);
+    $jobs[$i]["selected"] = true;
   }
   return $jobs;
 }
@@ -1565,7 +1565,7 @@ function getReceptionJobsByReception($receptionId) {
   $db = null;
   $l = count($jobs);
   for ($i = 0; $i < $l; $i++) {
-    $jobs[$i]["selected"] = ($jobs[$i]["selected"] > 0);
+    $jobs[$i]["selected"] = true;
   }
   return $jobs;
 }
@@ -1581,7 +1581,7 @@ function insertReceptionJob($jobData) {
   return $receptionJobId;
 }
 
-function updateReceptionArea($updateData) {
+function updateReceptionJob($updateData) {
   $sql = "UPDATE RecepcionTrabajo SET id_recepcion = :id_recepcion,
     id_trabajo = :id_trabajo, activo = :activo
     WHERE id_recepcion_area = :id_recepcion_area";

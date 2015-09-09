@@ -1957,11 +1957,11 @@
         vm.message += ' Confirme la recepción de una muestra ';
         return false;
       }
-      if (vm.id_muestra_validacion < 1) {
+      if (vm.reception.id_muestra_validacion < 1) {
         vm.message += ' Seleccione una muestra a verificar ';
         return false;
       }
-      vm.reception.id_muestra_validacion = vm.id_muestra_validacion;
+      //vm.reception.id_muestra_validacion = vm.id_muestra_validacion;
       // if (vm.reception.preservaciones.length < 1) {
       //   // vm.message += ' Seleccione al menos una preservación ';
       //   // return false;
@@ -1970,10 +1970,10 @@
       //   // vm.message += ' Seleccione al menos un tipo de análisis ';
       //   // return false;
       // }
-      if (vm.reception.trabajos.length < 1) {
-        vm.message += ' Seleccione al menos un área receptora ';
-        return false;
-      }
+      // if (vm.reception.trabajos.length < 1) {
+      //   vm.message += ' Seleccione al menos un área receptora ';
+      //   return false;
+      // }
       if (vm.user.level < 3) {
         if (vm.reception.id_status == 3 && vm.reception.motivo_rechaza.length < 1) {
           vm.message += ' Ingrese el motivo de rechazo del Informe ';
@@ -1985,25 +1985,27 @@
 
     function submitForm() {
       if (isFormValid() && !vm.isDataSubmitted) {
-        vm.isDataSubmitted = true;
-        if (vm.reception.id_recepcion < 1) {
-          RestUtilsService
-            .saveData(
-              ReceptionService,
-              vm.reception,
-              'recepcion/recepcion'
-            );
-        } else {
-          if (vm.user.level < 3 || vm.reception.id_status !== 2) {
-            RestUtilsService
-              .updateData(
-                ReceptionService,
-                vm.reception,
-                'recepcion/recepcion',
-                'id_recepcion'
-              );
-          }
-        }
+        console.log("data: " + vm);
+        // vm.isDataSubmitted = true;
+        // if (vm.reception.id_recepcion < 1) {
+        //   RestUtilsService
+        //     .saveData(
+        //       ReceptionService,
+        //       vm.reception,
+        //       'recepcion/recepcion'
+        //     );
+        // } else {
+        //   if (vm.user.level < 3 || vm.reception.id_status !== 2) {
+        //     RestUtilsService
+        //       .updateData(
+        //         ReceptionService,
+        //         vm.reception,
+        //         'recepcion/recepcion',
+        //         'id_recepcion'
+        //       );
+        //   }
+        // }
+
       }
     }
   }
@@ -2062,7 +2064,7 @@
               ]
             );
           });
-      })
+      });
 
     function viewJob(id) {
       $location.path('/recepcion/trabajo/' + parseInt(id, 10));

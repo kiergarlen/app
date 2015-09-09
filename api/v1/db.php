@@ -1894,13 +1894,25 @@ function deleteReceptionSamples($receptionId) {
 }
 
 function disableReceptionSamples($receptionId) {
-  $sql = "UPDATE RecepcionMuestra SET activo = 0 WHERE id_recepcion = :receptionId";
+  $sql = "UPDATE RecepcionMuestra SET activo = 0
+    WHERE id_recepcion = :receptionId";
   $db = getConnection();
   $stmt = $db->prepare($sql);
   $stmt->bindParam("receptionId", $receptionId);
   $stmt->execute();
   $db = null;
   return $receptionId;
+}
+
+function updateReceptionSample($updateData) {
+  $sql = "UPDATE RecepcionMuestra SET id_recepcion = :id_recepcion,
+    id_muestra = :id_muestra, activo = :activo
+    WHERE id_recepcion_muestra = :id_recepcion_muestra";
+  $db = getConnection();
+  $stmt = $db->prepare($sql);
+  $stmt->execute($updateData);
+  $db = null;
+  return $updateData["id_recepcion_muestra"];
 }
 
 function getResultsBySheet($sheetId) {

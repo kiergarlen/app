@@ -1368,7 +1368,7 @@ function processReceptionJobsUpdate($receptionUpdateData) {
   $l = count($storedJobs);
   $m = count($jobs);
   $n = count($jobsByReception);
-  if ($l < 100 && $n < 100)
+  if ($l < 1 && $n < 1)
   {
     $newJobIds = (array) processReceptionJobsInsert($receptionUpdateData);
     for ($i = 0; $i < $m; $i++) {

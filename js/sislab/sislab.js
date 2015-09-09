@@ -1,4 +1,4 @@
-/*global angular*/
+/*global angular, CryptoJS*/
 (function(window, document, undefined) {
   'use strict';
   //ANGULAR MODULE SETTER
@@ -537,8 +537,8 @@
     }
 
     function removeOrder(event) {
-      var field = '$$hashKey',
-      orderRow = ArrayUtilsService.extractItemFromCollection(
+      var field = '$$hashKey';
+      ArrayUtilsService.extractItemFromCollection(
         vm.study.ordenes,
         field,
         event[field]
@@ -1365,9 +1365,6 @@
     }
 
     function isMaterialListValid() {
-      var i = 0;
-      var l = 0;
-      var materials = [];
       if (vm.plan.id_responsable_material < 1) {
         vm.message += ' Seleccione una Responsable de preparación de material ';
         return false;
@@ -1380,9 +1377,6 @@
     }
 
     function isCoolerListValid() {
-      var i = 0;
-      var l = 0;
-      var coolers = [];
       if (vm.plan.id_responsable_hieleras < 1) {
         vm.message += ' Seleccione una Responsable de hieleras ';
         return false;
@@ -2441,7 +2435,6 @@
     vm.selectRow = selectRow;
     function selectRow() {
       //TODO send to details view
-      //console.log('clicked in row');
     }
   }
   angular
@@ -2600,9 +2593,8 @@
     vm.clients = ClientService.get();
     vm.selectRow = selectRow;
 
-    function selectRow(e) {
-      var itemId = e.currentTarget.id.split('Id')[1];
-      ////console.log(itemId);
+    function selectRow(e) { 
+      return e.currentTarget.id.split('Id')[1];;
     }
   }
   angular

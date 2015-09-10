@@ -985,7 +985,6 @@
     vm.isAllMaterialsListSelected = false;
     vm.selectInstruments = selectInstruments;
     vm.selectPreservations = selectPreservations;
-    // vm.selectContainers = selectContainers;
     vm.selectReactives = selectReactives;
     vm.selectMaterials = selectMaterials;
     vm.selectCoolers = selectCoolers;
@@ -1183,17 +1182,6 @@
         ).slice();
       }
     }
-
-    // function selectContainers() {
-    //   if (vm.isContainerListLoaded) {
-    //     vm.plan.recipientes = [];
-    //     vm.plan.recipientes = ArrayUtilsService.selectItemsFromCollection(
-    //       vm.containers,
-    //       'selected',
-    //       true
-    //     ).slice();
-    //   }
-    // }
 
     function selectReactives() {
       if (vm.reactives.length > 0 && vm.plan.reactivos) {
@@ -1978,28 +1966,50 @@
     }
 
     function submitForm() {
-      if (isFormValid() && !vm.isDataSubmitted) {
-        console.log("data: " + vm);
-        // vm.isDataSubmitted = true;
-        // if (vm.reception.id_recepcion < 1) {
-        //   RestUtilsService
-        //     .saveData(
-        //       ReceptionService,
-        //       vm.reception,
-        //       'recepcion/recepcion'
-        //     );
-        // } else {
-        //   if (vm.user.level < 3 || vm.reception.id_status !== 2) {
-        //     RestUtilsService
-        //       .updateData(
-        //         ReceptionService,
-        //         vm.reception,
-        //         'recepcion/recepcion',
-        //         'id_recepcion'
-        //       );
-        //   }
-        // }
+        vm.reception.preservaciones = [];
+        vm.reception.preservaciones = ArrayUtilsService
+        .selectItemsFromCollection(
+          vm.preservations,
+          'selected',
+          true
+        ).slice();
 
+        vm.reception.areas = [];
+        vm.reception.areas = ArrayUtilsService
+        .selectItemsFromCollection(
+          vm.areas,
+          'selected',
+          true
+        ).slice();
+
+        vm.reception.trabajos = [];
+        vm.reception.trabajos = ArrayUtilsService
+        .selectItemsFromCollection(
+          vm.jobs,
+          'selected',
+          true
+        ).slice();
+
+      if (isFormValid() && !vm.isDataSubmitted) {
+        vm.isDataSubmitted = true;
+        if (vm.reception.id_recepcion < 1) {
+          RestUtilsService
+            .saveData(
+              ReceptionService,
+              vm.reception,
+              'recepcion/recepcion'
+            );
+        } else {
+          if (vm.user.level < 3 || vm.reception.id_status !== 2) {
+            RestUtilsService
+              .updateData(
+                ReceptionService,
+                vm.reception,
+                'recepcion/recepcion',
+                'id_recepcion'
+              );
+          }
+        }
       }
     }
   }
@@ -2295,7 +2305,7 @@
    * @desc Controla la vista para el listado de Análisis de Microbiológicos
    * @this {Object} $scope - Contenedor para el modelo [AngularJS]
    * @param {Object} $location - Manejo de URL [AngularJS]
-   * @param {Object} BioAnalysisService - Proveedor de datos, Análisis de Microbiológicos
+   * @param {Object} BioAnalysisService - Proveedor de datos, Análisis Microbiológicos
    */
   function BioAnalysisListController($location, BioAnalysisService) {
     var vm = this;
@@ -2593,8 +2603,8 @@
     vm.clients = ClientService.get();
     vm.selectRow = selectRow;
 
-    function selectRow(e) { 
-      return e.currentTarget.id.split('Id')[1];;
+    function selectRow(e) {
+      return e.currentTarget.id.split('Id')[1];
     }
   }
   angular

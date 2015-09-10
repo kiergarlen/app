@@ -1225,8 +1225,7 @@ function processReceptionPreservationsUpdate($receptionUpdateData) {
       $preservation = array(
         "id_recepcion" => $preservations[$i]->id_recepcion,
         "id_preservacion" => $preservations[$i]->id_preservacion,
-        "cantidad" => $preservations[$i]->cantidad,
-        "preservado" => $preservations[$i]->preservado
+        "cantidad" => $preservations[$i]->cantidad
       );
       insertReceptionPreservation($preservation);
     }
@@ -1239,8 +1238,7 @@ function processReceptionPreservationsUpdate($receptionUpdateData) {
         "id_recepcion_preservacion" => $preservations[$i]->id_recepcion_preservacion,
         "id_recepcion" => $preservations[$i]->id_recepcion,
         "id_preservacion" => $preservations[$i]->id_preservacion,
-        "cantidad" => $preservations[$i]->cantidad,
-        "preservado" => $preservations[$i]->preservado
+        "cantidad" => $preservations[$i]->cantidad
       );
       if ($preservation["id_recepcion_preservacion"] < 1)
       {
@@ -1265,6 +1263,7 @@ function processReceptionAreasUpdate($receptionUpdateData) {
   $i = 0;
   $l = count($storedAreas);
   $m = count($areas);
+  return $storedAreas;
   if ($l < 1)
   {
     for ($i = 0; $i < $m; $i++) {

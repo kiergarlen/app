@@ -288,7 +288,7 @@ $app->post("/sheets", function() use ($app) {
 
 $app->get("/receptions(/)(:receptionId)", function($receptionId = -1) use ($app) {
   try {
-    //$userId = decodeUserToken($app->request())->uid;
+    $userId = decodeUserToken($app->request())->uid;
     if ($receptionId > -1)
     {
       $result = json_encode(getReception($receptionId));
@@ -329,13 +329,14 @@ $app->post("/receptions", function() use ($app) {
     if ($receptionId > 0)
     {
       $receptionUpdateData = processReceptionUpdate($request);
-      $receptionId = updateReception($receptionUpdateData["reception"]);
-      processReceptionSamplesUpdate($receptionUpdateData);
-      processReceptionPreservationsUpdate($receptionUpdateData);
-      processReceptionAreasUpdate($receptionUpdateData);
-      processReceptionJobsUpdate($receptionUpdateData);
+      // $receptionId = updateReception($receptionUpdateData["reception"]);
+      // processReceptionSamplesUpdate($receptionUpdateData);
+      // processReceptionPreservationsUpdate($receptionUpdateData);
+      // processReceptionAreasUpdate($receptionUpdateData);
+      // processReceptionJobsUpdate($receptionUpdateData);
     }
-    $result = "{\"id_recepcion\":" . $receptionId . "}";
+    $result = json_encode(processReceptionAreasUpdate($receptionUpdateData));
+    // $result = "{\"id_recepcion\":" . $receptionId . "}";
     $app->response()->status(200);
     $app->response()->header("Content-Type", "application/json");
     //$result = ")]}',\n" . $result;

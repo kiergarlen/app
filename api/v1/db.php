@@ -1176,26 +1176,41 @@ function getReception($receptionId) {
   $reception = getPlainReception($receptionId);
   $samples = (array) getReceptionSamples($receptionId);
   $sheetSamples = getSamplesBySheet($reception->id_hoja);
-
   $i = 0;
   $j = 0;
   $l = count($samples);
   $m = count($sheetSamples);
-
-  for ($i = 0; $i < $l; $i++) {
-    for ($j = 0; $j < $m; $j++) {
-      if ($samples[$i]["id_muestra"] == $sheetSamples[$j]["id_muestra"]) {
-        $samples[$i]["id_punto"] = $sheetSamples[$j]["id_punto"];
-        break;
+  if ($l > 1)
+  {
+    for ($i = 0; $i < $l; $i++) {
+      for ($j = 0; $j < $m; $j++) {
+        if ($samples[$i]["id_muestra"] == $sheetSamples[$j]["id_muestra"])
+        {
+          $samples[$i]["id_punto"] = $sheetSamples[$j]["id_punto"];
+          break;
+        }
       }
+      $samples[$i]["punto"] = getPoint($samples[$i]["id_punto"]);
+      $samples[$i]["selected"] = true;
     }
-    $samples[$i]["punto"] = getPoint($samples[$i]["id_punto"]);
-    $samples[$i]["selected"] = true;
+    $reception->muestras = $samples;
+  }
+  else
+  {
+    for ($j = 0; $j < $m; $j++) {
+      $newSamples[] = array(
+        "id_recepcion_muestra" => 0,
+        "id_recepcion" => $sheetSamples[$j]["id_recepcion"],
+        "id_muestra" => $sheetSamples[$j]["id_muestra"],
+        "activo" => 1,
+        "selected" => true,
+        "punto" => getPoint($sheetSamples[$j]["id_punto"])
+      );
+    }
+    $reception->muestras = $newSamples;
   }
 
-  $reception->muestras = $samples;
-  $preservations = getReceptionPreservations($receptionId);
-  $reception->preservaciones = $preservations;
+  $reception->preservaciones = getReceptionPreservations($receptionId);
   $reception->areas = getReceptionAreas($receptionId);
   $reception->trabajos = getReceptionJobsByReception($receptionId);
   return $reception;
@@ -2626,8 +2641,7 @@ function getReceptionPreservations($receptionId) {
 
 function insertReceptionPreservation($preservationData) {
   $sql = "INSERT INTO RecepcionPreservacion (id_recepcion,
-    id_preservacion,
-    cantidad activo)
+    id_preservacion, cantidad, activo)
     VALUES (:id_recepcion, :id_preservacion,
     :cantidad, 1)";
   $db = getConnection();
@@ -2664,7 +2678,7 @@ function disableReceptionPreservations($receptionId) {
 function updateReceptionPreservation($updateData) {
   $sql = "UPDATE RecepcionPreservacion SET id_recepcion = :id_recepcion,
     id_preservacion = :id_preservacion, cantidad = :cantidad,
-    preservado = :preservado, activo = :activo
+    activo = :activo
     WHERE id_recepcion_preservacion = :id_recepcion_preservacion";
   $db = getConnection();
   $stmt = $db->prepare($sql);

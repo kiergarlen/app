@@ -1177,6 +1177,7 @@ function processReceptionSamplesUpdate($receptionUpdateData) {
   $j = 0;
   $l = count($storedSamples);
   $m = count($samples);
+
   if ($l < 1)
   {
     for ($i = 0; $i < $m; $i++) {
@@ -1191,7 +1192,7 @@ function processReceptionSamplesUpdate($receptionUpdateData) {
   else
   {
     disableReceptionSamples($receptionId);
-    for ($j = 0; $j < $m; $i++) {
+    for ($i = 0; $i < $m; $i++) {
       $sample = (array) $samples[$i];
       unset($sample["id_punto"]);
       unset($sample["activo"]);
@@ -1219,6 +1220,7 @@ function processReceptionPreservationsUpdate($receptionUpdateData) {
   $i = 0;
   $l = count($storedPreservations);
   $m = count($preservations);
+
   if ($l < 1)
   {
     for ($i = 0; $i < $m; $i++) {

@@ -1356,7 +1356,7 @@ function deleteReceptionAreas($receptionId) {
   return $receptionId;
 }
 
-function getJob($jobId) {
+function getPlainJob($jobId) {
   $sql = "SELECT id_trabajo, id_plan, id_recepcion,
     id_muestra, id_muestra_duplicada, id_area, id_usuario_entrega,
     id_usuario_recibe, id_usuario_analiza, id_usuario_registra,
@@ -1475,6 +1475,13 @@ function getJobsByReception($receptionId) {
   return $jobs;
 }
 
+function getjob($jobId) {
+  $job = getPlainJob($jobId);
+  $job->muestras = getJobSamples($jobId);
+  $job->parametros = array();
+  return $job;
+}
+
 function insertJob($jobData) {
   $sql = "INSERT INTO Trabajo (id_plan, id_recepcion,
     id_muestra, id_muestra_duplicada, id_area,
@@ -1548,6 +1555,23 @@ function disableJobsByReception($receptionId) {
   $stmt->execute();
   $db = null;
   return $receptionId;
+}
+
+function getJobSamples($jobId) {
+  $sql = "SELECT id_trabajo_muestra, id_trabajo, id_muestra, activo
+    FROM TrabajoMuestra
+    WHERE activo = 1 AND id_trabajo = :jobId";
+  $db = getConnection();
+  $stmt = $db->prepare($sql);
+  $stmt->bindParam("jobId", $jobId);
+  $stmt->execute();
+  $samples = $stmt->fetchAll(PDO::FETCH_ASSOC);
+  $db = null;
+  $l = count($samples);
+  for ($i = 0; $i < $l; $i++) {
+    $samples[$i]["selected"] = true;
+  }
+  return $samples;
 }
 
 function getReceptionJobs($receptionId) {

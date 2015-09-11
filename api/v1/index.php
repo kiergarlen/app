@@ -367,11 +367,11 @@ $app->get("/jobs(/)(:jobId)", function($jobId = -1) use ($app) {
   }
 });
 
-$app->get("/jobs/user", function() use ($app) {
+$app->get("/jobs/user/:userId", function($userId) use ($app) {
   try {
     $userId = decodeUserToken($app->request())->uid;
-    $result = json_encode(getJobsByUser($userId));
     $app->response()->status(200);
+    $result = json_encode(getJobsByUser($userId * 1));
     $app->response()->header("Content-Type", "application/json");
     //$result = ")]}',\n" . $result;
     print_r($result);

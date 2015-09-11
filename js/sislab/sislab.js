@@ -2048,8 +2048,9 @@
     vm.user = TokenService.getUserFromToken();
     vm.viewJob = viewJob;
 
+      //.get()
     UserJobsService
-      .get()
+      .query({userId: 0})
       .$promise
       .then(function success(response) {
         vm.jobs = response;
@@ -3798,15 +3799,23 @@
    * @return {Object} $resource - Acceso a recursos HTTP
    */
   function UserJobsService($resource, TokenService) {
-    return $resource(API_BASE_URL + 'jobs/user', {}, {
-      get: {
+    return $resource(API_BASE_URL + 'jobs/user/:userId', {}, {
+      // get: {
+      //   method: 'GET',
+      //   params: {},
+      //   isArray: true,
+      //   headers: {
+      //     'Auth-Token': TokenService.getToken()
+      //   }
+      // },
+      query: {
         method: 'GET',
-        params: {},
+        params: {userId: 'id_usuario'},
         isArray: true,
         headers: {
           'Auth-Token': TokenService.getToken()
         }
-      },
+      }
     });
   }
   angular

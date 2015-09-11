@@ -1792,8 +1792,10 @@
     vm.areas = [];
     vm.jobs = [];
     vm.message = '';
-    vm.id_muestra_validacion = 0;
     vm.isDataSubmitted = false;
+    vm.selectPreservations = selectPreservations;
+    vm.selectAreas = selectAreas;
+    vm.selectJobs = selectJobs;
     vm.approveItem = approveItem;
     vm.rejectItem = rejectItem;
     vm.submitForm = submitForm;
@@ -1803,7 +1805,6 @@
       .$promise
       .then(function success(response) {
         vm.reception = response;
-        vm.id_muestra_validacion = vm.reception.id_muestra_validacion;
         SheetSampleService
           .query({sheetId: vm.reception.id_hoja})
           .$promise
@@ -1872,7 +1873,7 @@
               vm.areas[i].volumen = false;
               vm.areas[i].vigencia = false;
               vm.areas[i].recipiente = false;
-              vm.areas[i].activo = false;
+              vm.areas[i].activo = 0;
               vm.jobs[i] = {
                 id_recepcion_trabajo: 0,
                 id_recepcion: vm.reception.id_recepcion,
@@ -1943,19 +1944,14 @@
         vm.message += ' Seleccione una muestra a verificar ';
         return false;
       }
-      //vm.reception.id_muestra_validacion = vm.id_muestra_validacion;
-      // if (vm.reception.preservaciones.length < 1) {
-      //   // vm.message += ' Seleccione al menos una preservación ';
-      //   // return false;
-      // }
-      // if (vm.reception.areas.length < 1) {
-      //   // vm.message += ' Seleccione al menos un tipo de análisis ';
-      //   // return false;
-      // }
-      // if (vm.reception.trabajos.length < 1) {
-      //   vm.message += ' Seleccione al menos un área receptora ';
-      //   return false;
-      // }
+      if (vm.reception.areas.length < 1) {
+        vm.message += ' Seleccione al menos un tipo de análisis ';
+        return false;
+      }
+      if (vm.reception.trabajos.length < 1) {
+        vm.message += ' Asigne al menos una Orden de Trabajo ';
+        return false;
+      }
       if (vm.user.level < 3) {
         if (vm.reception.id_status == 3 && vm.reception.motivo_rechaza.length < 1) {
           vm.message += ' Ingrese el motivo de rechazo del Informe ';
@@ -1965,30 +1961,44 @@
       return true;
     }
 
+    function selectPreservations() {
+      vm.reception.preservaciones = [];
+      vm.reception.preservaciones = ArrayUtilsService
+      .selectItemsFromCollection(
+        vm.preservations,
+        'selected',
+        true
+      ).slice();
+    }
+
+    function selectAreas() {
+      vm.reception.areas = [];
+      var i = 0;
+      var l = 0;
+      var viewArea = {};
+      l = vm.areas.length;
+      for (i = 0; i < l; i += 1) {
+        viewArea = vm.areas[i];
+        if (viewArea.volumen || viewArea.vigencia || viewArea.recipiente) {
+          vm.reception.areas.push(viewArea);
+        }
+      }
+    }
+
+    function selectJobs() {
+      vm.reception.trabajos = [];
+      vm.reception.trabajos = ArrayUtilsService
+      .selectItemsFromCollection(
+        vm.jobs,
+        'selected',
+        true
+      ).slice();
+    }
+
     function submitForm() {
-        vm.reception.preservaciones = [];
-        vm.reception.preservaciones = ArrayUtilsService
-        .selectItemsFromCollection(
-          vm.preservations,
-          'selected',
-          true
-        ).slice();
-
-        vm.reception.areas = [];
-        vm.reception.areas = ArrayUtilsService
-        .selectItemsFromCollection(
-          vm.areas,
-          'selected',
-          true
-        ).slice();
-
-        vm.reception.trabajos = [];
-        vm.reception.trabajos = ArrayUtilsService
-        .selectItemsFromCollection(
-          vm.jobs,
-          'selected',
-          true
-        ).slice();
+      vm.selectPreservations();
+      vm.selectAreas();
+      vm.selectJobs();
 
       if (isFormValid() && !vm.isDataSubmitted) {
         vm.isDataSubmitted = true;

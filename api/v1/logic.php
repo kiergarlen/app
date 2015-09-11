@@ -1263,7 +1263,7 @@ function processReceptionAreasUpdate($receptionUpdateData) {
   $i = 0;
   $l = count($storedAreas);
   $m = count($areas);
-  return $storedAreas;
+
   if ($l < 1)
   {
     for ($i = 0; $i < $m; $i++) {
@@ -1367,6 +1367,7 @@ function processReceptionJobsUpdate($receptionUpdateData) {
   $l = count($storedJobs);
   $m = count($jobs);
   $n = count($jobsByReception);
+
   if ($l < 1 && $n < 1)
   {
     $newJobIds = (array) processReceptionJobsInsert($receptionUpdateData);

@@ -9,29 +9,25 @@ function processUserJwt($request) {
   $userInfo = getUserByCredentials($usr, $pwd);
   $userId = $userInfo->id_usuario;
   $userLv = $userInfo->id_nivel;
-  $userRole = $userInfo->id_rol;
   $name = $userInfo->nombres . " ";
   $name .= $userInfo->apellido_paterno . " ";
   $name .= $userInfo->apellido_materno . "";
 
-  $userPass = $usr . ".";
-  $userPass .= $pwd . ".";
-  $userPass .= $userId . "." . $userLv;
+  $userPass = $usr . "." . $pwd . "." . "." . $userLv;
   $userPass = bin2hex($userPass);
   $token = array();
-  //$token["usr"] = $input->username;
-  //$token["pwd"] = $input->password;
   $token["nam"] = $name;
   $token["upt"] = $userPass;
   $token["uid"] = $userId;
   $token["ulv"] = $userLv;
-  $token["uro"] = $userRole;
+  $token["uro"] = $userInfo->id_rol;
+  $token["uar"] = $userInfo->id_area;
   $token["cip"] = $request->getIp() . "";
   $token["iss"] = $request->getUrl();
   $token["aud"] = "sislab.ceajalisco.gob.mx";
   $token["iat"] = time();
-  //// Token expires 192 hours from now
-  $token["exp"] = time() + (192 * 60 * 60);
+  //// Token expires 4 hours from now
+  $token["exp"] = time() + (4 * 60 * 60);
   $jwt = JWT::encode($token, KEY);
   return $jwt;
 }

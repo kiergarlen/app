@@ -325,9 +325,9 @@
    * @name LoginController
    * @constructor
    * @desc Controla la vista para Login
-   * @this {Object} $scope - Contenedor para el modelo [AngularJS]
-   * @param {Object} $http - Manejo de peticiones HTTP [AngularJS]
-   * @param {Object} $location - Manejo de URL [AngularJS]
+   * @this {Object} $scope - Contenedor para el modelo
+   * @param {Object} $http - Manejo de peticiones HTTP
+   * @param {Object} $location - Manejo de URL
    * @param {Object} TokenService - Proveedor para manejo del token
    */
   function LoginController($scope, TokenService) {
@@ -362,7 +362,7 @@
    * @name MenuController
    * @constructor
    * @desc Controla la directiva para el Menú principal
-   * @this {Object} $scope - Contenedor para el modelo [AngularJS]
+   * @this {Object} $scope - Contenedor para el modelo
    * @param {Object} MenuService - Proveedor de datos, Menú
    */
   function MenuController(MenuService) {
@@ -383,7 +383,7 @@
    * @name TaskListController
    * @constructor
    * @desc Controla la vista para Tareas
-   * @this {Object} $scope - Contenedor para el modelo [AngularJS]
+   * @this {Object} $scope - Contenedor para el modelo
    * @param {Object} TokenService - Proveedor para manejo del token
    * @param {Object} TaskService - Proveedor de datos, Tareas
    */
@@ -412,9 +412,9 @@
    * @name StudyListController
    * @constructor
    * @desc Controla la vista para el listado de Estudios
-   * @this {Object} $scope - Contenedor para el modelo [AngularJS]
-   * @param {Object} $window - Acceso a Objeto Window [AngularJS]
-   * @param {Object} $location - Manejo de URL [AngularJS]
+   * @this {Object} $scope - Contenedor para el modelo
+   * @param {Object} $window - Acceso a Objeto Window
+   * @param {Object} $location - Manejo de URL
    * @param {Object} TokenService - Proveedor para manejo del token
    * @param {Object} RestUtilsService - Proveedor para manejo de servicios REST
    * @param {Object} StudyService - Proveedor de datos, Estudios
@@ -465,8 +465,8 @@
    * @name StudyController
    * @constructor
    * @desc Controla la vista para capturar un Estudio
-   * @this {Object} $scope - Contenedor para el modelo [AngularJS]
-   * @param {Object} $routeParams - Proveedor de parámetros de ruta [AngularJS]
+   * @this {Object} $scope - Contenedor para el modelo
+   * @param {Object} $routeParams - Proveedor de parámetros de ruta
    * @param {Object} TokenService - Proveedor para manejo del token
    * @param {Object} ValidationService - Proveedor para manejo de validación
    * @param {Object} RestUtilsService - Proveedor para manejo de servicios REST
@@ -669,8 +669,8 @@
    * @name OrderListController
    * @constructor
    * @desc Controla la vista para el listado de Órdenes muestreo
-   * @this {Object} $scope - Contenedor para el modelo [AngularJS]
-   * @param {Object} $location - Manejo de URL [AngularJS]
+   * @this {Object} $scope - Contenedor para el modelo
+   * @param {Object} $location - Manejo de URL
    * @param {Object} OrderService - Proveedor de datos, Órdenes de muestreo
    */
   function OrderListController($location, OrderService) {
@@ -696,8 +696,8 @@
    * @name OrderController
    * @constructor
    * @desc Controla la vista para capturar una Orden de muestreo
-   * @this {Object} $scope - Contenedor para el modelo [AngularJS]
-   * @param {Object} $routeParams - Proveedor de parámetros de ruta [AngularJS]
+   * @this {Object} $scope - Contenedor para el modelo
+   * @param {Object} $routeParams - Proveedor de parámetros de ruta
    * @param {Object} TokenService - Proveedor para manejo del token
    * @param {Object} ValidationService - Proveedor para manejo de validación
    * @param {Object} RestUtilsService - Proveedor para manejo de servicios REST
@@ -908,8 +908,8 @@
    * @name PlanListController
    * @constructor
    * @desc Controla la vista para el listado de Planes de muestreo
-   * @this {Object} $scope - Contenedor para el modelo [AngularJS]
-   * @param {Object} $location - Manejo de URL [AngularJS]
+   * @this {Object} $scope - Contenedor para el modelo
+   * @param {Object} $location - Manejo de URL
    * @param {Object} PlanService - Proveedor de datos, Planes de muestreo
    */
   function PlanListController($location, PlanService) {
@@ -935,8 +935,8 @@
    * @name PlanController
    * @constructor
    * @desc Controla la vista para capturar un Plan de muestreo
-   * @this {Object} $scope - Contenedor para el modelo [AngularJS]
-   * @param {Object} $routeParams - Proveedor de parámetros de ruta [AngularJS]
+   * @this {Object} $scope - Contenedor para el modelo
+   * @param {Object} $routeParams - Proveedor de parámetros de ruta
    * @param {Object} TokenService - Proveedor para manejo del token
    * @param {Object} ValidationService - Proveedor para manejo de validación
    * @param {Object} RestUtilsService - Proveedor para manejo de servicios REST
@@ -968,7 +968,6 @@
     vm.samplingEmployees = SamplingEmployeeService.get();
     vm.instruments = [];
     vm.preservations = [];
-    // vm.containers = [];
     vm.reactives = [];
     vm.materials = [];
     vm.coolers = [];
@@ -1049,12 +1048,6 @@
               ]
             );
           });
-        // PlanContainersService
-        //   .query({planId: $routeParams.planId})
-        //   .$promise
-        //   .then(function success(response) {
-        //     vm.containers = response;
-        //   });
         PreservationService
           .get()
           .$promise
@@ -1486,8 +1479,8 @@
    * @name SheetListController
    * @constructor
    * @desc Controla la vista para el listado de Hojas de campo
-   * @this {Object} $scope - Contenedor para el modelo [AngularJS]
-   * @param {Object} $location - Manejo de URL [AngularJS]
+   * @this {Object} $scope - Contenedor para el modelo
+   * @param {Object} $location - Manejo de URL
    * @param {Object} SheetService - Proveedor de datos, Hoja de campo
    */
   function SheetListController($location, SheetService) {
@@ -1513,8 +1506,8 @@
    * @name SheetController
    * @constructor
    * @desc Controla la vista para capturar la hoja de campo
-   * @this {Object} $scope - Contenedor para el modelo [AngularJS]
-   * @param {Object} $routeParams - Proveedor de parámetros de ruta [AngularJS]
+   * @this {Object} $scope - Contenedor para el modelo
+   * @param {Object} $routeParams - Proveedor de parámetros de ruta
    * @param {Object} TokenService - Proveedor para manejo del token
    * @param {Object} ValidationService - Proveedor para manejo de validación
    * @param {Object} RestUtilsService - Proveedor para manejo de servicios REST
@@ -1739,8 +1732,8 @@
    * @name ReceptionListController
    * @constructor
    * @desc Controla la vista para el listado de Recepciones
-   * @this {Object} $scope - Contenedor para el modelo [AngularJS]
-   * @param {Object} $location - Manejo de URL [AngularJS]
+   * @this {Object} $scope - Contenedor para el modelo
+   * @param {Object} $location - Manejo de URL
    * @param {Object} ReceptionService - Proveedor de datos, Recepción muestras
    */
   function ReceptionListController($location, ReceptionService) {
@@ -1766,8 +1759,8 @@
    * @name ReceptionController
    * @constructor
    * @desc Controla la vista para capturar la recepción de muestras
-   * @this {Object} $scope - Contenedor para el modelo [AngularJS]
-   * @param {Object} $routeParams - Proveedor de parámetros de ruta [AngularJS]
+   * @this {Object} $scope - Contenedor para el modelo
+   * @param {Object} $routeParams - Proveedor de parámetros de ruta
    * @param {Object} TokenService - Proveedor para manejo del token
    * @param {Object} ValidationService - Proveedor para manejo de validación
    * @param {Object} RestUtilsService - Proveedor para manejo de servicios REST
@@ -2040,20 +2033,22 @@
    * @name JobListController
    * @constructor
    * @desc Controla la vista para el listado de Órdenes de Trabajo
-   * @this {Object} $scope - Contenedor para el modelo [AngularJS]
-   * @param {Object} $location - Manejo de URL [AngularJS]
+   * @this {Object} $scope - Contenedor para el modelo
+   * @param {Object} $location - Manejo de URL
+   * @param {Object} TokenService - Proveedor para manejo del token
    * @param {Object} ReceivingAreaService - Proveedor de datos, Áreas receptoras
    * @param {Object} ArrayUtilsService - Proveedor para manejo de arreglos
-   * @param {Object} JobService - Proveedor de datos, Órdenes de Trabajo
+   * @param {Object} UserJobsService - Proveedor de datos, Órdenes de Trabajo (Usuario)
    */
-  function JobListController($location, ReceivingAreaService, ArrayUtilsService,
-    JobService) {
+  function JobListController($location, TokenService, ReceivingAreaService,
+    ArrayUtilsService, UserJobsService) {
     var vm = this;
     vm.jobs = [];
     vm.areas = [];
+    vm.user = TokenService.getUserFromToken();
     vm.viewJob = viewJob;
 
-    JobService
+    UserJobsService
       .get()
       .$promise
       .then(function success(response) {
@@ -2088,8 +2083,8 @@
     .module('sislabApp')
     .controller('JobListController',
       [
-        '$location', 'ReceivingAreaService', 'ArrayUtilsService',
-        'JobService',
+        '$location', 'TokenService', 'ReceivingAreaService',
+        'ArrayUtilsService', 'UserJobsService',
         JobListController
       ]
     );
@@ -2099,8 +2094,8 @@
    * @name JobController
    * @constructor
    * @desc Controla la vista para capturar las Órdenes de Trabajo
-   * @this {Object} $scope - Contenedor para el modelo [AngularJS]
-   * @param {Object} $routeParams - Proveedor de parámetros de ruta [AngularJS]
+   * @this {Object} $scope - Contenedor para el modelo
+   * @param {Object} $routeParams - Proveedor de parámetros de ruta
    * @param {Object} TokenService - Proveedor para manejo del token
    * @param {Object} JobService - Proveedor de datos, Órdenes de Trabajo
    */
@@ -2167,8 +2162,8 @@
    * @name CustodyListController
    * @constructor
    * @desc Controla la vista para el listado de Cadenas de custodia
-   * @this {Object} $scope - Contenedor para el modelo [AngularJS]
-   * @param {Object} $location - Manejo de URL [AngularJS]
+   * @this {Object} $scope - Contenedor para el modelo
+   * @param {Object} $location - Manejo de URL
    * @param {Object} CustodyService - Proveedor de datos, Cadenas de custodia
    */
   function CustodyListController($location, CustodyService) {
@@ -2194,8 +2189,8 @@
    * @name CustodyController
    * @constructor
    * @desc Controla la vista para capturar las Cadenas de custodia
-   * @this {Object} $scope - Contenedor para el modelo [AngularJS]
-   * @param {Object} $routeParams - Proveedor de parámetros de ruta [AngularJS]
+   * @this {Object} $scope - Contenedor para el modelo
+   * @param {Object} $routeParams - Proveedor de parámetros de ruta
    * @param {Object} TokenService - Proveedor para manejo del token
    * @param {Object} CustodyService - Proveedor de datos, Cadenas de custodia
    */
@@ -2261,8 +2256,8 @@
    * @name PhysAnalysisListController
    * @constructor
    * @desc Controla la vista para el listado de Análisis Fisicoquímicos
-   * @this {Object} $scope - Contenedor para el modelo [AngularJS]
-   * @param {Object} $location - Manejo de URL [AngularJS]
+   * @this {Object} $scope - Contenedor para el modelo
+   * @param {Object} $location - Manejo de URL
    * @param {Object} PhysAnalysisService - Proveedor de datos, Análisis Fisicoquímicos
    */
   function PhysAnalysisListController($location, PhysAnalysisService) {
@@ -2287,8 +2282,8 @@
    * @name MetalAnalysisListController
    * @constructor
    * @desc Controla la vista para el listado de Análisis de Metales Pesados
-   * @this {Object} $scope - Contenedor para el modelo [AngularJS]
-   * @param {Object} $location - Manejo de URL [AngularJS]
+   * @this {Object} $scope - Contenedor para el modelo
+   * @param {Object} $location - Manejo de URL
    * @param {Object} MetalAnalysisService - Proveedor de datos, Análisis de Metales Pesados
    */
   function MetalAnalysisListController($location, MetalAnalysisService) {
@@ -2313,8 +2308,8 @@
    * @name BioAnalysisListController
    * @constructor
    * @desc Controla la vista para el listado de Análisis de Microbiológicos
-   * @this {Object} $scope - Contenedor para el modelo [AngularJS]
-   * @param {Object} $location - Manejo de URL [AngularJS]
+   * @this {Object} $scope - Contenedor para el modelo
+   * @param {Object} $location - Manejo de URL
    * @param {Object} BioAnalysisService - Proveedor de datos, Análisis Microbiológicos
    */
   function BioAnalysisListController($location, BioAnalysisService) {
@@ -2340,8 +2335,8 @@
    * @name SampleListController
    * @constructor
    * @desc Controla la vista para el listado de Muestras
-   * @this {Object} $scope - Contenedor para el modelo [AngularJS]
-   * @param {Object} $location - Manejo de URL [AngularJS]
+   * @this {Object} $scope - Contenedor para el modelo
+   * @param {Object} $location - Manejo de URL
    * @param {Object} SampleService - Proveedor de datos, Muestras
    */
   function SampleListController($location, SampleService) {
@@ -2367,7 +2362,7 @@
    * @name InstrumentListController
    * @constructor
    * @desc Controla la vista para el listado de Equipos
-   * @this {Object} $scope - Contenedor para el modelo [AngularJS]
+   * @this {Object} $scope - Contenedor para el modelo
    * @param {Object} InstrumentService - Proveedor de datos, Equipos
    */
   function InstrumentListController(InstrumentService) {
@@ -2393,7 +2388,7 @@
    * @name ReactiveListController
    * @constructor
    * @desc Controla la vista para el listado de Reactivos
-   * @this {Object} $scope - Contenedor para el modelo [AngularJS]
+   * @this {Object} $scope - Contenedor para el modelo
    * @param {Object} ReactiveService - Proveedor de datos, Reactivos
    */
   function ReactiveListController(ReactiveService) {
@@ -2419,7 +2414,7 @@
    * @name ContainerListController
    * @constructor
    * @desc Controla la vista para el listado de Recipientes
-   * @this {Object} $scope - Contenedor para el modelo [AngularJS]
+   * @this {Object} $scope - Contenedor para el modelo
    * @param {Object} ContainerService - Proveedor de datos, Recipientes
    */
   function ContainerListController(ContainerService) {
@@ -2445,7 +2440,7 @@
    * @name AnalysisListController
    * @constructor
    * @desc Controla la vista para la búsqueda de Análisis
-   * @this {Object} $scope - Contenedor para el modelo [AngularJS]
+   * @this {Object} $scope - Contenedor para el modelo
    * @param {Object} AnalysisService - Proveedor de datos, Análisis
    */
   function AnalysisListController(AnalysisService) {
@@ -2471,7 +2466,7 @@
    * @name AnalysisController
    * @constructor
    * @desc Controla la vista para seleccionar captura de Análisis
-   * @this {Object} $scope - Contenedor para el modelo [AngularJS]
+   * @this {Object} $scope - Contenedor para el modelo
    * @param {Object} AreaService - Proveedor de datos, Áreas
    * @param {Object} ParameterService - Proveedor de datos, Parámetros
    * @param {Object} AnalysisService - Proveedor de datos, Análisis
@@ -2520,7 +2515,7 @@
    * @name ReportListController
    * @constructor
    * @desc Controla la vista para el listado de Reportes
-   * @this {Object} $scope - Contenedor para el modelo [AngularJS]
+   * @this {Object} $scope - Contenedor para el modelo
    * @param {Object} ReportService - Proveedor de datos, Reportes
    */
   function ReportListController(ReportService) {
@@ -2546,8 +2541,8 @@
    * @name ReportController
    * @constructor
    * @desc Controla la vista para captura de Reporte
-   * @this {Object} $scope - Contenedor para el modelo [AngularJS]
-   * @param {Object} $routeParams - Proveedor de parámetros de ruta [AngularJS]
+   * @this {Object} $scope - Contenedor para el modelo
+   * @param {Object} $routeParams - Proveedor de parámetros de ruta
    * @param {Object} ReportService - Proveedor de datos, Reporte
    */
   function ReportController($routeParams, ReportService) {
@@ -2579,7 +2574,7 @@
    * @name PointListController
    * @constructor
    * @desc Controla la vista para el listado de Puntos
-   * @this {Object} $scope - Contenedor para el modelo [AngularJS]
+   * @this {Object} $scope - Contenedor para el modelo
    * @param {Object} PointService - Proveedor de datos, Puntos
    */
   function PointListController(PointService) {
@@ -2605,7 +2600,7 @@
    * @name ClientListController
    * @constructor
    * @desc Controla la vista para el listado de Clientes
-   * @this {Object} $scope - Contenedor para el modelo [AngularJS]
+   * @this {Object} $scope - Contenedor para el modelo
    * @param {Object} ClientService - Proveedor de datos, Cliente
    */
   function ClientListController(ClientService) {
@@ -2631,7 +2626,7 @@
    * @name AreaListController
    * @constructor
    * @desc Controla la vista para el listado de Áreas
-   * @this {Object} $scope - Contenedor para el modelo [AngularJS]
+   * @this {Object} $scope - Contenedor para el modelo
    * @param {Object} AreaService - Proveedor de datos, Áreas
    */
   function AreaListController(AreaService) {
@@ -2652,7 +2647,7 @@
    * @name EmployeeListController
    * @constructor
    * @desc Controla la vista para el listado de Empleados
-   * @this {Object} $scope - Contenedor para el modelo [AngularJS]
+   * @this {Object} $scope - Contenedor para el modelo
    * @param {Object} EmployeeService - Proveedor de datos, Empleados
    */
   function EmployeeListController(EmployeeService) {
@@ -2673,7 +2668,7 @@
    * @name NormListController
    * @constructor
    * @desc Controla la vista para el listado de Normas
-   * @this {Object} $scope - Contenedor para el modelo [AngularJS]
+   * @this {Object} $scope - Contenedor para el modelo
    * @param {Object} NormService - Proveedor de datos, Normas
    */
   function NormListController(NormService) {
@@ -2699,7 +2694,7 @@
    * @name ReferenceListController
    * @constructor
    * @desc Controla la vista para el listado de Referencias
-   * @this {Object} $scope - Contenedor para el modelo [AngularJS]
+   * @this {Object} $scope - Contenedor para el modelo
    * @param {Object} ReferenceService - Proveedor de datos, Referencias
    */
   function ReferenceListController(ReferenceService) {
@@ -2725,7 +2720,7 @@
    * @name MethodListController
    * @constructor
    * @desc Controla la vista para la búsqueda de Métodos
-   * @this {Object} $scope - Contenedor para el modelo [AngularJS]
+   * @this {Object} $scope - Contenedor para el modelo
    * @param {Object} MethodService - Proveedor de datos, Métodos
    */
   function MethodListController(MethodService) {
@@ -2751,7 +2746,7 @@
    * @name PriceListController
    * @constructor
    * @desc Controla la vista para el listado de Precios
-   * @this {Object} $scope - Contenedor para el modelo [AngularJS]
+   * @this {Object} $scope - Contenedor para el modelo
    * @param {Object} PriceService - Proveedor de datos, Precios
    */
   function PriceListController(PriceService) {
@@ -2777,7 +2772,7 @@
    * @name UserListController
    * @constructor
    * @desc Controla la vista para el listado de Usuarios
-   * @this {Object} $scope - Contenedor para el modelo [AngularJS]
+   * @this {Object} $scope - Contenedor para el modelo
    * @param {Object} UserService - Proveedor de datos, Usuarios
    */
   function UserListController (UserService) {
@@ -2798,8 +2793,8 @@
    * @name ProfileController
    * @constructor
    * @desc Controla la vista para Perfil
-   * @this {Object} $scope - Contenedor para el modelo [AngularJS]
-   * @param {Object} $routeParams - Proveedor de parámetros de ruta [AngularJS]
+   * @this {Object} $scope - Contenedor para el modelo
+   * @param {Object} $routeParams - Proveedor de parámetros de ruta
    * @param {Object} TokenService - Proveedor para manejo del token
    * @param {Object} ProfileService - Proveedor de datos, Perfil de usuario
    */
@@ -2857,9 +2852,9 @@
    * @name LogoutController
    * @constructor
    * @desc Controla la vista para Logout
-   * @this {Object} $scope - Contenedor para el modelo [AngularJS]
-   * @param {Object} $location - Manejo de URL [AngularJS]
-   * @param {Object} TokenService - Manejo de objeto Window [AngularJS]
+   * @this {Object} $scope - Contenedor para el modelo
+   * @param {Object} $location - Manejo de URL
+   * @param {Object} TokenService - Manejo de objeto Window
    */
   function LogoutController($location, TokenService) {
     var vm = this;
@@ -2884,7 +2879,7 @@
    * @name ClientDetailController
    * @constructor
    * @desc Controla la vista para con el detalle de un Cliente
-   * @this {Object} $scope - Contenedor para el modelo [AngularJS]
+   * @this {Object} $scope - Contenedor para el modelo
    * @param {Object} ClientService - Proveedor de datos, Clientes
    */
   function ClientDetailController($scope, ClientService) {
@@ -3233,7 +3228,7 @@
    * @name TokenService
    * @constructor
    * @desc Proveedor para manejo del token
-   * @param {Object} $window - Acceso a Objeto Window [AngularJS]
+   * @param {Object} $window - Acceso a Objeto Window
    * @param {Object} jwtHelper - Acceso a utilerías de token [Angular-jwt]
    * @return {TokenService} Token - Métodos para manejo de token
    */
@@ -3352,7 +3347,9 @@
         userData = {
           name: decodedJwt.nam,
           id: decodedJwt.uid,
-          level: decodedJwt.ulv
+          level: decodedJwt.ulv,
+          role: decodedJwt.uro,
+          area: decodedJwt.uar
         };
       }
       return userData;
@@ -3412,7 +3409,7 @@
    * @name MenuService
    * @constructor
    * @desc Proveedor de datos, Menú
-   * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
+   * @param {Object} $resource - Acceso a recursos HTTP
    * @param {Object} TokenService - Proveedor de métodos para token
    * @return {Object} $resource - Acceso a recursos HTTP
    */
@@ -3472,7 +3469,7 @@
    * @name StudyService
    * @constructor
    * @desc Proveedor de datos, Estudios
-   * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
+   * @param {Object} $resource - Acceso a recursos HTTP
    * @param {Object} TokenService - Proveedor de métodos para token
    * @return {Object} $resource - Acceso a recursos HTTP
    */
@@ -3526,7 +3523,7 @@
    * @name OrderService
    * @constructor
    * @desc Proveedor de datos, Órdenes de muestreo
-   * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
+   * @param {Object} $resource - Acceso a recursos HTTP
    * @param {Object} TokenService - Proveedor de métodos para token
    * @return {Object} $resource - Acceso a recursos HTTP
    */
@@ -3580,7 +3577,7 @@
    * @name PlanService
    * @constructor
    * @desc Proveedor de datos, Planes de muestreo
-   * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
+   * @param {Object} $resource - Acceso a recursos HTTP
    * @param {Object} TokenService - Proveedor de métodos para token
    * @return {Object} $resource - Acceso a recursos HTTP
    */
@@ -3629,43 +3626,12 @@
       ]
     );
 
-  //PlanContainersService.js
-  /**
-   * @name PlanContainersService
-   * @constructor
-   * @desc Proveedor de datos, Recipientes de Plan
-   * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
-   * @param {Object} TokenService - Proveedor de métodos para token
-   * @return {Object} $resource - Acceso a recursos HTTP
-   */
-  // function PlanContainersService($resource, TokenService) {
-  //   return $resource(API_BASE_URL + 'plans/containers/:planId', {}, {
-  //     query: {
-  //       method: 'GET',
-  //       params: {planId: 'id_plan'},
-  //       isArray: true,
-  //       headers: {
-  //         'Auth-Token': TokenService.getToken()
-  //       }
-  //     }
-  //   });
-  // }
-  // angular
-  //   .module('sislabApp')
-  //   .factory('PlanContainersService',
-  //     [
-  //       '$resource', 'TokenService',
-  //       PlanContainersService
-  //     ]
-  //   );
-
-
   //SheetService.js
   /**
    * @name SheetService
    * @constructor
    * @desc  Proveedor de datos, Hojas de campo
-   * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
+   * @param {Object} $resource - Acceso a recursos HTTP
    * @param {Object} TokenService - Proveedor de métodos para token
    * @return {Object} $resource - Acceso a recursos HTTP
    */
@@ -3719,7 +3685,7 @@
    * @name ReceptionService
    * @constructor
    * @desc Proveedor de datos, Recepciones de muestras
-   * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
+   * @param {Object} $resource - Acceso a recursos HTTP
    * @param {Object} TokenService - Proveedor de métodos para token
    * @return {Object} $resource - Acceso a recursos HTTP
    */
@@ -3773,7 +3739,7 @@
    * @name JobService
    * @constructor
    * @desc Proveedor de datos, Órdenes de Trabajo
-   * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
+   * @param {Object} $resource - Acceso a recursos HTTP
    * @param {Object} TokenService - Proveedor de métodos para token
    * @return {Object} $resource - Acceso a recursos HTTP
    */
@@ -3822,12 +3788,42 @@
       ]
     );
 
+  //UserJobsService.js
+  /**
+   * @name UserJobsService
+   * @constructor
+   * @desc Proveedor de datos, Órdenes de Trabajo (Usuario)
+   * @param {Object} $resource - Acceso a recursos HTTP
+   * @param {Object} TokenService - Proveedor de métodos para token
+   * @return {Object} $resource - Acceso a recursos HTTP
+   */
+  function UserJobsService($resource, TokenService) {
+    return $resource(API_BASE_URL + 'jobs/user', {}, {
+      get: {
+        method: 'GET',
+        params: {},
+        isArray: true,
+        headers: {
+          'Auth-Token': TokenService.getToken()
+        }
+      },
+    });
+  }
+  angular
+    .module('sislabApp')
+    .factory('UserJobsService',
+      [
+        '$resource', 'TokenService',
+        UserJobsService
+      ]
+    );
+
   //CustodyService.js
   /**
    * @name CustodyService
    * @constructor
    * @desc Proveedor de datos, Cadenas de custodia
-   * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
+   * @param {Object} $resource - Acceso a recursos HTTP
    * @param {Object} TokenService - Proveedor de métodos para token
    * @return {Object} $resource - Acceso a recursos HTTP
    */
@@ -3881,7 +3877,7 @@
    * @name PhysAnalysisService
    * @constructor
    * @desc Proveedor de datos, Análisis Fisicoquímicos
-   * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
+   * @param {Object} $resource - Acceso a recursos HTTP
    * @param {Object} TokenService - Proveedor de métodos para token
    * @return {Object} $resource - Acceso a recursos HTTP
    */
@@ -3935,7 +3931,7 @@
    * @name MetalAnalysisService
    * @constructor
    * @desc Proveedor de datos, Análisis de Metales Pesados
-   * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
+   * @param {Object} $resource - Acceso a recursos HTTP
    * @param {Object} TokenService - Proveedor de métodos para token
    * @return {Object} $resource - Acceso a recursos HTTP
    */
@@ -3989,7 +3985,7 @@
    * @name BioAnalysisService
    * @constructor
    * @desc Proveedor de datos, Análisis Microbiológicos
-   * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
+   * @param {Object} $resource - Acceso a recursos HTTP
    * @param {Object} TokenService - Proveedor de métodos para token
    * @return {Object} $resource - Acceso a recursos HTTP
    */
@@ -4043,7 +4039,7 @@
    * @name ClientService
    * @constructor
    * @desc Proveedor de datos, Cliente
-   * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
+   * @param {Object} $resource - Acceso a recursos HTTP
    * @param {Object} TokenService - Proveedor de métodos para token
    * @return {Object} $resource - Acceso a recursos HTTP
    */
@@ -4097,7 +4093,7 @@
    * @name PointService
    * @constructor
    * @desc Proveedor de datos, Puntos muestreo
-   * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
+   * @param {Object} $resource - Acceso a recursos HTTP
    * @param {Object} TokenService - Proveedor de métodos para token
    * @return {Object} $resource - Acceso a recursos HTTP
    */
@@ -4151,7 +4147,7 @@
    * @name PointsByPackageService
    * @constructor
    * @desc Proveedor de datos, Puntos de muestreo por aquete
-   * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
+   * @param {Object} $resource - Acceso a recursos HTTP
    * @param {Object} TokenService - Proveedor de métodos para token
    * @return {Object} $resource - Acceso a recursos HTTP
    */
@@ -4181,7 +4177,7 @@
    * @name ParameterService
    * @constructor
    * @desc Proveedor de datos, Parámetros de análisis
-   * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
+   * @param {Object} $resource - Acceso a recursos HTTP
    * @param {Object} TokenService - Proveedor de métodos para token
    * @return {Object} $resource - Acceso a recursos HTTP
    */
@@ -4211,7 +4207,7 @@
    * @name NormService
    * @constructor
    * @desc Proveedor de datos, Normas referencia
-   * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
+   * @param {Object} $resource - Acceso a recursos HTTP
    * @param {Object} TokenService - Proveedor de métodos para token
    * @return {Object} $resource - Acceso a recursos HTTP
    */
@@ -4241,7 +4237,7 @@
    * @name SamplingTypeService
    * @constructor
    * @desc Proveedor de datos, Tipos de muestreo
-   * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
+   * @param {Object} $resource - Acceso a recursos HTTP
    * @param {Object} TokenService - Proveedor de métodos para token
    * @return {Object} $resource - Acceso a recursos HTTP
    */
@@ -4271,7 +4267,7 @@
    * @name OrderSourceService
    * @constructor
    * @desc Proveedor de datos, Orígenes de orden
-   * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
+   * @param {Object} $resource - Acceso a recursos HTTP
    * @param {Object} TokenService - Proveedor de métodos para token
    * @return {Object} $resource - Acceso a recursos HTTP
    */
@@ -4301,7 +4297,7 @@
    * @name MatrixService
    * @constructor
    * @desc Proveedor de datos, Matrices
-   * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
+   * @param {Object} $resource - Acceso a recursos HTTP
    * @param {Object} TokenService - Proveedor de métodos para token
    * @return {Object} $resource - Acceso a recursos HTTP
    */
@@ -4331,7 +4327,7 @@
    * @name PointPackageService
    * @constructor
    * @desc Proveedor de datos, Paquetes de puntos
-   * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
+   * @param {Object} $resource - Acceso a recursos HTTP
    * @param {Object} TokenService - Proveedor de métodos para token
    * @return {Object} $resource - Acceso a recursos HTTP
    */
@@ -4361,7 +4357,7 @@
    * @name SamplingSupervisorService
    * @constructor
    * @desc Proveedor de datos, Supervisores de muestreo
-   * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
+   * @param {Object} $resource - Acceso a recursos HTTP
    * @param {Object} TokenService - Proveedor de métodos para token
    * @return {Object} $resource - Acceso a recursos HTTP
    */
@@ -4391,7 +4387,7 @@
    * @name PlanObjectiveService
    * @constructor
    * @desc Proveedor de datos, Objetivos de Plan
-   * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
+   * @param {Object} $resource - Acceso a recursos HTTP
    * @param {Object} TokenService - Proveedor de métodos para token
    * @return {Object} $resource - Acceso a recursos HTTP
    */
@@ -4421,7 +4417,7 @@
    * @name PointKindsService
    * @constructor
    * @desc Proveedor de datos, tipos Punto
-   * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
+   * @param {Object} $resource - Acceso a recursos HTTP
    * @param {Object} TokenService - Proveedor de métodos para token
    * @return {Object} $resource - Acceso a recursos HTTP
    */
@@ -4451,7 +4447,7 @@
    * @name DistrictService
    * @constructor
    * @desc Proveedor de datos, Municipios
-   * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
+   * @param {Object} $resource - Acceso a recursos HTTP
    * @param {Object} TokenService - Proveedor de métodos para token
    * @return {Object} $resource - Acceso a recursos HTTP
    */
@@ -4481,7 +4477,7 @@
    * @name CityService
    * @constructor
    * @desc Proveedor de datos, Localidades
-   * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
+   * @param {Object} $resource - Acceso a recursos HTTP
    * @param {Object} TokenService - Proveedor de métodos para token
    * @return {Object} $resource - Acceso a recursos HTTP
    */
@@ -4511,7 +4507,7 @@
    * @name SamplingEmployeeService
    * @constructor
    * @desc Proveedor de datos, Empleados muestreo
-   * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
+   * @param {Object} $resource - Acceso a recursos HTTP
    * @param {Object} TokenService - Proveedor de métodos para token
    * @return {Object} $resource - Acceso a recursos HTTP
    */
@@ -4541,7 +4537,7 @@
    * @name PreservationService
    * @constructor
    * @desc Proveedor de datos, Preservaciones
-   * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
+   * @param {Object} $resource - Acceso a recursos HTTP
    * @param {Object} TokenService - Proveedor de métodos para token
    * @return {Object} $resource - Acceso a recursos HTTP
    */
@@ -4571,7 +4567,7 @@
    * @name ContainerService
    * @constructor
    * @desc Proveedor de datos, Recipientes
-   * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
+   * @param {Object} $resource - Acceso a recursos HTTP
    * @param {Object} TokenService - Proveedor de métodos para token
    * @return {Object} $resource - Acceso a recursos HTTP
    */
@@ -4625,7 +4621,7 @@
    * @name ReactiveService
    * @constructor
    * @desc Proveedor de datos, Reactivos
-   * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
+   * @param {Object} $resource - Acceso a recursos HTTP
    * @param {Object} TokenService - Proveedor de métodos para token
    * @return {Object} $resource - Acceso a recursos HTTP
    */
@@ -4655,7 +4651,7 @@
    * @name MaterialService
    * @constructor
    * @desc Proveedor de datos, Materiales
-   * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
+   * @param {Object} $resource - Acceso a recursos HTTP
    * @param {Object} TokenService - Proveedor de métodos para token
    * @return {Object} $resource - Acceso a recursos HTTP
    */
@@ -4685,7 +4681,7 @@
    * @name CoolerService
    * @constructor
    * @desc Proveedor de datos, Hieleras
-   * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
+   * @param {Object} $resource - Acceso a recursos HTTP
    * @param {Object} TokenService - Proveedor de métodos para token
    * @return {Object} $resource - Acceso a recursos HTTP
    */
@@ -4715,7 +4711,7 @@
    * @name SamplingInstrumentService
    * @constructor
    * @desc Proveedor de datos, Equipos de muestreo
-   * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
+   * @param {Object} $resource - Acceso a recursos HTTP
    * @param {Object} TokenService - Proveedor de métodos para token
    * @return {Object} $resource - Acceso a recursos HTTP
    */
@@ -4745,7 +4741,7 @@
    * @name FieldParameterService
    * @constructor
    * @desc Proveedor de datos, Parámetros campo
-   * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
+   * @param {Object} $resource - Acceso a recursos HTTP
    * @param {Object} TokenService - Proveedor de métodos para token
    * @return {Object} $resource - Acceso a recursos HTTP
    */
@@ -4775,7 +4771,7 @@
    * @name ReceptionistService
    * @constructor
    * @desc Proveedor de datos, Recepcionistas
-   * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
+   * @param {Object} $resource - Acceso a recursos HTTP
    * @param {Object} TokenService - Proveedor de métodos para token
    * @return {Object} $resource - Acceso a recursos HTTP
    */
@@ -4805,7 +4801,7 @@
    * @name AreaService
    * @constructor
    * @desc Proveedor de datos, Áreas
-   * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
+   * @param {Object} $resource - Acceso a recursos HTTP
    * @param {Object} TokenService - Proveedor de métodos para token
    * @return {Object} $resource - Acceso a recursos HTTP
    */
@@ -4835,7 +4831,7 @@
    * @name ReceivingAreaService
    * @constructor
    * @desc Proveedor de datos, Áreas receptoras
-   * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
+   * @param {Object} $resource - Acceso a recursos HTTP
    * @param {Object} TokenService - Proveedor de métodos para token
    * @return {Object} $resource - Acceso a recursos HTTP
    */
@@ -4865,7 +4861,7 @@
    * @name RequiredVolumeService
    * @constructor
    * @desc Proveedor de datos, Volúmenes requeridos
-   * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
+   * @param {Object} $resource - Acceso a recursos HTTP
    * @param {Object} TokenService - Proveedor de métodos para token
    * @return {Object} $resource - Acceso a recursos HTTP
    */
@@ -4895,7 +4891,7 @@
    * @name SampleService
    * @constructor
    * @desc Proveedor de datos, Muestras
-   * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
+   * @param {Object} $resource - Acceso a recursos HTTP
    * @param {Object} TokenService - Proveedor de métodos para token
    * @return {Object} $resource - Acceso a recursos HTTP
    */
@@ -4933,7 +4929,7 @@
    * @name SheetSampleService
    * @constructor
    * @desc Proveedor de datos, Muestras por Hoja de campo
-   * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
+   * @param {Object} $resource - Acceso a recursos HTTP
    * @param {Object} TokenService - Proveedor de métodos para token
    * @return {Object} $resource - Acceso a recursos HTTP
    */
@@ -4963,7 +4959,7 @@
    * @name InstrumentsListService
    * @constructor
    * @desc Proveedor de datos, Equipos
-   * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
+   * @param {Object} $resource - Acceso a recursos HTTP
    * @param {Object} TokenService - Proveedor de métodos para token
    * @return {Object} $resource - Acceso a recursos HTTP
    */
@@ -4993,7 +4989,7 @@
    * @name AnalysisListService
    * @constructor
    * @desc Proveedor de datos, consulta de Análisis
-   * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
+   * @param {Object} $resource - Acceso a recursos HTTP
    * @param {Object} TokenService - Proveedor de métodos para token
    * @return {Object} $resource - Acceso a recursos HTTP
    */
@@ -5023,7 +5019,7 @@
    * @name DepartmentService
    * @constructor
    * @desc Proveedor de datos, Áreas
-   * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
+   * @param {Object} $resource - Acceso a recursos HTTP
    * @param {Object} TokenService - Proveedor de métodos para token
    * @return {Object} $resource - Acceso a recursos HTTP
    */
@@ -5053,7 +5049,7 @@
    * @name AnalysisService
    * @constructor
    * @desc Proveedor de datos, selección de formato de captura de Análisis
-   * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
+   * @param {Object} $resource - Acceso a recursos HTTP
    * @param {Object} TokenService - Proveedor de métodos para token
    * @return {Object} $resource - Acceso a recursos HTTP
    */
@@ -5083,7 +5079,7 @@
    * @name ReportsListService
    * @constructor
    * @desc Proveedor de datos, Reportes
-   * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
+   * @param {Object} $resource - Acceso a recursos HTTP
    * @param {Object} TokenService - Proveedor de métodos para token
    * @return {Object} $resource - Acceso a recursos HTTP
    */
@@ -5113,7 +5109,7 @@
    * @name ReportService
    * @constructor
    * @desc Proveedor de datos, Reporte
-   * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
+   * @param {Object} $resource - Acceso a recursos HTTP
    * @param {Object} TokenService - Proveedor de métodos para token
    * @return {Object} $resource - Acceso a recursos HTTP
    */
@@ -5143,7 +5139,7 @@
    * @name EmployeeService
    * @constructor
    * @desc Proveedor de datos, Empleados
-   * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
+   * @param {Object} $resource - Acceso a recursos HTTP
    * @param {Object} TokenService - Proveedor de métodos para token
    * @return {Object} $resource - Acceso a recursos HTTP
    */
@@ -5173,7 +5169,7 @@
    * @name NormsListService
    * @constructor
    * @desc Proveedor de datos, Normas
-   * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
+   * @param {Object} $resource - Acceso a recursos HTTP
    * @param {Object} TokenService - Proveedor de métodos para token
    * @return {Object} $resource - Acceso a recursos HTTP
    */
@@ -5203,7 +5199,7 @@
    * @name ReferencesListService
    * @constructor
    * @desc Proveedor de datos, Referencias
-   * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
+   * @param {Object} $resource - Acceso a recursos HTTP
    * @param {Object} TokenService - Proveedor de métodos para token
    * @return {Object} $resource - Acceso a recursos HTTP
    */
@@ -5233,7 +5229,7 @@
    * @name MethodsListService
    * @constructor
    * @desc Proveedor de datos, Métodos
-   * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
+   * @param {Object} $resource - Acceso a recursos HTTP
    * @param {Object} TokenService - Proveedor de métodos para token
    * @return {Object} $resource - Acceso a recursos HTTP
    */
@@ -5263,7 +5259,7 @@
    * @name PricesListService
    * @constructor
    * @desc Proveedor de datos, Precios
-   * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
+   * @param {Object} $resource - Acceso a recursos HTTP
    * @param {Object} TokenService - Proveedor de métodos para token
    * @return {Object} $resource - Acceso a recursos HTTP
    */
@@ -5293,7 +5289,7 @@
    * @name UsersListService
    * @constructor
    * @desc Proveedor de datos, Usuarios
-   * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
+   * @param {Object} $resource - Acceso a recursos HTTP
    * @param {Object} TokenService - Proveedor de métodos para token
    * @return {Object} $resource - Acceso a recursos HTTP
    */
@@ -5323,7 +5319,7 @@
    * @name ProfileService
    * @constructor
    * @desc Proveedor de datos, Perfil de usuario
-   * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
+   * @param {Object} $resource - Acceso a recursos HTTP
    * @param {Object} TokenService - Proveedor de métodos para token
    * @return {Object} $resource - Acceso a recursos HTTP
    */
@@ -5377,7 +5373,7 @@
    * @name CloudService
    * @constructor
    * @desc Proveedor de datos, Coberturas nubes
-   * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
+   * @param {Object} $resource - Acceso a recursos HTTP
    * @param {Object} TokenService - Proveedor de métodos para token
    * @return {Object} $resource - Acceso a recursos HTTP
    */
@@ -5407,7 +5403,7 @@
    * @name WindService
    * @constructor
    * @desc Proveedor de datos, Direcciones viento
-   * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
+   * @param {Object} $resource - Acceso a recursos HTTP
    * @param {Object} TokenService - Proveedor de métodos para token
    * @return {Object} $resource - Acceso a recursos HTTP
    */
@@ -5437,7 +5433,7 @@
    * @name WaveService
    * @constructor
    * @desc Proveedor de datos, Intensidades oleaje
-   * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
+   * @param {Object} $resource - Acceso a recursos HTTP
    * @param {Object} TokenService - Proveedor de métodos para token
    * @return {Object} $resource - Acceso a recursos HTTP
    */
@@ -5467,7 +5463,7 @@
    * @name SamplingNormService
    * @constructor
    * @desc Proveedor de datos, Normas muestreo
-   * @param {Object} $resource - Acceso a recursos HTTP [AngularJS]
+   * @param {Object} $resource - Acceso a recursos HTTP
    * @param {Object} TokenService - Proveedor de métodos para token
    * @return {Object} $resource - Acceso a recursos HTTP
    */

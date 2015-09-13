@@ -481,7 +481,7 @@
   </div>
   <div class="row">
     <div class="col-xs-12">
-      <h5>Equipo</h5>
+      <h5>Equipo {{plan.selectInstruments()}}</h5>
     </div>
     <div class="col-xs-12 col-sm-6"
       data-ng-repeat="equipment in plan.instruments">
@@ -496,7 +496,10 @@
           </label>
         </div>
         <div class="col-xs-12 col-sm-4">
-          <label for="equipmentLog{{::equipment.id_equipo}}">
+          <label
+            for="equipmentLog{{::equipment.id_equipo}}"
+            class="sr-only"
+            >
             Bitácora
           </label>
           <input type="text"
@@ -506,10 +509,12 @@
             placeholder="Bitácora"
             data-ng-model="equipment.bitacora"
             >
-            {{equipment.inventario}}
         </div>
         <div class="col-xs-12 col-sm-4">
-          <label for="equipmentNumber{{::equipment.id_equipo}}">
+          <label
+            for="equipmentNumber{{::equipment.id_equipo}}"
+            class="sr-only"
+            >
             Folio
           </label>
           <input type="text"
@@ -519,7 +524,6 @@
             placeholder="Folio"
             data-ng-model="equipment.folio"
             >
-            {{equipment.inventario}}
         </div>
       </div>
     </div>
@@ -555,7 +559,7 @@
   </div>
   <div class="row">
     <div class="col-xs-12">
-      <h5>Recipientes por preservación</h5>
+      <h5>Recipientes por preservación {{plan.selectPreservations()}}</h5>
     </div>
     <div class="col-xs-12 col-sm-6"
       data-ng-repeat="preservation in plan.preservations">
@@ -590,7 +594,7 @@
   </div>
   <div class="row">
     <div class="col-xs-12">
-      <h5>Reactivos y soluciones</h5>
+      <h5>Reactivos y soluciones {{plan.selectReactives()}}</h5>
     </div>
   </div>
   <div class="row">
@@ -667,7 +671,7 @@
   </div>
   <div class="row">
     <div class="col-xs-12">
-      <h5>Preparación de material y equipo</h5>
+      <h5>Preparación de material y equipo {{plan.selectMaterials()}}</h5>
     </div>
   </div>
   <div class="row">
@@ -720,7 +724,7 @@
   </div>
   <div class="row">
     <div class="col-xs-12">
-      <h5>Hieleras</h5>
+      <h5>Hieleras {{plan.selectCoolers()}}</h5>
     </div>
   </div>
   <div class="row">

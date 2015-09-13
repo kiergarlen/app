@@ -1459,13 +1459,6 @@
     }
 
     function submitForm() {
-      vm.selectInstruments();
-      vm.selectPreservations();
-      vm.selectReactives();
-      vm.selectMaterials();
-      vm.selectCoolers();
-      vm.selectAllMaterials();
-
       if (isFormValid() && !vm.isDataSubmitted) {
         vm.isDataSubmitted = true;
         if (vm.plan.id_estudio > 0) {

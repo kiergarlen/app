@@ -481,7 +481,7 @@
   </div>
   <div class="row">
     <div class="col-xs-12">
-      <h5>Equipo {{plan.selectInstruments()}}</h5>
+      <h5>Equipo</h5>
     </div>
     <div class="col-xs-12 col-sm-6"
       data-ng-repeat="equipment in plan.instruments">
@@ -495,8 +495,31 @@
              {{equipment.inventario}}
           </label>
         </div>
-        <div class="col-xs-12 col-sm-8">
-          {{equipment.descripcion}}
+        <div class="col-xs-12 col-sm-4">
+          <label for="equipmentLog{{::equipment.id_equipo}}">
+            Bitácora
+          </label>
+          <input type="text"
+            class="form-control"
+            id="equipmentLog{{::equipment.id_equipo}}"
+            name="equipmentLog{{::equipment.id_equipo}}"
+            placeholder="Bitácora"
+            data-ng-model="equipment.bitacora"
+            >
+            {{equipment.inventario}}
+        </div>
+        <div class="col-xs-12 col-sm-4">
+          <label for="equipmentNumber{{::equipment.id_equipo}}">
+            Folio
+          </label>
+          <input type="text"
+            class="form-control"
+            id="equipmentNumber{{::equipment.id_equipo}}"
+            name="equipmentNumber{{::equipment.id_equipo}}"
+            placeholder="Folio"
+            data-ng-model="equipment.folio"
+            >
+            {{equipment.inventario}}
         </div>
       </div>
     </div>
@@ -509,7 +532,7 @@
   </div>
   <div class="row">
     <div class="col-xs-12">
-      <h5>Preparación de recipiente {{plan.selectPreservations()}}</h5>
+      <h5>Preparación de recipiente</h5>
     </div>
     <div class="col-xs-12 col-sm-6">
       <label for="preparationSupervisorSelect" class="sr-only">
@@ -567,7 +590,7 @@
   </div>
   <div class="row">
     <div class="col-xs-12">
-      <h5>Reactivos y soluciones {{plan.selectReactives()}}</h5>
+      <h5>Reactivos y soluciones</h5>
     </div>
   </div>
   <div class="row">
@@ -644,7 +667,7 @@
   </div>
   <div class="row">
     <div class="col-xs-12">
-      <h5>Preparación de material y equipo {{plan.selectMaterials()}}</h5>
+      <h5>Preparación de material y equipo</h5>
     </div>
   </div>
   <div class="row">
@@ -697,7 +720,7 @@
   </div>
   <div class="row">
     <div class="col-xs-12">
-      <h5>Hieleras {{plan.selectCoolers()}}</h5>
+      <h5>Hieleras</h5>
     </div>
   </div>
   <div class="row">

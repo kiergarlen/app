@@ -763,7 +763,7 @@ function getPlan($planId) {
   $supervisorId = $plan->id_supervisor_muestreo;
   $plan->supervisor_muestreo = getSamplingEmployee($supervisorId);
   $plan->puntos = getPointsByPackage($plan->id_paquete);
-  $plan->instrumentos = getInstrumentsByPlan($planId);
+  $plan->instrumentos = getPlanInstruments($planId);
   $plan->preservaciones = getPreservationsByPlan($planId);
   $plan->recipientes = getContainersByPlan($planId);
   $plan->reactivos = getReactivesByPlan($planId);
@@ -1231,7 +1231,7 @@ function insertReception($receptionData) {
     :host_valida, :comentarios, :motivo_rechaza, :activo)";
   $db = getConnection();
   $stmt = $db->prepare($sql);
-  $stmt->execute($receptionDataonData);
+  $stmt->execute($receptionData);
   $receptionId = $db->lastInsertId();
   $db = null;
   return $receptionId;
@@ -2076,7 +2076,7 @@ function getInstruments() {
   return $instruments;
 }
 
-function getInstrumentsByPlan($planId) {
+function getPlanInstruments($planId) {
   $sql = "SELECT id_plan_instrumento, id_plan, id_instrumento,
     bitacora, folio, activo
     FROM PlanInstrumento
@@ -2118,6 +2118,16 @@ function updatePlanInstrument($updateData) {
   $stmt->execute($updateData);
   $db = null;
   return $updateData["id_plan_instrumento"];
+}
+
+function disablePlanInstruments($planId) {
+  $sql = "UPDATE PlanInstrumento SET activo = 0
+    WHERE id_plan = :planId";
+  $db = getConnection();
+  $stmt = $db->prepare($sql);
+  $stmt->bindParam("planId", $planId);
+  $db = null;
+  return $planId;
 }
 
 function getParameter($parameterId) {
@@ -2840,8 +2850,8 @@ function getResultsForUpdate($resultId) {
 }
 
 function getSamplingInstruments() {
-  $sql = "SELECT id_instrumento, instrumento, descripcion, muestreo,
-    inventario, bitacora, folio, activo
+  $sql = "SELECT id_instrumento, instrumento, descripcion,
+    muestreo, inventario, activo
     FROM Instrumento
     WHERE activo = 1 AND muestreo = 1";
   $db = getConnection();

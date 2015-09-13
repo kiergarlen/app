@@ -1036,6 +1036,8 @@
             for (i = 0; i < l; i += 1) {
               vm.instruments[i].id_plan_instrumento = 0;
               vm.instruments[i].id_plan = vm.plan.id_plan;
+              vm.instruments[i].bitacora = '';
+              vm.instruments[i].folio = '';
               vm.instruments[i].selected = false;
             }
             ArrayUtilsService.seItemsFromReference(
@@ -1044,6 +1046,8 @@
               'id_instrumento',
               [
                 'id_plan_instrumento',
+                'bitacora',
+                'folio',
                 'selected'
               ]
             );
@@ -1275,6 +1279,10 @@
     }
 
     function isInstrumentListValid() {
+      var i = 0;
+      var l = vm.plan.instrumentos.length;
+      var instrument = {};
+
       if (vm.plan.id_responsable_calibracion < 1) {
         vm.message += ' Seleccione una Responsable de calibración ';
         return false;
@@ -1286,6 +1294,20 @@
       if (vm.plan.instrumentos.length < 1) {
         vm.message += ' Seleccione al menos un instrumento ';
         return false;
+      } else {
+        for (i = 0; i < l; i += 1) {
+          instrument = vm.plan.instrumentos[i];
+          if (instrument.bitacora.length < 1) {
+            vm.message += ' Ingrese la bitácora del equipo ';
+            vm.message += '' + instrument.inventario;
+            return false;
+          }
+          if (instrument.folio.length < 1) {
+            vm.message += ' Ingrese el folio del equipo ';
+            vm.message += '' + instrument.inventario;
+            return false;
+          }
+        }
       }
       return true;
     }
@@ -1437,6 +1459,13 @@
     }
 
     function submitForm() {
+      vm.selectInstruments();
+      vm.selectPreservations();
+      vm.selectReactives();
+      vm.selectMaterials();
+      vm.selectCoolers();
+      vm.selectAllMaterials();
+
       if (isFormValid() && !vm.isDataSubmitted) {
         vm.isDataSubmitted = true;
         if (vm.plan.id_estudio > 0) {
@@ -3116,6 +3145,7 @@
         padNumber(date.getMonth() + 1, 2),
         '-',
         padNumber(date.getDate(), 2),
+        'T',
         padNumber(date.getHours(), 2),
         ':',
         padNumber(date.getMinutes(), 2),

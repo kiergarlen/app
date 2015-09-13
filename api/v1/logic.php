@@ -698,20 +698,18 @@ function processPlanSheetSampleInsert($planUpdateData) {
 function processPlanInstrumentsUpdate($planUpdateData) {
   $instruments = (array) $planUpdateData["instruments"];
   $planId = $planUpdateData["plan"]["id_plan"];
-  $storedInstruments = getInstrumentsByPlan($planId);
+  $storedInstruments = getPlanInstruments($planId);
 
   $i = 0;
-  $j = 0;
   $l = count($storedInstruments);
   $m = count($instruments);
 
   if ($l < 1)
   {
-    for ($j = 0; $j < $m; $j++) {
-      $instrument = (array) $instruments[$j];
+    for ($i = 0; $i < $m; $i++) {
+      $instrument = (array) $instruments[$i];
       unset($instrument["id_plan_instrumento"]);
       unset($instrument["instrumento"]);
-      unset($instrument["descripcion"]);
       unset($instrument["muestreo"]);
       unset($instrument["inventario"]);
       unset($instrument["selected"]);
@@ -721,35 +719,24 @@ function processPlanInstrumentsUpdate($planUpdateData) {
   }
   else
   {
-    for ($i = 0; $i < $l; $i++) {
-      unset($storedInstruments[$i]["instrumento"]);
-      unset($storedInstruments[$i]["descripcion"]);
-      unset($storedInstruments[$i]["muestreo"]);
-      unset($storedInstruments[$i]["inventario"]);
-      unset($storedInstruments[$i]["selected"]);
-      $storedInstruments[$i]["activo"] = 0;
-      updatePlanInstrument($storedInstruments[$i]);
-    }
-    for ($j = 0; $j < $m; $j++) {
-      $instrument = (array) $instruments[$j];
-      if ($instrument["id_plan_instrumento"] == 0)
+    disablePlanInstruments($planId);
+
+    for ($i = 0; $i < $m; $i++) {
+      $instrument = array(
+        "id_plan_instrumento" => $instruments[$i]->id_plan_instrumento,
+        "id_plan" => $planId,
+        "id_instrumento" => $instruments[$i]->id_instrumento,
+        "bitacora" => $instruments[$i]->bitacora,
+        "folio" => $instruments[$i]->folio,
+        "activo" => $instruments[$i]->sctivo
+      );
+      if ($instrument["id_plan_instrumento"] < 1)
       {
         unset($instrument["id_plan_instrumento"]);
-        unset($instrument["instrumento"]);
-        unset($instrument["descripcion"]);
-        unset($instrument["muestreo"]);
-        unset($instrument["inventario"]);
-        unset($instrument["selected"]);
         insertPlanInstrument($instrument);
       }
       else
       {
-        unset($instrument["instrumento"]);
-        unset($instrument["descripcion"]);
-        unset($instrument["muestreo"]);
-        unset($instrument["inventario"]);
-        unset($instrument["selected"]);
-        $instrument["activo"] = 1;
         updatePlanInstrument($instrument);
       }
     }

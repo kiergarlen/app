@@ -2960,3 +2960,32 @@ function getSamplingNorms() {
   $db = null;
   return $waves;
 }
+
+function getLocations() {
+  $sql = "SELECT id_ubicacion, ubicacion,
+    fecha_captura, fecha_actualiza, ip_captura, ip_actualiza,
+    host_captura, host_actualiza, activo
+    FROM Ubicacion
+    WHERE activo = 1";
+  $db = getConnection();
+  $stmt = $db->prepare($sql);
+  $stmt->execute();
+  $locations = $stmt->fetchAll(PDO::FETCH_ASSOC);
+  $db = null;
+  return $locations;
+}
+
+function getLocation($locationId) {
+  $sql = "SELECT id_ubicacion, ubicacion,
+    fecha_captura, fecha_actualiza, ip_captura, ip_actualiza,
+    host_captura, host_actualiza, activo
+    FROM Ubicacion
+    WHERE activo = 1 AND id_ubicacion = :locationId";
+  $db = getConnection();
+  $stmt = $db->prepare($sql);
+  $stmt->bindParam("locationId", $locationId);
+  $stmt->execute();
+  $location = $stmt->fetch(PDO::FETCH_OBJ);
+  $db = null;
+  return $location;
+}

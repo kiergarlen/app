@@ -258,6 +258,24 @@
     </div>
   </div>
   <div class="row">
+    <div class="col-xs-12 col-sm-7">
+      <label class="sr-only" for="locationSelect">
+        Ubicación
+      </label>
+      <select class="form-control"
+        id="locationSelect"
+        name="locationSelect"
+        data-ng-model="study.study.id_ubicacion"
+        >
+        <option data-ng-repeat="location in study.locations"
+          value="{{location.id_ubicacion}}"
+          data-ng-selected="study.study.id_ubicacion == location.id_ubicacion"
+          >
+          {{location.ubicacion}}
+        </option>
+      </select>
+    </div>
+
     <div class="col-xs-12 col-sm-8">
       <label class="sr-only" for="locationText">
         Ubicación

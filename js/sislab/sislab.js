@@ -477,13 +477,14 @@
    * @param {Object} SamplingTypeService - Proveedor de datos, Tipos de muestreo
    * @param {Object} NormService - Proveedor de datos, Normas
    * @param {Object} OrderSourceService - Proveedor de datos, Orígenes de orden
+   * @param {Object} LocationService -  Proveedor de datos, Ubicación
    * @param {Object} StudyService - Proveedor de datos, Estudios
    */
   function StudyController($scope, $routeParams, TokenService,
     ValidationService, RestUtilsService, ArrayUtilsService,
     DateUtilsService, ClientService, MatrixService,
     SamplingTypeService, NormService, OrderSourceService,
-    StudyService) {
+    LocationService, StudyService) {
     var vm = this;
     vm.study = StudyService.query({studyId: $routeParams.studyId});
     vm.user = TokenService.getUserFromToken();
@@ -492,6 +493,7 @@
     vm.samplingTypes = SamplingTypeService.get();
     vm.norms = NormService.get();
     vm.orderSources = OrderSourceService.get();
+    vm.locations = LocationService.get();
     vm.message = '';
     vm.isDataSubmitted = false;
     vm.selectClient = selectClient;
@@ -659,7 +661,7 @@
         'ValidationService', 'RestUtilsService', 'ArrayUtilsService',
         'DateUtilsService', 'ClientService', 'MatrixService',
         'SamplingTypeService', 'NormService', 'OrderSourceService',
-        'StudyService',
+        'LocationService', 'StudyService',
         StudyController
       ]
     );
@@ -5517,6 +5519,60 @@
       [
         '$resource', 'TokenService',
         SamplingNormService
+      ]
+    );
+
+  //LocationService.js
+  /**
+   * @name LocationService
+   * @constructor
+   * @desc Proveedor de datos, Ubicación
+   * @param {Object} $resource - Acceso a recursos HTTP
+   * @param {Object} TokenService - Proveedor de métodos para token
+   * @return {Object} $resource - Acceso a recursos HTTP
+   */
+  function LocationService($resource, TokenService) {
+    return $resource(API_BASE_URL + 'locations/:locationId', {}, {
+      query: {
+        method: 'GET',
+        params: {locationId: 'id_ubicacion'},
+        isArray: false,
+        headers: {
+          'Auth-Token': TokenService.getToken()
+        }
+      },
+      get: {
+        method: 'GET',
+        params: {},
+        isArray: true,
+        headers: {
+          'Auth-Token': TokenService.getToken()
+        }
+      },
+      update: {
+        method: 'POST',
+        params: {},
+        isArray: false,
+        headers: {
+          'Auth-Token': TokenService.getToken()
+        }
+      },
+      save: {
+        method: 'POST',
+        params: {},
+        isArray: false,
+        headers: {
+          'Auth-Token': TokenService.getToken()
+        }
+      }
+    });
+  }
+  angular
+    .module('sislabApp')
+    .factory('LocationService',
+      [
+        '$resource', 'TokenService',
+        LocationService
       ]
     );
 })();

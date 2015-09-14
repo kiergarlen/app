@@ -1739,16 +1739,29 @@ function getPoint($pointId) {
   return $point;
 }
 
-function getPointPackages() {
-  $sql = "SELECT id_paquete, paquete, activo
+function getPackages() {
+  $sql = "SELECT id_paquete, id_ubicacion, paquete, activo
     FROM Paquete
     WHERE activo = 1";
   $db = getConnection();
   $stmt = $db->prepare($sql);
   $stmt->execute();
-  $pointPackages = $stmt->fetchAll(PDO::FETCH_ASSOC);
+  $packages = $stmt->fetchAll(PDO::FETCH_ASSOC);
   $db = null;
-  return $pointPackages;
+  return $packages;
+}
+
+function getPackagesByLocation($locationId) {
+  $sql = "SELECT id_paquete, id_ubicacion, paquete, activo
+    FROM Paquete
+    WHERE activo = 1 AND id_ubicacion = :locationId";
+  $db = getConnection();
+  $stmt = $db->prepare($sql);
+  $stmt->bindParam("locationId", $locationId);
+  $stmt->execute();
+  $packages = $stmt->fetchAll(PDO::FETCH_ASSOC);
+  $db = null;
+  return $packages;
 }
 
 function getPointsByPackage($packageId) {

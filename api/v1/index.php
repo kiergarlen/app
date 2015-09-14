@@ -540,7 +540,7 @@ $app->get("/matrices", function() use ($app) {
 $app->get("/points/packages", function() use ($app) {
   try {
     $userId = decodeUserToken($app->request())->uid;
-    $result = json_encode(getPointPackages());
+    $result = json_encode(getPackages());
     $app->response()->status(200);
     $app->response()->header("Content-Type", "application/json");
     //$result = ")]}',\n" . $result;

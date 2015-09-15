@@ -1862,7 +1862,7 @@ function getReceptionists() {
 function getSamples() {
   $sql = "SELECT id_muestra, id_estudio, id_cliente, id_orden,
     id_plan, id_hoja, id_recepcion, id_custodia, id_paquete,
-    id_ubicacion, id_punto,
+    id_ubicacion, id_punto, id_tipo_muestreo,
     CONVERT(NVARCHAR, fecha_muestreo, 126) AS fecha_muestreo,
     CONVERT(NVARCHAR, fecha_recibe, 126) AS fecha_recibe,
     comentarios, activo
@@ -1892,7 +1892,7 @@ function getBlankSample() {
 function getSamplesBySheet($sheetId) {
   $sql = "SELECT id_muestra, id_estudio, id_cliente, id_orden,
     id_plan, id_hoja, id_recepcion, id_custodia, id_paquete,
-    id_ubicacion, id_punto,
+    id_ubicacion, id_punto, id_tipo_muestreo,
     CONVERT(NVARCHAR, fecha_muestreo, 126) AS fecha_muestreo,
     CONVERT(NVARCHAR, fecha_recibe, 126) AS fecha_recibe,
     comentarios, activo
@@ -1910,7 +1910,7 @@ function getSamplesBySheet($sheetId) {
 function getSamplesByReception($receptionId) {
   $sql = "SELECT id_muestra, id_estudio, id_cliente, id_orden,
     id_plan, id_hoja, id_recepcion, id_custodia, id_paquete,
-    id_ubicacion, id_punto,
+    id_ubicacion, id_punto, id_tipo_muestreo,
     CONVERT(NVARCHAR,fecha_muestreo, 126) AS fecha_muestreo,
     CONVERT(NVARCHAR, fecha_recibe, 126) AS fecha_recibe,
     comentarios, activo
@@ -1935,18 +1935,34 @@ function getSamplesByReception($receptionId) {
 function insertSample($sampleData) {
   $sql = "INSERT INTO Muestra (id_estudio, id_cliente, id_orden,
     id_plan, id_hoja, id_recepcion, id_custodia,
-    id_paquete, id_ubicacion, id_punto, fecha_muestreo,
-    fecha_recibe, comentarios, activo)
+    id_paquete, id_ubicacion, id_punto, id_tipo_muestreo,
+    fecha_muestreo, fecha_recibe, comentarios, activo)
     VALUES (:id_estudio, :id_cliente, :id_orden,
     :id_plan, :id_hoja, :id_recepcion, :id_custodia,
-    :id_paquete, :id_ubicacion, :id_punto, :fecha_muestreo,
-    :fecha_recibe, :comentarios, :activo)";
+    :id_paquete, :id_ubicacion, :id_punto, 1,
+    :fecha_muestreo, :fecha_recibe, :comentarios, :activo)";
   $db = getConnection();
   $stmt = $db->prepare($sql);
   $stmt->execute($sampleData);
   $sampleId = $db->lastInsertId();
   $db = null;
   return $sampleId;
+}
+
+function updateSample($updateData) {
+  $sql = "UPDATE Muestra SET id_estudio = :id_estudio,
+    id_cliente = :id_cliente, id_orden = :id_orden,
+    id_plan = :id_plan, id_hoja = :id_hoja,
+    id_recepcion = :id_recepcion, id_custodia = :id_custodia,
+    id_paquete = :id_paquete, id_ubicacion = :id_ubicacion,
+    id_punto = :id_punto, id_tipo_muestreo = :id_tipo_muestreo,
+    fecha_muestreo = :fecha_muestreo, fecha_recibe = :fecha_recibe,
+    comentarios = :comentarios, activo = :activo";
+  $db = getConnection();
+  $stmt = $db->prepare($sql);
+  $stmt->execute($updateData);
+  $db = null;
+  return $updateData["id_muestra"];
 }
 
 function getReceptionSamples($receptionId) {

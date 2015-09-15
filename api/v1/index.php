@@ -537,10 +537,25 @@ $app->get("/matrices", function() use ($app) {
   }
 });
 
-$app->get("/points/packages", function() use ($app) {
+$app->get("/packages/points/:packageId", function($packageId) use ($app) {
   try {
     $userId = decodeUserToken($app->request())->uid;
-    $result = json_encode(getPackages());
+    $result = json_encode(getPointsByPackage($packageId));
+    //$result = json_encode(getPackages());
+    $app->response()->status(200);
+    $app->response()->header("Content-Type", "application/json");
+    //$result = ")]}',\n" . $result;
+    print_r($result);
+  } catch (Exception $e) {
+    $app->response()->status(400);
+    $app->response()->header("X-Status-Reason", $e->getMessage());
+  }
+});
+
+$app->get("/packages/locations/:locationId", function($locationId) use ($app) {
+  try {
+    $userId = decodeUserToken($app->request())->uid;
+    $result = json_encode(getPackagesByLocation($locationId));
     $app->response()->status(200);
     $app->response()->header("Content-Type", "application/json");
     //$result = ")]}',\n" . $result;

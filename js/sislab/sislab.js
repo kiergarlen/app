@@ -705,19 +705,19 @@
    * @param {Object} RestUtilsService - Proveedor para manejo de servicios REST
    * @param {Object} ArrayUtilsService - Proveedor para manejo de arreglos
    * @param {Object} DateUtilsService - Proveedor para manejo de fechas
-   * @param {Object} PointPackageService - Proveedor de datos, Paquetes de puntos
+   * @param {Object} PackageService - Proveedor de datos, Paquetes de puntos
    * @param {Object} SamplingSupervisorService - Proveedor de datos, Supervisores de muestreo
    * @param {Object} OrderService - Proveedor de datos, Órdenes de muestreo
    */
   function OrderController($scope, $routeParams, TokenService,
     ValidationService, RestUtilsService, ArrayUtilsService,
-    DateUtilsService, PointPackageService, SamplingSupervisorService,
+    DateUtilsService, PackageService, SamplingSupervisorService,
     OrderService) {
     var vm = this;
     vm.order = OrderService.query({orderId: $routeParams.orderId});
     vm.user = TokenService.getUserFromToken();
     vm.supervisors = SamplingSupervisorService.get();
-    vm.packages = PointPackageService.get();
+    vm.packages = PackageService.get();
     vm.message = '';
     vm.isDataSubmitted = false;
     vm.getScope = getScope;
@@ -899,7 +899,7 @@
       [
         '$scope', '$routeParams', 'TokenService',
         'ValidationService', 'RestUtilsService', 'ArrayUtilsService',
-        'DateUtilsService', 'PointPackageService', 'SamplingSupervisorService',
+        'DateUtilsService', 'PackageService', 'SamplingSupervisorService',
         'OrderService',
         OrderController
       ]
@@ -4176,20 +4176,20 @@
       ]
     );
 
-  //PointsByPackageService.js
+  //PackagePointsService.js
   /**
-   * @name PointsByPackageService
+   * @name PackagePointsService
    * @constructor
-   * @desc Proveedor de datos, Puntos de muestreo por aquete
+   * @desc Proveedor de datos, Puntos de muestreo por paquete
    * @param {Object} $resource - Acceso a recursos HTTP
    * @param {Object} TokenService - Proveedor de métodos para token
    * @return {Object} $resource - Acceso a recursos HTTP
    */
-  function PointsByPackageService($resource, TokenService) {
-    return $resource(API_BASE_URL + 'points/package', {}, {
+  function PackagePointsService($resource, TokenService) {
+    return $resource(API_BASE_URL + 'packages/points/:packageId', {}, {
       get: {
         method: 'GET',
-        params: {pointId: 'id_paquete_punto'},
+        params: {packageId: 'id_paquete_punto'},
         isArray: true,
         headers: {
           'Auth-Token': TokenService.getToken()
@@ -4199,10 +4199,10 @@
   }
   angular
     .module('sislabApp')
-    .factory('PointsByPackageService',
+    .factory('PackagePointsService',
       [
         '$resource', 'TokenService',
-        PointsByPackageService
+        PackagePointsService
       ]
     );
 
@@ -4356,17 +4356,17 @@
       ]
     );
 
-  //PointPackageService.js
+  //PackageService.js
   /**
-   * @name PointPackageService
+   * @name PackageService
    * @constructor
    * @desc Proveedor de datos, Paquetes de puntos
    * @param {Object} $resource - Acceso a recursos HTTP
    * @param {Object} TokenService - Proveedor de métodos para token
    * @return {Object} $resource - Acceso a recursos HTTP
    */
-  function PointPackageService($resource, TokenService) {
-    return $resource(API_BASE_URL + 'points/packages', {}, {
+  function PackageService($resource, TokenService) {
+    return $resource(API_BASE_URL + 'packages', {}, {
       get: {
         method: 'GET',
         params: {},
@@ -4379,10 +4379,40 @@
   }
   angular
     .module('sislabApp')
-    .factory('PointPackageService',
+    .factory('PackageService',
       [
         '$resource', 'TokenService',
-        PointPackageService
+        PackageService
+      ]
+    );
+
+  //LocationPackagesService.js
+  /**
+   * @name LocationPackagesService
+   * @constructor
+   * @desc Proveedor de datos, Paquetes de puntos por Ubicación
+   * @param {Object} $resource - Acceso a recursos HTTP
+   * @param {Object} TokenService - Proveedor de métodos para token
+   * @return {Object} $resource - Acceso a recursos HTTP
+   */
+  function LocationPackagesService($resource, TokenService) {
+    return $resource(API_BASE_URL + 'packages', {}, {
+      get: {
+        method: 'GET',
+        params: {},
+        isArray: true,
+        headers: {
+          'Auth-Token': TokenService.getToken()
+        }
+      }
+    });
+  }
+  angular
+    .module('sislabApp')
+    .factory('LocationPackagesService',
+      [
+        '$resource', 'TokenService',
+        LocationPackagesService
       ]
     );
 

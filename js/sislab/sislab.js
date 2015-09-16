@@ -705,19 +705,22 @@
    * @param {Object} RestUtilsService - Proveedor para manejo de servicios REST
    * @param {Object} ArrayUtilsService - Proveedor para manejo de arreglos
    * @param {Object} DateUtilsService - Proveedor para manejo de fechas
-   * @param {Object} PackageService - Proveedor de datos, Paquetes de puntos
+   * @param {Object} StudyService - Proveedor de datos, Estudios
+   * @param {Object} LocationPackagesService - Proveedor de datos, Paquetes de puntos por Ubicación
    * @param {Object} SamplingSupervisorService - Proveedor de datos, Supervisores de muestreo
    * @param {Object} OrderService - Proveedor de datos, Órdenes de muestreo
    */
   function OrderController($scope, $routeParams, TokenService,
     ValidationService, RestUtilsService, ArrayUtilsService,
-    DateUtilsService, PackageService, SamplingSupervisorService,
-    OrderService) {
+    DateUtilsService, StudyService, LocationPackagesService,
+    SamplingSupervisorService, OrderService) {
     var vm = this;
-    vm.order = OrderService.query({orderId: $routeParams.orderId});
+    vm.order = {};
+    vm.study = {};
     vm.user = TokenService.getUserFromToken();
     vm.supervisors = SamplingSupervisorService.get();
-    vm.packages = PackageService.get();
+    vm.packages = [];
+
     vm.message = '';
     vm.isDataSubmitted = false;
     vm.getScope = getScope;
@@ -727,6 +730,24 @@
     vm.rejectItem = rejectItem;
     vm.isFormValid = isFormValid;
     vm.submitForm = submitForm;
+    OrderService
+      .query({orderId: $routeParams.orderId})
+      .$promise
+      .then(function success(response) {
+        vm.order = response;
+        StudyService
+          .query({studyId: vm.order.id_estudio})
+          .$promise
+          .then(function success(response) {
+            vm.study = response;
+            LocationPackagesService
+              .query({locationId: vm.study.id_ubicacion})
+              .$promise
+              .then(function success(response) {
+                vm.packages = response;
+              });
+          });
+      });
 
     function getScope() {
       return vm;
@@ -899,8 +920,8 @@
       [
         '$scope', '$routeParams', 'TokenService',
         'ValidationService', 'RestUtilsService', 'ArrayUtilsService',
-        'DateUtilsService', 'PackageService', 'SamplingSupervisorService',
-        'OrderService',
+        'DateUtilsService', 'StudyService', 'LocationPackagesService',
+        'SamplingSupervisorService', 'OrderService',
         OrderController
       ]
     );
@@ -4396,10 +4417,10 @@
    * @return {Object} $resource - Acceso a recursos HTTP
    */
   function LocationPackagesService($resource, TokenService) {
-    return $resource(API_BASE_URL + 'packages', {}, {
-      get: {
+    return $resource(API_BASE_URL + 'packages/location/:locationId', {}, {
+      query: {
         method: 'GET',
-        params: {},
+        params: {locationId: 'id_ubicacion'},
         isArray: true,
         headers: {
           'Auth-Token': TokenService.getToken()

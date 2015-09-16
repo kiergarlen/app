@@ -552,9 +552,10 @@ $app->get("/packages/points/:packageId", function($packageId) use ($app) {
   }
 });
 
-$app->get("/packages/locations/:locationId", function($locationId) use ($app) {
+$app->get("/packages/location/:locationId", function($locationId) use ($app) {
   try {
     $userId = decodeUserToken($app->request())->uid;
+    $result = json_encode(getPackages());
     $result = json_encode(getPackagesByLocation($locationId));
     $app->response()->status(200);
     $app->response()->header("Content-Type", "application/json");

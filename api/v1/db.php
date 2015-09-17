@@ -923,7 +923,7 @@ function getSheets() {
     CONVERT(NVARCHAR, fecha_actualiza, 126) AS fecha_actualiza,
     ip_captura, ip_valida, ip_actualiza, host_captura,
     host_valida, host_actualiza, nubes_otro, comentarios,
-    motivo_rechaza, activo, ubicacion
+    motivo_rechaza, activo, ubicacion, id_tipo_muestreo
     FROM viewHojaUbicacion
     WHERE activo = 1";
   $db = getConnection();

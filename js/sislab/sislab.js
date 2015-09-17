@@ -978,6 +978,7 @@
     SamplingInstrumentService, PlanService) {
     var vm = this;
     vm.plan = {};
+    vm.study = {};
     vm.user = TokenService.getUserFromToken();
     vm.objectives = PlanObjectiveService.get();
     vm.cities = [];
@@ -1015,7 +1016,6 @@
       .$promise
       .then(function success(response) {
         vm.plan = response;
-
         LocationService
           .query({locationId: vm.plan.id_ubicacion})
           .$promise
@@ -1023,18 +1023,17 @@
             vm.location = response.ubicacion;
           });
           StudyService
-            .query({orderId: vm.plan.id_orden})
+            .query({studyId: vm.plan.id_estudio})
             .$promise
             .then(function success(response) {
-              var study = response;
+              vm.study = response;
               OrderSourceService
-                .query({sourceId: study.id_origen_orden})
+                .query({sourceId: vm.study.id_origen_orden})
                 .$promise
                 .then(function success(response) {
                   vm.source = response.origen_orden;
                 });
             });
-
         DistrictService
           .get()
           .$promise

@@ -955,6 +955,9 @@
    * @param {Object} RestUtilsService - Proveedor para manejo de servicios REST
    * @param {Object} ArrayUtilsService - Proveedor para manejo de arreglos
    * @param {Object} DateUtilsService - Proveedor para manejo de fechas
+   * @param {Object} StudyService - Proveedor de datos, Estudios
+   * @param {Object} LocationService - Proveedor de datos, Ubicación
+   * @param {Object} OrderSourceService - Proveedor de datos, Orígenes de orden
    * @param {Object} PlanObjectiveService - Proveedor de datos, Objetivos Plan
    * @param {Object} DistrictService - Proveedor de datos, Municipios
    * @param {Object} CityService - Proveedor de datos, Localidades
@@ -968,7 +971,8 @@
    */
   function PlanController($scope, $routeParams, TokenService,
     ValidationService, RestUtilsService, ArrayUtilsService,
-    DateUtilsService, PlanObjectiveService, DistrictService,
+    DateUtilsService, StudyService, LocationService,
+    OrderSourceService, PlanObjectiveService, DistrictService,
     CityService, SamplingEmployeeService, PreservationService,
     ReactiveService, MaterialService, CoolerService,
     SamplingInstrumentService, PlanService) {
@@ -1011,6 +1015,26 @@
       .$promise
       .then(function success(response) {
         vm.plan = response;
+
+        LocationService
+          .query({locationId: vm.plan.id_ubicacion})
+          .$promise
+          .then(function success(response) {
+            vm.location = response.ubicacion;
+          });
+          StudyService
+            .query({orderId: vm.plan.id_orden})
+            .$promise
+            .then(function success(response) {
+              var study = response;
+              OrderSourceService
+                .query({sourceId: study.id_origen_orden})
+                .$promise
+                .then(function success(response) {
+                  vm.source = response.origen_orden;
+                });
+            });
+
         DistrictService
           .get()
           .$promise
@@ -1413,8 +1437,13 @@
         vm.message += ' Si selecciona otro objetivo debe ingresarlo ';
         return false;
       }
+      if (!DateUtilsService.isValidDate(vm.plan.fecha)) {
+        vm.plan.fecha = DateUtilsService.dateToIso(new Date(vm.plan.fecha));
+        vm.message += ' Ingrese una fecha válida de muestreo ';
+        return false;
+      }
       if (vm.plan.calle.length < 1) {
-        vm.message += ' Ingrese una calle o ubicación ';
+        vm.message += ' Ingrese una calle o ubicación aproximada ';
         return false;
       }
       if (vm.plan.id_municipio < 1) {
@@ -1424,6 +1453,12 @@
       if (vm.plan.id_localidad < 1) {
         vm.message += ' Seleccione una localidad ';
         return false;
+      }
+      if (vm.plan.orden.id_tipo_muestreo > 1) {
+        if (isNaN(vm.plan.frecuencia) || vm.plan.frecuencia < 1) {
+          vm.message += ' Seleccione una frecuencia de muestreo ';
+          return false;
+        }
       }
       if (vm.plan.id_supervisor_entrega < 1) {
         vm.message += ' Seleccione un Responsable de muestreo ';
@@ -1500,7 +1535,8 @@
       [
         '$scope', '$routeParams', 'TokenService',
         'ValidationService', 'RestUtilsService', 'ArrayUtilsService',
-        'DateUtilsService', 'PlanObjectiveService', 'DistrictService',
+        'DateUtilsService', 'StudyService', 'LocationService',
+        'OrderSourceService', 'PlanObjectiveService', 'DistrictService',
         'CityService', 'SamplingEmployeeService', 'PreservationService',
         'ReactiveService', 'MaterialService', 'CoolerService',
         'SamplingInstrumentService', 'PlanService',

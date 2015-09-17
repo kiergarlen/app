@@ -212,16 +212,16 @@ $app->post("/plans", function() use ($app) {
     if ($planId > 0)
     {
       $planUpdateData = processPlanUpdate($request);
-      //$planId = updatePlan($planUpdateData["plan"]);
-      // processPlanSheetInsert($planUpdateData);
-      // processPlanReceptionInsert($planUpdateData);
-      // processPlanSheetSampleInsert($planUpdateData);
-      // processPlanInstrumentsUpdate($planUpdateData);
-      // processPlanPreservationsUpdate($planUpdateData);
-      // processPlanContainersUpdate($planUpdateData);
-      // processPlanReactivesUpdate($planUpdateData);
-      // processPlanMaterialsUpdate($planUpdateData);
-      // processPlanCoolersUpdate($planUpdateData);
+      $planId = updatePlan($planUpdateData["plan"]);
+      processPlanSheetInsert($planUpdateData);
+      processPlanReceptionInsert($planUpdateData);
+      processPlanSheetSampleInsert($planUpdateData);
+      processPlanInstrumentsUpdate($planUpdateData);
+      processPlanPreservationsUpdate($planUpdateData);
+      processPlanContainersUpdate($planUpdateData);
+      processPlanReactivesUpdate($planUpdateData);
+      processPlanMaterialsUpdate($planUpdateData);
+      processPlanCoolersUpdate($planUpdateData);
     }
     $result = "{\"id_plan\":" . $planId . "}";
     $app->response()->status(200);

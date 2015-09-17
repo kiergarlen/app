@@ -114,6 +114,24 @@
   </div>
   -->
   <div class="row">
+    <div class="col-xs-12 col-sm-6">
+      <h6>Ubicación</h6>
+      <p>
+        {{plan.location}}
+      </p>
+    </div>
+    <div class="col-xs-12 col-sm-6">
+      <h6>Medio de solicitud</h6>
+      <p>
+        {{plan.source}}
+        <span
+          data-ng-show="plan.study.origen_descripcion.length > 1">
+          ({{::plan.study.origen_descripcion}})
+        </span>
+      </p>
+    </div>
+  </div>
+  <div class="row">
     <div class="col-xs-12">
       <h4>Objetivo</h4>
     </div>

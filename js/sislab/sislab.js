@@ -991,8 +991,6 @@
     vm.coolers = [];
     vm.message = '';
     vm.isDataSubmitted = false;
-    vm.selectDistrict = selectDistrict;
-
     vm.isInstrumentListLoaded = false;
     vm.isPreservationListLoaded = false;
     vm.isContainerListLoaded = false;
@@ -1000,13 +998,13 @@
     vm.isMaterialListLoaded = false;
     vm.isCoolerListLoaded = false;
     vm.isAllMaterialsListSelected = false;
+    vm.selectDistrict = selectDistrict;
     vm.selectInstruments = selectInstruments;
     vm.selectPreservations = selectPreservations;
     vm.selectReactives = selectReactives;
     vm.selectMaterials = selectMaterials;
     vm.selectCoolers = selectCoolers;
     vm.selectAllMaterials = selectAllMaterials;
-
     vm.approveItem = approveItem;
     vm.rejectItem = rejectItem;
     vm.submitForm = submitForm;
@@ -1022,9 +1020,9 @@
           .then(function success(response) {
             vm.location = response.ubicacion;
           });
-          StudyService
-            .query({studyId: vm.plan.id_estudio})
-            .$promise
+        StudyService
+          .query({studyId: vm.plan.id_estudio})
+          .$promise
             .then(function success(response) {
               vm.study = response;
               OrderSourceService
@@ -2117,7 +2115,6 @@
     vm.user = TokenService.getUserFromToken();
     vm.viewJob = viewJob;
 
-      //.get()
     UserJobsService
       .query({userId: 0})
       .$promise

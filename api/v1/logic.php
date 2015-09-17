@@ -711,6 +711,7 @@ function processPlanInstrumentsUpdate($planUpdateData) {
       unset($instrument["id_plan_instrumento"]);
       unset($instrument["instrumento"]);
       unset($instrument["muestreo"]);
+      unset($instrument["descripcion"]);
       unset($instrument["inventario"]);
       unset($instrument["selected"]);
       insertPlanInstrument($instrument);
@@ -756,30 +757,25 @@ function processPlanPreservationsUpdate($planUpdateData) {
   if ($l < 1)
   {
     for ($j = 0; $j < $m; $j++) {
-      $newPreservation = (array) $preservations[$j];
-      unset($newPreservation["id_plan_preservacion"]);
-      unset($newPreservation["id_tipo_preservacion"]);
-      unset($newPreservation["descripcion"]);
-      unset($newPreservation["preservacion"]);
-      unset($newPreservation["selected"]);
+      $newPreservation = array(
+        "id_plan" => $preservations[$j]->id_plan,
+        "id_preservacion" => $preservations[$j]->id_preservacion,
+        "activo" => 1
+      );
       insertPlanPreservation($newPreservation);
     }
     return $planId;
   }
   else
   {
-    for ($i = 0; $i < $l; $i++) {
-      unset($storedPreservations[$i]["preservacion"]);
-      unset($storedPreservations[$i]["selected"]);
-      $storedPreservations[$i]["activo"] = 0;
-      updatePlanPreservation($storedPreservations[$i]);
-    }
+    disablePlanPreservations($planId);
     for ($j = 0; $j < $m; $j++) {
-      $preservation = (array) $preservations[$j];
-      unset($preservation["id_tipo_preservacion"]);
-      unset($preservation["descripcion"]);
-      unset($preservation["preservacion"]);
-      unset($preservation["selected"]);
+      $preservation = array(
+        "id_plan_preservacion" => $preservations[$j]->id_plan_preservacion,
+        "id_plan" => $preservations[$j]->id_plan,
+        "id_preservacion" => $preservations[$j]->id_preservacion,
+        "activo" => $preservations[$j]->activo
+      );
       if ($preservation["id_plan_preservacion"] < 1)
       {
         unset($preservation["id_plan_preservacion"]);

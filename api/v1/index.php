@@ -164,7 +164,7 @@ $app->post("/orders", function() use ($app) {
 
 $app->get("/order/sources(/)(:sourceId)", function($sourceId = -1) use ($app) {
   try {
-    // $userId = decodeUserToken($app->request())->uid;
+    $userId = decodeUserToken($app->request())->uid;
     if ($sourceId > -1)
     {
       $result = json_encode(getOrderSource($sourceId));
@@ -561,7 +561,7 @@ $app->get("/packages/points/:packageId", function($packageId) use ($app) {
 
 $app->get("/packages/location(/)(:locationId)", function($locationId = -1) use ($app) {
   try {
-    // $userId = decodeUserToken($app->request())->uid;
+    $userId = decodeUserToken($app->request())->uid;
     if ($locationId > -1)
     {
       $result = json_encode(getPackagesByLocation($locationId));
@@ -582,7 +582,7 @@ $app->get("/packages/location(/)(:locationId)", function($locationId = -1) use (
 
 $app->get("/bodies(/)(:bodyId)", function($bodyId = -1) use ($app) {
   try {
-    // $userId = decodeUserToken($app->request())->uid;
+    $userId = decodeUserToken($app->request())->uid;
     if ($bodyId > -1)
     {
       $result = json_encode(getWaterBody($bodyId));

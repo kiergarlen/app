@@ -2492,6 +2492,17 @@ function updatePlanPreservation($updateData) {
   return $updateData["id_plan_preservacion"];
 }
 
+function disablePlanPreservations($planId) {
+  $sql = "UPDATE PlanPreservacion SET activo = 0
+    WHERE id_plan = :planId";
+  $db = getConnection();
+  $stmt = $db->prepare($sql);
+  $stmt->bindParam("planId", $planId);
+  $stmt->execute();
+  $db = null;
+  return $planId;
+}
+
 function getReactivesByPlan($planId) {
   $sql = "SELECT id_plan_reactivo, id_plan, id_reactivo, valor,
     lote, folio
@@ -3066,4 +3077,3 @@ function getWaterBody($bodyId) {
   $db = null;
   return $waterBody;
 }
-

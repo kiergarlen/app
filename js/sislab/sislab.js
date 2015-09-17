@@ -1295,7 +1295,6 @@
       var i = 0;
       var l = vm.plan.instrumentos.length;
       var instrument = {};
-
       if (vm.plan.id_responsable_calibracion < 1) {
         vm.message += ' Seleccione una Responsable de calibración ';
         return false;
@@ -1330,7 +1329,7 @@
       var l = 0;
       var containers = [];
       if (vm.plan.id_responsable_recipientes < 1) {
-        vm.message += ' Seleccione una Responsable de preparación de recipientes ';
+        vm.message += ' Seleccione un Responsable de preparación de recipientes ';
         return false;
       }
       if (vm.plan.recipientes && vm.plan.recipientes.length > 0) {

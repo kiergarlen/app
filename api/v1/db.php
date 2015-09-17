@@ -176,6 +176,24 @@ function getTasks($userId) {
   return $result;
 }
 
+function getBlankClient() {
+  return array(
+    "id_cliente" => 0, "id_estado" => 14,
+    "id_municipio" => 14039, "id_localidad" => 140390001,
+    "interno" => 0, "cea" => 0,
+    "tasa" => 0, "cliente" => "",
+    "area" => "", "rfc" => "",
+    "calle" => "", "numero" => "",
+    "colonia" => "", "codigo_postal" => "",
+    "telefono" => "", "fax" => "",
+    "contacto" => "", "puesto_contacto" => "",
+    "email" => "", "fecha_captura" => NULL,
+    "fecha_actualiza" => NULL, "ip_captura" => "",
+    "ip_actualiza" => "", "host_captura" => "",
+    "host_actualiza" => "", "activo" => 1
+  );
+}
+
 function getClients() {
   $sql = "SELECT id_cliente, id_estado, id_municipio,
     id_localidad, interno, cea, tasa, cliente, area,
@@ -247,6 +265,8 @@ function getStudies() {
 }
 
 function getBlankStudy() {
+  $blankClient = getBlankClient();
+  $blankOrder = getBlankOrder();
   return array(
     "id_estudio" => 0, "id_cliente" => 0,
     "id_origen_orden" => 0, "id_ubicacion" => 1,
@@ -263,40 +283,8 @@ function getBlankStudy() {
     "ip_actualiza" => "", "host_captura" => "",
     "host_valida" => "", "host_actualiza" => "",
     "motivo_rechaza" => "", "activo" => 1,
-    "cliente" => array(
-      "id_cliente" => 0, "id_estado" => 14,
-      "id_municipio" => 14039, "id_localidad" => 140390001,
-      "interno" => 0, "cea" => 0,
-      "tasa" => 0, "cliente" => "",
-      "area" => "", "rfc" => "",
-      "calle" => "", "numero" => "",
-      "colonia" => "", "codigo_postal" => "",
-      "telefono" => "", "fax" => "",
-      "contacto" => "", "puesto_contacto" => "",
-      "email" => "", "fecha_captura" => NULL,
-      "fecha_actualiza" => NULL, "ip_captura" => "",
-      "ip_actualiza" => "", "host_captura" => "",
-      "host_actualiza" => "", "activo" => 1
-    ),
-    "ordenes" => array(
-      array(
-        "id_orden" => 0, "id_estudio" => 0,
-        "id_cliente" => 0, "id_matriz" => 0,
-        "id_tipo_muestreo" => 1, "id_norma" => 0,
-        "id_cuerpo_receptor" => 5, "id_status" => 1,
-        "id_usuario_captura" => 0, "id_usuario_valida" => 0,
-        "id_usuario_actualiza" => 0, "cantidad_muestras" => 0,
-        "costo_total" => 0, "cuerpo_receptor" => "",
-        "tipo_cuerpo" => "", "fecha" => NULL,
-        "fecha_captura" => NULL,
-        "fecha_valida" => NULL, "fecha_actualiza" => NULL,
-        "fecha_rechaza" => NULL, "ip_captura" => "",
-        "ip_valida" => "", "ip_actualiza" => "",
-        "host_captura" => "", "host_valida" => "",
-        "host_actualiza" => "", "motivo_rechaza" => "",
-        "comentarios" => "", "activo" => 1
-      )
-    )
+    "cliente" => $blankClient,
+    "ordenes" => array($blankOrder)
   );
 }
 
@@ -408,9 +396,29 @@ function updateStudy($updateData) {
   return $updateData["id_estudio"];
 }
 
+function getBlankOrder() {
+  return array(
+    "id_orden" => 0, "id_estudio" => 0,
+    "id_cliente" => 0, "id_matriz" => 0,
+    "id_tipo_muestreo" => 1, "id_norma" => 0,
+    "id_cuerpo" => 8, "id_status" => 1,
+    "id_usuario_captura" => 0, "id_usuario_valida" => 0,
+    "id_usuario_actualiza" => 0, "cantidad_muestras" => 0,
+    "costo_total" => 0, "cuerpo_receptor" => "",
+    "tipo_cuerpo" => "", "fecha" => NULL,
+    "fecha_captura" => NULL,
+    "fecha_valida" => NULL, "fecha_actualiza" => NULL,
+    "fecha_rechaza" => NULL, "ip_captura" => "",
+    "ip_valida" => "", "ip_actualiza" => "",
+    "host_captura" => "", "host_valida" => "",
+    "host_actualiza" => "", "motivo_rechaza" => "",
+    "comentarios" => "", "activo" => 1
+  );
+}
+
 function getOrders() {
   $sql = "SELECT id_orden, id_estudio, id_cliente, id_matriz,
-    id_tipo_muestreo, id_norma, id_cuerpo_receptor, id_status,
+    id_tipo_muestreo, id_norma, id_cuerpo, id_status,
     id_usuario_captura, id_usuario_valida, id_usuario_actualiza,
     cantidad_muestras, costo_total, cuerpo_receptor, tipo_cuerpo,
     CONVERT(NVARCHAR, fecha, 126) AS fecha,
@@ -443,7 +451,7 @@ function getOrders() {
 
 function getOrdersByStudy($studyId) {
   $sql = "SELECT id_orden, id_estudio, id_cliente, id_matriz,
-    id_tipo_muestreo, id_norma, id_cuerpo_receptor, id_status,
+    id_tipo_muestreo, id_norma, id_cuerpo, id_status,
     id_usuario_captura, id_usuario_valida, id_usuario_actualiza,
     cantidad_muestras, costo_total, cuerpo_receptor, tipo_cuerpo,
     CONVERT(NVARCHAR, fecha, 126) AS fecha,
@@ -474,7 +482,7 @@ function getOrdersByStudy($studyId) {
 
 function getPlainOrder($orderId) {
   $sql = "SELECT id_orden, id_estudio, id_cliente, id_matriz,
-    id_tipo_muestreo, id_norma, id_cuerpo_receptor, id_status,
+    id_tipo_muestreo, id_norma, id_cuerpo, id_status,
     id_usuario_captura, id_usuario_valida, id_usuario_actualiza,
     cantidad_muestras, costo_total, cuerpo_receptor, tipo_cuerpo,
     CONVERT(NVARCHAR, fecha, 126) AS fecha,
@@ -511,7 +519,7 @@ function getOrder($orderId) {
 
 function getStudyOrders($studyId) {
   $sql = "SELECT id_orden, id_estudio, id_cliente, id_matriz,
-    id_tipo_muestreo, id_norma, id_cuerpo_receptor, id_status,
+    id_tipo_muestreo, id_norma, id_cuerpo, id_status,
     id_usuario_captura, id_usuario_valida, id_usuario_actualiza,
     cantidad_muestras, costo_total, cuerpo_receptor, tipo_cuerpo,
     CONVERT(NVARCHAR, fecha, 126) AS fecha,
@@ -535,7 +543,7 @@ function getStudyOrders($studyId) {
 
 function insertOrder($orderData) {
   $sql = "INSERT INTO Orden (id_estudio, id_cliente, id_matriz,
-    id_tipo_muestreo, id_norma, id_cuerpo_receptor,
+    id_tipo_muestreo, id_norma, id_cuerpo,
     id_status, id_usuario_captura, id_usuario_valida,
     cantidad_muestras, costo_total,
     cuerpo_receptor, tipo_cuerpo, fecha, fecha_captura,
@@ -543,7 +551,7 @@ function insertOrder($orderData) {
     ip_valida, host_captura, host_valida,
     motivo_rechaza, comentarios, activo)
     VALUES (:id_estudio, :id_cliente, :id_matriz,
-    :id_tipo_muestreo, :id_norma, :id_cuerpo_receptor,
+    :id_tipo_muestreo, :id_norma, :id_cuerpo,
     :id_status, :id_usuario_captura, :id_usuario_valida,
     :cantidad_muestras, :costo_total,
     :cuerpo_receptor, :tipo_cuerpo, :fecha, SYSDATETIMEOFFSET(),
@@ -562,7 +570,7 @@ function updateOrder($updateData) {
   $sql = "UPDATE Orden SET
     id_estudio = :id_estudio, id_cliente = :id_cliente,
     id_matriz = :id_matriz, id_tipo_muestreo = :id_tipo_muestreo,
-    id_norma = :id_norma, id_cuerpo_receptor = :id_cuerpo_receptor,
+    id_norma = :id_norma, id_cuerpo = :id_cuerpo,
     id_status = :id_status, id_usuario_valida = :id_usuario_valida,
     id_usuario_actualiza = :id_usuario_actualiza,
     cantidad_muestras = :cantidad_muestras, costo_total = :costo_total,
@@ -591,9 +599,22 @@ function getOrderSources() {
   $db = getConnection();
   $stmt = $db->prepare($sql);
   $stmt->execute();
-  $orderSources = $stmt->fetchAll(PDO::FETCH_ASSOC);
+  $sources = $stmt->fetchAll(PDO::FETCH_ASSOC);
   $db = null;
-  return $orderSources;
+  return $sources;
+}
+
+function getOrderSource($sourceId) {
+  $sql = "SELECT id_origen_orden, origen_orden, activo
+    FROM OrigenOrden
+    WHERE activo = 1 AND id_origen_orden = :sourceId";
+  $db = getConnection();
+  $stmt = $db->prepare($sql);
+  $stmt->bindParam("sourceId", $sourceId);
+  $stmt->execute();
+  $source = $stmt->fetch(PDO::FETCH_OBJ);
+  $db = null;
+  return $source;
 }
 
 function getPlans() {
@@ -1699,7 +1720,7 @@ function getCustodies() {
 }
 
 function getPoints() {
-  $sql = "SELECT id_punto, id_cuerpo_receptor, id_tipo_punto,
+  $sql = "SELECT id_punto, id_cuerpo, id_tipo_punto,
     id_estado, id_municipio, id_localidad, id_usuario_captura,
     id_usuario_actualiza, punto, descripcion, siglas,
     consecutivo, clave, lat, lng, alt, lat_gra, lat_min, lat_seg,
@@ -1719,7 +1740,7 @@ function getPoints() {
 }
 
 function getPoint($pointId) {
-  $sql = "SELECT id_punto, id_cuerpo_receptor, id_tipo_punto,
+  $sql = "SELECT id_punto, id_cuerpo, id_tipo_punto,
     id_estado, id_municipio, id_localidad, id_usuario_captura,
     id_usuario_actualiza, punto, descripcion, siglas,
     consecutivo, clave, lat, lng, alt, lat_gra, lat_min, lat_seg,
@@ -1766,7 +1787,7 @@ function getPackagesByLocation($locationId) {
 
 function getPointsByPackage($packageId) {
   $sql = "SELECT id_paquete, paquete, id_paquete_punto, id_punto,
-    id_cuerpo_receptor, id_tipo_punto, id_estado, id_municipio,
+    id_cuerpo, id_tipo_punto, id_estado, id_municipio,
     id_localidad, id_usuario_captura, id_usuario_actualiza, punto,
     descripcion, siglas, consecutivo, clave, lat, lng, alt,
     lat_gra, lat_min, lat_seg, lng_gra, lng_min, lng_seg,
@@ -2291,7 +2312,7 @@ function getContainers() {
     id_tipo_recipiente, id_preservacion, id_almacenamiento,
     id_status_recipiente, id_usuario_captura, id_usuario_actualiza,
     volumen, volumen_inicial,
-        CONVERT(NVARCHAR, fecha_captura, 126) AS fecha_captura,
+    CONVERT(NVARCHAR, fecha_captura, 126) AS fecha_captura,
     CONVERT(NVARCHAR, fecha_actualiza, 126) AS  fecha_actualiza,
     ip_captura, ip_actualiza, host_captura, host_actualiza, activo
     FROM Recipiente
@@ -2309,7 +2330,7 @@ function getContainer($containerId) {
     id_tipo_recipiente, id_preservacion, id_almacenamiento,
     id_status_recipiente, id_usuario_captura, id_usuario_actualiza,
     volumen, volumen_inicial,
-        CONVERT(NVARCHAR, fecha_captura, 126) AS fecha_captura,
+    CONVERT(NVARCHAR, fecha_captura, 126) AS fecha_captura,
     CONVERT(NVARCHAR, fecha_actualiza, 126) AS  fecha_actualiza,
     ip_captura, ip_actualiza, host_captura, host_actualiza, activo
     FROM Recipiente
@@ -2327,8 +2348,8 @@ function getPlanContainers($planId) {
   $sql = "SELECT id_recipiente, id_plan, id_recepcion, id_muestra,
     id_tipo_recipiente, id_preservacion, id_almacenamiento,
     id_status_recipiente, id_usuario_captura, id_usuario_actualiza,
-    volumen, volumen_inicial
-        CONVERT(NVARCHAR, fecha_captura, 126) AS fecha_captura,
+    volumen, volumen_inicial,
+    CONVERT(NVARCHAR, fecha_captura, 126) AS fecha_captura,
     CONVERT(NVARCHAR, fecha_actualiza, 126) AS  fecha_actualiza,
     ip_captura, ip_actualiza, host_captura, host_actualiza, activo
     FROM Recipiente
@@ -3018,3 +3039,31 @@ function getLocation($locationId) {
   $db = null;
   return $location;
 }
+
+function getWaterBodies() {
+  $sql = "SELECT id_cuerpo, id_tipo_cuerpo, cuerpo, tipo_cuerpo,
+    siglas, activo
+    FROM Cuerpo
+    WHERE activo = 1";
+  $db = getConnection();
+  $stmt = $db->prepare($sql);
+  $stmt->execute();
+  $waterBodies = $stmt->fetchAll(PDO::FETCH_ASSOC);
+  $db = null;
+  return $waterBodies;
+}
+
+function getWaterBody($bodyId) {
+  $sql = "SELECT id_cuerpo, id_tipo_cuerpo, cuerpo, tipo_cuerpo,
+    siglas, activo
+    FROM Cuerpo
+    WHERE activo = 1 AND id_cuerpo = :bodyId";
+  $db = getConnection();
+  $stmt = $db->prepare($sql);
+  $stmt->bindParam("bodyId", $bodyId);
+  $stmt->execute();
+  $waterBody = $stmt->fetch(PDO::FETCH_OBJ);
+  $db = null;
+  return $waterBody;
+}
+

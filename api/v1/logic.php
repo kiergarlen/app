@@ -212,7 +212,7 @@ function processStudyOrderInsert($studyInsertData, $studyId) {
 
     $order["id_estudio"] = $studyId;
     $order["id_cliente"] = $clientId;
-    $order["id_cuerpo_receptor"] = 5;
+    $order["id_cuerpo"] = 8;
     $order["id_status"] = 1;
     $order["costo_total"] = 0;
     $order["id_usuario_captura"] = $insertUserId;
@@ -295,7 +295,7 @@ function processStudyOrderUpdate($studyUpdateData) {
         $newOrder["id_estudio"] = $studyId;
         $newOrder["id_cliente"] = $clientId;
         //TODO: Get from catalog
-        $newOrder["id_cuerpo_receptor"] = 5;
+        $newOrder["id_cuerpo"] = 8;
         $newOrder["fecha"] = isoDateToMsSql($newOrder["fecha"]);
         $newOrder["id_usuario_captura"] = $updateUserId;
         $newOrder["ip_captura"] = $updateIp;
@@ -342,7 +342,7 @@ function processStudyOrderUpdate($studyUpdateData) {
         $order["id_estudio"] = $studyId;
         $order["id_cliente"] = $clientId;
         //TODO: Get from catalog
-        $order["id_cuerpo_receptor"] = 5;
+        $order["id_cuerpo"] = 8;
 
         $order["fecha"] = isoDateToMsSql($order["fecha"]);
         $order["id_usuario_captura"] = $updateUserId;
@@ -728,7 +728,7 @@ function processPlanInstrumentsUpdate($planUpdateData) {
         "id_instrumento" => $instruments[$i]->id_instrumento,
         "bitacora" => $instruments[$i]->bitacora,
         "folio" => $instruments[$i]->folio,
-        "activo" => $instruments[$i]->sctivo
+        "activo" => $instruments[$i]->activo
       );
       if ($instrument["id_plan_instrumento"] < 1)
       {

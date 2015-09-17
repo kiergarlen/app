@@ -162,10 +162,17 @@ $app->post("/orders", function() use ($app) {
   }
 });
 
-$app->get("/order/sources", function() use ($app) {
+$app->get("/order/sources(/)(:sourceId)", function($sourceId = -1) use ($app) {
   try {
-    $userId = decodeUserToken($app->request())->uid;
-    $result = json_encode(getOrderSources());
+    // $userId = decodeUserToken($app->request())->uid;
+    if ($sourceId > -1)
+    {
+      $result = json_encode(getOrderSource($sourceId));
+    }
+    else
+    {
+      $result = json_encode(getOrderSources());
+    }
     $app->response()->status(200);
     $app->response()->header("Content-Type", "application/json");
     //$result = ")]}',\n" . $result;
@@ -552,11 +559,38 @@ $app->get("/packages/points/:packageId", function($packageId) use ($app) {
   }
 });
 
-$app->get("/packages/location/:locationId", function($locationId) use ($app) {
+$app->get("/packages/location(/)(:locationId)", function($locationId = -1) use ($app) {
   try {
-    $userId = decodeUserToken($app->request())->uid;
-    $result = json_encode(getPackages());
-    $result = json_encode(getPackagesByLocation($locationId));
+    // $userId = decodeUserToken($app->request())->uid;
+    if ($locationId > -1)
+    {
+      $result = json_encode(getPackagesByLocation($locationId));
+    }
+    else
+    {
+      $result = json_encode(getPackages());
+    }
+    $app->response()->status(200);
+    $app->response()->header("Content-Type", "application/json");
+    //$result = ")]}',\n" . $result;
+    print_r($result);
+  } catch (Exception $e) {
+    $app->response()->status(400);
+    $app->response()->header("X-Status-Reason", $e->getMessage());
+  }
+});
+
+$app->get("/bodies(/)(:bodyId)", function($bodyId = -1) use ($app) {
+  try {
+    // $userId = decodeUserToken($app->request())->uid;
+    if ($bodyId > -1)
+    {
+      $result = json_encode(getWaterBody($bodyId));
+    }
+    else
+    {
+      $result = json_encode(getWaterBodies());
+    }
     $app->response()->status(200);
     $app->response()->header("Content-Type", "application/json");
     //$result = ")]}',\n" . $result;

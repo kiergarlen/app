@@ -706,19 +706,26 @@
    * @param {Object} ArrayUtilsService - Proveedor para manejo de arreglos
    * @param {Object} DateUtilsService - Proveedor para manejo de fechas
    * @param {Object} StudyService - Proveedor de datos, Estudios
+   * @param {Object} WaterBodyService - Proveedor de datos, Cuerpo de agua
+   * @param {Object} LocationService - Proveedor de datos, Ubicación
+   * @param {Object} OrderSourceService - Proveedor de datos, Orígenes de orden
    * @param {Object} LocationPackagesService - Proveedor de datos, Paquetes de puntos por Ubicación
    * @param {Object} SamplingSupervisorService - Proveedor de datos, Supervisores de muestreo
    * @param {Object} OrderService - Proveedor de datos, Órdenes de muestreo
    */
   function OrderController($scope, $routeParams, TokenService,
     ValidationService, RestUtilsService, ArrayUtilsService,
-    DateUtilsService, StudyService, LocationPackagesService,
+    DateUtilsService, StudyService, WaterBodyService,
+    LocationService, OrderSourceService, LocationPackagesService,
     SamplingSupervisorService, OrderService) {
     var vm = this;
     vm.order = {};
     vm.study = {};
+    vm.location = '';
+    vm.source = '';
     vm.user = TokenService.getUserFromToken();
     vm.supervisors = SamplingSupervisorService.get();
+    vm.bodies = WaterBodyService.get();
     vm.packages = [];
 
     vm.message = '';
@@ -740,6 +747,18 @@
           .$promise
           .then(function success(response) {
             vm.study = response;
+            LocationService
+              .query({locationId: vm.study.id_ubicacion})
+              .$promise
+              .then(function success(response) {
+                vm.location = response.ubicacion;
+              });
+            OrderSourceService
+              .query({sourceId: vm.study.id_origen_orden})
+              .$promise
+              .then(function success(response) {
+                vm.source = response.origen_orden;
+              });
             LocationPackagesService
               .query({locationId: vm.study.id_ubicacion})
               .$promise
@@ -754,74 +773,43 @@
     }
 
     function addPlan() {
+      var blankPlan = {
+        'id_plan': 0,
+        'id_estudio': vm.order.id_estudio,
+        'id_orden': vm.order.id_orden, 'id_ubicacion': 1,
+        'id_paquete': 1, 'id_objetivo_plan': 1,
+        'id_norma_muestreo': 1, 'id_estado': 14,
+        'id_municipio': 14001, 'id_localidad': 1400100001,
+        'id_supervisor_muestreo': 13,
+        'id_supervisor_entrega': 13, 'id_supervisor_recoleccion': 13,
+        'id_supervisor_registro': 13, 'id_ayudante_entrega': 13,
+        'id_ayudante_recoleccion': 13, 'id_ayudante_registro': 13,
+        'id_responsable_calibracion': 13,
+        'id_responsable_recipientes': 13,
+        'id_responsable_reactivos': 13, 'id_responsable_material': 13,
+        'id_responsable_hieleras': 13, 'id_status': 1,
+        'id_usuario_captura': 0, 'id_usuario_valida': 0,
+        'id_usuario_actualiza': 0, 'fecha': null,
+        'fecha_probable': null, 'fecha_calibracion': null,
+        'fecha_captura': null, 'fecha_valida': null,
+        'fecha_actualiza': null, 'fecha_rechaza': null,
+        'ip_captura': '', 'ip_valida': '',
+        'ip_actualiza': '', 'host_captura': '',
+        'host_valida': '', 'host_actualiza': '',
+        'calle': '', 'numero': '',
+        'colonia': '', 'codigo_postal': '',
+        'telefono': '', 'contacto': '',
+        'email': '', 'comentarios_ubicacion': '',
+        'cantidad_puntos': 0, 'cantidad_equipos': 0,
+        'cantidad_recipientes': 0, 'cantidad_reactivos': 0,
+        'cantidad_hieleras': 0, 'frecuencia': 0,
+        'objetivo_otro': '', 'motivo_rechaza': '',
+        'comentarios': '', 'activo': 1
+      };
       if (vm.order.planes) {
-        vm.order.planes.push({
-          'id_plan': 0,
-          'id_estudio': vm.order.id_estudio,
-          'id_orden': vm.order.id_orden, 'id_ubicacion': 1,
-          'id_paquete': 1, 'id_objetivo_plan': 1,
-          'id_norma_muestreo': 1, 'id_estado': 14,
-          'id_municipio': 14001, 'id_localidad': 1400100001,
-          'id_supervisor_muestreo': 13,
-          'id_supervisor_entrega': 13, 'id_supervisor_recoleccion': 13,
-          'id_supervisor_registro': 13, 'id_ayudante_entrega': 13,
-          'id_ayudante_recoleccion': 13, 'id_ayudante_registro': 13,
-          'id_responsable_calibracion': 13,
-          'id_responsable_recipientes': 13,
-          'id_responsable_reactivos': 13, 'id_responsable_material': 13,
-          'id_responsable_hieleras': 13, 'id_status': 1,
-          'id_usuario_captura': 0, 'id_usuario_valida': 0,
-          'id_usuario_actualiza': 0, 'fecha': null,
-          'fecha_probable': null, 'fecha_calibracion': null,
-          'fecha_captura': null, 'fecha_valida': null,
-          'fecha_actualiza': null, 'fecha_rechaza': null,
-          'ip_captura': '', 'ip_valida': '',
-          'ip_actualiza': '', 'host_captura': '',
-          'host_valida': '', 'host_actualiza': '',
-          'calle': '', 'numero': '',
-          'colonia': '', 'codigo_postal': '',
-          'telefono': '', 'contacto': '',
-          'email': '', 'comentarios_ubicacion': '',
-          'cantidad_puntos': 0, 'cantidad_equipos': 0,
-          'cantidad_recipientes': 0, 'cantidad_reactivos': 0,
-          'cantidad_hieleras': 0, 'frecuencia': 0,
-          'objetivo_otro': '', 'motivo_rechaza': '',
-          'comentarios': '', 'activo': 1
-        });
+        vm.order.planes.push(blankPlan);
       } else {
-        vm.order.planes = [{
-          'id_plan': 0,
-          'id_estudio': vm.order.id_estudio,
-          'id_orden': vm.order.id_orden, 'id_ubicacion': 1,
-          'id_paquete': 1, 'id_objetivo_plan': 1,
-          'id_norma_muestreo': 1, 'id_estado': 14,
-          'id_municipio': 14001, 'id_localidad': 140010001,
-          'id_supervisor_muestreo': 13,
-          'id_supervisor_entrega': 13, 'id_supervisor_recoleccion': 13,
-          'id_supervisor_registro': 13, 'id_ayudante_entrega': 13,
-          'id_ayudante_recoleccion': 13, 'id_ayudante_registro': 13,
-          'id_responsable_calibracion': 13,
-          'id_responsable_recipientes': 13,
-          'id_responsable_reactivos': 13, 'id_responsable_material': 13,
-          'id_responsable_hieleras': 13, 'id_status': 1,
-          'id_usuario_captura': 0, 'id_usuario_valida': 0,
-          'id_usuario_actualiza': 0, 'fecha': null,
-          'fecha_probable': null, 'fecha_calibracion': null,
-          'fecha_captura': null, 'fecha_valida': null,
-          'fecha_actualiza': null, 'fecha_rechaza': null,
-          'ip_captura': '', 'ip_valida': '',
-          'ip_actualiza': '', 'host_captura': '',
-          'host_valida': '', 'host_actualiza': '',
-          'calle': '', 'numero': '',
-          'colonia': '', 'codigo_postal': '',
-          'telefono': '', 'contacto': '',
-          'email': '', 'comentarios_ubicacion': '',
-          'cantidad_puntos': 0, 'cantidad_equipos': 0,
-          'cantidad_recipientes': 0, 'cantidad_reactivos': 0,
-          'cantidad_hieleras': 0, 'frecuencia': 0,
-          'objetivo_otro': '', 'motivo_rechaza': '',
-          'comentarios': '', 'activo': 1
-        }];
+        vm.order.planes = [blankPlan];
       }
     }
 
@@ -920,8 +908,10 @@
       [
         '$scope', '$routeParams', 'TokenService',
         'ValidationService', 'RestUtilsService', 'ArrayUtilsService',
-        'DateUtilsService', 'StudyService', 'LocationPackagesService',
-        'SamplingSupervisorService', 'OrderService',
+        'DateUtilsService', 'StudyService', 'WaterBodyService',
+        'LocationService', 'OrderSourceService',
+        'LocationPackagesService', 'SamplingSupervisorService',
+        'OrderService',
         OrderController
       ]
     );
@@ -4327,11 +4317,19 @@
    * @return {Object} $resource - Acceso a recursos HTTP
    */
   function OrderSourceService($resource, TokenService) {
-    return $resource(API_BASE_URL + 'order/sources', {}, {
+    return $resource(API_BASE_URL + 'order/sources/:sourceId', {}, {
       get: {
         method: 'GET',
         params: {},
         isArray: true,
+        headers: {
+          'Auth-Token': TokenService.getToken()
+        }
+      },
+      query: {
+        method: 'GET',
+        params: {sourceId: 'id_origen_orden'},
+        isArray: false,
         headers: {
           'Auth-Token': TokenService.getToken()
         }
@@ -5584,18 +5582,18 @@
    */
   function LocationService($resource, TokenService) {
     return $resource(API_BASE_URL + 'locations/:locationId', {}, {
-      query: {
-        method: 'GET',
-        params: {locationId: 'id_ubicacion'},
-        isArray: false,
-        headers: {
-          'Auth-Token': TokenService.getToken()
-        }
-      },
       get: {
         method: 'GET',
         params: {},
         isArray: true,
+        headers: {
+          'Auth-Token': TokenService.getToken()
+        }
+      },
+      query: {
+        method: 'GET',
+        params: {locationId: 'id_ubicacion'},
+        isArray: false,
         headers: {
           'Auth-Token': TokenService.getToken()
         }
@@ -5624,6 +5622,60 @@
       [
         '$resource', 'TokenService',
         LocationService
+      ]
+    );
+
+  //WaterBodyService.js
+  /**
+   * @name WaterBodyService
+   * @constructor
+   * @desc Proveedor de datos, Cuerpo de agua
+   * @param {Object} $resource - Acceso a recursos HTTP
+   * @param {Object} TokenService - Proveedor de métodos para token
+   * @return {Object} $resource - Acceso a recursos HTTP
+   */
+  function WaterBodyService($resource, TokenService) {
+    return $resource(API_BASE_URL + 'bodies/:bodyId', {}, {
+      get: {
+        method: 'GET',
+        params: {},
+        isArray: true,
+        headers: {
+          'Auth-Token': TokenService.getToken()
+        }
+      },
+      query: {
+        method: 'GET',
+        params: {bodyId: 'id_cuerpo'},
+        isArray: false,
+        headers: {
+          'Auth-Token': TokenService.getToken()
+        }
+      },
+      update: {
+        method: 'POST',
+        params: {},
+        isArray: false,
+        headers: {
+          'Auth-Token': TokenService.getToken()
+        }
+      },
+      save: {
+        method: 'POST',
+        params: {},
+        isArray: false,
+        headers: {
+          'Auth-Token': TokenService.getToken()
+        }
+      }
+    });
+  }
+  angular
+    .module('sislabApp')
+    .factory('WaterBodyService',
+      [
+        '$resource', 'TokenService',
+        WaterBodyService
       ]
     );
 })();

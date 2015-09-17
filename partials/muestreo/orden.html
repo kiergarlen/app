@@ -88,14 +88,53 @@
   </div>
   -->
   <div class="row">
+    <div class="col-xs-12 col-sm-6">
+      <h6>Ubicación</h6>
+      <p>
+        {{order.location}}
+      </p>
+    </div>
+    <div class="col-xs-12 col-sm-6">
+      <h6>Medio de solicitud</h6>
+      <p>
+        {{order.source}}
+        <span
+          data-ng-show="order.study.origen_descripcion.length > 1">
+          ({{::order.study.origen_descripcion}})
+        </span>
+      </p>
+    </div>
+  </div>
+  <div class="row">
     <div class="col-xs-12">
       <h4>Cuerpo receptor</h4>
     </div>
   </div>
   <div class="row">
+    <div class="col-xs-12 col-sm-8">
+      <label for="bodySelect">
+        Cuerpo
+      </label>
+      <select class="form-control"
+        id="bodySelect"
+        name="bodySelect"
+        data-ng-model="order.order.id_cuerpo"
+        >
+        <option data-ng-repeat="body in order.bodies"
+          value="{{body.id_cuerpo}}"
+          data-ng-selected="body.id_cuerpo == order.order.id_cuerpo"
+          >
+         {{::body.cuerpo}}
+         (Tipo: {{body.tipo_cuerpo}})
+        </option>
+      </select>
+    </div>
+  </div>
+  <!--
+  <div class="row">
     <div class="col-xs-12 col-sm-7 col-md-7 col-lg-6">
       <label for="receivingWaterBodyText">
-        Cuerpo receptor
+        Cuerpo receptor {{order.order.id_cuerpo}}
       </label>
       <input type="text" class="form-control"
         id="receivingWaterBodyText"
@@ -116,6 +155,7 @@
         >
     </div>
   </div>
+  -->
   <div class="row">
     <div class="col-xs-12">
       <h4>Solicitar Plan de muestreo</h4>

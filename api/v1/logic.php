@@ -542,7 +542,6 @@ function processOrderPlansUpdate($orderUpdateData) {
 function processPlanUpdate($request) {
   $token = decodeUserToken($request);
   $plan = (array) json_decode($request->getBody());
-  $planUpdateData = $plan;
   $client = $plan["cliente"];
   $instruments = $plan["instrumentos"];
   $containers = $plan["recipientes"];

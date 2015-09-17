@@ -1018,7 +1018,8 @@ function getSheet($sheetId) {
   $blankSamplingResult = getBlankSamplingResult();
   $blankSamplingResult["id_usuario_captura"] =  $sheet->id_usuario_captura;
   $blankSamplingResult["id_usuario_actualiza"] =  $sheet->id_usuario_captura;
-
+  // //TODO: get ALL samples, if compound samples add them to Point in muestras[]
+  // //TODO: update view to worl with an array of Samples, if compund mark them as such
   for($i = 0; $i < $l; $i++) {
     $pointId = $sheet->muestras[$i]["id_punto"];
     $sheet->muestras[$i]["punto"] = getPoint($pointId);

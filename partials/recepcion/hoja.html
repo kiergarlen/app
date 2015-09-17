@@ -218,6 +218,8 @@
     </div>
   </div>
   <!-- PUNTOS Y RESULTADOS -->
+  <!-- Already iterates thorough the Samples array -->
+  <!-- Check if appears correct -->
   <div class="row">
     <div class="col-xs-12">
       <h4>Resultados</h4>
@@ -282,6 +284,10 @@
         <div class="col-xs-6"
           data-ng-repeat="result in row.resultados"
           >
+          <!-- TODO: check if Sample is compouded, mark as such -->
+          <!--  <span class="label label-info"
+                  data-ng-show="item.id_tipo_muestreo == 2">Compuesta</span>
+          -->
           <label for="result{{::row.id_muestra}}_{{::result.id_resultado}}">
             {{::result.param}}
           </label>

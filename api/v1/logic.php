@@ -688,6 +688,23 @@ function processPlanSheetSampleInsert($planUpdateData) {
 
     for ($i = 0; $i < $l; $i++) {
       $sampleData["id_punto"] = $points[$i]["id_punto"];
+      // //TODO: if 'id_tipo_muestreo' == 2 (Compound sampling) insert # times more,
+      // //check Study.frecuencia, hours between sampling in a 24 hour period for samples multiplier
+      // //example: Study.frecuencia = 6; 24/6 = 4x samples
+      // //example: Study.frecuencia = 4; 24/4 = 6x samples
+      // //example: Study.frecuencia = 2; 24/2 = 6x samples
+      // $freq = 24;
+      // if ($plan["frecuencia"] > 0) {
+      //   $freq = $plan["frecuencia"];
+      // }
+      // $m = 24 % $freq;
+      // for /$j = 0; $j < $m; $j++) {
+      //   if ($freq < 24) {
+      // //Compound sample, groups with its 'siblings' by id_punto
+      //     $sampleData["id_tipo_muestreo"] = 2;
+      //   }
+      //   $sampleId = insertSample($sampleData);
+      // }
       $sampleId = insertSample($sampleData);
     }
   }

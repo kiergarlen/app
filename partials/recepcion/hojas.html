@@ -53,6 +53,8 @@
               <th>Id Hoja</th>
               <th>Id Plan</th>
               <th>Status</th>
+              <!-- TODO: Mark Sheet with Compound Samples -->
+              <!-- <th>Tipo Muestreo</th> -->
               <th>Ubicación</th>
               <th>Fecha</th>
               <th>Acciones</th>
@@ -80,6 +82,15 @@
                   Falta info.
                 </span>
               </td>
+              <!-- TODO: Mark Sheet with Compound Samples -->
+              <!--
+              <td>
+                <span class="label label-info"
+                  data-ng-show="item.id_tipo_muestreo == 2">Compuesto</span>
+                <span class="label label-default"
+                  data-ng-show="item.id_status < 2">Simple</span>
+              </td>
+              -->
               <td>
                 {{item.ubicacion}}
               </td>

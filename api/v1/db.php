@@ -1961,7 +1961,7 @@ function insertSample($sampleData) {
     fecha_muestreo, fecha_recibe, comentarios, activo)
     VALUES (:id_estudio, :id_cliente, :id_orden,
     :id_plan, :id_hoja, :id_recepcion, :id_custodia,
-    :id_paquete, :id_ubicacion, :id_punto, 1,
+    :id_paquete, :id_ubicacion, :id_punto, :id_tipo_muestreo,
     :fecha_muestreo, :fecha_recibe, :comentarios, :activo)";
   $db = getConnection();
   $stmt = $db->prepare($sql);

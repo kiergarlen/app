@@ -1675,14 +1675,14 @@
       l = results.length;
       for (i = 0; i < l; i += 1) {
         if (results[i].valor.length > 0) {
-          if (results[i].id_tipo_valor > 1 && results[i].valor.length < 2) {
-            vm.message += ' Ingrese un valor para el parámetro ';
+          if (results[i].id_tipo_valor == 1 && isNaN(results[i].valor)) {
+            vm.message += ' Ingrese un valor numérico para el parámetro ';
             vm.message += results[i].parametro + ' ';
             vm.message += sample.punto + ' ';
             return false;
           }
-          if (results[i].id_tipo_valor == 1 && isNaN(results[i].valor)) {
-            vm.message += ' Ingrese un valor numérico para el parámetro ';
+          if (results[i].id_tipo_valor == 2 && results[i].valor.length < 2) {
+            vm.message += ' Ingrese un valor para el parámetro ';
             vm.message += results[i].parametro + ' ';
             vm.message += sample.punto + ' ';
             return false;
@@ -1700,7 +1700,7 @@
         samples = vm.sheet.muestras;
         l = samples.length;
         for (i = 0; i < l; i += 1) {
-          if (!DateUtilsService.isValidDate(new Date(samples[i].fecha_muestreo))) {
+          if (!DateUtilsService.isValidDate(samples[i].fecha_muestreo)) {
             vm.message += ' Ingrese una fecha/hora válida para la muestra en ';
             vm.message += samples[i].punto + ' ';
             return false;
@@ -1758,23 +1758,26 @@
 
     function submitForm() {
       if (isFormValid() && !vm.isDataSubmitted) {
+        console.log(vm);
         vm.isDataSubmitted = true;
         if (vm.sheet.id_hoja < 1) {
-          RestUtilsService
-            .saveData(
-              SheetService,
-              vm.sheet,
-              'recepcion/hoja'
-            );
+          console.log(vm);
+          // RestUtilsService
+          //   .saveData(
+          //     SheetService,
+          //     vm.sheet,
+          //     'recepcion/hoja'
+          //   );
         } else {
           if (vm.user.level < 3 || vm.sheet.id_status !== 2) {
-            RestUtilsService
-              .updateData(
-                SheetService,
-                vm.sheet,
-                'recepcion/hoja',
-                'id_hoja'
-              );
+            console.log(vm);
+            // RestUtilsService
+            //   .updateData(
+            //     SheetService,
+            //     vm.sheet,
+            //     'recepcion/hoja',
+            //     'id_hoja'
+            //   );
           }
         }
       }

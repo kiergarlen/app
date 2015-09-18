@@ -223,7 +223,6 @@ $app->post("/plans", function() use ($app) {
       processPlanMaterialsUpdate($planUpdateData);
       processPlanCoolersUpdate($planUpdateData);
     }
-    // $result = json_encode($planUpdateData);
     $result = "{\"id_plan\":" . $planId . "}";
     $app->response()->status(200);
     $app->response()->header("Content-Type", "application/json");

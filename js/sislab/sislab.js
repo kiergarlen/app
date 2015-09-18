@@ -1434,8 +1434,7 @@
         vm.message += ' Si selecciona otro objetivo debe ingresarlo ';
         return false;
       }
-      if (!DateUtilsService.isValidDate(vm.plan.fecha)) {
-        vm.plan.fecha = DateUtilsService.dateToIso(new Date(vm.plan.fecha));
+      if (!DateUtilsService.isValidDate(new Date(vm.plan.fecha))) {
         vm.message += ' Ingrese una fecha válida de muestreo ';
         return false;
       }

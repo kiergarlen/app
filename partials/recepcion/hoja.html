@@ -236,7 +236,7 @@
         </small>
         <br>
         Latitud: {{::row.punto.lat}}
-        <br>
+        |
         Longitud: {{::row.punto.lng}}
       </p>
       <div class="row">
@@ -282,7 +282,7 @@
         </div>
       </div>
       <div class="row">
-        <div class="col-xs-6"
+        <div class="col-xs-6 col-sm-4"
           data-ng-repeat="result in row.resultados"
           >
           <label
@@ -299,7 +299,7 @@
           <input type="text"
             class="form-control"
             placeholder="Valor"
-            data-ng-model="result.valor"
+            data-ng-model="result.param"
             data-ng-if="result.id_tipo_valor == 2"
             >
           <label
@@ -326,12 +326,12 @@
         </div>
       </div>
       <div class="row">
-        <div class="col-xs-6">
+        <div class="col-xs-12">
           <label for="sampleComments{{::row.id_muestra}}">
             Comentarios
           </label>
           <br>
-          <textarea rows="3" class="form-control well well-sm"
+          <textarea rows="2" class="form-control well well-sm"
             id="sheetComments{{::row.id_muestra}}"
             name="sheetComments{{::row.id_muestra}}"
             data-ng-model="row.comentarios"

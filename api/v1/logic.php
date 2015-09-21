@@ -26,8 +26,8 @@ function processUserJwt($request) {
   $token["iss"] = $request->getUrl();
   $token["aud"] = "sislab.ceajalisco.gob.mx";
   $token["iat"] = time();
-  //// Token expires 4 hours from now
-  $token["exp"] = time() + (4 * 60 * 60);
+  //// Token expires 24 hours from now
+  $token["exp"] = time() + (24 * 60 * 60);
   $jwt = JWT::encode($token, KEY);
   return $jwt;
 }

@@ -527,9 +527,9 @@
         'id_usuario_captura':0, 'id_usuario_valida':0,
         'id_usuario_actualiza':0, 'cantidad_muestras':0,
         'costo_total':0, 'cuerpo_receptor':'',
-        'tipo_cuerpo':'', 'fecha':'NULL',
-        'fecha_captura':'NULL', 'fecha_valida':'NULL',
-        'fecha_actualiza':'NULL', 'fecha_rechaza':'NULL',
+        'tipo_cuerpo':'', 'fecha':null,
+        'fecha_captura':null, 'fecha_valida':null,
+        'fecha_actualiza':null, 'fecha_rechaza':null,
         'ip_captura':'', 'ip_valida':'',
         'ip_actualiza':'', 'host_captura':'',
         'host_valida':'', 'host_actualiza':'',
@@ -1677,15 +1677,17 @@
         if (results[i].valor.length > 0) {
           if (results[i].id_tipo_valor == 1 && isNaN(results[i].valor)) {
             vm.message += ' Ingrese un valor numérico para el parámetro ';
-            vm.message += results[i].parametro + ' ';
-            vm.message += sample.punto + ' ';
+            vm.message += results[i].param + ' ';
+            vm.message += ' (' + sample.punto.punto + ')';
             return false;
+            break;
           }
           if (results[i].id_tipo_valor == 2 && results[i].valor.length < 2) {
             vm.message += ' Ingrese un valor para el parámetro ';
-            vm.message += results[i].parametro + ' ';
-            vm.message += sample.punto + ' ';
+            vm.message += results[i].param + ' ';
+            vm.message += ' (' + sample.punto.punto + ')';
             return false;
+            break;
           }
         }
       }
@@ -1703,11 +1705,13 @@
           if (!DateUtilsService.isValidDate(samples[i].fecha_muestreo)) {
             vm.message += ' Ingrese una fecha/hora válida para la muestra en ';
             vm.message += samples[i].punto.punto + ' ';
-            vm.message += ' [' + (i + 1) + '] ';
+            vm.message += ' (Ver fila ' + (i + 1) + ')';
             return false;
           }
           samples[i].fecha_muestreo = new Date(samples[i].fecha_muestreo);
-          isResultListValid(samples[i], samples[i].resultados);
+          if (!isResultListValid(samples[i], samples[i].resultados)) {
+            return false;
+          }
         }
       } else {
         vm.message += ' Sin muestras ';
@@ -1718,10 +1722,6 @@
 
     function isFormValid() {
       vm.message = '';
-      // if (vm.sheet.id_norma_muestreo < 1) {
-      //   vm.message += ' Seleccione una Norma de referencia ';
-      //   return false;
-      // }
       if (!DateUtilsService.isValidDate(vm.sheet.fecha_muestreo)) {
         vm.message += ' Ingrese una fecha/hora de muestreo válida ';
         return false;
@@ -1762,7 +1762,6 @@
 
     function submitForm() {
       if (isFormValid() && !vm.isDataSubmitted) {
-        console.log(vm);
         vm.isDataSubmitted = true;
         if (vm.sheet.id_hoja < 1) {
           RestUtilsService

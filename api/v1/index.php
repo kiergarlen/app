@@ -279,9 +279,11 @@ $app->post("/sheets", function() use ($app) {
     {
       $sheetUpdateData = processSheetUpdate($request);
       $sheetId = updateSheet($sheetUpdateData["sheet"]);
+      // processSheetReceptionUpdate($sheetUpdateData);
       processSheetResultsUpdate($sheetUpdateData);
       processSheetPreservationsUpdate($sheetUpdateData);
     }
+    // $result = json_encode(processSheetReceptionUpdate($sheetUpdateData));
     $result = "{\"id_hoja\":" . $sheetId . "}";
     $app->response()->status(200);
     $app->response()->header("Content-Type", "application/json");

@@ -1125,6 +1125,32 @@ function getReceptions() {
   return $receptions;
 }
 
+function getReceptionsBySheet($sheetId) {
+  $sql = "SELECT id_recepcion, id_orden, id_plan, id_hoja,
+    id_recepcionista, id_verificador, id_muestra_validacion,
+    id_status, id_usuario_captura, id_usuario_valida,
+    id_usuario_entrega, id_usuario_actualiza,
+    CONVERT(NVARCHAR, fecha_entrega, 126) AS fecha_entrega,
+    CONVERT(NVARCHAR, fecha_recibe, 126) AS fecha_recibe,
+    CONVERT(NVARCHAR, fecha_verifica, 126) AS fecha_verifica,
+    CONVERT(NVARCHAR, fecha_captura, 126) AS fecha_captura,
+    CONVERT(NVARCHAR, fecha_valida, 126) AS fecha_valida,
+    CONVERT(NVARCHAR, fecha_actualiza, 126) AS fecha_actualiza,
+    CONVERT(NVARCHAR, fecha_rechaza, 126) AS fecha_rechaza,
+    ip_captura, ip_valida, ip_actualiza,
+    host_captura, host_valida, host_actualiza, comentarios,
+    motivo_rechaza, activo
+    FROM Recepcion
+    WHERE activo = 1 AND id_hoja = :sheetId";
+  $db = getConnection();
+  $stmt = $db->prepare($sql);
+  $stmt->bindParam("sheetId", $sheetId);
+  $stmt->execute();
+  $receptions = $stmt->fetchAll(PDO::FETCH_ASSOC);
+  $db = null;
+  return $receptions;
+}
+
 function getBlankReception() {
   return array(
     "id_recepcion" => 0,"id_orden" => 0, "id_plan" => 0, "id_hoja" => 0,

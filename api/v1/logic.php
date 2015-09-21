@@ -973,6 +973,21 @@ function processSheetUpdate($request) {
   return $sheetUpdateData;
 }
 
+function processSheetReceptionUpdate($sheetUpdateData) {
+  $sheet = $sheetUpdateData["sheet"];
+  $sheetId = $sheet["id_hoja"];
+  $storedReceptions = getReceptionsBySheet($sheetId);
+  // $i = 0;
+  // $l = count($storedReceptions);
+  // if ($l > 0) {
+  //   for ($i = 0; $i < $l; $i++) {
+
+  //   }
+  // }
+  return $storedReceptions;
+  //return $sheetId;
+}
+
 function processSheetResultsUpdate($sheetUpdateData) {
   $samples = (array) $sheetUpdateData["samples"];
   $sheetId = $sheetUpdateData["sheet"]["id_hoja"];

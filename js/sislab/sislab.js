@@ -1726,12 +1726,16 @@
         vm.message += ' Ingrese una fecha/hora de muestreo válida ';
         return false;
       }
-      vm.sheet.fecha_muestreo = new Date(vm.sheet.fecha_muestreo);
+      vm.sheet.fecha_muestreo = DateUtilsService.dateToIso(
+        new Date(vm.sheet.fecha_muestreo)
+      );
       if (!DateUtilsService.isValidDate(vm.sheet.fecha_entrega)) {
         vm.message += ' Ingrese una fecha/hora de entrega válida ';
         return false;
       }
-      vm.sheet.fecha_muestreo = new Date(vm.sheet.fecha_entrega);
+      vm.sheet.fecha_muestreo = DateUtilsService.dateToIso(
+        new Date(vm.sheet.fecha_entrega)
+      );
       if (!isSampleListValid()) {
         return false;
       }
@@ -1991,10 +1995,16 @@
         vm.message += ' Ingrese una fecha/hora de entrega válida ';
         return false;
       }
+      vm.reception.fecha_entrega = DateUtilsService.dateToIso(
+        new Date(vm.reception.fecha_entrega)
+      );
       if (!DateUtilsService.isValidDate(new Date(vm.reception.fecha_recibe))) {
         vm.message += ' Ingrese una fecha/hora de recepción válida ';
         return false;
       }
+      vm.reception.fecha_recibe = DateUtilsService.dateToIso(
+        new Date(vm.reception.fecha_recibe)
+      );
       if (vm.reception.id_recepcionista < 1) {
         vm.message += ' Seleccione un responsable de la recepción ';
         return false;

@@ -1424,8 +1424,7 @@
       return true;
     }
 
-    function isFormValid() {
-      vm.message = '';
+    function isGeneralDataValid() {
       if (vm.plan.id_objetivo_plan < 1) {
         vm.message += ' Seleccione un objetivo ';
         return false;
@@ -1437,6 +1436,12 @@
       if (!DateUtilsService.isValidDate(new Date(vm.plan.fecha))) {
         vm.message += ' Ingrese una fecha válida de muestreo ';
         return false;
+      }
+      if (vm.plan.orden.id_tipo_muestreo > 1) {
+        if (isNaN(vm.plan.frecuencia) || vm.plan.frecuencia < 1) {
+          vm.message += ' Seleccione una frecuencia de muestreo ';
+          return false;
+        }
       }
       if (vm.plan.calle.length < 1) {
         vm.message += ' Ingrese una calle o ubicación aproximada ';
@@ -1450,12 +1455,10 @@
         vm.message += ' Seleccione una localidad ';
         return false;
       }
-      if (vm.plan.orden.id_tipo_muestreo > 1) {
-        if (isNaN(vm.plan.frecuencia) || vm.plan.frecuencia < 1) {
-          vm.message += ' Seleccione una frecuencia de muestreo ';
-          return false;
-        }
-      }
+      return true;
+    }
+
+    function isSupervisorListValid() {
       if (vm.plan.id_supervisor_entrega < 1) {
         vm.message += ' Seleccione un Responsable de muestreo ';
         return false;
@@ -1478,6 +1481,17 @@
       }
       if (vm.plan.id_ayudante_registro < 1) {
         vm.message += ' Seleccione una Acompañante de registro de resultados ';
+        return false;
+      }
+      return true;
+    }
+
+    function isFormValid() {
+      vm.message = '';
+      if (!isGeneralDataValid()) {
+        return false;
+      }
+      if (!isSupervisorListValid()) {
         return false;
       }
       if (!isInstrumentListValid) {
@@ -1680,14 +1694,12 @@
             vm.message += results[i].param + ' ';
             vm.message += ' (' + sample.punto.punto + ')';
             return false;
-            break;
           }
           if (results[i].id_tipo_valor == 2 && results[i].valor.length < 2) {
             vm.message += ' Ingrese un valor para el parámetro ';
             vm.message += results[i].param + ' ';
             vm.message += ' (' + sample.punto.punto + ')';
             return false;
-            break;
           }
         }
       }

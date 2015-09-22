@@ -961,8 +961,8 @@ function getSheetsByPlan($planId) {
 function getBlankSheet() {
   return array(
     "id_hoja" => 0, "id_estudio" => 0, "id_cliente" => 0, "id_orden" => 0,
-    "id_plan" => 0, "id_paquete" => 0, "id_nubes" => 1,
-    "id_direccion_corriente" => 1, "id_oleaje" => 1, "id_status" => 1,
+    "id_plan" => 0, "id_paquete" => 0, "id_nubes" => 4,
+    "id_direccion_corriente" => 8, "id_oleaje" => 5, "id_status" => 1,
     "id_usuario_captura" => 0, "id_usuario_valida" => 0,
     "id_usuario_actualiza" => 0,
     "fecha_muestreo" => NULL, "fecha_entrega" => NULL,
@@ -1912,8 +1912,8 @@ function getSamples() {
     id_ubicacion, id_punto, id_tipo_muestreo,
     CONVERT(NVARCHAR, fecha_muestreo, 126) AS fecha_muestreo,
     CONVERT(NVARCHAR, fecha_recibe, 126) AS fecha_recibe,
-    comentarios, activo
-    FROM Muestra
+    comentarios, activo, ubicacion
+    FROM viewMuestraUbicacion
     WHERE activo = 1";
   $db = getConnection();
   $stmt = $db->prepare($sql);

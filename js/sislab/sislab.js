@@ -163,7 +163,7 @@
       when('/inventario/muestra', {
         templateUrl: 'partials/inventario/muestras.html',
         controller: 'SampleListController',
-        controllerAs: 'samplesList'
+        controllerAs: 'samples'
       }).
       when('/inventario/equipo', {
         templateUrl: 'partials/inventario/equipos.html',
@@ -2429,11 +2429,13 @@
    * @desc Controla la vista para el listado de Muestras
    * @this {Object} $scope - Contenedor para el modelo
    * @param {Object} $location - Manejo de URL
+   * @param {Object} TokenService - Proveedor para manejo del token
    * @param {Object} SampleService - Proveedor de datos, Muestras
    */
-  function SampleListController($location, SampleService) {
+  function SampleListController($location, TokenService, SampleService) {
     var vm = this;
     vm.samples = SampleService.get();
+    vm.user = TokenService.getUserFromToken();
     vm.viewSample = viewSample;
 
     function viewSample(id) {
@@ -2444,7 +2446,7 @@
     .module('sislabApp')
     .controller('SampleListController',
       [
-        '$location', 'SampleService',
+        '$location', 'TokenService', 'SampleService',
         SampleListController
       ]
     );

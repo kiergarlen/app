@@ -1,5 +1,6 @@
 <?php
 //PROCESSING FUNCTIONS
+define("KEY", "m0oxUT7L8Unn93hXMUGHpwq_jTSKVBjQfEVCUe8jZ38KUU4VSAfmsNk4JJYcJl7CukrY6QMlixxwat7AZSpDcSQ");
 
 function processUserJwt($request) {
   $input = json_decode($request->getbody());

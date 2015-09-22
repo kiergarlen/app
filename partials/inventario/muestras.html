@@ -22,7 +22,7 @@
   <div class="row">
     <div class="col-xs-12 col-sm-8">
       <label for="sampleSearch" class="sr-only">
-        Ingrese una búsqueda (Clave, Matriz, etc.)
+        Ingrese una búsqueda
       </label>
       <div class="input-group">
         <div class="input-group-addon">
@@ -30,10 +30,10 @@
         </div>
         <input type="text"
           class="form-control"
-          placeholder="Ingrese una búsqueda (Clave, Matriz, etc.)"
+          placeholder="Ingrese una búsqueda"
           id="sampleSearch"
           name="sampleSearch"
-          data-ng-model="samlpes.filter.$">
+          data-ng-model="samples.filter.$">
       </div>
       <br>
     </div>
@@ -51,8 +51,12 @@
           <thead>
             <tr>
               <th>Id Muestra</th>
-              <th>Clave</th>
-              <th>Matriz</th>
+              <th>Id Estudio</th>
+              <th>Muestreo</th>
+              <th
+                data-ng-show="samples.user.level < 3">
+                Ubicación
+              </th>
               <th>Fecha</th>
               <th>Acciones</th>
             </tr>
@@ -68,13 +72,20 @@
                 {{item.id_muestra}}
               </td>
               <td>
-               {{item.folio}}
+               {{item.id_estudio}}
               </td>
               <td>
-                {{item.matriz}}
+                <span class="label label-info"
+                  data-ng-show="item.id_tipo_muestreo > 1">Compuesto</span>
+                <span class="label label-primary"
+                  data-ng-show="item.id_tipo_muestreo < 2">Simple</span>
+              </td>
+              <td
+                data-ng-show="samples.user.level < 3">
+                {{item.ubicacion}}
               </td>
               <td>
-                {{item.fecha}}
+                {{item.fecha_muestreo | date: 'yyyy-MM-dd'}}
               </td>
               <td>
                 <button class="btn btn-default"

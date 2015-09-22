@@ -3,7 +3,6 @@ require "../libs/Slim/Slim.php";
 require "../libs/JWT/JWT.php";
 require "./logic.php";
 require "./db.php";
-define("KEY", "m0oxUT7L8Unn93hXMUGHpwq_jTSKVBjQfEVCUe8jZ38KUU4VSAfmsNk4JJYcJl7CukrY6QMlixxwat7AZSpDcSQ");
 
 \Slim\Slim::registerAutoloader();
 $app = new \Slim\Slim();

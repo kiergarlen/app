@@ -2456,6 +2456,32 @@
       ]
     );
 
+  //SampleController.js
+  /**
+   * @name SampleController
+   * @constructor
+   * @desc Controla la vista para capturar las Cadenas de custodia
+   * @this {Object} $scope - Contenedor para el modelo
+   * @param {Object} $routeParams - Proveedor de parámetros de ruta
+   * @param {Object} TokenService - Proveedor para manejo del token
+   * @param {Object} SampleService - Proveedor de datos, Muestras
+   */
+  function SampleController($scope, $routeParams, TokenService,
+    SampleService) {
+    var vm = this;
+    vm.user = TokenService.getUserFromToken();
+    vm.sample = SampleService.query({sampleId: $routeParams.sampleId});
+  }
+  angular
+    .module('sislabApp')
+    .controller('SampleController',
+      [
+        '$scope', '$routeParams', 'TokenService',
+        'SampleService',
+        SampleController
+      ]
+    );
+
   //InstrumentListController.js
   /**
    * @name InstrumentListController

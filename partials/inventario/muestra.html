@@ -7,73 +7,36 @@
 
 <div class="row">
   <div class="col-xs-12">
-    <h2 class="page-header">Inventario de muestras</h2>
+    <h2 class="page-header">Muestra</h2>
   </div>
 </div>
 <form class="form" role="form"
-  name="sampleInventoryForm"
+  name="jobForm"
+  data-ng-submit="sample.submitSampleForm()"
   novalidate
   >
   <div class="row">
     <div class="col-xs-12">
-      <h4>Búsqueda</h4>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-xs-12 col-sm-8">
-      <label for="sampleName" class="sr-only">
-        Ingrese una búsqueda (Datos de muestra)
-      </label>
-      <input type="text"
-        class="form-control"
-        placeholder="Ingrese una búsqueda (Datos de muestra)"
-        id="sampleName"
-        name="sampleName"
-        data-ng-model="samples.filter.$">
-      <br>
+      <ul>
+        <li><strong>id_estudio:</strong> {{::sample.id_estudio}}</li>
+        <li><strong>id_cliente:</strong> {{::sample.id_cliente}}</li>
+        <li><strong>id_orden:</strong> {{::sample.id_orden}}</li>
+        <li><strong>id_plan:</strong> {{::sample.id_plan}}</li>
+        <li><strong>id_hoja:</strong> {{::sample.id_hoja}}</li>
+        <li><strong>id_recepcion:</strong> {{::sample.id_recepcion}}</li>
+        <li><strong>id_custodia:</strong> {{::sample.id_custodia}}</li>
+        <li><strong>id_paquete:</strong> {{::sample.id_paquete}}</li>
+        <li><strong>id_ubicacion:</strong> {{::sample.id_ubicacion}}</li>
+        <li><strong>id_punto:</strong> {{::sample.id_punto}}</li>
+        <li><strong>id_tipo_muestreo:</strong> {{::sample.id_tipo_muestreo}}</li>
+        <li><strong>fecha_muestreo:</strong> {{::sample.fecha_muestreo}}</li>
+        <li><strong>fecha_recibe:</strong> {{::sample.fecha_recibe}}</li>
+        <li><strong>comentarios:</strong> {{::sample.comentarios}}</li>
+        <li><strong>activo:</strong> {{::sample.activo}}</li>
+      </ul>
     </div>
   </div>
 </form>
-<div class="row">
-  <div class="col-xs-12">
-    <div class="panel">
-      <div class="panel-heading">
-        <h3 class="panel-title">Muestras</h3>
-      </div>
-      <div class="table-responsive">
-        <table class="table table-hover table-condensed"
-          id="samplesList">
-          <thead>
-            <tr>
-              <th>Muestra</th>
-              <th>Ubicación</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr
-              data-ng-repeat="item in samples.samples |
-              filter:samples.filter.$"
-              id="sampleId{{item.id_sample}}"
-              data-ng-click="">
-              <td>
-                <h6>
-                  {{item.folio}}
-                  /
-                  {{item.ejercicio}}
-                </h6>
-              </td>
-              <td>
-                {{item.ubicacion}}<br>
-                {{item.anaquel}}
-                {{item.repisa}}
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </div>
-</div>
 
           </div>
           <sislab-footer></sislab-footer>

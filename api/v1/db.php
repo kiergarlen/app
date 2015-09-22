@@ -1923,6 +1923,24 @@ function getSamples() {
   return $samples;
 }
 
+function getSample($sampleId) {
+  $sql = "SELECT id_muestra, id_estudio, id_cliente, id_orden,
+    id_plan, id_hoja, id_recepcion, id_custodia, id_paquete,
+    id_ubicacion, id_punto, id_tipo_muestreo,
+    CONVERT(NVARCHAR, fecha_muestreo, 126) AS fecha_muestreo,
+    CONVERT(NVARCHAR, fecha_recibe, 126) AS fecha_recibe,
+    comentarios, activo
+    FROM Muestra
+    WHERE activo = 1 ANd id_muestra = :sampleId";
+  $db = getConnection();
+  $stmt = $db->prepare($sql);
+  $stmt->bindParam("sampleId", $sampleId);
+  $stmt->execute();
+  $sample = $stmt->fetch(PDO::FETCH_OBJ);
+  $db = null;
+  return $sample;
+}
+
 function getBlankSample() {
   return array(
     "id_muestra" => 0, "id_estudio" => 0,

@@ -153,7 +153,7 @@
       when('/reporte/reporte', {
         templateUrl: 'partials/reporte/reportes.html',
         controller: 'ReportListController',
-        controllerAs: 'reportsList'
+        controllerAs: 'reports'
       }).
       when('/reporte/reporte/:reportId', {
         templateUrl: 'partials/reporte/reporte.html',
@@ -164,6 +164,11 @@
         templateUrl: 'partials/inventario/muestras.html',
         controller: 'SampleListController',
         controllerAs: 'samples'
+      }).
+      when('/inventario/muestra/:sampleId', {
+        templateUrl: 'partials/inventario/muestra.html',
+        controller: 'SampleController',
+        controllerAs: 'sample'
       }).
       when('/inventario/equipo', {
         templateUrl: 'partials/inventario/equipos.html',

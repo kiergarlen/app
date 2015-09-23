@@ -58,11 +58,11 @@ $app->get("/studies(/)(:studyId)", function($studyId = -1) use ($app) {
   try {
     $userId = decodeUserToken($app->request())->uid;
     $result = json_encode(getBlankStudy());
-    if ($studyId > 0)
+    if ($studyId > -1)
     {
       $result = json_encode(getStudy($studyId));
     }
-    if ($studyId < 0)
+    else
     {
       $result = json_encode(getStudies());
     }
@@ -904,10 +904,17 @@ $app->get("/receptionists", function() use ($app) {
   }
 });
 
-$app->get("/samples", function() use ($app) {
+$app->get("/samples(/)(:sampleId)", function($sampleId = -1) use ($app) {
   try {
     $userId = decodeUserToken($app->request())->uid;
-    $result = json_encode(getSamples());
+    if ($sampleId > -1)
+    {
+      $result = json_encode(getSample($sampleId));
+    }
+    else
+    {
+      $result = json_encode(getSamples());
+    }
     $app->response()->status(200);
     $app->response()->header("Content-Type", "application/json");
     //$result = ")]}',\n" . $result;

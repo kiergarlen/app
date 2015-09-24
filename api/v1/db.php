@@ -911,6 +911,17 @@ function updatePlan($updateData) {
   return $updateData["id_plan"];
 }
 
+function disableOrderPlans($orderId) {
+  $sql = "UPDATE [Plan] SET activo = 0
+    WHERE id_orden = :orderId";
+  $dn = getConnection();
+  $stmt = $db->prepare($sql);
+  $stmt->bidParam("orderId", $orderId);
+  $stmt->execute();
+  $db = null;
+  return $orderId;
+}
+
 function getSheets() {
   $sql = "SELECT id_hoja, id_estudio, id_cliente, id_orden, id_plan,
     id_paquete, id_nubes, id_direccion_corriente, id_oleaje,

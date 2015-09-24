@@ -344,7 +344,6 @@ function processStudyOrderUpdate($studyUpdateData) {
         $order["id_cliente"] = $clientId;
         //TODO: Get from catalog
         $order["id_cuerpo"] = 8;
-
         $order["fecha"] = isoDateToMsSql($order["fecha"]);
         $order["id_usuario_captura"] = $updateUserId;
         $order["ip_captura"] = $updateIp;
@@ -433,7 +432,7 @@ function processOrderPlansUpdate($orderUpdateData) {
   $l = count($storedPlans);
   $m = count($plans);
 
-  //TODO: refactor with array_walk() & use single transaction
+  //TODO: use single transaction
   if ($l < 1)
   {
     for ($j = 0; $j < $m; $j++) {
@@ -473,19 +472,7 @@ function processOrderPlansUpdate($orderUpdateData) {
   }
   else
   {
-    for ($i = 0; $i < $l; $i++) {
-      unset($storedPlans[$i]['$$hashKey']);
-      unset($storedPlans[$i]["fecha_actualiza"]);
-      unset($storedPlans[$i]["id_usuario_captura"]);
-      unset($storedPlans[$i]["fecha_captura"]);
-      unset($storedPlans[$i]["ip_captura"]);
-      unset($storedPlans[$i]["host_captura"]);
-      $storedPlans[$i]["activo"] = 0;
-      $storedPlans[$i]["id_usuario_actualiza"] = $updateUserId;
-      $storedPlans[$i]["ip_actualiza"] = $updateIp;
-      $storedPlans[$i]["host_actualiza"] = $updateUrl;
-      updatePlan($storedPlans[$i]);
-    }
+    disableOrderPlans($orderId);
     for ($j = 0; $j < $m; $j++) {
       $plan = (array) $plans[$j];
       if ($plan["id_plan"] == 0)
@@ -661,9 +648,11 @@ function processPlanReceptionInsert($planUpdateData) {
 
 function processPlanSheetSampleInsert($planUpdateData) {
   $plan = (array) $planUpdateData["plan"];
+  $orderId = $plan["id_orden"];
   $client = (array) $planUpdateData["client"];
   $planId = $plan["id_plan"];
   $sheets = (array) getSheetsByPlan($planId);
+  $order = getPlainOrder($orderId);
   $sheetId = $sheets[0]["id_hoja"];
   $samples = (array) getSamplesBySheet($sheetId);
   $sampleId = 0;
@@ -686,6 +675,7 @@ function processPlanSheetSampleInsert($planUpdateData) {
     $sampleData["id_recepcion"] = $receptionId;
     $sampleData["id_paquete"] = $plan["id_paquete"];
     $sampleData["id_ubicacion"] = $plan["id_ubicacion"];
+    $sampleData["id_tipo_muestreo"] = $order->id_tipo_muestreo;
     $sampleData["fecha_muestreo"] = isoDateToMsSql($plan["fecha"]);
 
     for ($i = 0; $i < $l; $i++) {
@@ -732,7 +722,6 @@ function processPlanInstrumentsUpdate($planUpdateData) {
   else
   {
     disablePlanInstruments($planId);
-
     for ($i = 0; $i < $m; $i++) {
       $instrument = array(
         "id_plan_instrumento" => $instruments[$i]->id_plan_instrumento,

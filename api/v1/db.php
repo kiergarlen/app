@@ -592,6 +592,17 @@ function updateOrder($updateData) {
   return $updateData["id_orden"];
 }
 
+function disableStudyOrders($studyId) {
+  $sql = "UPDATE Orden SET activo = 0
+    WHERE id_estudio = :studyId";
+  $db = getConnection();
+  $stmt = $db->prepare($sql);
+  $stmt->bidParam("studyId", $studyId);
+  $stmt->execute();
+  $db = null;
+  return $studyId;
+}
+
 function getOrderSources() {
   $sql = "SELECT id_origen_orden, origen_orden, activo
     FROM OrigenOrden

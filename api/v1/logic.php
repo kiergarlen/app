@@ -203,6 +203,7 @@ function processStudyOrderInsert($studyInsertData, $studyId) {
   for ($i = 0; $i < $l; $i++)
   {
     $order = (array) $orders[$i];
+    // processNewOrderInsert($newOrder, $study);
     unset($order['$$hashKey']);
     unset($order["id_orden"]);
     unset($order["fecha_captura"]);
@@ -284,73 +285,19 @@ function processStudyOrderUpdate($studyUpdateData) {
   {
     for ($j = 0; $j < $m; $j++) {
       if ($orders[$j]->id_orden < 1) {
-        $newOrder = (array) $orders[$j];
-        unset($newOrder['$$hashKey']);
-        unset($newOrder["id_orden"]);
-        unset($newOrder["id_usuario_actualiza"]);
-        unset($newOrder['fecha_captura']);
-        unset($newOrder["fecha_actualiza"]);
-        unset($newOrder["ip_actualiza"]);
-        unset($newOrder["host_actualiza"]);
-
-        $newOrder["id_estudio"] = $studyId;
-        $newOrder["id_cliente"] = $clientId;
-        //TODO: Get from catalog
-        $newOrder["id_cuerpo"] = 8;
-        $newOrder["fecha"] = isoDateToMsSql($newOrder["fecha"]);
-        $newOrder["id_usuario_captura"] = $updateUserId;
-        $newOrder["ip_captura"] = $updateIp;
-        $newOrder["host_captura"] = $updateUrl;
-        $newOrder["fecha_valida"] = isoDateToMsSql($newOrder["fecha_valida"]);
-        $newOrder["fecha_rechaza"] = isoDateToMsSql($newOrder["fecha_rechaza"]);
-        insertOrder($newOrder);
+        processNewOrderInsert($newOrder, $study);
       }
     }
     return $studyId;
   }
   else
   {
-    for ($i = 0; $i < $l; $i++) {
-      unset($storedOrders[$i]["cliente"]);
-      unset($storedOrders[$i]["estudio"]);
-      unset($storedOrders[$i]["planes"]);
-      unset($storedOrders[$i]['$$hashKey']);
-      unset($storedOrders[$i]["id_usuario_captura"]);
-      unset($storedOrders[$i]["fecha_actualiza"]);
-      unset($storedOrders[$i]["fecha_captura"]);
-      unset($storedOrders[$i]["ip_captura"]);
-      unset($storedOrders[$i]["host_captura"]);
-      $storedOrders[$i]["activo"] = 0;
-      $storedOrders[$i]["fecha"] = isoDateToMsSql($storedOrders[$i]["fecha"]);
-      $storedOrders[$i]["id_usuario_actualiza"] = $updateUserId;
-      $storedOrders[$i]["ip_actualiza"] = $updateIp;
-      $storedOrders[$i]["host_actualiza"] = $updateUrl;
-      updateOrder($storedOrders[$i]);
-    }
-
+    disableStudyOrders($studyId);
     for ($j = 0; $j < $m; $j++) {
       $order = (array) $orders[$j];
       if ($order["id_orden"] < 1)
       {
-        unset($order['$$hashKey']);
-        unset($order["id_orden"]);
-        unset($order["id_usuario_actualiza"]);
-        unset($order['fecha_captura']);
-        unset($order["fecha_actualiza"]);
-        unset($order["ip_actualiza"]);
-        unset($order["host_actualiza"]);
-
-        $order["id_estudio"] = $studyId;
-        $order["id_cliente"] = $clientId;
-        //TODO: Get from catalog
-        $order["id_cuerpo"] = 8;
-        $order["fecha"] = isoDateToMsSql($order["fecha"]);
-        $order["id_usuario_captura"] = $updateUserId;
-        $order["ip_captura"] = $updateIp;
-        $order["host_captura"] = $updateUrl;
-        $order["fecha_valida"] = isoDateToMsSql($order["fecha_valida"]);
-        $order["fecha_rechaza"] = isoDateToMsSql($order["fecha_rechaza"]);
-        insertOrder($order);
+        processNewOrderInsert($order, $study);
       }
       else
       {
@@ -375,10 +322,35 @@ function processStudyOrderUpdate($studyUpdateData) {
   return $studyId;
 }
 
-function processOrderInsert($request) {
-  $token = decodeUserToken($request);
-  $insertData = (array) json_decode($request->getBody());
-  return $insertData;
+function processNewOrderInsert($newOrder, $study) {
+  $studyId = $study["id_estudio"];
+  $clientId = $study["id_cliente"];
+  $updateUserId = $study["id_usuario_actualiza"];
+  $updateIp = $study["ip_actualiza"];
+  $updateUrl = $study["host_actualiza"];
+
+  unset($newOrder['$$hashKey']);
+  unset($newOrder["id_orden"]);
+  unset($newOrder["id_usuario_actualiza"]);
+  unset($newOrder['fecha_captura']);
+  unset($newOrder["fecha_actualiza"]);
+  unset($newOrder["ip_actualiza"]);
+  unset($newOrder["host_actualiza"]);
+
+  $newOrder["id_estudio"] = $studyId;
+  $newOrder["id_cliente"] = $clientId;
+  //TODO: Get from catalog
+  $newOrder["id_cuerpo"] = 8;
+  // $order["id_status"] = 1;
+  // $order["costo_total"] = 0;
+  $newOrder["id_usuario_captura"] = $updateUserId;
+  $newOrder["fecha"] = isoDateToMsSql($newOrder["fecha"]);
+  $newOrder["fecha_valida"] = isoDateToMsSql($newOrder["fecha_valida"]);
+  $newOrder["fecha_rechaza"] = isoDateToMsSql($newOrder["fecha_rechaza"]);
+  $newOrder["ip_captura"] = $updateIp;
+  $newOrder["host_captura"] = $updateUrl;
+  // $order["activo"] = 1;
+  return insertOrder($newOrder);
 }
 
 function processOrderUpdate($request) {

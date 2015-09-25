@@ -1,6 +1,10 @@
 /*global angular, CryptoJS*/
 (function(window, document, undefined) {
   'use strict';
+  //app.js
+  //DATA API URL
+  var API_BASE_URL = 'api/v1/';
+
   //ANGULAR MODULE SETTER
   angular
     .module('sislabApp', [
@@ -11,9 +15,6 @@
       'mgcrea.ngStrap'
     ]
   );
-
-  //DATA API URL
-  var API_BASE_URL = 'api/v1/';
 
   //config.js
   /**

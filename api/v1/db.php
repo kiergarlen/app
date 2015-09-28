@@ -935,7 +935,7 @@ function disableOrderPlans($orderId) {
 
 function getSheets() {
   $sql = "SELECT id_hoja, id_estudio, id_cliente, id_orden, id_plan,
-    id_paquete, id_nubes, id_direccion_corriente, id_oleaje,
+    id_paquete, id_nube, id_direccion_corriente, id_oleaje,
     id_status, id_usuario_captura, id_usuario_valida,
     id_usuario_actualiza,
     CONVERT(NVARCHAR, fecha_muestreo, 126) AS fecha_muestreo,
@@ -944,7 +944,7 @@ function getSheets() {
     CONVERT(NVARCHAR, fecha_valida, 126) AS fecha_valida,
     CONVERT(NVARCHAR, fecha_actualiza, 126) AS fecha_actualiza,
     ip_captura, ip_valida, ip_actualiza, host_captura,
-    host_valida, host_actualiza, nubes_otro, comentarios,
+    host_valida, host_actualiza, nube_otro, comentarios,
     motivo_rechaza, activo, ubicacion, id_tipo_muestreo
     FROM viewHojaUbicacion
     WHERE activo = 1";
@@ -958,7 +958,7 @@ function getSheets() {
 
 function getSheetsByPlan($planId) {
   $sql = "SELECT id_hoja, id_estudio, id_cliente, id_orden, id_plan,
-    id_paquete, id_nubes, id_direccion_corriente, id_oleaje,
+    id_paquete, id_nube, id_direccion_corriente, id_oleaje,
     id_status, id_usuario_captura, id_usuario_valida,
     id_usuario_actualiza,
     CONVERT(NVARCHAR, fecha_muestreo, 126) AS fecha_muestreo,
@@ -967,7 +967,7 @@ function getSheetsByPlan($planId) {
     CONVERT(NVARCHAR, fecha_valida, 126) AS fecha_valida,
     CONVERT(NVARCHAR, fecha_actualiza, 126) AS fecha_actualiza,
     ip_captura, ip_valida, ip_actualiza, host_captura,
-    host_valida, host_actualiza, nubes_otro, comentarios,
+    host_valida, host_actualiza, nube_otro, comentarios,
     motivo_rechaza, activo
     FROM Hoja
     WHERE activo = 1 AND id_plan = :planId";
@@ -983,7 +983,7 @@ function getSheetsByPlan($planId) {
 function getBlankSheet() {
   return array(
     "id_hoja" => 0, "id_estudio" => 0, "id_cliente" => 0, "id_orden" => 0,
-    "id_plan" => 0, "id_paquete" => 0, "id_nubes" => 4,
+    "id_plan" => 0, "id_paquete" => 0, "id_nube" => 4,
     "id_direccion_corriente" => 8, "id_oleaje" => 5, "id_status" => 1,
     "id_usuario_captura" => 0, "id_usuario_valida" => 0,
     "id_usuario_actualiza" => 0,
@@ -992,14 +992,14 @@ function getBlankSheet() {
     "fecha_actualiza" => NULL, "fecha_rechaza" => NULL,
     "ip_captura" => "", "ip_valida" => "", "ip_actualiza" => "",
     "host_captura" => "", "host_valida" => "", "host_actualiza" => "",
-    "nubes_otro" => "", "comentarios" => "", "motivo_rechaza" => "",
+    "nube_otro" => "", "comentarios" => "", "motivo_rechaza" => "",
     "activo" => 1
   );
 }
 
 function getPlainSheet($sheetId) {
   $sql = "SELECT id_hoja, id_estudio, id_cliente, id_orden, id_plan,
-    id_paquete, id_nubes, id_direccion_corriente, id_oleaje,
+    id_paquete, id_nube, id_direccion_corriente, id_oleaje,
     id_status, id_usuario_captura, id_usuario_valida,
     id_usuario_actualiza,
     CONVERT(NVARCHAR, fecha_muestreo, 126) AS fecha_muestreo,
@@ -1009,7 +1009,7 @@ function getPlainSheet($sheetId) {
     CONVERT(NVARCHAR, fecha_actualiza, 126) AS fecha_actualiza,
     CONVERT(NVARCHAR, fecha_rechaza, 126) AS fecha_rechaza,
     ip_captura, ip_valida, ip_actualiza, host_captura,
-    host_valida, host_actualiza, nubes_otro, comentarios,
+    host_valida, host_actualiza, nube_otro, comentarios,
     motivo_rechaza, activo
     FROM Hoja
     WHERE activo = 1 AND id_hoja = :sheetId";
@@ -1064,18 +1064,18 @@ function getSheet($sheetId) {
 
 function insertSheet($sheetData) {
   $sql = "INSERT INTO Hoja (id_estudio, id_cliente, id_orden,
-    id_plan, id_paquete, id_nubes, id_direccion_corriente,
+    id_plan, id_paquete, id_nube, id_direccion_corriente,
     id_oleaje, id_status, id_usuario_captura, id_usuario_valida,
     fecha_muestreo, fecha_entrega,
     fecha_captura, fecha_valida, fecha_rechaza, ip_captura,
-    ip_valida, host_captura, host_valida, nubes_otro,
+    ip_valida, host_captura, host_valida, nube_otro,
     comentarios, motivo_rechaza, activo)
     VALUES (:id_estudio, :id_cliente, :id_orden, :id_plan,
-    :id_paquete, :id_nubes, :id_direccion_corriente, :id_oleaje,
+    :id_paquete, :id_nube, :id_direccion_corriente, :id_oleaje,
     :id_status, :id_usuario_captura, :id_usuario_valida,
     :fecha_muestreo, :fecha_entrega, SYSDATETIMEOFFSET(),
     :fecha_valida, :fecha_rechaza, :ip_captura,
-    :ip_valida, :host_captura, :host_valida, :nubes_otro,
+    :ip_valida, :host_captura, :host_valida, :nube_otro,
     :comentarios, :motivo_rechaza, :activo)";
   $db = getConnection();
   $stmt = $db->prepare($sql);
@@ -1089,7 +1089,7 @@ function updateSheet($updateData) {
   $sql = "UPDATE Hoja SET id_estudio = :id_estudio,
     id_cliente = :id_cliente, id_orden = :id_orden,
     id_plan = :id_plan, id_paquete = :id_paquete,
-    id_nubes = :id_nubes,
+    id_nube = :id_nube,
     id_direccion_corriente = :id_direccion_corriente,
     id_oleaje = :id_oleaje, id_status = :id_status,
     id_usuario_valida = :id_usuario_valida,
@@ -1101,7 +1101,7 @@ function updateSheet($updateData) {
     fecha_rechaza = :fecha_rechaza, ip_valida = :ip_valida,
     ip_actualiza = :ip_actualiza, host_valida = :host_valida,
     host_actualiza = :host_actualiza,
-    nubes_otro = :nubes_otro, comentarios = :comentarios,
+    nube_otro = :nube_otro, comentarios = :comentarios,
     motivo_rechaza = :motivo_rechaza, activo = :activo
     WHERE id_hoja = :id_hoja";
   $db = getConnection();
@@ -3040,8 +3040,8 @@ function getCoolers() {
 }
 
 function getClouds() {
-  $sql = "SELECT id_nubes, nubes, activo
-    FROM Nubes
+  $sql = "SELECT id_nube, nube, activo
+    FROM Nube
     WHERE activo = 1";
   $db = getConnection();
   $stmt = $db->prepare($sql);

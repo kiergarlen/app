@@ -715,7 +715,7 @@
    * @param {Object} WaterBodyService - Proveedor de datos, Cuerpo de agua
    * @param {Object} LocationService - Proveedor de datos, Ubicación
    * @param {Object} OrderSourceService - Proveedor de datos, Orígenes de orden
-   * @param {Object} LocationPackagesService - Proveedor de datos, Paquetes de puntos por Ubicación
+   * @param {Object} LocationPackagesService - Proveedor de datos, Paquetes por Ubicación
    * @param {Object} SamplingSupervisorService - Proveedor de datos, Supervisores de muestreo
    * @param {Object} OrderService - Proveedor de datos, Órdenes de muestreo
    */
@@ -1599,7 +1599,7 @@
    * @param {Object} RestUtilsService - Proveedor para manejo de servicios REST
    * @param {Object} ArrayUtilsService - Proveedor para manejo de arreglos
    * @param {Object} DateUtilsService - Proveedor para manejo de fechas
-   * @param {Object} CloudService - Proveedor de datos, Coberturas nubes
+   * @param {Object} CloudService - Proveedor de datos, Cobertura nubes
    * @param {Object} WindService - Proveedor de datos, Direcciones viento
    * @param {Object} WaveService - Proveedor de datos, Intensidades oleaje
    * @param {Object} SamplingNormService - Proveedor de datos, Normas muestreo
@@ -1757,7 +1757,7 @@
       if (!isSampleListValid()) {
         return false;
       }
-      if (vm.sheet.id_nubes < 1) {
+      if (vm.sheet.id_nube < 1) {
         vm.message += ' Seleccione una cobertura de nubes ';
         return false;
       }
@@ -4499,7 +4499,7 @@
   /**
    * @name LocationPackagesService
    * @constructor
-   * @desc Proveedor de datos, Paquetes de puntos por Ubicación
+   * @desc Proveedor de datos, Paquetes por Ubicación
    * @param {Object} $resource - Acceso a recursos HTTP
    * @param {Object} TokenService - Proveedor de métodos para token
    * @return {Object} $resource - Acceso a recursos HTTP
@@ -5545,7 +5545,7 @@
   /**
    * @name CloudService
    * @constructor
-   * @desc Proveedor de datos, Coberturas nubes
+   * @desc Proveedor de datos, Cobertura nubes
    * @param {Object} $resource - Acceso a recursos HTTP
    * @param {Object} TokenService - Proveedor de métodos para token
    * @return {Object} $resource - Acceso a recursos HTTP

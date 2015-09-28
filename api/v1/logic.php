@@ -192,10 +192,14 @@ function processStudyInsert($request) {
 
 function processStudyOrderInsert($studyInsertData, $studyId) {
   $orders = (array) $studyInsertData["orders"];
-  $clientId = $studyInsertData["study"]["id_cliente"];
-  $insertUserId = $studyInsertData["study"]["id_usuario_captura"];
-  $insertIp = $studyInsertData["study"]["ip_captura"];
-  $insertUrl = $studyInsertData["study"]["host_captura"];
+
+  $study = array(
+    "id_estudio" => $studyId,
+    "id_cliente" => $studyInsertData["study"]["id_cliente"],
+    "id_usuario_actualiza" = $studyInsertData["study"]["id_usuario_captura"],
+    "ip_actualiza" = $studyInsertData["study"]["ip_captura"];
+    "host_actualiza" = $studyInsertData["study"]["host_captura"];
+  );
 
   $i = 0;
   $l = count($orders);
@@ -203,28 +207,7 @@ function processStudyOrderInsert($studyInsertData, $studyId) {
   for ($i = 0; $i < $l; $i++)
   {
     $order = (array) $orders[$i];
-    // processNewOrderInsert($newOrder, $study);
-    unset($order['$$hashKey']);
-    unset($order["id_orden"]);
-    unset($order["fecha_captura"]);
-    unset($order["id_usuario_actualiza"]);
-    unset($order["fecha_actualiza"]);
-    unset($order["ip_actualiza"]);
-    unset($order["host_actualiza"]);
-
-    $order["id_estudio"] = $studyId;
-    $order["id_cliente"] = $clientId;
-    $order["id_cuerpo"] = 8;
-    $order["id_status"] = 1;
-    $order["costo_total"] = 0;
-    $order["id_usuario_captura"] = $insertUserId;
-    $order["fecha"] = isoDateToMsSql($order["fecha"]);
-    $order["fecha_valida"] = isoDateToMsSql($order["fecha_valida"]);
-    $order["fecha_rechaza"] = isoDateToMsSql($order["fecha_rechaza"]);
-    $order["ip_captura"] = $insertIp;
-    $order["host_captura"] = $insertUrl;
-    $order["activo"] = 1;
-    $orderId = insertOrder($order);
+    processNewOrderInsert($order, $study);
   }
   return $studyId;
 }
@@ -269,11 +252,12 @@ function processStudyUpdate($request) {
 
 function processStudyOrderUpdate($studyUpdateData) {
   $orders = (array) $studyUpdateData["orders"];
-  $studyId = $studyUpdateData["study"]["id_estudio"];
-  $clientId = $studyUpdateData["study"]["id_cliente"];
-  $updateUserId = $studyUpdateData["study"]["id_usuario_actualiza"];
-  $updateIp = $studyUpdateData["study"]["ip_actualiza"];
-  $updateUrl = $studyUpdateData["study"]["host_actualiza"];
+  $study = $studyUpdateData["study"];
+  $studyId = $study["id_estudio"];
+  $clientId = $study["id_cliente"];
+  $updateUserId = $study["id_usuario_actualiza"];
+  $updateIp = $study["ip_actualiza"];
+  $updateUrl = $study["host_actualiza"];
   $storedOrders = getOrdersByStudy($studyId);
 
   $i = 0;
@@ -281,44 +265,37 @@ function processStudyOrderUpdate($studyUpdateData) {
   $l = count($storedOrders);
   $m = count($orders);
 
-  if ($l < 1)
-  {
-    for ($j = 0; $j < $m; $j++) {
-      if ($orders[$j]->id_orden < 1) {
-        processNewOrderInsert($newOrder, $study);
-      }
-    }
-    return $studyId;
-  }
-  else
+  if ($l > 0)
   {
     disableStudyOrders($studyId);
-    for ($j = 0; $j < $m; $j++) {
-      $order = (array) $orders[$j];
-      if ($order["id_orden"] < 1)
-      {
-        processNewOrderInsert($order, $study);
-      }
-      else
-      {
-        unset($order["cliente"]);
-        unset($order["estudio"]);
-        unset($order["planes"]);
-        unset($order['$$hashKey']);
-        unset($order["id_usuario_captura"]);
-        unset($order["fecha_actualiza"]);
-        unset($order["fecha_captura"]);
-        unset($order["ip_captura"]);
-        unset($order["host_captura"]);
-        $order["activo"] = 1;
-        $order["fecha"] = isoDateToMsSql($order["fecha"]);
-        $order["id_usuario_actualiza"] = $updateUserId;
-        $order["ip_actualiza"] = $updateIp;
-        $order["host_actualiza"] = $updateUrl;
-        updateOrder($order);
-      }
+  }
+
+  for ($j = 0; $j < $m; $j++) {
+    $order = (array) $orders[$j];
+    if ($order["id_orden"] < 1 || $l < 1)
+    {
+      processNewOrderInsert($order, $study);
+    }
+    else
+    {
+      unset($order["cliente"]);
+      unset($order["estudio"]);
+      unset($order["planes"]);
+      unset($order['$$hashKey']);
+      unset($order["id_usuario_captura"]);
+      unset($order["fecha_actualiza"]);
+      unset($order["fecha_captura"]);
+      unset($order["ip_captura"]);
+      unset($order["host_captura"]);
+      $order["activo"] = 1;
+      $order["fecha"] = isoDateToMsSql($order["fecha"]);
+      $order["id_usuario_actualiza"] = $updateUserId;
+      $order["ip_actualiza"] = $updateIp;
+      $order["host_actualiza"] = $updateUrl;
+      updateOrder($order);
     }
   }
+
   return $studyId;
 }
 

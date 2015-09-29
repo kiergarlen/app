@@ -283,10 +283,10 @@ function processStudyOrderUpdate($studyUpdateData) {
       unset($order["planes"]);
       unset($order['$$hashKey']);
       unset($order["id_usuario_captura"]);
-      unset($order["fecha_actualiza"]);
       unset($order["fecha_captura"]);
       unset($order["ip_captura"]);
       unset($order["host_captura"]);
+      unset($order["fecha_actualiza"]);
       $order["activo"] = 1;
       $order["fecha"] = isoDateToMsSql($order["fecha"]);
       $order["id_usuario_actualiza"] = $updateUserId;
@@ -341,11 +341,12 @@ function processOrderUpdate($request) {
   unset($update["estudio"]);
   unset($update["planes"]);
   unset($update["status"]);
-  unset($update["fecha_actualiza"]);
+  // unset($update['$$hashKey']);
   unset($update["id_usuario_captura"]);
   unset($update["fecha_captura"]);
   unset($update["ip_captura"]);
   unset($update["host_captura"]);
+  unset($update["fecha_actualiza"]);
 
   $update["id_usuario_actualiza"] = $token->uid;
   $update["ip_actualiza"] = $request->getIp();

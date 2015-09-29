@@ -1379,9 +1379,9 @@ function getReceptionAreas($receptionId) {
 
 function insertReceptionArea($areaData) {
   $sql = "INSERT INTO RecepcionArea (id_recepcion, id_area,
-    id_muestra, volumen, vigencia, recipiente, activo)
+    id_muestra, volumen, vigencia, recipiente)
     VALUES (:id_recepcion, :id_area,
-    :id_muestra, :volumen, :vigencia, :recipiente, 1)";
+    :id_muestra, :volumen, :vigencia, :recipiente)";
   $db = getConnection();
   $stmt = $db->prepare($sql);
   $stmt->execute($areaData);
@@ -2066,8 +2066,8 @@ function getReceptionSamples($receptionId) {
 }
 
 function insertReceptionSample($receptionData) {
-  $sql = "INSERT INTO RecepcionMuestra (id_recepcion, id_muestra, activo)
-    VALUES (:id_recepcion, :id_muestra, 1)";
+  $sql = "INSERT INTO RecepcionMuestra (id_recepcion, id_muestra)
+    VALUES (:id_recepcion, :id_muestra)";
   $db = getConnection();
   $stmt = $db->prepare($sql);
   $stmt->execute($receptionData);
@@ -2841,10 +2841,9 @@ function getReceptionPreservations($receptionId) {
 }
 
 function insertReceptionPreservation($preservationData) {
-  $sql = "INSERT INTO RecepcionPreservacion (id_recepcion,
-    id_preservacion, cantidad, activo)
-    VALUES (:id_recepcion, :id_preservacion,
-    :cantidad, 1)";
+  $sql = "INSERT INTO RecepcionPreservacion (
+    id_recepcion, id_preservacion, cantidad)
+    VALUES (:id_recepcion, :id_preservacion, :cantidad)";
   $db = getConnection();
   $stmt = $db->prepare($sql);
   $stmt->execute($preservationData);

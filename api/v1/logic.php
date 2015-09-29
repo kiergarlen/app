@@ -196,9 +196,9 @@ function processStudyOrderInsert($studyInsertData, $studyId) {
   $study = array(
     "id_estudio" => $studyId,
     "id_cliente" => $studyInsertData["study"]["id_cliente"],
-    "id_usuario_actualiza" = $studyInsertData["study"]["id_usuario_captura"],
-    "ip_actualiza" = $studyInsertData["study"]["ip_captura"];
-    "host_actualiza" = $studyInsertData["study"]["host_captura"];
+    "id_usuario_actualiza" => $studyInsertData["study"]["id_usuario_captura"],
+    "ip_actualiza" => $studyInsertData["study"]["ip_captura"],
+    "host_actualiza" => $studyInsertData["study"]["host_captura"]
   );
 
   $i = 0;
@@ -1122,36 +1122,26 @@ function processReceptionSamplesUpdate($receptionUpdateData) {
   $l = count($storedSamples);
   $m = count($samples);
 
-  if ($l < 1)
-  {
-    for ($i = 0; $i < $m; $i++) {
-      $sample = (array) $samples[$i];
-      unset($sample["id_punto"]);
-      unset($sample["activo"]);
-      unset($sample["selected"]);
-      unset($sample["punto"]);
-      insertReceptionSample($sample);
-    }
-  }
-  else
+  if ($l > 0)
   {
     disableReceptionSamples($receptionId);
-    for ($i = 0; $i < $m; $i++) {
-      $sample = (array) $samples[$i];
-      unset($sample["id_punto"]);
-      unset($sample["activo"]);
-      unset($sample["selected"]);
-      unset($sample["punto"]);
-      if ($sample["id_recepcion_muestra"] < 1)
-      {
-        unset($sample["id_recepcion_muestra"]);
-        insertReceptionSample($sample);
-      }
-      else
-      {
-        $sample["activo"] = 1;
-        updateReceptionSample($sample);
-      }
+  }
+
+  for ($i = 0; $i < $m; $i++) {
+    $sample = array(
+      "id_recepcion_muestra" => $samples[$i]->id_recepcion_muestra,
+      "id_recepcion" => $samples[$i]->id_recepcion,
+      "id_muestra" => $samples[$i]->id_muestra
+    );
+    if ($sample["id_recepcion_muestra"] < 1 || $l < 1)
+    {
+      unset($sample["id_recepcion_muestra"]);
+      insertReceptionSample($sample);
+    }
+    else
+    {
+      $sample["activo"] = 1;
+      updateReceptionSample($sample);
     }
   }
   return $receptionId;
@@ -1165,37 +1155,27 @@ function processReceptionPreservationsUpdate($receptionUpdateData) {
   $l = count($storedPreservations);
   $m = count($preservations);
 
-  if ($l < 1)
-  {
-    for ($i = 0; $i < $m; $i++) {
-      $preservation = array(
-        "id_recepcion" => $preservations[$i]->id_recepcion,
-        "id_preservacion" => $preservations[$i]->id_preservacion,
-        "cantidad" => $preservations[$i]->cantidad
-      );
-      insertReceptionPreservation($preservation);
-    }
-  }
-  else
+  if ($l > 0)
   {
     disableReceptionPreservations($receptionId);
-    for ($i = 0; $i < $m; $i++) {
-      $preservation = array(
-        "id_recepcion_preservacion" => $preservations[$i]->id_recepcion_preservacion,
-        "id_recepcion" => $preservations[$i]->id_recepcion,
-        "id_preservacion" => $preservations[$i]->id_preservacion,
-        "cantidad" => $preservations[$i]->cantidad
-      );
-      if ($preservation["id_recepcion_preservacion"] < 1)
-      {
-        unset($preservation["id_recepcion_preservacion"]);
-        insertReceptionPreservation($preservation);
-      }
-      else
-      {
-        $preservation["activo"] = 1;
-        updateReceptionPreservation($preservation);
-      }
+  }
+
+  for ($i = 0; $i < $m; $i++) {
+    $preservation = array(
+      "id_recepcion_preservacion" => $preservations[$i]->id_recepcion_preservacion,
+      "id_recepcion" => $preservations[$i]->id_recepcion,
+      "id_preservacion" => $preservations[$i]->id_preservacion,
+      "cantidad" => $preservations[$i]->cantidad,
+    );
+    if ($preservation["id_recepcion_preservacion"] < 1)
+    {
+      unset($preservation["id_recepcion_preservacion"]);
+      insertReceptionPreservation($preservation);
+    }
+    else
+    {
+      $preservation["activo"] = 1;
+      updateReceptionPreservation($preservation);
     }
   }
   return $receptionId;
@@ -1210,43 +1190,30 @@ function processReceptionAreasUpdate($receptionUpdateData) {
   $l = count($storedAreas);
   $m = count($areas);
 
-  if ($l < 1)
-  {
-    for ($i = 0; $i < $m; $i++) {
-      $area = array(
-        "id_recepcion" => $areas[$i]->id_recepcion,
-        "id_area" => $areas[$i]->id_area,
-        "id_muestra" => $reception["id_muestra_validacion"],
-        "volumen" => $areas[$i]->volumen,
-        "vigencia" => $areas[$i]->vigencia,
-        "recipiente" => $areas[$i]->recipiente
-      );
-      insertReceptionArea($area);
-    }
-  }
-  else
+  if ($l > 0)
   {
     disableReceptionAreas($receptionId);
-    for ($i = 0; $i < $m; $i++) {
-      $area = array(
-        "id_recepcion_area" => $areas[$i]->id_recepcion_area,
-        "id_recepcion" => $areas[$i]->id_recepcion,
-        "id_area" => $areas[$i]->id_area,
-        "id_muestra" => $reception["id_muestra_validacion"],
-        "volumen" => $areas[$i]->volumen,
-        "vigencia" => $areas[$i]->vigencia,
-        "recipiente" => $areas[$i]->recipiente
-      );
-      if ($area["id_recepcion_area"] < 1)
-      {
-        unset($area["id_recepcion_area"]);
-        insertReceptionArea($area);
-      }
-      else
-      {
-        $area["activo"] = 1;
-        updateReceptionArea($area);
-      }
+  }
+
+  for ($i = 0; $i < $m; $i++) {
+    $area = array(
+      "id_recepcion_area" => $areas[$i]->id_recepcion_area,
+      "id_recepcion" => $areas[$i]->id_recepcion,
+      "id_area" => $areas[$i]->id_area,
+      "id_muestra" => $reception["id_muestra_validacion"],
+      "volumen" => $areas[$i]->volumen,
+      "vigencia" => $areas[$i]->vigencia,
+      "recipiente" => $areas[$i]->recipiente
+    );
+    if ($area["id_recepcion_area"] < 1)
+    {
+      unset($area["id_recepcion_area"]);
+      insertReceptionArea($area);
+    }
+    else
+    {
+      $area["activo"] = 1;
+      updateReceptionArea($area);
     }
   }
   return $receptionId;
@@ -1318,7 +1285,6 @@ function processReceptionJobsUpdate($receptionUpdateData) {
   {
     $newJobIds = (array) processReceptionJobsInsert($receptionUpdateData);
     for ($i = 0; $i < $m; $i++) {
-      $job = $jobs[$i];
       $job = array(
         "id_recepcion" => $jobs[$i]->id_recepcion,
         "id_trabajo" => $newJobIds[$i]

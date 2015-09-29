@@ -378,15 +378,16 @@ function processOrderPlansUpdate($orderUpdateData) {
   $plans = (array) $orderUpdateData["plans"];
 
   $i = 0;
-  $j = 0;
-  $l = count($storedPlans);
-  $m = count($plans);
-
-  //TODO: use single transaction
-  if ($l < 1)
+  $l = count($plans);
+  if (count($storedPlans) > 0)
   {
-    for ($j = 0; $j < $m; $j++) {
-      $plan = (array) $plans[$j];
+    disableOrderPlans($orderId);
+  }
+
+  for ($i = 0; $i < $l; $i++) {
+    $plan = (array) $plans[$i];
+    if ($plan["id_plan"] == 0)
+    {
       unset($plan['$$hashKey']);
       unset($plan["id_plan"]);
       unset($plan["fecha_captura"]);
@@ -394,9 +395,9 @@ function processOrderPlansUpdate($orderUpdateData) {
       unset($plan["id_usuario_actualiza"]);
       unset($plan["ip_actualiza"]);
       unset($plan["host_actualiza"]);
+      $supervisorId = $plan["id_supervisor_muestreo"];
       $plan["id_estudio"] = $orderData["id_estudio"];
       $plan["id_orden"] = $orderId;
-      $supervisorId = $plan["id_supervisor_muestreo"];
       $plan["id_supervisor_entrega"] = $supervisorId;
       $plan["id_supervisor_recoleccion"] = $supervisorId;
       $plan["id_supervisor_registro"] = $supervisorId;
@@ -411,67 +412,26 @@ function processOrderPlansUpdate($orderUpdateData) {
       $plan["id_usuario_captura"] = $updateUserId;
       $plan["ip_captura"] = $updateIp;
       $plan["host_captura"] = $updateUrl;
-      $plan["fecha"] = NULL;
+      $plan["fecha"] = isoDateToMsSql($plan["fecha_probable"]);
       $plan["fecha_probable"] = isoDateToMsSql($plan["fecha_probable"]);
       $plan["fecha_calibracion"] = NULL;
       $plan["fecha_valida"] = NULL;
       $plan["fecha_rechaza"] = NULL;
       insertPlan($plan);
     }
-    return $orderId;
-  }
-  else
-  {
-    disableOrderPlans($orderId);
-    for ($j = 0; $j < $m; $j++) {
-      $plan = (array) $plans[$j];
-      if ($plan["id_plan"] == 0)
-      {
-        unset($plan['$$hashKey']);
-        unset($plan["id_plan"]);
-        unset($plan["fecha_captura"]);
-        unset($plan["fecha_actualiza"]);
-        unset($plan["id_usuario_actualiza"]);
-        unset($plan["ip_actualiza"]);
-        unset($plan["host_actualiza"]);
-        $plan["id_estudio"] = $orderData["id_estudio"];
-        $plan["id_orden"] = $orderId;
-        $supervisorId = $plan["id_supervisor_muestreo"];
-        $plan["id_supervisor_entrega"] = $supervisorId;
-        $plan["id_supervisor_recoleccion"] = $supervisorId;
-        $plan["id_supervisor_registro"] = $supervisorId;
-        $plan["id_ayudante_entrega"] = $supervisorId;
-        $plan["id_ayudante_recoleccion"] = $supervisorId;
-        $plan["id_ayudante_registro"] = $supervisorId;
-        $plan["id_responsable_calibracion"] = $supervisorId;
-        $plan["id_responsable_recipientes"] = $supervisorId;
-        $plan["id_responsable_reactivos"] = $supervisorId;
-        $plan["id_responsable_material"] = $supervisorId;
-        $plan["id_responsable_hieleras"] = $supervisorId;
-        $plan["id_usuario_captura"] = $updateUserId;
-        $plan["ip_captura"] = $updateIp;
-        $plan["host_captura"] = $updateUrl;
-        $plan["fecha"] = isoDateToMsSql($plan["fecha_probable"]);;
-        $plan["fecha_probable"] = isoDateToMsSql($plan["fecha_probable"]);
-        $plan["fecha_calibracion"] = NULL;
-        $plan["fecha_valida"] = NULL;
-        $plan["fecha_rechaza"] = NULL;
-        insertPlan($plan);
-      }
-      else
-      {
-        unset($plan['$$hashKey']);
-        unset($plan["fecha_actualiza"]);
-        unset($plan["id_usuario_captura"]);
-        unset($plan["fecha_captura"]);
-        unset($plan["ip_captura"]);
-        unset($plan["host_captura"]);
-        $plan["activo"] = 1;
-        $plan["id_usuario_actualiza"] = $updateUserId;
-        $plan["ip_actualiza"] = $updateIp;
-        $plan["host_actualiza"] = $updateUrl;
-        updatePlan($plan);
-      }
+    else
+    {
+      unset($plan['$$hashKey']);
+      unset($plan["fecha_actualiza"]);
+      unset($plan["id_usuario_captura"]);
+      unset($plan["fecha_captura"]);
+      unset($plan["ip_captura"]);
+      unset($plan["host_captura"]);
+      $plan["activo"] = 1;
+      $plan["id_usuario_actualiza"] = $updateUserId;
+      $plan["ip_actualiza"] = $updateIp;
+      $plan["host_actualiza"] = $updateUrl;
+      updatePlan($plan);
     }
   }
   return $orderId;

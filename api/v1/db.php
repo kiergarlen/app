@@ -597,7 +597,7 @@ function disableStudyOrders($studyId) {
     WHERE id_estudio = :studyId";
   $db = getConnection();
   $stmt = $db->prepare($sql);
-  $stmt->bidParam("studyId", $studyId);
+  $stmt->bindParam("studyId", $studyId);
   $stmt->execute();
   $db = null;
   return $studyId;
@@ -925,9 +925,9 @@ function updatePlan($updateData) {
 function disableOrderPlans($orderId) {
   $sql = "UPDATE [Plan] SET activo = 0
     WHERE id_orden = :orderId";
-  $dn = getConnection();
+  $db = getConnection();
   $stmt = $db->prepare($sql);
-  $stmt->bidParam("orderId", $orderId);
+  $stmt->bindParam("orderId", $orderId);
   $stmt->execute();
   $db = null;
   return $orderId;

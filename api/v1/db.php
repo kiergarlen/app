@@ -1751,10 +1751,42 @@ function disableReceptionJobs($receptionId) {
   return $receptionId;
 }
 
+function getBlankCustody() {
+  return array(
+    "id_custodia" => 0, "id_estudio" => 0, "id_recepcion" => 0,
+    "id_trabajo" => 0, "id_area" => 0, "id_usuario_entrega" => 0,
+    "id_usuario_recibe" => 0, "id_usuario_valida" => 0,
+    "id_usuario_actualiza" => 0, "id_status" => 1, "fecha" => NULL,
+    "fecha_entrega" => NULL, "fecha_recibe" => NULL,
+    "fecha_valida" => NULL, "ip_captura" => "", "ip_valida" => "",
+    "ip_actualiza" => "", "host_captura" => "", "host_valida" => "",
+    "host_actualiza" => "", "comentarios" => "",
+    "activo" => 1
+  );
+}
+
+function getPlainCustody($custodyId) {
+  $sql = "SELECT id_custodia, id_estudio, id_recepcion, id_trabajo,
+    id_area, id_usuario_entrega, id_usuario_recibe,
+    id_usuario_valida, id_usuario_actualiza, id_status, fecha,
+    fecha_entrega, fecha_recibe, fecha_valida, ip_captura,
+    ip_valida, ip_actualiza, host_captura, host_valida,
+    host_actualiza, comentarios, activo
+    FROM Custodia
+    WHERE activo = 1 AND id_custodia = :custodyId";
+  $db = getConnection();
+  $stmt = $db->prepare($sql);
+  $stmt->bindParam("custodyId", $custodyId);
+  $stmt->execute();
+  $custody = $stmt->fetch(PDO::FETCH_OBJ);
+  $db = null;
+  return $custody;
+}
+
 function getCustody($custodyId) {
   $sql = "SELECT id_custodia, id_estudio, id_recepcion, id_trabajo,
     id_area, id_usuario_entrega, id_usuario_recibe,
-    id_usuario_valida, id_usuario_actualiza, id_status, fecha, 
+    id_usuario_valida, id_usuario_actualiza, id_status, fecha,
     fecha_entrega, fecha_recibe, fecha_valida, ip_captura,
     ip_valida, ip_actualiza, host_captura, host_valida,
     host_actualiza, comentarios, activo
@@ -1772,7 +1804,7 @@ function getCustody($custodyId) {
 function getCustodies() {
   $sql = "SELECT id_custodia, id_estudio, id_recepcion, id_trabajo,
     id_area, id_usuario_entrega, id_usuario_recibe,
-    id_usuario_valida, id_usuario_actualiza, id_status, fecha, 
+    id_usuario_valida, id_usuario_actualiza, id_status, fecha,
     fecha_entrega, fecha_recibe, fecha_valida, ip_captura,
     ip_valida, ip_actualiza, host_captura, host_valida,
     host_actualiza, comentarios, activo

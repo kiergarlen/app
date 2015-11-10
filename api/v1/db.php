@@ -1450,9 +1450,9 @@ function getPlainJob($jobId) {
   $stmt = $db->prepare($sql);
   $stmt->bindParam("jobId", $jobId);
   $stmt->execute();
-  $user = $stmt->fetch(PDO::FETCH_OBJ);
+  $job = $stmt->fetch(PDO::FETCH_OBJ);
   $db = null;
-  return $user;
+  return $job;
 }
 
 function getJobs() {
@@ -1752,19 +1752,38 @@ function disableReceptionJobs($receptionId) {
 }
 
 function getCustody($custodyId) {
-  $json = '
-    {}
-  ';
-  return json_decode($json);
+  $sql = "SELECT id_custodia, id_estudio, id_recepcion, id_trabajo,
+    id_area, id_usuario_entrega, id_usuario_recibe,
+    id_usuario_valida, id_usuario_actualiza, id_status, fecha, 
+    fecha_entrega, fecha_recibe, fecha_valida, ip_captura,
+    ip_valida, ip_actualiza, host_captura, host_valida,
+    host_actualiza, comentarios, activo
+    FROM Custodia
+    WHERE activo = 1 AND id_custodia = :custodyId";
+  $db = getConnection();
+  $stmt = $db->prepare($sql);
+  $stmt->bindParam("custodyId", $custodyId);
+  $stmt->execute();
+  $custody = $stmt->fetch(PDO::FETCH_OBJ);
+  $db = null;
+  return $custody;
 }
 
 function getCustodies() {
-  $json = '
-    [
-      {}
-    ]
-  ';
-  return json_decode($json);
+  $sql = "SELECT id_custodia, id_estudio, id_recepcion, id_trabajo,
+    id_area, id_usuario_entrega, id_usuario_recibe,
+    id_usuario_valida, id_usuario_actualiza, id_status, fecha, 
+    fecha_entrega, fecha_recibe, fecha_valida, ip_captura,
+    ip_valida, ip_actualiza, host_captura, host_valida,
+    host_actualiza, comentarios, activo
+    FROM Custodia
+    WHERE activo = 1";
+  $db = getConnection();
+  $stmt = $db->prepare($sql);
+  $stmt->execute();
+  $custodies = $stmt->fetchAll(PDO::FETCH_ASSOC);
+  $db = null;
+  return $custodies;
 }
 
 function getPoints() {

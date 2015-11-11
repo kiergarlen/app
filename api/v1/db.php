@@ -7,13 +7,13 @@ define("DB_DATA_BASE", "Sislab");
 
 /**
  * Conecta a la base de datos, regresa una instancia de PDO
- * @return PDO $dbConnection
+ * @return mixed $dbConnection
  */
 function getConnection() {
+  $dsn = "sqlsrv:server=";
+  $dsn .= DB_HOST . ";Database=";
+  $dsn .= DB_DATA_BASE;
   try {
-    $dsn = "sqlsrv:server=";
-    $dsn .= DB_HOST . ";Database=";
-    $dsn .= DB_DATA_BASE;
     $dbConnection = new PDO($dsn, DB_USER, DB_PASSWORD);
     $dbConnection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
   } catch(PDOException $e) {
@@ -28,7 +28,7 @@ function getConnection() {
 
 /**
  * Obtiene los Usuarios activos
- * @return Array $result Array de Usuarios activos
+ * @return array $result Array de Usuarios activos
  */
 function getUsers() {
   $sql = "SELECT id_usuario, id_nivel, id_rol, id_area, id_puesto,
@@ -42,8 +42,6 @@ function getUsers() {
     WHERE activo = 1";
   $db = getConnection();
   $stmt = $db->prepare($sql);
-  $stmt->bindParam("userName", $userName);
-  $stmt->bindParam("userPassword", $userPassword);
   $stmt->execute();
   $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
   $db = null;
@@ -98,7 +96,7 @@ function getUserByCredentials($userName, $userPassword) {
 
 /**
  * Inserta un nuevo Usuario desde $userData
- * @param  Array $userData Array con los datos del Usuario a insertar
+ * @param  array $userData Array con los datos del Usuario a insertar
  * @return integer $userId Id del Usuario insertado
  */
 function insertUser($userData) {
@@ -120,7 +118,7 @@ function insertUser($userData) {
 
 /**
  * Actualiza un Usuario desde $updateData
- * @param  Array $updateData Array con los datos del Usuario a actualizar
+ * @param  array $updateData Array con los datos del Usuario a actualizar
  * @return integer $userId Id del Usuario actualizado
  */
 function updateUser($updateData) {
@@ -146,8 +144,8 @@ function updateUser($updateData) {
 
 /**
  * Obtiene los elementos del Menu/Submenu asignados al usuario $userId
- * @param  $userId integer Id del Usuario
- * @return $result Array Elementos del menu de $userId
+ * @param  integer $userId Id del Usuario
+ * @return array $result Elementos del menu de $userId
  */
 function getMenu($userId) {
   $sql = "SELECT
@@ -1050,9 +1048,10 @@ function getSheet($sheetId) {
       $j = 0;
       $m = count($parameters);
       for ($j = 0; $j < $m; $j++) {
+        $params = (array) $parameters[$j];
         $blankSamplingResult["id_muestra"] = $sampleId;
-        $blankSamplingResult["id_parametro"] = $parameters[$j]["id_parametro"];
-        $blankSamplingResult["id_tipo_valor"] = $parameters[$j]["id_tipo_valor"];
+        $blankSamplingResult["id_parametro"] = $params["id_parametro"];
+        $blankSamplingResult["id_tipo_valor"] = $params["id_tipo_valor"];
         $blankSamplingResult["param"] = $parameters[$j]["param"];
         $samplingResults[] = $blankSamplingResult;
       }
@@ -1865,9 +1864,9 @@ function insertCustody($custodyData) {
 }
 
 function updateCustody($updateData) {
-  $sql = "UPDATE Custody SET id_custodia = :id_custodia,
-    id_estudio = :id_estudio, id_recepcion = :id_recepcion,
-    id_trabajo = :id_trabajo, id_area = :id_area, id_status = :id_status,
+  $sql = "UPDATE Custody SET id_estudio = :id_estudio,
+    id_recepcion = :id_recepcion, id_trabajo = :id_trabajo,
+    id_area = :id_area, id_status = :id_status,
     id_usuario_entrega = :id_usuario_entrega,
     id_usuario_recibe = :id_usuario_recibe,
     id_usuario_valida = :id_usuario_valida,
@@ -1879,7 +1878,13 @@ function updateCustody($updateData) {
     ip_valida = :ip_valida, ip_actualiza = :ip_actualiza,
     host_valida = :host_valida, host_actualiza = :host_actualiza,
     comentarios = :comentarios, motivo_rechaza = :motivo_rechaza,
-    activo = :activo"
+    activo = :activo
+    WHERE id_custodia = :id_custodia";
+  $db = getConnection();
+  $stmt = $db->prepare($sql);
+  $stmt->execute($updateData);
+  $db = null;
+  return $updateData["id_hoja"];
 }
 
 function getPoints() {

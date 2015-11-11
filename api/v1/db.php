@@ -1751,27 +1751,60 @@ function disableReceptionJobs($receptionId) {
   return $receptionId;
 }
 
+function getCustodies() {
+  $sql = "SELECT id_custodia, id_estudio, id_recepcion, id_trabajo,
+    id_area, id_status, id_usuario_entrega, id_usuario_recibe,
+    id_usuario_captura, id_usuario_valida,
+    id_usuario_actualiza,
+    CONVERT(NVARCHAR, fecha_entrega, 126) AS fecha_entrega,
+    CONVERT(NVARCHAR, fecha_recibe, 126) AS fecha_recibe,
+    CONVERT(NVARCHAR, fecha_captura, 126) AS fecha_captura,
+    CONVERT(NVARCHAR, fecha_valida, 126) AS fecha_valida,
+    CONVERT(NVARCHAR, fecha_actualiza, 126) AS fecha_actualiza,
+    CONVERT(NVARCHAR, fecha_rechaza, 126) AS fecha_rechaza,
+    ip_captura, ip_valida, ip_actualiza,
+    host_captura, host_valida, host_actualiza, comentarios,
+    motivo_rechaza, activo
+    FROM Custodia
+    WHERE activo = 1";
+  $db = getConnection();
+  $stmt = $db->prepare($sql);
+  $stmt->execute();
+  $custodies = $stmt->fetchAll(PDO::FETCH_ASSOC);
+  $db = null;
+  return $custodies;
+}
+
 function getBlankCustody() {
   return array(
     "id_custodia" => 0, "id_estudio" => 0, "id_recepcion" => 0,
     "id_trabajo" => 0, "id_area" => 0, "id_usuario_entrega" => 0,
-    "id_usuario_recibe" => 0, "id_usuario_valida" => 0,
-    "id_usuario_actualiza" => 0, "id_status" => 1, "fecha" => NULL,
+    "id_usuario_recibe" => 0, "id_status" => 0,
+    "id_usuario_captura" => 0, "id_usuario_valida" => 0,
+    "id_usuario_actualiza" => 0,
     "fecha_entrega" => NULL, "fecha_recibe" => NULL,
-    "fecha_valida" => NULL, "ip_captura" => "", "ip_valida" => "",
-    "ip_actualiza" => "", "host_captura" => "", "host_valida" => "",
-    "host_actualiza" => "", "comentarios" => "",
-    "activo" => 1
+    "fecha_captura" => NULL, "fecha_valida" => NULL,
+    "fecha_actualiza" => NULL, "fecha_rechaza" => NULL,
+    "ip_captura" => "", "ip_valida" => "", "ip_actualiza" => "",
+    "host_captura" => "", "host_valida" => "", "host_actualiza" => "",
+    "comentarios" => "", "motivo_rechaza" => "", "activo" => 1
   );
 }
 
 function getPlainCustody($custodyId) {
   $sql = "SELECT id_custodia, id_estudio, id_recepcion, id_trabajo,
-    id_area, id_usuario_entrega, id_usuario_recibe,
-    id_usuario_valida, id_usuario_actualiza, id_status, fecha,
-    fecha_entrega, fecha_recibe, fecha_valida, ip_captura,
-    ip_valida, ip_actualiza, host_captura, host_valida,
-    host_actualiza, comentarios, activo
+    id_area, id_status, id_usuario_entrega, id_usuario_recibe,
+    id_usuario_captura, id_usuario_valida,
+    id_usuario_actualiza,
+    CONVERT(NVARCHAR, fecha_entrega, 126) AS fecha_entrega,
+    CONVERT(NVARCHAR, fecha_recibe, 126) AS fecha_recibe,
+    CONVERT(NVARCHAR, fecha_captura, 126) AS fecha_captura,
+    CONVERT(NVARCHAR, fecha_valida, 126) AS fecha_valida,
+    CONVERT(NVARCHAR, fecha_actualiza, 126) AS fecha_actualiza,
+    CONVERT(NVARCHAR, fecha_rechaza, 126) AS fecha_rechaza,
+    ip_captura, ip_valida, ip_actualiza,
+    host_captura, host_valida, host_actualiza, comentarios,
+    motivo_rechaza, activo
     FROM Custodia
     WHERE activo = 1 AND id_custodia = :custodyId";
   $db = getConnection();
@@ -1784,38 +1817,54 @@ function getPlainCustody($custodyId) {
 }
 
 function getCustody($custodyId) {
-  $sql = "SELECT id_custodia, id_estudio, id_recepcion, id_trabajo,
-    id_area, id_usuario_entrega, id_usuario_recibe,
-    id_usuario_valida, id_usuario_actualiza, id_status, fecha,
-    fecha_entrega, fecha_recibe, fecha_valida, ip_captura,
-    ip_valida, ip_actualiza, host_captura, host_valida,
-    host_actualiza, comentarios, activo
-    FROM Custodia
-    WHERE activo = 1 AND id_custodia = :custodyId";
-  $db = getConnection();
-  $stmt = $db->prepare($sql);
-  $stmt->bindParam("custodyId", $custodyId);
-  $stmt->execute();
-  $custody = $stmt->fetch(PDO::FETCH_OBJ);
-  $db = null;
-  return $custody;
+  return getPlainCustody($custodyId);
 }
 
-function getCustodies() {
-  $sql = "SELECT id_custodia, id_estudio, id_recepcion, id_trabajo,
-    id_area, id_usuario_entrega, id_usuario_recibe,
-    id_usuario_valida, id_usuario_actualiza, id_status, fecha,
-    fecha_entrega, fecha_recibe, fecha_valida, ip_captura,
-    ip_valida, ip_actualiza, host_captura, host_valida,
-    host_actualiza, comentarios, activo
-    FROM Custodia
-    WHERE activo = 1";
+function insertCustody($custodyData) {
+  $sql = "INSERT INTO Custodia (id_custodia, id_estudio,
+    id_recepcion, id_trabajo, id_area, id_status,
+    id_usuario_entrega, id_usuario_recibe, id_usuario_captura,
+    id_usuario_valida,
+    fecha_entrega, fecha_recibe,
+    fecha_valida, fecha_rechaza,
+    ip_captura, ip_valida,
+    host_captura, host_valida,
+    comentarios, motivo_rechaza, activo
+    )
+    VALUES (:id_custodia, :id_estudio,
+    :id_recepcion, :id_trabajo, :id_area, :id_status,
+    :id_usuario_entrega, :id_usuario_recibe, :id_usuario_captura,
+    :id_usuario_valida,
+    :fecha_entrega, :fecha_recibe, SYSDATETIMEOFFSET(),
+    :fecha_valida, :fecha_rechaza,
+    :ip_captura, :ip_valida,
+    :host_captura, :host_valida,
+    :comentarios, :motivo_rechaza, :activo
+    )";
   $db = getConnection();
   $stmt = $db->prepare($sql);
-  $stmt->execute();
-  $custodies = $stmt->fetchAll(PDO::FETCH_ASSOC);
+  $stmt->execute($custodyData);
+  $custodyId = $db->lastInsertId();
   $db = null;
-  return $custodies;
+  return $custodyId;
+}
+
+function updateCustody($updateData) {
+  $sql = "UPDATE Custody SET id_custodia = :id_custodia,
+    id_estudio = :id_estudio, id_recepcion = :id_recepcion,
+    id_trabajo = :id_trabajo, id_area = :id_area, id_status = :id_status,
+    id_usuario_entrega = :id_usuario_entrega,
+    id_usuario_recibe = :id_usuario_recibe,
+    id_usuario_valida = :id_usuario_valida,
+    id_usuario_actualiza = :id_usuario_actualiza,
+    fecha_entrega = :fecha_entrega, fecha_recibe = :fecha_recibe,
+    fecha_actualiza = SYSDATETIMEOFFSET(),
+    fecha_valida = :fecha_valida,
+    fecha_rechaza = :fecha_rechaza,
+    ip_valida = :ip_valida, ip_actualiza = :ip_actualiza,
+    host_valida = :host_valida, host_actualiza = :host_actualiza,
+    comentarios = :comentarios, motivo_rechaza = :motivo_rechaza,
+    activo = :activo"
 }
 
 function getPoints() {

@@ -47,122 +47,25 @@
       <h4>Datos generales</h4>
     </div>
     <div class="col-xs-12">
-      Fecha muestreo: {custody.fecha_muestreo}
+      Fecha muestreo: <strong>{{custody.fecha_muestreo}}</strong>
       <br>
-      Id Orden Trabajo: {custody.id_trabajo}
+      Fecha recepción: <strong>{{custody.recepcion.fecha_recibe}}</strong>
       <br>
-      Matriz: {custody.id_matriz}
+      Id Orden Trabajo: <strong>{{custody.id_trabajo}}</strong>
       <br>
-      Muestras: {custody.cantidads_muestras}
+      Matriz: <strong>{{custody.id_matriz}}</strong>
       <br>
-      Contenedores: {custody.cantidads_recipientes}
+      Muestras: <strong>{{custody.cantidad_muestras}}</strong>
+      <br>
+      Contenedores: <strong>{{custody.cantidad_recipientes}}</strong>
       <br>
     </div>
   </div>
-
-  <div class="row">
-    <div class="col-xs-12">
-      <h4>Fecha / hora de muestreo</h4>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-xs-6 col-sm-4">
-      <label for="startDate">
-        <i class="glyphicon glyphicon-calendar"></i>
-        Fecha
-      </label>
-      <input type="text"
-        class="form-control"
-        id="startDate"
-        name="startDate"
-        placeholder="aaaa-mm-dd"
-        readonly
-        data-ng-model="custody.custody.fecha_muestreo"
-        data-date-format="yyyy-MM-dd"
-        data-date-type="date"
-        data-autoclose="1"
-        date-use-native="true"
-        data-bs-datepicker
-        >
-    </div>
-    <div class="col-xs-6 col-sm-3">
-      <label for="startTime">
-        <i class="glyphicon glyphicon-time"></i>
-        Hora
-      </label>
-      <input type="text"
-        class="form-control"
-        id="startTime"
-        name="startTime"
-        placeholder="HH:mm"
-        readonly
-        data-ng-model="custody.custody.fecha_muestreo"
-        data-time-format="HH:mm"
-        data-date-type="date"
-        data-length="1"
-        data-hour-step="1"
-        data-minute-step="1"
-        data-arrow-behavior="picker"
-        data-auto-close="1"
-        data-bs-timepicker
-        >
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="col-xs-12">
-      <h4>Fecha / hora de recepción</h4>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-xs-6 col-sm-4">
-      <label for="endDate">
-        <i class="glyphicon glyphicon-calendar"></i>
-        Fecha recepción
-      </label>
-      <input type="text"
-        class="form-control"
-        id="endDate"
-        name="endDate"
-        placeholder="aaaa-mm-dd"
-        readonly
-        data-ng-model="custody.custody.fecha_recepcion"
-        data-date-format="yyyy-MM-dd"
-        data-date-type="date"
-        data-autoclose="1"
-        date-use-native="true"
-        data-bs-datepicker
-        >
-    </div>
-    <div class="col-xs-6 col-sm-3">
-      <label for="endTime">
-        <i class="glyphicon glyphicon-time"></i>
-        Hora recepción
-      </label>
-      <input type="text"
-        class="form-control"
-        id="endTime"
-        name="endTime"
-        placeholder="HH:mm"
-        readonly
-        data-ng-model="custody.custody.fecha_recepcion"
-        data-time-format="HH:mm"
-        data-date-type="date"
-        data-length="1"
-        data-hour-step="1"
-        data-minute-step="1"
-        data-arrow-behavior="picker"
-        data-auto-close="1"
-        data-bs-timepicker
-        >
-    </div>
-  </div>
-
   <div class="row">
     <div class="col-xs-12">
       <div class="panel">
         <div class="panel-heading">
-          <h3 class="panel-title">Ubicación de las muestras</h3>
+          <h3 class="panel-title">Ubicación de Muestras/Contenedores</h3>
         </div>
         <div class="table-responsive">
           <table class="table table-hover table-condensed"
@@ -181,38 +84,63 @@
                 <th>
                   Ubicación
                 </th>
+                <th>
+                  Fecha
+                </th>
+                <th>
+                  Acciones
+                </th>
               </tr>
             </thead>
             <tbody>
               <tr
                 data-ng-repeat="container in custody.containers"
-                id="jobId{container.id_recipiente}">
+                id="jobId{{container.id_recipiente}}">
                 <td>
-                  {container.id_muestra}
+                  {{container.id_muestra}}
                 </td>
                 <td>
-                  {container.id_recipiente}
+                  {{container.id_recipiente}}
                 </td>
                 <td>
-                  {container.preservacion}
+                  {{container.preservacion}}
                 </td>
                 <td>
+                  <!--
                   if FIRST_WRITE
                   <br>
-                  -- selectStorage --
-                  -- ngRepeat storage in storages --
+                  + selectStorage +
+                  + ngRepeat storage in storages +
                   <br>
                   else
                   <br>
-                  -- selectedStorage --
+                  + selectedStorage +
+                  -->
                   <span class="label label-info"
                     data-ng-show="container.id_almacenamiento < 4">
-                    {container.almacenamiento}
+                    {{container.almacenamiento}}
                   </span>
                   <span class="label label-default"
                     data-ng-show="container.id_almacenamiento > 3">
-                    {container.almacenamiento}
+                    {{container.almacenamiento}}
                   </span>
+                </td>
+                <td>
+                  {{container.fecha | date: 'yyyy-MM-dd'}}
+                </td>
+                <td>
+                  <button class="btn btn-default"
+                    value="Consultar" title="Consultar"
+                    data-ng-click="custody.viewContainerLog(container.id_recipiente)"
+                    >
+                    <i class="glyphicon glyphicon-eye-open" aria-hidden="true"></i>
+                  </button>
+                  <button class="btn btn-danger"
+                    value="Disposición" title="Disposición"
+                    data-ng-click="custody.viewContainerWaste(container.id_recipiente)"
+                    >
+                    <i class="glyphicon glyphicon-remove" aria-hidden="true"></i>
+                  </button>
                 </td>
               </tr>
             </tbody>
@@ -221,7 +149,7 @@
       </div>
     </div>
   </div>
-
+  <!--
   <div class="row">
     <div class="col-xs-12">
       <div class="panel">
@@ -256,25 +184,25 @@
             <tbody>
               <tr
                 data-ng-repeat="take in custody.takes"
-                id="{take.id_uso}">
+                id="{{take.id_uso}}">
                 <td>
-                  {take.id_muestra}
+                  {{take.id_muestra}}
                 </td>
                 <td>
-                  {take.id_recipiente}
+                  {{take.id_recipiente}}
                 </td>
                 <td>
                   Param
-                  {take.parametro.param}
+                  {{take.parametro.param}}
                 </td>
                 <td>
                   Usr
-                  {take.id_analista}
+                  {{take.id_analista}}
                   <br>
-                  {take.analista.nombres}
+                  {{take.analista.nombres}}
                   <br>
-                  {take.analista.apellido_paterno}
-                  {take.analista.apellido_materno}
+                  {{take.analista.apellido_paterno}}
+                  {{take.analista.apellido_materno}}
                 </td>
                 <td>
                   <input
@@ -282,7 +210,7 @@
                     -- volumen --
                 </td>
                 <td>
-                  {take.fecha | date: 'yyyy-MM-dd'}
+                  {{take.fecha | date: 'yyyy-MM-dd'}}
                 </td>
               </tr>
             </tbody>
@@ -309,15 +237,67 @@
     <div class="col-xs-12">
       <h4>Disposición Final</h4>
     </div>
-
   </div>
-
+  -->
+  <div class="row">
+    <div class="col-xs-12">
+      <h4>Comentarios</h4>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12">
+      <textarea rows="3" class="form-control well well-sm"
+        id="custodyCommentsText"
+        name="custodyCommentsText"
+        data-ng-model="custody.custody.comentarios"
+        >
+      </textarea>
+    </div>
+  </div>
+  <div class="row"
+    data-ng-show="custody.user.level < 3">
+    <div class="col-xs-12">
+      <h4>Validación</h4>
+    </div>
+    <div class="col-xs-12 col-sm-5 well wel-sm ">
+      <button class="btn btn-success"
+        value="Validar" title="Validar"
+        data-ng-disabled="custody.custody.id_status == 2"
+        data-ng-click="custody.approveItem()"
+        >
+        <i class="glyphicon glyphicon-ok" aria-hidden="true"></i>
+        Validar
+      </button>
+      <button class="btn btn-danger"
+        value="Rechazar" title="Rechazar"
+        data-ng-disabled="custody.custody.id_status == 3"
+        data-ng-click="custody.rejectItem()"
+        >
+        <i class="glyphicon glyphicon-remove" aria-hidden="true"></i>
+        Rechazar
+      </button>
+    </div>
+    <div class="col-xs-12 col-sm-7 well wel-sm ">
+      <label class="sr-only" for="rejectText">
+        Motivo rechazo
+      </label>
+      <input type="text" class="form-control"
+        id="rejectText"
+        name="rejectText"
+        placeholder="Especifique motivo rechazo"
+        data-ng-disabled="custody.custody.id_status != 3"
+        data-ng-model="custody.custody.motivo_rechaza"
+        >
+    </div>
+  </div>
   <br>
   <button type="submit" class="btn btn-primary"
     value="Guardar" title="Guardar"
-    data-ng-click="custody.validateCustodyForm()"
+    data-ng-click="custody.submitForm()"
     >
-    Guardar</button>
+    <i class="glyphicon glyphicon-cloud-upload" aria-hidden="true"></i>
+    Guardar
+  </button>
 </form>
 
           </div>

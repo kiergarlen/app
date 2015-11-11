@@ -1817,7 +1817,22 @@ function getPlainCustody($custodyId) {
 }
 
 function getCustody($custodyId) {
-  return getPlainCustody($custodyId);
+  $custody = getPlainCustody($custodyId);
+  $custody->recipientes = getCustodyContainers($custodyId);
+  return $custody;
+}
+
+function getCustodyContainers($custodyId) {
+  $sql = "SELECT *
+    FROM viewRecipienteCustodia
+    WHERE id_custodia = :custodyId";
+  $db = getConnection();
+  $stmt = $db->prepare($sql);
+  $stmt->bindParam("custodyId", $custodyId);
+  $stmt->execute();
+  $containers = $stmt->fetchAll(PDO::FETCH_ASSOC);
+  $db = null;
+  return $containers;
 }
 
 function insertCustody($custodyData) {

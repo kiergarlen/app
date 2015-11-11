@@ -126,7 +126,7 @@
                   </span>
                 </td>
                 <td>
-                  {{container.fecha | date: 'yyyy-MM-dd'}}
+                  {{container.fecha_actualiza | date: 'yyyy-MM-dd'}}
                 </td>
                 <td>
                   <button class="btn btn-default"
@@ -134,12 +134,6 @@
                     data-ng-click="custody.viewContainerLog(container.id_recipiente)"
                     >
                     <i class="glyphicon glyphicon-eye-open" aria-hidden="true"></i>
-                  </button>
-                  <button class="btn btn-danger"
-                    value="Disposición" title="Disposición"
-                    data-ng-click="custody.viewContainerWaste(container.id_recipiente)"
-                    >
-                    <i class="glyphicon glyphicon-remove" aria-hidden="true"></i>
                   </button>
                 </td>
               </tr>

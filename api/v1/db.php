@@ -1052,7 +1052,7 @@ function getSheet($sheetId) {
         $blankSamplingResult["id_muestra"] = $sampleId;
         $blankSamplingResult["id_parametro"] = $params["id_parametro"];
         $blankSamplingResult["id_tipo_valor"] = $params["id_tipo_valor"];
-        $blankSamplingResult["param"] = $parameters[$j]["param"];
+        $blankSamplingResult["param"] = $params["param"];
         $samplingResults[] = $blankSamplingResult;
       }
     }

@@ -1072,6 +1072,27 @@ $app->get("/methods(/)(:methodId)", function() use ($app) {
   }
 });
 
+$app->get("/storages(/)(:storageId)", function() use ($app) {
+  try {
+    $userId = decodeUserToken($app->request())->uid;
+    if ($storageId > -1)
+    {
+      $result = json_encode(getStorage($storageId));
+    }
+    else
+    {
+      $result = json_encode(getStorages());
+    }
+    $app->response()->status(200);
+    $app->response()->header("Content-Type", "application/json");
+    //$result = ")]}',\n" . $result;
+    print_r($result);
+  } catch (Exception $e) {
+    $app->response()->status(400);
+    $app->response()->header("X-Status-Reason", $e->getMessage());
+  }
+});
+
 $app->get("/prices", function() use ($app) {
   try {
     $userId = decodeUserToken($app->request())->uid;

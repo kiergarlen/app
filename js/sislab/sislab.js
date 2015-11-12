@@ -2290,14 +2290,16 @@
    * @this {Object} $scope - Contenedor para el modelo
    * @param {Object} $routeParams - Proveedor de parámetros de ruta
    * @param {Object} TokenService - Proveedor para manejo del token
+   * @param {Object} StorageService - Proveedor de datos, Almacenamientos
    * @param {Object} CustodyService - Proveedor de datos, Cadenas de custodia
    */
   function CustodyController($scope, $routeParams, TokenService,
     ValidationService, RestUtilsService, ArrayUtilsService,
-    DateUtilsService, CustodyService) {
+    DateUtilsService, StorageService, CustodyService) {
     var vm = this;
     vm.user = TokenService.getUserFromToken();
     vm.custody = CustodyService.query({custodyId: $routeParams.custodyId});
+    vm.storages = StorageService.get();
     vm.viewContainerLog = viewContainerLog;
     vm.isDataSubmitted = false;
     vm.approveItem = approveItem;
@@ -2350,7 +2352,7 @@
       [
         '$scope', '$routeParams', 'TokenService',
         'ValidationService', 'RestUtilsService', 'ArrayUtilsService',
-        'DateUtilsService', 'CustodyService',
+        'DateUtilsService', 'StorageService', 'CustodyService',
         CustodyController
       ]
     );
@@ -5771,6 +5773,60 @@
       [
         '$resource', 'TokenService',
         WaterBodyService
+      ]
+    );
+
+  //StorageService.js
+  /**
+   * @name StorageService
+   * @constructor
+   * @desc Proveedor de datos, Almacenamientos
+   * @param {Object} $resource - Acceso a recursos HTTP
+   * @param {Object} TokenService - Proveedor de métodos para token
+   * @return {Object} $resource - Acceso a recursos HTTP
+   */
+  function StorageService($resource, TokenService) {
+    return $resource(API_BASE_URL + 'storages/:storageId', {}, {
+      get: {
+        method: 'GET',
+        params: {},
+        isArray: true,
+        headers: {
+          'Auth-Token': TokenService.getToken()
+        }
+      },
+      query: {
+        method: 'GET',
+        params: {storageId: 'id_almacenamiento'},
+        isArray: false,
+        headers: {
+          'Auth-Token': TokenService.getToken()
+        }
+      },
+      update: {
+        method: 'POST',
+        params: {},
+        isArray: false,
+        headers: {
+          'Auth-Token': TokenService.getToken()
+        }
+      },
+      save: {
+        method: 'POST',
+        params: {},
+        isArray: false,
+        headers: {
+          'Auth-Token': TokenService.getToken()
+        }
+      }
+    });
+  }
+  angular
+    .module('sislabApp')
+    .factory('StorageService',
+      [
+        '$resource', 'TokenService',
+        StorageService
       ]
     );
 })();

@@ -3297,3 +3297,28 @@ function getWaterBody($bodyId) {
   $db = null;
   return $waterBody;
 }
+
+function getStorages() {
+  $sql = "SELECT id_almacenamiento, almacenamiento, activo
+    FROM Almacenamiento
+    WHERE activo = 1";
+  $db = getConnection();
+  $stmt = $db->prepare($sql);
+  $stmt->execute();
+  $storages = $stmt->fetchAll(PDO::FETCH_ASSOC);
+  $db = null;
+  return $storages;
+}
+
+function getStorage($storageId) {
+  $sql = "SELECT id_almacenamiento, almacenamiento, activo
+    FROM Almacenamiento
+    WHERE activo = 1 AND id_almacenamiento = :storageId";
+  $db = getConnection();
+  $stmt = $db->prepare($sql);
+  $stmt->bindParam("storageId", $storageId);
+  $stmt->execute();
+  $storage = $stmt->fetch(PDO::FETCH_OBJ);
+  $db = null;
+  return $storage;
+}

@@ -16,10 +16,10 @@
     <i class="glyphicon glyphicon-ban-circle"></i>
     Motivo rechazo:
     <strong>
-      {custody.custody.motivo_rechaza}
+      {{custody.custody.motivo_rechaza}}
       <span
         data-ng-show="custody.custody.fecha_rechaza.length > 0">
-          ({custody.custody.fecha_rechaza | date: 'yyyy-MM-dd'})
+          ({{custody.custody.fecha_rechaza | date: 'yyyy-MM-dd'}})
       </span>
     </strong>
   </div>
@@ -33,7 +33,7 @@
     </button>
     <i class="glyphicon glyphicon-warning-sign"></i>
     <strong>
-      {custody.message}
+      {{custody.message}}
     </strong>
   </div>
 </div>
@@ -48,22 +48,34 @@
     </div>
     <div class="col-xs-12">
       Fecha muestreo:
-      <strong>{{custody.custody.fecha_muestreo}}</strong>
+      <strong>
+        {{custody.custody.fecha_muestreo | date: 'yyyy-MM-dd'}}
+      </strong>
       <br>
       Fecha recepción:
-      <strong>{{custody.custody.recepcion.fecha_recibe}}</strong>
+      <strong>
+        {{custody.custody.recepcion.fecha_recibe | date: 'yyyy-MM-dd'}}
+      </strong>
       <br>
       Id Orden Trabajo:
-      <strong>{{custody.custody.id_trabajo}}</strong>
+      <strong>
+        {{custody.custody.id_trabajo}}
+      </strong>
       <br>
       Matriz:
-      <strong>{{custody.custody.id_matriz}}</strong>
+      <strong>
+        {{custody.custody.id_matriz}}
+      </strong>
       <br>
       Muestras:
-      <strong>{{custody.custody.cantidad_muestras}}</strong>
+      <strong>
+        {{custody.custody.cantidad_muestras}}
+      </strong>
       <br>
       Contenedores:
-      <strong>{{custody.custody.cantidad_recipientes}}</strong>
+      <strong>
+        {{custody.custody.cantidad_recipientes}}
+      </strong>
       <br>
     </div>
   </div>
@@ -109,9 +121,28 @@
                   {{container.id_recipiente}}
                 </td>
                 <td>
-                  {{container.preservacion}}
+                  {{container.tipo_preservacion}}
+                  <br>
+                  <small class="muted-text">
+                    ({{container.preservacion}})
+                  </small>
                 </td>
                 <td>
+                  <label for="storageSelectId{{container.id_recipiente}}">
+                      Tipo muestreo
+                  </label>
+                  <select class="form-control"
+                    id="storageSelectId{{container.id_recipiente}}"
+                    name="storageSelectId{{container.id_recipiente}}"
+                    data-ng-model="container.id_almacenamiento"
+                    >
+                    <option data-ng-repeat="storage in custody.storages"
+                      value="{{storage.id_almacenamiento}}"
+                      data-ng-selected="row.id_almacenamiento == storage.id_almacenamiento"
+                      >
+                      {{storage.almacenamiento}}
+                    </option>
+                  </select>
                   <!--
                   if FIRST_WRITE
                   <br>

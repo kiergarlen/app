@@ -1816,14 +1816,49 @@ function getPlainCustody($custodyId) {
 }
 
 function getCustody($custodyId) {
-  $custody = getPlainCustody($custodyId);
-  $custody->recipientes = getCustodyContainers($custodyId);
+  $custody = getCustodyData($custodyId);
+  $custody->containers = getCustodyContainers($custodyId);
+  return $custody;
+}
+
+function getCustodyData($custodyId) {
+  $sql = "SELECT id_custodia, id_estudio, id_recepcion, id_trabajo,
+    id_area, id_status, id_usuario_entrega, id_usuario_recibe,
+    id_usuario_captura, id_usuario_valida, id_usuario_actualiza,
+    CONVERT(NVARCHAR, fecha_entrega, 126) AS fecha_entrega,
+    CONVERT(NVARCHAR, fecha_recibe, 126) AS fecha_recibe,
+    CONVERT(NVARCHAR, fecha_captura, 126) AS fecha_captura,
+    CONVERT(NVARCHAR, fecha_valida, 126) AS fecha_valida,
+    CONVERT(NVARCHAR, fecha_actualiza, 126) AS fecha_actualiza,
+    CONVERT(NVARCHAR, fecha_rechaza,126) AS fecha_rechaza,
+    CONVERT(NVARCHAR, fecha_muestreo,126) AS fecha_muestreo,
+    CONVERT(NVARCHAR, fecha_recepcion,126) AS fecha_recepcion,
+    ip_captura, ip_valida, ip_actualiza,
+    host_captura, host_valida, host_actualiza,
+    comentarios, motivo_rechaza,
+    id_matriz, matriz, cantidad_muestras, activo
+    FROM viewCustodiaDatos
+    WHERE id_custodia = :custodyId";
+  $db = getConnection();
+  $stmt = $db->prepare($sql);
+  $stmt->bindParam("custodyId", $custodyId);
+  $stmt->execute();
+  $custody = $stmt->fetch(PDO::FETCH_OBJ);
+  $db = null;
   return $custody;
 }
 
 function getCustodyContainers($custodyId) {
-  $sql = "SELECT *
-    FROM viewRecipienteCustodia
+  $sql = "SELECT id_custodia, id_recepcion, id_muestra, id_recipiente,
+    id_tipo_recipiente, id_preservacion, id_tipo_preservacion,
+    id_almacenamiento, id_status_recipiente, tipo_muestreo,
+    preservacion, tipo_preservacion, almacenamiento,
+    status_recipiente,
+    id_usuario_captura, id_usuario_actualiza,
+    volumen, volumen_inicial,
+    CONVERT(NVARCHAR, fecha_actualiza, 126) AS fecha_actualiza,
+    activo
+    FROM viewCustodiaRecipiente
     WHERE id_custodia = :custodyId";
   $db = getConnection();
   $stmt = $db->prepare($sql);

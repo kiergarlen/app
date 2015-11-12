@@ -1072,7 +1072,7 @@ $app->get("/methods(/)(:methodId)", function() use ($app) {
   }
 });
 
-$app->get("/storages(/)(:storageId)", function() use ($app) {
+$app->get("/storages(/)(:storageId)", function($storageId = -1) use ($app) {
   try {
     $userId = decodeUserToken($app->request())->uid;
     if ($storageId > -1)

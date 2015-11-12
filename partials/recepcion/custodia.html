@@ -123,14 +123,11 @@
                 <td>
                   {{container.tipo_preservacion}}
                   <br>
-                  <small class="muted-text">
-                    ({{container.preservacion}})
-                  </small>
+                  <sup class="muted-text">
+                    {{container.preservacion}}
+                  </sup>
                 </td>
                 <td>
-                  <label for="storageSelectId{{container.id_recipiente}}">
-                      Tipo muestreo
-                  </label>
                   <select class="form-control"
                     id="storageSelectId{{container.id_recipiente}}"
                     name="storageSelectId{{container.id_recipiente}}"
@@ -138,7 +135,7 @@
                     >
                     <option data-ng-repeat="storage in custody.storages"
                       value="{{storage.id_almacenamiento}}"
-                      data-ng-selected="row.id_almacenamiento == storage.id_almacenamiento"
+                      data-ng-selected="container.id_almacenamiento == storage.id_almacenamiento"
                       >
                       {{storage.almacenamiento}}
                     </option>
@@ -153,14 +150,16 @@
                   <br>
                   + selectedStorage +
                   -->
+                  <!--
                   <span class="label label-info"
                     data-ng-show="container.id_almacenamiento < 4">
                     {{container.almacenamiento}}
                   </span>
-                  <span class="label label-default"
+                  <span class="label label-warning"
                     data-ng-show="container.id_almacenamiento > 3">
                     {{container.almacenamiento}}
                   </span>
+                  -->
                 </td>
                 <td>
                   {{container.fecha_actualiza | date: 'yyyy-MM-dd'}}

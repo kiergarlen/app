@@ -2298,10 +2298,15 @@
     var vm = this;
     vm.user = TokenService.getUserFromToken();
     vm.custody = CustodyService.query({custodyId: $routeParams.custodyId});
+    vm.viewContainerLog = viewContainerLog;
     vm.isDataSubmitted = false;
     vm.approveItem = approveItem;
     vm.rejectItem = rejectItem;
     vm.submitForm = submitForm;
+
+    function viewContainerLog(id) {
+      alert(id);
+    }
 
     function approveItem() {
       ValidationService.approveItem(vm.custody, vm.user);

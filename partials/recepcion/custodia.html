@@ -47,17 +47,23 @@
       <h4>Datos generales</h4>
     </div>
     <div class="col-xs-12">
-      Fecha muestreo: <strong>{{custody.fecha_muestreo}}</strong>
+      Fecha muestreo:
+      <strong>{{custody.custody.fecha_muestreo}}</strong>
       <br>
-      Fecha recepción: <strong>{{custody.recepcion.fecha_recibe}}</strong>
+      Fecha recepción:
+      <strong>{{custody.custody.recepcion.fecha_recibe}}</strong>
       <br>
-      Id Orden Trabajo: <strong>{{custody.id_trabajo}}</strong>
+      Id Orden Trabajo:
+      <strong>{{custody.custody.id_trabajo}}</strong>
       <br>
-      Matriz: <strong>{{custody.id_matriz}}</strong>
+      Matriz:
+      <strong>{{custody.custody.id_matriz}}</strong>
       <br>
-      Muestras: <strong>{{custody.cantidad_muestras}}</strong>
+      Muestras:
+      <strong>{{custody.custody.cantidad_muestras}}</strong>
       <br>
-      Contenedores: <strong>{{custody.cantidad_recipientes}}</strong>
+      Contenedores:
+      <strong>{{custody.custody.cantidad_recipientes}}</strong>
       <br>
     </div>
   </div>
@@ -94,8 +100,8 @@
             </thead>
             <tbody>
               <tr
-                data-ng-repeat="container in custody.containers"
-                id="jobId{{container.id_recipiente}}">
+                data-ng-repeat="container in custody.custody.containers"
+                id="containerId{{container.id_recipiente}}">
                 <td>
                   {{container.id_muestra}}
                 </td>
@@ -201,7 +207,7 @@
                 <td>
                   <input
                     type="text">
-                    -- volumen --
+                    + volumen +
                 </td>
                 <td>
                   {{take.fecha | date: 'yyyy-MM-dd'}}

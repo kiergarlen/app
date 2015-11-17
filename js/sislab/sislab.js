@@ -4873,10 +4873,10 @@
    * @param {Object} $resource - Acceso a recursos HTTP
    * @param {Object} TokenService - Proveedor de métodos para token
    * @return {Object} $resource - Acceso a recursos HTTP
-
+  */
   function ReactiveService($resource, TokenService) {
     return $resource(API_BASE_URL + 'reactives', {}, {
-   {
+      get: {
         method: 'GET',
         params: {},
         isArray: true,
@@ -4887,7 +4887,7 @@
     });
   }
   angular
-    .mo   dule('sislabApp')
+    .module('sislabApp')
     .factory('ReactiveService',
       [
         '$resource', 'TokenService',

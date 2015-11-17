@@ -167,7 +167,7 @@
                 <td>
                   <button class="btn btn-default"
                     value="Consultar" title="Consultar"
-                    data-ng-click="custody.viewContainerLog(container.id_recipiente)"
+                    data-ng-click="custody.viewLog(container.id_recipiente)"
                     >
                     <i class="glyphicon glyphicon-eye-open" aria-hidden="true"></i>
                   </button>
@@ -179,7 +179,68 @@
       </div>
     </div>
   </div>
+  <div>
+  <div>
+    <div class="panel">
+      <div class="panel-heading">
+        <h3 class="panel-title">Recipiente</h3>
+      </div>
+      <div class="table-responsive">
+        <table class="table table-condensed">
+          <tr>
+            <th>
+              Id Recipiente:
+            </th>
+            <th>
+              Parámetro:
+            </th>
+            <th>
+              Usuario:
+            </th>
+            <th>
+              Volumen:
+            </th>
+            <th>
+              Fecha:
+            </th>
+          </tr>
+          <tr
+            data-ng-repeat="logEntry in custody.logEntries">
+            <td>
+              {{logEntry.id_recipiente}}
+            </td>
+            <td>
+              {{logEntry.parametro.parametro}}
+            </td>
+            <td>
+              {{logEntry.analista.nombres}}
+              {{logEntry.analista.apellido_paterno}}
+              {{logEntry.analista.apellido_materno}}
+            </td>
+            <td>
+              {{logEntry.volumen}}
+            </td>
+            <td>
+              {{logEntry.fecha_actualizacion | date: 'yyyy-MM-dd'}}
+            </td>
+          </tr>
+        </table>
+    </div>
+  </div>
   <!--
+  <div class="row">
+    <div class="col-xs-12">
+      <br>
+      <a class="btn btn-success"
+        value="Agregar recipiente" title="Agregar recipiente"
+        data-ng-click="custody.addContainer()"
+        >
+        <i class="glyphicon glyphicon-plus" aria-hidden="true"></i>
+        Agregar recipiente
+      </a>
+      <br><br>
+    </div>
+  </div>
   <div class="row">
     <div class="col-xs-12">
       <div class="panel">

@@ -2291,23 +2291,37 @@
    * @param {Object} $routeParams - Proveedor de parámetros de ruta
    * @param {Object} TokenService - Proveedor para manejo del token
    * @param {Object} StorageService - Proveedor de datos, Almacenamientos
+   * @param {Object} ContainerService - Proveedor de datos, Recipientes
+   * @param {Object} ContainerLogService - Proveedor de datos, Bitácora de Recipiente
    * @param {Object} CustodyService - Proveedor de datos, Cadenas de custodia
    */
   function CustodyController($scope, $routeParams, TokenService,
     ValidationService, RestUtilsService, ArrayUtilsService,
-    DateUtilsService, StorageService, CustodyService) {
+    DateUtilsService, StorageService, ContainerService,
+    ContainerLogService, CustodyService) {
     var vm = this;
     vm.user = TokenService.getUserFromToken();
     vm.custody = CustodyService.query({custodyId: $routeParams.custodyId});
     vm.storages = StorageService.get();
-    vm.viewContainerLog = viewContainerLog;
+    vm.containerId = 0;
+    vm.logEntry = {};
+    vm.viewLog = viewLog;
+    vm.isLogVisible = false;
     vm.isDataSubmitted = false;
     vm.approveItem = approveItem;
     vm.rejectItem = rejectItem;
     vm.submitForm = submitForm;
 
-    function viewContainerLog(id) {
-      alert(id);
+    function viewLog(id) {
+      vm.isLogVisible = false;
+      //TODO: load Logs for containerId
+      ContainerLogService
+        .query({containerId: id})
+        .$promise
+        .then(function success(response) {
+          vm.logEntries = response;
+          vm.isLogVisible = true;
+      });
     }
 
     function approveItem() {
@@ -2352,7 +2366,8 @@
       [
         '$scope', '$routeParams', 'TokenService',
         'ValidationService', 'RestUtilsService', 'ArrayUtilsService',
-        'DateUtilsService', 'StorageService', 'CustodyService',
+        'DateUtilsService', 'StorageService', 'ContainerService',
+        'ContainerLogService', 'CustodyService',
         CustodyController
       ]
     );
@@ -4755,7 +4770,7 @@
     return $resource(API_BASE_URL + 'containers/:containerId', {}, {
       query: {
         method: 'GET',
-        params: {planId: 'id_recipiente'},
+        params: {containerId: 'id_recipiente'},
         isArray: false,
         headers: {
           'Auth-Token': TokenService.getToken()
@@ -4796,6 +4811,60 @@
       ]
     );
 
+  //ContainerLogService.js
+  /**
+   * @name ContainerLogService
+   * @constructor
+   * @desc Proveedor de datos, Bitácora de Recipiente
+   * @param {Object} $resource - Acceso a recursos HTTP
+   * @param {Object} TokenService - Proveedor de métodos para token
+   * @return {Object} $resource - Acceso a recursos HTTP
+   */
+  function ContainerLogService($resource, TokenService) {
+    return $resource(API_BASE_URL + 'containers/logs/:containerId', {}, {
+      query: {
+        method: 'GET',
+        params: {containerId: 'id_recipiente'},
+        isArray: true,
+        headers: {
+          'Auth-Token': TokenService.getToken()
+        }
+      },
+      get: {
+        method: 'GET',
+        params: {},
+        isArray: true,
+        headers: {
+          'Auth-Token': TokenService.getToken()
+        }
+      },
+      update: {
+        method: 'POST',
+        params: {},
+        isArray: false,
+        headers: {
+          'Auth-Token': TokenService.getToken()
+        }
+      },
+      save: {
+        method: 'POST',
+        params: {},
+        isArray: false,
+        headers: {
+          'Auth-Token': TokenService.getToken()
+        }
+      }
+    });
+  }
+  angular
+    .module('sislabApp')
+    .factory('ContainerLogService',
+      [
+        '$resource', 'TokenService',
+        ContainerLogService
+      ]
+    );
+
   //ReactiveService.js
   /**
    * @name ReactiveService
@@ -4804,10 +4873,10 @@
    * @param {Object} $resource - Acceso a recursos HTTP
    * @param {Object} TokenService - Proveedor de métodos para token
    * @return {Object} $resource - Acceso a recursos HTTP
-   */
+
   function ReactiveService($resource, TokenService) {
     return $resource(API_BASE_URL + 'reactives', {}, {
-      get: {
+   {
         method: 'GET',
         params: {},
         isArray: true,
@@ -4818,7 +4887,7 @@
     });
   }
   angular
-    .module('sislabApp')
+    .mo   dule('sislabApp')
     .factory('ReactiveService',
       [
         '$resource', 'TokenService',

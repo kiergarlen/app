@@ -2292,7 +2292,7 @@
    * @param {Object} TokenService - Proveedor para manejo del token
    * @param {Object} StorageService - Proveedor de datos, Almacenamientos
    * @param {Object} ContainerService - Proveedor de datos, Recipientes
-   * @param {Object} ContainerLogService - Proveedor de datos, Bitácora de Recipiente
+   * @param {Object} ContainerLogService - Proveedor de datos, Bitácoras de Recipiente
    * @param {Object} CustodyService - Proveedor de datos, Cadenas de custodia
    */
   function CustodyController($scope, $routeParams, TokenService,
@@ -4815,41 +4815,17 @@
   /**
    * @name ContainerLogService
    * @constructor
-   * @desc Proveedor de datos, Bitácora de Recipiente
+   * @desc Proveedor de datos, Bitácoras de Recipiente
    * @param {Object} $resource - Acceso a recursos HTTP
    * @param {Object} TokenService - Proveedor de métodos para token
    * @return {Object} $resource - Acceso a recursos HTTP
    */
   function ContainerLogService($resource, TokenService) {
-    return $resource(API_BASE_URL + 'containers/logs/:containerId', {}, {
+    return $resource(API_BASE_URL + 'containers/:containerId/logs', {}, {
       query: {
         method: 'GET',
         params: {containerId: 'id_recipiente'},
         isArray: true,
-        headers: {
-          'Auth-Token': TokenService.getToken()
-        }
-      },
-      get: {
-        method: 'GET',
-        params: {},
-        isArray: true,
-        headers: {
-          'Auth-Token': TokenService.getToken()
-        }
-      },
-      update: {
-        method: 'POST',
-        params: {},
-        isArray: false,
-        headers: {
-          'Auth-Token': TokenService.getToken()
-        }
-      },
-      save: {
-        method: 'POST',
-        params: {},
-        isArray: false,
         headers: {
           'Auth-Token': TokenService.getToken()
         }

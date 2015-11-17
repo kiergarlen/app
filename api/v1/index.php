@@ -743,6 +743,20 @@ $app->get("/containers(/)(:containerId)", function($containerId = -1) use ($app)
   }
 });
 
+$app->get("/containers/:containerId/logs", function($containerId) use ($app) {
+  try {
+    //$userId = decodeUserToken($app->request())->uid;
+    $result = json_encode(getContainerLogs($containerId));
+    $app->response()->status(200);
+    $app->response()->header("Content-Type", "application/json");
+    //$result = ")]}',\n" . $result;
+    print_r($result);
+  } catch (Exception $e) {
+    $app->response()->status(400);
+    $app->response()->header("X-Status-Reason", $e->getMessage());
+  }
+});
+
 $app->get("/reactives", function() use ($app) {
   try {
     $userId = decodeUserToken($app->request())->uid;

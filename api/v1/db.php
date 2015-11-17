@@ -2642,6 +2642,24 @@ function updatePlanContainer($updateData) {
   return $updateData["id_plan_recipiente"];
 }
 
+function getContainerLogs($containerId) {
+  $sql = "SELECT id_historial_recipiente, id_custodia, id_muestra,
+    id_recipiente, id_parametro, id_usuario_captura,
+    id_usuario_actualiza, volumen,
+    CONVERT(NVARCHAR, fecha_captura, 126) AS fecha_captura,
+    CONVERT(NVARCHAR, fecha_actualiza,126) AS fecha_actualiza,
+    ip_captura, ip_actualiza, host_captura, host_actualiza, activo
+    FROM HistorialRecipiente
+    WHERE id_recipiente = :containerId";
+  $db = getConnection();
+  $stmt = $db->prepare($sql);
+  $stmt->bindParam("containerId", $containerId);
+  $stmt->execute();
+  $logs = $stmt->fetchAll(PDO::FETCH_ASSOC);
+  $db = null;
+  return $logs;
+}
+
 function getAnalysis() {
   $json = '[]';
   return json_decode($json);

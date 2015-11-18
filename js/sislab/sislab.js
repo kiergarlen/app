@@ -2312,17 +2312,27 @@
     vm.rejectItem = rejectItem;
     vm.submitForm = submitForm;
 
-    function viewLog(id) {
+    function viewLog(containerId) {
       vm.isLogVisible = false;
+      vm.message = "";
       //TODO: load Logs for containerId
       ContainerLogService
-        .query({containerId: id})
+        .query({containerId: containerId})
         .$promise
         .then(function success(response) {
-          vm.logEntries = response;
-          vm.isLogVisible = true;
+          if (response.lengthv > 0) {
+            vm.logEntries = response;
+            vm.isLogVisible = true;
+          } else {
+            vm.message = " No hay entradas en la bitácora de este recipiente";
+          }
       });
     }
+
+    function addLog(containerId) {
+
+    }
+
 
     function approveItem() {
       ValidationService.approveItem(vm.custody, vm.user);

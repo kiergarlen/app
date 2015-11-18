@@ -171,6 +171,12 @@
                     >
                     <i class="glyphicon glyphicon-eye-open" aria-hidden="true"></i>
                   </button>
+                  <button class="btn btn-success"
+                    value="Agregar" title="Agregar"
+                    data-ng-click="custody.addLog(container.id_recipiente)"
+                    >
+                    <i class="glyphicon glyphicon-plus" aria-hidden="true"></i>
+                  </button>
                 </td>
               </tr>
             </tbody>
@@ -180,7 +186,7 @@
     </div>
   </div>
   <div>
-  <div>
+  <div data-ng-show="custody.isLogVisible">
     <div class="panel">
       <div class="panel-heading">
         <h3 class="panel-title">Recipiente</h3>
@@ -236,7 +242,7 @@
         data-ng-click="custody.addContainer()"
         >
         <i class="glyphicon glyphicon-plus" aria-hidden="true"></i>
-        Agregar recipiente
+        Agregar bitácorarecipiente
       </a>
       <br><br>
     </div>

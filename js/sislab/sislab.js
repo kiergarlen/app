@@ -2303,24 +2303,52 @@
     vm.user = TokenService.getUserFromToken();
     vm.custody = CustodyService.query({custodyId: $routeParams.custodyId});
     vm.storages = StorageService.get();
+    vm.parameters = [];
     vm.containerId = 0;
     vm.logEntry = {};
+    vm.logEntries = [];
+    vm.blankLog = {
+      id_historial_recipiente: 0,
+      id_custodia: 0,
+      id_muestra: 0,
+      id_recipiente: 0,
+      id_parametro: 0,
+      id_usuario_captura: 0,
+      id_usuario_actualiza: 0,
+      volumen: 0,
+      fecha_captura: null,
+      fecha_actualiza: null,
+      ip_captura: '',
+      ip_actualiza: '',
+      host_captura: '',
+      host_actualiza: '',
+      activo: 1
+    };
     vm.viewLog = viewLog;
+    vm.openAddLog = openAddLog;
     vm.isLogVisible = false;
     vm.isDataSubmitted = false;
     vm.approveItem = approveItem;
     vm.rejectItem = rejectItem;
     vm.submitForm = submitForm;
 
+    ParameterService
+      .get()
+      .$promise
+      .then(function success(response) {
+        vm.parameters = response;
+
+      });
+
     function viewLog(containerId) {
       vm.isLogVisible = false;
       vm.message = "";
-      //TODO: load Logs for containerId
+      vm.logEntries = [];
       ContainerLogService
         .query({containerId: containerId})
         .$promise
         .then(function success(response) {
-          if (response.lengthv > 0) {
+          if (response.length > 0) {
             vm.logEntries = response;
             vm.isLogVisible = true;
           } else {
@@ -2329,8 +2357,8 @@
       });
     }
 
-    function addLog(containerId) {
-
+    function openAddLog() {
+      vm.blankLog.id_custodia = vm.custody.id_custodia;
     }
 
 

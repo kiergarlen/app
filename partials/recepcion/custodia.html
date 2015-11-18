@@ -140,26 +140,6 @@
                       {{storage.almacenamiento}}
                     </option>
                   </select>
-                  <!--
-                  if FIRST_WRITE
-                  <br>
-                  + selectStorage +
-                  + ngRepeat storage in storages +
-                  <br>
-                  else
-                  <br>
-                  + selectedStorage +
-                  -->
-                  <!--
-                  <span class="label label-info"
-                    data-ng-show="container.id_almacenamiento < 4">
-                    {{container.almacenamiento}}
-                  </span>
-                  <span class="label label-warning"
-                    data-ng-show="container.id_almacenamiento > 3">
-                    {{container.almacenamiento}}
-                  </span>
-                  -->
                 </td>
                 <td>
                   {{container.fecha_actualiza | date: 'yyyy-MM-dd'}}
@@ -233,20 +213,45 @@
         </table>
     </div>
   </div>
-  <!--
   <div class="row">
     <div class="col-xs-12">
       <br>
       <a class="btn btn-success"
         value="Agregar recipiente" title="Agregar recipiente"
-        data-ng-click="custody.addContainer()"
+        data-ng-click="custody.openAddLog()"
         >
         <i class="glyphicon glyphicon-plus" aria-hidden="true"></i>
-        Agregar bitácorarecipiente
+        Agregar entrada a bitácora
       </a>
       <br><br>
     </div>
   </div>
+  <div class="row">
+    <div class="col-xs-12">
+      <h4>Nueva entrada a bitácora</h3>
+    </div>
+    <div class="col-xs-12 col-sm-6">
+      <label for="sampleSelect">
+        Recipiente
+      </label>
+      <select class="form-control"
+        id="sampleSelect"
+        name="sampleSelect"
+        data-ng-model="custody.blankLog.id_recipiente"
+        >
+        <option
+          data-ng-repeat="containerData in custody.custody.containers"
+          >
+          Muestra:
+          {{::validationSample.id_muestra}}
+          Recipiente:
+          ({{::validationSample.id_recipiente}})
+        </option>
+      </select>
+    </div>
+  </div>
+
+  <!--
   <div class="row">
     <div class="col-xs-12">
       <div class="panel">

@@ -2293,12 +2293,13 @@
    * @param {Object} StorageService - Proveedor de datos, Almacenamientos
    * @param {Object} ContainerService - Proveedor de datos, Recipientes
    * @param {Object} ContainerLogService - Proveedor de datos, Bitácoras de Recipiente
+   * @param {Object} CustodyParameterService - Proveedor de datos, Parámetros por Custodia
    * @param {Object} CustodyService - Proveedor de datos, Cadenas de custodia
    */
   function CustodyController($scope, $routeParams, TokenService,
     ValidationService, RestUtilsService, ArrayUtilsService,
     DateUtilsService, StorageService, ContainerService,
-    ContainerLogService, CustodyService) {
+    ContainerLogService, CustodyParameterService, CustodyService) {
     var vm = this;
     vm.user = TokenService.getUserFromToken();
     vm.custody = CustodyService.query({custodyId: $routeParams.custodyId});
@@ -2332,13 +2333,12 @@
     vm.rejectItem = rejectItem;
     vm.submitForm = submitForm;
 
-    ParameterService
-      .get()
+    CustodyParameterService
+      .query({custodyId: $routeParams.custodyId})
       .$promise
       .then(function success(response) {
         vm.parameters = response;
-
-      });
+    });
 
     function viewLog(containerId) {
       vm.isLogVisible = false;
@@ -2405,7 +2405,7 @@
         '$scope', '$routeParams', 'TokenService',
         'ValidationService', 'RestUtilsService', 'ArrayUtilsService',
         'DateUtilsService', 'StorageService', 'ContainerService',
-        'ContainerLogService', 'CustodyService',
+        'ContainerLogService', 'CustodyParameterService', 'CustodyService',
         CustodyController
       ]
     );
@@ -4394,6 +4394,36 @@
       [
         '$resource', 'TokenService',
         ParameterService
+      ]
+    );
+
+  //CustodyParameterService.js
+  /**
+   * @name CustodyParameterService
+   * @constructor
+   * @desc Proveedor de datos, Parámetros por Custodia
+   * @param {Object} $resource - Acceso a recursos HTTP
+   * @param {Object} TokenService - Proveedor de métodos para token
+   * @return {Object} $resource - Acceso a recursos HTTP
+   */
+  function CustodyParameterService($resource, TokenService) {
+    return $resource(API_BASE_URL + 'parameters/custodies/:custodyId', {}, {
+      query: {
+        method: 'GET',
+        params: {custodyId: 'id_custodia'},
+        isArray: true,
+        headers: {
+          'Auth-Token': TokenService.getToken()
+        }
+      }
+    });
+  }
+  angular
+    .module('sislabApp')
+    .factory('CustodyParameterService',
+      [
+        '$resource', 'TokenService',
+        CustodyParameterService
       ]
     );
 

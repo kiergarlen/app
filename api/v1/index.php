@@ -496,6 +496,34 @@ $app->get("/parameters", function() use ($app) {
   }
 });
 
+$app->get("/parameters/field", function() use ($app) {
+  try {
+    $userId = decodeUserToken($app->request())->uid;
+    $result = json_encode(getParametersField());
+    $app->response()->status(200);
+    $app->response()->header("Content-Type", "application/json");
+    //$result = ")]}',\n" . $result;
+    print_r($result);
+  } catch (Exception $e) {
+    $app->response()->status(400);
+    $app->response()->header("X-Status-Reason", $e->getMessage());
+  }
+});
+
+$app->get("/parameters/custodies/:custodyId", function($custodyId) use ($app) {
+  try {
+    $userId = decodeUserToken($app->request())->uid;
+    $result = json_encode(getParametersByCustody($custodyId));
+    $app->response()->status(200);
+    $app->response()->header("Content-Type", "application/json");
+    //$result = ")]}',\n" . $result;
+    print_r($result);
+  } catch (Exception $e) {
+    $app->response()->status(400);
+    $app->response()->header("X-Status-Reason", $e->getMessage());
+  }
+});
+
 $app->get("/norms(/)(:normId)", function($normId = -1) use ($app) {
   try {
     $userId = decodeUserToken($app->request())->uid;
@@ -880,20 +908,6 @@ $app->get("/points(/)(:pointId)", function($pointId = -1) use ($app) {
     {
       $result = json_encode(getPoints());
     }
-    $app->response()->status(200);
-    $app->response()->header("Content-Type", "application/json");
-    //$result = ")]}',\n" . $result;
-    print_r($result);
-  } catch (Exception $e) {
-    $app->response()->status(400);
-    $app->response()->header("X-Status-Reason", $e->getMessage());
-  }
-});
-
-$app->get("/parameters/field", function() use ($app) {
-  try {
-    $userId = decodeUserToken($app->request())->uid;
-    $result = json_encode(getParametersField());
     $app->response()->status(200);
     $app->response()->header("Content-Type", "application/json");
     //$result = ")]}',\n" . $result;

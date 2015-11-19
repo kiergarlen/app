@@ -2417,6 +2417,37 @@ function getParameter($parameterId) {
   return $parameter;
 }
 
+function getParameters() {
+  $sql = "SELECT id_parametro, id_tipo_matriz, id_area,
+    id_tipo_preservacion, id_metodo, id_unidad, id_tipo_valor,
+    parametro, param, caducidad, limite_entrega, acreditado,
+    precio, activo
+    FROM Parametro
+    WHERE activo = 1";
+  $db = getConnection();
+  $stmt = $db->prepare($sql);
+  $stmt->execute();
+  $parameters = $stmt->fetchAll(PDO::FETCH_ASSOC);
+  $db = null;
+  return $parameters;
+}
+
+function getParametersByCustody($custodyId) {
+  $sql = "SELECT id_custodia, id_recepcion, id_orden, id_norma,
+    id_parametro, id_tipo_matriz, id_area, id_tipo_preservacion,
+    id_metodo, id_unidad, id_tipo_valor, parametro, [param],
+    caducidad, limite_entrega, acreditado, precio
+    FROM viewParametroCustodia
+    WHERE id_custodia = :custodyId";
+  $db = getConnection();
+  $stmt = $db->prepare($sql);
+  $stmt->bindParam("custodyId", $custodyId);
+  $stmt->execute();
+  $parameters = $stmt->fetchAll(PDO::FETCH_ASSOC);
+  $db = null;
+  return $parameters;
+}
+
 function getParametersByNorm($normId) {
   $sql = "SELECT id_parametro, id_tipo_matriz, id_area,
     id_tipo_preservacion, id_metodo, id_unidad, id_tipo_valor,

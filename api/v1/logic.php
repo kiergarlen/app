@@ -2,7 +2,12 @@
 //PROCESSING FUNCTIONS
 define("KEY", "m0oxUT7L8Unn93hXMUGHpwq_jTSKVBjQfEVCUe8jZ38KUU4VSAfmsNk4JJYcJl7CukrY6QMlixxwat7AZSpDcSQ");
 
-function processUserJwt($request) {
+/**
+ * @param $request
+ * @return mixed
+ */
+function processUserJwt($request)
+{
   $input = json_decode($request->getbody());
   $usr = $input->username;
   $pwd = $input->password;
@@ -33,15 +38,28 @@ function processUserJwt($request) {
   return $jwt;
 }
 
-function decodeJwt($jwt) {
+/**
+ * @param $jwt
+ */
+function decodeJwt($jwt)
+{
   return (array) JWT::decode($jwt, KEY);
 }
 
-function extractDataFromRequest($request) {
+/**
+ * @param $request
+ */
+function extractDataFromRequest($request)
+{
   return json_decode($request->getBody());
 }
 
-function decodeUserToken($request) {
+/**
+ * @param $request
+ * @return mixed
+ */
+function decodeUserToken($request)
+{
   try {
     $headers = $request->headers();
     $jwt = $headers["Auth-Token"];
@@ -66,7 +84,12 @@ function decodeUserToken($request) {
   }
 }
 
-function processMenuToJson($items) {
+/**
+ * @param $items
+ * @return mixed
+ */
+function processMenuToJson($items)
+{
   $output = '';
   $i = 0;
   $l = count($items);
@@ -79,16 +102,12 @@ function processMenuToJson($items) {
   $output .= '"orden":' . $currentItem["orden_submenu"] . ',';
   $output .= '"url":"' . $currentItem["url"] . '",';
   $output .= '"menu":"' . $currentItem["submenu"] . '"}';
-  for($i = 1; $i < $l; $i++)
-  {
-    if ($currentItem["id_menu"] == $items[$i]["id_menu"])
-    {
+  for ($i = 1; $i < $l; $i++) {
+    if ($currentItem["id_menu"] == $items[$i]["id_menu"]) {
       // add submenu
       $output .= ',';
       $currentItem = $items[$i];
-    }
-    else
-    {
+    } else {
       //close current menu, add new one
       $output .= ']},';
       $currentItem = $items[$i];
@@ -108,7 +127,12 @@ function processMenuToJson($items) {
   return $output;
 }
 
-function isoDateToMsSql($dateString) {
+/**
+ * @param $dateString
+ * @return mixed
+ */
+function isoDateToMsSql($dateString)
+{
   //$format = "Y-m-d";
   //if (strlen($dateString) > 10)
   //{
@@ -116,8 +140,8 @@ function isoDateToMsSql($dateString) {
   //  $parsedDate = str_replace("T", " ", $parsedDate);
   //  if (DateTime::createFromFormat($format .  " H:i:s", $parsedDate))
   //  {
-  //    $date = DateTime::createFromFormat($format, $parsedDate);
-  //    return $date->format($format);
+  //  $date = DateTime::createFromFormat($format, $parsedDate);
+  //  return $date->format($format);
   //  }
   //}
   //if (strlen($dateString) == 10)
@@ -128,10 +152,15 @@ function isoDateToMsSql($dateString) {
   if (strlen($dateString) > 9) {
     return $dateString;
   }
-  return NULL;
+  return null;
 }
 
-function processStudyInsert($request) {
+/**
+ * @param $request
+ * @return mixed
+ */
+function processStudyInsert($request)
+{
   $token = decodeUserToken($request);
   $insertData = (array) json_decode($request->getBody());
   $lastStudyNumber = 0;
@@ -149,8 +178,7 @@ function processStudyInsert($request) {
   unset($insertData["ip_actualiza"]);
 
   $lastStudy = (array) getLastStudyByYear($currentYear);
-  if (is_numeric($lastStudy["oficio"]))
-  {
+  if (is_numeric($lastStudy["oficio"])) {
     $lastStudyNumber = $lastStudy["oficio"];
   }
 
@@ -167,7 +195,7 @@ function processStudyInsert($request) {
   $insertData["ip_captura"] = $request->getIp();
   $insertData["host_captura"] = $request->getUrl();
 
-  $insertData["fecha_rechaza"] = NULL;
+  $insertData["fecha_rechaza"] = null;
   if ($insertData["id_status"] == 3) {
     $insertData["fecha_rechaza"] = isoDateToMsSql($insertData["fecha"]);
     $insertData["id_usuario_rechaza"] = $insertData["id_usuario_captura"];
@@ -175,7 +203,7 @@ function processStudyInsert($request) {
     $insertData["host_rechaza"] = $insertData["host_captura"];
   }
 
-  $insertData["fecha_valida"] = NULL;
+  $insertData["fecha_valida"] = null;
   if ($insertData["id_status"] == 2) {
     $insertData["fecha_valida"] = isoDateToMsSql($insertData["fecha_valida"]);
     $insertData["id_usuario_valida"] = $insertData["id_usuario_captura"];
@@ -185,12 +213,18 @@ function processStudyInsert($request) {
 
   $studyInsertData = array(
     "study" => $insertData,
-    "orders" => $orders
+    "orders" => $orders,
   );
   return $studyInsertData;
 }
 
-function processStudyOrderInsert($studyInsertData, $studyId) {
+/**
+ * @param $studyInsertData
+ * @param $studyId
+ * @return mixed
+ */
+function processStudyOrderInsert($studyInsertData, $studyId)
+{
   $orders = (array) $studyInsertData["orders"];
 
   $study = array(
@@ -198,21 +232,25 @@ function processStudyOrderInsert($studyInsertData, $studyId) {
     "id_cliente" => $studyInsertData["study"]["id_cliente"],
     "id_usuario_actualiza" => $studyInsertData["study"]["id_usuario_captura"],
     "ip_actualiza" => $studyInsertData["study"]["ip_captura"],
-    "host_actualiza" => $studyInsertData["study"]["host_captura"]
+    "host_actualiza" => $studyInsertData["study"]["host_captura"],
   );
 
   $i = 0;
   $l = count($orders);
 
-  for ($i = 0; $i < $l; $i++)
-  {
+  for ($i = 0; $i < $l; $i++) {
     $order = (array) $orders[$i];
     processNewOrderInsert($order, $study);
   }
   return $studyId;
 }
 
-function processStudyUpdate($request) {
+/**
+ * @param $request
+ * @return mixed
+ */
+function processStudyUpdate($request)
+{
   $token = decodeUserToken($request);
   $updateData = (array) json_decode($request->getBody());
   $studyId = $updateData["id_estudio"];
@@ -232,8 +270,7 @@ function processStudyUpdate($request) {
   $updateData["ip_actualiza"] = $request->getIp();
   $updateData["host_actualiza"] = $request->getUrl();
 
-  if ($updateData["id_status"] == 2 && strlen($updateData["ip_valida"]) < 1)
-  {
+  if ($updateData["id_status"] == 2 && strlen($updateData["ip_valida"]) < 1) {
     $updateData["ip_valida"] = $request->getIp();
     $updateData["host_valida"] = $request->getUrl();
     $updateData["fecha_valida"] = isoDateToMsSql($updateData["fecha_valida"]);
@@ -243,14 +280,19 @@ function processStudyUpdate($request) {
   $updateData["fecha_entrega"] = isoDateToMsSql($updateData["fecha_entrega"]);
   $updateData["fecha_rechaza"] = isoDateToMsSql($updateData["fecha_rechaza"]);
 
-  $studyUpdateData = array (
+  $studyUpdateData = array(
     "study" => $updateData,
-    "orders" => $orders
+    "orders" => $orders,
   );
   return $studyUpdateData;
 }
 
-function processStudyOrderUpdate($studyUpdateData) {
+/**
+ * @param $studyUpdateData
+ * @return mixed
+ */
+function processStudyOrderUpdate($studyUpdateData)
+{
   $orders = (array) $studyUpdateData["orders"];
   $study = $studyUpdateData["study"];
   $studyId = $study["id_estudio"];
@@ -265,19 +307,15 @@ function processStudyOrderUpdate($studyUpdateData) {
   $l = count($storedOrders);
   $m = count($orders);
 
-  if ($l > 0)
-  {
+  if ($l > 0) {
     disableStudyOrders($studyId);
   }
 
   for ($j = 0; $j < $m; $j++) {
     $order = (array) $orders[$j];
-    if ($order["id_orden"] < 1 || $l < 1)
-    {
+    if ($order["id_orden"] < 1 || $l < 1) {
       processNewOrderInsert($order, $study);
-    }
-    else
-    {
+    } else {
       unset($order["cliente"]);
       unset($order["estudio"]);
       unset($order["planes"]);
@@ -299,7 +337,12 @@ function processStudyOrderUpdate($studyUpdateData) {
   return $studyId;
 }
 
-function processNewOrderInsert($newOrder, $study) {
+/**
+ * @param $newOrder
+ * @param $study
+ */
+function processNewOrderInsert($newOrder, $study)
+{
   $studyId = $study["id_estudio"];
   $clientId = $study["id_cliente"];
   $updateUserId = $study["id_usuario_actualiza"];
@@ -330,7 +373,12 @@ function processNewOrderInsert($newOrder, $study) {
   return insertOrder($newOrder);
 }
 
-function processOrderUpdate($request) {
+/**
+ * @param $request
+ * @return mixed
+ */
+function processOrderUpdate($request)
+{
   $token = decodeUserToken($request);
   $update = (array) json_decode($request->getBody());
   $client = $update["cliente"];
@@ -354,8 +402,7 @@ function processOrderUpdate($request) {
   $update["fecha"] = isoDateToMsSql($update["fecha"]);
   $update["fecha_rechaza"] = isoDateToMsSql($update["fecha_rechaza"]);
 
-  if ($update["id_status"] == 2 && strlen($update["ip_valida"]) < 1)
-  {
+  if ($update["id_status"] == 2 && strlen($update["ip_valida"]) < 1) {
     $update["ip_valida"] = $request->getIp();
     $update["host_valida"] = $request->getUrl();
     $update["fecha_valida"] = isoDateToMsSql($update["fecha_valida"]);
@@ -363,12 +410,17 @@ function processOrderUpdate($request) {
 
   $orderUpdateData = array(
     "order" => $update,
-    "plans" => $plans
+    "plans" => $plans,
   );
   return $orderUpdateData;
 }
 
-function processOrderPlansUpdate($orderUpdateData) {
+/**
+ * @param $orderUpdateData
+ * @return mixed
+ */
+function processOrderPlansUpdate($orderUpdateData)
+{
   $orderData = $orderUpdateData["order"];
   $orderId = $orderData["id_orden"];
   $updateUserId = $orderData["id_usuario_actualiza"];
@@ -379,15 +431,13 @@ function processOrderPlansUpdate($orderUpdateData) {
 
   $i = 0;
   $l = count($plans);
-  if (count($storedPlans) > 0)
-  {
+  if (count($storedPlans) > 0) {
     disableOrderPlans($orderId);
   }
 
   for ($i = 0; $i < $l; $i++) {
     $plan = (array) $plans[$i];
-    if ($plan["id_plan"] == 0)
-    {
+    if ($plan["id_plan"] == 0) {
       unset($plan['$$hashKey']);
       unset($plan["id_plan"]);
       unset($plan["fecha_captura"]);
@@ -414,13 +464,11 @@ function processOrderPlansUpdate($orderUpdateData) {
       $plan["host_captura"] = $updateUrl;
       $plan["fecha"] = isoDateToMsSql($plan["fecha_probable"]);
       $plan["fecha_probable"] = isoDateToMsSql($plan["fecha_probable"]);
-      $plan["fecha_calibracion"] = NULL;
-      $plan["fecha_valida"] = NULL;
-      $plan["fecha_rechaza"] = NULL;
+      $plan["fecha_calibracion"] = null;
+      $plan["fecha_valida"] = null;
+      $plan["fecha_rechaza"] = null;
       insertPlan($plan);
-    }
-    else
-    {
+    } else {
       unset($plan['$$hashKey']);
       unset($plan["fecha_actualiza"]);
       unset($plan["id_usuario_captura"]);
@@ -437,7 +485,12 @@ function processOrderPlansUpdate($orderUpdateData) {
   return $orderId;
 }
 
-function processPlanUpdate($request) {
+/**
+ * @param $request
+ * @return mixed
+ */
+function processPlanUpdate($request)
+{
   $token = decodeUserToken($request);
   $plan = (array) json_decode($request->getBody());
   $client = $plan["cliente"];
@@ -471,8 +524,7 @@ function processPlanUpdate($request) {
   $plan["ip_actualiza"] = $request->getIp();
   $plan["host_actualiza"] = $request->getUrl();
 
-  if ($plan["id_status"] == 2 && strlen($plan["ip_valida"]) < 1)
-  {
+  if ($plan["id_status"] == 2 && strlen($plan["ip_valida"]) < 1) {
     $plan["ip_valida"] = $request->getIp();
     $plan["host_valida"] = $request->getUrl();
     $plan["fecha_valida"] = isoDateToMsSql($plan["fecha_valida"]);
@@ -485,7 +537,7 @@ function processPlanUpdate($request) {
   $plan["fecha_valida"] = isoDateToMsSql($plan["fecha_valida"]);
   $plan["fecha_rechaza"] = isoDateToMsSql($plan["fecha_rechaza"]);
 
-  $planUpdateData = array (
+  $planUpdateData = array(
     "plan" => $plan,
     "client" => $client,
     "instruments" => $instruments,
@@ -494,18 +546,22 @@ function processPlanUpdate($request) {
     "points" => $points,
     "reactives" => $reactives,
     "materials" => $materials,
-    "coolers" => $coolers
+    "coolers" => $coolers,
   );
   return $planUpdateData;
 }
 
-function processPlanSheetInsert($planUpdateData) {
+/**
+ * @param $planUpdateData
+ * @return mixed
+ */
+function processPlanSheetInsert($planUpdateData)
+{
   $plan = (array) $planUpdateData["plan"];
   $client = (array) $planUpdateData["client"];
   $planId = $plan["id_plan"];
   $sheets = getSheetsByPlan($planId);
-  if (count($sheets) < 1)
-  {
+  if (count($sheets) < 1) {
     $sheetData = getBlankSheet();
     unset($sheetData["id_hoja"]);
     unset($sheetData["fecha_captura"]);
@@ -527,13 +583,17 @@ function processPlanSheetInsert($planUpdateData) {
   return $sheets[0]["id_hoja"];
 }
 
-function processPlanReceptionInsert($planUpdateData) {
+/**
+ * @param $planUpdateData
+ * @return mixed
+ */
+function processPlanReceptionInsert($planUpdateData)
+{
   $plan = (array) $planUpdateData["plan"];
   $planId = $plan["id_plan"];
   $sheet = getSheetsByPlan($planId)[0];
   $receptions = (array) getReceptionsByPlan($planId);
-  if (count($receptions) < 1)
-  {
+  if (count($receptions) < 1) {
     $receptionData = getBlankReception();
     unset($receptionData["id_recepcion"]);
     unset($receptionData["fecha_captura"]);
@@ -556,7 +616,12 @@ function processPlanReceptionInsert($planUpdateData) {
   return $receptions[0]["id_recepcion"];
 }
 
-function processPlanSheetSampleInsert($planUpdateData) {
+/**
+ * @param $planUpdateData
+ * @return mixed
+ */
+function processPlanSheetSampleInsert($planUpdateData)
+{
   $plan = (array) $planUpdateData["plan"];
   $orderId = $plan["id_orden"];
   $client = (array) $planUpdateData["client"];
@@ -567,8 +632,7 @@ function processPlanSheetSampleInsert($planUpdateData) {
   $samples = (array) getSamplesBySheet($sheetId);
   $sampleId = 0;
 
-  if (count($samples) < 1)
-  {
+  if (count($samples) < 1) {
     $receptions = (array) getReceptionsByPlan($planId);
     $receptionId = $receptions[0]["id_recepcion"];
     $points = getPointsByPackage($plan["id_paquete"]);
@@ -606,7 +670,12 @@ function processPlanSheetSampleInsert($planUpdateData) {
   return $planId;
 }
 
-function processPlanInstrumentsUpdate($planUpdateData) {
+/**
+ * @param $planUpdateData
+ * @return mixed
+ */
+function processPlanInstrumentsUpdate($planUpdateData)
+{
   $instruments = (array) $planUpdateData["instruments"];
   $planId = $planUpdateData["plan"]["id_plan"];
   $storedInstruments = getPlanInstruments($planId);
@@ -615,8 +684,7 @@ function processPlanInstrumentsUpdate($planUpdateData) {
   $l = count($storedInstruments);
   $m = count($instruments);
 
-  if ($l < 1)
-  {
+  if ($l < 1) {
     for ($i = 0; $i < $m; $i++) {
       $instrument = (array) $instruments[$i];
       unset($instrument["id_plan_instrumento"]);
@@ -628,9 +696,7 @@ function processPlanInstrumentsUpdate($planUpdateData) {
       insertPlanInstrument($instrument);
     }
     return $planId;
-  }
-  else
-  {
+  } else {
     disablePlanInstruments($planId);
     for ($i = 0; $i < $m; $i++) {
       $instrument = array(
@@ -639,15 +705,12 @@ function processPlanInstrumentsUpdate($planUpdateData) {
         "id_instrumento" => $instruments[$i]->id_instrumento,
         "bitacora" => $instruments[$i]->bitacora,
         "folio" => $instruments[$i]->folio,
-        "activo" => $instruments[$i]->activo
+        "activo" => $instruments[$i]->activo,
       );
-      if ($instrument["id_plan_instrumento"] < 1)
-      {
+      if ($instrument["id_plan_instrumento"] < 1) {
         unset($instrument["id_plan_instrumento"]);
         insertPlanInstrument($instrument);
-      }
-      else
-      {
+      } else {
         updatePlanInstrument($instrument);
       }
     }
@@ -655,7 +718,12 @@ function processPlanInstrumentsUpdate($planUpdateData) {
   return $planId;
 }
 
-function processPlanPreservationsUpdate($planUpdateData) {
+/**
+ * @param $planUpdateData
+ * @return mixed
+ */
+function processPlanPreservationsUpdate($planUpdateData)
+{
   $preservations = (array) $planUpdateData["preservations"];
   $planId = $planUpdateData["plan"]["id_plan"];
   $storedPreservations = getPreservationsByPlan($planId);
@@ -664,35 +732,29 @@ function processPlanPreservationsUpdate($planUpdateData) {
   $l = count($storedPreservations);
   $m = count($preservations);
 
-  if ($l < 1)
-  {
+  if ($l < 1) {
     for ($j = 0; $j < $m; $j++) {
       $newPreservation = array(
         "id_plan" => $preservations[$j]->id_plan,
         "id_preservacion" => $preservations[$j]->id_preservacion,
-        "activo" => 1
+        "activo" => 1,
       );
       insertPlanPreservation($newPreservation);
     }
     return $planId;
-  }
-  else
-  {
+  } else {
     disablePlanPreservations($planId);
     for ($j = 0; $j < $m; $j++) {
       $preservation = array(
         "id_plan_preservacion" => $preservations[$j]->id_plan_preservacion,
         "id_plan" => $preservations[$j]->id_plan,
         "id_preservacion" => $preservations[$j]->id_preservacion,
-        "activo" => $preservations[$j]->activo
+        "activo" => $preservations[$j]->activo,
       );
-      if ($preservation["id_plan_preservacion"] < 1)
-      {
+      if ($preservation["id_plan_preservacion"] < 1) {
         unset($preservation["id_plan_preservacion"]);
         insertPlanPreservation($preservation);
-      }
-      else
-      {
+      } else {
         $preservation["activo"] = 1;
         updatePlanPreservation($preservation);
       }
@@ -701,7 +763,12 @@ function processPlanPreservationsUpdate($planUpdateData) {
   return $planId;
 }
 
-function processPlanContainersUpdate($planUpdateData) {
+/**
+ * @param $planUpdateData
+ * @return mixed
+ */
+function processPlanContainersUpdate($planUpdateData)
+{
   $containers = (array) $planUpdateData["containers"];
   $preservations = (array) $planUpdateData["preservations"];
   $points = (array) $planUpdateData["points"];
@@ -720,8 +787,7 @@ function processPlanContainersUpdate($planUpdateData) {
   $n = count($preservations);
   $o = count($points);
 
-  if ($l < 1)
-  {
+  if ($l < 1) {
     for ($i = 0; $i < $o; $i++) {
       for ($j = 0; $j < $n; $j++) {
         insertContainer(
@@ -736,7 +802,7 @@ function processPlanContainersUpdate($planUpdateData) {
             "id_usuario_captura" => $userId,
             "ip_captura" => $ip,
             "host_captura" => $url,
-            "activo" => 1
+            "activo" => 1,
           )
         );
       }
@@ -748,18 +814,16 @@ function processPlanContainersUpdate($planUpdateData) {
       $newContainer = array(
         "id_recipiente" => $newContainers[$i]["id_recipiente"],
         "id_plan" => $newContainers[$i]["id_plan"],
-        "activo" => 1
+        "activo" => 1,
       );
       insertPlanContainer($newContainer);
     }
     return $planId;
-  }
-  else
-  {
+  } else {
     for ($i = 0; $i < $l; $i++) {
       // if ($storedContainers[$i]["id_recepcion"] < 1) {
-        $storedContainers[$i]["activo"] = 0;
-        updatePlanContainer($storedContainers[$i]);
+      $storedContainers[$i]["activo"] = 0;
+      updatePlanContainer($storedContainers[$i]);
       // }
     }
     for ($j = 0; $j < $m; $j++) {
@@ -769,8 +833,7 @@ function processPlanContainersUpdate($planUpdateData) {
       //   unset($container["id_plan_recipiente"]);
       //   insertPlanContainer($container);
       // }
-      if ($container["id_plan_recipiente"] > 0)
-      {
+      if ($container["id_plan_recipiente"] > 0) {
         $container["activo"] = 1;
         updatePlanContainer($container);
       }
@@ -779,7 +842,12 @@ function processPlanContainersUpdate($planUpdateData) {
   return $planId;
 }
 
-function processPlanReactivesUpdate($planUpdateData) {
+/**
+ * @param $planUpdateData
+ * @return mixed
+ */
+function processPlanReactivesUpdate($planUpdateData)
+{
   $reactives = (array) $planUpdateData["reactives"];
   $planId = $planUpdateData["plan"]["id_plan"];
   deletePlanReactives($planId);
@@ -798,7 +866,12 @@ function processPlanReactivesUpdate($planUpdateData) {
   return $planId;
 }
 
-function processPlanMaterialsUpdate($planUpdateData) {
+/**
+ * @param $planUpdateData
+ * @return mixed
+ */
+function processPlanMaterialsUpdate($planUpdateData)
+{
   $materials = (array) $planUpdateData["materials"];
   $planId = $planUpdateData["plan"]["id_plan"];
   deletePlanMaterials($planId);
@@ -815,7 +888,12 @@ function processPlanMaterialsUpdate($planUpdateData) {
   return $planId;
 }
 
-function processPlanCoolersUpdate($planUpdateData) {
+/**
+ * @param $planUpdateData
+ * @return mixed
+ */
+function processPlanCoolersUpdate($planUpdateData)
+{
   $coolers = (array) $planUpdateData["coolers"];
   $planId = $planUpdateData["plan"]["id_plan"];
   deletePlanCoolers($planId);
@@ -832,7 +910,12 @@ function processPlanCoolersUpdate($planUpdateData) {
   return $planId;
 }
 
-function processSheetUpdate($request) {
+/**
+ * @param $request
+ * @return mixed
+ */
+function processSheetUpdate($request)
+{
   $token = decodeUserToken($request);
   $update = (array) json_decode($request->getBody());
   $preservations = $update["preservaciones"];
@@ -858,8 +941,7 @@ function processSheetUpdate($request) {
   $update["fecha_entrega"] = isoDateToMsSql($update["fecha_entrega"]);
   $update["fecha_rechaza"] = isoDateToMsSql($update["fecha_rechaza"]);
 
-  if ($update["id_status"] == 2 && strlen($update["ip_valida"]) < 1)
-  {
+  if ($update["id_status"] == 2 && strlen($update["ip_valida"]) < 1) {
     $update["ip_valida"] = $request->getIp();
     $update["host_valida"] = $request->getUrl();
     $update["fecha_valida"] = isoDateToMsSql($update["fecha_valida"]);
@@ -868,12 +950,17 @@ function processSheetUpdate($request) {
   $sheetUpdateData = array(
     "sheet" => $update,
     "preservations" => $preservations,
-    "samples" => $samples
+    "samples" => $samples,
   );
   return $sheetUpdateData;
 }
 
-function processSheetReceptionUpdate($sheetUpdateData) {
+/**
+ * @param $sheetUpdateData
+ * @return mixed
+ */
+function processSheetReceptionUpdate($sheetUpdateData)
+{
   $sheet = $sheetUpdateData["sheet"];
   $sheetId = $sheet["id_hoja"];
   $storedReceptions = getReceptionsBySheet($sheetId);
@@ -888,7 +975,12 @@ function processSheetReceptionUpdate($sheetUpdateData) {
   //return $sheetId;
 }
 
-function processSheetResultsUpdate($sheetUpdateData) {
+/**
+ * @param $sheetUpdateData
+ * @return mixed
+ */
+function processSheetResultsUpdate($sheetUpdateData)
+{
   $samples = (array) $sheetUpdateData["samples"];
   $sheetId = $sheetUpdateData["sheet"]["id_hoja"];
   $userId = $sheetUpdateData["sheet"]["id_usuario_actualiza"];
@@ -913,8 +1005,7 @@ function processSheetResultsUpdate($sheetUpdateData) {
     }
   }
 
-  if ($l < 1)
-  {
+  if ($l < 1) {
     $m = count($results);
     for ($j = 0; $j < $m; $j++) {
       $results[$j]["id_usuario_captura"] = $userId;
@@ -925,9 +1016,7 @@ function processSheetResultsUpdate($sheetUpdateData) {
       insertResult($results[$j]);
     }
     return $sheetId;
-  }
-  else
-  {
+  } else {
     for ($i = 0; $i < $l; $i++) {
       $storedResults[$i]["id_usuario_actualiza"] = $userId;
       $storedResults[$i]["activo"] = 0;
@@ -941,17 +1030,14 @@ function processSheetResultsUpdate($sheetUpdateData) {
     $m = count($results);
     for ($j = 0; $j < $m; $j++) {
       $result = (array) $results[$j];
-      if ($result["id_resultado"] == 0)
-      {
+      if ($result["id_resultado"] == 0) {
         $result["id_usuario_captura"] = $userId;
         unset($result["id_resultado"]);
         unset($result["id_usuario_actualiza"]);
         unset($result["fecha_captura"]);
         unset($result["fecha_actualiza"]);
         insertResult($result);
-      }
-      else
-      {
+      } else {
         $result["id_usuario_actualiza"] = $userId;
         $result["activo"] = 1;
         unset($result["id_usuario_captura"]);
@@ -965,7 +1051,12 @@ function processSheetResultsUpdate($sheetUpdateData) {
   return $sheetId;
 }
 
-function processSheetPreservationsUpdate($sheetUpdateData) {
+/**
+ * @param $sheetUpdateData
+ * @return mixed
+ */
+function processSheetPreservationsUpdate($sheetUpdateData)
+{
   $preservations = (array) $sheetUpdateData["preservations"];
   $sheetId = $sheetUpdateData["sheet"]["id_hoja"];
   $storedPreservations = (array) getPreservationsBySheet($sheetId);
@@ -974,8 +1065,7 @@ function processSheetPreservationsUpdate($sheetUpdateData) {
   $l = count($storedPreservations);
   $m = count($preservations);
 
-  if ($l < 1)
-  {
+  if ($l < 1) {
     for ($j = 0; $j < $m; $j++) {
       $preservation = (array) $preservations[$j];
       $preservation["cantidad"] = count($sheetUpdateData["samples"]);
@@ -989,9 +1079,7 @@ function processSheetPreservationsUpdate($sheetUpdateData) {
       insertSheetPreservation($preservation);
     }
     return $sheetId;
-  }
-  else
-  {
+  } else {
     for ($i = 0; $i < $l; $i++) {
       unset($storedPreservations[$i]["id_tipo_preservacion"]);
       unset($storedPreservations[$i]["preservacion"]);
@@ -1009,13 +1097,10 @@ function processSheetPreservationsUpdate($sheetUpdateData) {
       unset($preservation["preservacion"]);
       unset($preservation["descripcion"]);
       unset($preservation["selected"]);
-      if ($preservation["id_hoja_preservacion"] < 1)
-      {
+      if ($preservation["id_hoja_preservacion"] < 1) {
         unset($preservation["id_hoja_preservacion"]);
         insertSheetPreservation($preservation);
-      }
-      else
-      {
+      } else {
         $preservation["activo"] = 1;
         updateSheetPreservation($preservation);
       }
@@ -1024,7 +1109,12 @@ function processSheetPreservationsUpdate($sheetUpdateData) {
   return $sheetId;
 }
 
-function processReceptionUpdate($request) {
+/**
+ * @param $request
+ * @return mixed
+ */
+function processReceptionUpdate($request)
+{
   $token = decodeUserToken($request);
   $update = (array) json_decode($request->getBody());
 
@@ -1056,8 +1146,7 @@ function processReceptionUpdate($request) {
   $update["fecha_verifica"] = $update["fecha_recibe"];
   $update["fecha_rechaza"] = isoDateToMsSql($update["fecha_rechaza"]);
 
-  if ($update["id_status"] == 2 && strlen($update["ip_valida"]) < 1)
-  {
+  if ($update["id_status"] == 2 && strlen($update["ip_valida"]) < 1) {
     $update["ip_valida"] = $request->getIp();
     $update["host_valida"] = $request->getUrl();
     $update["fecha_valida"] = isoDateToMsSql($update["fecha_valida"]);
@@ -1068,12 +1157,17 @@ function processReceptionUpdate($request) {
     "samples" => $samples,
     "preservations" => $preservations,
     "areas" => $areas,
-    "jobs" => $jobs
+    "jobs" => $jobs,
   );
   return $receptionUpdateData;
 }
 
-function processReceptionSamplesUpdate($receptionUpdateData) {
+/**
+ * @param $receptionUpdateData
+ * @return mixed
+ */
+function processReceptionSamplesUpdate($receptionUpdateData)
+{
   $samples = (array) $receptionUpdateData["samples"];
   $receptionId = $receptionUpdateData["reception"]["id_recepcion"];
   $storedSamples = getReceptionSamples($receptionId);
@@ -1082,8 +1176,7 @@ function processReceptionSamplesUpdate($receptionUpdateData) {
   $l = count($storedSamples);
   $m = count($samples);
 
-  if ($l > 0)
-  {
+  if ($l > 0) {
     disableReceptionSamples($receptionId);
   }
 
@@ -1091,15 +1184,12 @@ function processReceptionSamplesUpdate($receptionUpdateData) {
     $sample = array(
       "id_recepcion_muestra" => $samples[$i]->id_recepcion_muestra,
       "id_recepcion" => $samples[$i]->id_recepcion,
-      "id_muestra" => $samples[$i]->id_muestra
+      "id_muestra" => $samples[$i]->id_muestra,
     );
-    if ($sample["id_recepcion_muestra"] < 1 || $l < 1)
-    {
+    if ($sample["id_recepcion_muestra"] < 1 || $l < 1) {
       unset($sample["id_recepcion_muestra"]);
       insertReceptionSample($sample);
-    }
-    else
-    {
+    } else {
       $sample["activo"] = 1;
       updateReceptionSample($sample);
     }
@@ -1107,7 +1197,12 @@ function processReceptionSamplesUpdate($receptionUpdateData) {
   return $receptionId;
 }
 
-function processReceptionPreservationsUpdate($receptionUpdateData) {
+/**
+ * @param $receptionUpdateData
+ * @return mixed
+ */
+function processReceptionPreservationsUpdate($receptionUpdateData)
+{
   $preservations = (array) $receptionUpdateData["preservations"];
   $receptionId = $receptionUpdateData["reception"]["id_recepcion"];
   $storedPreservations = getReceptionPreservations($receptionId);
@@ -1115,8 +1210,7 @@ function processReceptionPreservationsUpdate($receptionUpdateData) {
   $l = count($storedPreservations);
   $m = count($preservations);
 
-  if ($l > 0)
-  {
+  if ($l > 0) {
     disableReceptionPreservations($receptionId);
   }
 
@@ -1127,13 +1221,10 @@ function processReceptionPreservationsUpdate($receptionUpdateData) {
       "id_preservacion" => $preservations[$i]->id_preservacion,
       "cantidad" => $preservations[$i]->cantidad,
     );
-    if ($preservation["id_recepcion_preservacion"] < 1)
-    {
+    if ($preservation["id_recepcion_preservacion"] < 1) {
       unset($preservation["id_recepcion_preservacion"]);
       insertReceptionPreservation($preservation);
-    }
-    else
-    {
+    } else {
       $preservation["activo"] = 1;
       updateReceptionPreservation($preservation);
     }
@@ -1141,7 +1232,12 @@ function processReceptionPreservationsUpdate($receptionUpdateData) {
   return $receptionId;
 }
 
-function processReceptionAreasUpdate($receptionUpdateData) {
+/**
+ * @param $receptionUpdateData
+ * @return mixed
+ */
+function processReceptionAreasUpdate($receptionUpdateData)
+{
   $areas = (array) $receptionUpdateData["areas"];
   $reception = (array) $receptionUpdateData["reception"];
   $receptionId = $reception["id_recepcion"];
@@ -1150,8 +1246,7 @@ function processReceptionAreasUpdate($receptionUpdateData) {
   $l = count($storedAreas);
   $m = count($areas);
 
-  if ($l > 0)
-  {
+  if ($l > 0) {
     disableReceptionAreas($receptionId);
   }
 
@@ -1163,15 +1258,12 @@ function processReceptionAreasUpdate($receptionUpdateData) {
       "id_muestra" => $reception["id_muestra_validacion"],
       "volumen" => $areas[$i]->volumen,
       "vigencia" => $areas[$i]->vigencia,
-      "recipiente" => $areas[$i]->recipiente
+      "recipiente" => $areas[$i]->recipiente,
     );
-    if ($area["id_recepcion_area"] < 1)
-    {
+    if ($area["id_recepcion_area"] < 1) {
       unset($area["id_recepcion_area"]);
       insertReceptionArea($area);
-    }
-    else
-    {
+    } else {
       $area["activo"] = 1;
       updateReceptionArea($area);
     }
@@ -1179,7 +1271,12 @@ function processReceptionAreasUpdate($receptionUpdateData) {
   return $receptionId;
 }
 
-function processReceptionJobsInsert($receptionUpdateData) {
+/**
+ * @param $receptionUpdateData
+ * @return mixed
+ */
+function processReceptionJobsInsert($receptionUpdateData)
+{
   $reception = (array) $receptionUpdateData["reception"];
   $jobs = (array) $receptionUpdateData["jobs"];
   $receptionId = $reception["id_recepcion"];
@@ -1206,7 +1303,12 @@ function processReceptionJobsInsert($receptionUpdateData) {
   return $newJobIds;
 }
 
-function processReceptionJobInsert($receptionUpdateData, $areaId) {
+/**
+ * @param $receptionUpdateData
+ * @param $areaId
+ */
+function processReceptionJobInsert($receptionUpdateData, $areaId)
+{
   $reception = (array) $receptionUpdateData["reception"];
   $jobs = (array) $receptionUpdateData["jobs"];
   $receptionId = $reception["id_recepcion"];
@@ -1230,7 +1332,12 @@ function processReceptionJobInsert($receptionUpdateData, $areaId) {
   return insertJob($jobData);
 }
 
-function processReceptionJobsUpdate($receptionUpdateData) {
+/**
+ * @param $receptionUpdateData
+ * @return mixed
+ */
+function processReceptionJobsUpdate($receptionUpdateData)
+{
   $jobs = (array) $receptionUpdateData["jobs"];
   $reception = (array) $receptionUpdateData["reception"];
   $receptionId = $reception["id_recepcion"];
@@ -1241,40 +1348,33 @@ function processReceptionJobsUpdate($receptionUpdateData) {
   $m = count($jobs);
   $n = count($jobsByReception);
 
-  if ($l < 1 && $n < 1)
-  {
+  if ($l < 1 && $n < 1) {
     $newJobIds = (array) processReceptionJobsInsert($receptionUpdateData);
     for ($i = 0; $i < $m; $i++) {
       $job = array(
         "id_recepcion" => $jobs[$i]->id_recepcion,
-        "id_trabajo" => $newJobIds[$i]
+        "id_trabajo" => $newJobIds[$i],
       );
       $insertedJobIds[] = insertReceptionJob($job);
     }
     return $insertedJobIds;
-  }
-  else
-  {
+  } else {
     disableReceptionJobs($receptionId);
     for ($i = 0; $i < $m; $i++) {
       $job = array(
         "id_recepcion_trabajo" => $jobs[$i]->id_recepcion_trabajo,
         "id_recepcion" => $jobs[$i]->id_recepcion,
-        "id_trabajo" => $jobs[$i]->id_trabajo
+        "id_trabajo" => $jobs[$i]->id_trabajo,
       );
-      if ($job["id_recepcion_trabajo"] < 1)
-      {
-        if ($job["id_trabajo"] < 1)
-        {
+      if ($job["id_recepcion_trabajo"] < 1) {
+        if ($job["id_trabajo"] < 1) {
           $areaId = $jobs[$i]->id_area;
           $jobId = processReceptionJobInsert($receptionUpdateData, $areaId);
         }
         $job["id_trabajo"] = $jobId;
         unset($job["id_recepcion_trabajo"]);
         insertReceptionJob($job);
-      }
-      else
-      {
+      } else {
         $job["activo"] = 1;
         updateReceptionJob($job);
       }

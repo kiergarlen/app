@@ -7,7 +7,7 @@ require "./db.php";
 \Slim\Slim::registerAutoloader();
 $app = new \Slim\Slim();
 
-$app->post("/login", function() use ($app) {
+$app->post("/login", function () use ($app) {
   try {
     $jwt = processUserJwt($app->request());
     $result = json_encode($jwt);
@@ -26,7 +26,7 @@ $app->post("/login", function() use ($app) {
   }
 });
 
-$app->get("/menu", function() use ($app) {
+$app->get("/menu", function () use ($app) {
   try {
     $userId = decodeUserToken($app->request())->uid;
     $result = processMenuToJson(getMenu($userId));
@@ -40,7 +40,7 @@ $app->get("/menu", function() use ($app) {
   }
 });
 
-$app->get("/tasks", function() use ($app) {
+$app->get("/tasks", function () use ($app) {
   try {
     $userId = decodeUserToken($app->request())->uid;
     $result = json_encode(getTasks($userId));
@@ -54,16 +54,13 @@ $app->get("/tasks", function() use ($app) {
   }
 });
 
-$app->get("/studies(/)(:studyId)", function($studyId = -1) use ($app) {
+$app->get("/studies(/)(:studyId)", function ($studyId = -1) use ($app) {
   try {
     $userId = decodeUserToken($app->request())->uid;
     $result = json_encode(getBlankStudy());
-    if ($studyId > -1)
-    {
+    if ($studyId > -1) {
       $result = json_encode(getStudy($studyId));
-    }
-    else
-    {
+    } else {
       $result = json_encode(getStudies());
     }
     $app->response()->status(200);
@@ -76,19 +73,16 @@ $app->get("/studies(/)(:studyId)", function($studyId = -1) use ($app) {
   }
 });
 
-$app->post("/studies", function() use ($app) {
+$app->post("/studies", function () use ($app) {
   try {
     $userId = decodeUserToken($app->request())->uid;
     $request = $app->request();
     $studyId = extractDataFromRequest($request)->id_estudio;
-    if ($studyId < 1)
-    {
+    if ($studyId < 1) {
       $studyInsertData = processStudyInsert($request);
       $studyId = insertStudy($studyInsertData["study"]);
       processStudyOrderInsert($studyInsertData, $studyId);
-    }
-    else
-    {
+    } else {
       $studyUpdateData = processStudyUpdate($request);
       $studyId = updateStudy($studyUpdateData["study"]);
       $orderData = processStudyOrderUpdate($studyUpdateData);
@@ -104,15 +98,12 @@ $app->post("/studies", function() use ($app) {
   }
 });
 
-$app->get("/orders(/)(:orderId)", function($orderId = -1) use ($app) {
+$app->get("/orders(/)(:orderId)", function ($orderId = -1) use ($app) {
   try {
     $userId = decodeUserToken($app->request())->uid;
-    if ($orderId > -1)
-    {
+    if ($orderId > -1) {
       $result = json_encode(getOrder($orderId));
-    }
-    else
-    {
+    } else {
       $result = json_encode(getOrders());
     }
     $app->response()->status(200);
@@ -125,7 +116,7 @@ $app->get("/orders(/)(:orderId)", function($orderId = -1) use ($app) {
   }
 });
 
-$app->get("/orders/study/(:studyId)", function($studyId) use ($app) {
+$app->get("/orders/study/(:studyId)", function ($studyId) use ($app) {
   try {
     $userId = decodeUserToken($app->request())->uid;
     $result = json_encode(getOrdersByStudy($studyId));
@@ -139,13 +130,12 @@ $app->get("/orders/study/(:studyId)", function($studyId) use ($app) {
   }
 });
 
-$app->post("/orders", function() use ($app) {
+$app->post("/orders", function () use ($app) {
   try {
     $userId = decodeUserToken($app->request())->uid;
     $request = $app->request();
     $orderId = extractDataFromRequest($request)->id_orden;
-    if ($orderId > 0)
-    {
+    if ($orderId > 0) {
       $orderUpdateData = processOrderUpdate($request);
       $orderId = updateOrder($orderUpdateData["order"]);
       processOrderPlansUpdate($orderUpdateData);
@@ -161,15 +151,12 @@ $app->post("/orders", function() use ($app) {
   }
 });
 
-$app->get("/order/sources(/)(:sourceId)", function($sourceId = -1) use ($app) {
+$app->get("/order/sources(/)(:sourceId)", function ($sourceId = -1) use ($app) {
   try {
     $userId = decodeUserToken($app->request())->uid;
-    if ($sourceId > -1)
-    {
+    if ($sourceId > -1) {
       $result = json_encode(getOrderSource($sourceId));
-    }
-    else
-    {
+    } else {
       $result = json_encode(getOrderSources());
     }
     $app->response()->status(200);
@@ -182,15 +169,12 @@ $app->get("/order/sources(/)(:sourceId)", function($sourceId = -1) use ($app) {
   }
 });
 
-$app->get("/plans(/)(:planId)", function($planId = -1) use ($app) {
+$app->get("/plans(/)(:planId)", function ($planId = -1) use ($app) {
   try {
     $userId = decodeUserToken($app->request())->uid;
-    if ($planId > -1)
-    {
+    if ($planId > -1) {
       $result = json_encode(getPlan($planId));
-    }
-    else
-    {
+    } else {
       $result = json_encode(getPlans());
     }
     $app->response()->status(200);
@@ -203,13 +187,12 @@ $app->get("/plans(/)(:planId)", function($planId = -1) use ($app) {
   }
 });
 
-$app->post("/plans", function() use ($app) {
+$app->post("/plans", function () use ($app) {
   try {
     $userId = decodeUserToken($app->request())->uid;
     $request = $app->request();
     $planId = extractDataFromRequest($request)->id_plan;
-    if ($planId > 0)
-    {
+    if ($planId > 0) {
       $planUpdateData = processPlanUpdate($request);
       $planId = updatePlan($planUpdateData["plan"]);
       processPlanSheetInsert($planUpdateData);
@@ -233,7 +216,7 @@ $app->post("/plans", function() use ($app) {
   }
 });
 
-$app->get("/plans/containers/:planId", function($planId) use ($app) {
+$app->get("/plans/containers/:planId", function ($planId) use ($app) {
   try {
     $userId = decodeUserToken($app->request())->uid;
     // $result = json_encode(getContainersByPlan($planId));
@@ -248,15 +231,12 @@ $app->get("/plans/containers/:planId", function($planId) use ($app) {
   }
 });
 
-$app->get("/sheets(/)(:sheetId)", function($sheetId = -1) use ($app) {
+$app->get("/sheets(/)(:sheetId)", function ($sheetId = -1) use ($app) {
   try {
     $userId = decodeUserToken($app->request())->uid;
-    if ($sheetId > -1)
-    {
+    if ($sheetId > -1) {
       $result = json_encode(getSheet($sheetId));
-    }
-    else
-    {
+    } else {
       $result = json_encode(getSheets());
     }
     $app->response()->status(200);
@@ -269,13 +249,12 @@ $app->get("/sheets(/)(:sheetId)", function($sheetId = -1) use ($app) {
   }
 });
 
-$app->post("/sheets", function() use ($app) {
+$app->post("/sheets", function () use ($app) {
   try {
     $userId = decodeUserToken($app->request())->uid;
     $request = $app->request();
     $sheetId = extractDataFromRequest($request)->id_hoja;
-    if ($sheetId > 0)
-    {
+    if ($sheetId > 0) {
       $sheetUpdateData = processSheetUpdate($request);
       $sheetId = updateSheet($sheetUpdateData["sheet"]);
       // processSheetReceptionUpdate($sheetUpdateData);
@@ -294,15 +273,12 @@ $app->post("/sheets", function() use ($app) {
   }
 });
 
-$app->get("/receptions(/)(:receptionId)", function($receptionId = -1) use ($app) {
+$app->get("/receptions(/)(:receptionId)", function ($receptionId = -1) use ($app) {
   try {
     $userId = decodeUserToken($app->request())->uid;
-    if ($receptionId > -1)
-    {
+    if ($receptionId > -1) {
       $result = json_encode(getReception($receptionId));
-    }
-    else
-    {
+    } else {
       $result = json_encode(getReceptions());
     }
     $app->response()->status(200);
@@ -315,7 +291,7 @@ $app->get("/receptions(/)(:receptionId)", function($receptionId = -1) use ($app)
   }
 });
 
-$app->get("/areas/reception", function() use ($app) {
+$app->get("/areas/reception", function () use ($app) {
   try {
     $userId = decodeUserToken($app->request())->uid;
     $result = json_encode(getReceivingAreas());
@@ -329,13 +305,12 @@ $app->get("/areas/reception", function() use ($app) {
   }
 });
 
-$app->post("/receptions", function() use ($app) {
+$app->post("/receptions", function () use ($app) {
   try {
     $userId = decodeUserToken($app->request())->uid;
     $request = $app->request();
     $receptionId = extractDataFromRequest($request)->id_recepcion;
-    if ($receptionId > 0)
-    {
+    if ($receptionId > 0) {
       $receptionUpdateData = processReceptionUpdate($request);
       $receptionId = updateReception($receptionUpdateData["reception"]);
       processReceptionSamplesUpdate($receptionUpdateData);
@@ -354,15 +329,12 @@ $app->post("/receptions", function() use ($app) {
   }
 });
 
-$app->get("/jobs(/)(:jobId)", function($jobId = -1) use ($app) {
+$app->get("/jobs(/)(:jobId)", function ($jobId = -1) use ($app) {
   try {
     $userId = decodeUserToken($app->request())->uid;
-    if ($jobId > -1)
-    {
+    if ($jobId > -1) {
       $result = json_encode(getJob($jobId));
-    }
-    else
-    {
+    } else {
       $result = json_encode(getJobs());
     }
     $app->response()->status(200);
@@ -375,7 +347,7 @@ $app->get("/jobs(/)(:jobId)", function($jobId = -1) use ($app) {
   }
 });
 
-$app->get("/jobs/user/:userId", function($userId) use ($app) {
+$app->get("/jobs/user/:userId", function ($userId) use ($app) {
   try {
     $userId = decodeUserToken($app->request())->uid;
     $app->response()->status(200);
@@ -389,13 +361,12 @@ $app->get("/jobs/user/:userId", function($userId) use ($app) {
   }
 });
 
-$app->post("/jobs", function() use ($app) {
+$app->post("/jobs", function () use ($app) {
   try {
     $userId = decodeUserToken($app->request())->uid;
     $request = $app->request();
     $jobId = extractDataFromRequest($request)->id_orden_trabajo;
-    if ($jobId > 0)
-    {
+    if ($jobId > 0) {
       $jobUpdateData = processJobUpdate($request);
       $jobId = updateJob($jobUpdateData["job"]);
     }
@@ -410,15 +381,12 @@ $app->post("/jobs", function() use ($app) {
   }
 });
 
-$app->get("/custodies(/)(:custodyId)", function($custodyId = -1) use ($app) {
+$app->get("/custodies(/)(:custodyId)", function ($custodyId = -1) use ($app) {
   try {
     $userId = decodeUserToken($app->request())->uid;
-    if ($custodyId > -1)
-    {
+    if ($custodyId > -1) {
       $result = json_encode(getCustody($custodyId));
-    }
-    else
-    {
+    } else {
       $result = json_encode(getCustodies());
     }
     $app->response()->status(200);
@@ -431,19 +399,16 @@ $app->get("/custodies(/)(:custodyId)", function($custodyId = -1) use ($app) {
   }
 });
 
-$app->post("/custodies", function() use ($app) {
+$app->post("/custodies", function () use ($app) {
   try {
     $userId = decodeUserToken($app->request())->uid;
     $request = $app->request();
     $custodyId = extractDataFromRequest($request)->id_custody;
-    if ($custodyId < 1)
-    {
+    if ($custodyId < 1) {
       // $custodyInsertData = processReceptionInsert($request);
       // $custodyId = insertReception($custodyInsertData["custody"]);
       // //processReceptionOrderInsert($custodyInsertData, $custodyId);
-    }
-    else
-    {
+    } else {
       //$custodyUpdateData = processReceptionUpdate($request);
       //$custodyId = updateReception($custodyUpdateData["custody"]);
       //processReceptionOrderUpdate($custodyUpdateData);
@@ -461,15 +426,12 @@ $app->post("/custodies", function() use ($app) {
   }
 });
 //CATALOGS
-$app->get("/clients(/)(:clientId)", function($clientId = -1) use ($app) {
+$app->get("/clients(/)(:clientId)", function ($clientId = -1) use ($app) {
   try {
     $userId = decodeUserToken($app->request())->uid;
-    if ($clientId > -1)
-    {
+    if ($clientId > -1) {
       $result = json_encode(getClient($clientId));
-    }
-    else
-    {
+    } else {
       $result = json_encode(getClients());
     }
     $app->response()->status(200);
@@ -482,7 +444,7 @@ $app->get("/clients(/)(:clientId)", function($clientId = -1) use ($app) {
   }
 });
 
-$app->get("/parameters", function() use ($app) {
+$app->get("/parameters", function () use ($app) {
   try {
     $userId = decodeUserToken($app->request())->uid;
     $result = json_encode(getParameters());
@@ -496,7 +458,7 @@ $app->get("/parameters", function() use ($app) {
   }
 });
 
-$app->get("/parameters/field", function() use ($app) {
+$app->get("/parameters/field", function () use ($app) {
   try {
     $userId = decodeUserToken($app->request())->uid;
     $result = json_encode(getParametersField());
@@ -510,7 +472,7 @@ $app->get("/parameters/field", function() use ($app) {
   }
 });
 
-$app->get("/parameters/custodies/:custodyId", function($custodyId) use ($app) {
+$app->get("/parameters/custodies/:custodyId", function ($custodyId) use ($app) {
   try {
     $userId = decodeUserToken($app->request())->uid;
     $result = json_encode(getParametersByCustody($custodyId));
@@ -524,15 +486,12 @@ $app->get("/parameters/custodies/:custodyId", function($custodyId) use ($app) {
   }
 });
 
-$app->get("/norms(/)(:normId)", function($normId = -1) use ($app) {
+$app->get("/norms(/)(:normId)", function ($normId = -1) use ($app) {
   try {
     $userId = decodeUserToken($app->request())->uid;
-    if ($normId > -1)
-    {
+    if ($normId > -1) {
       $result = json_encode(getNorm($normId));
-    }
-    else
-    {
+    } else {
       $result = json_encode(getNorms());
     }
     $app->response()->status(200);
@@ -545,7 +504,7 @@ $app->get("/norms(/)(:normId)", function($normId = -1) use ($app) {
   }
 });
 
-$app->get("/sampling/types", function() use ($app) {
+$app->get("/sampling/types", function () use ($app) {
   try {
     $userId = decodeUserToken($app->request())->uid;
     $result = json_encode(getSamplingTypes());
@@ -559,7 +518,7 @@ $app->get("/sampling/types", function() use ($app) {
   }
 });
 
-$app->get("/matrices", function() use ($app) {
+$app->get("/matrices", function () use ($app) {
   try {
     $userId = decodeUserToken($app->request())->uid;
     $result = json_encode(getMatrices());
@@ -573,7 +532,7 @@ $app->get("/matrices", function() use ($app) {
   }
 });
 
-$app->get("/packages/points/:packageId", function($packageId) use ($app) {
+$app->get("/packages/points/:packageId", function ($packageId) use ($app) {
   try {
     $userId = decodeUserToken($app->request())->uid;
     $result = json_encode(getPointsByPackage($packageId));
@@ -588,15 +547,12 @@ $app->get("/packages/points/:packageId", function($packageId) use ($app) {
   }
 });
 
-$app->get("/packages/location(/)(:locationId)", function($locationId = -1) use ($app) {
+$app->get("/packages/location(/)(:locationId)", function ($locationId = -1) use ($app) {
   try {
     $userId = decodeUserToken($app->request())->uid;
-    if ($locationId > -1)
-    {
+    if ($locationId > -1) {
       $result = json_encode(getPackagesByLocation($locationId));
-    }
-    else
-    {
+    } else {
       $result = json_encode(getPackages());
     }
     $app->response()->status(200);
@@ -609,15 +565,12 @@ $app->get("/packages/location(/)(:locationId)", function($locationId = -1) use (
   }
 });
 
-$app->get("/bodies(/)(:bodyId)", function($bodyId = -1) use ($app) {
+$app->get("/bodies(/)(:bodyId)", function ($bodyId = -1) use ($app) {
   try {
     $userId = decodeUserToken($app->request())->uid;
-    if ($bodyId > -1)
-    {
+    if ($bodyId > -1) {
       $result = json_encode(getWaterBody($bodyId));
-    }
-    else
-    {
+    } else {
       $result = json_encode(getWaterBodies());
     }
     $app->response()->status(200);
@@ -630,15 +583,12 @@ $app->get("/bodies(/)(:bodyId)", function($bodyId = -1) use ($app) {
   }
 });
 
-$app->get("/sampling/supervisors(/)(:empId)", function($empId = -1) use ($app) {
+$app->get("/sampling/supervisors(/)(:empId)", function ($empId = -1) use ($app) {
   try {
     $userId = decodeUserToken($app->request())->uid;
-    if ($empId > 0)
-    {
+    if ($empId > 0) {
       $result = json_encode(getSamplingEmployee($empId));
-    }
-    else
-    {
+    } else {
       $result = json_encode(getSamplingEmployees());
     }
     $app->response()->status(200);
@@ -651,15 +601,12 @@ $app->get("/sampling/supervisors(/)(:empId)", function($empId = -1) use ($app) {
   }
 });
 
-$app->get("/sampling/employees(/)(:empId)", function($empId = -1) use ($app) {
+$app->get("/sampling/employees(/)(:empId)", function ($empId = -1) use ($app) {
   try {
     $userId = decodeUserToken($app->request())->uid;
-    if ($empId > 0)
-    {
+    if ($empId > 0) {
       $result = json_encode(getSamplingEmployee($empId));
-    }
-    else
-    {
+    } else {
       $result = json_encode(getSamplingEmployees());
     }
     $app->response()->status(200);
@@ -672,7 +619,7 @@ $app->get("/sampling/employees(/)(:empId)", function($empId = -1) use ($app) {
   }
 });
 
-$app->get("/plan/objectives", function() use ($app) {
+$app->get("/plan/objectives", function () use ($app) {
   try {
     $userId = decodeUserToken($app->request())->uid;
     $result = json_encode(getPlanObjectives());
@@ -686,7 +633,7 @@ $app->get("/plan/objectives", function() use ($app) {
   }
 });
 
-$app->get("/point/kinds", function() use ($app) {
+$app->get("/point/kinds", function () use ($app) {
   try {
     $userId = decodeUserToken($app->request())->uid;
     $result = json_encode(getPointKinds());
@@ -700,15 +647,12 @@ $app->get("/point/kinds", function() use ($app) {
   }
 });
 
-$app->get("/districts(/)(:districtId)", function($districtId = -1) use ($app) {
+$app->get("/districts(/)(:districtId)", function ($districtId = -1) use ($app) {
   try {
     $userId = decodeUserToken($app->request())->uid;
-    if ($districtId > 0)
-    {
+    if ($districtId > 0) {
       $result = json_encode(getDistrict($districtId));
-    }
-    else
-    {
+    } else {
       $result = json_encode(getDistricts());
     }
     $app->response()->status(200);
@@ -721,11 +665,10 @@ $app->get("/districts(/)(:districtId)", function($districtId = -1) use ($app) {
   }
 });
 
-
-$app->get("/districts/cities/:districtId", function($districtId) use ($app) {
+$app->get("/districts/cities/:districtId", function ($districtId) use ($app) {
   try {
     $userId = decodeUserToken($app->request())->uid;
-    $result =json_encode(getCitiesByDistrictId($districtId));
+    $result = json_encode(getCitiesByDistrictId($districtId));
     $app->response()->status(200);
     $app->response()->header("Content-Type", "application/json");
     //$result = ")]}',\n" . $result;
@@ -736,7 +679,7 @@ $app->get("/districts/cities/:districtId", function($districtId) use ($app) {
   }
 });
 
-$app->get("/preservations", function() use ($app) {
+$app->get("/preservations", function () use ($app) {
   try {
     $userId = decodeUserToken($app->request())->uid;
     $result = json_encode(getPreservations());
@@ -750,15 +693,12 @@ $app->get("/preservations", function() use ($app) {
   }
 });
 
-$app->get("/containers(/)(:containerId)", function($containerId = -1) use ($app) {
+$app->get("/containers(/)(:containerId)", function ($containerId = -1) use ($app) {
   try {
     $userId = decodeUserToken($app->request())->uid;
-    if ($containerId > 0)
-    {
+    if ($containerId > 0) {
       $result = json_encode(getContainer($containerId));
-    }
-    else
-    {
+    } else {
       $result = json_encode(getContainers());
     }
     $app->response()->status(200);
@@ -771,7 +711,7 @@ $app->get("/containers(/)(:containerId)", function($containerId = -1) use ($app)
   }
 });
 
-$app->get("/containers/:containerId/logs", function($containerId) use ($app) {
+$app->get("/containers/:containerId/logs", function ($containerId) use ($app) {
   try {
     //$userId = decodeUserToken($app->request())->uid;
     $result = json_encode(getContainerLogs($containerId));
@@ -785,7 +725,7 @@ $app->get("/containers/:containerId/logs", function($containerId) use ($app) {
   }
 });
 
-$app->get("/reactives", function() use ($app) {
+$app->get("/reactives", function () use ($app) {
   try {
     $userId = decodeUserToken($app->request())->uid;
     $result = json_encode(getReactives());
@@ -799,7 +739,7 @@ $app->get("/reactives", function() use ($app) {
   }
 });
 
-$app->get("/materials", function() use ($app) {
+$app->get("/materials", function () use ($app) {
   try {
     $userId = decodeUserToken($app->request())->uid;
     $result = json_encode(getMaterials());
@@ -813,7 +753,7 @@ $app->get("/materials", function() use ($app) {
   }
 });
 
-$app->get("/instruments/sampling", function() use ($app) {
+$app->get("/instruments/sampling", function () use ($app) {
   try {
     $userId = decodeUserToken($app->request())->uid;
     $result = json_encode(getSamplingInstruments());
@@ -827,7 +767,7 @@ $app->get("/instruments/sampling", function() use ($app) {
   }
 });
 
-$app->get("/coolers", function() use ($app) {
+$app->get("/coolers", function () use ($app) {
   try {
     $userId = decodeUserToken($app->request())->uid;
     $result = json_encode(getCoolers());
@@ -841,7 +781,7 @@ $app->get("/coolers", function() use ($app) {
   }
 });
 
-$app->get("/clouds", function() use ($app) {
+$app->get("/clouds", function () use ($app) {
   try {
     $userId = decodeUserToken($app->request())->uid;
     $result = json_encode(getClouds());
@@ -855,7 +795,7 @@ $app->get("/clouds", function() use ($app) {
   }
 });
 
-$app->get("/winds", function() use ($app) {
+$app->get("/winds", function () use ($app) {
   try {
     $userId = decodeUserToken($app->request())->uid;
     $result = json_encode(getCurrentDirections());
@@ -869,7 +809,7 @@ $app->get("/winds", function() use ($app) {
   }
 });
 
-$app->get("/waves", function() use ($app) {
+$app->get("/waves", function () use ($app) {
   try {
     $userId = decodeUserToken($app->request())->uid;
     $result = json_encode(getWaves());
@@ -883,7 +823,7 @@ $app->get("/waves", function() use ($app) {
   }
 });
 
-$app->get("/sampling/norms", function() use ($app) {
+$app->get("/sampling/norms", function () use ($app) {
   try {
     $userId = decodeUserToken($app->request())->uid;
     $result = json_encode(getSamplingNorms());
@@ -897,15 +837,12 @@ $app->get("/sampling/norms", function() use ($app) {
   }
 });
 
-$app->get("/points(/)(:pointId)", function($pointId = -1) use ($app) {
+$app->get("/points(/)(:pointId)", function ($pointId = -1) use ($app) {
   try {
     $userId = decodeUserToken($app->request())->uid;
-    if ($pointId > -1)
-    {
+    if ($pointId > -1) {
       $result = json_encode(getPoint($pointId));
-    }
-    else
-    {
+    } else {
       $result = json_encode(getPoints());
     }
     $app->response()->status(200);
@@ -918,7 +855,7 @@ $app->get("/points(/)(:pointId)", function($pointId = -1) use ($app) {
   }
 });
 
-$app->get("/receptionists", function() use ($app) {
+$app->get("/receptionists", function () use ($app) {
   try {
     $userId = decodeUserToken($app->request())->uid;
     $result = json_encode(getReceptionists());
@@ -932,15 +869,12 @@ $app->get("/receptionists", function() use ($app) {
   }
 });
 
-$app->get("/samples(/)(:sampleId)", function($sampleId = -1) use ($app) {
+$app->get("/samples(/)(:sampleId)", function ($sampleId = -1) use ($app) {
   try {
     $userId = decodeUserToken($app->request())->uid;
-    if ($sampleId > -1)
-    {
+    if ($sampleId > -1) {
       $result = json_encode(getSample($sampleId));
-    }
-    else
-    {
+    } else {
       $result = json_encode(getSamples());
     }
     $app->response()->status(200);
@@ -953,7 +887,7 @@ $app->get("/samples(/)(:sampleId)", function($sampleId = -1) use ($app) {
   }
 });
 
-$app->get("/sheet/samples/:sheetId", function($sheetId) use ($app) {
+$app->get("/sheet/samples/:sheetId", function ($sheetId) use ($app) {
   try {
     $userId = decodeUserToken($app->request())->uid;
     $result = json_encode(getSamplesBySheet($sheetId));
@@ -967,7 +901,7 @@ $app->get("/sheet/samples/:sheetId", function($sheetId) use ($app) {
   }
 });
 
-$app->get("/instruments", function() use ($app) {
+$app->get("/instruments", function () use ($app) {
   try {
     $userId = decodeUserToken($app->request())->uid;
     $result = json_encode(getInstruments());
@@ -981,7 +915,7 @@ $app->get("/instruments", function() use ($app) {
   }
 });
 
-$app->get("/containers", function() use ($app) {
+$app->get("/containers", function () use ($app) {
   try {
     $userId = decodeUserToken($app->request())->uid;
     $result = json_encode(getContainers());
@@ -995,7 +929,7 @@ $app->get("/containers", function() use ($app) {
   }
 });
 
-$app->get("/analysis", function() use ($app) {
+$app->get("/analysis", function () use ($app) {
   try {
     $userId = decodeUserToken($app->request())->uid;
     $result = json_encode(getAnalysis());
@@ -1009,7 +943,7 @@ $app->get("/analysis", function() use ($app) {
   }
 });
 
-$app->get("/analysis/selections", function() use ($app) {
+$app->get("/analysis/selections", function () use ($app) {
   try {
     $userId = decodeUserToken($app->request())->uid;
     $result = json_encode(getAnalysisSelections());
@@ -1023,7 +957,7 @@ $app->get("/analysis/selections", function() use ($app) {
   }
 });
 
-$app->get("/areas", function() use ($app) {
+$app->get("/areas", function () use ($app) {
   try {
     $userId = decodeUserToken($app->request())->uid;
     $result = json_encode(getAreas());
@@ -1037,7 +971,7 @@ $app->get("/areas", function() use ($app) {
   }
 });
 
-$app->get("/reports", function() use ($app) {
+$app->get("/reports", function () use ($app) {
   try {
     $userId = decodeUserToken($app->request())->uid;
     $result = json_encode(getReports());
@@ -1051,7 +985,7 @@ $app->get("/reports", function() use ($app) {
   }
 });
 
-$app->get("/employees", function() use ($app) {
+$app->get("/employees", function () use ($app) {
   try {
     $userId = decodeUserToken($app->request())->uid;
     $result = json_encode(getEmployees());
@@ -1065,7 +999,7 @@ $app->get("/employees", function() use ($app) {
   }
 });
 
-$app->get("/references", function() use ($app) {
+$app->get("/references", function () use ($app) {
   try {
     $userId = decodeUserToken($app->request())->uid;
     $result = json_encode(getReferences());
@@ -1079,15 +1013,12 @@ $app->get("/references", function() use ($app) {
   }
 });
 
-$app->get("/methods(/)(:methodId)", function() use ($app) {
+$app->get("/methods(/)(:methodId)", function () use ($app) {
   try {
     $userId = decodeUserToken($app->request())->uid;
-    if ($methodId > -1)
-    {
+    if ($methodId > -1) {
       $result = json_encode(getMethod($methodId));
-    }
-    else
-    {
+    } else {
       $result = json_encode(getMethods());
     }
     $app->response()->status(200);
@@ -1100,15 +1031,12 @@ $app->get("/methods(/)(:methodId)", function() use ($app) {
   }
 });
 
-$app->get("/storages(/)(:storageId)", function($storageId = -1) use ($app) {
+$app->get("/storages(/)(:storageId)", function ($storageId = -1) use ($app) {
   try {
     $userId = decodeUserToken($app->request())->uid;
-    if ($storageId > -1)
-    {
+    if ($storageId > -1) {
       $result = json_encode(getStorage($storageId));
-    }
-    else
-    {
+    } else {
       $result = json_encode(getStorages());
     }
     $app->response()->status(200);
@@ -1121,7 +1049,7 @@ $app->get("/storages(/)(:storageId)", function($storageId = -1) use ($app) {
   }
 });
 
-$app->get("/prices", function() use ($app) {
+$app->get("/prices", function () use ($app) {
   try {
     $userId = decodeUserToken($app->request())->uid;
     $result = json_encode(getPrices());
@@ -1135,15 +1063,12 @@ $app->get("/prices", function() use ($app) {
   }
 });
 
-$app->get("/locations(/)(:locationId)", function($locationId = -1) use ($app) {
+$app->get("/locations(/)(:locationId)", function ($locationId = -1) use ($app) {
   try {
     $userId = decodeUserToken($app->request())->uid;
-    if ($locationId > -1)
-    {
+    if ($locationId > -1) {
       $result = json_encode(getLocation($locationId));
-    }
-    else
-    {
+    } else {
       $result = json_encode(getLocations());
     }
     $app->response()->status(200);
@@ -1156,15 +1081,12 @@ $app->get("/locations(/)(:locationId)", function($locationId = -1) use ($app) {
   }
 });
 
-$app->get("/users(/)(:userId)", function($userId = -1) use ($app) {
+$app->get("/users(/)(:userId)", function ($userId = -1) use ($app) {
   try {
     $userId = decodeUserToken($app->request())->uid;
-    if ($userId > -1)
-    {
+    if ($userId > -1) {
       $result = json_encode(getUser($userId));
-    }
-    else
-    {
+    } else {
       $result = json_encode(getUsers());
     }
     $app->response()->status(200);

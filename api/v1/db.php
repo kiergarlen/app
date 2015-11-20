@@ -28,7 +28,7 @@ function getConnection() {
 
 /**
  * Obtiene los Usuarios activos
- * @return array $result Array de Usuarios activos
+ * @return array $result Usuarios activos
  */
 function getUsers() {
   $sql = "SELECT id_usuario, id_nivel, id_rol, id_area, id_puesto,
@@ -49,8 +49,8 @@ function getUsers() {
 }
 
 /**
- * Obtiene un Usuario, por $userId
- * @param  integer $userId Id del usuario a obtener
+ * Obtiene un Usuario
+ * @param  integer $userId Id del Usuario
  * @return stdClass $user
  */
 function getUser($userId) {
@@ -71,7 +71,7 @@ function getUser($userId) {
 }
 
 /**
- * Obtiene las credenciales de un Usuario, por $userName y $userPassword
+ * Obtiene las credenciales de un Usuario
  * @param  string $userName Nombre de Usuario
  * @param  string $userPassword Password del Usuario
  * @return stdClass $user
@@ -95,8 +95,8 @@ function getUserByCredentials($userName, $userPassword) {
 }
 
 /**
- * Inserta un nuevo Usuario desde $userData
- * @param  array $userData Array con los datos del Usuario a insertar
+ * Inserta un nuevo Usuario
+ * @param  array $userData Datos del Usuario
  * @return integer $userId Id del Usuario insertado
  */
 function insertUser($userData) {
@@ -117,7 +117,7 @@ function insertUser($userData) {
 }
 
 /**
- * Actualiza un Usuario desde $updateData
+ * Actualiza un Usuario
  * @param  array $updateData Array con los datos del Usuario a actualizar
  * @return integer $userId Id del Usuario actualizado
  */
@@ -163,6 +163,10 @@ function getMenu($userId) {
   return $result;
 }
 
+/**
+ * @param $userId
+ * @return mixed
+ */
 function getTasks($userId) {
   $result = array();
   // $sql = "SELECT * FROM Tarea WHERE activo = 1";
@@ -174,6 +178,9 @@ function getTasks($userId) {
   return $result;
 }
 
+/**
+ * @return array
+ */
 function getBlankClient() {
   return array(
     "id_cliente" => 0, "id_estado" => 14,
@@ -192,6 +199,9 @@ function getBlankClient() {
   );
 }
 
+/**
+ * @return mixed
+ */
 function getClients() {
   $sql = "SELECT id_cliente, id_estado, id_municipio,
     id_localidad, interno, cea, tasa, cliente, area,
@@ -211,6 +221,10 @@ function getClients() {
   return $result;
 }
 
+/**
+ * @param $clientId
+ * @return mixed
+ */
 function getClient($clientId) {
   $sql = "SELECT id_cliente, id_estado, id_municipio,
     id_localidad, interno, cea, tasa, cliente, area,
@@ -231,6 +245,9 @@ function getClient($clientId) {
   return $client;
 }
 
+/**
+ * @return mixed
+ */
 function getStudies() {
   $sql = "SELECT id_estudio, id_cliente, id_origen_orden,
     id_ubicacion, id_ejercicio, id_status, id_etapa,
@@ -262,6 +279,9 @@ function getStudies() {
   return $studies;
 }
 
+/**
+ * @return mixed
+ */
 function getBlankStudy() {
   $blankClient = getBlankClient();
   $blankOrder = getBlankOrder();
@@ -286,6 +306,10 @@ function getBlankStudy() {
   );
 }
 
+/**
+ * @param $studyId
+ * @return mixed
+ */
 function getPlainStudy($studyId) {
   $sql = "SELECT id_estudio, id_cliente, id_origen_orden,
     id_ubicacion, id_ejercicio, id_status, id_etapa,
@@ -312,6 +336,10 @@ function getPlainStudy($studyId) {
   return $study;
 }
 
+/**
+ * @param $studyId
+ * @return mixed
+ */
 function getStudy($studyId) {
   $study = getPlainStudy($studyId);
   $study->cliente = getClient($study->id_cliente);
@@ -319,6 +347,10 @@ function getStudy($studyId) {
   return $study;
 }
 
+/**
+ * @param $yearId
+ * @return mixed
+ */
 function getLastStudyByYear($yearId) {
   $sql = "SELECT TOP (1) id_estudio, id_cliente, id_origen_orden,
     id_ubicacion, id_ejercicio, id_status, id_etapa,
@@ -346,6 +378,10 @@ function getLastStudyByYear($yearId) {
   return $result;
 }
 
+/**
+ * @param $insertData
+ * @return mixed
+ */
 function insertStudy($insertData) {
   $sql = "INSERT INTO Estudio (id_cliente, id_origen_orden, id_ubicacion,
     id_ejercicio, id_status, id_etapa, id_usuario_captura,
@@ -371,6 +407,10 @@ function insertStudy($insertData) {
   return $studyId;
 }
 
+/**
+ * @param $updateData
+ * @return mixed
+ */
 function updateStudy($updateData) {
   $sql = "UPDATE Estudio SET id_cliente = :id_cliente,
     id_origen_orden = :id_origen_orden, id_ubicacion = :id_ubicacion,
@@ -394,6 +434,9 @@ function updateStudy($updateData) {
   return $updateData["id_estudio"];
 }
 
+/**
+ * @return array
+ */
 function getBlankOrder() {
   return array(
     "id_orden" => 0, "id_estudio" => 0,
@@ -414,6 +457,9 @@ function getBlankOrder() {
   );
 }
 
+/**
+ * @return mixed
+ */
 function getOrders() {
   $sql = "SELECT id_orden, id_estudio, id_cliente, id_matriz,
     id_tipo_muestreo, id_norma, id_cuerpo, id_status,
@@ -446,6 +492,10 @@ function getOrders() {
   return $orders;
 }
 
+/**
+ * @param $studyId
+ * @return mixed
+ */
 function getOrdersByStudy($studyId) {
   $sql = "SELECT id_orden, id_estudio, id_cliente, id_matriz,
     id_tipo_muestreo, id_norma, id_cuerpo, id_status,
@@ -477,6 +527,10 @@ function getOrdersByStudy($studyId) {
   return $orders;
 }
 
+/**
+ * @param $orderId
+ * @return mixed
+ */
 function getPlainOrder($orderId) {
   $sql = "SELECT id_orden, id_estudio, id_cliente, id_matriz,
     id_tipo_muestreo, id_norma, id_cuerpo, id_status,
@@ -501,6 +555,10 @@ function getPlainOrder($orderId) {
   return $order;
 }
 
+/**
+ * @param $orderId
+ * @return mixed
+ */
 function getOrder($orderId) {
   $order = getPlainOrder($orderId);
   $order->cliente = getClient($order->id_cliente);
@@ -513,6 +571,10 @@ function getOrder($orderId) {
   return $order;
 }
 
+/**
+ * @param $studyId
+ * @return mixed
+ */
 function getStudyOrders($studyId) {
   $sql = "SELECT id_orden, id_estudio, id_cliente, id_matriz,
     id_tipo_muestreo, id_norma, id_cuerpo, id_status,
@@ -537,6 +599,10 @@ function getStudyOrders($studyId) {
   return $result;
 }
 
+/**
+ * @param $orderData
+ * @return mixed
+ */
 function insertOrder($orderData) {
   $sql = "INSERT INTO Orden (id_estudio, id_cliente, id_matriz,
     id_tipo_muestreo, id_norma, id_cuerpo,
@@ -562,6 +628,10 @@ function insertOrder($orderData) {
   return $orderId;
 }
 
+/**
+ * @param $updateData
+ * @return mixed
+ */
 function updateOrder($updateData) {
   $sql = "UPDATE Orden SET
     id_estudio = :id_estudio, id_cliente = :id_cliente,
@@ -588,6 +658,10 @@ function updateOrder($updateData) {
   return $updateData["id_orden"];
 }
 
+/**
+ * @param $studyId
+ * @return mixed
+ */
 function disableStudyOrders($studyId) {
   $sql = "UPDATE Orden SET activo = 0
     WHERE id_estudio = :studyId";
@@ -599,6 +673,9 @@ function disableStudyOrders($studyId) {
   return $studyId;
 }
 
+/**
+ * @return mixed
+ */
 function getOrderSources() {
   $sql = "SELECT id_origen_orden, origen_orden, activo
     FROM OrigenOrden
@@ -611,6 +688,10 @@ function getOrderSources() {
   return $sources;
 }
 
+/**
+ * @param $sourceId
+ * @return mixed
+ */
 function getOrderSource($sourceId) {
   $sql = "SELECT id_origen_orden, origen_orden, activo
     FROM OrigenOrden
@@ -624,6 +705,9 @@ function getOrderSource($sourceId) {
   return $source;
 }
 
+/**
+ * @return mixed
+ */
 function getPlans() {
   $sql = "SELECT id_plan, id_estudio, id_orden, id_ubicacion,
     id_paquete, id_objetivo_plan, id_norma_muestreo,
@@ -673,6 +757,9 @@ function getPlans() {
   return $plans;
 }
 
+/**
+ * @return array
+ */
 function getBlankPlan() {
   return array(
     "id_plan" => 0, "id_estudio" => 1,
@@ -708,6 +795,10 @@ function getBlankPlan() {
   );
 }
 
+/**
+ * @param $orderId
+ * @return mixed
+ */
 function getPlansByOrder($orderId) {
   $sql = "SELECT id_plan, id_estudio, id_orden, id_ubicacion,
     id_paquete, id_objetivo_plan, id_norma_muestreo,
@@ -744,6 +835,10 @@ function getPlansByOrder($orderId) {
   return $plans;
 }
 
+/**
+ * @param $planId
+ * @return mixed
+ */
 function getPlainPlan($planId) {
   $sql = "SELECT id_plan, id_estudio, id_orden, id_ubicacion,
     id_paquete, id_objetivo_plan, id_norma_muestreo,
@@ -781,6 +876,10 @@ function getPlainPlan($planId) {
   return $plan;
 }
 
+/**
+ * @param $planId
+ * @return mixed
+ */
 function getPlan($planId) {
   $plan = getPlainPlan($planId);
   $study = getPlainStudy($plan->id_estudio);
@@ -800,6 +899,9 @@ function getPlan($planId) {
   return $plan;
 }
 
+/**
+ * @return mixed
+ */
 function getPlanObjectives() {
   $sql = "SELECT id_objetivo_plan, objetivo_plan, activo
     FROM ObjetivoPlan
@@ -812,6 +914,10 @@ function getPlanObjectives() {
   return $planObjectives;
 }
 
+/**
+ * @param $planId
+ * @return mixed
+ */
 function getContainersByPlan($planId) {
   $sql = "SELECT id_plan_recipiente, id_recipiente, id_plan, activo
     FROM PlanRecipiente
@@ -825,6 +931,10 @@ function getContainersByPlan($planId) {
   return $containers;
 }
 
+/**
+ * @param $planData
+ * @return mixed
+ */
 function insertPlan($planData) {
   $sql = "INSERT INTO [Plan] (id_estudio, id_orden, id_ubicacion,
     id_paquete, id_objetivo_plan, id_norma_muestreo, id_estado,
@@ -870,6 +980,10 @@ function insertPlan($planData) {
   return $planId;
 }
 
+/**
+ * @param $updateData
+ * @return mixed
+ */
 function updatePlan($updateData) {
   $sql = "UPDATE [Plan] SET
     id_estudio = :id_estudio, id_orden = :id_orden,
@@ -918,6 +1032,10 @@ function updatePlan($updateData) {
   return $updateData["id_plan"];
 }
 
+/**
+ * @param $orderId
+ * @return mixed
+ */
 function disableOrderPlans($orderId) {
   $sql = "UPDATE [Plan] SET activo = 0
     WHERE id_orden = :orderId";
@@ -929,6 +1047,9 @@ function disableOrderPlans($orderId) {
   return $orderId;
 }
 
+/**
+ * @return mixed
+ */
 function getSheets() {
   $sql = "SELECT id_hoja, id_estudio, id_cliente, id_orden, id_plan,
     id_paquete, id_nube, id_direccion_corriente, id_oleaje,
@@ -952,6 +1073,10 @@ function getSheets() {
   return $result;
 }
 
+/**
+ * @param $planId
+ * @return mixed
+ */
 function getSheetsByPlan($planId) {
   $sql = "SELECT id_hoja, id_estudio, id_cliente, id_orden, id_plan,
     id_paquete, id_nube, id_direccion_corriente, id_oleaje,
@@ -976,6 +1101,9 @@ function getSheetsByPlan($planId) {
   return $result;
 }
 
+/**
+ * @return array
+ */
 function getBlankSheet() {
   return array(
     "id_hoja" => 0, "id_estudio" => 0, "id_cliente" => 0, "id_orden" => 0,
@@ -993,6 +1121,10 @@ function getBlankSheet() {
   );
 }
 
+/**
+ * @param $sheetId
+ * @return mixed
+ */
 function getPlainSheet($sheetId) {
   $sql = "SELECT id_hoja, id_estudio, id_cliente, id_orden, id_plan,
     id_paquete, id_nube, id_direccion_corriente, id_oleaje,
@@ -1018,6 +1150,10 @@ function getPlainSheet($sheetId) {
   return $sheet;
 }
 
+/**
+ * @param $sheetId
+ * @return mixed
+ */
 function getSheet($sheetId) {
   $i = 0;
   $l = 0;
@@ -1059,6 +1195,10 @@ function getSheet($sheetId) {
   return $sheet;
 }
 
+/**
+ * @param $sheetData
+ * @return mixed
+ */
 function insertSheet($sheetData) {
   $sql = "INSERT INTO Hoja (id_estudio, id_cliente, id_orden,
     id_plan, id_paquete, id_nube, id_direccion_corriente,
@@ -1082,6 +1222,10 @@ function insertSheet($sheetData) {
   return $sheetId;
 }
 
+/**
+ * @param $updateData
+ * @return mixed
+ */
 function updateSheet($updateData) {
   $sql = "UPDATE Hoja SET id_estudio = :id_estudio,
     id_cliente = :id_cliente, id_orden = :id_orden,
@@ -1108,6 +1252,10 @@ function updateSheet($updateData) {
   return $updateData["id_hoja"];
 }
 
+/**
+ * @param $sheetData
+ * @return mixed
+ */
 function insertSheetSample($sheetData) {
   $sql = "INSERT INTO HojaMuestra (id_hoja, id_muestra)
     VALUES (:id_hoja, :id_muestra)";
@@ -1119,6 +1267,9 @@ function insertSheetSample($sheetData) {
   return $sheetSampleId;
 }
 
+/**
+ * @return mixed
+ */
 function getReceptions() {
   $sql = "SELECT id_recepcion, id_orden, id_plan, id_hoja,
     id_recepcionista, id_verificador, id_muestra_validacion,
@@ -1144,6 +1295,10 @@ function getReceptions() {
   return $receptions;
 }
 
+/**
+ * @param $sheetId
+ * @return mixed
+ */
 function getReceptionsBySheet($sheetId) {
   $sql = "SELECT id_recepcion, id_orden, id_plan, id_hoja,
     id_recepcionista, id_verificador, id_muestra_validacion,
@@ -1170,6 +1325,9 @@ function getReceptionsBySheet($sheetId) {
   return $receptions;
 }
 
+/**
+ * @return array
+ */
 function getBlankReception() {
   return array(
     "id_recepcion" => 0, "id_orden" => 0, "id_plan" => 0, "id_hoja" => 0,
@@ -1186,6 +1344,10 @@ function getBlankReception() {
   );
 }
 
+/**
+ * @param $receptionId
+ * @return mixed
+ */
 function getPlainReception($receptionId) {
   $sql = "SELECT id_recepcion, id_orden, id_plan, id_hoja,
     id_recepcionista, id_verificador, id_muestra_validacion,
@@ -1212,6 +1374,10 @@ function getPlainReception($receptionId) {
   return $reception;
 }
 
+/**
+ * @param $planId
+ * @return mixed
+ */
 function getReceptionsByPlan($planId) {
   $sql = "SELECT id_recepcion, id_orden, id_plan, id_hoja,
     id_recepcionista, id_verificador, id_muestra_validacion,
@@ -1238,6 +1404,10 @@ function getReceptionsByPlan($planId) {
   return $receptions;
 }
 
+/**
+ * @param $receptionId
+ * @return mixed
+ */
 function getReception($receptionId) {
   $reception = getPlainReception($receptionId);
   $samples = (array) getReceptionSamples($receptionId);
@@ -1278,6 +1448,10 @@ function getReception($receptionId) {
   return $reception;
 }
 
+/**
+ * @param $receptionData
+ * @return mixed
+ */
 function insertReception($receptionData) {
   $sql = "INSERT INTO Recepcion (id_orden, id_plan, id_hoja,
     id_recepcionista, id_verificador, id_muestra_validacion,
@@ -1299,6 +1473,10 @@ function insertReception($receptionData) {
   return $receptionId;
 }
 
+/**
+ * @param $updateData
+ * @return mixed
+ */
 function updateReception($updateData) {
   $sql = "UPDATE Recepcion SET id_orden = :id_orden,
     id_plan = :id_plan, id_hoja = :id_hoja,
@@ -1324,6 +1502,9 @@ function updateReception($updateData) {
   return $updateData["id_recepcion"];
 }
 
+/**
+ * @return mixed
+ */
 function getAreas() {
   $sql = "SELECT id_area, id_usuario_supervisa, area,
     siglas, entrega, recibe, activo
@@ -1337,6 +1518,9 @@ function getAreas() {
   return $areas;
 }
 
+/**
+ * @return mixed
+ */
 function getReceivingAreas() {
   $sql = "SELECT id_area, area, activo
     FROM Area
@@ -1349,6 +1533,10 @@ function getReceivingAreas() {
   return $areas;
 }
 
+/**
+ * @param $receptionId
+ * @return mixed
+ */
 function getReceptionAreas($receptionId) {
   $sql = "SELECT id_recepcion_area, id_recepcion, id_area,
     id_muestra, volumen, vigencia, recipiente, activo
@@ -1370,6 +1558,10 @@ function getReceptionAreas($receptionId) {
   return $areas;
 }
 
+/**
+ * @param $areaData
+ * @return mixed
+ */
 function insertReceptionArea($areaData) {
   $sql = "INSERT INTO RecepcionArea (id_recepcion, id_area,
     id_muestra, volumen, vigencia, recipiente)
@@ -1383,6 +1575,10 @@ function insertReceptionArea($areaData) {
   return $receptionAreaId;
 }
 
+/**
+ * @param $updateData
+ * @return mixed
+ */
 function updateReceptionArea($updateData) {
   $sql = "UPDATE RecepcionArea SET id_recepcion = :id_recepcion,
     id_area = :id_area, id_muestra = :id_muestra, volumen = :volumen,
@@ -1395,6 +1591,10 @@ function updateReceptionArea($updateData) {
   return $updateData["id_recepcion"];
 }
 
+/**
+ * @param $receptionId
+ * @return mixed
+ */
 function disableReceptionAreas($receptionId) {
   $sql = "UPDATE RecepcionArea SET activo = 0
     WHERE id_recepcion = :receptionId";
@@ -1406,6 +1606,10 @@ function disableReceptionAreas($receptionId) {
   return $receptionId;
 }
 
+/**
+ * @param $receptionId
+ * @return mixed
+ */
 function deleteReceptionAreas($receptionId) {
   $sql = "DELETE
     FROM RecepcionArea
@@ -1418,6 +1622,10 @@ function deleteReceptionAreas($receptionId) {
   return $receptionId;
 }
 
+/**
+ * @param $jobId
+ * @return mixed
+ */
 function getPlainJob($jobId) {
   $sql = "SELECT id_trabajo, id_plan, id_recepcion,
     id_muestra, id_muestra_duplicada, id_area, id_usuario_entrega,
@@ -1448,6 +1656,9 @@ function getPlainJob($jobId) {
   return $job;
 }
 
+/**
+ * @return mixed
+ */
 function getJobs() {
   $sql = "SELECT id_trabajo, id_plan, id_recepcion,
     id_muestra, id_muestra_duplicada, id_area,
@@ -1478,6 +1689,9 @@ function getJobs() {
   return $jobs;
 }
 
+/**
+ * @return array
+ */
 function getBlankJob() {
   return array(
     "id_trabajo" => 0, "id_plan" => 1,
@@ -1502,6 +1716,10 @@ function getBlankJob() {
   );
 }
 
+/**
+ * @param $receptionId
+ * @return mixed
+ */
 function getJobsByReception($receptionId) {
   $sql = "SELECT id_trabajo, id_plan, id_recepcion,
     id_muestra, id_muestra_duplicada, id_area,
@@ -1537,6 +1755,10 @@ function getJobsByReception($receptionId) {
   return $jobs;
 }
 
+/**
+ * @param $areaId
+ * @return mixed
+ */
 function getJobsByArea($areaId) {
   $sql = "SELECT id_trabajo, id_plan, id_recepcion,
     id_muestra, id_muestra_duplicada, id_area,
@@ -1568,6 +1790,9 @@ function getJobsByArea($areaId) {
   return $jobs;
 }
 
+/**
+ * @param $userId
+ */
 function getJobsByUser($userId) {
   $user = getUser($userId);
   if ($user->id_nivel < 3 || $user->id_area > 3) {
@@ -1576,6 +1801,10 @@ function getJobsByUser($userId) {
   return getJobsByArea($user->id_area);
 }
 
+/**
+ * @param $jobId
+ * @return mixed
+ */
 function getJob($jobId) {
   $job = getPlainJob($jobId);
   $job->muestras = getJobSamples($jobId);
@@ -1584,6 +1813,10 @@ function getJob($jobId) {
   return $job;
 }
 
+/**
+ * @param $jobData
+ * @return mixed
+ */
 function insertJob($jobData) {
   $sql = "INSERT INTO Trabajo (id_plan, id_recepcion,
     id_muestra, id_muestra_duplicada, id_area,
@@ -1617,6 +1850,10 @@ function insertJob($jobData) {
   return $jobId;
 }
 
+/**
+ * @param $updateData
+ * @return mixed
+ */
 function updateJob($updateData) {
   $sql = "UPDATE Trabajo SET id_plan = :id_plan,
     id_recepcion = :id_recepcion, id_muestra = :id_muestra,
@@ -1648,6 +1885,10 @@ function updateJob($updateData) {
   return $updateData["id_trabajo"];
 }
 
+/**
+ * @param $receptionId
+ * @return mixed
+ */
 function disableJobsByReception($receptionId) {
   $sql = "UPDATE Trabajo SET activo = 0
     WHERE id_recepcion = :receptionId";
@@ -1659,6 +1900,10 @@ function disableJobsByReception($receptionId) {
   return $receptionId;
 }
 
+/**
+ * @param $jobId
+ * @return mixed
+ */
 function getJobSamples($jobId) {
   $sql = "SELECT id_trabajo_muestra, id_trabajo, id_muestra, activo
     FROM TrabajoMuestra
@@ -1676,6 +1921,10 @@ function getJobSamples($jobId) {
   return $samples;
 }
 
+/**
+ * @param $receptionId
+ * @return mixed
+ */
 function getReceptionJobs($receptionId) {
   $sql = "SELECT id_recepcion_trabajo, id_recepcion, id_trabajo, activo
     FROM RecepcionTrabajo
@@ -1693,6 +1942,10 @@ function getReceptionJobs($receptionId) {
   return $jobs;
 }
 
+/**
+ * @param $receptionId
+ * @return mixed
+ */
 function getReceptionJobsByReception($receptionId) {
   $sql = "SELECT id_recepcion_trabajo, id_recepcion, id_trabajo, id_area,
     activo, area, fecha_entrega
@@ -1711,6 +1964,10 @@ function getReceptionJobsByReception($receptionId) {
   return $jobs;
 }
 
+/**
+ * @param $jobData
+ * @return mixed
+ */
 function insertReceptionJob($jobData) {
   $sql = "INSERT INTO RecepcionTrabajo (id_recepcion, id_trabajo)
     VALUES (:id_recepcion, :id_trabajo)";
@@ -1722,6 +1979,10 @@ function insertReceptionJob($jobData) {
   return $receptionJobId;
 }
 
+/**
+ * @param $updateData
+ * @return mixed
+ */
 function updateReceptionJob($updateData) {
   $sql = "UPDATE RecepcionTrabajo SET id_recepcion = :id_recepcion,
     id_trabajo = :id_trabajo, activo = :activo
@@ -1733,6 +1994,10 @@ function updateReceptionJob($updateData) {
   return $updateData["id_recepcion"];
 }
 
+/**
+ * @param $receptionId
+ * @return mixed
+ */
 function disableReceptionJobs($receptionId) {
   $sql = "UPDATE RecepcionTrabajo SET activo = 0
     WHERE id_recepcion = :receptionId";
@@ -1744,6 +2009,9 @@ function disableReceptionJobs($receptionId) {
   return $receptionId;
 }
 
+/**
+ * @return mixed
+ */
 function getCustodies() {
   $sql = "SELECT id_custodia, id_estudio, id_recepcion, id_trabajo,
     id_area, id_status, id_usuario_entrega, id_usuario_recibe,
@@ -1784,6 +2052,10 @@ function getBlankCustody() {
   );
 }
 
+/**
+ * @param $custodyId
+ * @return mixed
+ */
 function getPlainCustody($custodyId) {
   $sql = "SELECT id_custodia, id_estudio, id_recepcion, id_trabajo,
     id_area, id_status, id_usuario_entrega, id_usuario_recibe,
@@ -1809,12 +2081,20 @@ function getPlainCustody($custodyId) {
   return $custody;
 }
 
+/**
+ * @param $custodyId
+ * @return mixed
+ */
 function getCustody($custodyId) {
   $custody = getCustodyData($custodyId);
   $custody->containers = getCustodyContainers($custodyId);
   return $custody;
 }
 
+/**
+ * @param $custodyId
+ * @return mixed
+ */
 function getCustodyData($custodyId) {
   $sql = "SELECT id_custodia, id_estudio, id_recepcion, id_trabajo,
     id_area, id_status, id_usuario_entrega, id_usuario_recibe,
@@ -1842,6 +2122,10 @@ function getCustodyData($custodyId) {
   return $custody;
 }
 
+/**
+ * @param $custodyId
+ * @return mixed
+ */
 function getCustodyContainers($custodyId) {
   $sql = "SELECT id_custodia, id_recepcion, id_muestra, id_recipiente,
     id_tipo_recipiente, id_preservacion, id_tipo_preservacion,
@@ -1863,6 +2147,10 @@ function getCustodyContainers($custodyId) {
   return $containers;
 }
 
+/**
+ * @param $custodyData
+ * @return mixed
+ */
 function insertCustody($custodyData) {
   $sql = "INSERT INTO Custodia (id_custodia, id_estudio,
     id_recepcion, id_trabajo, id_area, id_status,
@@ -1892,6 +2180,10 @@ function insertCustody($custodyData) {
   return $custodyId;
 }
 
+/**
+ * @param $updateData
+ * @return mixed
+ */
 function updateCustody($updateData) {
   $sql = "UPDATE Custody SET id_estudio = :id_estudio,
     id_recepcion = :id_recepcion, id_trabajo = :id_trabajo,
@@ -1916,6 +2208,9 @@ function updateCustody($updateData) {
   return $updateData["id_hoja"];
 }
 
+/**
+ * @return mixed
+ */
 function getPoints() {
   $sql = "SELECT id_punto, id_cuerpo, id_tipo_punto,
     id_estado, id_municipio, id_localidad, id_usuario_captura,
@@ -1936,6 +2231,10 @@ function getPoints() {
   return $points;
 }
 
+/**
+ * @param $pointId
+ * @return mixed
+ */
 function getPoint($pointId) {
   $sql = "SELECT id_punto, id_cuerpo, id_tipo_punto,
     id_estado, id_municipio, id_localidad, id_usuario_captura,
@@ -1957,6 +2256,9 @@ function getPoint($pointId) {
   return $point;
 }
 
+/**
+ * @return mixed
+ */
 function getPackages() {
   $sql = "SELECT id_paquete, id_ubicacion, paquete, activo
     FROM Paquete
@@ -1969,6 +2271,10 @@ function getPackages() {
   return $packages;
 }
 
+/**
+ * @param $locationId
+ * @return mixed
+ */
 function getPackagesByLocation($locationId) {
   $sql = "SELECT id_paquete, id_ubicacion, paquete, activo
     FROM Paquete
@@ -1982,6 +2288,10 @@ function getPackagesByLocation($locationId) {
   return $packages;
 }
 
+/**
+ * @param $packageId
+ * @return mixed
+ */
 function getPointsByPackage($packageId) {
   $sql = "SELECT id_paquete, paquete, id_paquete_punto, id_punto,
     id_cuerpo, id_tipo_punto, id_estado, id_municipio,
@@ -2003,6 +2313,9 @@ function getPointsByPackage($packageId) {
   return $points;
 }
 
+/**
+ * @return mixed
+ */
 function getMethods() {
   $sql = "SELECT id_metodo, id_norma, metodo, descripcion, activo
     FROM Metodo
@@ -2015,6 +2328,10 @@ function getMethods() {
   return $methods;
 }
 
+/**
+ * @param $methodId
+ * @return mixed
+ */
 function getMethod($methodId) {
   $sql = "SELECT id_metodo, id_norma, metodo, descripcion, activo
     FROM Metodo
@@ -2028,6 +2345,9 @@ function getMethod($methodId) {
   return $method;
 }
 
+/**
+ * @return mixed
+ */
 function getParameters() {
   $sql = "SELECT id_parametro, id_tipo_matriz, id_area,
     id_tipo_preservacion, id_metodo, id_unidad, id_tipo_valor,
@@ -2043,6 +2363,9 @@ function getParameters() {
   return $parameters;
 }
 
+/**
+ * @return mixed
+ */
 function getParametersField() {
   $sql = "SELECT id_parametro, id_tipo_matriz, id_area,
     id_tipo_preservacion, id_metodo, id_unidad, id_tipo_valor,
@@ -2058,6 +2381,10 @@ function getParametersField() {
   return $parameters;
 }
 
+/**
+ * @param $custodyId
+ * @return mixed
+ */
 function getParametersByCustody($custodyId) {
   $sql = "SELECT id_custodia, id_recepcion, id_orden, id_norma,
     id_parametro, id_tipo_matriz, id_area, id_tipo_preservacion,
@@ -2074,6 +2401,10 @@ function getParametersByCustody($custodyId) {
   return $parameters;
 }
 
+/**
+ * @param $normId
+ * @return mixed
+ */
 function getParametersByNorm($normId) {
   $sql = "SELECT id_parametro, id_tipo_matriz, id_area,
     id_tipo_preservacion, id_metodo, id_unidad, id_tipo_valor,
@@ -2090,6 +2421,9 @@ function getParametersByNorm($normId) {
   return $parameters;
 }
 
+/**
+ * @return mixed
+ */
 function getReceptionists() {
   $sql = "SELECT id_usuario, id_nivel, id_rol, id_empleado,
     id_area, id_puesto, interno, cea, laboratorio, calidad,
@@ -2109,6 +2443,9 @@ function getReceptionists() {
   return $receptionists;
 }
 
+/**
+ * @return mixed
+ */
 function getSamples() {
   $sql = "SELECT id_muestra, id_estudio, id_cliente, id_orden,
     id_plan, id_hoja, id_recepcion, id_custodia, id_paquete,
@@ -2126,6 +2463,10 @@ function getSamples() {
   return $samples;
 }
 
+/**
+ * @param $sampleId
+ * @return mixed
+ */
 function getSample($sampleId) {
   $sql = "SELECT id_muestra, id_estudio, id_cliente, id_orden,
     id_plan, id_hoja, id_recepcion, id_custodia, id_paquete,
@@ -2157,6 +2498,10 @@ function getBlankSample() {
   );
 }
 
+/**
+ * @param $sheetId
+ * @return mixed
+ */
 function getSamplesBySheet($sheetId) {
   $sql = "SELECT id_muestra, id_estudio, id_cliente, id_orden,
     id_plan, id_hoja, id_recepcion, id_custodia, id_paquete,
@@ -2175,6 +2520,10 @@ function getSamplesBySheet($sheetId) {
   return $samples;
 }
 
+/**
+ * @param $receptionId
+ * @return mixed
+ */
 function getSamplesByReception($receptionId) {
   $sql = "SELECT id_muestra, id_estudio, id_cliente, id_orden,
     id_plan, id_hoja, id_recepcion, id_custodia, id_paquete,
@@ -2200,6 +2549,10 @@ function getSamplesByReception($receptionId) {
   return $samples;
 }
 
+/**
+ * @param $sampleData
+ * @return mixed
+ */
 function insertSample($sampleData) {
   $sql = "INSERT INTO Muestra (id_estudio, id_cliente, id_orden,
     id_plan, id_hoja, id_recepcion, id_custodia,
@@ -2217,6 +2570,10 @@ function insertSample($sampleData) {
   return $sampleId;
 }
 
+/**
+ * @param $updateData
+ * @return mixed
+ */
 function updateSample($updateData) {
   $sql = "UPDATE Muestra SET id_estudio = :id_estudio,
     id_cliente = :id_cliente, id_orden = :id_orden,
@@ -2233,6 +2590,10 @@ function updateSample($updateData) {
   return $updateData["id_muestra"];
 }
 
+/**
+ * @param $receptionId
+ * @return mixed
+ */
 function getReceptionSamples($receptionId) {
   $sql = "SELECT id_recepcion_muestra, id_recepcion, id_muestra, activo
     FROM RecepcionMuestra
@@ -2246,6 +2607,10 @@ function getReceptionSamples($receptionId) {
   return $results;
 }
 
+/**
+ * @param $receptionData
+ * @return mixed
+ */
 function insertReceptionSample($receptionData) {
   $sql = "INSERT INTO RecepcionMuestra (id_recepcion, id_muestra)
     VALUES (:id_recepcion, :id_muestra)";
@@ -2257,6 +2622,10 @@ function insertReceptionSample($receptionData) {
   return $receptionSampleId;
 }
 
+/**
+ * @param $receptionId
+ * @return mixed
+ */
 function deleteReceptionSamples($receptionId) {
   $sql = "DELETE
     FROM RecepcionMuestra
@@ -2269,6 +2638,10 @@ function deleteReceptionSamples($receptionId) {
   return $receptionId;
 }
 
+/**
+ * @param $receptionId
+ * @return mixed
+ */
 function disableReceptionSamples($receptionId) {
   $sql = "UPDATE RecepcionMuestra SET activo = 0
     WHERE id_recepcion = :receptionId";
@@ -2280,6 +2653,10 @@ function disableReceptionSamples($receptionId) {
   return $receptionId;
 }
 
+/**
+ * @param $updateData
+ * @return mixed
+ */
 function updateReceptionSample($updateData) {
   $sql = "UPDATE RecepcionMuestra SET id_recepcion = :id_recepcion,
     id_muestra = :id_muestra, activo = :activo
@@ -2291,6 +2668,10 @@ function updateReceptionSample($updateData) {
   return $updateData["id_recepcion_muestra"];
 }
 
+/**
+ * @param $sheetId
+ * @return mixed
+ */
 function getResultsBySheet($sheetId) {
   $sql = "SELECT id_resultado, id_muestra, id_parametro,
     id_tipo_resultado, id_tipo_valor, id_usuario_captura,
@@ -2309,6 +2690,10 @@ function getResultsBySheet($sheetId) {
   return $results;
 }
 
+/**
+ * @param $sampleId
+ * @return mixed
+ */
 function getResultsBySample($sampleId) {
   $sql = "SELECT id_resultado, id_muestra, id_parametro,
     id_tipo_resultado, id_tipo_valor, id_usuario_captura,
@@ -2327,6 +2712,9 @@ function getResultsBySample($sampleId) {
   return $results;
 }
 
+/**
+ * @return array
+ */
 function getBlankSamplingResult() {
   return array(
     "id_resultado" => 0, "id_muestra" => 0, "id_parametro" => 0,
@@ -2337,6 +2725,10 @@ function getBlankSamplingResult() {
   );
 }
 
+/**
+ * @param $sampleId
+ * @return mixed
+ */
 function getSamplingResultsBySample($sampleId) {
   $sql = "SELECT id_resultado, id_muestra, id_parametro,
     id_tipo_resultado, id_tipo_valor, id_usuario_captura,
@@ -2355,6 +2747,9 @@ function getSamplingResultsBySample($sampleId) {
   return $results;
 }
 
+/**
+ * @return mixed
+ */
 function getInstruments() {
   $sql = "SELECT id_instrumento, id_usuario_captura,
     id_usuario_actualiza, instrumento, descripcion, muestreo,
@@ -2373,6 +2768,10 @@ function getInstruments() {
   return $instruments;
 }
 
+/**
+ * @param $planId
+ * @return mixed
+ */
 function getPlanInstruments($planId) {
   $sql = "SELECT id_plan_instrumento, id_plan, id_instrumento,
     bitacora, folio, activo
@@ -2391,6 +2790,10 @@ function getPlanInstruments($planId) {
   return $instruments;
 }
 
+/**
+ * @param $instrumentData
+ * @return mixed
+ */
 function insertPlanInstrument($instrumentData) {
   $sql = "INSERT INTO PlanInstrumento (id_plan, id_instrumento,
     bitacora, folio, activo)
@@ -2404,6 +2807,10 @@ function insertPlanInstrument($instrumentData) {
   return $instrumentId;
 }
 
+/**
+ * @param $updateData
+ * @return mixed
+ */
 function updatePlanInstrument($updateData) {
   $sql = "UPDATE PlanInstrumento SET id_plan = :id_plan,
     id_instrumento = :id_instrumento,
@@ -2417,6 +2824,10 @@ function updatePlanInstrument($updateData) {
   return $updateData["id_plan_instrumento"];
 }
 
+/**
+ * @param $planId
+ * @return mixed
+ */
 function disablePlanInstruments($planId) {
   $sql = "UPDATE PlanInstrumento SET activo = 0
     WHERE id_plan = :planId";
@@ -2427,6 +2838,10 @@ function disablePlanInstruments($planId) {
   return $planId;
 }
 
+/**
+ * @param $normId
+ * @return mixed
+ */
 function getSamplingParametersByNorm($normId) {
   $sql = "SELECT id_parametro, id_tipo_matriz, id_area,
     id_tipo_preservacion, id_metodo, id_unidad, id_tipo_valor,
@@ -2443,6 +2858,9 @@ function getSamplingParametersByNorm($normId) {
   return $parameters;
 }
 
+/**
+ * @return mixed
+ */
 function getNorms() {
   $sql = "SELECT id_norma, id_tipo_norma, id_tipo_matriz, norma,
     descripcion, activo
@@ -2456,6 +2874,10 @@ function getNorms() {
   return $norms;
 }
 
+/**
+ * @param $normId
+ * @return mixed
+ */
 function getNorm($normId) {
   $sql = "SELECT id_norma, id_tipo_norma, id_tipo_matriz, norma,
     descripcion, activo
@@ -2470,6 +2892,9 @@ function getNorm($normId) {
   return $norm;
 }
 
+/**
+ * @return mixed
+ */
 function getSamplingTypes() {
   $sql = "SELECT id_tipo_muestreo, tipo_muestreo, activo
     FROM TipoMuestreo
@@ -2482,6 +2907,10 @@ function getSamplingTypes() {
   return $samplingTypes;
 }
 
+/**
+ * @param $samplingTypeId
+ * @return mixed
+ */
 function getSamplingType($samplingTypeId) {
   $sql = "SELECT id_tipo_muestreo, tipo_muestreo, activo
     FROM TipoMuestreo
@@ -2495,6 +2924,9 @@ function getSamplingType($samplingTypeId) {
   return $samplingType;
 }
 
+/**
+ * @return mixed
+ */
 function getMatrices() {
   $sql = "SELECT id_matriz, id_tipo_matriz, id_norma, matriz,
     siglas, activo
@@ -2508,6 +2940,10 @@ function getMatrices() {
   return $matrices;
 }
 
+/**
+ * @param $matrixId
+ * @return mixed
+ */
 function getMatrix($matrixId) {
   $sql = "SELECT id_matriz, id_tipo_matriz, id_norma, matriz,
     siglas, activo
@@ -2522,6 +2958,9 @@ function getMatrix($matrixId) {
   return $matrix;
 }
 
+/**
+ * @return mixed
+ */
 function getContainers() {
   $sql = "SELECT id_recipiente, id_plan, id_recepcion, id_muestra,
     id_tipo_recipiente, id_preservacion, id_almacenamiento,
@@ -2540,6 +2979,10 @@ function getContainers() {
   return $containers;
 }
 
+/**
+ * @param $containerId
+ * @return mixed
+ */
 function getContainer($containerId) {
   $sql = "SELECT id_recipiente, id_plan, id_recepcion, id_muestra,
     id_tipo_recipiente, id_preservacion, id_almacenamiento,
@@ -2559,6 +3002,10 @@ function getContainer($containerId) {
   return $container;
 }
 
+/**
+ * @param $planId
+ * @return mixed
+ */
 function getPlanContainers($planId) {
   $sql = "SELECT id_recipiente, id_plan, id_recepcion, id_muestra,
     id_tipo_recipiente, id_preservacion, id_almacenamiento,
@@ -2578,6 +3025,10 @@ function getPlanContainers($planId) {
   return $containers;
 }
 
+/**
+ * @param $containerData
+ * @return mixed
+ */
 function insertContainer($containerData) {
   $sql = "INSERT INTO Recipiente (id_plan, id_recepcion, id_muestra,
     id_tipo_recipiente, id_preservacion, id_almacenamiento,
@@ -2595,6 +3046,10 @@ function insertContainer($containerData) {
   return $containerId;
 }
 
+/**
+ * @param $updateData
+ * @return mixed
+ */
 function updateContainer($updateData) {
   $sql = "UPDATE Recipiente SET id_plan = :id_plan,
     id_recepcion = :id_recepcion, id_muestra = :id_muestra,
@@ -2614,6 +3069,10 @@ function updateContainer($updateData) {
   return $updateData["id_recipiente"];
 }
 
+/**
+ * @param $containerData
+ * @return mixed
+ */
 function insertPlanContainer($containerData) {
   $sql = "INSERT INTO PlanRecipiente (id_plan, id_recipiente, activo)
     VALUES (:id_plan, :id_recipiente, :activo)";
@@ -2625,6 +3084,10 @@ function insertPlanContainer($containerData) {
   return $containerId;
 }
 
+/**
+ * @param $updateData
+ * @return mixed
+ */
 function updatePlanContainer($updateData) {
   $sql = "UPDATE PlanRecipiente SET id_plan = :id_plan,
     id_recipiente = :id_recipiente, activo = :activo
@@ -2636,6 +3099,10 @@ function updatePlanContainer($updateData) {
   return $updateData["id_plan_recipiente"];
 }
 
+/**
+ * @param $containerId
+ * @return mixed
+ */
 function getContainerLogs($containerId) {
   $sql = "SELECT id_historial_recipiente, id_custodia, id_muestra,
     id_recipiente, id_parametro, id_usuario_captura,
@@ -2654,26 +3121,41 @@ function getContainerLogs($containerId) {
   return $logs;
 }
 
+/**
+ * @return mixed
+ */
 function getAnalysis() {
   $json = '[]';
   return json_decode($json);
 }
 
+/**
+ * @return mixed
+ */
 function getAnalysisSelections() {
   $json = '[]';
   return json_decode($json);
 }
 
+/**
+ * @return mixed
+ */
 function getReports() {
   $json = '[]';
   return json_decode($json);
 }
 
+/**
+ * @return mixed
+ */
 function getReferences() {
   $json = '[]';
   return json_decode($json);
 }
 
+/**
+ * @return mixed
+ */
 function getPrices() {
   $sql = "SELECT DISTINCT precio, activo
     FROM Parametro
@@ -2686,6 +3168,10 @@ function getPrices() {
   return $prices;
 }
 
+/**
+ * @param $planId
+ * @return mixed
+ */
 function getPreservationsByPlan($planId) {
   $sql = "SELECT id_plan_preservacion, id_plan, id_preservacion, activo
     FROM PlanPreservacion
@@ -2703,6 +3189,10 @@ function getPreservationsByPlan($planId) {
   return $preservations;
 }
 
+/**
+ * @param $preservationData
+ * @return mixed
+ */
 function insertPlanPreservation($preservationData) {
   $sql = "INSERT INTO PlanPreservacion (id_plan, id_preservacion, activo)
     VALUES (:id_plan, :id_preservacion, :activo)";
@@ -2714,6 +3204,10 @@ function insertPlanPreservation($preservationData) {
   return $preservationId;
 }
 
+/**
+ * @param $updateData
+ * @return mixed
+ */
 function updatePlanPreservation($updateData) {
   $sql = "UPDATE PlanPreservacion SET id_plan = :id_plan,
     id_preservacion = :id_preservacion, activo = :activo
@@ -2725,6 +3219,10 @@ function updatePlanPreservation($updateData) {
   return $updateData["id_plan_preservacion"];
 }
 
+/**
+ * @param $planId
+ * @return mixed
+ */
 function disablePlanPreservations($planId) {
   $sql = "UPDATE PlanPreservacion SET activo = 0
     WHERE id_plan = :planId";
@@ -2736,6 +3234,10 @@ function disablePlanPreservations($planId) {
   return $planId;
 }
 
+/**
+ * @param $planId
+ * @return mixed
+ */
 function getReactivesByPlan($planId) {
   $sql = "SELECT id_plan_reactivo, id_plan, id_reactivo, valor,
     lote, folio
@@ -2754,6 +3256,10 @@ function getReactivesByPlan($planId) {
   return $reactives;
 }
 
+/**
+ * @param $reactiveData
+ * @return mixed
+ */
 function insertPlanReactive($reactiveData) {
   $sql = "INSERT INTO PlanReactivo (id_plan, id_reactivo,
     valor, lote, folio)
@@ -2767,6 +3273,10 @@ function insertPlanReactive($reactiveData) {
   return $reactiveId;
 }
 
+/**
+ * @param $planId
+ * @return mixed
+ */
 function deletePlanReactives($planId) {
   $sql = "DELETE
     FROM PlanReactivo
@@ -2779,6 +3289,10 @@ function deletePlanReactives($planId) {
   return $planId;
 }
 
+/**
+ * @param $planId
+ * @return mixed
+ */
 function getMaterialsByPlan($planId) {
   $sql = "SELECT id_plan, id_plan_material, id_material,
     material, activo
@@ -2797,6 +3311,10 @@ function getMaterialsByPlan($planId) {
   return $materials;
 }
 
+/**
+ * @param $materialData
+ * @return mixed
+ */
 function insertPlanMaterial($materialData) {
   $sql = "INSERT INTO PlanMaterial (id_plan, id_material)
     VALUES (:id_plan, :id_material)";
@@ -2808,6 +3326,10 @@ function insertPlanMaterial($materialData) {
   return $materialId;
 }
 
+/**
+ * @param $planId
+ * @return mixed
+ */
 function deletePlanMaterials($planId) {
   $sql = "DELETE
     FROM PlanMaterial
@@ -2820,6 +3342,10 @@ function deletePlanMaterials($planId) {
   return $planId;
 }
 
+/**
+ * @param $planId
+ * @return mixed
+ */
 function getCoolersByPlan($planId) {
   $sql = "SELECT id_plan, id_plan_hielera, id_hielera,
     hielera, activo
@@ -2838,6 +3364,10 @@ function getCoolersByPlan($planId) {
   return $coolers;
 }
 
+/**
+ * @param $coolerData
+ * @return mixed
+ */
 function insertPlanCooler($coolerData) {
   $sql = "INSERT INTO PlanHielera (id_plan, id_hielera)
     VALUES (:id_plan, :id_hielera)";
@@ -2849,6 +3379,10 @@ function insertPlanCooler($coolerData) {
   return $coolerId;
 }
 
+/**
+ * @param $planId
+ * @return mixed
+ */
 function deletePlanCoolers($planId) {
   $sql = "DELETE
     FROM PlanHielera
@@ -2861,6 +3395,9 @@ function deletePlanCoolers($planId) {
   return $planId;
 }
 
+/**
+ * @return mixed
+ */
 function getEmployees() {
   $sql = "SELECT id_usuario, id_nivel, id_rol, id_area, id_puesto,
     interno, cea, laboratorio, supervisa, analiza, muestrea,
@@ -2875,6 +3412,9 @@ function getEmployees() {
   return $samplingEmployees;
 }
 
+/**
+ * @return mixed
+ */
 function getSamplingEmployees() {
   $sql = "SELECT id_usuario, id_nivel, id_rol, id_area, id_puesto,
     interno, cea, laboratorio, supervisa, analiza, muestrea,
@@ -2893,6 +3433,10 @@ function getSamplingEmployees() {
   return $result;
 }
 
+/**
+ * @param $userId
+ * @return mixed
+ */
 function getSamplingEmployee($userId) {
   $sql = "SELECT id_usuario, id_nivel, id_rol, id_area, id_puesto,
     interno, cea, laboratorio, supervisa, analiza, muestrea,
@@ -2908,6 +3452,9 @@ function getSamplingEmployee($userId) {
   return $samplingEmployee;
 }
 
+/**
+ * @return mixed
+ */
 function getPointKinds() {
   $sql = "SELECT id_tipo_punto, tipo_punto, activo
     FROM TipoPunto
@@ -2920,6 +3467,9 @@ function getPointKinds() {
   return $pointKinds;
 }
 
+/**
+ * @return mixed
+ */
 function getDistricts() {
   $sql = "SELECT id_municipio, municipio
     FROM Municipio
@@ -2932,6 +3482,10 @@ function getDistricts() {
   return $districts;
 }
 
+/**
+ * @param $districtId
+ * @return mixed
+ */
 function getDistrict($districtId) {
   $sql = "SELECT id_municipio, municipio
     FROM Municipio
@@ -2945,6 +3499,10 @@ function getDistrict($districtId) {
   return $district;
 }
 
+/**
+ * @param $districtId
+ * @return mixed
+ */
 function getCitiesByDistrictId($districtId) {
   $sql = "SELECT id_municipio, id_localidad, localidad
     FROM Localidad
@@ -2958,6 +3516,9 @@ function getCitiesByDistrictId($districtId) {
   return $districts;
 }
 
+/**
+ * @return mixed
+ */
 function getPreservations() {
   $sql = "SELECT id_preservacion, id_tipo_preservacion, preservacion,
     descripcion, activo
@@ -2971,6 +3532,10 @@ function getPreservations() {
   return $preservations;
 }
 
+/**
+ * @param $sheetId
+ * @return mixed
+ */
 function getPreservationsBySheet($sheetId) {
   $sql = "SELECT id_hoja_preservacion, id_hoja, id_preservacion,
     cantidad, preservado, activo
@@ -2989,6 +3554,10 @@ function getPreservationsBySheet($sheetId) {
   return $preservations;
 }
 
+/**
+ * @param $receptionId
+ * @return mixed
+ */
 function getReceptionPreservations($receptionId) {
   $sql = "SELECT id_recepcion_preservacion, id_recepcion,
     id_preservacion, cantidad, activo
@@ -3007,6 +3576,10 @@ function getReceptionPreservations($receptionId) {
   return $preservations;
 }
 
+/**
+ * @param $preservationData
+ * @return mixed
+ */
 function insertReceptionPreservation($preservationData) {
   $sql = "INSERT INTO RecepcionPreservacion (
     id_recepcion, id_preservacion, cantidad)
@@ -3019,6 +3592,10 @@ function insertReceptionPreservation($preservationData) {
   return $receptionPreservationId;
 }
 
+/**
+ * @param $receptionId
+ * @return mixed
+ */
 function deleteReceptionPreservations($receptionId) {
   $sql = "DELETE
     FROM RecepcionPreservacion
@@ -3031,6 +3608,10 @@ function deleteReceptionPreservations($receptionId) {
   return $receptionId;
 }
 
+/**
+ * @param $receptionId
+ * @return mixed
+ */
 function disableReceptionPreservations($receptionId) {
   $sql = "UPDATE RecepcionPreservacion SET activo = 0
     WHERE id_recepcion = :receptionId";
@@ -3042,6 +3623,10 @@ function disableReceptionPreservations($receptionId) {
   return $receptionId;
 }
 
+/**
+ * @param $updateData
+ * @return mixed
+ */
 function updateReceptionPreservation($updateData) {
   $sql = "UPDATE RecepcionPreservacion SET id_recepcion = :id_recepcion,
     id_preservacion = :id_preservacion, cantidad = :cantidad,
@@ -3054,6 +3639,10 @@ function updateReceptionPreservation($updateData) {
   return $updateData["id_recepcion"];
 }
 
+/**
+ * @param $preservationData
+ * @return mixed
+ */
 function insertSheetPreservation($preservationData) {
   $sql = "INSERT INTO HojaPreservacion (id_hoja, id_preservacion,
     cantidad, preservado, activo)
@@ -3067,6 +3656,10 @@ function insertSheetPreservation($preservationData) {
   return $preservationId;
 }
 
+/**
+ * @param $updateData
+ * @return mixed
+ */
 function updateSheetPreservation($updateData) {
   $sql = "UPDATE HojaPreservacion SET id_hoja = :id_hoja,
     id_preservacion = :id_preservacion, cantidad = :cantidad,
@@ -3079,6 +3672,10 @@ function updateSheetPreservation($updateData) {
   return $updateData["id_hoja"];
 }
 
+/**
+ * @param $sheetId
+ * @return mixed
+ */
 function deleteSheetPreservations($sheetId) {
   $sql = "DELETE
     FROM HojaPreservacion
@@ -3091,6 +3688,10 @@ function deleteSheetPreservations($sheetId) {
   return $sheetId;
 }
 
+/**
+ * @param $resultData
+ * @return mixed
+ */
 function insertResult($resultData) {
   $sql = "INSERT INTO Resultado (id_muestra, id_parametro,
     id_tipo_resultado, id_tipo_valor, id_usuario_captura,
@@ -3106,6 +3707,10 @@ function insertResult($resultData) {
   return $preservationId;
 }
 
+/**
+ * @param $updateData
+ * @return mixed
+ */
 function updateResult($updateData) {
   $sql = "UPDATE Resultado SET id_muestra = :id_muestra,
     id_parametro = :id_parametro,
@@ -3122,6 +3727,10 @@ function updateResult($updateData) {
   return $updateData["id_resultado"];
 }
 
+/**
+ * @param $resultId
+ * @return mixed
+ */
 function getResultsForUpdate($resultId) {
   $sql = "SELECT
     id_muestra,
@@ -3142,6 +3751,9 @@ function getResultsForUpdate($resultId) {
   return $result;
 }
 
+/**
+ * @return mixed
+ */
 function getSamplingInstruments() {
   $sql = "SELECT id_instrumento, instrumento, descripcion,
     muestreo, inventario, activo
@@ -3155,6 +3767,9 @@ function getSamplingInstruments() {
   return $instruments;
 }
 
+/**
+ * @return mixed
+ */
 function getReactives() {
   $sql = "SELECT id_reactivo, id_tipo_reactivo, reactivo,
     registra_valor, lote, folio, activo,
@@ -3173,6 +3788,9 @@ function getReactives() {
   return $reactives;
 }
 
+/**
+ * @return mixed
+ */
 function getMaterials() {
   $sql = "SELECT id_material, material, activo
     FROM Material
@@ -3189,6 +3807,9 @@ function getMaterials() {
   return $materials;
 }
 
+/**
+ * @return mixed
+ */
 function getCoolers() {
   $sql = "SELECT id_hielera, hielera, activo
     FROM Hielera
@@ -3205,6 +3826,9 @@ function getCoolers() {
   return $coolers;
 }
 
+/**
+ * @return mixed
+ */
 function getClouds() {
   $sql = "SELECT id_nube, nube, activo
     FROM Nube
@@ -3217,6 +3841,9 @@ function getClouds() {
   return $clouds;
 }
 
+/**
+ * @return mixed
+ */
 function getCurrentDirections() {
   $sql = "SELECT id_direccion_corriente, direccion_corriente, activo
     FROM DireccionCorriente
@@ -3229,6 +3856,9 @@ function getCurrentDirections() {
   return $currentDirections;
 }
 
+/**
+ * @return mixed
+ */
 function getWaves() {
   $sql = "SELECT id_oleaje, oleaje, activo
     FROM Oleaje
@@ -3241,6 +3871,9 @@ function getWaves() {
   return $waves;
 }
 
+/**
+ * @return mixed
+ */
 function getSamplingNorms() {
   $sql = "SELECT id_norma, id_tipo_norma, id_tipo_matriz,
     norma, descripcion, activo
@@ -3254,6 +3887,9 @@ function getSamplingNorms() {
   return $waves;
 }
 
+/**
+ * @return mixed
+ */
 function getLocations() {
   $sql = "SELECT id_ubicacion, ubicacion,
     fecha_captura, fecha_actualiza, ip_captura, ip_actualiza,
@@ -3268,6 +3904,10 @@ function getLocations() {
   return $locations;
 }
 
+/**
+ * @param $locationId
+ * @return mixed
+ */
 function getLocation($locationId) {
   $sql = "SELECT id_ubicacion, ubicacion,
     fecha_captura, fecha_actualiza, ip_captura, ip_actualiza,
@@ -3283,6 +3923,9 @@ function getLocation($locationId) {
   return $location;
 }
 
+/**
+ * @return mixed
+ */
 function getWaterBodies() {
   $sql = "SELECT id_cuerpo, id_tipo_cuerpo, cuerpo, tipo_cuerpo,
     siglas, activo
@@ -3296,6 +3939,10 @@ function getWaterBodies() {
   return $waterBodies;
 }
 
+/**
+ * @param $bodyId
+ * @return mixed
+ */
 function getWaterBody($bodyId) {
   $sql = "SELECT id_cuerpo, id_tipo_cuerpo, cuerpo, tipo_cuerpo,
     siglas, activo
@@ -3310,6 +3957,9 @@ function getWaterBody($bodyId) {
   return $waterBody;
 }
 
+/**
+ * @return mixed
+ */
 function getStorages() {
   $sql = "SELECT id_almacenamiento, almacenamiento, activo
     FROM Almacenamiento
@@ -3322,6 +3972,10 @@ function getStorages() {
   return $storages;
 }
 
+/**
+ * @param $storageId
+ * @return mixed
+ */
 function getStorage($storageId) {
   $sql = "SELECT id_almacenamiento, almacenamiento, activo
     FROM Almacenamiento

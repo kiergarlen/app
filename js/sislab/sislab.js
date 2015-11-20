@@ -1,3 +1,4 @@
+
 /*global angular, CryptoJS*/
 (function(window, document, undefined) {
   'use strict';

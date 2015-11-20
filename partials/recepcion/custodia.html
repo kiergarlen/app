@@ -217,7 +217,7 @@
     <div class="col-xs-12">
       <br>
       <a class="btn btn-success"
-        value="Agregar recipiente" title="Agregar recipiente"
+        value="Agregar entrada" title="Agregar entrada"
         data-ng-click="custody.openAddLog()"
         >
         <i class="glyphicon glyphicon-plus" aria-hidden="true"></i>
@@ -230,6 +230,27 @@
     <div class="col-xs-12">
       <h4>Nueva entrada a bitácora</h3>
     </div>
+
+    <div class="col-xs-12 col-sm-6">
+      <label for="parameterSelect">
+        Parametro
+      </label>
+      <select class="form-control"
+        id="parameterSelect"
+        name="parameterSelect"
+        data-ng-model="custody.blankLog.id_parametro"
+        >
+        <option
+          data-ng-repeat="parameter in custody.parameters"
+          >
+          Id:
+          {{::parameter.id_parametro}}
+          Parametro:
+          ({{::parameter.parametro}})
+        </option>
+      </select>
+    </div>
+
     <div class="col-xs-12 col-sm-6">
       <label for="sampleSelect">
         Recipiente
@@ -243,9 +264,9 @@
           data-ng-repeat="containerData in custody.custody.containers"
           >
           Muestra:
-          {{::validationSample.id_muestra}}
+          {{::containerData.id_muestra}}
           Recipiente:
-          ({{::validationSample.id_recipiente}})
+          ({{::containerData.id_recipiente}})
         </option>
       </select>
     </div>

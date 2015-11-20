@@ -2328,7 +2328,7 @@
     };
     vm.viewLog = viewLog;
     vm.openAddLog = openAddLog;
-    vm.isLogVisible = false;
+    vm.isLogVisible = true;
     vm.isDataSubmitted = false;
     vm.approveItem = approveItem;
     vm.rejectItem = rejectItem;

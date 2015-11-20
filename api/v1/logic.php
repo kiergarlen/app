@@ -3,7 +3,7 @@
 define("KEY", "m0oxUT7L8Unn93hXMUGHpwq_jTSKVBjQfEVCUe8jZ38KUU4VSAfmsNk4JJYcJl7CukrY6QMlixxwat7AZSpDcSQ");
 
 /**
- * @param $request
+ * @param mixed $request
  * @return mixed
  */
 function processUserJwt($request)
@@ -39,7 +39,8 @@ function processUserJwt($request)
 }
 
 /**
- * @param $jwt
+ * @param mixed $jwt
+ * @return array
  */
 function decodeJwt($jwt)
 {
@@ -47,7 +48,7 @@ function decodeJwt($jwt)
 }
 
 /**
- * @param $request
+ * @param mixed $request
  */
 function extractDataFromRequest($request)
 {
@@ -55,7 +56,7 @@ function extractDataFromRequest($request)
 }
 
 /**
- * @param $request
+ * @param mixed $request
  * @return mixed
  */
 function decodeUserToken($request)
@@ -85,7 +86,7 @@ function decodeUserToken($request)
 }
 
 /**
- * @param $items
+ * @param mixed $items
  * @return mixed
  */
 function processMenuToJson($items)
@@ -128,7 +129,7 @@ function processMenuToJson($items)
 }
 
 /**
- * @param $dateString
+ * @param string $dateString
  * @return mixed
  */
 function isoDateToMsSql($dateString)
@@ -156,7 +157,7 @@ function isoDateToMsSql($dateString)
 }
 
 /**
- * @param $request
+ * @param mixed $request
  * @return mixed
  */
 function processStudyInsert($request)
@@ -219,8 +220,8 @@ function processStudyInsert($request)
 }
 
 /**
- * @param $studyInsertData
- * @param $studyId
+ * @param array $studyInsertData
+ * @param int $studyId
  * @return mixed
  */
 function processStudyOrderInsert($studyInsertData, $studyId)
@@ -246,7 +247,7 @@ function processStudyOrderInsert($studyInsertData, $studyId)
 }
 
 /**
- * @param $request
+ * @param mixed $request
  * @return mixed
  */
 function processStudyUpdate($request)
@@ -288,7 +289,7 @@ function processStudyUpdate($request)
 }
 
 /**
- * @param $studyUpdateData
+ * @param array $studyUpdateData
  * @return mixed
  */
 function processStudyOrderUpdate($studyUpdateData)
@@ -338,8 +339,8 @@ function processStudyOrderUpdate($studyUpdateData)
 }
 
 /**
- * @param $newOrder
- * @param $study
+ * @param array $newOrder
+ * @param mixed $study
  */
 function processNewOrderInsert($newOrder, $study)
 {
@@ -374,7 +375,7 @@ function processNewOrderInsert($newOrder, $study)
 }
 
 /**
- * @param $request
+ * @param mixed $request
  * @return mixed
  */
 function processOrderUpdate($request)
@@ -416,7 +417,7 @@ function processOrderUpdate($request)
 }
 
 /**
- * @param $orderUpdateData
+ * @param array $orderUpdateData
  * @return mixed
  */
 function processOrderPlansUpdate($orderUpdateData)
@@ -486,7 +487,7 @@ function processOrderPlansUpdate($orderUpdateData)
 }
 
 /**
- * @param $request
+ * @param mixed $request
  * @return mixed
  */
 function processPlanUpdate($request)
@@ -552,7 +553,7 @@ function processPlanUpdate($request)
 }
 
 /**
- * @param $planUpdateData
+ * @param array $planUpdateData
  * @return mixed
  */
 function processPlanSheetInsert($planUpdateData)
@@ -584,7 +585,7 @@ function processPlanSheetInsert($planUpdateData)
 }
 
 /**
- * @param $planUpdateData
+ * @param array $planUpdateData
  * @return mixed
  */
 function processPlanReceptionInsert($planUpdateData)
@@ -617,7 +618,7 @@ function processPlanReceptionInsert($planUpdateData)
 }
 
 /**
- * @param $planUpdateData
+ * @param array $planUpdateData
  * @return mixed
  */
 function processPlanSheetSampleInsert($planUpdateData)
@@ -671,7 +672,7 @@ function processPlanSheetSampleInsert($planUpdateData)
 }
 
 /**
- * @param $planUpdateData
+ * @param array $planUpdateData
  * @return mixed
  */
 function processPlanInstrumentsUpdate($planUpdateData)
@@ -719,7 +720,7 @@ function processPlanInstrumentsUpdate($planUpdateData)
 }
 
 /**
- * @param $planUpdateData
+ * @param array $planUpdateData
  * @return mixed
  */
 function processPlanPreservationsUpdate($planUpdateData)
@@ -764,7 +765,7 @@ function processPlanPreservationsUpdate($planUpdateData)
 }
 
 /**
- * @param $planUpdateData
+ * @param array $planUpdateData
  * @return mixed
  */
 function processPlanContainersUpdate($planUpdateData)
@@ -843,7 +844,7 @@ function processPlanContainersUpdate($planUpdateData)
 }
 
 /**
- * @param $planUpdateData
+ * @param array $planUpdateData
  * @return mixed
  */
 function processPlanReactivesUpdate($planUpdateData)
@@ -867,7 +868,7 @@ function processPlanReactivesUpdate($planUpdateData)
 }
 
 /**
- * @param $planUpdateData
+ * @param array $planUpdateData
  * @return mixed
  */
 function processPlanMaterialsUpdate($planUpdateData)
@@ -889,7 +890,7 @@ function processPlanMaterialsUpdate($planUpdateData)
 }
 
 /**
- * @param $planUpdateData
+ * @param array $planUpdateData
  * @return mixed
  */
 function processPlanCoolersUpdate($planUpdateData)
@@ -911,7 +912,7 @@ function processPlanCoolersUpdate($planUpdateData)
 }
 
 /**
- * @param $request
+ * @param mixed $request
  * @return mixed
  */
 function processSheetUpdate($request)
@@ -956,7 +957,7 @@ function processSheetUpdate($request)
 }
 
 /**
- * @param $sheetUpdateData
+ * @param array $sheetUpdateData
  * @return mixed
  */
 function processSheetReceptionUpdate($sheetUpdateData)
@@ -976,7 +977,7 @@ function processSheetReceptionUpdate($sheetUpdateData)
 }
 
 /**
- * @param $sheetUpdateData
+ * @param array $sheetUpdateData
  * @return mixed
  */
 function processSheetResultsUpdate($sheetUpdateData)
@@ -1052,7 +1053,7 @@ function processSheetResultsUpdate($sheetUpdateData)
 }
 
 /**
- * @param $sheetUpdateData
+ * @param array $sheetUpdateData
  * @return mixed
  */
 function processSheetPreservationsUpdate($sheetUpdateData)
@@ -1110,7 +1111,7 @@ function processSheetPreservationsUpdate($sheetUpdateData)
 }
 
 /**
- * @param $request
+ * @param mixed $request
  * @return mixed
  */
 function processReceptionUpdate($request)
@@ -1163,7 +1164,7 @@ function processReceptionUpdate($request)
 }
 
 /**
- * @param $receptionUpdateData
+ * @param array $receptionUpdateData
  * @return mixed
  */
 function processReceptionSamplesUpdate($receptionUpdateData)
@@ -1198,7 +1199,7 @@ function processReceptionSamplesUpdate($receptionUpdateData)
 }
 
 /**
- * @param $receptionUpdateData
+ * @param array $receptionUpdateData
  * @return mixed
  */
 function processReceptionPreservationsUpdate($receptionUpdateData)
@@ -1233,7 +1234,7 @@ function processReceptionPreservationsUpdate($receptionUpdateData)
 }
 
 /**
- * @param $receptionUpdateData
+ * @param array $receptionUpdateData
  * @return mixed
  */
 function processReceptionAreasUpdate($receptionUpdateData)
@@ -1272,7 +1273,7 @@ function processReceptionAreasUpdate($receptionUpdateData)
 }
 
 /**
- * @param $receptionUpdateData
+ * @param array $receptionUpdateData
  * @return mixed
  */
 function processReceptionJobsInsert($receptionUpdateData)
@@ -1304,8 +1305,8 @@ function processReceptionJobsInsert($receptionUpdateData)
 }
 
 /**
- * @param $receptionUpdateData
- * @param $areaId
+ * @param array $receptionUpdateData
+ * @param mixed $areaId
  */
 function processReceptionJobInsert($receptionUpdateData, $areaId)
 {
@@ -1333,7 +1334,7 @@ function processReceptionJobInsert($receptionUpdateData, $areaId)
 }
 
 /**
- * @param $receptionUpdateData
+ * @param array $receptionUpdateData
  * @return mixed
  */
 function processReceptionJobsUpdate($receptionUpdateData)

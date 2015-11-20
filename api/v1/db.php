@@ -52,7 +52,7 @@ function getUsers()
 
 /**
  * Obtiene un Usuario
- * @param  integer $userId Id del Usuario
+ * @param  int $userId Id del Usuario
  * @return stdClass $user
  */
 function getUser($userId)
@@ -101,7 +101,7 @@ function getUserByCredentials($userName, $userPassword)
 /**
  * Inserta un nuevo Usuario
  * @param  array $userData Datos del Usuario
- * @return integer $userId Id del Usuario insertado
+ * @return int $userId Id del Usuario insertado
  */
 function insertUser($userData)
 {
@@ -124,7 +124,7 @@ function insertUser($userData)
 /**
  * Actualiza un Usuario
  * @param  array $updateData Array con los datos del Usuario a actualizar
- * @return integer $userId Id del Usuario actualizado
+ * @return int $userId Id del Usuario actualizado
  */
 function updateUser($updateData)
 {
@@ -150,7 +150,7 @@ function updateUser($updateData)
 
 /**
  * Obtiene los elementos del Menu/Submenu asignados al usuario $userId
- * @param  integer $userId Id del Usuario
+ * @param  int $userId Id del Usuario
  * @return array $result Elementos del menu de $userId
  */
 function getMenu($userId)

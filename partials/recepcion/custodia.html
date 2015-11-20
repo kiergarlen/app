@@ -79,6 +79,7 @@
       <br>
     </div>
   </div>
+  <!--
   <div class="row">
     <div class="col-xs-12">
       <div class="panel">
@@ -151,14 +152,14 @@
                     >
                     <i class="glyphicon glyphicon-eye-open" aria-hidden="true"></i>
                   </button>
-                  <!--
+                  !--
                   <button class="btn btn-success"
                     value="Agregar" title="Agregar"
                     data-ng-click="custody.addLog(container.id_recipiente)"
                     >
                     <i class="glyphicon glyphicon-plus" aria-hidden="true"></i>
                   </button>
-                  -->
+                  --
                 </td>
               </tr>
             </tbody>
@@ -167,6 +168,7 @@
       </div>
     </div>
   </div>
+  -->
   <div>
   <!--
   <div data-ng-show="custody.isLogVisible">
@@ -225,15 +227,39 @@
         data-ng-click="custody.openAddLog()"
         >
         <i class="glyphicon glyphicon-plus" aria-hidden="true"></i>
-        Agregar entrada a bitácora
+        Agregar entrada
       </a>
       <br><br>
     </div>
   </div>
   <div class="row">
     <div class="col-xs-12">
-      <h4>Nueva entrada a bitácora</h3>
+      <div class="panel">
+        <div class="panel-heading">
+          <h3 class="panel-title">Nueva entrada a bitácora</h3>
+        </div>
+        <div class="row">
+          <div class="col-xs-12 col-sm-7">
+            <label for="sampleSelect">
+              Recipiente
+            </label>
+            <select class="form-control"
+              id="sampleSelect"
+              name="sampleSelect"
+              data-ng-model="custody.blankLog.id_recipiente"
+              >
+              <option
+                data-ng-repeat="containerData in custody.custody.containers"
+                >
+                {{::containerData.id_muestra}} -
+                {{::containerData.id_recipiente}}
+              </option>
+            </select>
+          </div>
     </div>
+
+
+
 
     <div class="col-xs-12 col-sm-6">
       <label for="parameterSelect">
@@ -246,34 +272,13 @@
         >
         <option
           data-ng-repeat="parameter in custody.parameters"
+          value=" {{::parameter.id_parametro}}"
           >
-          Id:
-          {{::parameter.id_parametro}}
-          Parametro:
-          ({{::parameter.parametro}})
+          {{::parameter.param}}
         </option>
       </select>
     </div>
 
-    <div class="col-xs-12 col-sm-6">
-      <label for="sampleSelect">
-        Recipiente
-      </label>
-      <select class="form-control"
-        id="sampleSelect"
-        name="sampleSelect"
-        data-ng-model="custody.blankLog.id_recipiente"
-        >
-        <option
-          data-ng-repeat="containerData in custody.custody.containers"
-          >
-          Muestra:
-          {{::containerData.id_muestra}}
-          Recipiente:
-          ({{::containerData.id_recipiente}})
-        </option>
-      </select>
-    </div>
   </div>
 
   <!--

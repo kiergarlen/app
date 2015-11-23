@@ -2318,6 +2318,7 @@
     vm.isDataSubmitted = false;
     vm.approveItem = approveItem;
     vm.rejectItem = rejectItem;
+    vm.isLogValid = isLogValid;
     vm.submitForm = submitForm;
 
     CustodyParameterService
@@ -2374,7 +2375,7 @@
     }
 
     function submitLog() {
-      if (vm.validateLog() && vm.isLogSubmitted) {
+      if (isLogValid() && vm.isLogSubmitted) {
         console.log(vm.blankLog);
         // vm.isLogSubmitted = true;
         // RestUtilsService
@@ -3169,8 +3170,8 @@
      * @function extractItemFromCollection
      * @desc Extrae un ítem de un Array, coincidiendo el valor de una propiedad
      * @param {Array} collection - Array de origen
-     * @param {String} field - Nombre de la propiedad a coincidir
-     * @param {Object} value - Valor de la propiedad a coincidir
+     * @param {String} field - Propiedad a coincidir
+     * @param {Object} value - Valor de la propiedad
      * @return {Object} item - Ítem extraído
      */
     function extractItemFromCollection(collection, field, value) {

@@ -2309,26 +2309,12 @@
     vm.containerId = 0;
     vm.logEntry = {};
     vm.logEntries = [];
-    vm.blankLog = {
-      id_historial_recipiente: 0,
-      id_custodia: 0,
-      id_muestra: 0,
-      id_recipiente: 0,
-      id_parametro: 0,
-      id_usuario_captura: 0,
-      id_usuario_actualiza: 0,
-      volumen: 0,
-      fecha_captura: null,
-      fecha_actualiza: null,
-      ip_captura: '',
-      ip_actualiza: '',
-      host_captura: '',
-      host_actualiza: '',
-      activo: 1
-    };
+    vm.getBlankLog = getBlankLog;
+    vm.blankLog = getBlankLog();
     vm.viewLog = viewLog;
     vm.openAddLog = openAddLog;
-    vm.isLogVisible = true;
+    vm.submitLog = submitLog;
+    vm.isLogVisible = false;
     vm.isDataSubmitted = false;
     vm.approveItem = approveItem;
     vm.rejectItem = rejectItem;
@@ -2358,10 +2344,47 @@
       });
     }
 
-    function openAddLog() {
-      vm.blankLog.id_custodia = vm.custody.id_custodia;
+    function getBlankLog() {
+      return {
+        id_historial_recipiente: 0,
+        id_custodia: 0,
+        id_muestra: 0,
+        id_recipiente: 0,
+        id_parametro: 0,
+        id_usuario_captura: 0,
+        id_usuario_actualiza: 0,
+        volumen: 0,
+        fecha_captura: null,
+        fecha_actualiza: null,
+        ip_captura: '',
+        ip_actualiza: '',
+        host_captura: '',
+        host_actualiza: '',
+        activo: 1
+      };
     }
 
+    function openAddLog(container) {
+      resetBlankLog();
+      vm.blankLog.id_custodia = vm.custody.id_custodia;
+      vm.blankLog.id_muestra = container.id_muestra;
+      vm.blankLog.id_recipiente = container.id_recipiente;
+      vm.blankLog.id_usuario_captura = vm.user.id;
+      vm.isLogVisible = true;
+    }
+
+    function saveLog() {
+      if (vm.validateLog() && vm.isLogSubmitted) {
+        console.log(vm.blankLog);
+        // vm.isLogSubmitted = true;
+        // RestUtilsService
+        //   .saveData(
+        //     ContainerLogService,
+        //     vm.blankLog,
+        //     'recepcion/custodia'
+        //   );
+      }
+    }
 
     function approveItem() {
       ValidationService.approveItem(vm.custody, vm.user);

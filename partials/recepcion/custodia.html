@@ -79,7 +79,7 @@
       <br>
     </div>
   </div>
-  <!--
+  <!-- -->
   <div class="row">
     <div class="col-xs-12">
       <div class="panel">
@@ -91,24 +91,12 @@
             id="containerStorageList">
             <thead>
               <tr>
-                <th>
-                  Id Muestra
-                </th>
-                <th>
-                  Id Recipiente
-                </th>
-                <th>
-                  Preservación
-                </th>
-                <th>
-                  Ubicación
-                </th>
-                <th>
-                  Fecha
-                </th>
-                <th>
-                  Acciones
-                </th>
+                <th>Id Muestra</th>
+                <th>Id Recipiente</th>
+                <th>Preservación</th>
+                <th>Ubicación</th>
+                <th>Fecha</th>
+                <th>Acciones</th>
               </tr>
             </thead>
             <tbody>
@@ -152,14 +140,12 @@
                     >
                     <i class="glyphicon glyphicon-eye-open" aria-hidden="true"></i>
                   </button>
-                  !--
                   <button class="btn btn-success"
                     value="Agregar" title="Agregar"
-                    data-ng-click="custody.addLog(container.id_recipiente)"
+                    data-ng-click="custody.openAddLog(container)"
                     >
                     <i class="glyphicon glyphicon-plus" aria-hidden="true"></i>
                   </button>
-                  --
                 </td>
               </tr>
             </tbody>
@@ -168,8 +154,7 @@
       </div>
     </div>
   </div>
-  -->
-  <div>
+
   <!--
   <div data-ng-show="custody.isLogVisible">
     <div class="panel">
@@ -233,35 +218,17 @@
     </div>
   </div>
 
-  <div class="row">
+  <div class="row"
+    data-ng-show="custody.isLogVisible">
     <div class="col-xs-12">
       <div class="panel">
         <div class="panel-heading">
-          <h3 class="panel-title">Nueva entrada a bitácora</h3>
-        </div>
-        <div class="row">
-          <div class="col-xs-12 col-sm-7">
-            <label for="sampleSelect">
-              Recipiente
-            </label>
-            <select class="form-control"
-              id="sampleSelect"
-              name="sampleSelect"
-              data-ng-model="custody.blankLog.id_recipiente"
-              >
-              <option
-                data-ng-repeat="containerData in custody.custody.containers"
-                >
-                {{::containerData.id_muestra}} -
-                {{::containerData.id_recipiente}}
-              </option>
-            </select>
-          </div>
+          <h3 class="panel-title">Nueva entrada a bitácora Muestra {{custody.blankLog.id_muestra}}, Recipiente {{custody.blankLog.id_recipiente}}</h3>
         </div>
         <div class="row">
           <div class="col-xs-12 col-sm-6">
             <label for="parameterSelect">
-              Parametro
+              Parámetro
             </label>
             <select class="form-control"
               id="parameterSelect"
@@ -280,7 +247,7 @@
         <div class="row">
           <div class="col-xs-12">
             <label for="volumeNumber">
-              Volumen extraído
+              Volumen extraido
             </label>
             <input type="text" class="form-control"
               id="volumeNumber"
@@ -310,6 +277,15 @@
           </div>
         </div>
       </div>
+    </div>
+    <div class="col-xs-12">
+        <button type="button" class="btn btn-primary"
+          value="Guardar entrada" title="Guardar entrada"
+          data-ng-click="custody.submitLog()"
+          >
+          <i class="glyphicon glyphicon-cloud-upload" aria-hidden="true"></i>
+          Guardar entrada
+        </button>
     </div>
   </div>
   <!--

@@ -2365,7 +2365,7 @@
     }
 
     function openAddLog(container) {
-      resetBlankLog();
+      vm.getBlankLog();
       vm.blankLog.id_custodia = vm.custody.id_custodia;
       vm.blankLog.id_muestra = container.id_muestra;
       vm.blankLog.id_recipiente = container.id_recipiente;
@@ -2373,7 +2373,7 @@
       vm.isLogVisible = true;
     }
 
-    function saveLog() {
+    function submitLog() {
       if (vm.validateLog() && vm.isLogSubmitted) {
         console.log(vm.blankLog);
         // vm.isLogSubmitted = true;

@@ -232,6 +232,7 @@
       <br><br>
     </div>
   </div>
+
   <div class="row">
     <div class="col-xs-12">
       <div class="panel">
@@ -256,31 +257,61 @@
               </option>
             </select>
           </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12 col-sm-6">
+            <label for="parameterSelect">
+              Parametro
+            </label>
+            <select class="form-control"
+              id="parameterSelect"
+              name="parameterSelect"
+              data-ng-model="custody.blankLog.id_parametro"
+              >
+              <option
+                data-ng-repeat="parameter in custody.parameters"
+                value=" {{::parameter.id_parametro}}"
+                >
+                {{::parameter.param}}
+              </option>
+            </select>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12">
+            <label for="volumeNumber">
+              Volumen extraído
+            </label>
+            <input type="text" class="form-control"
+              id="volumeNumber"
+              name="volumeNumber"
+              placeholder="0"
+              data-ng-model="custody.blankLog.volumen"
+              >
+          </div>
+          <div class="col-xs-7 col-sm-7">
+            <label for="useDate">
+              <i class="glyphicon glyphicon-calendar"></i>
+              Fecha
+            </label>
+            <input type="text"
+              class="form-control"
+              id="useDate"
+              name="useDate"
+              placeholder="aaaa-MM-dd"
+              required
+              data-ng-model="custody.blankLog.fecha"
+              data-date-format="yyyy-MM-dd"
+              data-date-type="date"
+              data-autoclose="1"
+              date-use-native="true"
+              data-bs-datepicker
+              >
+          </div>
+        </div>
+      </div>
     </div>
-
-
-
-
-    <div class="col-xs-12 col-sm-6">
-      <label for="parameterSelect">
-        Parametro
-      </label>
-      <select class="form-control"
-        id="parameterSelect"
-        name="parameterSelect"
-        data-ng-model="custody.blankLog.id_parametro"
-        >
-        <option
-          data-ng-repeat="parameter in custody.parameters"
-          value=" {{::parameter.id_parametro}}"
-          >
-          {{::parameter.param}}
-        </option>
-      </select>
-    </div>
-
   </div>
-
   <!--
   <div class="row">
     <div class="col-xs-12">

@@ -3256,6 +3256,51 @@ function getContainerLogs($containerId)
 }
 
 /**
+ * @param $planData
+ * @return mixed
+ */
+function insertContainerLog($insertData)
+{
+  $sql = "INSERT INTO HistorialRecipiente (id_custodia, id_muestra,
+    id_recipiente, id_parametro, id_usuario_captura,
+    volumen, ip_captura, host_captura)
+    VALUES (:id_custodia, :id_muestra,
+    :id_recipiente, :id_parametro, :id_usuario_captura,
+    :volumen, :ip_captura, :host_captura)";
+  $db = getConnection();
+  $stmt = $db->prepare($sql);
+  $stmt->execute($insertData);
+  $containerLogId = $db->lastInsertId();
+  $db = null;
+  return $containerLogId;
+}
+
+/**
+ * @param $updateData
+ * @return mixed
+ */
+function updateContainerLog($updateData)
+{
+  $sql = "UPDATE HistorialRecipiente SET
+    id_custodia = :id_custodia,
+    id_muestra = :id_muestra,
+    id_recipiente = :id_recipiente,
+    id_parametro = :id_parametro,
+    id_usuario_actualiza = :id_usuario_actualiza,
+    volumen = :volumen,
+    fecha_actualiza = SYSDATETIMEOFFSET(),
+    ip_actualiza = :ip_actualiza,
+    host_actualiza = :host_actualiza,
+    activo = :activo
+    WHERE id_historial_recipiente = :id_historial_recipiente";
+  $db = getConnection();
+  $stmt = $db->prepare($sql);
+  $stmt->execute($updateData);
+  $db = null;
+  return $updateData["id_historial_recipiente"];
+}
+
+/**
  * @return mixed
  */
 function getAnalysis()

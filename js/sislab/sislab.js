@@ -2384,6 +2384,39 @@
         //     vm.blankLog,
         //     'recepcion/custodia'
         //   );
+        if (vm.blankLog.id_historial_recipiente < 1) {
+          ContainerLogService
+            .save(JSON.stringify(vm.blankLog))
+            .$promise
+            .then(function success(response) {
+              console.log("Success");
+              vm.blankLog = getBlankLog();
+              return response;
+            }, function error(response) {
+              console.log("Error");
+              if (response.status === 404) {
+                return 'Recurso no encontrado';
+              } else {
+                return 'Error no especificado';
+              }
+            });
+        } else {
+          ContainerLogService
+            .update(JSON.stringify(vm.blankLog))
+            .$promise
+            .then(function success(response) {
+              console.log("Success");
+              vm.blankLog = getBlankLog();
+              return response;
+            }, function error(response) {
+              console.log("Error");
+              if (response.status === 404) {
+                return 'Recurso no encontrado';
+              } else {
+                return 'Error no especificado';
+              }
+            });
+        }
       }
     }
 
@@ -4914,11 +4947,27 @@
    * @return {Object} $resource - Acceso a recursos HTTP
    */
   function ContainerLogService($resource, TokenService) {
-    return $resource(API_BASE_URL + 'containers/:containerId/logs', {}, {
+    return $resource(API_BASE_URL + 'containers/logs/:containerId', {}, {
       query: {
         method: 'GET',
         params: {containerId: 'id_recipiente'},
         isArray: true,
+        headers: {
+          'Auth-Token': TokenService.getToken()
+        }
+      },
+      update: {
+        method: 'POST',
+        params: {},
+        isArray: false,
+        headers: {
+          'Auth-Token': TokenService.getToken()
+        }
+      },
+      save: {
+        method: 'POST',
+        params: {},
+        isArray: false,
         headers: {
           'Auth-Token': TokenService.getToken()
         }

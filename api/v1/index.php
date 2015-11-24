@@ -711,10 +711,31 @@ $app->get("/containers(/)(:containerId)", function ($containerId = -1) use ($app
   }
 });
 
-$app->get("/containers/:containerId/logs", function ($containerId) use ($app) {
+$app->get("/containers/logs/:containerId", function ($containerId) use ($app) {
   try {
     //$userId = decodeUserToken($app->request())->uid;
     $result = json_encode(getContainerLogs($containerId));
+    $app->response()->status(200);
+    $app->response()->header("Content-Type", "application/json");
+    //$result = ")]}',\n" . $result;
+    print_r($result);
+  } catch (Exception $e) {
+    $app->response()->status(400);
+    $app->response()->header("X-Status-Reason", $e->getMessage());
+  }
+});
+
+$app->post("/containers/logs", function () use ($app) {
+  try {
+    $userId = decodeUserToken($app->request())->uid;
+    $request = $app->request();
+    $containerLogId = extractDataFromRequest($request)->id_historial_recipiente;
+    if ($containerLogId < 1) {
+      $containerLogId = processContainerLogInsert($request);
+    } else {
+      $containerLogId = processContainerLogUpdate($request);
+    }
+    $result = "{\"id_historial_recipiente\":" . $containerLogId . "}";
     $app->response()->status(200);
     $app->response()->header("Content-Type", "application/json");
     //$result = ")]}',\n" . $result;

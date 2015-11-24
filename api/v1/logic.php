@@ -1383,3 +1383,56 @@ function processReceptionJobsUpdate($receptionUpdateData)
   }
   return $receptionId;
 }
+
+/**
+ * @param mixed $request
+ * @return mixed
+ */
+function processContainerLogInsert($request)
+{
+  $token = decodeUserToken($request);
+  $insertData = (array) json_decode($request->getBody());
+
+  $log = array(
+    "id_custodia" => $insertData["id_custodia"],
+    "id_muestra" => $insertData["id_muestra"],
+    "id_recipiente" => $insertData["id_recipiente"],
+    "id_parametro" => $insertData["id_parametro"],
+    "id_usuario_captura" => $token->uid,
+    "volumen" => $insertData["volumen"],
+    "ip_captura" => $request->getIp(),
+    "host_captura" => $request->getUrl()
+  );
+
+  //return json_encode($log);
+  $newLogId = insertContainerLog($log);
+  return $newLogId;
+}
+
+/**
+ * @param mixed $request
+ * @return mixed
+ */
+function processContainerLogUpdate($request)
+{
+  $token = decodeUserToken($request);
+  $updateData = (array) json_decode($request->getBody());
+
+  $log = array(
+    "id_historial_recipiente" => $updateData["id_historial_recipiente"],
+    "id_custodia" => $updateData["id_custodia"],
+    "id_muestra" => $updateData["id_muestra"],
+    "id_recipiente" => $updateData["id_recipiente"],
+    "id_parametro" => $updateData["id_parametro"],
+    "id_usuario_actualiza" => $token->uid,
+    "volumen" => $updateData["volumen"],
+    "ip_actualiza" => $request->getIp(),
+    "host_actualiza" => $request->getUrl(),
+    "activo" => $updateData["activo"]
+  );
+
+  //return json_encode($log);
+  $logId = updateContainerLog($log);
+  return $logId;
+}
+

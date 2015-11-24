@@ -2374,6 +2374,16 @@
       vm.isLogVisible = true;
     }
 
+    function isLogValid() {
+      if (vm.blankLog.id_parametro < 1) {
+        return false;
+      }
+      if (isNaN(vm.blankLog.volumen) || vm.blankLog.volumen === 0) {
+        return false;
+      }
+      return true;
+    }
+
     function submitLog() {
       if (isLogValid() && vm.isLogSubmitted) {
         console.log(vm.blankLog);

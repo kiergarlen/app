@@ -3239,8 +3239,9 @@ function updatePlanContainer($updateData)
 function getContainerLogs($containerId)
 {
   $sql = "SELECT id_historial_recipiente, id_custodia, id_muestra,
-    id_recipiente, id_parametro, id_usuario_captura,
+    id_recipiente, id_parametro, id_analista, id_usuario_captura,
     id_usuario_actualiza, volumen,
+    CONVERT(NVARCHAR, fecha, 126) AS fecha,
     CONVERT(NVARCHAR, fecha_captura, 126) AS fecha_captura,
     CONVERT(NVARCHAR, fecha_actualiza,126) AS fecha_actualiza,
     ip_captura, ip_actualiza, host_captura, host_actualiza, activo
@@ -3262,10 +3263,10 @@ function getContainerLogs($containerId)
 function insertContainerLog($insertData)
 {
   $sql = "INSERT INTO HistorialRecipiente (id_custodia, id_muestra,
-    id_recipiente, id_parametro, id_usuario_captura,
-    volumen, ip_captura, host_captura)
+    id_recipiente, id_parametro, id_analista, id_usuario_captura,
+    volumen, fecha, ip_captura, host_captura)
     VALUES (:id_custodia, :id_muestra,
-    :id_recipiente, :id_parametro, :id_usuario_captura,
+    :id_recipiente, :id_parametro, :id_analista, :id_usuario_captura,
     :volumen, :ip_captura, :host_captura)";
   $db = getConnection();
   $stmt = $db->prepare($sql);
@@ -3281,16 +3282,13 @@ function insertContainerLog($insertData)
  */
 function updateContainerLog($updateData)
 {
-  $sql = "UPDATE HistorialRecipiente SET
-    id_custodia = :id_custodia,
-    id_muestra = :id_muestra,
-    id_recipiente = :id_recipiente,
-    id_parametro = :id_parametro,
+  $sql = "UPDATE HistorialRecipiente SET id_custodia = :id_custodia,
+    id_muestra = :id_muestra, id_recipiente = :id_recipiente,
+    id_parametro = :id_parametro, id_analista = :id_analista,
     id_usuario_actualiza = :id_usuario_actualiza,
-    volumen = :volumen,
+    volumen = :volumen, fecha = :fecha,
     fecha_actualiza = SYSDATETIMEOFFSET(),
-    ip_actualiza = :ip_actualiza,
-    host_actualiza = :host_actualiza,
+    ip_actualiza = :ip_actualiza, host_actualiza = :host_actualiza,
     activo = :activo
     WHERE id_historial_recipiente = :id_historial_recipiente";
   $db = getConnection();
@@ -3451,10 +3449,9 @@ function getReactivesByPlan($planId)
  */
 function insertPlanReactive($reactiveData)
 {
-  $sql = "INSERT INTO PlanReactivo (id_plan, id_reactivo,
-    valor, lote, folio)
-    VALUES (:id_plan, :id_reactivo,
-    :valor, :lote, :folio)";
+  $sql = "INSERT INTO PlanReactivo (id_plan, id_reactivo, valor, lote,
+    folio)
+    VALUES (:id_plan, :id_reactivo, :valor, :lote, :folio)";
   $db = getConnection();
   $stmt = $db->prepare($sql);
   $stmt->execute($reactiveData);
@@ -3789,8 +3786,8 @@ function getReceptionPreservations($receptionId)
  */
 function insertReceptionPreservation($preservationData)
 {
-  $sql = "INSERT INTO RecepcionPreservacion (
-    id_recepcion, id_preservacion, cantidad)
+  $sql = "INSERT INTO RecepcionPreservacion (id_recepcion,
+    id_preservacion, cantidad)
     VALUES (:id_recepcion, :id_preservacion, :cantidad)";
   $db = getConnection();
   $stmt = $db->prepare($sql);
@@ -3949,13 +3946,8 @@ function updateResult($updateData)
  */
 function getResultsForUpdate($resultId)
 {
-  $sql = "SELECT
-    id_muestra,
-    id_parametro,
-    id_tipo_resultado,
-    id_tipo_valor,
-    id_usuario_actualiza,
-    valor, fecha_actualiza,
+  $sql = "SELECT id_muestra, id_parametro, id_tipo_resultado,
+    id_tipo_valor, id_usuario_actualiza, valor, fecha_actualiza,
     activo
     FROM Resultado
     WHERE id_resultado = :resultId";
@@ -3991,8 +3983,7 @@ function getSamplingInstruments()
 function getReactives()
 {
   $sql = "SELECT id_reactivo, id_tipo_reactivo, reactivo,
-    registra_valor, lote, folio, activo,
-    '0' AS valor
+    registra_valor, lote, folio, activo, '0' AS valor
     FROM Reactivo
     WHERE activo = 1";
   $db = getConnection();

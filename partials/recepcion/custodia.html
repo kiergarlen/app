@@ -79,7 +79,6 @@
       <br>
     </div>
   </div>
-  <!-- -->
   <div class="row">
     <div class="col-xs-12">
       <div class="panel">
@@ -136,15 +135,9 @@
                 <td>
                   <button class="btn btn-default"
                     value="Consultar" title="Consultar"
-                    data-ng-click="custody.viewLog(container.id_recipiente)"
+                    data-ng-click="custody.viewLog(container)"
                     >
                     <i class="glyphicon glyphicon-eye-open" aria-hidden="true"></i>
-                  </button>
-                  <button class="btn btn-success"
-                    value="Agregar" title="Agregar"
-                    data-ng-click="custody.openAddLog(container)"
-                    >
-                    <i class="glyphicon glyphicon-plus" aria-hidden="true"></i>
                   </button>
                 </td>
               </tr>
@@ -155,11 +148,11 @@
     </div>
   </div>
 
-  <!--
-  <div data-ng-show="custody.isLogVisible">
+  <div
+    data-ng-show="custody.isLogVisible">
     <div class="panel">
       <div class="panel-heading">
-        <h3 class="panel-title">Recipiente</h3>
+        <h3 class="panel-title">Historial de Recipiente</h3>
       </div>
       <div class="table-responsive">
         <table class="table table-condensed">
@@ -189,6 +182,8 @@
               {{logEntry.parametro.parametro}}
             </td>
             <td>
+              {{logEntry.id_analista.}}
+              -
               {{logEntry.analista.nombres}}
               {{logEntry.analista.apellido_paterno}}
               {{logEntry.analista.apellido_materno}}
@@ -197,14 +192,15 @@
               {{logEntry.volumen}}
             </td>
             <td>
-              {{logEntry.fecha_actualizacion | date: 'yyyy-MM-dd'}}
+              {{logEntry.fecha | date: 'yyyy-MM-dd'}}
             </td>
           </tr>
         </table>
     </div>
   </div>
-  -->
-  <div class="row">
+
+  <div class="row"
+    data-ng-show="custody.isLogVisible">
     <div class="col-xs-12">
       <br>
       <a class="btn btn-success"
@@ -219,7 +215,7 @@
   </div>
 
   <div class="row"
-    data-ng-show="custody.isLogVisible">
+    data-ng-show="custody.isAddLogVisible">
     <div class="col-xs-12">
       <!--
       <div class="panel">
@@ -227,9 +223,9 @@
           <h3 class="panel-title">Nueva entrada a bitácora Muestra {{custody.blankLog.id_muestra}}, Recipiente {{custody.blankLog.id_recipiente}}</h3>
         </div>
       -->
-        <h3 class="panel-title">Nueva entrada a bitácora Muestra {{custody.blankLog.id_muestra}}, Recipiente {{custody.blankLog.id_recipiente}}</h3>
+        <h3>Nueva entrada a bitácora Muestra {{custody.blankLog.id_muestra}}, Recipiente {{custody.blankLog.id_recipiente}}</h3>
         <div class="row">
-          <div class="col-xs-12 col-sm-6">
+          <div class="col-xs-7">
             <label for="parameterSelect">
               Parámetro
             </label>
@@ -246,9 +242,7 @@
               </option>
             </select>
           </div>
-        </div>
-        <div class="row">
-          <div class="col-xs-12">
+          <div class="col-xs-7">
             <label for="volumeNumber">
               Volumen extraido
             </label>
@@ -259,8 +253,7 @@
               data-ng-model="custody.blankLog.volumen"
               >
           </div>
-          <!--
-          <div class="col-xs-7 col-sm-7">
+          <div class="col-xs-7">
             <label for="useDate">
               <i class="glyphicon glyphicon-calendar"></i>
               Fecha
@@ -271,7 +264,7 @@
               name="useDate"
               placeholder="aaaa-MM-dd"
               required
-              data-ng-model="custody.blankLog.fecha_actualiza"
+              data-ng-model="custody.blankLog.fecha"
               data-date-format="yyyy-MM-dd"
               data-date-type="date"
               data-autoclose="1"
@@ -279,16 +272,32 @@
               data-bs-datepicker
               >
           </div>
-          -->
+          <div class="col-xs-7">
+            <label for="parameterSelect">
+              Analista
+            </label>
+            <select class="form-control"
+              id="analistSelect"
+              name="analistSelect"
+              data-ng-model="custody.blankLog.id_analista"
+              >
+              <option
+                data-ng-repeat="analist in custody.analists"
+                value=" {{::analist.id_usuario}}"
+                >
+                {{::analist.nombres}} {{::analist.apellido_paterno}}
+              </option>
+            </select>
+          </div>
         </div>
         <div class="row">
           <div class="col-xs-12">
             <button type="button" class="btn btn-primary"
-              value="Guardar entrada" title="Guardar entrada"
-              data-ng-click="custody.submitLog()"
+              value="Agregar entrada" title="Agregar entrada"
+              data-ng-click="custody.addLog()"
               >
-              <i class="glyphicon glyphicon-cloud-upload" aria-hidden="true"></i>
-              Guardar entrada
+              <i class="glyphicon glyphicon-plus" aria-hidden="true"></i>
+              Agregar entrada
             </button>
           </div>
         </div>

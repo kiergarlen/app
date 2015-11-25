@@ -2307,6 +2307,7 @@
     vm.storages = StorageService.get();
     vm.parameters = [];
     vm.containerId = 0;
+    vm.currentContainer = {};
     vm.logEntry = {};
     vm.logEntries = [];
     vm.getBlankLog = getBlankLog;
@@ -2315,6 +2316,7 @@
     vm.openAddLog = openAddLog;
     vm.submitLog = submitLog;
     vm.isLogVisible = false;
+    vm.isAddLogVisible = false;
     vm.isDataSubmitted = false;
     vm.approveItem = approveItem;
     vm.rejectItem = rejectItem;
@@ -2326,23 +2328,29 @@
       .$promise
       .then(function success(response) {
         vm.parameters = response;
-    });
+      });
 
-    function viewLog(containerId) {
+    function viewLog(container) {
+      var containerId = container.id_recipiente;
       vm.isLogVisible = false;
       vm.message = "";
-      vm.logEntries = [];
-      ContainerLogService
-        .query({containerId: containerId})
-        .$promise
-        .then(function success(response) {
-          if (response.length > 0) {
-            vm.logEntries = response;
-            vm.isLogVisible = true;
-          } else {
-            vm.message = " No hay entradas en la bitácora de este recipiente";
-          }
-      });
+      container.historial = [];
+      if (!container.historial || container.historial.length < 1) {
+        //load logs from database, add to store
+        ContainerLogService
+          .query({containerId: containerId})
+          .$promise
+          .then(function success(response) {
+            if (response.length > 0) {
+              container.historial = response;
+            } else {
+              vm.message = " No hay entradas en el historial para este recipiente";
+            }
+        });
+      }
+      vm.currentContainer = container;
+      vm.logentries = container.historial;
+      vm.isLogVisible = true;
     }
 
     function getBlankLog() {
@@ -2371,7 +2379,7 @@
       vm.blankLog.id_muestra = container.id_muestra;
       vm.blankLog.id_recipiente = container.id_recipiente;
       vm.blankLog.id_usuario_captura = vm.user.id;
-      vm.isLogVisible = true;
+      vm.isAddLogVisible = true;
     }
 
     function isLogValid() {
@@ -2381,12 +2389,20 @@
       if (isNaN(vm.blankLog.volumen) || vm.blankLog.volumen === 0) {
         return false;
       }
+      if (vm.blankLog.id_analista < 1) {
+        return false;
+      }
       return true;
     }
 
-    function submitLog() {
-      if (isLogValid() && vm.isLogSubmitted) {
+    function addLog() {
+      if (isLogValid()) {
+        console.log("VALID entry");
         console.log(vm.blankLog);
+        //find Container in Custody and push to its Containers array
+        //vm.logentries
+        //vm.currentContainer = container;
+
         // vm.isLogSubmitted = true;
         // RestUtilsService
         //   .saveData(
@@ -2394,39 +2410,43 @@
         //     vm.blankLog,
         //     'recepcion/custodia'
         //   );
-        if (vm.blankLog.id_historial_recipiente < 1) {
-          ContainerLogService
-            .save(JSON.stringify(vm.blankLog))
-            .$promise
-            .then(function success(response) {
-              console.log("Success");
-              vm.blankLog = getBlankLog();
-              return response;
-            }, function error(response) {
-              console.log("Error");
-              if (response.status === 404) {
-                return 'Recurso no encontrado';
-              } else {
-                return 'Error no especificado';
-              }
-            });
-        } else {
-          ContainerLogService
-            .update(JSON.stringify(vm.blankLog))
-            .$promise
-            .then(function success(response) {
-              console.log("Success");
-              vm.blankLog = getBlankLog();
-              return response;
-            }, function error(response) {
-              console.log("Error");
-              if (response.status === 404) {
-                return 'Recurso no encontrado';
-              } else {
-                return 'Error no especificado';
-              }
-            });
-        }
+
+        // if (vm.blankLog.id_historial_recipiente < 1) {
+        //   ContainerLogService
+        //     .save(JSON.stringify(vm.blankLog))
+        //     .$promise
+        //     .then(function success(response) {
+        //       console.log("Success");
+        //       vm.blankLog = getBlankLog();
+        //       return response;
+        //     }, function error(response) {
+        //       console.log("Error");
+        //       if (response.status === 404) {
+        //         return 'Recurso no encontrado';
+        //       } else {
+        //         return 'Error no especificado';
+        //       }
+        //     });
+        // } else {
+        //   ContainerLogService
+        //     .update(JSON.stringify(vm.blankLog))
+        //     .$promise
+        //     .then(function success(response) {
+        //       console.log("Success");
+        //       vm.blankLog = getBlankLog();
+        //       return response;
+        //     }, function error(response) {
+        //       console.log("Error");
+        //       if (response.status === 404) {
+        //         return 'Recurso no encontrado';
+        //       } else {
+        //         return 'Error no especificado';
+        //       }
+        //     });
+        // }
+      } else {
+        console.log("INVALID entry");
+        console.log(vm.blankLog);
       }
     }
 

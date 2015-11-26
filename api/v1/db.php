@@ -3661,7 +3661,8 @@ function getAnalysts()
     CONVERT(NVARCHAR, fecha_captura, 126) AS fecha_captura,
     CONVERT(NVARCHAR, fecha_actualiza, 126) AS fecha_actualiza,
     ip_captura, ip_actualiza,
-    host_captura, host_actualiza, activo
+    host_captura, host_actualiza, activo,
+    id_usuario AS id_analista
     FROM Usuario
     WHERE activo = 1 AND id_nivel > 1 AND analiza = 1";
   $db = getConnection();

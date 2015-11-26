@@ -2343,6 +2343,7 @@
       container.historial = [];
       if (!container.historial || container.historial.length < 1) {
         //load logs from database, add to logs array
+        console.log('parametros: ', vm.parametros);
         ContainerLogService
           .query({containerId: containerId})
           .$promise
@@ -2360,12 +2361,13 @@
                 ]);
               container.historial = ArrayUtilsService.setItemsFromReference(
                 container.historial,
-                vm,parameters,
+                vm.parameters,
                 'id_parametro',
                 [
                   'param',
                   'parametro'
                 ]);
+              vm.logEntries = container.historial;
             } else {
               vm.message = ' No hay entradas en el historial para este recipiente';
             }

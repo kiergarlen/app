@@ -1081,7 +1081,7 @@
               vm.instruments[i].folio = '';
               vm.instruments[i].selected = false;
             }
-            ArrayUtilsService.seItemsFromReference(
+            ArrayUtilsService.setItemsFromReference(
               vm.instruments,
               vm.plan.instrumentos,
               'id_instrumento',
@@ -1107,7 +1107,7 @@
               vm.preservations[i].id_plan = vm.plan.id_plan;
               vm.preservations[i].selected = false;
             }
-            ArrayUtilsService.seItemsFromReference(
+            ArrayUtilsService.setItemsFromReference(
               vm.preservations,
               vm.plan.preservaciones,
               'id_preservacion',
@@ -1131,7 +1131,7 @@
               vm.reactives[i].id_plan_reactivo = 0;
               vm.reactives[i].id_plan = vm.plan.id_plan;
             }
-            ArrayUtilsService.seItemsFromReference(
+            ArrayUtilsService.setItemsFromReference(
               vm.reactives,
               vm.plan.reactivos,
               'id_reactivo',
@@ -1157,7 +1157,7 @@
               vm.materials[i].id_plan_material = 0;
               vm.materials[i].id_plan = vm.plan.id_plan;
             }
-            ArrayUtilsService.seItemsFromReference(
+            ArrayUtilsService.setItemsFromReference(
               vm.materials,
               vm.plan.materiales,
               'id_material',
@@ -1180,7 +1180,7 @@
               vm.coolers[i].id_plan_hielera = 0;
               vm.coolers[i].id_plan = vm.plan.id_plan;
             }
-            ArrayUtilsService.seItemsFromReference(
+            ArrayUtilsService.setItemsFromReference(
               vm.coolers,
               vm.plan.hieleras,
               'id_hielera',
@@ -1224,7 +1224,7 @@
     function selectReactives() {
       if (vm.reactives.length > 0 && vm.plan.reactivos) {
         if (vm.plan.reactivos.length > 0 && !vm.isReactiveListLoaded) {
-          ArrayUtilsService.seItemsFromReference(
+          ArrayUtilsService.setItemsFromReference(
             vm.reactives,
             vm.plan.reactivos,
             'id_reactivo',
@@ -1252,7 +1252,7 @@
     function selectMaterials() {
       if (vm.materials.length > 0 && vm.plan.materiales) {
         if (vm.plan.materiales.length > 0 && !vm.isMaterialListLoaded) {
-          ArrayUtilsService.seItemsFromReference(
+          ArrayUtilsService.setItemsFromReference(
             vm.materials,
             vm.plan.materiales,
             'id_material',
@@ -1277,7 +1277,7 @@
     function selectCoolers() {
       if (vm.coolers.length > 0 && vm.plan.hieleras) {
         if (vm.plan.hieleras.length > 0 && !vm.isCoolerListLoaded) {
-          ArrayUtilsService.seItemsFromReference(
+          ArrayUtilsService.setItemsFromReference(
             vm.coolers,
             vm.plan.hieleras,
             'id_hielera',
@@ -1655,7 +1655,7 @@
     function selectPreservations() {
       if (vm.preservations.length > 0 && vm.sheet.preservaciones) {
         if (vm.sheet.preservaciones.length > 0 && !vm.isPreservationListLoaded) {
-          ArrayUtilsService.seItemsFromReference(
+          ArrayUtilsService.setItemsFromReference(
             vm.preservations,
             vm.sheet.preservaciones,
             'id_preservacion',
@@ -1904,7 +1904,7 @@
               vm.samples[i].selected = false;
               vm.samples[i].punto = {};
             }
-            ArrayUtilsService.seItemsFromReference(
+            ArrayUtilsService.setItemsFromReference(
               vm.samples,
               vm.reception.muestras,
               'id_muestra',
@@ -1931,7 +1931,7 @@
               vm.preservations[i].activo = 0;
               vm.preservations[i].selected = false;
             }
-            ArrayUtilsService.seItemsFromReference(
+            ArrayUtilsService.setItemsFromReference(
               vm.preservations,
               vm.reception.preservaciones,
               'id_preservacion',
@@ -1971,7 +1971,7 @@
                 selected: false
               };
             }
-            ArrayUtilsService.seItemsFromReference(
+            ArrayUtilsService.setItemsFromReference(
               vm.areas,
               vm.reception.areas,
               'id_area',
@@ -1984,7 +1984,7 @@
                 'activo'
               ]
             );
-            ArrayUtilsService.seItemsFromReference(
+            ArrayUtilsService.setItemsFromReference(
               vm.jobs,
               vm.reception.trabajos,
               'id_area',
@@ -2163,7 +2163,7 @@
             for (i = 0; i < l; i += 1) {
               vm.jobs[i].area = '';
             }
-            ArrayUtilsService.seItemsFromReference(
+            ArrayUtilsService.setItemsFromReference(
               vm.jobs,
               vm.areas,
               'id_area',
@@ -2291,6 +2291,9 @@
    * @this {Object} $scope - Contenedor para el modelo
    * @param {Object} $routeParams - Proveedor de parámetros de ruta
    * @param {Object} TokenService - Proveedor para manejo del token
+   * @param {Object} ValidationService - Proveedor para manejo de validación
+   * @param {Object} RestUtilsService - Proveedor para manejo de servicios REST
+   * @param {Object} ArrayUtilsService - Proveedor para manejo de arreglos
    * @param {Object} StorageService - Proveedor de datos, Almacenamientos
    * @param {Object} AnalystService - Proveedor de datos, Analistas
    * @param {Object} ContainerService - Proveedor de datos, Recipientes
@@ -2346,16 +2349,16 @@
           .then(function success(response) {
             if (response.length > 0) {
               container.historial = response;
-              container.historial = seItemsFromReference(
+              container.historial = ArrayUtilsService.setItemsFromReference(
                 container.historial,
-                vm,analysts,
+                vm.analysts,
                 'id_analista',
                 [
                   'nombres',
                   'apellido_paterno',
                   'apellido_materno'
                 ]);
-              container.historial = seItemsFromReference(
+              container.historial = ArrayUtilsService.setItemsFromReference(
                 container.historial,
                 vm,parameters,
                 'id_parametro',
@@ -3215,7 +3218,7 @@
     ArrayUtils.selectItemFromCollection = selectItemFromCollection;
     ArrayUtils.selectItemsFromCollection = selectItemsFromCollection;
     ArrayUtils.extractItemFromCollection = extractItemFromCollection;
-    ArrayUtils.seItemsFromReference = seItemsFromReference;
+    ArrayUtils.setItemsFromReference = setItemsFromReference;
     ArrayUtils.countSelectedItems = countSelectedItems;
     ArrayUtils.averageFromValues = averageFromValues;
 
@@ -3282,7 +3285,7 @@
     }
 
     /**
-     * @function seItemsFromReference
+     * @function ArrayUtilsService.setItemsFromReference
      * @desc Cambia las propiedades de ítem de un Array desde otro Array de referencia
      * @param {Array} collection - Array de ítems a modificar
      * @param {Array} reference - Array de referencia
@@ -3290,7 +3293,7 @@
      * @param {Array} fields - Nombres de las propiedades a cambiar
      * @return {Object} item - Ítem seleccionado
      */
-    function seItemsFromReference(collection, reference, matchField, fields) {
+    function setItemsFromReference(collection, reference, matchField, fields) {
       var i;
       var l;
       var j;

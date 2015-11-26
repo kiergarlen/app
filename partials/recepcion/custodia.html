@@ -223,7 +223,10 @@
           <h3 class="panel-title">Nueva entrada a bitácora Muestra {{custody.blankLog.id_muestra}}, Recipiente {{custody.blankLog.id_recipiente}}</h3>
         </div>
       -->
-        <h3>Nueva entrada a bitácora Muestra {{custody.blankLog.id_muestra}}, Recipiente {{custody.blankLog.id_recipiente}}</h3>
+        <h3>
+          Nueva entrada a historial de Recipiente
+          {{custody.blankLog.id_recipiente}}
+        </h3>
         <div class="row">
           <div class="col-xs-7">
             <label for="parameterSelect">
@@ -277,15 +280,17 @@
               Analista
             </label>
             <select class="form-control"
-              id="analistSelect"
-              name="analistSelect"
+              id="analystSelect"
+              name="analystSelect"
               data-ng-model="custody.blankLog.id_analista"
               >
               <option
-                data-ng-repeat="analist in custody.analists"
-                value=" {{::analist.id_usuario}}"
+                data-ng-repeat="analyst in custody.analysts"
+                value=" {{::analyst.id_usuario}}"
                 >
-                {{::analist.nombres}} {{::analist.apellido_paterno}}
+                {{::analyst.nombres}}
+                {{::analyst.apellido_paterno}}
+                {{::analyst.apellido_materno}}
               </option>
             </select>
           </div>

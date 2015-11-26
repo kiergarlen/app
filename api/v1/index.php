@@ -890,6 +890,20 @@ $app->get("/receptionists", function () use ($app) {
   }
 });
 
+$app->get("/analysts", function () use ($app) {
+  try {
+    $userId = decodeUserToken($app->request())->uid;
+    $result = json_encode(getAnalysts());
+    $app->response()->status(200);
+    $app->response()->header("Content-Type", "application/json");
+    //$result = ")]}',\n" . $result;
+    print_r($result);
+  } catch (Exception $e) {
+    $app->response()->status(400);
+    $app->response()->header("X-Status-Reason", $e->getMessage());
+  }
+});
+
 $app->get("/samples(/)(:sampleId)", function ($sampleId = -1) use ($app) {
   try {
     $userId = decodeUserToken($app->request())->uid;

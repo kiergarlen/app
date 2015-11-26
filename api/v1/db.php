@@ -3652,6 +3652,29 @@ function getSamplingEmployee($userId)
 /**
  * @return mixed
  */
+function getAnalysts()
+{
+  $sql = "SELECT id_usuario, id_nivel, id_rol, id_empleado,
+    id_area, id_puesto, interno, cea, laboratorio, calidad,
+    supervisa, recibe, analiza, muestrea, nombres,
+    apellido_paterno, apellido_materno,
+    CONVERT(NVARCHAR, fecha_captura, 126) AS fecha_captura,
+    CONVERT(NVARCHAR, fecha_actualiza, 126) AS fecha_actualiza,
+    ip_captura, ip_actualiza,
+    host_captura, host_actualiza, activo
+    FROM Usuario
+    WHERE activo = 1 AND id_nivel > 1 AND analiza = 1";
+  $db = getConnection();
+  $stmt = $db->prepare($sql);
+  $stmt->execute();
+  $analysts = $stmt->fetchAll(PDO::FETCH_ASSOC);
+  $db = null;
+  return $analysts;
+}
+
+/**
+ * @return mixed
+ */
 function getPointKinds()
 {
   $sql = "SELECT id_tipo_punto, tipo_punto, activo

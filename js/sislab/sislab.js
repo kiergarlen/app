@@ -2292,6 +2292,7 @@
    * @param {Object} $routeParams - Proveedor de parámetros de ruta
    * @param {Object} TokenService - Proveedor para manejo del token
    * @param {Object} StorageService - Proveedor de datos, Almacenamientos
+   * @param {Object} AnalystService - Proveedor de datos, Analistas
    * @param {Object} ContainerService - Proveedor de datos, Recipientes
    * @param {Object} ContainerLogService - Proveedor de datos, Bitácoras de Recipiente
    * @param {Object} CustodyParameterService - Proveedor de datos, Parámetros por Custodia
@@ -2299,12 +2300,14 @@
    */
   function CustodyController($scope, $routeParams, TokenService,
     ValidationService, RestUtilsService, ArrayUtilsService,
-    DateUtilsService, StorageService, ContainerService,
-    ContainerLogService, CustodyParameterService, CustodyService) {
+    DateUtilsService, StorageService, AnalystService,
+    ContainerService, ContainerLogService, CustodyParameterService,
+    CustodyService) {
     var vm = this;
     vm.user = TokenService.getUserFromToken();
     vm.custody = CustodyService.query({custodyId: $routeParams.custodyId});
     vm.storages = StorageService.get();
+    vm.analysts = AnalystService.get();
     vm.parameters = [];
     vm.containerId = 0;
     vm.currentContainer = {};
@@ -2314,7 +2317,7 @@
     vm.blankLog = getBlankLog();
     vm.viewLog = viewLog;
     vm.openAddLog = openAddLog;
-    vm.submitLog = submitLog;
+    vm.addLog = addLog;
     vm.isLogVisible = false;
     vm.isAddLogVisible = false;
     vm.isDataSubmitted = false;
@@ -2396,14 +2399,21 @@
     }
 
     function addLog() {
+      var i = 0;
+      var l = vm.custody.containers.length;
       if (isLogValid()) {
         console.log("VALID entry");
-        console.log(vm.blankLog);
-        //find Container in Custody and push to its Containers array
-        //vm.logentries
-        //vm.currentContainer = container;
 
-        // vm.isLogSubmitted = true;
+        //find Container in Custody and push to its Containers array
+        for (i = 0; i < l; i += 1) {
+          if (vm.custody.containers[i].id_recipiente === vm.currentContainer.id_recipiente) {
+            vm.logentries.push(vm.blankLog);
+            vm.custody.containers[i].historial.push(vm.blankLog);
+            vm.isAddLogVisible = false;
+            break;
+          }
+        }
+
         // RestUtilsService
         //   .saveData(
         //     ContainerLogService,
@@ -2446,8 +2456,8 @@
         // }
       } else {
         console.log("INVALID entry");
-        console.log(vm.blankLog);
       }
+      console.log(vm.blankLog);
     }
 
     function approveItem() {
@@ -2492,8 +2502,9 @@
       [
         '$scope', '$routeParams', 'TokenService',
         'ValidationService', 'RestUtilsService', 'ArrayUtilsService',
-        'DateUtilsService', 'StorageService', 'ContainerService',
-        'ContainerLogService', 'CustodyParameterService', 'CustodyService',
+        'DateUtilsService', 'StorageService', 'AnalystService',
+        'ContainerService', 'ContainerLogService', 'CustodyParameterService',
+        'CustodyService',
         CustodyController
       ]
     );
@@ -5190,6 +5201,36 @@
       [
         '$resource', 'TokenService',
         ReceptionistService
+      ]
+    );
+
+  //AnalystService.js
+  /**
+   * @name AnalystService
+   * @constructor
+   * @desc Proveedor de datos, Analistas
+   * @param {Object} $resource - Acceso a recursos HTTP
+   * @param {Object} TokenService - Proveedor de métodos para token
+   * @return {Object} $resource - Acceso a recursos HTTP
+   */
+  function AnalystService($resource, TokenService) {
+    return $resource(API_BASE_URL + 'analysts', {}, {
+      get: {
+        method: 'GET',
+        params: {},
+        isArray: true,
+        headers: {
+          'Auth-Token': TokenService.getToken()
+        }
+      }
+    });
+  }
+  angular
+    .module('sislabApp')
+    .factory('AnalystService',
+      [
+        '$resource', 'TokenService',
+        AnalystService
       ]
     );
 

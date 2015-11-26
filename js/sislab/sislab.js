@@ -2161,7 +2161,7 @@
             vm.areas = response;
             l = vm.jobs.length;
             for (i = 0; i < l; i += 1) {
-              vm.jobs[i].area = "";
+              vm.jobs[i].area = '';
             }
             ArrayUtilsService.seItemsFromReference(
               vm.jobs,
@@ -2336,18 +2336,35 @@
     function viewLog(container) {
       var containerId = container.id_recipiente;
       vm.isLogVisible = false;
-      vm.message = "";
+      vm.message = '';
       container.historial = [];
       if (!container.historial || container.historial.length < 1) {
-        //load logs from database, add to store
+        //load logs from database, add to logs array
         ContainerLogService
           .query({containerId: containerId})
           .$promise
           .then(function success(response) {
             if (response.length > 0) {
               container.historial = response;
+              container.historial = seItemsFromReference(
+                container.historial,
+                vm,analysts,
+                'id_analista',
+                [
+                  'nombres',
+                  'apellido_paterno',
+                  'apellido_materno'
+                ]);
+              container.historial = seItemsFromReference(
+                container.historial,
+                vm,parameters,
+                'id_parametro',
+                [
+                  'param',
+                  'parametro'
+                ]);
             } else {
-              vm.message = " No hay entradas en el historial para este recipiente";
+              vm.message = ' No hay entradas en el historial para este recipiente';
             }
         });
       }
@@ -2372,15 +2389,17 @@
         ip_actualiza: '',
         host_captura: '',
         host_actualiza: '',
-        activo: 1
+        activo: 1,
+        parametro:{},
+        analista:{}
       };
     }
 
-    function openAddLog(container) {
+    function openAddLog() {
       vm.getBlankLog();
       vm.blankLog.id_custodia = vm.custody.id_custodia;
-      vm.blankLog.id_muestra = container.id_muestra;
-      vm.blankLog.id_recipiente = container.id_recipiente;
+      vm.blankLog.id_muestra = vm.currentContainer.id_muestra;
+      vm.blankLog.id_recipiente = vm.currentContainer.id_recipiente;
       vm.blankLog.id_usuario_captura = vm.user.id;
       vm.isAddLogVisible = true;
     }
@@ -2402,12 +2421,13 @@
       var i = 0;
       var l = vm.custody.containers.length;
       if (isLogValid()) {
-        console.log("VALID entry");
+        console.log('VALID entry');
 
         //find Container in Custody and push to its Containers array
+        console.log(vm.custody.containers);
         for (i = 0; i < l; i += 1) {
           if (vm.custody.containers[i].id_recipiente === vm.currentContainer.id_recipiente) {
-            vm.logentries.push(vm.blankLog);
+            vm.logEntries.push(vm.blankLog);
             vm.custody.containers[i].historial.push(vm.blankLog);
             vm.isAddLogVisible = false;
             break;
@@ -2426,11 +2446,11 @@
         //     .save(JSON.stringify(vm.blankLog))
         //     .$promise
         //     .then(function success(response) {
-        //       console.log("Success");
+        //       console.log('Success');
         //       vm.blankLog = getBlankLog();
         //       return response;
         //     }, function error(response) {
-        //       console.log("Error");
+        //       console.log('Error');
         //       if (response.status === 404) {
         //         return 'Recurso no encontrado';
         //       } else {
@@ -2442,11 +2462,11 @@
         //     .update(JSON.stringify(vm.blankLog))
         //     .$promise
         //     .then(function success(response) {
-        //       console.log("Success");
+        //       console.log('Success');
         //       vm.blankLog = getBlankLog();
         //       return response;
         //     }, function error(response) {
-        //       console.log("Error");
+        //       console.log('Error');
         //       if (response.status === 404) {
         //         return 'Recurso no encontrado';
         //       } else {
@@ -2455,7 +2475,7 @@
         //     });
         // }
       } else {
-        console.log("INVALID entry");
+        console.log('INVALID entry');
       }
       console.log(vm.blankLog);
     }

@@ -2349,33 +2349,37 @@
           .$promise
           .then(function success(response) {
             if (response.length > 0) {
-              container.historial = response;
-              container.historial = ArrayUtilsService.setItemsFromReference(
-                container.historial,
-                vm.analysts,
-                'id_analista',
-                [
-                  'nombres',
-                  'apellido_paterno',
-                  'apellido_materno'
-                ]);
-              container.historial = ArrayUtilsService.setItemsFromReference(
-                container.historial,
-                vm.parameters,
-                'id_parametro',
-                [
-                  'param',
-                  'parametro'
-                ]);
-              vm.logEntries = container.historial;
+              container.historial = setLogReferences(response);
+              vm.logEntries = container.historial.slice();
             } else {
               vm.message = ' No hay entradas en el historial para este recipiente';
             }
         });
       }
       vm.currentContainer = container;
-      vm.logentries = container.historial;
+      vm.logentries = container.historial.slice();
       vm.isLogVisible = true;
+    }
+
+    function setLogReferences(logs) {
+      logs = ArrayUtilsService.setItemsFromReference(
+        logs,
+        vm.analysts,
+        'id_analista',
+        [
+          'nombres',
+          'apellido_paterno',
+          'apellido_materno'
+        ]);
+      logs = ArrayUtilsService.setItemsFromReference(
+        logs,
+        vm.parameters,
+        'id_parametro',
+        [
+          'param',
+          'parametro'
+        ]);
+      return logs;
     }
 
     function getBlankLog() {
@@ -2423,21 +2427,32 @@
     }
 
     function addLog() {
-      var i = 0;
-      var l = vm.custody.containers.length;
-      if (isLogValid()) {
-        console.log('VALID entry');
+      var newLog = vm.getBlankLog();
+      newLog.id_custodia = vm.custody.id_custodia;
+      newLog.id_muestra = vm.currentContainer.id_muestra;
+      newLog.id_recipiente = vm.currentContainer.id_recipiente;
+      newLog.id_usuario_captura = vm.user.id;
 
-        //find Container in Custody and push to its Containers array
-        console.log(vm.custody.containers);
-        for (i = 0; i < l; i += 1) {
-          if (vm.custody.containers[i].id_recipiente === vm.currentContainer.id_recipiente) {
-            vm.logEntries.push(vm.blankLog);
-            vm.custody.containers[i].historial.push(vm.blankLog);
-            vm.isAddLogVisible = false;
-            break;
-          }
-        }
+      vm.logEntries.push(newLog);
+      // var i = 0;
+      // var l = vm.custody.containers.length;
+      // if (isLogValid()) {
+      //   console.log('VALID entry');
+
+      //   //find Container in Custody and push to its Containers array
+      //   console.log(vm.blankLog);
+      //   for (i = 0; i < l; i += 1) {
+      //     if (vm.custody.containers[i].id_recipiente === vm.currentContainer.id_recipiente) {
+      //       //vm.logEntries.push(vm.blankLog);
+      //       vm.custody.containers[i].historial.push(vm.blankLog);
+      //       vm.custody.containers[i].historial = setLogReferences(
+      //         vm.custody.containers[i].historial
+      //         );
+      //       vm.logentries = vm.custody.containers[i].historial.slice();
+      //       vm.isAddLogVisible = false;
+      //       break;
+      //     }
+      //   }
 
         // RestUtilsService
         //   .saveData(
@@ -2479,10 +2494,10 @@
         //       }
         //     });
         // }
-      } else {
-        console.log('INVALID entry');
-      }
-      console.log(vm.blankLog);
+      // } else {
+      //   console.log('INVALID entry');
+      // }
+      // console.log(vm.blankLog);
     }
 
     function approveItem() {

@@ -231,7 +231,7 @@
         </option>
       </select>
     </div>
-    <div class="col-xs-6 col-sm-3">
+    <div class="col-xs-6 col-sm-2">
       <label for="logVolume{{logEntry.id_historial_recipiente}}">
         Volumen extraído (ml)
       </label>
@@ -239,7 +239,7 @@
         name="logVolume{{logEntry.id_historial_recipiente}}"
         placeholder="ID"
         data-ng-model="logEntry.volumen"
-        data-ng-readonly="logEntry.$$hashKey"
+        data-ng-readonly="logEntry.$$hashKey && logEntry.id_historial_recipiente < 1"
         >
     </div>
     <div class="col-xs-6 col-sm-3">
@@ -258,9 +258,10 @@
         data-autoclose="1"
         date-use-native="true"
         data-bs-datepicker
+        data-ng-readonly="logEntry.$$hashKey && logEntry.id_historial_recipiente < 1"
         >
     </div>
-    <div class="col-xs-6 col-sm-3">
+    <div class="col-xs-6 col-sm-2">
       <label for="analystSelectId{{logEntry.id_historial_recipiente}}">
         Analista
       </label>

@@ -2340,16 +2340,15 @@
       var containerId = container.id_recipiente;
       vm.isLogVisible = false;
       vm.message = '';
-      container.historial = [];
       if (!container.historial || container.historial.length < 1) {
         //load logs from database, add to logs array
-        console.log('parametros: ', vm.parametros);
+        container.historial = [];
         ContainerLogService
           .query({containerId: containerId})
           .$promise
           .then(function success(response) {
             if (response.length > 0) {
-              container.historial = setLogReferences(response);
+              //container.historial = setLogReferences(response);
               vm.logEntries = container.historial.slice();
             } else {
               vm.message = ' No hay entradas en el historial para este recipiente';

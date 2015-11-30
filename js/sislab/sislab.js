@@ -2340,15 +2340,15 @@
       var containerId = container.id_recipiente;
       vm.isLogVisible = false;
       vm.message = '';
+      container.historial = [];
       if (!container.historial || container.historial.length < 1) {
         //load logs from database, add to logs array
-        container.historial = [];
         ContainerLogService
           .query({containerId: containerId})
           .$promise
           .then(function success(response) {
             if (response.length > 0) {
-              //container.historial = setLogReferences(response);
+              container.historial = setLogReferences(response);
               vm.logEntries = container.historial.slice();
             } else {
               vm.message = ' No hay entradas en el historial para este recipiente';
@@ -2412,17 +2412,44 @@
       vm.isAddLogVisible = true;
     }
 
-    function isLogValid() {
-      if (vm.blankLog.id_parametro < 1) {
+    function isLogValid(log) {
+      if (log.id_parametro < 1) {
         return false;
       }
-      if (isNaN(vm.blankLog.volumen) || vm.blankLog.volumen === 0) {
+      if (isNaN(log.volumen) || log.volumen === 0) {
         return false;
       }
-      if (vm.blankLog.id_analista < 1) {
+      if (log.id_analista < 1) {
         return false;
       }
       return true;
+    }
+
+    function saveLog() {
+      var i = 0;
+      var j = 0;
+      var l = vm.custody.containers.length;
+      var log = {};
+
+      //find Container position
+      for (i = 0; i < l; i += 1) {
+        if (vm.custody.containers[i].id_recipiente === vm.currentContainer.id_recipiente) {
+          j = i;
+          break;
+        }
+      }
+
+      if (!vm.custody.containers[i].historial) {
+        vm.custody.containers[i].historial = [];
+      }
+
+      l = vm.logEntries.length;
+      for (i = 0; i < l; i += 1) {
+        log = vm.logEntries[i];
+        if (log.id_recipiente < 1 && isLogValid(log)) {
+          vm.custody.containers[j].historial.push(log);
+        }
+      }
     }
 
     function addLog() {
@@ -2436,10 +2463,8 @@
       // var i = 0;
       // var l = vm.custody.containers.length;
       // if (isLogValid()) {
-      //   console.log('VALID entry');
 
       //   //find Container in Custody and push to its Containers array
-      //   console.log(vm.blankLog);
       //   for (i = 0; i < l; i += 1) {
       //     if (vm.custody.containers[i].id_recipiente === vm.currentContainer.id_recipiente) {
       //       //vm.logEntries.push(vm.blankLog);
@@ -2465,11 +2490,9 @@
         //     .save(JSON.stringify(vm.blankLog))
         //     .$promise
         //     .then(function success(response) {
-        //       console.log('Success');
         //       vm.blankLog = getBlankLog();
         //       return response;
         //     }, function error(response) {
-        //       console.log('Error');
         //       if (response.status === 404) {
         //         return 'Recurso no encontrado';
         //       } else {
@@ -2481,11 +2504,9 @@
         //     .update(JSON.stringify(vm.blankLog))
         //     .$promise
         //     .then(function success(response) {
-        //       console.log('Success');
         //       vm.blankLog = getBlankLog();
         //       return response;
         //     }, function error(response) {
-        //       console.log('Error');
         //       if (response.status === 404) {
         //         return 'Recurso no encontrado';
         //       } else {
@@ -2494,9 +2515,7 @@
         //     });
         // }
       // } else {
-      //   console.log('INVALID entry');
       // }
-      // console.log(vm.blankLog);
     }
 
     function approveItem() {

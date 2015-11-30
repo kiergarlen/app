@@ -147,75 +147,16 @@
       </div>
     </div>
   </div>
-<!--
-  <div
-    data-ng-show="custody.isLogVisible">
-    <div class="panel">
-      <div class="panel-heading">
-        <h3 class="panel-title">Historial de Recipiente</h3>
-      </div>
-      <div class="table-responsive">
-        <table class="table table-condensed">
-          <tr>
-            <th>
-              Id Recipiente:
-            </th>
-            <th>
-              Parámetro:
-            </th>
-            <th>
-              Analista:
-            </th>
-            <th>
-              Volumen:
-            </th>
-            <th>
-              Fecha:
-            </th>
-          </tr>
-          <tr
-            data-ng-repeat="logEntry in custody.logEntries">
-            <td>
-              {{logEntry.id_recipiente}}
-            </td>
-            <td>
-              {{logEntry.parametro}}
-            </td>
-            <td>
-              {{logEntry.nombres}}
-              {{logEntry.apellido_paterno}}
-              {{logEntry.apellido_materno}}
-            </td>
-            <td>
-              {{logEntry.volumen}}
-            </td>
-            <td>
-              {{logEntry.fecha | date: 'yyyy-MM-dd'}}
-            </td>
-          </tr>
-        </table>
-    </div>
-  </div>
--->
-  <div class="row">
-    <div class="col-xs-12">
-      <h4>Historial de uso, Recipiente</h4>
-    </div>
-  </div>
   <div class="row"
-    data-ng-repeat="logEntry in custody.logEntries">
-    <div class="col-xs-6 col-sm-2">
-      <label for="logContainerId{{logEntry.id_historial_recipiente}}">
-        Recipiente
-      </label>
-      <input type="text" class="form-control"
-        name="logContainerId{{logEntry.id_historial_recipiente}}"
-        placeholder="ID"
-        data-ng-model="logEntry.id_recipiente"
-        data-ng-readonly="logEntry.$$hashKey"
-        >
+    data-ng-show="custody.isLogVisible">
+    <div class="col-xs-12">
+      <h4>Historial de uso, Recipiente {{custody.currentContainer.id_recipiente}}</h4>
     </div>
-    <div class="col-xs-6 col-sm-3">
+  </div>
+  <div class="row item-z2"
+    data-ng-show="custody.isLogVisible"
+    data-ng-repeat="logEntry in custody.logEntries">
+    <div class="col-xs-9 col-sm-2">
       <label for="parameterSelect{{logEntry.id_historial_recipiente}}">
         Parámetro
       </label>
@@ -227,41 +168,22 @@
           value="{{parameter.id_parametro}}"
           data-ng-selected="logEntry.id_matriz == parameter.id_matriz"
           >
-          {{::parameter.param}}
+          {{::parameter.parametro}}
         </option>
       </select>
     </div>
-    <div class="col-xs-6 col-sm-2">
+    <div class="col-xs-3 col-sm-2">
       <label for="logVolume{{logEntry.id_historial_recipiente}}">
-        Volumen extraído (ml)
+        Volumen (ml)
       </label>
       <input type="text" class="form-control"
         name="logVolume{{logEntry.id_historial_recipiente}}"
-        placeholder="ID"
+        placeholder="0.0"
         data-ng-model="logEntry.volumen"
-        data-ng-readonly="logEntry.$$hashKey && logEntry.id_historial_recipiente < 1"
+        data-ng-readonly="logEntry.$$hashKey && logEntry.id_historial_recipiente > 0"
         >
     </div>
-    <div class="col-xs-6 col-sm-3">
-      <label for="logDate">
-        <i class="glyphicon glyphicon-calendar"></i>
-        Fecha
-      </label>
-      <input type="text"
-        class="form-control"
-        name="logDate"
-        placeholder="aaaa-MM-dd"
-        required
-        data-ng-model="logEntry.fecha"
-        data-date-format="yyyy-MM-dd"
-        data-date-type="date"
-        data-autoclose="1"
-        date-use-native="true"
-        data-bs-datepicker
-        data-ng-readonly="logEntry.$$hashKey && logEntry.id_historial_recipiente < 1"
-        >
-    </div>
-    <div class="col-xs-6 col-sm-2">
+    <div class="col-xs-12 col-sm-3">
       <label for="analystSelectId{{logEntry.id_historial_recipiente}}">
         Analista
       </label>
@@ -280,11 +202,29 @@
         </option>
       </select>
     </div>
+    <div class="col-xs-9 col-sm-5">
+      <label for="logDate">
+        <i class="glyphicon glyphicon-calendar"></i>
+        Fecha
+      </label>
+      <input type="text"
+        class="form-control"
+        name="logDate"
+        placeholder="aaaa-MM-dd"
+        required
+        data-ng-model="logEntry.fecha"
+        data-date-format="yyyy-MM-dd"
+        data-date-type="date"
+        data-autoclose="1"
+        date-use-native="true"
+        data-bs-datepicker
+        data-ng-readonly="logEntry.$$hashKey && logEntry.id_historial_recipiente > 0"
+        >
+    </div>
   </div>
-
   <div class="row"
     data-ng-show="custody.isLogVisible">
-    <div class="col-xs-12">
+    <div class="col-xs-6">
       <br>
       <a class="btn btn-success"
         value="Agregar historial" title="Agregar historial"
@@ -295,187 +235,20 @@
       </a>
       <br><br>
     </div>
-  </div>
-
-      <!--
-  <div class="row"
-    data-ng-show="custody.isAddLogVisible">
-    <div class="col-xs-12">
-      <div class="panel">
-        <div class="panel-heading">
-          <h3 class="panel-title">Nueva entrada a bitácora Muestra {{custody.blankLog.id_muestra}}, Recipiente {{custody.blankLog.id_recipiente}}</h3>
-        </div>
-        <h3>
-          Nueva entrada a historial de Recipiente
-          {{custody.blankLog.id_recipiente}}
-        </h3>
-        <div class="row">
-          <div class="col-xs-7">
-            <label for="parameterSelect">
-              Parámetro
-            </label>
-            <select class="form-control"
-              id="parameterSelect"
-              name="parameterSelect"
-              data-ng-model="custody.blankLog.id_parametro"
-              >
-              <option
-                data-ng-repeat="parameter in custody.parameters"
-                value=" {{::parameter.id_parametro}}"
-                >
-                {{::parameter.param}}
-              </option>
-            </select>
-          </div>
-          <div class="col-xs-7">
-            <label for="volumeNumber">
-              Volumen extraído (ml)
-            </label>
-            <input type="text" class="form-control"
-              id="volumeNumber"
-              name="volumeNumber"
-              placeholder="0"
-              data-ng-model="custody.blankLog.volumen"
-              >
-          </div>
-          <div class="col-xs-7">
-            <label for="logDate">
-              <i class="glyphicon glyphicon-calendar"></i>
-              Fecha
-            </label>
-            <input type="text"
-              class="form-control"
-              id="logDate"
-              name="logDate"
-              placeholder="aaaa-MM-dd"
-              required
-              data-ng-model="custody.blankLog.fecha"
-              data-date-format="yyyy-MM-dd"
-              data-date-type="date"
-              data-autoclose="1"
-              date-use-native="true"
-              data-bs-datepicker
-              >
-          </div>
-          <div class="col-xs-7">
-            <label for="parameterSelect">
-              Analista
-            </label>
-            <select class="form-control"
-              id="analystSelect"
-              name="analystSelect"
-              data-ng-model="custody.blankLog.id_analista"
-              >
-              <option
-                data-ng-repeat="analyst in custody.analysts"
-                value=" {{::analyst.id_usuario}}"
-                >
-                {{::analyst.nombres}}
-                {{::analyst.apellido_paterno}}
-                {{::analyst.apellido_materno}}
-              </option>
-            </select>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-xs-12">
-            <button type="button" class="btn btn-primary"
-              value="Agregar entrada" title="Agregar entrada"
-              data-ng-click="custody.addLog()"
-              >
-              <i class="glyphicon glyphicon-plus" aria-hidden="true"></i>
-              Agregar entrada
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-      -->
-  <!--
-  <div class="row">
-    <div class="col-xs-12">
-      <div class="panel">
-        <div class="panel-heading">
-          <h3 class="panel-title">Uso de las muestras</h3>
-        </div>
-        <div class="table-responsive">
-          <table class="table table-hover table-condensed"
-            id="sampleUseList">
-            <thead>
-              <tr>
-                <th>
-                  Id Muestra
-                </th>
-                <th>
-                  Id Recipiente
-                </th>
-                <th>
-                  Parámetro
-                </th>
-                <th>
-                  Analista
-                </th>
-                <th>
-                  Volumen
-                </th>
-                <th>
-                  Fecha
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr
-                data-ng-repeat="take in custody.takes"
-                id="{{take.id_uso}}">
-                <td>
-                  {{take.id_muestra}}
-                </td>
-                <td>
-                  {{take.id_recipiente}}
-                </td>
-                <td>
-                  Param
-                  {{take.parametro.param}}
-                </td>
-                <td>
-                  Usr
-                  {{take.id_analista}}
-                  <br>
-                  {{take.analista.nombres}}
-                  <br>
-                  {{take.analista.apellido_paterno}}
-                  {{take.analista.apellido_materno}}
-                </td>
-                <td>
-                  <input
-                    type="text">
-                    + volumen +
-                </td>
-                <td>
-                  {{take.fecha | date: 'yyyy-MM-dd'}}
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-xs-12">
+    <div class="col-xs-6">
       <br>
-      <a class="btn btn-success"
-        value="Agregar entrada" title="Agregar entrada"
-        data-ng-click="custody.addTake()"
+      <a class="btn btn-default"
+        value="Guardar y cerrar" title="Guardar y cerrar"
+        data-ng-click="custody.saveLog()"
         >
-        <i class="glyphicon glyphicon-plus" aria-hidden="true"></i>
-        Agregar entrada
+        <i class="glyphicon glyphicon-cloud-upload" aria-hidden="true"></i>
+        Guardar y cerrar
       </a>
       <br><br>
     </div>
   </div>
 
+  <!--
   <div class="row">
     <div class="col-xs-12">
       <h4>Disposición Final</h4>

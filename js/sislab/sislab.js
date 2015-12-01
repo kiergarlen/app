@@ -2422,6 +2422,10 @@
       if (log.id_analista < 1) {
         return false;
       }
+      if (!DateUtilsService.isValidDate(new Date(log.fecha))) {
+        //vm.message += ' Ingrese una fecha válida ';
+        return false;
+      }
       return true;
     }
 

@@ -42,6 +42,7 @@
   data-ng-submit="custody.submitCustodyForm()"
   novalidate
   >
+  <!--
   <div class="row">
     <div class="col-xs-12">
       <h4>Datos generales</h4>
@@ -79,6 +80,7 @@
       <br>
     </div>
   </div>
+  -->
   <div class="row">
     <div class="col-xs-12">
       <div class="panel">
@@ -121,6 +123,9 @@
                     name="storageSelectId{{container.id_recipiente}}"
                     data-ng-model="container.id_almacenamiento"
                     >
+                    <option value="0">
+                      Ubicación
+                    </option>
                     <option data-ng-repeat="storage in custody.storages"
                       value="{{storage.id_almacenamiento}}"
                       data-ng-selected="container.id_almacenamiento == storage.id_almacenamiento"

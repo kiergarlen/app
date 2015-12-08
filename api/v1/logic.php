@@ -1430,7 +1430,6 @@ function processContainerLogUpdate($request)
     "host_actualiza" => $request->getUrl(),
     "activo" => $updateData["activo"]
   );
-
   //return json_encode($log);
   $logId = updateContainerLog($log);
   return $logId;

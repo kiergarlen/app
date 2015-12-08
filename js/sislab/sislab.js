@@ -2321,12 +2321,13 @@
     vm.viewLog = viewLog;
     vm.openAddLog = openAddLog;
     vm.addLog = addLog;
+    vm.saveLog = saveLog;
+    vm.isLogValid = isLogValid;
     vm.isLogVisible = false;
     vm.isAddLogVisible = false;
     vm.isDataSubmitted = false;
     vm.approveItem = approveItem;
     vm.rejectItem = rejectItem;
-    vm.isLogValid = isLogValid;
     vm.submitForm = submitForm;
 
     CustodyParameterService
@@ -2340,8 +2341,8 @@
       var containerId = container.id_recipiente;
       vm.isLogVisible = false;
       vm.message = '';
-      container.historial = [];
       if (!container.historial || container.historial.length < 1) {
+        container.historial = [];
         //load logs from database, add to logs array
         ContainerLogService
           .query({containerId: containerId})
@@ -2354,9 +2355,11 @@
               vm.message = ' No hay entradas en el historial para este recipiente';
             }
         });
+      } else {
+        vm.logEntries = container.historial.slice();
       }
+      //vm.logentries = container.historial.slice();
       vm.currentContainer = container;
-      vm.logentries = container.historial.slice();
       vm.isLogVisible = true;
     }
 
@@ -2434,7 +2437,6 @@
       var j = 0;
       var l = vm.custody.containers.length;
       var log = {};
-
       //find Container position
       for (i = 0; i < l; i += 1) {
         if (vm.custody.containers[i].id_recipiente === vm.currentContainer.id_recipiente) {
@@ -2443,18 +2445,32 @@
         }
       }
 
-      if (!vm.custody.containers[i].historial) {
-        vm.custody.containers[i].historial = [];
+      console.log('Current Entries: ');
+      console.log(vm.custody.containers[j].historial);
+      console.log('New Entries: ');
+      console.log(vm.logEntries);
+
+      if (!vm.custody.containers[j].historial) {
+        vm.custody.containers[j].historial = [];
       }
 
       l = vm.logEntries.length;
       for (i = 0; i < l; i += 1) {
         log = vm.logEntries[i];
-        if (log.id_recipiente < 1 && isLogValid(log)) {
+        console.log(log);
+        console.log(vm.isLogValid(log));
+        console.log(log.id_recipiente);
+        if (log.id_recipiente < 1 && vm.isLogValid(log)) {
           vm.custody.containers[j].historial.push(log);
         }
       }
+
+      console.log(vm.custody.containers[j].historial);
+      vm.isLogVisible = false;
+      vm.logentries = [];
     }
+
+
 
     function addLog() {
       var newLog = vm.getBlankLog();

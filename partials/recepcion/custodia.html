@@ -164,9 +164,12 @@
         name="parameterSelect{{logEntry.id_historial_recipiente}}"
         data-ng-model="logEntry.id_parametro"
         >
+        <option value="0">
+          Seleccione un parámetro
+        </option>
         <option data-ng-repeat="parameter in custody.parameters"
           value="{{parameter.id_parametro}}"
-          data-ng-selected="logEntry.id_matriz == parameter.id_matriz"
+          data-ng-selected="logEntry.id_parametro == parameter.id_parametro"
           >
           {{::parameter.parametro}}
         </option>
@@ -180,7 +183,7 @@
         name="logVolume{{logEntry.id_historial_recipiente}}"
         placeholder="0.0"
         data-ng-model="logEntry.volumen"
-        data-ng-readonly="logEntry.$$hashKey && logEntry.id_historial_recipiente > 0"
+        data-ng-readonly="logEntry.id_historial_recipiente > 0"
         >
     </div>
     <div class="col-xs-12 col-sm-3">
@@ -218,7 +221,7 @@
         data-autoclose="1"
         date-use-native="true"
         data-bs-datepicker
-        data-ng-readonly="logEntry.$$hashKey && logEntry.id_historial_recipiente > 0"
+        data-ng-readonly="logEntry.id_historial_recipiente > 0"
         >
     </div>
   </div>
@@ -236,6 +239,7 @@
       <a class="btn btn-default"
         value="Guardar y cerrar" title="Guardar y cerrar"
         data-ng-click="custody.saveLog()"
+        data-ng-show="custody.logEntries.length > 0"
         >
         <i class="glyphicon glyphicon-cloud-upload" aria-hidden="true"></i>
         Guardar y cerrar

@@ -42,12 +42,11 @@
   data-ng-submit="custody.submitCustodyForm()"
   novalidate
   >
-  <!--
   <div class="row">
     <div class="col-xs-12">
-      <h4>Datos generales</h4>
+      <h4>Datos de referencia</h4>
     </div>
-    <div class="col-xs-12">
+    <div class="col-xs-6">
       Fecha muestreo:
       <strong>
         {{custody.custody.fecha_muestreo | date: 'yyyy-MM-dd'}}
@@ -62,7 +61,8 @@
       <strong>
         {{custody.custody.id_trabajo}}
       </strong>
-      <br>
+    </div>
+    <div class="col-xs-6">
       Matriz:
       <strong>
         {{custody.custody.id_matriz}}
@@ -75,12 +75,141 @@
       <br>
       Contenedores:
       <strong>
-        {{custody.custody.cantidad_recipientes}}
+        {{custody.custody.containers.length}}
       </strong>
       <br>
     </div>
   </div>
-  -->
+  <div class="row"
+    data-ng-show="custody.user.area == 4">
+    <div class="col-xs-12">
+      Entrega de custodia
+    </div>
+    <div class="col-xs-12 col-sm-3">
+      <label for="transferorSelect">
+        Entrega custodia
+      </label>
+      <select class="form-control"
+        id="transferorSelect"
+        name="transferorSelect"
+        data-ng-model="custody.custody.id_usuario_entrega"
+        >
+        <option data-ng-repeat="transferor in custody.transferors"
+          value="{{transferor.id_analista}}"
+          data-ng-selected="custody.custody.id_usuario_entrega == transferor.id_analista"
+          >
+          {{::transferor.nombres}}
+          {{::transferor.apellido_paterno}}
+          {{::transferor.apellido_materno}}
+        </option>
+      </select>
+    </div>
+    <div class="col-xs-9 col-sm-5">
+      <label for="transferDate">
+        <i class="glyphicon glyphicon-calendar"></i>
+        Fecha entrega
+      </label>
+      <input type="text"
+        class="form-control"
+        name="transferDate"
+        placeholder="aaaa-MM-dd"
+        required
+        data-ng-model="custody.custody.fecha_entrega"
+        data-date-format="yyyy-MM-dd"
+        data-date-type="date"
+        data-autoclose="1"
+        date-use-native="true"
+        data-bs-datepicker
+        >
+    </div>
+    <div class="col-xs-9 col-sm-4">
+      <label for="transferTime">
+        <i class="glyphicon glyphicon-time"></i>
+        Hora
+      </label>
+      <input type="text"
+        class="form-control"
+        id="transferTime"
+        name="transferTime"
+        placeholder="HH:mm"
+        required
+        data-ng-model="custody.custody.fecha_entrega"
+        data-time-format="HH:mm"
+        data-date-type="date"
+        data-length="1"
+        data-hour-step="1"
+        data-minute-step="1"
+        data-arrow-behavior="picker"
+        data-auto-close="1"
+        data-bs-timepicker
+        >
+    </div>
+  </div>
+  <div class="row"
+    data-ng-show="custody.user.area != 4">
+    <div class="col-xs-12">
+      Recepción de custodia
+    </div>
+    <div class="col-xs-12 col-sm-3">
+      <label for="analystSelectId{{logEntry.id_historial_recipiente}}">
+        Recibe custodia
+      </label>
+      <select class="form-control"
+        id="analystSelectId{{logEntry.id_historial_recipiente}}"
+        name="analystSelectId{{logEntry.id_historial_recipiente}}"
+        data-ng-model="custody.custody.id_usuario_recibe"
+        >
+        <option data-ng-repeat="receptionist in custody.receptionists"
+          value="{{receptionist.id_analista}}"
+          data-ng-selected="custody.custody.id_usuario_recibe == receptionist.id_analista"
+          >
+          {{::receptionist.nombres}}
+          {{::receptionist.apellido_paterno}}
+          {{::receptionist.apellido_materno}}
+        </option>
+      </select>
+    </div>
+    <div class="col-xs-9 col-sm-5">
+      <label for="receptionDate">
+        <i class="glyphicon glyphicon-calendar"></i>
+        Fecha recepción
+      </label>
+      <input type="text"
+        class="form-control"
+        name="receptionDate"
+        placeholder="aaaa-MM-dd"
+        required
+        data-ng-model="custody.custody.fecha_recibe"
+        data-date-format="yyyy-MM-dd"
+        data-date-type="date"
+        data-autoclose="1"
+        date-use-native="true"
+        data-bs-datepicker
+        >
+    </div>
+    <div class="col-xs-9 col-sm-4">
+      <label for="receptionTime">
+        <i class="glyphicon glyphicon-time"></i>
+        Hora
+      </label>
+      <input type="text"
+        class="form-control"
+        id="receptionTime"
+        name="receptionTime"
+        placeholder="HH:mm"
+        required
+        data-ng-model="custody.custody.fecha_recibe"
+        data-time-format="HH:mm"
+        data-date-type="date"
+        data-length="1"
+        data-hour-step="1"
+        data-minute-step="1"
+        data-arrow-behavior="picker"
+        data-auto-close="1"
+        data-bs-timepicker
+        >
+    </div>
+  </div>
   <div class="row">
     <div class="col-xs-12">
       <div class="panel">
@@ -247,9 +376,19 @@
         data-ng-show="custody.logEntries.length > 0"
         >
         <i class="glyphicon glyphicon-cloud-upload" aria-hidden="true"></i>
-        Guardar y cerrar
+        Guardar historial
       </a>
       <br><br>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12">
+      <h4>Disposición final</h4>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12">
+        muestra --- fecha disposición -- autorizado por
     </div>
   </div>
   <div class="row">

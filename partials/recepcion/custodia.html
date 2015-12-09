@@ -151,21 +151,21 @@
       Recepción de custodia
     </div>
     <div class="col-xs-12 col-sm-3">
-      <label for="analystSelectId{{logEntry.id_historial_recipiente}}">
+      <label for="receiverSelect">
         Recibe custodia
       </label>
       <select class="form-control"
-        id="analystSelectId{{logEntry.id_historial_recipiente}}"
-        name="analystSelectId{{logEntry.id_historial_recipiente}}"
+        id="receiverSelect"
+        name="receiverSelect"
         data-ng-model="custody.custody.id_usuario_recibe"
         >
-        <option data-ng-repeat="receptionist in custody.receptionists"
-          value="{{receptionist.id_analista}}"
-          data-ng-selected="custody.custody.id_usuario_recibe == receptionist.id_analista"
+        <option data-ng-repeat="receiver in custody.receivers"
+          value="{{receiver.id_analista}}"
+          data-ng-selected="custody.custody.id_usuario_recibe == receiver.id_analista"
           >
-          {{::receptionist.nombres}}
-          {{::receptionist.apellido_paterno}}
-          {{::receptionist.apellido_materno}}
+          {{::receiver.nombres}}
+          {{::receiver.apellido_paterno}}
+          {{::receiver.apellido_materno}}
         </option>
       </select>
     </div>

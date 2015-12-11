@@ -1276,6 +1276,46 @@ function processReceptionAreasUpdate($receptionUpdateData)
  * @param array $receptionUpdateData
  * @return mixed
  */
+function processReceptionCustodiesInsert($receptionUpdateData)
+{
+  $reception = (array) $receptionUpdateData["reception"];
+  $custodies = (array) $receptionUpdateData["custodies"];
+  $receptionId = $reception["id_recepcion"];
+  $i = 0;
+  $l = count($custodies);
+
+  $custodyData = getBlankJob();
+  $custodyData["id_estudio"] = $reception["id_estudio"];
+  $custodyData["id_recepcion"] = $reception["id_recepcion"];
+  $custodyData["id_trabajo"] = $reception["id_trabajo"];
+  $custodyData["id_trabajo"] = $reception["id_trabajo"];
+  $custodyData["id_area"] = $reception["id_area"];
+  $custodyData["id_usuario_entrega"] = $reception["id_usuario_actualiza"];
+  $custodyData["id_usuario_recibe"] = 0;
+  $custodyData["id_status"] = 1;
+  $custodyData["id_usuario_captura"] = $reception["id_usuario_actualiza"];
+  $custodyData["id_usuario_valida"] = 0;
+  $custodyData["id_usuario_actualiza"] = 0;
+  unset($custodyData["fecha_captura"]);
+  $custodyData["ip_captura"] = $reception["ip_actualiza"];
+  $custodyData["host_captura"] = $reception["host_actualiza"];
+  unset($custodyData["id_trabajo"]);
+  unset($custodyData["id_usuario_actualiza"]);
+  unset($custodyData["fecha_actualiza"]);
+  unset($custodyData["ip_actualiza"]);
+  unset($custodyData["host_actualiza"]);
+
+  for ($i = 0; $i < $l; $i++) {
+    $custodyData["id_area"] = $custodies[$i]->id_area;
+    $cusotdyIds[] = insertJob($custodyData);
+  }
+  return $cusotdyIds;
+}
+
+/**
+ * @param array $receptionUpdateData
+ * @return mixed
+ */
 function processReceptionJobsInsert($receptionUpdateData)
 {
   $reception = (array) $receptionUpdateData["reception"];
@@ -1388,6 +1428,42 @@ function processReceptionJobsUpdate($receptionUpdateData)
  * @param mixed $request
  * @return mixed
  */
+function processCustodyInsert($request)
+{
+  $token = decodeUserToken($request);
+  $insertData = (array) json_decode($request->getBody());
+
+  $custody = array(
+    "id_custodia" => $insertData["id_custodia"],
+    "id_estudio" => $insertData["id_estudio"],
+    "id_recepcion" => $insertData["id_recepcion"],
+    "id_trabajo" => $insertData["id_trabajo"],
+    "id_area" => $insertData["id_area"],
+    "id_status" => $insertData["id_status"],
+    "id_usuario_entrega" => $insertData["id_usuario_entrega"],
+    "id_usuario_recibe" => $insertData["id_usuario_recibe"],
+    "id_usuario_captura" => $insertData["id_usuario_captura"],
+    "id_usuario_valida" => $insertData["id_usuario_valida"],
+    "fecha_entrega" => $insertData["fecha_entrega"],
+    "fecha_recibe" => $insertData["fecha_recibe"],
+    "fecha_valida" => $insertData["fecha_valida"],
+    "fecha_rechaza" => $insertData["fecha_rechaza"],
+    "ip_captura" => $request->getIp(),
+    "ip_valida" => $insertData["ip_valida"],
+    "host_captura" => $request->getUrl(),
+    "host_valida" => $insertData["host_valida"],
+    "comentarios" => $insertData["comentarios"],
+    "motivo_rechaza" => $insertData["motivo_rechaza"],
+    "activo" => 1
+  );
+  $custodyId = insertCustody($custody);
+  return $custodyId;
+}
+
+/**
+ * @param mixed $request
+ * @return mixed
+ */
 function processContainerLogInsert($request)
 {
   $token = decodeUserToken($request);
@@ -1403,8 +1479,6 @@ function processContainerLogInsert($request)
     "ip_captura" => $request->getIp(),
     "host_captura" => $request->getUrl()
   );
-
-  //return json_encode($log);
   $newLogId = insertContainerLog($log);
   return $newLogId;
 }
@@ -1430,7 +1504,6 @@ function processContainerLogUpdate($request)
     "host_actualiza" => $request->getUrl(),
     "activo" => $updateData["activo"]
   );
-  //return json_encode($log);
   $logId = updateContainerLog($log);
   return $logId;
 }

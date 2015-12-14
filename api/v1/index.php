@@ -7,22 +7,30 @@ require "./db.php";
 \Slim\Slim::registerAutoloader();
 $app = new \Slim\Slim();
 
+function sendSuccessResponse($app, $result) {
+  $app->response()->status(200);
+  $app->response()->header("Content-Type", "application/json");
+  //JSONP enable
+  if (isset($_GET["callback"])) {
+    $result = $_GET["callback"] . "(" . $result . ");";
+  }
+  //Angular XSS protection
+  //$result = ")]}',\n" . $result;
+  print_r($result);
+}
+
+function sendErrorResponse ($app, $e) {
+  $app->response()->status(400);
+  $app->response()->header("X-Status-Reason", $e->getMessage());
+}
+
 $app->post("/login", function () use ($app) {
   try {
     $jwt = processUserJwt($app->request());
     $result = json_encode($jwt);
-    $app->response()->status(200);
-    $app->response()->header("Content-Type", "application/json");
-    if (!isset($_GET["callback"])) {
-      $result = json_encode($jwt);
-    } else {
-      $result = $_GET["callback"] . "(" . json_encode($jwt) . ");";
-    }
-    //$result = ")]}',\n" . $result;
-    print_r($result);
+    sendSuccessResponse($app, $result);
   } catch (Exception $e) {
-    $app->response()->status(400);
-    $app->response()->header("X-Status-Reason", $e->getMessage());
+    sendErrorResponse($app, $e);
   }
 });
 
@@ -30,13 +38,9 @@ $app->get("/menu", function () use ($app) {
   try {
     $userId = decodeUserToken($app->request())->uid;
     $result = processMenuToJson(getMenu($userId));
-    $app->response()->status(200);
-    $app->response()->header("Content-Type", "application/json");
-    //$result = ")]}',\n" . $result;
-    print_r($result);
+    sendSuccessResponse($app, $result);
   } catch (Exception $e) {
-    $app->response()->status(400);
-    $app->response()->header("X-Status-Reason", $e->getMessage());
+    sendErrorResponse($app, $e);
   }
 });
 
@@ -44,13 +48,9 @@ $app->get("/tasks", function () use ($app) {
   try {
     $userId = decodeUserToken($app->request())->uid;
     $result = json_encode(getTasks($userId));
-    $app->response()->status(200);
-    $app->response()->header("Content-Type", "application/json");
-    //$result = ")]}',\n" . $result;
-    print_r($result);
+    sendSuccessResponse($app, $result);
   } catch (Exception $e) {
-    $app->response()->status(400);
-    $app->response()->header("X-Status-Reason", $e->getMessage());
+    sendErrorResponse($app, $e);
   }
 });
 
@@ -63,13 +63,9 @@ $app->get("/studies(/)(:studyId)", function ($studyId = -1) use ($app) {
     } else {
       $result = json_encode(getStudies());
     }
-    $app->response()->status(200);
-    $app->response()->header("Content-Type", "application/json");
-    //$result = ")]}',\n" . $result;
-    print_r($result);
+    sendSuccessResponse($app, $result);
   } catch (Exception $e) {
-    $app->response()->status(400);
-    $app->response()->header("X-Status-Reason", $e->getMessage());
+    sendErrorResponse($app, $e);
   }
 });
 
@@ -88,13 +84,9 @@ $app->post("/studies", function () use ($app) {
       $orderData = processStudyOrderUpdate($studyUpdateData);
     }
     $result = "{\"id_estudio\":" . $studyId . "}";
-    $app->response()->status(200);
-    $app->response()->header("Content-Type", "application/json");
-    //$result = ")]}',\n" . $result;
-    print_r($result);
+    sendSuccessResponse($app, $result);
   } catch (Exception $e) {
-    $app->response()->status(400);
-    $app->response()->header("X-Status-Reason", $e->getMessage());
+    sendErrorResponse($app, $e);
   }
 });
 
@@ -106,13 +98,9 @@ $app->get("/orders(/)(:orderId)", function ($orderId = -1) use ($app) {
     } else {
       $result = json_encode(getOrders());
     }
-    $app->response()->status(200);
-    $app->response()->header("Content-Type", "application/json");
-    //$result = ")]}',\n" . $result;
-    print_r($result);
+    sendSuccessResponse($app, $result);
   } catch (Exception $e) {
-    $app->response()->status(400);
-    $app->response()->header("X-Status-Reason", $e->getMessage());
+    sendErrorResponse($app, $e);
   }
 });
 
@@ -120,13 +108,9 @@ $app->get("/orders/study/(:studyId)", function ($studyId) use ($app) {
   try {
     $userId = decodeUserToken($app->request())->uid;
     $result = json_encode(getOrdersByStudy($studyId));
-    $app->response()->status(200);
-    $app->response()->header("Content-Type", "application/json");
-    //$result = ")]}',\n" . $result;
-    print_r($result);
+    sendSuccessResponse($app, $result);
   } catch (Exception $e) {
-    $app->response()->status(400);
-    $app->response()->header("X-Status-Reason", $e->getMessage());
+    sendErrorResponse($app, $e);
   }
 });
 
@@ -141,13 +125,9 @@ $app->post("/orders", function () use ($app) {
       processOrderPlansUpdate($orderUpdateData);
     }
     $result = "{\"id_orden\":" . $orderId . "}";
-    $app->response()->status(200);
-    $app->response()->header("Content-Type", "application/json");
-    //$result = ")]}',\n" . $result;
-    print_r($result);
+    sendSuccessResponse($app, $result);
   } catch (Exception $e) {
-    $app->response()->status(400);
-    $app->response()->header("X-Status-Reason", $e->getMessage());
+    sendErrorResponse($app, $e);
   }
 });
 
@@ -159,13 +139,9 @@ $app->get("/order/sources(/)(:sourceId)", function ($sourceId = -1) use ($app) {
     } else {
       $result = json_encode(getOrderSources());
     }
-    $app->response()->status(200);
-    $app->response()->header("Content-Type", "application/json");
-    //$result = ")]}',\n" . $result;
-    print_r($result);
+    sendSuccessResponse($app, $result);
   } catch (Exception $e) {
-    $app->response()->status(400);
-    $app->response()->header("X-Status-Reason", $e->getMessage());
+    sendErrorResponse($app, $e);
   }
 });
 
@@ -177,13 +153,9 @@ $app->get("/plans(/)(:planId)", function ($planId = -1) use ($app) {
     } else {
       $result = json_encode(getPlans());
     }
-    $app->response()->status(200);
-    $app->response()->header("Content-Type", "application/json");
-    //$result = ")]}',\n" . $result;
-    print_r($result);
+    sendSuccessResponse($app, $result);
   } catch (Exception $e) {
-    $app->response()->status(400);
-    $app->response()->header("X-Status-Reason", $e->getMessage());
+    sendErrorResponse($app, $e);
   }
 });
 
@@ -206,13 +178,9 @@ $app->post("/plans", function () use ($app) {
       processPlanCoolersUpdate($planUpdateData);
     }
     $result = "{\"id_plan\":" . $planId . "}";
-    $app->response()->status(200);
-    $app->response()->header("Content-Type", "application/json");
-    //$result = ")]}',\n" . $result;
-    print_r($result);
+    sendSuccessResponse($app, $result);
   } catch (Exception $e) {
-    $app->response()->status(400);
-    $app->response()->header("X-Status-Reason", $e->getMessage());
+    sendErrorResponse($app, $e);
   }
 });
 
@@ -221,13 +189,9 @@ $app->get("/plans/containers/:planId", function ($planId) use ($app) {
     $userId = decodeUserToken($app->request())->uid;
     // $result = json_encode(getContainersByPlan($planId));
     $result = json_encode(getPlanContainers($planId));
-    $app->response()->status(200);
-    $app->response()->header("Content-Type", "application/json");
-    //$result = ")]}',\n" . $result;
-    print_r($result);
+    sendSuccessResponse($app, $result);
   } catch (Exception $e) {
-    $app->response()->status(400);
-    $app->response()->header("X-Status-Reason", $e->getMessage());
+    sendErrorResponse($app, $e);
   }
 });
 
@@ -239,13 +203,9 @@ $app->get("/sheets(/)(:sheetId)", function ($sheetId = -1) use ($app) {
     } else {
       $result = json_encode(getSheets());
     }
-    $app->response()->status(200);
-    $app->response()->header("Content-Type", "application/json");
-    //$result = ")]}',\n" . $result;
-    print_r($result);
+    sendSuccessResponse($app, $result);
   } catch (Exception $e) {
-    $app->response()->status(400);
-    $app->response()->header("X-Status-Reason", $e->getMessage());
+    sendErrorResponse($app, $e);
   }
 });
 
@@ -263,13 +223,9 @@ $app->post("/sheets", function () use ($app) {
     }
     // $result = json_encode(processSheetReceptionUpdate($sheetUpdateData));
     $result = "{\"id_hoja\":" . $sheetId . "}";
-    $app->response()->status(200);
-    $app->response()->header("Content-Type", "application/json");
-    //$result = ")]}',\n" . $result;
-    print_r($result);
+    sendSuccessResponse($app, $result);
   } catch (Exception $e) {
-    $app->response()->status(400);
-    $app->response()->header("X-Status-Reason", $e->getMessage());
+    sendErrorResponse($app, $e);
   }
 });
 
@@ -281,13 +237,9 @@ $app->get("/receptions(/)(:receptionId)", function ($receptionId = -1) use ($app
     } else {
       $result = json_encode(getReceptions());
     }
-    $app->response()->status(200);
-    $app->response()->header("Content-Type", "application/json");
-    //$result = ")]}',\n" . $result;
-    print_r($result);
+    sendSuccessResponse($app, $result);
   } catch (Exception $e) {
-    $app->response()->status(400);
-    $app->response()->header("X-Status-Reason", $e->getMessage());
+    sendErrorResponse($app, $e);
   }
 });
 
@@ -295,13 +247,9 @@ $app->get("/areas/reception", function () use ($app) {
   try {
     $userId = decodeUserToken($app->request())->uid;
     $result = json_encode(getReceivingAreas());
-    $app->response()->status(200);
-    $app->response()->header("Content-Type", "application/json");
-    //$result = ")]}',\n" . $result;
-    print_r($result);
+    sendSuccessResponse($app, $result);
   } catch (Exception $e) {
-    $app->response()->status(400);
-    $app->response()->header("X-Status-Reason", $e->getMessage());
+    sendErrorResponse($app, $e);
   }
 });
 
@@ -319,13 +267,9 @@ $app->post("/receptions", function () use ($app) {
       processReceptionJobsUpdate($receptionUpdateData);
     }
     $result = "{\"id_recepcion\":" . $receptionId . "}";
-    $app->response()->status(200);
-    $app->response()->header("Content-Type", "application/json");
-    //$result = ")]}',\n" . $result;
-    print_r($result);
+    sendSuccessResponse($app, $result);
   } catch (Exception $e) {
-    $app->response()->status(400);
-    $app->response()->header("X-Status-Reason", $e->getMessage());
+    sendErrorResponse($app, $e);
   }
 });
 
@@ -337,13 +281,9 @@ $app->get("/jobs(/)(:jobId)", function ($jobId = -1) use ($app) {
     } else {
       $result = json_encode(getJobs());
     }
-    $app->response()->status(200);
-    $app->response()->header("Content-Type", "application/json");
-    //$result = ")]}',\n" . $result;
-    print_r($result);
+    sendSuccessResponse($app, $result);
   } catch (Exception $e) {
-    $app->response()->status(400);
-    $app->response()->header("X-Status-Reason", $e->getMessage());
+    sendErrorResponse($app, $e);
   }
 });
 
@@ -356,8 +296,7 @@ $app->get("/jobs/user/:userId", function ($userId) use ($app) {
     //$result = ")]}',\n" . $result;
     print_r($result);
   } catch (Exception $e) {
-    $app->response()->status(400);
-    $app->response()->header("X-Status-Reason", $e->getMessage());
+    sendErrorResponse($app, $e);
   }
 });
 
@@ -371,13 +310,9 @@ $app->post("/jobs", function () use ($app) {
       $jobId = updateJob($jobUpdateData["job"]);
     }
     $result = "{\"id_orden_trabajo\":" . $jobId . "}";
-    $app->response()->status(200);
-    $app->response()->header("Content-Type", "application/json");
-    //$result = ")]}',\n" . $result;
-    print_r($result);
+    sendSuccessResponse($app, $result);
   } catch (Exception $e) {
-    $app->response()->status(400);
-    $app->response()->header("X-Status-Reason", $e->getMessage());
+    sendErrorResponse($app, $e);
   }
 });
 
@@ -389,13 +324,9 @@ $app->get("/custodies(/)(:custodyId)", function ($custodyId = -1) use ($app) {
     } else {
       $result = json_encode(getCustodies());
     }
-    $app->response()->status(200);
-    $app->response()->header("Content-Type", "application/json");
-    //$result = ")]}',\n" . $result;
-    print_r($result);
+    sendSuccessResponse($app, $result);
   } catch (Exception $e) {
-    $app->response()->status(400);
-    $app->response()->header("X-Status-Reason", $e->getMessage());
+    sendErrorResponse($app, $e);
   }
 });
 
@@ -416,13 +347,9 @@ $app->post("/custodies", function () use ($app) {
     $result = "{\"id_custody\":" . $custodyId . "}";
     $requestData = extractDataFromRequest($request);
     $result = json_encode($requestData);
-    $app->response()->status(200);
-    $app->response()->header("Content-Type", "application/json");
-    //$result = ")]}',\n" . $result;
-    print_r($result);
+    sendSuccessResponse($app, $result);
   } catch (Exception $e) {
-    $app->response()->status(400);
-    $app->response()->header("X-Status-Reason", $e->getMessage());
+    sendErrorResponse($app, $e);
   }
 });
 //CATALOGS
@@ -434,13 +361,9 @@ $app->get("/clients(/)(:clientId)", function ($clientId = -1) use ($app) {
     } else {
       $result = json_encode(getClients());
     }
-    $app->response()->status(200);
-    $app->response()->header("Content-Type", "application/json");
-    //$result = ")]}',\n" . $result;
-    print_r($result);
+    sendSuccessResponse($app, $result);
   } catch (Exception $e) {
-    $app->response()->status(400);
-    $app->response()->header("X-Status-Reason", $e->getMessage());
+    sendErrorResponse($app, $e);
   }
 });
 
@@ -448,13 +371,9 @@ $app->get("/parameters", function () use ($app) {
   try {
     $userId = decodeUserToken($app->request())->uid;
     $result = json_encode(getParameters());
-    $app->response()->status(200);
-    $app->response()->header("Content-Type", "application/json");
-    //$result = ")]}',\n" . $result;
-    print_r($result);
+    sendSuccessResponse($app, $result);
   } catch (Exception $e) {
-    $app->response()->status(400);
-    $app->response()->header("X-Status-Reason", $e->getMessage());
+    sendErrorResponse($app, $e);
   }
 });
 
@@ -462,13 +381,9 @@ $app->get("/parameters/field", function () use ($app) {
   try {
     $userId = decodeUserToken($app->request())->uid;
     $result = json_encode(getParametersField());
-    $app->response()->status(200);
-    $app->response()->header("Content-Type", "application/json");
-    //$result = ")]}',\n" . $result;
-    print_r($result);
+    sendSuccessResponse($app, $result);
   } catch (Exception $e) {
-    $app->response()->status(400);
-    $app->response()->header("X-Status-Reason", $e->getMessage());
+    sendErrorResponse($app, $e);
   }
 });
 
@@ -476,13 +391,9 @@ $app->get("/parameters/custodies/:custodyId", function ($custodyId) use ($app) {
   try {
     $userId = decodeUserToken($app->request())->uid;
     $result = json_encode(getParametersByCustody($custodyId));
-    $app->response()->status(200);
-    $app->response()->header("Content-Type", "application/json");
-    //$result = ")]}',\n" . $result;
-    print_r($result);
+    sendSuccessResponse($app, $result);
   } catch (Exception $e) {
-    $app->response()->status(400);
-    $app->response()->header("X-Status-Reason", $e->getMessage());
+    sendErrorResponse($app, $e);
   }
 });
 
@@ -494,13 +405,9 @@ $app->get("/norms(/)(:normId)", function ($normId = -1) use ($app) {
     } else {
       $result = json_encode(getNorms());
     }
-    $app->response()->status(200);
-    $app->response()->header("Content-Type", "application/json");
-    //$result = ")]}',\n" . $result;
-    print_r($result);
+    sendSuccessResponse($app, $result);
   } catch (Exception $e) {
-    $app->response()->status(400);
-    $app->response()->header("X-Status-Reason", $e->getMessage());
+    sendErrorResponse($app, $e);
   }
 });
 
@@ -508,13 +415,9 @@ $app->get("/sampling/types", function () use ($app) {
   try {
     $userId = decodeUserToken($app->request())->uid;
     $result = json_encode(getSamplingTypes());
-    $app->response()->status(200);
-    $app->response()->header("Content-Type", "application/json");
-    //$result = ")]}',\n" . $result;
-    print_r($result);
+    sendSuccessResponse($app, $result);
   } catch (Exception $e) {
-    $app->response()->status(400);
-    $app->response()->header("X-Status-Reason", $e->getMessage());
+    sendErrorResponse($app, $e);
   }
 });
 
@@ -522,13 +425,9 @@ $app->get("/matrices", function () use ($app) {
   try {
     $userId = decodeUserToken($app->request())->uid;
     $result = json_encode(getMatrices());
-    $app->response()->status(200);
-    $app->response()->header("Content-Type", "application/json");
-    //$result = ")]}',\n" . $result;
-    print_r($result);
+    sendSuccessResponse($app, $result);
   } catch (Exception $e) {
-    $app->response()->status(400);
-    $app->response()->header("X-Status-Reason", $e->getMessage());
+    sendErrorResponse($app, $e);
   }
 });
 
@@ -537,13 +436,9 @@ $app->get("/packages/points/:packageId", function ($packageId) use ($app) {
     $userId = decodeUserToken($app->request())->uid;
     $result = json_encode(getPointsByPackage($packageId));
     //$result = json_encode(getPackages());
-    $app->response()->status(200);
-    $app->response()->header("Content-Type", "application/json");
-    //$result = ")]}',\n" . $result;
-    print_r($result);
+    sendSuccessResponse($app, $result);
   } catch (Exception $e) {
-    $app->response()->status(400);
-    $app->response()->header("X-Status-Reason", $e->getMessage());
+    sendErrorResponse($app, $e);
   }
 });
 
@@ -555,13 +450,9 @@ $app->get("/packages/location(/)(:locationId)", function ($locationId = -1) use 
     } else {
       $result = json_encode(getPackages());
     }
-    $app->response()->status(200);
-    $app->response()->header("Content-Type", "application/json");
-    //$result = ")]}',\n" . $result;
-    print_r($result);
+    sendSuccessResponse($app, $result);
   } catch (Exception $e) {
-    $app->response()->status(400);
-    $app->response()->header("X-Status-Reason", $e->getMessage());
+    sendErrorResponse($app, $e);
   }
 });
 
@@ -573,13 +464,9 @@ $app->get("/bodies(/)(:bodyId)", function ($bodyId = -1) use ($app) {
     } else {
       $result = json_encode(getWaterBodies());
     }
-    $app->response()->status(200);
-    $app->response()->header("Content-Type", "application/json");
-    //$result = ")]}',\n" . $result;
-    print_r($result);
+    sendSuccessResponse($app, $result);
   } catch (Exception $e) {
-    $app->response()->status(400);
-    $app->response()->header("X-Status-Reason", $e->getMessage());
+    sendErrorResponse($app, $e);
   }
 });
 
@@ -591,13 +478,9 @@ $app->get("/sampling/supervisors(/)(:empId)", function ($empId = -1) use ($app) 
     } else {
       $result = json_encode(getSamplingEmployees());
     }
-    $app->response()->status(200);
-    $app->response()->header("Content-Type", "application/json");
-    //$result = ")]}',\n" . $result;
-    print_r($result);
+    sendSuccessResponse($app, $result);
   } catch (Exception $e) {
-    $app->response()->status(400);
-    $app->response()->header("X-Status-Reason", $e->getMessage());
+    sendErrorResponse($app, $e);
   }
 });
 
@@ -609,13 +492,9 @@ $app->get("/sampling/employees(/)(:empId)", function ($empId = -1) use ($app) {
     } else {
       $result = json_encode(getSamplingEmployees());
     }
-    $app->response()->status(200);
-    $app->response()->header("Content-Type", "application/json");
-    //$result = ")]}',\n" . $result;
-    print_r($result);
+    sendSuccessResponse($app, $result);
   } catch (Exception $e) {
-    $app->response()->status(400);
-    $app->response()->header("X-Status-Reason", $e->getMessage());
+    sendErrorResponse($app, $e);
   }
 });
 
@@ -623,13 +502,9 @@ $app->get("/plan/objectives", function () use ($app) {
   try {
     $userId = decodeUserToken($app->request())->uid;
     $result = json_encode(getPlanObjectives());
-    $app->response()->status(200);
-    $app->response()->header("Content-Type", "application/json");
-    //$result = ")]}',\n" . $result;
-    print_r($result);
+    sendSuccessResponse($app, $result);
   } catch (Exception $e) {
-    $app->response()->status(400);
-    $app->response()->header("X-Status-Reason", $e->getMessage());
+    sendErrorResponse($app, $e);
   }
 });
 
@@ -637,13 +512,9 @@ $app->get("/point/kinds", function () use ($app) {
   try {
     $userId = decodeUserToken($app->request())->uid;
     $result = json_encode(getPointKinds());
-    $app->response()->status(200);
-    $app->response()->header("Content-Type", "application/json");
-    //$result = ")]}',\n" . $result;
-    print_r($result);
+    sendSuccessResponse($app, $result);
   } catch (Exception $e) {
-    $app->response()->status(400);
-    $app->response()->header("X-Status-Reason", $e->getMessage());
+    sendErrorResponse($app, $e);
   }
 });
 
@@ -655,13 +526,9 @@ $app->get("/districts(/)(:districtId)", function ($districtId = -1) use ($app) {
     } else {
       $result = json_encode(getDistricts());
     }
-    $app->response()->status(200);
-    $app->response()->header("Content-Type", "application/json");
-    //$result = ")]}',\n" . $result;
-    print_r($result);
+    sendSuccessResponse($app, $result);
   } catch (Exception $e) {
-    $app->response()->status(400);
-    $app->response()->header("X-Status-Reason", $e->getMessage());
+    sendErrorResponse($app, $e);
   }
 });
 
@@ -669,13 +536,9 @@ $app->get("/districts/cities/:districtId", function ($districtId) use ($app) {
   try {
     $userId = decodeUserToken($app->request())->uid;
     $result = json_encode(getCitiesByDistrictId($districtId));
-    $app->response()->status(200);
-    $app->response()->header("Content-Type", "application/json");
-    //$result = ")]}',\n" . $result;
-    print_r($result);
+    sendSuccessResponse($app, $result);
   } catch (Exception $e) {
-    $app->response()->status(400);
-    $app->response()->header("X-Status-Reason", $e->getMessage());
+    sendErrorResponse($app, $e);
   }
 });
 
@@ -683,13 +546,9 @@ $app->get("/preservations", function () use ($app) {
   try {
     $userId = decodeUserToken($app->request())->uid;
     $result = json_encode(getPreservations());
-    $app->response()->status(200);
-    $app->response()->header("Content-Type", "application/json");
-    //$result = ")]}',\n" . $result;
-    print_r($result);
+    sendSuccessResponse($app, $result);
   } catch (Exception $e) {
-    $app->response()->status(400);
-    $app->response()->header("X-Status-Reason", $e->getMessage());
+    sendErrorResponse($app, $e);
   }
 });
 
@@ -701,13 +560,9 @@ $app->get("/containers(/)(:containerId)", function ($containerId = -1) use ($app
     } else {
       $result = json_encode(getContainers());
     }
-    $app->response()->status(200);
-    $app->response()->header("Content-Type", "application/json");
-    //$result = ")]}',\n" . $result;
-    print_r($result);
+    sendSuccessResponse($app, $result);
   } catch (Exception $e) {
-    $app->response()->status(400);
-    $app->response()->header("X-Status-Reason", $e->getMessage());
+    sendErrorResponse($app, $e);
   }
 });
 
@@ -715,13 +570,9 @@ $app->get("/containers/logs/:containerId", function ($containerId) use ($app) {
   try {
     //$userId = decodeUserToken($app->request())->uid;
     $result = json_encode(getContainerLogs($containerId));
-    $app->response()->status(200);
-    $app->response()->header("Content-Type", "application/json");
-    //$result = ")]}',\n" . $result;
-    print_r($result);
+    sendSuccessResponse($app, $result);
   } catch (Exception $e) {
-    $app->response()->status(400);
-    $app->response()->header("X-Status-Reason", $e->getMessage());
+    sendErrorResponse($app, $e);
   }
 });
 
@@ -736,13 +587,9 @@ $app->post("/containers/logs", function () use ($app) {
       $containerLogId = processContainerLogUpdate($request);
     }
     $result = "{\"id_historial_recipiente\":" . $containerLogId . "}";
-    $app->response()->status(200);
-    $app->response()->header("Content-Type", "application/json");
-    //$result = ")]}',\n" . $result;
-    print_r($result);
+    sendSuccessResponse($app, $result);
   } catch (Exception $e) {
-    $app->response()->status(400);
-    $app->response()->header("X-Status-Reason", $e->getMessage());
+    sendErrorResponse($app, $e);
   }
 });
 
@@ -750,13 +597,9 @@ $app->get("/reactives", function () use ($app) {
   try {
     $userId = decodeUserToken($app->request())->uid;
     $result = json_encode(getReactives());
-    $app->response()->status(200);
-    $app->response()->header("Content-Type", "application/json");
-    //$result = ")]}',\n" . $result;
-    print_r($result);
+    sendSuccessResponse($app, $result);
   } catch (Exception $e) {
-    $app->response()->status(400);
-    $app->response()->header("X-Status-Reason", $e->getMessage());
+    sendErrorResponse($app, $e);
   }
 });
 
@@ -764,13 +607,9 @@ $app->get("/materials", function () use ($app) {
   try {
     $userId = decodeUserToken($app->request())->uid;
     $result = json_encode(getMaterials());
-    $app->response()->status(200);
-    $app->response()->header("Content-Type", "application/json");
-    //$result = ")]}',\n" . $result;
-    print_r($result);
+    sendSuccessResponse($app, $result);
   } catch (Exception $e) {
-    $app->response()->status(400);
-    $app->response()->header("X-Status-Reason", $e->getMessage());
+    sendErrorResponse($app, $e);
   }
 });
 
@@ -778,13 +617,9 @@ $app->get("/instruments/sampling", function () use ($app) {
   try {
     $userId = decodeUserToken($app->request())->uid;
     $result = json_encode(getSamplingInstruments());
-    $app->response()->status(200);
-    $app->response()->header("Content-Type", "application/json");
-    //$result = ")]}',\n" . $result;
-    print_r($result);
+    sendSuccessResponse($app, $result);
   } catch (Exception $e) {
-    $app->response()->status(400);
-    $app->response()->header("X-Status-Reason", $e->getMessage());
+    sendErrorResponse($app, $e);
   }
 });
 
@@ -792,13 +627,9 @@ $app->get("/coolers", function () use ($app) {
   try {
     $userId = decodeUserToken($app->request())->uid;
     $result = json_encode(getCoolers());
-    $app->response()->status(200);
-    $app->response()->header("Content-Type", "application/json");
-    //$result = ")]}',\n" . $result;
-    print_r($result);
+    sendSuccessResponse($app, $result);
   } catch (Exception $e) {
-    $app->response()->status(400);
-    $app->response()->header("X-Status-Reason", $e->getMessage());
+    sendErrorResponse($app, $e);
   }
 });
 
@@ -806,13 +637,9 @@ $app->get("/clouds", function () use ($app) {
   try {
     $userId = decodeUserToken($app->request())->uid;
     $result = json_encode(getClouds());
-    $app->response()->status(200);
-    $app->response()->header("Content-Type", "application/json");
-    //$result = ")]}',\n" . $result;
-    print_r($result);
+    sendSuccessResponse($app, $result);
   } catch (Exception $e) {
-    $app->response()->status(400);
-    $app->response()->header("X-Status-Reason", $e->getMessage());
+    sendErrorResponse($app, $e);
   }
 });
 
@@ -820,13 +647,9 @@ $app->get("/winds", function () use ($app) {
   try {
     $userId = decodeUserToken($app->request())->uid;
     $result = json_encode(getCurrentDirections());
-    $app->response()->status(200);
-    $app->response()->header("Content-Type", "application/json");
-    //$result = ")]}',\n" . $result;
-    print_r($result);
+    sendSuccessResponse($app, $result);
   } catch (Exception $e) {
-    $app->response()->status(400);
-    $app->response()->header("X-Status-Reason", $e->getMessage());
+    sendErrorResponse($app, $e);
   }
 });
 
@@ -834,13 +657,9 @@ $app->get("/waves", function () use ($app) {
   try {
     $userId = decodeUserToken($app->request())->uid;
     $result = json_encode(getWaves());
-    $app->response()->status(200);
-    $app->response()->header("Content-Type", "application/json");
-    //$result = ")]}',\n" . $result;
-    print_r($result);
+    sendSuccessResponse($app, $result);
   } catch (Exception $e) {
-    $app->response()->status(400);
-    $app->response()->header("X-Status-Reason", $e->getMessage());
+    sendErrorResponse($app, $e);
   }
 });
 
@@ -848,13 +667,9 @@ $app->get("/sampling/norms", function () use ($app) {
   try {
     $userId = decodeUserToken($app->request())->uid;
     $result = json_encode(getSamplingNorms());
-    $app->response()->status(200);
-    $app->response()->header("Content-Type", "application/json");
-    //$result = ")]}',\n" . $result;
-    print_r($result);
+    sendSuccessResponse($app, $result);
   } catch (Exception $e) {
-    $app->response()->status(400);
-    $app->response()->header("X-Status-Reason", $e->getMessage());
+    sendErrorResponse($app, $e);
   }
 });
 
@@ -866,13 +681,9 @@ $app->get("/points(/)(:pointId)", function ($pointId = -1) use ($app) {
     } else {
       $result = json_encode(getPoints());
     }
-    $app->response()->status(200);
-    $app->response()->header("Content-Type", "application/json");
-    //$result = ")]}',\n" . $result;
-    print_r($result);
+    sendSuccessResponse($app, $result);
   } catch (Exception $e) {
-    $app->response()->status(400);
-    $app->response()->header("X-Status-Reason", $e->getMessage());
+    sendErrorResponse($app, $e);
   }
 });
 
@@ -880,13 +691,9 @@ $app->get("/receptionists", function () use ($app) {
   try {
     $userId = decodeUserToken($app->request())->uid;
     $result = json_encode(getReceptionists());
-    $app->response()->status(200);
-    $app->response()->header("Content-Type", "application/json");
-    //$result = ")]}',\n" . $result;
-    print_r($result);
+    sendSuccessResponse($app, $result);
   } catch (Exception $e) {
-    $app->response()->status(400);
-    $app->response()->header("X-Status-Reason", $e->getMessage());
+    sendErrorResponse($app, $e);
   }
 });
 
@@ -894,13 +701,9 @@ $app->get("/analysts", function () use ($app) {
   try {
     $userId = decodeUserToken($app->request())->uid;
     $result = json_encode(getAnalysts());
-    $app->response()->status(200);
-    $app->response()->header("Content-Type", "application/json");
-    //$result = ")]}',\n" . $result;
-    print_r($result);
+    sendSuccessResponse($app, $result);
   } catch (Exception $e) {
-    $app->response()->status(400);
-    $app->response()->header("X-Status-Reason", $e->getMessage());
+    sendErrorResponse($app, $e);
   }
 });
 
@@ -912,13 +715,9 @@ $app->get("/samples(/)(:sampleId)", function ($sampleId = -1) use ($app) {
     } else {
       $result = json_encode(getSamples());
     }
-    $app->response()->status(200);
-    $app->response()->header("Content-Type", "application/json");
-    //$result = ")]}',\n" . $result;
-    print_r($result);
+    sendSuccessResponse($app, $result);
   } catch (Exception $e) {
-    $app->response()->status(400);
-    $app->response()->header("X-Status-Reason", $e->getMessage());
+    sendErrorResponse($app, $e);
   }
 });
 
@@ -926,13 +725,9 @@ $app->get("/sheet/samples/:sheetId", function ($sheetId) use ($app) {
   try {
     $userId = decodeUserToken($app->request())->uid;
     $result = json_encode(getSamplesBySheet($sheetId));
-    $app->response()->status(200);
-    $app->response()->header("Content-Type", "application/json");
-    //$result = ")]}',\n" . $result;
-    print_r($result);
+    sendSuccessResponse($app, $result);
   } catch (Exception $e) {
-    $app->response()->status(400);
-    $app->response()->header("X-Status-Reason", $e->getMessage());
+    sendErrorResponse($app, $e);
   }
 });
 
@@ -940,13 +735,9 @@ $app->get("/instruments", function () use ($app) {
   try {
     $userId = decodeUserToken($app->request())->uid;
     $result = json_encode(getInstruments());
-    $app->response()->status(200);
-    $app->response()->header("Content-Type", "application/json");
-    //$result = ")]}',\n" . $result;
-    print_r($result);
+    sendSuccessResponse($app, $result);
   } catch (Exception $e) {
-    $app->response()->status(400);
-    $app->response()->header("X-Status-Reason", $e->getMessage());
+    sendErrorResponse($app, $e);
   }
 });
 
@@ -954,13 +745,9 @@ $app->get("/containers", function () use ($app) {
   try {
     $userId = decodeUserToken($app->request())->uid;
     $result = json_encode(getContainers());
-    $app->response()->status(200);
-    $app->response()->header("Content-Type", "application/json");
-    //$result = ")]}',\n" . $result;
-    print_r($result);
+    sendSuccessResponse($app, $result);
   } catch (Exception $e) {
-    $app->response()->status(400);
-    $app->response()->header("X-Status-Reason", $e->getMessage());
+    sendErrorResponse($app, $e);
   }
 });
 
@@ -968,13 +755,9 @@ $app->get("/analysis", function () use ($app) {
   try {
     $userId = decodeUserToken($app->request())->uid;
     $result = json_encode(getAnalysis());
-    $app->response()->status(200);
-    $app->response()->header("Content-Type", "application/json");
-    //$result = ")]}',\n" . $result;
-    print_r($result);
+    sendSuccessResponse($app, $result);
   } catch (Exception $e) {
-    $app->response()->status(400);
-    $app->response()->header("X-Status-Reason", $e->getMessage());
+    sendErrorResponse($app, $e);
   }
 });
 
@@ -982,13 +765,9 @@ $app->get("/analysis/selections", function () use ($app) {
   try {
     $userId = decodeUserToken($app->request())->uid;
     $result = json_encode(getAnalysisSelections());
-    $app->response()->status(200);
-    $app->response()->header("Content-Type", "application/json");
-    //$result = ")]}',\n" . $result;
-    print_r($result);
+    sendSuccessResponse($app, $result);
   } catch (Exception $e) {
-    $app->response()->status(400);
-    $app->response()->header("X-Status-Reason", $e->getMessage());
+    sendErrorResponse($app, $e);
   }
 });
 
@@ -996,13 +775,9 @@ $app->get("/areas", function () use ($app) {
   try {
     $userId = decodeUserToken($app->request())->uid;
     $result = json_encode(getAreas());
-    $app->response()->status(200);
-    $app->response()->header("Content-Type", "application/json");
-    //$result = ")]}',\n" . $result;
-    print_r($result);
+    sendSuccessResponse($app, $result);
   } catch (Exception $e) {
-    $app->response()->status(400);
-    $app->response()->header("X-Status-Reason", $e->getMessage());
+    sendErrorResponse($app, $e);
   }
 });
 
@@ -1010,13 +785,9 @@ $app->get("/reports", function () use ($app) {
   try {
     $userId = decodeUserToken($app->request())->uid;
     $result = json_encode(getReports());
-    $app->response()->status(200);
-    $app->response()->header("Content-Type", "application/json");
-    //$result = ")]}',\n" . $result;
-    print_r($result);
+    sendSuccessResponse($app, $result);
   } catch (Exception $e) {
-    $app->response()->status(400);
-    $app->response()->header("X-Status-Reason", $e->getMessage());
+    sendErrorResponse($app, $e);
   }
 });
 
@@ -1024,13 +795,9 @@ $app->get("/employees", function () use ($app) {
   try {
     $userId = decodeUserToken($app->request())->uid;
     $result = json_encode(getEmployees());
-    $app->response()->status(200);
-    $app->response()->header("Content-Type", "application/json");
-    //$result = ")]}',\n" . $result;
-    print_r($result);
+    sendSuccessResponse($app, $result);
   } catch (Exception $e) {
-    $app->response()->status(400);
-    $app->response()->header("X-Status-Reason", $e->getMessage());
+    sendErrorResponse($app, $e);
   }
 });
 
@@ -1038,13 +805,9 @@ $app->get("/references", function () use ($app) {
   try {
     $userId = decodeUserToken($app->request())->uid;
     $result = json_encode(getReferences());
-    $app->response()->status(200);
-    $app->response()->header("Content-Type", "application/json");
-    //$result = ")]}',\n" . $result;
-    print_r($result);
+    sendSuccessResponse($app, $result);
   } catch (Exception $e) {
-    $app->response()->status(400);
-    $app->response()->header("X-Status-Reason", $e->getMessage());
+    sendErrorResponse($app, $e);
   }
 });
 
@@ -1056,13 +819,9 @@ $app->get("/methods(/)(:methodId)", function () use ($app) {
     } else {
       $result = json_encode(getMethods());
     }
-    $app->response()->status(200);
-    $app->response()->header("Content-Type", "application/json");
-    //$result = ")]}',\n" . $result;
-    print_r($result);
+    sendSuccessResponse($app, $result);
   } catch (Exception $e) {
-    $app->response()->status(400);
-    $app->response()->header("X-Status-Reason", $e->getMessage());
+    sendErrorResponse($app, $e);
   }
 });
 
@@ -1074,13 +833,9 @@ $app->get("/storages(/)(:storageId)", function ($storageId = -1) use ($app) {
     } else {
       $result = json_encode(getStorages());
     }
-    $app->response()->status(200);
-    $app->response()->header("Content-Type", "application/json");
-    //$result = ")]}',\n" . $result;
-    print_r($result);
+    sendSuccessResponse($app, $result);
   } catch (Exception $e) {
-    $app->response()->status(400);
-    $app->response()->header("X-Status-Reason", $e->getMessage());
+    sendErrorResponse($app, $e);
   }
 });
 
@@ -1088,13 +843,9 @@ $app->get("/prices", function () use ($app) {
   try {
     $userId = decodeUserToken($app->request())->uid;
     $result = json_encode(getPrices());
-    $app->response()->status(200);
-    $app->response()->header("Content-Type", "application/json");
-    //$result = ")]}',\n" . $result;
-    print_r($result);
+    sendSuccessResponse($app, $result);
   } catch (Exception $e) {
-    $app->response()->status(400);
-    $app->response()->header("X-Status-Reason", $e->getMessage());
+    sendErrorResponse($app, $e);
   }
 });
 
@@ -1106,13 +857,9 @@ $app->get("/locations(/)(:locationId)", function ($locationId = -1) use ($app) {
     } else {
       $result = json_encode(getLocations());
     }
-    $app->response()->status(200);
-    $app->response()->header("Content-Type", "application/json");
-    //$result = ")]}',\n" . $result;
-    print_r($result);
+    sendSuccessResponse($app, $result);
   } catch (Exception $e) {
-    $app->response()->status(400);
-    $app->response()->header("X-Status-Reason", $e->getMessage());
+    sendErrorResponse($app, $e);
   }
 });
 
@@ -1124,13 +871,9 @@ $app->get("/users(/)(:userId)", function ($userId = -1) use ($app) {
     } else {
       $result = json_encode(getUsers());
     }
-    $app->response()->status(200);
-    $app->response()->header("Content-Type", "application/json");
-    //$result = ")]}',\n" . $result;
-    print_r($result);
+    sendSuccessResponse($app, $result);
   } catch (Exception $e) {
-    $app->response()->status(400);
-    $app->response()->header("X-Status-Reason", $e->getMessage());
+    sendErrorResponse($app, $e);
   }
 });
 

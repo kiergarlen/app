@@ -290,11 +290,8 @@ $app->get("/jobs(/)(:jobId)", function ($jobId = -1) use ($app) {
 $app->get("/jobs/user/:userId", function ($userId) use ($app) {
   try {
     $userId = decodeUserToken($app->request())->uid;
-    $app->response()->status(200);
     $result = json_encode(getJobsByUser($userId * 1));
-    $app->response()->header("Content-Type", "application/json");
-    //$result = ")]}',\n" . $result;
-    print_r($result);
+    sendSuccessResponse($app, $result);
   } catch (Exception $e) {
     sendErrorResponse($app, $e);
   }
@@ -568,7 +565,7 @@ $app->get("/containers(/)(:containerId)", function ($containerId = -1) use ($app
 
 $app->get("/containers/logs/:containerId", function ($containerId) use ($app) {
   try {
-    //$userId = decodeUserToken($app->request())->uid;
+    $userId = decodeUserToken($app->request())->uid;
     $result = json_encode(getContainerLogs($containerId));
     sendSuccessResponse($app, $result);
   } catch (Exception $e) {

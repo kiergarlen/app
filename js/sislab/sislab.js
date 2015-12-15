@@ -1877,6 +1877,7 @@
     vm.preservations = [];
     vm.areas = [];
     vm.jobs = [];
+    vm.custodies = [];
     vm.message = '';
     vm.isDataSubmitted = false;
     vm.selectPreservations = selectPreservations;
@@ -1998,6 +1999,21 @@
               ]
             );
           });
+        /*
+        ReceptionCustodiesService
+          .query()
+          .$promise
+          .then(function success(response) {
+              var i = 0;
+              var l = 0;
+              vm.custodies = response;
+              l = vm.custodies.length;
+              for (i = 0; i < l; i += 1) {
+                vm.custodies[i]
+                vm.areas[i].
+              };
+          });
+          */
       });
 
     function approveItem() {

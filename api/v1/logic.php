@@ -1123,6 +1123,8 @@ function processReceptionUpdate($request)
   $preservations = $update["preservaciones"];
   $areas = $update["areas"];
   $jobs = $update["trabajos"];
+  //TODO: Replace with actual CustodiesbyReception
+  $custodies = $update["trabajos"];
 
   unset($update["muestras"]);
   unset($update["preservaciones"]);
@@ -1159,6 +1161,7 @@ function processReceptionUpdate($request)
     "preservations" => $preservations,
     "areas" => $areas,
     "jobs" => $jobs,
+    "custodies" => $custodies,
   );
   return $receptionUpdateData;
 }
@@ -1284,22 +1287,16 @@ function processReceptionCustodiesInsert($receptionUpdateData)
   $i = 0;
   $l = count($custodies);
 
-  $custodyData = getBlankJob();
+  $custodyData = getBlankCustody();
   $custodyData["id_estudio"] = $reception["id_estudio"];
   $custodyData["id_recepcion"] = $reception["id_recepcion"];
   $custodyData["id_trabajo"] = $reception["id_trabajo"];
-  $custodyData["id_trabajo"] = $reception["id_trabajo"];
-  $custodyData["id_area"] = $reception["id_area"];
-  $custodyData["id_usuario_entrega"] = $reception["id_usuario_actualiza"];
-  $custodyData["id_usuario_recibe"] = 0;
-  $custodyData["id_status"] = 1;
   $custodyData["id_usuario_captura"] = $reception["id_usuario_actualiza"];
-  $custodyData["id_usuario_valida"] = 0;
-  $custodyData["id_usuario_actualiza"] = 0;
-  unset($custodyData["fecha_captura"]);
   $custodyData["ip_captura"] = $reception["ip_actualiza"];
   $custodyData["host_captura"] = $reception["host_actualiza"];
+  unset($custodyData["fecha_captura"]);
   unset($custodyData["id_trabajo"]);
+  unset($custodyData["id_usuario_valida"]);
   unset($custodyData["id_usuario_actualiza"]);
   unset($custodyData["fecha_actualiza"]);
   unset($custodyData["ip_actualiza"]);
@@ -1307,9 +1304,60 @@ function processReceptionCustodiesInsert($receptionUpdateData)
 
   for ($i = 0; $i < $l; $i++) {
     $custodyData["id_area"] = $custodies[$i]->id_area;
-    $cusotdyIds[] = insertJob($custodyData);
+    $custodyIds[] = insertCustody($custodyData);
   }
-  return $cusotdyIds;
+  return $custodyIds;
+}
+
+/**
+ * @param array $receptionUpdateData
+ * @return mixed
+ */
+function processReceptionCustodiesUpdate($receptionUpdateData)
+{
+  $custodies = (array) $receptionUpdateData["custodies"];
+  $reception = (array) $receptionUpdateData["reception"];
+  $receptionId = $reception["id_recepcion"];
+  $storedCustodies = getReceptionCustodies($receptionId);
+  $custodiesByReception = getCustodiesByReception($receptionId);
+  $i = 0;
+  $l = count($storedCustodies);
+  $m = count($custodies);
+  $n = count($custodiesByReception);
+
+  if ($l < 1 && $n < 1) {
+    $custodyIds = (array) processReceptionCustodiesInsert($receptionUpdateData);
+    for ($i = 0; $i < $m; $i++) {
+      $custody = array(
+        "id_recepcion" => $custodies[$i]->id_recepcion,
+        "id_custodia" => $custodyIds[$i],
+      );
+      $insertedJobIds[] = insertReceptionCustody($custody);
+    }
+    return $insertedJobIds;
+  } else {
+    disableReceptionCustodies($receptionId);
+    for ($i = 0; $i < $m; $i++) {
+      $custody = array(
+        "id_recepcion_custodia" => $custodies[$i]->id_recepcion_custodia,
+        "id_recepcion" => $custodies[$i]->id_recepcion,
+        "id_custodia" => $custodies[$i]->id_custodia,
+      );
+      if ($custody["id_recepcion_custodia"] < 1) {
+        if ($custody["id_custodia"] < 1) {
+          $areaId = $custodies[$i]->id_area;
+          $custodyId = processReceptionJobInsert($receptionUpdateData, $areaId);
+        }
+        $custody["id_custodia"] = $custodyId;
+        unset($custody["id_recepcion_custodia"]);
+        insertReceptionJob($custody);
+      } else {
+        $custody["activo"] = 1;
+        updateReceptionJob($custody);
+      }
+    }
+  }
+  return $receptionId;
 }
 
 /**
@@ -1339,9 +1387,9 @@ function processReceptionJobsInsert($receptionUpdateData)
 
   for ($i = 0; $i < $l; $i++) {
     $jobData["id_area"] = $jobs[$i]->id_area;
-    $newJobIds[] = insertJob($jobData);
+    $jobIds[] = insertJob($jobData);
   }
-  return $newJobIds;
+  return $jobIds;
 }
 
 /**
@@ -1390,11 +1438,11 @@ function processReceptionJobsUpdate($receptionUpdateData)
   $n = count($jobsByReception);
 
   if ($l < 1 && $n < 1) {
-    $newJobIds = (array) processReceptionJobsInsert($receptionUpdateData);
+    $jobIds = (array) processReceptionJobsInsert($receptionUpdateData);
     for ($i = 0; $i < $m; $i++) {
       $job = array(
         "id_recepcion" => $jobs[$i]->id_recepcion,
-        "id_trabajo" => $newJobIds[$i],
+        "id_trabajo" => $jobIds[$i],
       );
       $insertedJobIds[] = insertReceptionJob($job);
     }

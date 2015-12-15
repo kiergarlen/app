@@ -1762,10 +1762,10 @@ function getBlankJob()
     "id_trabajo" => 0, "id_plan" => 1,
     "id_recepcion" => 1, "id_muestra" => null,
     "id_muestra_duplicada" => null, "id_area" => 1,
-    "id_usuario_entrega" => 1, "id_usuario_recibe" => 1,
+    "id_usuario_entrega" => 1, "id_usuario_recibe" => 0,
     "id_usuario_analiza" => 1, "id_usuario_registra" => 1,
-    "id_usuario_aprueba" => 1, "id_usuario_captura" => 1,
-    "id_usuario_valida" => 1, "id_usuario_actualiza" => 1,
+    "id_usuario_aprueba" => 1, "id_usuario_captura" => 0,
+    "id_usuario_valida" => 0, "id_usuario_actualiza" => 0,
     "id_status" => 1,
     "fecha" => null, "fecha_entrega" => null,
     "fecha_recibe" => null, "fecha_analiza" => null,
@@ -1780,6 +1780,41 @@ function getBlankJob()
     "activo" => 1,
   );
 }
+
+/**
+ * @param $receptionId
+ * @return mixed
+ */
+function getCustodiesByReception($receptionId)
+{
+  $sql = "SELECT id_custodia, id_estudio, id_recepcion, id_trabajo,
+    id_area, id_status, id_usuario_entrega, id_usuario_recibe,
+    id_usuario_captura, id_usuario_valida,
+    id_usuario_actualiza,
+    CONVERT(NVARCHAR, fecha_entrega, 126) AS fecha_entrega,
+    CONVERT(NVARCHAR, fecha_recibe, 126) AS fecha_recibe,
+    CONVERT(NVARCHAR, fecha_captura, 126) AS fecha_captura,
+    CONVERT(NVARCHAR, fecha_valida, 126) AS fecha_valida,
+    CONVERT(NVARCHAR, fecha_actualiza, 126) AS fecha_actualiza,
+    CONVERT(NVARCHAR, fecha_rechaza, 126) AS fecha_rechaza,
+    ip_captura, ip_valida, ip_actualiza,
+    host_captura, host_valida, host_actualiza, comentarios,
+    motivo_rechaza, activo
+    FROM Custodia
+    WHERE activo = 1 AND id_recepcion = :receptionId";
+  $db = getConnection();
+  $stmt = $db->prepare($sql);
+  $stmt->bindParam("receptionId", $receptionId);
+  $stmt->execute();
+  $custodies = $stmt->fetchAll(PDO::FETCH_ASSOC);
+  $db = null;
+  $l = count($custodies);
+  for ($i = 0; $i < $l; $i++) {
+    $custodies[$i]["selected"] = true;
+  }
+  return $custodies;
+}
+
 
 /**
  * @param $receptionId
@@ -1998,6 +2033,28 @@ function getJobSamples($jobId)
  * @param $receptionId
  * @return mixed
  */
+function getReceptionCustodies($receptionId)
+{
+  $sql = "SELECT id_recepcion_custodia, id_recepcion, id_custodia, activo
+    FROM RecepcionCustodia
+    WHERE activo = 1 AND id_recepcion = :receptionId";
+  $db = getConnection();
+  $stmt = $db->prepare($sql);
+  $stmt->bindParam("receptionId", $receptionId);
+  $stmt->execute();
+  $custodies = $stmt->fetchAll(PDO::FETCH_ASSOC);
+  $db = null;
+  $l = count($custodies);
+  for ($i = 0; $i < $l; $i++) {
+    $custodies[$i]["selected"] = true;
+  }
+  return $custodies;
+}
+
+/**
+ * @param $receptionId
+ * @return mixed
+ */
 function getReceptionJobs($receptionId)
 {
   $sql = "SELECT id_recepcion_trabajo, id_recepcion, id_trabajo, activo
@@ -2088,6 +2145,54 @@ function disableReceptionJobs($receptionId)
 }
 
 /**
+ * @param $custodyData
+ * @return mixed
+ */
+function insertReceptionCustody($custodyData)
+{
+  $sql = "INSERT INTO RecepcionCustodia (id_recepcion, id_custodia)
+    VALUES (:id_recepcion, :id_custodia)";
+  $db = getConnection();
+  $stmt = $db->prepare($sql);
+  $stmt->execute($custodyData);
+  $receptionCustodyId = $db->lastInsertId();
+  $db = null;
+  return $receptionCustodyId;
+}
+
+/**
+ * @param $updateData
+ * @return mixed
+ */
+function updateReceptionCustody($updateData)
+{
+  $sql = "UPDATE RecepcionCutodia SET id_recepcion = :id_recepcion,
+    id_custodia = :id_custodia, activo = :activo
+    WHERE id_recepcion_custodia = :id_recepcion_custodia";
+  $db = getConnection();
+  $stmt = $db->prepare($sql);
+  $stmt->execute($updateData);
+  $db = null;
+  return $updateData["id_recepcion"];
+}
+
+/**
+ * @param $receptionId
+ * @return mixed
+ */
+function disableReceptionCustodies($receptionId)
+{
+  $sql = "UPDATE RecepcionCustodia SET activo = 0
+    WHERE id_recepcion = :receptionId";
+  $db = getConnection();
+  $stmt = $db->prepare($sql);
+  $stmt->bindParam("receptionId", $receptionId);
+  $stmt->execute();
+  $db = null;
+  return $receptionId;
+}
+
+/**
  * @return mixed
  */
 function getCustodies()
@@ -2120,7 +2225,7 @@ function getBlankCustody()
   return array(
     "id_custodia" => 0, "id_estudio" => 0, "id_recepcion" => 0,
     "id_trabajo" => 0, "id_area" => 0, "id_usuario_entrega" => 0,
-    "id_usuario_recibe" => 0, "id_status" => 0,
+    "id_usuario_recibe" => 0, "id_status" => 1,
     "id_usuario_captura" => 0, "id_usuario_valida" => 0,
     "id_usuario_actualiza" => 0,
     "fecha_entrega" => null, "fecha_recibe" => null,

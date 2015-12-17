@@ -1,4 +1,3 @@
-
 /*global angular, CryptoJS*/
 (function(window, document, undefined) {
   'use strict';
@@ -1998,22 +1997,20 @@
                 'selected'
               ]
             );
+            ArrayUtilsService.setItemsFromReference(
+              vm.custodies,
+              vm.reception.custodias,
+              'id_area',
+              [
+                'id_recepcion_custodia',
+                'id_recepcion',
+                'id_custodia',
+                'fecha_entrega',
+                'activo',
+                'selected'
+              ]
+            );
           });
-        /*
-        ReceptionCustodiesService
-          .query()
-          .$promise
-          .then(function success(response) {
-              var i = 0;
-              var l = 0;
-              vm.custodies = response;
-              l = vm.custodies.length;
-              for (i = 0; i < l; i += 1) {
-                vm.custodies[i]
-                vm.areas[i].
-              };
-          });
-          */
       });
 
     function approveItem() {

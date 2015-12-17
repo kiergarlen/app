@@ -1498,6 +1498,7 @@ function getReception($receptionId)
   $reception->preservaciones = getReceptionPreservations($receptionId);
   $reception->areas = getReceptionAreas($receptionId);
   $reception->trabajos = getReceptionJobsByReception($receptionId);
+  $reception->custodias = getReceptionCustodiesByReception($receptionId);
   return $reception;
 }
 
@@ -2037,6 +2038,29 @@ function getReceptionCustodies($receptionId)
 {
   $sql = "SELECT id_recepcion_custodia, id_recepcion, id_custodia, activo
     FROM RecepcionCustodia
+    WHERE activo = 1 AND id_recepcion = :receptionId";
+  $db = getConnection();
+  $stmt = $db->prepare($sql);
+  $stmt->bindParam("receptionId", $receptionId);
+  $stmt->execute();
+  $custodies = $stmt->fetchAll(PDO::FETCH_ASSOC);
+  $db = null;
+  $l = count($custodies);
+  for ($i = 0; $i < $l; $i++) {
+    $custodies[$i]["selected"] = true;
+  }
+  return $custodies;
+}
+
+/**
+ * @param $receptionId
+ * @return mixed
+ */
+function getReceptionCustodiesByReception($receptionId)
+{
+  $sql = "SELECT id_recepcion_custodia, id_recepcion, id_custodia, id_area,
+    activo, area, fecha_entrega
+    FROM viewCustodiaRecepcion
     WHERE activo = 1 AND id_recepcion = :receptionId";
   $db = getConnection();
   $stmt = $db->prepare($sql);

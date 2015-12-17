@@ -3,6 +3,7 @@
 define("KEY", "m0oxUT7L8Unn93hXMUGHpwq_jTSKVBjQfEVCUe8jZ38KUU4VSAfmsNk4JJYcJl7CukrY6QMlixxwat7AZSpDcSQ");
 
 /**
+ * processUserJwt
  * @param mixed $request
  * @return mixed
  */
@@ -39,6 +40,7 @@ function processUserJwt($request)
 }
 
 /**
+ * decodeJwt
  * @param mixed $jwt
  * @return array
  */
@@ -48,6 +50,7 @@ function decodeJwt($jwt)
 }
 
 /**
+ * extractDataFromRequest
  * @param mixed $request
  */
 function extractDataFromRequest($request)
@@ -56,6 +59,7 @@ function extractDataFromRequest($request)
 }
 
 /**
+ * decodeUserToken
  * @param mixed $request
  * @return mixed
  */
@@ -86,6 +90,7 @@ function decodeUserToken($request)
 }
 
 /**
+ * processMenuToJson
  * @param mixed $items
  * @return mixed
  */
@@ -129,6 +134,7 @@ function processMenuToJson($items)
 }
 
 /**
+ * isoDateToMsSql
  * @param string $dateString
  * @return mixed
  */
@@ -157,6 +163,7 @@ function isoDateToMsSql($dateString)
 }
 
 /**
+ * processStudyInsert
  * @param mixed $request
  * @return mixed
  */
@@ -220,6 +227,7 @@ function processStudyInsert($request)
 }
 
 /**
+ * processStudyOrderInsert
  * @param array $studyInsertData
  * @param int $studyId
  * @return mixed
@@ -247,6 +255,7 @@ function processStudyOrderInsert($studyInsertData, $studyId)
 }
 
 /**
+ * processStudyUpdate
  * @param mixed $request
  * @return mixed
  */
@@ -289,6 +298,7 @@ function processStudyUpdate($request)
 }
 
 /**
+ * processStudyOrderUpdate
  * @param array $studyUpdateData
  * @return mixed
  */
@@ -339,6 +349,7 @@ function processStudyOrderUpdate($studyUpdateData)
 }
 
 /**
+ * processNewOrderInsert
  * @param array $newOrder
  * @param mixed $study
  */
@@ -375,6 +386,7 @@ function processNewOrderInsert($newOrder, $study)
 }
 
 /**
+ * processOrderUpdate
  * @param mixed $request
  * @return mixed
  */
@@ -417,6 +429,7 @@ function processOrderUpdate($request)
 }
 
 /**
+ * processOrderPlansUpdate
  * @param array $orderUpdateData
  * @return mixed
  */
@@ -487,6 +500,7 @@ function processOrderPlansUpdate($orderUpdateData)
 }
 
 /**
+ * processPlanUpdate
  * @param mixed $request
  * @return mixed
  */
@@ -553,6 +567,7 @@ function processPlanUpdate($request)
 }
 
 /**
+ * processPlanSheetInsert
  * @param array $planUpdateData
  * @return mixed
  */
@@ -585,6 +600,7 @@ function processPlanSheetInsert($planUpdateData)
 }
 
 /**
+ * processPlanReceptionInsert
  * @param array $planUpdateData
  * @return mixed
  */
@@ -618,6 +634,7 @@ function processPlanReceptionInsert($planUpdateData)
 }
 
 /**
+ * processPlanSheetSampleInsert
  * @param array $planUpdateData
  * @return mixed
  */
@@ -672,6 +689,7 @@ function processPlanSheetSampleInsert($planUpdateData)
 }
 
 /**
+ * processPlanInstrumentsUpdate
  * @param array $planUpdateData
  * @return mixed
  */
@@ -720,6 +738,7 @@ function processPlanInstrumentsUpdate($planUpdateData)
 }
 
 /**
+ * processPlanPreservationsUpdate
  * @param array $planUpdateData
  * @return mixed
  */
@@ -765,6 +784,7 @@ function processPlanPreservationsUpdate($planUpdateData)
 }
 
 /**
+ * processPlanContainersUpdate
  * @param array $planUpdateData
  * @return mixed
  */
@@ -844,6 +864,7 @@ function processPlanContainersUpdate($planUpdateData)
 }
 
 /**
+ * processPlanReactivesUpdate
  * @param array $planUpdateData
  * @return mixed
  */
@@ -868,6 +889,7 @@ function processPlanReactivesUpdate($planUpdateData)
 }
 
 /**
+ * processPlanMaterialsUpdate
  * @param array $planUpdateData
  * @return mixed
  */
@@ -890,6 +912,7 @@ function processPlanMaterialsUpdate($planUpdateData)
 }
 
 /**
+ * processPlanCoolersUpdate
  * @param array $planUpdateData
  * @return mixed
  */
@@ -912,6 +935,7 @@ function processPlanCoolersUpdate($planUpdateData)
 }
 
 /**
+ * processSheetUpdate
  * @param mixed $request
  * @return mixed
  */
@@ -957,6 +981,7 @@ function processSheetUpdate($request)
 }
 
 /**
+ * processSheetReceptionUpdate
  * @param array $sheetUpdateData
  * @return mixed
  */
@@ -977,6 +1002,7 @@ function processSheetReceptionUpdate($sheetUpdateData)
 }
 
 /**
+ * processSheetResultsUpdate
  * @param array $sheetUpdateData
  * @return mixed
  */
@@ -1053,6 +1079,7 @@ function processSheetResultsUpdate($sheetUpdateData)
 }
 
 /**
+ * processSheetPreservationsUpdate
  * @param array $sheetUpdateData
  * @return mixed
  */
@@ -1111,6 +1138,7 @@ function processSheetPreservationsUpdate($sheetUpdateData)
 }
 
 /**
+ * processReceptionUpdate
  * @param mixed $request
  * @return mixed
  */
@@ -1167,6 +1195,7 @@ function processReceptionUpdate($request)
 }
 
 /**
+ * processReceptionSamplesUpdate
  * @param array $receptionUpdateData
  * @return mixed
  */
@@ -1202,6 +1231,7 @@ function processReceptionSamplesUpdate($receptionUpdateData)
 }
 
 /**
+ * processReceptionPreservationsUpdate
  * @param array $receptionUpdateData
  * @return mixed
  */
@@ -1237,6 +1267,7 @@ function processReceptionPreservationsUpdate($receptionUpdateData)
 }
 
 /**
+ * processReceptionAreasUpdate
  * @param array $receptionUpdateData
  * @return mixed
  */
@@ -1276,6 +1307,7 @@ function processReceptionAreasUpdate($receptionUpdateData)
 }
 
 /**
+ * processReceptionCustodiesInsert
  * @param array $receptionUpdateData
  * @return mixed
  */
@@ -1310,6 +1342,7 @@ function processReceptionCustodiesInsert($receptionUpdateData)
 }
 
 /**
+ * processReceptionCustodiesUpdate
  * @param array $receptionUpdateData
  * @return mixed
  */
@@ -1361,6 +1394,7 @@ function processReceptionCustodiesUpdate($receptionUpdateData)
 }
 
 /**
+ * processReceptionJobsInsert
  * @param array $receptionUpdateData
  * @return mixed
  */
@@ -1393,6 +1427,7 @@ function processReceptionJobsInsert($receptionUpdateData)
 }
 
 /**
+ * processReceptionJobInsert
  * @param array $receptionUpdateData
  * @param mixed $areaId
  */
@@ -1422,6 +1457,7 @@ function processReceptionJobInsert($receptionUpdateData, $areaId)
 }
 
 /**
+ * processReceptionJobsUpdate
  * @param array $receptionUpdateData
  * @return mixed
  */
@@ -1473,6 +1509,7 @@ function processReceptionJobsUpdate($receptionUpdateData)
 }
 
 /**
+ * processCustodyInsert
  * @param mixed $request
  * @return mixed
  */
@@ -1509,6 +1546,7 @@ function processCustodyInsert($request)
 }
 
 /**
+ * processContainerLogInsert
  * @param mixed $request
  * @return mixed
  */
@@ -1532,6 +1570,7 @@ function processContainerLogInsert($request)
 }
 
 /**
+ * processContainerLogUpdate
  * @param mixed $request
  * @return mixed
  */

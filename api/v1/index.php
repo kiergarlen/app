@@ -265,6 +265,7 @@ $app->post("/receptions", function () use ($app) {
       processReceptionPreservationsUpdate($receptionUpdateData);
       processReceptionAreasUpdate($receptionUpdateData);
       processReceptionJobsUpdate($receptionUpdateData);
+      //processReceptionCustodiesUpdate($receptionUpdateData);
     }
     $result = "{\"id_recepcion\":" . $receptionId . "}";
     sendSuccessResponse($app, $result);

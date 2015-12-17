@@ -1152,12 +1152,13 @@ function processReceptionUpdate($request)
   $areas = $update["areas"];
   $jobs = $update["trabajos"];
   //TODO: Replace with actual CustodiesbyReception
-  $custodies = $update["trabajos"];
+  $custodies = $update["custodias"];
 
   unset($update["muestras"]);
   unset($update["preservaciones"]);
   unset($update["areas"]);
   unset($update["trabajos"]);
+  unset($update["custodias"]);
 
   unset($update["id_usuario_captura"]);
   unset($update["fecha_captura"]);
@@ -1594,4 +1595,3 @@ function processContainerLogUpdate($request)
   $logId = updateContainerLog($log);
   return $logId;
 }
-

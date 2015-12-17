@@ -330,9 +330,10 @@
           data-ng-model="job.selected"
           >
           {{job.area}}
+          <br>
           <small class="text-muted"
             data-ng-show="job.fecha_entrega.length > 9">
-            Entregada: {{job.fecha_entrega}}
+            Entregada: {{job.fecha_entrega | date: 'yyyy-MM-dd'}}
           </small>
       </label>
     </div>
@@ -349,9 +350,10 @@
           data-ng-model="custody.selected"
           >
           {{custody.area}}
+          <br>
           <small class="text-muted"
             data-ng-show="custody.fecha_entrega.length > 9">
-            Entregada: {{custody.fecha_entrega}}
+            Entregada: {{custody.fecha_entrega | date: 'yyyy-MM-dd'}}
           </small>
       </label>
     </div>

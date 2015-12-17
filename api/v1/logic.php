@@ -1151,7 +1151,6 @@ function processReceptionUpdate($request)
   $preservations = $update["preservaciones"];
   $areas = $update["areas"];
   $jobs = $update["trabajos"];
-  //TODO: Replace with actual CustodiesbyReception
   $custodies = $update["custodias"];
 
   unset($update["muestras"]);
@@ -1360,27 +1359,28 @@ function processReceptionCustodiesUpdate($receptionUpdateData)
   $n = count($custodiesByReception);
 
   if ($l < 1 && $n < 1) {
-    $custodyIds = (array) processReceptionCustodiesInsert($receptionUpdateData);
-    for ($i = 0; $i < $m; $i++) {
-      $custody = array(
-        "id_recepcion" => $custodies[$i]->id_recepcion,
-        "id_custodia" => $custodyIds[$i],
-      );
-      $insertedJobIds[] = insertReceptionCustody($custody);
-    }
-    return $insertedJobIds;
+    // $custodyIds = (array) processReceptionCustodiesInsert($receptionUpdateData);
+    // for ($i = 0; $i < $m; $i++) {
+    //   $custody = array(
+    //     "id_recepcion" => $custodies[$i]->id_recepcion,
+    //     "id_custodia" => $custodyIds[$i],
+    //   );
+    //   $insertedCustodiesIds[] = insertReceptionCustody($custody);
+    // }
+    // return $insertedCustodiesIds;
   } else {
-    disableReceptionCustodies($receptionId);
+    //disableReceptionCustodies($receptionId);
     for ($i = 0; $i < $m; $i++) {
       $custody = array(
         "id_recepcion_custodia" => $custodies[$i]->id_recepcion_custodia,
         "id_recepcion" => $custodies[$i]->id_recepcion,
         "id_custodia" => $custodies[$i]->id_custodia,
       );
+      return $custody;
       if ($custody["id_recepcion_custodia"] < 1) {
         if ($custody["id_custodia"] < 1) {
           $areaId = $custodies[$i]->id_area;
-          $custodyId = processReceptionJobInsert($receptionUpdateData, $areaId);
+          $custodyId = processReceptionCustodyInsert($receptionUpdateData, $areaId);
         }
         $custody["id_custodia"] = $custodyId;
         unset($custody["id_recepcion_custodia"]);
@@ -1540,7 +1540,7 @@ function processCustodyInsert($request)
     "host_valida" => $insertData["host_valida"],
     "comentarios" => $insertData["comentarios"],
     "motivo_rechaza" => $insertData["motivo_rechaza"],
-    "activo" => 1
+    "activo" => 1,
   );
   $custodyId = insertCustody($custody);
   return $custodyId;
@@ -1564,7 +1564,7 @@ function processContainerLogInsert($request)
     "id_usuario_captura" => $token->uid,
     "volumen" => $insertData["volumen"],
     "ip_captura" => $request->getIp(),
-    "host_captura" => $request->getUrl()
+    "host_captura" => $request->getUrl(),
   );
   $newLogId = insertContainerLog($log);
   return $newLogId;
@@ -1590,8 +1590,44 @@ function processContainerLogUpdate($request)
     "volumen" => $updateData["volumen"],
     "ip_actualiza" => $request->getIp(),
     "host_actualiza" => $request->getUrl(),
-    "activo" => $updateData["activo"]
+    "activo" => $updateData["activo"],
   );
   $logId = updateContainerLog($log);
   return $logId;
+}
+
+/**
+ * processReceptionCustodyInsert
+ * @param array $receptionUpdateData
+ * @param mixed $areaId
+ */
+function processReceptionCustodyInsert($receptionUpdateData, $areaId)
+{
+  $reception = (array) $receptionUpdateData["reception"];
+  $custodies = (array) $receptionUpdateData["custodies"];
+  $receptionId = $reception["id_recepcion"];
+  $i = 0;
+  $l = count($custodies);
+
+  /*
+  $reception["id_recepcion"],
+  $reception["id_orden"],
+  $reception["id_plan"],
+  $reception["id_hoja"],
+  */
+
+  // $custodyData = getBlankCustody();
+  // $custodyData["id_recepcion"] = $reception["id_recepcion"];
+  // $custodyData["id_usuario_captura"] = $reception["id_usuario_actualiza"];
+  // $custodyData["ip_captura"] = $reception["ip_actualiza"];
+  // $custodyData["host_captura"] = $reception["host_actualiza"];
+  // unset($custodyData["id_custodia"]);
+  // unset($custodyData["fecha_captura"]);
+  // unset($custodyData["id_usuario_actualiza"]);
+  // unset($custodyData["fecha_actualiza"]);
+  // unset($custodyData["ip_actualiza"]);
+  // unset($custodyData["host_actualiza"]);
+
+  // $custodyData["id_area"] = $areaId;
+  // return insertCustody($custodyData);
 }

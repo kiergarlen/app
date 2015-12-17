@@ -1400,7 +1400,7 @@ function getBlankReception()
  */
 function getPlainReception($receptionId)
 {
-  $sql = "SELECT id_recepcion, id_orden, id_plan, id_hoja,
+  $sql = "SELECT                                  ,
     id_recepcionista, id_verificador, id_muestra_validacion,
     id_status, id_usuario_captura, id_usuario_valida,
     id_usuario_entrega, id_usuario_actualiza,
@@ -2366,26 +2366,20 @@ function getCustodyContainers($custodyId)
  */
 function insertCustody($custodyData)
 {
-  $sql = "INSERT INTO Custodia (id_custodia, id_estudio,
-    id_recepcion, id_trabajo, id_area, id_status,
-    id_usuario_entrega, id_usuario_recibe, id_usuario_captura,
-    id_usuario_valida,
-    fecha_entrega, fecha_recibe,
+  $sql = "INSERT INTO Custodia (id_estudio, id_recepcion, id_trabajo,
+    id_area, id_status, id_usuario_entrega, id_usuario_recibe,
+    id_usuario_captura, id_usuario_valida,
+    fecha_entrega, fecha_recibe, fecha_captura,
     fecha_valida, fecha_rechaza,
-    ip_captura, ip_valida,
-    host_captura, host_valida,
-    comentarios, motivo_rechaza, activo
-    )
-    VALUES (:id_custodia, :id_estudio,
-    :id_recepcion, :id_trabajo, :id_area, :id_status,
-    :id_usuario_entrega, :id_usuario_recibe, :id_usuario_captura,
-    :id_usuario_valida,
+    ip_captura, ip_valida, host_captura, host_valida,
+    comentarios, motivo_rechaza, activo)
+    VALUES (:id_estudio, :id_recepcion, :id_trabajo,
+    :id_area, :id_status, :id_usuario_entrega, :id_usuario_recibe,
+    :id_usuario_captura, :id_usuario_valida,
     :fecha_entrega, :fecha_recibe, SYSDATETIMEOFFSET(),
     :fecha_valida, :fecha_rechaza,
-    :ip_captura, :ip_valida,
-    :host_captura, :host_valida,
-    :comentarios, :motivo_rechaza, :activo
-    )";
+    :ip_captura, :ip_valida, :host_captura, :host_valida,
+    :comentarios, :motivo_rechaza, :activo)";
   $db = getConnection();
   $stmt = $db->prepare($sql);
   $stmt->execute($custodyData);

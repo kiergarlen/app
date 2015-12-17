@@ -1882,6 +1882,7 @@
     vm.selectPreservations = selectPreservations;
     vm.selectAreas = selectAreas;
     vm.selectJobs = selectJobs;
+    vm.selectCustodies = selectCustodies;
     vm.approveItem = approveItem;
     vm.rejectItem = rejectItem;
     vm.submitForm = submitForm;
@@ -1964,6 +1965,16 @@
                 id_recepcion_trabajo: 0,
                 id_recepcion: vm.reception.id_recepcion,
                 id_trabajo: 0,
+                id_area: vm.areas[i].id_area,
+                area: vm.areas[i].area,
+                fecha_entrega: null,
+                activo: 0,
+                selected: false
+              };
+              vm.custodies[i] = {
+                id_recepcion_custodia: 0,
+                id_recepcion: vm.reception.id_recepcion,
+                id_custodia: 0,
                 id_area: vm.areas[i].id_area,
                 area: vm.areas[i].area,
                 fecha_entrega: null,
@@ -2100,10 +2111,21 @@
       ).slice();
     }
 
+    function selectCustodies() {
+      vm.reception.custodias = [];
+      vm.reception.custodias = ArrayUtilsService
+      .selectItemsFromCollection(
+        vm.custodies,
+        'selected',
+        true
+      ).slice();
+    }
+
     function submitForm() {
       vm.selectPreservations();
       vm.selectAreas();
       vm.selectJobs();
+      vm.selectCustodies();
 
       if (isFormValid() && !vm.isDataSubmitted) {
         vm.isDataSubmitted = true;

@@ -20,7 +20,7 @@
   /**
    * @name config
    * @desc Configuración de AngularJS
-   * @param {Object} $routeProvider - Proveedor, manejo de rutas de la applicación
+   * @param {Object} $routeProvider - Proveedor, manejo de rutas
    * @param {Object} $httpProvider - Proveedor, manejo de peticiones HTTP
    * @param {Object} jwtInterceptorProvider - Proveedor, intercepción de JWT
    * @param {Object} $collapseProvider - Proveedor, Angular-strap Collapse

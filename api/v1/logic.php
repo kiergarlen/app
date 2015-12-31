@@ -1318,25 +1318,46 @@ function processReceptionCustodiesInsert($receptionUpdateData)
   $receptionId = $reception["id_recepcion"];
   $i = 0;
   $l = count($custodies);
-
+  return $custodies;
   $custodyData = getBlankCustody();
-  $custodyData["id_estudio"] = $reception["id_estudio"];
   $custodyData["id_recepcion"] = $reception["id_recepcion"];
   $custodyData["id_trabajo"] = $reception["id_trabajo"];
   $custodyData["id_usuario_captura"] = $reception["id_usuario_actualiza"];
   $custodyData["ip_captura"] = $reception["ip_actualiza"];
   $custodyData["host_captura"] = $reception["host_actualiza"];
+  unset($custodyData['$$hashKey']);
+  unset($custodyData["area"]);
+  unset($custodyData["id_custodia"]);
   unset($custodyData["fecha_captura"]);
-  unset($custodyData["id_trabajo"]);
   unset($custodyData["id_usuario_valida"]);
   unset($custodyData["id_usuario_actualiza"]);
   unset($custodyData["fecha_actualiza"]);
   unset($custodyData["ip_actualiza"]);
   unset($custodyData["host_actualiza"]);
+/*
+$$hashKey: "object:229"
+activo: "1"
+area: "Fisicoquímico"
+fecha_entrega: "2015-09-12 14:05:00.000 -05:00"
+id_area: "1"
+id_custodia: "1"
+id_recepcion: "12"
+id_recepcion_custodia: "1"
+selected: true
+
+id_recepcion, id_trabajo,
+    id_area, id_status, id_usuario_entrega, id_usuario_recibe,
+    id_usuario_captura, id_usuario_valida,
+    fecha_entrega, fecha_recibe, fecha_captura,
+    fecha_valida, fecha_rechaza,
+    ip_captura, ip_valida, host_captura, host_valida,
+    comentarios, motivo_rechaza, activo
+    */
 
   for ($i = 0; $i < $l; $i++) {
     $custodyData["id_area"] = $custodies[$i]->id_area;
-    $custodyIds[] = insertCustody($custodyData);
+    $custodyIds[] = ($custodyData);
+    //$custodyIds[] = insertCustody($custodyData);
   }
   return $custodyIds;
 }
@@ -1357,8 +1378,11 @@ function processReceptionCustodiesUpdate($receptionUpdateData)
   $l = count($storedCustodies);
   $m = count($custodies);
   $n = count($custodiesByReception);
+  $l = 0;
+  $n = 0;
 
   if ($l < 1 && $n < 1) {
+    return processReceptionCustodiesInsert($receptionUpdateData);
     // $custodyIds = (array) processReceptionCustodiesInsert($receptionUpdateData);
     // for ($i = 0; $i < $m; $i++) {
     //   $custody = array(
@@ -1369,6 +1393,7 @@ function processReceptionCustodiesUpdate($receptionUpdateData)
     // }
     // return $insertedCustodiesIds;
   } else {
+    return $storedCustodies;
     //disableReceptionCustodies($receptionId);
     for ($i = 0; $i < $m; $i++) {
       $custody = array(

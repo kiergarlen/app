@@ -260,15 +260,14 @@ $app->post("/receptions", function () use ($app) {
     $receptionId = extractDataFromRequest($request)->id_recepcion;
     if ($receptionId > 0) {
       $receptionUpdateData = processReceptionUpdate($request);
-      // $receptionId = updateReception($receptionUpdateData["reception"]);
-      // processReceptionSamplesUpdate($receptionUpdateData);
-      // processReceptionPreservationsUpdate($receptionUpdateData);
-      // processReceptionAreasUpdate($receptionUpdateData);
-      // processReceptionJobsUpdate($receptionUpdateData);
-      // processReceptionCustodiesUpdate($receptionUpdateData);
+      $receptionId = updateReception($receptionUpdateData["reception"]);
+      processReceptionSamplesUpdate($receptionUpdateData);
+      processReceptionPreservationsUpdate($receptionUpdateData);
+      processReceptionAreasUpdate($receptionUpdateData);
+      processReceptionJobsUpdate($receptionUpdateData);
+      processReceptionCustodiesUpdate($receptionUpdateData);
     }
-    $result = json_encode(processReceptionCustodiesUpdate($receptionUpdateData));
-    //$result = "{\"id_recepcion\":" . $receptionId . "}";
+    $result = "{\"id_recepcion\":" . $receptionId . "}";
     sendSuccessResponse($app, $result);
   } catch (Exception $e) {
     sendErrorResponse($app, $e);

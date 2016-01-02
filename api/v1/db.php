@@ -1400,7 +1400,7 @@ function getBlankReception()
  */
 function getPlainReception($receptionId)
 {
-  $sql = "SELECT                                  ,
+  $sql = "SELECT id_recepcion, id_orden, id_plan, id_hoja,
     id_recepcionista, id_verificador, id_muestra_validacion,
     id_status, id_usuario_captura, id_usuario_valida,
     id_usuario_entrega, id_usuario_actualiza,
@@ -2190,7 +2190,7 @@ function insertReceptionCustody($custodyData)
  */
 function updateReceptionCustody($updateData)
 {
-  $sql = "UPDATE RecepcionCutodia SET id_recepcion = :id_recepcion,
+  $sql = "UPDATE RecepcionCustodia SET id_recepcion = :id_recepcion,
     id_custodia = :id_custodia, activo = :activo
     WHERE id_recepcion_custodia = :id_recepcion_custodia";
   $db = getConnection();
@@ -2221,7 +2221,7 @@ function disableReceptionCustodies($receptionId)
  */
 function getCustodies()
 {
-  $sql = "SELECT id_custodia, id_estudio, id_recepcion, id_trabajo,
+  $sql = "SELECT id_custodia, id_recepcion, id_trabajo,
     id_area, id_status, id_usuario_entrega, id_usuario_recibe,
     id_usuario_captura, id_usuario_valida,
     id_usuario_actualiza,
@@ -2247,9 +2247,9 @@ function getCustodies()
 function getBlankCustody()
 {
   return array(
-    "id_custodia" => 0, "id_recepcion" => 0,
-    "id_trabajo" => 0, "id_area" => 0, "id_usuario_entrega" => 0,
-    "id_usuario_recibe" => 0, "id_status" => 1,
+    "id_custodia" => 0, "id_recepcion" => 0, "id_trabajo" => 0,
+    "id_area" => 0, "id_status" => 1,
+    "id_usuario_entrega" => 0, "id_usuario_recibe" => 0,
     "id_usuario_captura" => 0, "id_usuario_valida" => 0,
     "id_usuario_actualiza" => 0,
     "fecha_entrega" => null, "fecha_recibe" => null,
@@ -2267,7 +2267,7 @@ function getBlankCustody()
  */
 function getPlainCustody($custodyId)
 {
-  $sql = "SELECT id_custodia, id_estudio, id_recepcion, id_trabajo,
+  $sql = "SELECT id_custodia, id_recepcion, id_trabajo,
     id_area, id_status, id_usuario_entrega, id_usuario_recibe,
     id_usuario_captura, id_usuario_valida,
     id_usuario_actualiza,

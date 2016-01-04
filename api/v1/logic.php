@@ -1620,6 +1620,70 @@ function processCustodyUpdate($request)
 }
 
 /**
+ * processCustodyContainers
+ * @param mixed $request
+ * @return mixed
+ */
+function processCustodyContainers($custodyUpdateData)
+{
+  $custody = (array) $custodyUpdateData["custody"];
+  $containers = (array) $custodyUpdateData["containers"];
+  $custodyId = $custody["id_custodia"];
+  // $storedContainers = getCustodyContainers($custodyId);
+
+  $i = 0;
+  $j = 0;
+  $l = count($containers);
+  $m = 0;
+
+  $containerData = array(
+    "id_recipiente" => 0,
+    "id_almacenamiento" => 1,
+    "id_usuario_actualiza" => $custody["id_usuario_actualiza"],
+    "ip_actualiza" => $custody["ip_actualiza"],
+    "host_actualiza" => $custody["host_actualiza"]
+  );
+
+  for ($i = 0; $i < $l; $i++) {
+    $container = $containers[$i];
+    $containerData["id_recipiente"] = $container->id_recipiente;
+    $containerData["id_almacenamiento"] = $container->id_almacenamiento;
+    $containerIds[] = updateContainerStorage($containerData);
+    $containersData[] = $containerData;
+
+
+    $containerId = $container->id_recipiente;
+
+    if (isset($container->historial) || property_exists($container, "historial")) {
+
+      $logs = $container->historial;
+      $m = count($logs);
+
+      for ($j = 0; $j < $m; $j++) {
+        if ($logs[$j]->id_historial_recipiente < 1) {
+          // INSERT only
+          $logIds[] = insertContainerLog(array(
+            "id_custodia" => $custodyId,
+            "id_muestra" => $container->id_muestra,
+            "id_recipiente" => $container->id_recipiente,
+            "id_parametro" => $logs[$j]->id_parametro,
+            "id_analista" => $logs[$j]->id_analista,
+            "id_usuario_captura" => $custody["id_usuario_actualiza"],
+            "volumen" => $logs[$j]->volumen,
+            "fecha" => $logs[$j]->fecha,
+            "ip_captura" => $custody["ip_actualiza"],
+            "host_captura" => $custody["host_actualiza"],
+          ));
+        } else {
+          // UPDATE disabled until request
+        }
+      }
+    }
+  }
+  return $custodyId;
+}
+
+/**
  * processContainerLogInsert
  * @param mixed $request
  * @return mixed

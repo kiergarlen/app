@@ -2342,7 +2342,7 @@ function getCustodyContainers($custodyId)
 {
   $sql = "SELECT id_custodia, id_recepcion, id_muestra, id_recipiente,
     id_tipo_recipiente, id_preservacion, id_tipo_preservacion,
-    id_almacenamiento, id_status_recipiente, tipo_muestreo,
+    id_almacenamiento, id_status_recipiente,
     preservacion, tipo_preservacion, almacenamiento,
     status_recipiente,
     id_usuario_captura, id_usuario_actualiza,
@@ -3385,6 +3385,24 @@ function updateContainer($updateData)
 }
 
 /**
+ * @param $updateData
+ * @return mixed
+ */
+function updateContainerStorage($updateData)
+{
+  $sql = "UPDATE Recipiente SET id_almacenamiento = :id_almacenamiento,
+    id_usuario_actualiza = :id_usuario_actualiza,
+    fecha_actualiza = SYSDATETIMEOFFSET(), ip_actualiza = :ip_actualiza,
+    host_actualiza = :host_actualiza
+    WHERE id_recipiente = :id_recipiente";
+  $db = getConnection();
+  $stmt = $db->prepare($sql);
+  $stmt->execute($updateData);
+  $db = null;
+  return $updateData["id_recipiente"];
+}
+
+/**
  * @param $containerData
  * @return mixed
  */
@@ -3465,10 +3483,10 @@ function insertContainerLog($insertData)
 {
   $sql = "INSERT INTO HistorialRecipiente (id_custodia, id_muestra,
     id_recipiente, id_parametro, id_analista, id_usuario_captura,
-    volumen, fecha, ip_captura, host_captura)
+    volumen, fecha, fecha_captura, ip_captura, host_captura)
     VALUES (:id_custodia, :id_muestra,
     :id_recipiente, :id_parametro, :id_analista, :id_usuario_captura,
-    :volumen, :ip_captura, :host_captura)";
+    :volumen, :fecha, SYSDATETIMEOFFSET(), :ip_captura, :host_captura)";
   $db = getConnection();
   $stmt = $db->prepare($sql);
   $stmt->execute($insertData);

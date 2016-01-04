@@ -57,9 +57,10 @@ $app->get("/tasks", function () use ($app) {
 $app->get("/studies(/)(:studyId)", function ($studyId = -1) use ($app) {
   try {
     $userId = decodeUserToken($app->request())->uid;
-    $result = json_encode(getBlankStudy());
-    if ($studyId > -1) {
+    if ($studyId > 0) {
       $result = json_encode(getStudy($studyId));
+    } else if ($studyId == 0) {
+      $result = json_encode(getBlankStudy());
     } else {
       $result = json_encode(getStudies());
     }
@@ -337,11 +338,9 @@ $app->post("/custodies", function () use ($app) {
     if ($custodyId > 0) {
       $custodyUpdateData = processCustodyUpdate($request);
       $custodyId = updateCustody($custodyUpdateData["custody"]);
-      // processCustodyContainerLogs($custodyUpdateData);
+      processCustodyContainers($custodyUpdateData);
     }
     $result = "{\"id_custodia\":" . $custodyId . "}";
-    // $requestData = $custodyUpdateData["custody"];
-    // $result = json_encode($requestData);
     sendSuccessResponse($app, $result);
   } catch (Exception $e) {
     sendErrorResponse($app, $e);

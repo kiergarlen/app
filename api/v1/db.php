@@ -2413,7 +2413,7 @@ function updateCustody($updateData)
   $stmt = $db->prepare($sql);
   $stmt->execute($updateData);
   $db = null;
-  return $updateData["id_hoja"];
+  return $updateData["id_recepcion"];
 }
 
 /**
@@ -2590,6 +2590,25 @@ function getParametersField()
     precio, activo
     FROM Parametro
     WHERE activo = 1 AND id_area = 4";
+  $db = getConnection();
+  $stmt = $db->prepare($sql);
+  $stmt->execute();
+  $parameters = $stmt->fetchAll(PDO::FETCH_ASSOC);
+  $db = null;
+  return $parameters;
+}
+
+/**
+ * @return mixed
+ */
+function getParametersLab()
+{
+  $sql = "SELECT id_parametro, id_tipo_matriz, id_area,
+    id_tipo_preservacion, id_metodo, id_unidad, id_tipo_valor,
+    parametro, param, caducidad, limite_entrega, acreditado,
+    precio, activo
+    FROM Parametro
+    WHERE activo = 1 AND id_area <> 4";
   $db = getConnection();
   $stmt = $db->prepare($sql);
   $stmt->execute();
@@ -2901,6 +2920,21 @@ function updateReceptionSample($updateData)
 }
 
 /**
+ * @param $updateData
+ * @return mixed
+ */
+function updateSampleReceptionId($updateData)
+{
+  $sql = "UPDATE Muestra SET id_recepcion = :id_recepcion,
+    WHERE id_muestra = :id_muestra";
+  $db = getConnection();
+  $stmt = $db->prepare($sql);
+  $stmt->execute($updateData);
+  $db = null;
+  return $updateData["id_muestra"];
+}
+
+/**
  * @param $sheetId
  * @return mixed
  */
@@ -3209,6 +3243,34 @@ function getMatrix($matrixId)
 /**
  * @return mixed
  */
+function getBlankContainer()
+{
+  return array(
+    "id_recipiente" => 0,
+    "id_plan" => 0,
+    "id_recepcion" => 0,
+    "id_muestra" => 0,
+    "id_tipo_recipiente" => 1,
+    "id_preservacion" => 1,
+    "id_almacenamiento" => 1,
+    "id_status_recipiente" => 1,
+    "id_usuario_captura" => 0,
+    "id_usuario_actualiza" => 0,
+    "volumen" => 0,
+    "volumen_inicial" => 0,
+    "fecha_captura" => NULL,
+    "fecha_actualiza" => NULL,
+    "ip_captura" => "",
+    "ip_actualiza" => "",
+    "host_captura" => "",
+    "host_actualiza" => "",
+    "activo" => 1,
+  );
+}
+
+/**
+ * @return mixed
+ */
 function getContainers()
 {
   $sql = "SELECT id_recipiente, id_plan, id_recepcion, id_muestra,
@@ -3216,7 +3278,7 @@ function getContainers()
     id_status_recipiente, id_usuario_captura, id_usuario_actualiza,
     volumen, volumen_inicial,
     CONVERT(NVARCHAR, fecha_captura, 126) AS fecha_captura,
-    CONVERT(NVARCHAR, fecha_actualiza, 126) AS  fecha_actualiza,
+    CONVERT(NVARCHAR, fecha_actualiza, 126) AS fecha_actualiza,
     ip_captura, ip_actualiza, host_captura, host_actualiza, activo
     FROM Recipiente
     WHERE activo = 1";
@@ -3239,7 +3301,7 @@ function getContainer($containerId)
     id_status_recipiente, id_usuario_captura, id_usuario_actualiza,
     volumen, volumen_inicial,
     CONVERT(NVARCHAR, fecha_captura, 126) AS fecha_captura,
-    CONVERT(NVARCHAR, fecha_actualiza, 126) AS  fecha_actualiza,
+    CONVERT(NVARCHAR, fecha_actualiza, 126) AS fecha_actualiza,
     ip_captura, ip_actualiza, host_captura, host_actualiza, activo
     FROM Recipiente
     WHERE activo = 1 AND id_recipiente = :containerId";
@@ -3263,7 +3325,7 @@ function getPlanContainers($planId)
     id_status_recipiente, id_usuario_captura, id_usuario_actualiza,
     volumen, volumen_inicial,
     CONVERT(NVARCHAR, fecha_captura, 126) AS fecha_captura,
-    CONVERT(NVARCHAR, fecha_actualiza, 126) AS  fecha_actualiza,
+    CONVERT(NVARCHAR, fecha_actualiza, 126) AS fecha_actualiza,
     ip_captura, ip_actualiza, host_captura, host_actualiza, activo
     FROM Recipiente
     WHERE activo = 1 AND id_plan = :planId";
@@ -3353,6 +3415,23 @@ function updatePlanContainer($updateData)
   $db = null;
   return $updateData["id_plan_recipiente"];
 }
+
+/**
+ * @param $planId
+ * @return mixed
+ */
+function disablePlanContainers($planId)
+{
+  $sql = "UPDATE PlanRecipiente SET activo = 0
+    WHERE id_plan = :planId";
+  $db = getConnection();
+  $stmt = $db->prepare($sql);
+  $stmt->bindParam("planId", $planId);
+  $stmt->execute();
+  $db = null;
+  return $planId;
+}
+
 
 /**
  * @param $containerId
@@ -3470,6 +3549,29 @@ function getPrices()
   $prices = $stmt->fetchAll(PDO::FETCH_ASSOC);
   $db = null;
   return $prices;
+}
+
+/**
+ * @param $planId
+ * @return mixed
+ */
+function getPlanSamples($planId)
+{
+  $sql = "SELECT id_muestra, id_estudio, id_cliente, id_orden,
+    id_plan, id_hoja, id_recepcion, id_custodia, id_paquete,
+    id_ubicacion, id_punto, id_tipo_muestreo,
+    CONVERT(NVARCHAR, fecha_muestreo, 126) AS fecha_muestreo,
+    CONVERT(NVARCHAR, fecha_recibe, 126) AS fecha_recibe,
+    comentarios, activo
+    FROM Muestra
+    WHERE activo = 1 AND id_plan = :planId";
+  $db = getConnection();
+  $stmt = $db->prepare($sql);
+  $stmt->bindParam("planId", $planId);
+  $stmt->execute();
+  $samples = $stmt->fetchAll(PDO::FETCH_ASSOC);
+  $db = null;
+  return $samples;
 }
 
 /**

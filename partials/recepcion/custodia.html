@@ -42,6 +42,7 @@
   data-ng-submit="custody.submitCustodyForm()"
   novalidate
   >
+  <!--
   <div class="row">
     <div class="col-xs-12">
       <h4>Datos de referencia</h4>
@@ -80,31 +81,34 @@
       <br>
     </div>
   </div>
+  -->
   <div class="row"
-    data-ng-show="custody.user.area == 4">
+    data-ng-show="custody.user.area > 3">
     <div class="col-xs-12">
-      Entrega de custodia
+      <h4>
+        Entrega de custodia
+      </h4>
     </div>
-    <div class="col-xs-12 col-sm-3">
-      <label for="transferorSelect">
+    <div class="col-xs-12 col-sm-7">
+      <label for="receptionistSelect">
         Entrega custodia
       </label>
       <select class="form-control"
-        id="transferorSelect"
-        name="transferorSelect"
+        id="receptionistSelect"
+        name="receptionistSelect"
         data-ng-model="custody.custody.id_usuario_entrega"
         >
-        <option data-ng-repeat="transferor in custody.transferors"
-          value="{{transferor.id_analista}}"
-          data-ng-selected="custody.custody.id_usuario_entrega == transferor.id_analista"
+        <option data-ng-repeat="receptionist in custody.receptionists"
+          value="{{receptionist.id_usuario}}"
+          data-ng-selected="custody.custody.id_usuario_entrega == receptionist.id_usuario"
           >
-          {{::transferor.nombres}}
-          {{::transferor.apellido_paterno}}
-          {{::transferor.apellido_materno}}
+          {{::receptionist.nombres}}
+          {{::receptionist.apellido_paterno}}
+          {{::receptionist.apellido_materno}}
         </option>
       </select>
     </div>
-    <div class="col-xs-9 col-sm-5">
+    <div class="col-xs-9 col-sm-6">
       <label for="transferDate">
         <i class="glyphicon glyphicon-calendar"></i>
         Fecha entrega
@@ -145,31 +149,35 @@
         >
     </div>
   </div>
-  <div class="row"
+  <div class="row">
+    <!--
     data-ng-show="custody.user.area != 4">
+    -->
     <div class="col-xs-12">
-      Recepción de custodia
+      <h4>
+        Recepción de custodia
+      </h4>
     </div>
-    <div class="col-xs-12 col-sm-3">
-      <label for="receiverSelect">
+    <div class="col-xs-12 col-sm-7">
+      <label for="analystSelect">
         Recibe custodia
       </label>
       <select class="form-control"
-        id="receiverSelect"
-        name="receiverSelect"
+        id="analystSelect"
+        name="analystSelect"
         data-ng-model="custody.custody.id_usuario_recibe"
         >
-        <option data-ng-repeat="receiver in custody.receivers"
-          value="{{receiver.id_analista}}"
-          data-ng-selected="custody.custody.id_usuario_recibe == receiver.id_analista"
+        <option data-ng-repeat="analyst in custody.analysts"
+          value="{{analyst.id_usuario}}"
+          data-ng-selected="custody.custody.id_usuario_recibe == analyst.id_usuario"
           >
-          {{::receiver.nombres}}
-          {{::receiver.apellido_paterno}}
-          {{::receiver.apellido_materno}}
+          {{::analyst.nombres}}
+          {{::analyst.apellido_paterno}}
+          {{::analyst.apellido_materno}}
         </option>
       </select>
     </div>
-    <div class="col-xs-9 col-sm-5">
+    <div class="col-xs-9 col-sm-6">
       <label for="receptionDate">
         <i class="glyphicon glyphicon-calendar"></i>
         Fecha recepción
@@ -210,6 +218,7 @@
         >
     </div>
   </div>
+  <br>
   <div class="row">
     <div class="col-xs-12">
       <div class="panel">
@@ -284,7 +293,7 @@
   <div class="row"
     data-ng-show="custody.isLogVisible">
     <div class="col-xs-12">
-      <h4>Historial de uso, Recipiente {{custody.currentContainer.id_recipiente}}</h4>
+      <h4>Historial de uso, Id Recipiente: {{custody.currentContainer.id_recipiente}}</h4>
     </div>
   </div>
   <div class="row"
@@ -381,6 +390,7 @@
       <br><br>
     </div>
   </div>
+  <!--
   <div class="row">
     <div class="col-xs-12">
       <h4>Disposición final</h4>
@@ -388,9 +398,10 @@
   </div>
   <div class="row">
     <div class="col-xs-12">
-        muestra --- fecha disposición -- autorizado por
+        muestra :: fecha disposición :: autorizado por
     </div>
   </div>
+  -->
   <div class="row">
     <div class="col-xs-12">
       <h4>Comentarios</h4>

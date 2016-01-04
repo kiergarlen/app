@@ -2330,6 +2330,7 @@
    * @param {Object} RestUtilsService - Proveedor para manejo de servicios REST
    * @param {Object} ArrayUtilsService - Proveedor para manejo de arreglos
    * @param {Object} StorageService - Proveedor de datos, Almacenamientos
+   * @param {Object} SamplingEmployeeService - Proveedor de datos, Empleados muestreo
    * @param {Object} AnalystService - Proveedor de datos, Analistas
    * @param {Object} ContainerService - Proveedor de datos, Recipientes
    * @param {Object} ContainerLogService - Proveedor de datos, Bitácoras de Recipiente
@@ -2338,14 +2339,15 @@
    */
   function CustodyController($scope, $routeParams, TokenService,
     ValidationService, RestUtilsService, ArrayUtilsService,
-    DateUtilsService, StorageService, AnalystService,
-    ContainerService, ContainerLogService, CustodyParameterService,
-    CustodyService) {
+    DateUtilsService, StorageService, SamplingEmployeeService,
+    AnalystService, ContainerService, ContainerLogService,
+    CustodyParameterService, CustodyService) {
     var vm = this;
     vm.user = TokenService.getUserFromToken();
-    vm.custody = CustodyService.query({custodyId: $routeParams.custodyId});
+    vm.custody = {};
     vm.storages = StorageService.get();
-    vm.analysts = AnalystService.get();
+    vm.receptionists = SamplingEmployeeService.get();
+    vm.analysts = {};
     vm.parameters = [];
     vm.containerId = 0;
     vm.currentContainer = {};
@@ -2364,6 +2366,23 @@
     vm.approveItem = approveItem;
     vm.rejectItem = rejectItem;
     vm.submitForm = submitForm;
+
+    CustodyService
+      .query({custodyId: $routeParams.custodyId})
+      .$promise
+      .then(function success(response) {
+        vm.custody = response;
+        AnalystService
+          .get()
+          .$promise
+          .then(function success(response) {
+            vm.analysts = ArrayUtilsService.selectItemsFromCollection(
+                response,
+                'id_area',
+                vm.custody.id_area
+              );
+          });
+      });
 
     CustodyParameterService
       .query({custodyId: $routeParams.custodyId})
@@ -2566,9 +2585,9 @@
       [
         '$scope', '$routeParams', 'TokenService',
         'ValidationService', 'RestUtilsService', 'ArrayUtilsService',
-        'DateUtilsService', 'StorageService', 'AnalystService',
-        'ContainerService', 'ContainerLogService', 'CustodyParameterService',
-        'CustodyService',
+        'DateUtilsService', 'StorageService', 'SamplingEmployeeService',
+        'AnalystService', 'ContainerService', 'ContainerLogService',
+        'CustodyParameterService', 'CustodyService',
         CustodyController
       ]
     );

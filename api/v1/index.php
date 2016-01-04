@@ -263,6 +263,7 @@ $app->post("/receptions", function () use ($app) {
       $receptionId = updateReception($receptionUpdateData["reception"]);
       processReceptionSamplesUpdate($receptionUpdateData);
       processReceptionPreservationsUpdate($receptionUpdateData);
+      processReceptionContainersUpdate($receptionUpdateData);
       processReceptionAreasUpdate($receptionUpdateData);
       processReceptionJobsUpdate($receptionUpdateData);
       processReceptionCustodiesUpdate($receptionUpdateData);
@@ -332,19 +333,15 @@ $app->post("/custodies", function () use ($app) {
   try {
     $userId = decodeUserToken($app->request())->uid;
     $request = $app->request();
-    $custodyId = extractDataFromRequest($request)->id_custody;
-    if ($custodyId < 1) {
-      // $custodyInsertData = processReceptionInsert($request);
-      // $custodyId = insertReception($custodyInsertData["custody"]);
-      // //processReceptionOrderInsert($custodyInsertData, $custodyId);
-    } else {
-      //$custodyUpdateData = processReceptionUpdate($request);
-      //$custodyId = updateReception($custodyUpdateData["custody"]);
-      //processReceptionOrderUpdate($custodyUpdateData);
+    $custodyId = extractDataFromRequest($request)->id_custodia;
+    if ($custodyId > 0) {
+      $custodyUpdateData = processCustodyUpdate($request);
+      $custodyId = updateCustody($custodyUpdateData["custody"]);
+      // processCustodyContainerLogs($custodyUpdateData);
     }
-    $result = "{\"id_custody\":" . $custodyId . "}";
-    $requestData = extractDataFromRequest($request);
-    $result = json_encode($requestData);
+    $result = "{\"id_custodia\":" . $custodyId . "}";
+    // $requestData = $custodyUpdateData["custody"];
+    // $result = json_encode($requestData);
     sendSuccessResponse($app, $result);
   } catch (Exception $e) {
     sendErrorResponse($app, $e);
@@ -388,7 +385,8 @@ $app->get("/parameters/field", function () use ($app) {
 $app->get("/parameters/custodies/:custodyId", function ($custodyId) use ($app) {
   try {
     $userId = decodeUserToken($app->request())->uid;
-    $result = json_encode(getParametersByCustody($custodyId));
+    // $result = json_encode(getParametersByCustody($custodyId));
+    $result = json_encode(getParametersLab());
     sendSuccessResponse($app, $result);
   } catch (Exception $e) {
     sendErrorResponse($app, $e);

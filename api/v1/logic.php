@@ -794,6 +794,7 @@ function processPlanContainersUpdate($planUpdateData)
   $preservations = (array) $planUpdateData["preservations"];
   $points = (array) $planUpdateData["points"];
   $planId = $planUpdateData["plan"]["id_plan"];
+  $storedSamples = getPlanSamples($planId);
   $storedPreservations = getPreservationsByPlan($planId);
   $storedContainers = getContainersByPlan($planId);
   $userId = $planUpdateData["plan"]["id_usuario_actualiza"];
@@ -808,24 +809,23 @@ function processPlanContainersUpdate($planUpdateData)
   $n = count($preservations);
   $o = count($points);
 
+  $newContainer = getBlankContainer();
+  unset($newContaienr["id_recipiente"]);
+  unset($newContaienr["fecha_captura"]);
+  unset($newContaienr["fecha_actualiza"]);
+  unset($newContaienr["ip_actualiza"]);
+  unset($newContaienr["host_actualiza"]);
+  $newContainer["id_plan"] = $planId;
+  $newContainer["id_usuario_captura"] = $userId;
+  $newContainer["ip_captura"] = $ip;
+  $newContainer["host_captura"] = $url;
+
   if ($l < 1) {
-    for ($i = 0; $i < $o; $i++) {
-      for ($j = 0; $j < $n; $j++) {
-        insertContainer(
-          array(
-            "id_plan" => $planId,
-            "id_recepcion" => 0,
-            "id_muestra" => 0,
-            "id_tipo_recipiente" => 1,
-            "id_preservacion" => $preservations[$j]->id_preservacion,
-            "id_almacenamiento" => 1,
-            "id_status_recipiente" => 1,
-            "id_usuario_captura" => $userId,
-            "ip_captura" => $ip,
-            "host_captura" => $url,
-            "activo" => 1,
-          )
-        );
+    foreach ($storedSamples as $sample) {
+      $newContainer["id_muestra"] = $sample->id_muestra;
+      foreach ($storedPreservations as $preservation) {
+        $newContainer["id_preservacion"] = $preservation->id_preservacion;
+        insertContainer($newContainer);
       }
     }
 
@@ -841,24 +841,19 @@ function processPlanContainersUpdate($planUpdateData)
     }
     return $planId;
   } else {
-    for ($i = 0; $i < $l; $i++) {
-      // if ($storedContainers[$i]["id_recepcion"] < 1) {
-      $storedContainers[$i]["activo"] = 0;
-      updatePlanContainer($storedContainers[$i]);
-      // }
-    }
-    for ($j = 0; $j < $m; $j++) {
-      $container = (array) $containers[$j];
-      // if ($container["id_plan_recipiente"] < 1)
-      // {
-      //   unset($container["id_plan_recipiente"]);
-      //   insertPlanContainer($container);
-      // }
-      if ($container["id_plan_recipiente"] > 0) {
-        $container["activo"] = 1;
-        updatePlanContainer($container);
-      }
-    }
+    // disablePlanContainers($planId);
+
+    // for ($j = 0; $j < $m; $j++) {
+    //   $container = (array) $containers[$j];
+    //   // if ($container["id_plan_recipiente"] < 1) {
+    //   //   unset($container["id_plan_recipiente"]);
+    //   //   insertPlanContainer($container);
+    //   // }
+    //   if ($container["id_plan_recipiente"] > 0) {
+    //     $container["activo"] = 1;
+    //     updatePlanContainer($container);
+    //   }
+    // }
   }
   return $planId;
 }
@@ -1214,18 +1209,23 @@ function processReceptionSamplesUpdate($receptionUpdateData)
   }
 
   for ($i = 0; $i < $m; $i++) {
-    $sample = array(
+    $receptionSample = array(
       "id_recepcion_muestra" => $samples[$i]->id_recepcion_muestra,
       "id_recepcion" => $samples[$i]->id_recepcion,
       "id_muestra" => $samples[$i]->id_muestra,
     );
-    if ($sample["id_recepcion_muestra"] < 1 || $l < 1) {
-      unset($sample["id_recepcion_muestra"]);
-      insertReceptionSample($sample);
+    if ($receptionSample["id_recepcion_muestra"] < 1 || $l < 1) {
+      unset($receptionSample["id_recepcion_muestra"]);
+      insertReceptionSample($receptionSample);
     } else {
-      $sample["activo"] = 1;
-      updateReceptionSample($sample);
+      $receptionSample["activo"] = 1;
+      updateReceptionSample($receptionSample);
     }
+    $sampleData = array(
+      "id_muestra" => $samples[$i]->id_muestra,
+      "id_recepcion" => $samples[$i]->id_recepcion,
+    );
+    updateSampleReceptionId($sampleData);
   }
   return $receptionId;
 }
@@ -1263,6 +1263,33 @@ function processReceptionPreservationsUpdate($receptionUpdateData)
       updateReceptionPreservation($preservation);
     }
   }
+  return $receptionId;
+}
+
+
+/**
+ * processReceptionContainersUpdate
+ * @param array $receptionUpdateData
+ * @return mixed
+ */
+function processReceptionContainersUpdate($receptionUpdateData)
+{
+  $receptionId = $receptionUpdateData["reception"]["id_recepcion"];
+  $planId = $receptionUpdateData["reception"]["id_plan"];
+  $samples = getReceptionSamples($receptionId);
+  $containers = getPlanContainers($planId);
+
+  // $i = 0;
+  // $l = count($storedSamples);
+  // $m = count($containers);
+
+  // for ($i = 0; $i < $m; $i++) {
+  //   $containerData = array(
+  //     "id_recipiente" => $containers[$i]->id_recipiente,
+  //     "id_recepcion" => $receptionId,
+  //   );
+  //   updateContainerReceptionId($containerData);
+  // }
   return $receptionId;
 }
 
@@ -1541,6 +1568,55 @@ function processCustodyInsert($request)
   );
   $custodyId = insertCustody($custody);
   return $custodyId;
+}
+
+/**
+ * processCustodyUpdate
+ * @param mixed $request
+ * @return mixed
+ */
+function processCustodyUpdate($request)
+{
+  $token = decodeUserToken($request);
+  $update = (array) json_decode($request->getBody());
+
+  $containers = $update["containers"];
+  // $containersLogs = $update["containersLogs"];
+  unset($update["containers"]);
+
+  unset($update["id_usuario_captura"]);
+  unset($update["fecha_captura"]);
+  unset($update["ip_captura"]);
+  unset($update["host_captura"]);
+  unset($update["fecha_actualiza"]);
+  unset($update["fecha_muestreo"]);
+  unset($update["fecha_recepcion"]);
+
+  unset($update["id_matriz"]);
+  unset($update["id_hoja"]);
+  unset($update["matriz"]);
+  unset($update["cantidad_muestras"]);
+
+  $update["id_usuario_actualiza"] = $token->uid;
+  $update["ip_actualiza"] = $request->getIp();
+  $update["host_actualiza"] = $request->getUrl();
+
+  $update["fecha_entrega"] = isoDateToMsSql($update["fecha_entrega"]);
+  $update["fecha_recibe"] = isoDateToMsSql($update["fecha_recibe"]);
+  $update["fecha_valida"] = isoDateToMsSql($update["fecha_valida"]);
+  $update["fecha_rechaza"] = isoDateToMsSql($update["fecha_rechaza"]);
+
+  if ($update["id_status"] == 2 && strlen($update["ip_valida"]) < 1) {
+    $update["ip_valida"] = $request->getIp();
+    $update["host_valida"] = $request->getUrl();
+    $update["fecha_valida"] = isoDateToMsSql($update["fecha_valida"]);
+  }
+
+  $custodyUpdateData = array(
+    "custody" => $update,
+    "containers" => $containers,
+  );
+  return $custodyUpdateData;
 }
 
 /**

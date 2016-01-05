@@ -53,6 +53,7 @@
               <th>Id Recepción</th>
               <th>Id Custodia</th>
               <th>Status</th>
+              <th>Área</th>
               <th>Fecha</th>
               <th>Acciones</th>
             </tr>
@@ -78,6 +79,9 @@
                   data-ng-show="item.fecha_captura.length < 1">
                   Falta info.
                 </span>
+              </td>
+              <td>
+                {{item.area}}
               </td>
               <td>
                 {{item.fecha_entrega | date: 'yyyy-MM-dd'}}

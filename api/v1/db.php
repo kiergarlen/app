@@ -2223,8 +2223,7 @@ function getCustodies()
 {
   $sql = "SELECT id_custodia, id_recepcion, id_trabajo,
     id_area, id_status, id_usuario_entrega, id_usuario_recibe,
-    id_usuario_captura, id_usuario_valida,
-    id_usuario_actualiza,
+    id_usuario_captura, id_usuario_valida, id_usuario_actualiza, area,
     CONVERT(NVARCHAR, fecha_entrega, 126) AS fecha_entrega,
     CONVERT(NVARCHAR, fecha_recibe, 126) AS fecha_recibe,
     CONVERT(NVARCHAR, fecha_captura, 126) AS fecha_captura,
@@ -2234,7 +2233,7 @@ function getCustodies()
     ip_captura, ip_valida, ip_actualiza,
     host_captura, host_valida, host_actualiza, comentarios,
     motivo_rechaza, activo
-    FROM Custodia
+    FROM viewCustodiaArea
     WHERE activo = 1";
   $db = getConnection();
   $stmt = $db->prepare($sql);

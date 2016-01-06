@@ -1650,18 +1650,15 @@ function processCustodyContainers($custodyUpdateData)
     $containerData["id_almacenamiento"] = $container->id_almacenamiento;
     $containerIds[] = updateContainerStorage($containerData);
     $containersData[] = $containerData;
-
-
     $containerId = $container->id_recipiente;
 
     if (isset($container->historial) || property_exists($container, "historial")) {
-
       $logs = $container->historial;
       $m = count($logs);
 
       for ($j = 0; $j < $m; $j++) {
+        // Logs are write-once
         if ($logs[$j]->id_historial_recipiente < 1) {
-          // INSERT only
           $logIds[] = insertContainerLog(array(
             "id_custodia" => $custodyId,
             "id_muestra" => $container->id_muestra,
@@ -1674,8 +1671,6 @@ function processCustodyContainers($custodyUpdateData)
             "ip_captura" => $custody["ip_actualiza"],
             "host_captura" => $custody["host_actualiza"],
           ));
-        } else {
-          // UPDATE disabled until request
         }
       }
     }

@@ -276,6 +276,37 @@ $app->post("/receptions", function () use ($app) {
   }
 });
 
+$app->get("/custodies(/)(:custodyId)", function ($custodyId = -1) use ($app) {
+  try {
+    $userId = decodeUserToken($app->request())->uid;
+    if ($custodyId > -1) {
+      $result = json_encode(getCustody($custodyId));
+    } else {
+      $result = json_encode(getCustodies());
+    }
+    sendSuccessResponse($app, $result);
+  } catch (Exception $e) {
+    sendErrorResponse($app, $e);
+  }
+});
+
+$app->post("/custodies", function () use ($app) {
+  try {
+    $userId = decodeUserToken($app->request())->uid;
+    $request = $app->request();
+    $custodyId = extractDataFromRequest($request)->id_custodia;
+    if ($custodyId > 0) {
+      $custodyUpdateData = processCustodyUpdate($request);
+      $custodyId = updateCustody($custodyUpdateData["custody"]);
+      processCustodyContainers($custodyUpdateData);
+    }
+    $result = "{\"id_custodia\":" . $custodyId . "}";
+    sendSuccessResponse($app, $result);
+  } catch (Exception $e) {
+    sendErrorResponse($app, $e);
+  }
+});
+
 $app->get("/jobs(/)(:jobId)", function ($jobId = -1) use ($app) {
   try {
     $userId = decodeUserToken($app->request())->uid;
@@ -316,36 +347,6 @@ $app->post("/jobs", function () use ($app) {
   }
 });
 
-$app->get("/custodies(/)(:custodyId)", function ($custodyId = -1) use ($app) {
-  try {
-    $userId = decodeUserToken($app->request())->uid;
-    if ($custodyId > -1) {
-      $result = json_encode(getCustody($custodyId));
-    } else {
-      $result = json_encode(getCustodies());
-    }
-    sendSuccessResponse($app, $result);
-  } catch (Exception $e) {
-    sendErrorResponse($app, $e);
-  }
-});
-
-$app->post("/custodies", function () use ($app) {
-  try {
-    $userId = decodeUserToken($app->request())->uid;
-    $request = $app->request();
-    $custodyId = extractDataFromRequest($request)->id_custodia;
-    if ($custodyId > 0) {
-      $custodyUpdateData = processCustodyUpdate($request);
-      $custodyId = updateCustody($custodyUpdateData["custody"]);
-      processCustodyContainers($custodyUpdateData);
-    }
-    $result = "{\"id_custodia\":" . $custodyId . "}";
-    sendSuccessResponse($app, $result);
-  } catch (Exception $e) {
-    sendErrorResponse($app, $e);
-  }
-});
 //CATALOGS
 $app->get("/clients(/)(:clientId)", function ($clientId = -1) use ($app) {
   try {
@@ -570,7 +571,7 @@ $app->get("/containers/logs/:containerId", function ($containerId) use ($app) {
     sendErrorResponse($app, $e);
   }
 });
-
+/*
 $app->post("/containers/logs", function () use ($app) {
   try {
     $userId = decodeUserToken($app->request())->uid;
@@ -587,7 +588,7 @@ $app->post("/containers/logs", function () use ($app) {
     sendErrorResponse($app, $e);
   }
 });
-
+*/
 $app->get("/reactives", function () use ($app) {
   try {
     $userId = decodeUserToken($app->request())->uid;

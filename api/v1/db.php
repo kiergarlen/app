@@ -1828,25 +1828,21 @@ function getJobs()
  */
 function getJobsByReception($receptionId)
 {
-  $sql = "SELECT id_trabajo, id_plan, id_recepcion,
-    id_muestra, id_muestra_duplicada, id_area,
-    id_usuario_entrega, id_usuario_recibe, id_usuario_analiza,
-    id_usuario_registra, id_usuario_aprueba, id_usuario_captura,
-    id_usuario_valida, id_usuario_actualiza, id_status,
-    CONVERT(NVARCHAR, fecha, 126) AS fecha,
+  $sql = "SELECT id_trabajo, id_plan, id_recepcion, id_custodia,
+    id_area, id_muestra_duplicada,
+    id_usuario_entrega, id_usuario_recibe, id_usuario_aprueba,
+    id_usuario_captura, id_usuario_valida, id_usuario_actualiza,
+    id_status, positivo, negativo,
     CONVERT(NVARCHAR, fecha_entrega, 126) AS fecha_entrega,
     CONVERT(NVARCHAR, fecha_recibe, 126) AS fecha_recibe,
-    CONVERT(NVARCHAR, fecha_analiza, 126) AS fecha_analiza,
-    CONVERT(NVARCHAR, fecha_registra, 126) AS fecha_registra,
     CONVERT(NVARCHAR, fecha_aprueba, 126) AS fecha_aprueba,
     CONVERT(NVARCHAR, fecha_captura, 126) AS fecha_captura,
     CONVERT(NVARCHAR, fecha_valida, 126) AS fecha_valida,
     CONVERT(NVARCHAR, fecha_actualiza, 126) AS fecha_actualiza,
     CONVERT(NVARCHAR, fecha_rechaza, 126) AS fecha_rechaza,
-    ip_captura, ip_aprueba, ip_valida,
-    ip_actualiza, host_captura, host_aprueba,
-    host_valida, host_actualiza, comentarios,
-    comentarios_calidad, activo
+    ip_captura, ip_aprueba, ip_valida, ip_actualiza,
+    host_captura, host_aprueba, host_valida, host_actualiza,
+    comentarios, comentarios_calidad, activo
     FROM Trabajo
     WHERE activo = 1 AND id_recepcion = :receptionId";
   $db = getConnection();
@@ -1868,25 +1864,21 @@ function getJobsByReception($receptionId)
  */
 function getJobsByArea($areaId)
 {
-  $sql = "SELECT id_trabajo, id_plan, id_recepcion,
-    id_muestra, id_muestra_duplicada, id_area,
-    id_usuario_entrega, id_usuario_recibe, id_usuario_analiza,
-    id_usuario_registra, id_usuario_aprueba, id_usuario_captura,
-    id_usuario_valida, id_usuario_actualiza, id_status,
-    CONVERT(NVARCHAR, fecha, 126) AS fecha,
+  $sql = "SELECT id_trabajo, id_plan, id_recepcion, id_custodia,
+    id_area, id_muestra_duplicada,
+    id_usuario_entrega, id_usuario_recibe, id_usuario_aprueba,
+    id_usuario_captura, id_usuario_valida, id_usuario_actualiza,
+    id_status, positivo, negativo,
     CONVERT(NVARCHAR, fecha_entrega, 126) AS fecha_entrega,
     CONVERT(NVARCHAR, fecha_recibe, 126) AS fecha_recibe,
-    CONVERT(NVARCHAR, fecha_analiza, 126) AS fecha_analiza,
-    CONVERT(NVARCHAR, fecha_registra, 126) AS fecha_registra,
     CONVERT(NVARCHAR, fecha_aprueba, 126) AS fecha_aprueba,
     CONVERT(NVARCHAR, fecha_captura, 126) AS fecha_captura,
     CONVERT(NVARCHAR, fecha_valida, 126) AS fecha_valida,
     CONVERT(NVARCHAR, fecha_actualiza, 126) AS fecha_actualiza,
     CONVERT(NVARCHAR, fecha_rechaza, 126) AS fecha_rechaza,
-    ip_captura, ip_aprueba, ip_valida,
-    ip_actualiza, host_captura, host_aprueba,
-    host_valida, host_actualiza, comentarios,
-    comentarios_calidad, activo
+    ip_captura, ip_aprueba, ip_valida, ip_actualiza,
+    host_captura, host_aprueba, host_valida, host_actualiza,
+    comentarios, comentarios_calidad, activo
     FROM Trabajo
     WHERE activo = 1 AND id_area = :areaId";
   $db = getConnection();

@@ -170,6 +170,78 @@
       </select>
     </div>
   </div>
+  <!-- ASIGNACION WIP -->
+  <div class="row"
+    data-ng-show="!job.isPameterListAsigned">
+    <div class="col-xs-12">
+      <h4>Asignar Análisis</h4>
+    </div>
+    <div class="col-xs-12">
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="panel">
+            <div class="panel-heading">
+              <h3 class="panel-title">Asignar Análisis</h3>
+            </div>
+            <div class="table-responsive">
+              <table class="table table-hover table-condensed"
+                id="parameterList">
+                <thead>
+                  <tr>
+                    <th>Parámetro</th>
+                    <th>Analista</th>
+                    <!--
+                    <th>Acciones</th>
+                    -->
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr
+                    data-ng-repeat="parameter in job.job.parameters"
+                    id="parameterId{{parameter.id_parametro}}">
+                    <td>
+                      {{parameter.parametro}}
+                    </td>
+                    <td>
+                      <select class="form-control"
+                        id="analystSelectId{{parameter.id_parametro}}"
+                        name="analystSelectId{{parameter.id_parametro}}"
+                        data-ng-model="parameter.id_analista"
+                        >
+                        <option value="0">
+                          Analista
+                        </option>
+                        <option data-ng-repeat="analyst in job.analysts"
+                          value="{{analyst.id_analista}}"
+                          data-ng-selected="parameter.id_analista == analyst.id_analista"
+                          >
+                          {{::analyst.nombres}}
+                          {{::analyst.apellido_paterno}}
+                          {{::analyst.apellido_materno}}
+                        </option>
+                      </select>
+                    </td>
+                    <!--
+                    <td>
+                      <button class="btn btn-default"
+                        value="Consultar" title="Consultar"
+                        data-ng-click="job.toggleParameterAsign(parameter)"
+                        >
+                        <i class="glyphicon glyphicon-eye-open" aria-hidden="true"></i>
+                      </button>
+                    </td>
+                    -->
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- PRELIMINARES WIP -->
+  <!-- APRUEBA
   <div class="row">
     <div class="col-xs-12">
       <h4>Aprueba preliminares</h4>
@@ -256,6 +328,7 @@
       </button>
     </div>
   </div>
+  -->
   <div class="row"
     data-ng-show="job.user.level < 3">
     <div class="col-xs-12">

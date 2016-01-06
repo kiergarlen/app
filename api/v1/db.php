@@ -1686,103 +1686,6 @@ function deleteReceptionAreas($receptionId)
 }
 
 /**
- * @param $jobId
- * @return mixed
- */
-function getPlainJob($jobId)
-{
-  $sql = "SELECT id_trabajo, id_plan, id_recepcion,
-    id_muestra, id_muestra_duplicada, id_area, id_usuario_entrega,
-    id_usuario_recibe, id_usuario_analiza, id_usuario_registra,
-    id_usuario_aprueba, id_usuario_captura, id_usuario_valida,
-    id_usuario_actualiza, id_status,
-    CONVERT(NVARCHAR, fecha, 126) AS fecha,
-    CONVERT(NVARCHAR, fecha_entrega, 126) AS fecha_entrega,
-    CONVERT(NVARCHAR, fecha_recibe, 126) AS fecha_recibe,
-    CONVERT(NVARCHAR, fecha_analiza, 126) AS fecha_analiza,
-    CONVERT(NVARCHAR, fecha_registra, 126) AS fecha_registra,
-    CONVERT(NVARCHAR, fecha_aprueba, 126) AS fecha_aprueba,
-    CONVERT(NVARCHAR, fecha_captura, 126) AS fecha_captura,
-    CONVERT(NVARCHAR, fecha_valida, 126) AS fecha_valida,
-    CONVERT(NVARCHAR, fecha_actualiza, 126) AS fecha_actualiza,
-    CONVERT(NVARCHAR, fecha_rechaza, 126) AS fecha_rechaza,
-    ip_captura, ip_aprueba, ip_valida, ip_actualiza,
-    host_captura, host_aprueba, host_valida, host_actualiza,
-    comentarios, comentarios_calidad, activo
-    FROM Trabajo
-    WHERE activo = 1 AND id_trabajo = :jobId";
-  $db = getConnection();
-  $stmt = $db->prepare($sql);
-  $stmt->bindParam("jobId", $jobId);
-  $stmt->execute();
-  $job = $stmt->fetch(PDO::FETCH_OBJ);
-  $db = null;
-  return $job;
-}
-
-/**
- * @return mixed
- */
-function getJobs()
-{
-  $sql = "SELECT id_trabajo, id_plan, id_recepcion,
-    id_muestra, id_muestra_duplicada, id_area,
-    id_usuario_entrega, id_usuario_recibe, id_usuario_analiza,
-    id_usuario_registra, id_usuario_aprueba, id_usuario_captura,
-    id_usuario_valida, id_usuario_actualiza, id_status,
-    CONVERT(NVARCHAR, fecha, 126) AS fecha,
-    CONVERT(NVARCHAR, fecha_entrega, 126) AS fecha_entrega,
-    CONVERT(NVARCHAR, fecha_recibe, 126) AS fecha_recibe,
-    CONVERT(NVARCHAR, fecha_analiza, 126) AS fecha_analiza,
-    CONVERT(NVARCHAR, fecha_registra, 126) AS fecha_registra,
-    CONVERT(NVARCHAR, fecha_aprueba, 126) AS fecha_aprueba,
-    CONVERT(NVARCHAR, fecha_captura, 126) AS fecha_captura,
-    CONVERT(NVARCHAR, fecha_valida, 126) AS fecha_valida,
-    CONVERT(NVARCHAR, fecha_actualiza, 126) AS fecha_actualiza,
-    CONVERT(NVARCHAR, fecha_rechaza, 126) AS fecha_rechaza,
-    ip_captura, ip_aprueba, ip_valida,
-    ip_actualiza, host_captura, host_aprueba,
-    host_valida, host_actualiza, comentarios,
-    comentarios_calidad, activo
-    FROM Trabajo
-    WHERE activo = 1";
-  $db = getConnection();
-  $stmt = $db->prepare($sql);
-  $stmt->execute();
-  $jobs = $stmt->fetchAll(PDO::FETCH_ASSOC);
-  $db = null;
-  return $jobs;
-}
-
-/**
- * @return array
- */
-function getBlankJob()
-{
-  return array(
-    "id_trabajo" => 0, "id_plan" => 1,
-    "id_recepcion" => 1, "id_muestra" => null,
-    "id_muestra_duplicada" => null, "id_area" => 1,
-    "id_usuario_entrega" => 1, "id_usuario_recibe" => 0,
-    "id_usuario_analiza" => 1, "id_usuario_registra" => 1,
-    "id_usuario_aprueba" => 1, "id_usuario_captura" => 0,
-    "id_usuario_valida" => 0, "id_usuario_actualiza" => 0,
-    "id_status" => 1,
-    "fecha" => null, "fecha_entrega" => null,
-    "fecha_recibe" => null, "fecha_analiza" => null,
-    "fecha_registra" => null, "fecha_aprueba" => null,
-    "fecha_captura" => null, "fecha_valida" => null,
-    "fecha_actualiza" => null, "fecha_rechaza" => null,
-    "ip_captura" => "", "ip_aprueba" => "",
-    "ip_valida" => "", "ip_actualiza" => "",
-    "host_captura" => "", "host_aprueba" => "",
-    "host_valida" => "", "host_actualiza" => "",
-    "comentarios" => "", "comentarios_calidad" => "",
-    "activo" => 1,
-  );
-}
-
-/**
  * @param $receptionId
  * @return mixed
  */
@@ -1816,6 +1719,108 @@ function getCustodiesByReception($receptionId)
   return $custodies;
 }
 
+/**
+ * @return array
+ */
+function getBlankJob()
+{
+  return array(
+    "id_trabajo" => 0, "id_plan" => 1,
+    "id_recepcion" => 1, "id_custodia" => null,
+    "id_area" => null, "id_muestra_duplicada" => null,
+    "id_usuario_entrega" => 1, "id_usuario_recibe" => 0,
+    "id_usuario_aprueba" => 1, "id_usuario_captura" => 0,
+    "id_usuario_valida" => 0, "id_usuario_actualiza" => 0,
+    "id_status" => 1,
+    "positivo" => 0, "negativo" => 0,
+    "fecha_entrega" => null, "fecha_recibe" => null,
+    "fecha_aprueba" => null, "fecha_captura" => null,
+    "fecha_valida" => null, "fecha_actualiza" => null,
+    "fecha_rechaza" => null,
+    "ip_captura" => "", "ip_aprueba" => "",
+    "ip_valida" => "", "ip_actualiza" => "",
+    "host_captura" => "", "host_aprueba" => "",
+    "host_valida" => "", "host_actualiza" => "",
+    "comentarios" => "", "comentarios_calidad" => "",
+    "activo" => 1,
+  );
+}
+
+/**
+ * @param $jobId
+ * @return mixed
+ */
+function getPlainJob($jobId)
+{
+  $sql = "SELECT id_trabajo, id_plan, id_recepcion, id_custodia,
+    id_area, id_muestra_duplicada,
+    id_usuario_entrega, id_usuario_recibe, id_usuario_aprueba,
+    id_usuario_captura, id_usuario_valida, id_usuario_actualiza,
+    id_status, positivo, negativo,
+    CONVERT(NVARCHAR, fecha_entrega, 126) AS fecha_entrega,
+    CONVERT(NVARCHAR, fecha_recibe, 126) AS fecha_recibe,
+    CONVERT(NVARCHAR, fecha_aprueba, 126) AS fecha_aprueba,
+    CONVERT(NVARCHAR, fecha_captura, 126) AS fecha_captura,
+    CONVERT(NVARCHAR, fecha_valida, 126) AS fecha_valida,
+    CONVERT(NVARCHAR, fecha_actualiza, 126) AS fecha_actualiza,
+    CONVERT(NVARCHAR, fecha_rechaza, 126) AS fecha_rechaza,
+    ip_captura, ip_aprueba, ip_valida, ip_actualiza,
+    host_captura, host_aprueba, host_valida, host_actualiza,
+    comentarios, comentarios_calidad, activo
+    FROM Trabajo
+    WHERE activo = 1 AND id_trabajo = :jobId";
+  $db = getConnection();
+  $stmt = $db->prepare($sql);
+  $stmt->bindParam("jobId", $jobId);
+  $stmt->execute();
+  $job = $stmt->fetch(PDO::FETCH_OBJ);
+  $db = null;
+  return $job;
+}
+
+/**
+ * @param $jobId
+ * @return mixed
+ */
+function getJob($jobId)
+{
+  $job = getPlainJob($jobId);
+  $job->samples = getJobSamples($jobId);
+  $job->references = getJobReferenceResults($jobId);
+  $job->parameters = getJobParameters($jobId);
+  // $job->analysis = getJobAnalysis();
+  return $job;
+}
+
+/**
+ * @return mixed
+ */
+function getJobs()
+{
+  $sql = "SELECT id_trabajo, id_plan, id_recepcion, id_custodia,
+    id_area, id_muestra_duplicada,
+    id_usuario_entrega, id_usuario_recibe, id_usuario_aprueba,
+    id_usuario_captura, id_usuario_valida, id_usuario_actualiza,
+    id_status, positivo, negativo,
+    CONVERT(NVARCHAR, fecha_entrega, 126) AS fecha_entrega,
+    CONVERT(NVARCHAR, fecha_recibe, 126) AS fecha_recibe,
+    CONVERT(NVARCHAR, fecha_aprueba, 126) AS fecha_aprueba,
+    CONVERT(NVARCHAR, fecha_captura, 126) AS fecha_captura,
+    CONVERT(NVARCHAR, fecha_valida, 126) AS fecha_valida,
+    CONVERT(NVARCHAR, fecha_actualiza, 126) AS fecha_actualiza,
+    CONVERT(NVARCHAR, fecha_rechaza, 126) AS fecha_rechaza,
+    ip_captura, ip_aprueba, ip_valida, ip_actualiza,
+    host_captura, host_aprueba, host_valida, host_actualiza,
+    comentarios, comentarios_calidad, activo
+    FROM Trabajo
+    WHERE activo = 1";
+  $db = getConnection();
+  $stmt = $db->prepare($sql);
+  $stmt->execute();
+  $jobs = $stmt->fetchAll(PDO::FETCH_ASSOC);
+  $db = null;
+  return $jobs;
+}
 
 /**
  * @param $receptionId
@@ -1906,48 +1911,29 @@ function getJobsByUser($userId)
 }
 
 /**
- * @param $jobId
- * @return mixed
- */
-function getJob($jobId)
-{
-  $job = getPlainJob($jobId);
-  $job->muestras = getJobSamples($jobId);
-  $job->parametros = array();
-  $job->resultados = array();
-  return $job;
-}
-
-/**
  * @param $jobData
  * @return mixed
  */
 function insertJob($jobData)
 {
   $sql = "INSERT INTO Trabajo (id_plan, id_recepcion,
-    id_muestra, id_muestra_duplicada, id_area,
-    id_usuario_entrega, id_usuario_recibe, id_usuario_analiza,
-    id_usuario_registra, id_usuario_aprueba, id_usuario_captura,
-    id_usuario_valida, id_status, fecha,
-    fecha_entrega, fecha_recibe, fecha_analiza,
-    fecha_registra, fecha_aprueba, fecha_captura,
-    fecha_valida, fecha_rechaza,
+    id_custodia, id_area, id_muestra_duplicada,
+    id_usuario_entrega, id_usuario_recibe, id_usuario_aprueba,
+    id_usuario_captura, id_usuario_valida,
+    id_status, positivo, negativo, fecha_entrega, fecha_recibe,
+    fecha_aprueba, fecha_captura, fecha_valida, fecha_rechaza,
     ip_captura, ip_aprueba, ip_valida,
-    host_captura, host_aprueba,
-    host_valida, comentarios,
-    comentarios_calidad, activo)
-    VALUES (:id_plan, :id_recepcion,
-    :id_muestra, :id_muestra_duplicada, :id_area,
-    :id_usuario_entrega, :id_usuario_recibe, :id_usuario_analiza,
-    :id_usuario_registra, :id_usuario_aprueba, :id_usuario_captura,
-    :id_usuario_valida, :id_status, :fecha,
-    :fecha_entrega, :fecha_recibe, :fecha_analiza,
-    :fecha_registra, :fecha_aprueba, SYSDATETIMEOFFSET(),
-    :fecha_valida, :fecha_rechaza,
+    host_captura, host_aprueba, host_valida,
+    comentarios, comentarios_calidad, activo)
+    VALUES(:id_plan, :id_recepcion,
+    :id_custodia, :id_area, :id_muestra_duplicada,
+    :id_usuario_entrega, :id_usuario_recibe, :id_usuario_aprueba,
+    :id_usuario_captura, :id_usuario_valida,
+    :id_status, :positivo, :negativo, :fecha_entrega, :fecha_recibe,
+    :fecha_aprueba,  SYSDATETIMEOFFSET(), :fecha_valida, :fecha_rechaza,
     :ip_captura, :ip_aprueba, :ip_valida,
-    :host_captura, :host_aprueba,
-    :host_valida, :comentarios,
-    :comentarios_calidad, :activo)";
+    :host_captura, :host_aprueba, :host_valida,
+    :comentarios, :comentarios_calidad, :activo)";
   $db = getConnection();
   $stmt = $db->prepare($sql);
   $stmt->execute($jobData);
@@ -1962,29 +1948,23 @@ function insertJob($jobData)
  */
 function updateJob($updateData)
 {
-  $sql = "UPDATE Trabajo SET id_plan = :id_plan,
-    id_recepcion = :id_recepcion, id_muestra = :id_muestra,
-    id_muestra_duplicada = :id_muestra_duplicada, id_area = :id_area,
+  $sql = "UPDATE Trabajo  SET id_plan = :id_plan,
+    id_recepcion = :id_recepcion, id_custodia = :id_custodia,
+    id_area = :id_area, id_muestra_duplicada = :id_muestra_duplicada,
     id_usuario_entrega = :id_usuario_entrega,
     id_usuario_recibe = :id_usuario_recibe,
-    id_usuario_analiza = :id_usuario_analiza,
-    id_usuario_registra = :id_usuario_registra,
     id_usuario_aprueba = :id_usuario_aprueba,
     id_usuario_valida = :id_usuario_valida,
     id_usuario_actualiza = :id_usuario_actualiza,
-    id_status = :id_status,
-    fecha = :fecha,
+    id_status = :id_status, positivo = :positivo, negativo = :negativo,
     fecha_entrega = :fecha_entrega, fecha_recibe = :fecha_recibe,
-    fecha_analiza = :fecha_analiza, fecha_registra = :fecha_registra,
     fecha_aprueba = :fecha_aprueba, fecha_valida = :fecha_valida,
-    fecha_actualiza = :SYSDATETIMEOFFSET(),
-    fecha_rechaza = :fecha_rechaza,
-    ip_aprueba = :ip_aprueba, ip_actualiza = :ip_actualiza,
-    ip_valida = :ip_valida, host_aprueba = :host_aprueba,
-    host_actualiza = :host_actualiza, host_valida = :host_valida,
-    comentarios = :comentarios,
-    comentarios_calidad = :comentarios_calidad, activo = :activo
-    WHERE id_trabajo = :jobId";
+    fecha_rechaza = :fecha_rechaza, fecha_actualiza = :SYSDATETIMEOFFSET(),
+    ip_aprueba = :ip_aprueba, ip_valida = :ip_valida,
+    host_aprueba = :host_aprueba, host_valida = :host_valida,
+    comentarios = :comentarios, comentarios_calidad = :comentarios_calidad,
+    activo = :activo,
+    WHERE id_trabajo = :id_trabajo";
   $db = getConnection();
   $stmt = $db->prepare($sql);
   $stmt->execute($updateData);
@@ -2014,8 +1994,14 @@ function disableJobsByReception($receptionId)
  */
 function getJobSamples($jobId)
 {
-  $sql = "SELECT id_trabajo_muestra, id_trabajo, id_muestra, activo
-    FROM TrabajoMuestra
+  // $sql = "SELECT id_trabajo_muestra, id_trabajo, id_muestra, activo
+  //   FROM TrabajoMuestra
+  //   WHERE activo = 1 AND id_trabajo = :jobId";
+  $sql = "SELECT id_trabajo, id_muestra, id_estudio, id_cliente,
+    id_orden, id_plan, id_hoja, id_recepcion, id_custodia,
+    id_tipo_muestreo, fecha_muestreo, fecha_recibe, activo, matriz,
+    tipo_muestreo
+    FROM viewMuestraTrabajo
     WHERE activo = 1 AND id_trabajo = :jobId";
   $db = getConnection();
   $stmt = $db->prepare($sql);
@@ -2023,11 +2009,45 @@ function getJobSamples($jobId)
   $stmt->execute();
   $samples = $stmt->fetchAll(PDO::FETCH_ASSOC);
   $db = null;
-  $l = count($samples);
-  for ($i = 0; $i < $l; $i++) {
-    $samples[$i]["selected"] = true;
-  }
   return $samples;
+}
+
+/**
+ * @param $jobId
+ * @return mixed
+ */
+function getJobReferenceResults($jobId)
+{
+  $sql = "SELECT id_trabajo, id_resultado, id_muestra, valor, param,
+    unidad, activo
+    FROM viewResultadoReferenciaTrabajo
+    WHERE activo = 1 AND id_trabajo = :jobId";
+  $db = getConnection();
+  $stmt = $db->prepare($sql);
+  $stmt->bindParam("jobId", $jobId);
+  $stmt->execute();
+  $referenceResults = $stmt->fetchAll(PDO::FETCH_ASSOC);
+  $db = null;
+  return $referenceResults;
+}
+
+/**
+ * @param $jobId
+ * @return mixed
+ */
+function getJobParameters($jobId)
+{
+  $sql = "SELECT id_trabajo, id_matriz, id_tipo_muestreo, id_norma,
+    id_parametro, id_metodo, id_unidad, [param]
+    FROM viewParametroTrabajo
+    WHERE id_trabajo = :jobId";
+  $db = getConnection();
+  $stmt = $db->prepare($sql);
+  $stmt->bindParam("jobId", $jobId);
+  $stmt->execute();
+  $referenceResults = $stmt->fetchAll(PDO::FETCH_ASSOC);
+  $db = null;
+  return $referenceResults;
 }
 
 /**

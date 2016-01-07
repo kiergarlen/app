@@ -209,7 +209,7 @@
               value="{{sample.selected}}"
               data-ng-model="sample.selected"
               >
-              {{::sample.id_muestra}} - 2015
+              {{::sample.id_muestra}}
           </label>
           <br>
           ({{::sample.punto.punto}})
@@ -234,7 +234,6 @@
           data-ng-repeat="validationSample in reception.samples"
           value="{{validationSample.id_muestra}}">
           {{validationSample.id_muestra}}
-          - 2015
           ({{::validationSample.punto.punto}})
         </option>
       </select>

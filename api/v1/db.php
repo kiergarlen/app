@@ -301,7 +301,7 @@ function getBlankStudy()
   return array(
     "id_estudio" => 0, "id_cliente" => 0,
     "id_origen_orden" => 0, "id_ubicacion" => 1,
-    "id_ejercicio" => 2015, "id_status" => 1,
+    "id_ejercicio" => date("Y"), "id_status" => 1,
     "id_etapa" => 1, "id_usuario_captura" => 0,
     "id_usuario_valida" => 0, "id_usuario_entrega" => 0,
     "id_usuario_actualiza" => 0, "oficio" => 0,
@@ -2936,7 +2936,7 @@ function updateReceptionSample($updateData)
  */
 function updateSampleReceptionId($updateData)
 {
-  $sql = "UPDATE Muestra SET id_recepcion = :id_recepcion,
+  $sql = "UPDATE Muestra SET id_recepcion = :id_recepcion
     WHERE id_muestra = :id_muestra";
   $db = getConnection();
   $stmt = $db->prepare($sql);
@@ -3357,11 +3357,11 @@ function insertContainer($containerData)
 {
   $sql = "INSERT INTO Recipiente (id_plan, id_recepcion, id_muestra,
     id_tipo_recipiente, id_preservacion, id_almacenamiento,
-    id_status_recipiente, id_usuario_captura,
+    id_status_recipiente, id_usuario_captura, volumen, volumen_inicial,
     fecha_captura, ip_captura, host_captura, activo)
     VALUES (:id_plan, :id_recepcion, :id_muestra,
     :id_tipo_recipiente, :id_preservacion, :id_almacenamiento,
-    :id_status_recipiente, :id_usuario_captura,
+    :id_status_recipiente, :id_usuario_captura, :volumen, :volumen_inicial,
     SYSDATETIMEOFFSET(), :ip_captura, :host_captura, :activo)";
   $db = getConnection();
   $stmt = $db->prepare($sql);
@@ -3405,6 +3405,21 @@ function updateContainerStorage($updateData)
     id_usuario_actualiza = :id_usuario_actualiza,
     fecha_actualiza = SYSDATETIMEOFFSET(), ip_actualiza = :ip_actualiza,
     host_actualiza = :host_actualiza
+    WHERE id_recipiente = :id_recipiente";
+  $db = getConnection();
+  $stmt = $db->prepare($sql);
+  $stmt->execute($updateData);
+  $db = null;
+  return $updateData["id_recipiente"];
+}
+
+/**
+ * @param $updateData
+ * @return mixed
+ */
+function  updateContainerReceptionId($updateData)
+{
+  $sql = "UPDATE Recipiente SET id_recepcion = :id_recepcion
     WHERE id_recipiente = :id_recipiente";
   $db = getConnection();
   $stmt = $db->prepare($sql);
@@ -4157,6 +4172,22 @@ function updateSheetPreservation($updateData)
   $stmt->execute($updateData);
   $db = null;
   return $updateData["id_hoja"];
+}
+
+/**
+ * @param $sheetId
+ * @return mixed
+ */
+function disableSheetPreservations($sheetId)
+{
+  $sql = "UPDATE HojaPreservacion SET activo = 0
+    WHERE id_hoja = :sheetId";
+  $db = getConnection();
+  $stmt = $db->prepare($sql);
+  $stmt->bindParam("sheetId", $sheetId);
+  $stmt->execute();
+  $db = null;
+  return $sheetId;
 }
 
 /**

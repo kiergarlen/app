@@ -186,7 +186,7 @@ function processStudyInsert($request)
   unset($insertData["ip_actualiza"]);
 
   $lastStudy = (array) getLastStudyByYear($currentYear);
-  if (is_numeric($lastStudy["oficio"])) {
+  if (isset($lastStudy["oficio"]) && is_numeric($lastStudy["oficio"])) {
     $lastStudyNumber = $lastStudy["oficio"];
   }
 
@@ -810,11 +810,12 @@ function processPlanContainersUpdate($planUpdateData)
   $o = count($points);
 
   $newContainer = getBlankContainer();
-  unset($newContaienr["id_recipiente"]);
-  unset($newContaienr["fecha_captura"]);
-  unset($newContaienr["fecha_actualiza"]);
-  unset($newContaienr["ip_actualiza"]);
-  unset($newContaienr["host_actualiza"]);
+  unset($newContainer["id_recipiente"]);
+  unset($newContainer["fecha_captura"]);
+  unset($newContainer["fecha_actualiza"]);
+  unset($newContainer["id_usuario_actualiza"]);
+  unset($newContainer["ip_actualiza"]);
+  unset($newContainer["host_actualiza"]);
   $newContainer["id_plan"] = $planId;
   $newContainer["id_usuario_captura"] = $userId;
   $newContainer["ip_captura"] = $ip;
@@ -822,9 +823,9 @@ function processPlanContainersUpdate($planUpdateData)
 
   if ($l < 1) {
     foreach ($storedSamples as $sample) {
-      $newContainer["id_muestra"] = $sample->id_muestra;
+      $newContainer["id_muestra"] = $sample["id_muestra"];
       foreach ($storedPreservations as $preservation) {
-        $newContainer["id_preservacion"] = $preservation->id_preservacion;
+        $newContainer["id_preservacion"] = $preservation["id_preservacion"];
         insertContainer($newContainer);
       }
     }
@@ -1087,7 +1088,6 @@ function processSheetPreservationsUpdate($sheetUpdateData)
   $j = 0;
   $l = count($storedPreservations);
   $m = count($preservations);
-
   if ($l < 1) {
     for ($j = 0; $j < $m; $j++) {
       $preservation = (array) $preservations[$j];
@@ -1103,14 +1103,7 @@ function processSheetPreservationsUpdate($sheetUpdateData)
     }
     return $sheetId;
   } else {
-    for ($i = 0; $i < $l; $i++) {
-      unset($storedPreservations[$i]["id_tipo_preservacion"]);
-      unset($storedPreservations[$i]["preservacion"]);
-      unset($storedPreservations[$i]["descripcion"]);
-      unset($storedPreservations[$i]["selected"]);
-      $storedPreservations[$i]["activo"] = 0;
-      updateSheetPreservation($storedPreservations[$i]);
-    }
+    disableSheetPreservations($sheetId);
     for ($j = 0; $j < $m; $j++) {
       $preservation = (array) $preservations[$j];
       $preservation["cantidad"] = count($sheetUpdateData["samples"]);
@@ -1216,6 +1209,7 @@ function processReceptionSamplesUpdate($receptionUpdateData)
     );
     if ($receptionSample["id_recepcion_muestra"] < 1 || $l < 1) {
       unset($receptionSample["id_recepcion_muestra"]);
+      $receptionSamplesArray[] = $receptionSample;
       insertReceptionSample($receptionSample);
     } else {
       $receptionSample["activo"] = 1;
@@ -1276,20 +1270,18 @@ function processReceptionContainersUpdate($receptionUpdateData)
 {
   $receptionId = $receptionUpdateData["reception"]["id_recepcion"];
   $planId = $receptionUpdateData["reception"]["id_plan"];
-  $samples = getReceptionSamples($receptionId);
   $containers = getPlanContainers($planId);
 
-  // $i = 0;
-  // $l = count($storedSamples);
-  // $m = count($containers);
+  $i = 0;
+  $l = count($containers);
 
-  // for ($i = 0; $i < $m; $i++) {
-  //   $containerData = array(
-  //     "id_recipiente" => $containers[$i]->id_recipiente,
-  //     "id_recepcion" => $receptionId,
-  //   );
-  //   updateContainerReceptionId($containerData);
-  // }
+  for ($i = 0; $i < $l; $i++) {
+    $containerData = array(
+      "id_recipiente" => $containers[$i]["id_recipiente"],
+      "id_recepcion" => $receptionId,
+    );
+    updateContainerReceptionId($containerData);
+  }
   return $receptionId;
 }
 

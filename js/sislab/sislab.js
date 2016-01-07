@@ -620,8 +620,8 @@
           return false;
         }
       }
-      if (vm.study.ubicacion.length < 1) {
-        vm.message += ' Ingrese una ubicación ';
+      if (vm.study.id_ubicacion < 1) {
+        vm.message += ' Seleccione una ubicación ';
         return false;
       }
       if (vm.user.level < 3) {
@@ -2238,11 +2238,18 @@
     DateUtilsService, JobService) {
     var vm = this;
     vm.user = TokenService.getUserFromToken();
-    vm.job = JobService.query({jobId: $routeParams.jobId});
+    vm.job = {};
     vm.isDataSubmitted = false;
     vm.approveItem = approveItem;
     vm.rejectItem = rejectItem;
     vm.submitForm = submitForm;
+
+    JobService
+      .query({jobId: $routeParams.jobId})
+      .$promise
+      .then(function success(response) {
+        vm.job = response;
+      });
 
     function approveItem() {
       ValidationService.approveItem(vm.job, vm.user);

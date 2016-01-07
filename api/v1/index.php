@@ -218,11 +218,10 @@ $app->post("/sheets", function () use ($app) {
     if ($sheetId > 0) {
       $sheetUpdateData = processSheetUpdate($request);
       $sheetId = updateSheet($sheetUpdateData["sheet"]);
-      // processSheetReceptionUpdate($sheetUpdateData);
+      //processSheetReceptionUpdate($sheetUpdateData);
       processSheetResultsUpdate($sheetUpdateData);
       processSheetPreservationsUpdate($sheetUpdateData);
     }
-    // $result = json_encode(processSheetReceptionUpdate($sheetUpdateData));
     $result = "{\"id_hoja\":" . $sheetId . "}";
     sendSuccessResponse($app, $result);
   } catch (Exception $e) {

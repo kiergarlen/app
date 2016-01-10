@@ -72,14 +72,12 @@
                 {{item.id_plan}}
               </td>
               <td>
+                <span class="label label-default"
+                  data-ng-show="item.id_status == 1">Sin Validar</span>
                 <span class="label label-success"
                   data-ng-show="item.id_status == 2">Validado</span>
-                <span class="label label-default"
-                  data-ng-show="item.id_status < 2">Sin Validar</span>
                 <span class="label label-danger"
-                  data-ng-show="item.fecha_captura.length < 1">
-                  Falta info.
-                </span>
+                  data-ng-show="item.id_status == 3">Rechazado</span>
               </td>
               <td>
                 <span class="label label-info"

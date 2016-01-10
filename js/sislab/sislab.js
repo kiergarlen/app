@@ -369,17 +369,21 @@
    * @constructor
    * @desc Controla la directiva para el Menú principal
    * @this {Object} $scope - Contenedor para el modelo
+   * @param {Object} TokenService - Proveedor de métodos para token
    * @param {Object} MenuService - Proveedor de datos, Menú
    */
-  function MenuController(MenuService) {
+  function MenuController(TokenService, MenuService) {
     var vm = this;
-    vm.menu = MenuService.get();
+    if (TokenService.isAuthenticated()) {
+      vm.userName = TokenService.getUserFromToken().name;
+      vm.menu = MenuService.get();
+    }
   }
   angular
     .module('sislabApp')
     .controller('MenuController',
       [
-        'MenuService',
+        'TokenService', 'MenuService',
         MenuController
       ]
     );
@@ -1751,7 +1755,7 @@
         vm.message += ' Ingrese una fecha/hora de entrega válida ';
         return false;
       }
-      vm.sheet.fecha_muestreo = DateUtilsService.dateToIso(
+      vm.sheet.fecha_entrega = DateUtilsService.dateToIso(
         new Date(vm.sheet.fecha_entrega)
       );
       if (!isSampleListValid()) {

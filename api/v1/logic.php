@@ -1420,8 +1420,11 @@ function processReceptionJobsInsert($receptionUpdateData)
   $reception = (array) $receptionUpdateData["reception"];
   $jobs = (array) $receptionUpdateData["jobs"];
   $receptionId = $reception["id_recepcion"];
+  $storedCustodies = getReceptionCustodies($receptionId);
   $i = 0;
+  $j = 0;
   $l = count($jobs);
+  $m = count($storedCustodies);
 
   $jobData = getBlankJob();
   $jobData["id_recepcion"] = $reception["id_recepcion"];
@@ -1437,7 +1440,14 @@ function processReceptionJobsInsert($receptionUpdateData)
   unset($jobData["host_actualiza"]);
 
   for ($i = 0; $i < $l; $i++) {
-    $jobData["id_area"] = $jobs[$i]->id_area;
+    $areaId = $jobs[$i]->id_area;
+    $jobData["id_area"] = $areaId;
+    for ($j = 0; $j < $m; $j++) {
+      if ($storedCustodies[$j]->id_area == $areaId) {
+        $jobData["id_custodia"] = $storedCustodies[$j]->id_custodia;
+        break;
+      }
+    }
     $jobIds[] = insertJob($jobData);
   }
   return $jobIds;
@@ -1751,4 +1761,38 @@ function processReceptionCustodyInsert($receptionUpdateData, $areaId)
     $custodyIds[] = insertCustody($custodyData);
   }
   return $custodyIds;
+}
+
+/**
+ * processJobUpdate
+ * @param array $request
+ * @param mixed $areaId
+ */
+function processJobUpdate($request)
+{
+  $token = decodeUserToken($request);
+  $update = (array) json_decode($request->getBody());
+
+  // $samples = $update["muestras"];
+  // $preservations = $update["preservaciones"];
+  // $areas = $update["areas"];
+  // $jobs = $update["trabajos"];
+  // $custodies = $update["custodias"];
+
+  // unset($custodyData["id_custodia"]);
+  // unset($custodyData["fecha_captura"]);
+  // unset($custodyData["id_usuario_actualiza"]);
+  // unset($custodyData["fecha_actualiza"]);
+  // unset($custodyData["ip_actualiza"]);
+  // unset($custodyData["host_actualiza"]);
+
+  $jobUpdateData = array(
+    "job" => $update,
+    // "samples" => $samples,
+    // "preservations" => $preservations,
+    // "areas" => $areas,
+    // "jobs" => $jobs,
+    // "custodies" => $custodies,
+  );
+  return $jobUpdateData;
 }

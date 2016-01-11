@@ -1786,9 +1786,13 @@ function getJob($jobId)
 {
   $job = getPlainJob($jobId);
   $job->samples = getJobSamples($jobId);
-  $job->references = getJobReferenceResults($jobId);
+  $job->analysisList = array();
+  $job->references = array();
   $job->parameters = getJobParameters($jobId);
-  // $job->analysis = getJobAnalysis();
+  // if (count(getJobAnalysis($jobId)) > 0) {
+  //   $job->references = getJobReferenceResults($jobId);
+  //   $job->analysisList = getJobAnalysis($jobId);
+  // }
   return $job;
 }
 
@@ -2026,11 +2030,10 @@ function getJobReferenceResults($jobId)
 /**
  * @param $jobId
  * @return mixed
- */
-function getJobParameters($jobId)
+ */function getJobParameters($jobId)
 {
-  $sql = "SELECT id_trabajo, id_matriz, id_tipo_muestreo, id_norma,
-    id_parametro, id_metodo, id_unidad, [param]
+  $sql = "SELECT id_trabajo, id_matriz, id_tipo_muestreo,
+    id_norma, id_parametro, id_metodo, id_unidad, [param]
     FROM viewParametroTrabajo
     WHERE id_trabajo = :jobId";
   $db = getConnection();
@@ -3929,8 +3932,7 @@ function getAnalysts()
     CONVERT(NVARCHAR, fecha_captura, 126) AS fecha_captura,
     CONVERT(NVARCHAR, fecha_actualiza, 126) AS fecha_actualiza,
     ip_captura, ip_actualiza,
-    host_captura, host_actualiza, activo,
-    id_usuario AS id_analista
+    host_captura, host_actualiza, activo
     FROM Usuario
     WHERE activo = 1 AND id_nivel > 1 AND analiza = 1";
   $db = getConnection();

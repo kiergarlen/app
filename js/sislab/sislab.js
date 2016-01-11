@@ -2235,14 +2235,22 @@
    * @this {Object} $scope - Contenedor para el modelo
    * @param {Object} $routeParams - Proveedor de parámetros de ruta
    * @param {Object} TokenService - Proveedor para manejo del token
+   * @param {Object} ValidationService - Proveedor para manejo de validación
+   * @param {Object} RestUtilsService - Proveedor para manejo de servicios REST
+   * @param {Object} ArrayUtilsService - Proveedor para manejo de arreglos
+   * @param {Object} DateUtilsService - Proveedor para manejo de fechas
+   * @param {Object} AnalystService - Proveedor de datos, Analistas
    * @param {Object} JobService - Proveedor de datos, Órdenes de Trabajo
    */
   function JobController($scope, $routeParams, TokenService,
     ValidationService, RestUtilsService, ArrayUtilsService,
-    DateUtilsService, JobService) {
+    DateUtilsService, AnalystService, JobService) {
     var vm = this;
     vm.user = TokenService.getUserFromToken();
     vm.job = {};
+    vm.analysts = [];
+    vm.supervisor = {};
+    vm.isParameterListAsigned = false;
     vm.isDataSubmitted = false;
     vm.approveItem = approveItem;
     vm.rejectItem = rejectItem;
@@ -2253,6 +2261,28 @@
       .$promise
       .then(function success(response) {
         vm.job = response;
+        //vm.isParameterListAsigned = vm.job.analysisList.length > 0;
+        AnalystService
+          .get()
+          .$promise
+          .then(function success(response) {
+            var i = 0;
+            var l = 0;
+            vm.analysts = ArrayUtilsService.selectItemsFromCollection(
+              response,
+              'id_area',
+              vm.job.id_area
+            );
+            vm.supervisor = ArrayUtilsService.selectItemFromCollection(
+              vm.analysts,
+              'supervisa',
+              1
+            );
+            l = vm.job.parameters.length;
+            for (i = 0; i < l; i += 1) {
+              vm.job.parameters[i].id_usuario_analiza = vm.supervisor.id_usuario;
+            };
+          });
       });
 
     function approveItem() {
@@ -2297,7 +2327,7 @@
       [
         '$scope', '$routeParams', 'TokenService',
         'ValidationService', 'RestUtilsService', 'ArrayUtilsService',
-        'DateUtilsService', 'JobService',
+        'DateUtilsService', 'AnalystService', 'JobService',
         JobController
       ]
     );

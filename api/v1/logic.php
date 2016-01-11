@@ -1159,7 +1159,7 @@ function processReceptionUpdate($request)
 
   $update["fecha_entrega"] = isoDateToMsSql($update["fecha_entrega"]);
   $update["fecha_recibe"] = isoDateToMsSql($update["fecha_recibe"]);
-  $update["fecha_recibe"] = isoDateToMsSql($update["fecha_recibe"]);
+  // $update["fecha_recibe"] = isoDateToMsSql($update["fecha_recibe"]);
   ////No input in form por this date/time setting to reception date/time
   //$update["fecha_verifica"] = isoDateToMsSql($update["fecha_verifica"]);
   $update["fecha_verifica"] = $update["fecha_recibe"];
@@ -1771,27 +1771,39 @@ function processReceptionCustodyInsert($receptionUpdateData, $areaId)
 function processJobUpdate($request)
 {
   $token = decodeUserToken($request);
-  $jobData = (array) json_decode($request->getBody());
+  $update = (array) json_decode($request->getBody());
+  $samples = $update["muestras"];
+  $analysisList = $update["lista_analisis"];
+  $references = $update["referencias"];
+  $parameters = $update["parametros"];
 
-  $samples = $jobData["muestras"];
-  $analysisList = $jobData["lista_analisis"];
-  $references = $jobData["referencias"];
-  $parameters = $jobData["parametros"];
+  unset($update["muestras"]);
+  unset($update["lista_analisis"]);
+  unset($update["referencias"]);
+  unset($update["parametros"]);
+  unset($update["id_trabajo"]);
+  unset($update["fecha_captura"]);
+  unset($update["id_usuario_captura"]);
+  unset($update["fecha_captura"]);
 
-  unset($jobData["muestras"]);
-  unset($jobData["lista_analisis"]);
-  unset($jobData["referencias"]);
-  unset($jobData["parametros"]);
+  $update["id_usuario_actualiza"] = $token->uid;
+  $update["ip_actualiza"] = $request->getIp();
+  $update["host_actualiza"] = $request->getUrl();
+  $update["id_usuario_recibe"] = $token->uid;
 
-  unset($jobData["id_trabajo"]);
-  unset($jobData["fecha_captura"]);
-  unset($jobData["id_usuario_actualiza"]);
-  unset($jobData["fecha_actualiza"]);
-  unset($jobData["ip_actualiza"]);
-  unset($jobData["host_actualiza"]);
+  $update["fecha_aprueba"] = isoDateToMsSql($update["fecha_aprueba"]);
+  $update["fecha_entrega"] = isoDateToMsSql($update["fecha_entrega"]);
+  $update["fecha_recibe"] = isoDateToMsSql($update["fecha_recibe"]);
+  $update["fecha_rechaza"] = isoDateToMsSql($update["fecha_rechaza"]);
+
+  if ($update["id_status"] == 2 && strlen($update["ip_valida"]) < 1) {
+    $update["ip_valida"] = $request->getIp();
+    $update["host_valida"] = $request->getUrl();
+    $update["fecha_valida"] = isoDateToMsSql($update["fecha_valida"]);
+  }
 
   $jobUpdateData = array(
-    "job" => $jobData,
+    "job" => $update,
     "samples" => $samples,
     "analysisList" => $analysisList,
     "references" => $references,

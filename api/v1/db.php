@@ -1814,11 +1814,11 @@ function getJob($jobId)
     }
   }
   if (count(getJobAnalysis($jobId)) > 0) {
-    $jobreferencias = getJobReferenceResults($jobId);
+    $job->referencias = getJobReferenceResults($jobId);
     $job->lista_analisis = getJobAnalysis($jobId);
   } else {
     $job->lista_analisis = array();
-    $jobreferencias = array();
+    $job->referencias = array();
   }
   return $job;
 }

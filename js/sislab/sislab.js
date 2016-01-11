@@ -2252,6 +2252,8 @@
     vm.supervisor = {};
     vm.isParameterListAsigned = false;
     vm.isDataSubmitted = false;
+    vm.approveResults = approveResults;
+    vm.rejectResults = rejectResults;
     vm.approveItem = approveItem;
     vm.rejectItem = rejectItem;
     vm.submitForm = submitForm;
@@ -2261,7 +2263,9 @@
       .$promise
       .then(function success(response) {
         vm.job = response;
-        //vm.isParameterListAsigned = vm.job.analysisList.length > 0;
+        if (vm.job.anlysisList) {
+          vm.isParameterListAsigned = vm.job.lista_analisis.length > 0;
+        }
         AnalystService
           .get()
           .$promise
@@ -2278,12 +2282,23 @@
               'supervisa',
               1
             );
-            l = vm.job.parameters.length;
+            l = vm.job.parametros.length;
             for (i = 0; i < l; i += 1) {
-              vm.job.parameters[i].id_usuario_analiza = vm.supervisor.id_usuario;
+              vm.job.parametros[i].id_usuario_analiza = vm.supervisor.id_usuario;
             };
           });
       });
+
+    function approveResults() {
+      vm.job.id_usuario_aprueba = vm.user.id;
+      vm.job.fecha_aprueba = DateUtilsService.dateToIso(new Date());
+    }
+
+    function rejectResults() {
+      vm.job.comentarios = ' [Resultados Rechazados] ' + vm.job.comentarios;
+      vm.job.id_usuario_aprueba = null;
+      vm.job.fecha_aprueba = null;
+    }
 
     function approveItem() {
       ValidationService.approveItem(vm.job, vm.user);

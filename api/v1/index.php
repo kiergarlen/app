@@ -306,6 +306,7 @@ $app->post("/custodies", function () use ($app) {
   }
 });
 
+
 $app->get("/jobs(/)(:jobId)", function ($jobId = -1) use ($app) {
   try {
     //$userId = decodeUserToken($app->request())->uid;
@@ -334,12 +335,45 @@ $app->post("/jobs", function () use ($app) {
   try {
     $userId = decodeUserToken($app->request())->uid;
     $request = $app->request();
-    $jobId = extractDataFromRequest($request)->id_orden_trabajo;
-    if ($jobId > 0) {
-      $jobUpdateData = processJobUpdate($request);
-      $jobId = updateJob($jobUpdateData["job"]);
+    // $jobId = extractDataFromRequest($request)->id_trabajo;
+    // if ($jobId > 0) {
+    //   $jobUpdateData = processJobUpdate($request);
+    //   $jobId = updateJob($jobUpdateData["job"]);
+    // }
+    $result = json_encode(processJobUpdate($request));
+    // $result = "{\"id_orden_trabajo\":" . $jobId . "}";
+    sendSuccessResponse($app, $result);
+  } catch (Exception $e) {
+    sendErrorResponse($app, $e);
+  }
+});
+
+$app->get("/analysis(/)(:analysisId)", function ($analysisId = -1) use ($app) {
+  try {
+    $userId = decodeUserToken($app->request())->uid;
+    if ($analysisId > -1) {
+      $result = json_encode(getAnalysis($analysisId));
+    } else {
+      $result = json_encode(getAnalysisList());
     }
-    $result = "{\"id_orden_trabajo\":" . $jobId . "}";
+    sendSuccessResponse($app, $result);
+  } catch (Exception $e) {
+    sendErrorResponse($app, $e);
+  }
+});
+
+$app->post("/analysis", function () use ($app) {
+  try {
+    $userId = decodeUserToken($app->request())->uid;
+    $request = $app->request();
+    $analysisId = 0;
+    // $analysisId = extractDataFromRequest($request)->id_analisis;
+    // if ($analysisId > 0) {
+      // $analysisUpdateData = processAnalysisUpdate($request);
+      // $analysisId = updateAnalysis($analysisUpdateData["analysis"]);
+      // processAnalysisContainers($analysisUpdateData);
+    // }
+    $result = "{\"id_analisis\":" . $analysisId . "}";
     sendSuccessResponse($app, $result);
   } catch (Exception $e) {
     sendErrorResponse($app, $e);
@@ -740,20 +774,6 @@ $app->get("/containers", function () use ($app) {
   try {
     $userId = decodeUserToken($app->request())->uid;
     $result = json_encode(getContainers());
-    sendSuccessResponse($app, $result);
-  } catch (Exception $e) {
-    sendErrorResponse($app, $e);
-  }
-});
-
-$app->get("/analysis(/)(:analysisId)", function ($analysisId = -1) use ($app) {
-  try {
-    $userId = decodeUserToken($app->request())->uid;
-    if ($analysisId > -1) {
-      $result = json_encode(getAnalysis($analysisId));
-    } else {
-      $result = json_encode(getAnalysisList());
-    }
     sendSuccessResponse($app, $result);
   } catch (Exception $e) {
     sendErrorResponse($app, $e);

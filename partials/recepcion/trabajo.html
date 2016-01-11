@@ -196,7 +196,7 @@
                 </thead>
                 <tbody>
                   <tr
-                    data-ng-repeat="parameter in job.job.parameters"
+                    data-ng-repeat="parameter in job.job.parametros"
                     id="parameterId{{parameter.id_parametro}}">
                     <td>
                       {{parameter.param}}
@@ -280,7 +280,7 @@
                 </thead>
                 <tbody>
                   <tr
-                    data-ng-repeat="analysis in job.job.analysisList"
+                    data-ng-repeat="analysis in job.job.lista_analisis"
                     id="analysisId{{analysis.id_parametro}}">
                     <td>
                       {{analysis.id_muestra}}<br>
@@ -447,7 +447,7 @@
   <br>
   <button type="submit" class="btn btn-primary"
     value="Guardar" title="Guardar"
-    data-ng-click="job.validateJobForm()"
+    data-ng-click="job.submitForm()"
     >
     Guardar</button>
 </form>

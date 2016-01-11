@@ -1786,15 +1786,15 @@ function getJob($jobId)
 {
   $job = getPlainJob($jobId);
   $receptionId = $job->id_recepcion;
-  $job->parameters = getJobParameters($jobId);
+  $job->parametros = getJobParameters($jobId);
   if (count(getJobSamples($jobId)) > 0) {
-    $job->samples = getJobSamples($jobId);
+    $job->muestras = getJobSamples($jobId);
   } else {
     $receptionSamples = getReceptionSamples($receptionId);
     $i = 0;
     $l = count($receptionSamples);
     for ($i = 0; $i < $l; $i++) {
-      $job->samples[] = array(
+      $job->muestras[] = array(
         "id_trabajo" => 0,
         "id_muestra" => $receptionSamples[$i]["id_muestra"],
         "id_estudio" => 0,
@@ -1814,11 +1814,11 @@ function getJob($jobId)
     }
   }
   if (count(getJobAnalysis($jobId)) > 0) {
-    $job->references = getJobReferenceResults($jobId);
-    $job->analysisList = getJobAnalysis($jobId);
+    $jobreferencias = getJobReferenceResults($jobId);
+    $job->lista_analisis = getJobAnalysis($jobId);
   } else {
-    $job->analysisList = array();
-    $job->references = array();
+    $job->lista_analisis = array();
+    $jobreferencias = array();
   }
   return $job;
 }

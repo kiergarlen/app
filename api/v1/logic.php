@@ -1771,28 +1771,31 @@ function processReceptionCustodyInsert($receptionUpdateData, $areaId)
 function processJobUpdate($request)
 {
   $token = decodeUserToken($request);
-  $update = (array) json_decode($request->getBody());
+  $jobData = (array) json_decode($request->getBody());
 
-  // $samples = $update["muestras"];
-  // $preservations = $update["preservaciones"];
-  // $areas = $update["areas"];
-  // $jobs = $update["trabajos"];
-  // $custodies = $update["custodias"];
+  $samples = $jobData["muestras"];
+  $analysisList = $jobData["lista_analisis"];
+  $references = $jobData["referencias"];
+  $parameters = $jobData["parametros"];
 
-  // unset($custodyData["id_custodia"]);
-  // unset($custodyData["fecha_captura"]);
-  // unset($custodyData["id_usuario_actualiza"]);
-  // unset($custodyData["fecha_actualiza"]);
-  // unset($custodyData["ip_actualiza"]);
-  // unset($custodyData["host_actualiza"]);
+  unset($jobData["muestras"]);
+  unset($jobData["lista_analisis"]);
+  unset($jobData["referencias"]);
+  unset($jobData["parametros"]);
+
+  unset($jobData["id_trabajo"]);
+  unset($jobData["fecha_captura"]);
+  unset($jobData["id_usuario_actualiza"]);
+  unset($jobData["fecha_actualiza"]);
+  unset($jobData["ip_actualiza"]);
+  unset($jobData["host_actualiza"]);
 
   $jobUpdateData = array(
-    "job" => $update,
-    // "samples" => $samples,
-    // "preservations" => $preservations,
-    // "areas" => $areas,
-    // "jobs" => $jobs,
-    // "custodies" => $custodies,
+    "job" => $jobData,
+    "samples" => $samples,
+    "analysisList" => $analysisList,
+    "references" => $references,
+    "parameters" => $parameters,
   );
   return $jobUpdateData;
 }

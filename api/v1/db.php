@@ -1785,14 +1785,41 @@ function getPlainJob($jobId)
 function getJob($jobId)
 {
   $job = getPlainJob($jobId);
-  $job->samples = getJobSamples($jobId);
-  $job->analysisList = array();
-  $job->references = array();
+  $receptionId = $job->id_recepcion;
   $job->parameters = getJobParameters($jobId);
-  // if (count(getJobAnalysis($jobId)) > 0) {
-  //   $job->references = getJobReferenceResults($jobId);
-  //   $job->analysisList = getJobAnalysis($jobId);
-  // }
+  if (count(getJobSamples($jobId)) > 0) {
+    $job->samples = getJobSamples($jobId);
+  } else {
+    $receptionSamples = getReceptionSamples($receptionId);
+    $i = 0;
+    $l = count($receptionSamples);
+    for ($i = 0; $i < $l; $i++) {
+      $job->samples[] = array(
+        "id_trabajo" => 0,
+        "id_muestra" => $receptionSamples[$i]["id_muestra"],
+        "id_estudio" => 0,
+        "id_cliente" => 0,
+        "id_orden" => 0,
+        "id_plan" => 0,
+        "id_hoja" => 0,
+        "id_recepcion" => $receptionId,
+        "id_custodia" => 0,
+        "id_tipo_muestreo" => 1,
+        "fecha_muestreo" => 0,
+        "fecha_recibe" => 0,
+        "activo" => 1,
+        "matriz" => 1,
+        "tipo_muestreo" => 1,
+      );
+    }
+  }
+  if (count(getJobAnalysis($jobId)) > 0) {
+    $job->references = getJobReferenceResults($jobId);
+    $job->analysisList = getJobAnalysis($jobId);
+  } else {
+    $job->analysisList = array();
+    $job->references = array();
+  }
   return $job;
 }
 
@@ -2043,6 +2070,32 @@ function getJobReferenceResults($jobId)
   $referenceResults = $stmt->fetchAll(PDO::FETCH_ASSOC);
   $db = null;
   return $referenceResults;
+}
+
+/**
+ * @param $jobId
+ * @return mixed
+ */function getJobAnalysis($jobId)
+{
+  $sql = "SELECT id_analisis, id_trabajo, id_usuario_analiza,
+    CONVERT(NVARCHAR, fecha_analiza, 126) AS fecha_analiza,
+    CONVERT(NVARCHAR, fecha_aprueba, 126) AS fecha_aprueba,
+    CONVERT(NVARCHAR, fecha_captura, 126) AS fecha_captura,
+    CONVERT(NVARCHAR, fecha_valida, 126) AS fecha_valida,
+    CONVERT(NVARCHAR, fecha_actualiza, 126) AS fecha_actualiza,
+    CONVERT(NVARCHAR, fecha_rechaza, 126) AS fecha_rechaza,
+    ip_captura, ip_valida, ip_actualiza,
+    host_captura, host_valida, host_actualiza,
+    comentarios, activo
+    FROM Analisis
+    WHERE id_trabajo = :jobId";
+  $db = getConnection();
+  $stmt = $db->prepare($sql);
+  $stmt->bindParam("jobId", $jobId);
+  $stmt->execute();
+  $analysisList = $stmt->fetchAll(PDO::FETCH_ASSOC);
+  $db = null;
+  return $analysisList;
 }
 
 /**
@@ -3547,21 +3600,53 @@ function updateContainerLog($updateData)
 }
 
 /**
+ * @param $analysisId
  * @return mixed
- */
-function getAnalysis()
+ */function getAnalysis($analysisId)
 {
-  $json = '[]';
-  return json_decode($json);
+  $sql = "SELECT id_analisis, id_trabajo, id_usuario_analiza,
+    CONVERT(NVARCHAR, fecha_analiza, 126) AS fecha_analiza,
+    CONVERT(NVARCHAR, fecha_aprueba, 126) AS fecha_aprueba,
+    CONVERT(NVARCHAR, fecha_captura, 126) AS fecha_captura,
+    CONVERT(NVARCHAR, fecha_valida, 126) AS fecha_valida,
+    CONVERT(NVARCHAR, fecha_actualiza, 126) AS fecha_actualiza,
+    CONVERT(NVARCHAR, fecha_rechaza, 126) AS fecha_rechaza,
+    ip_captura, ip_valida, ip_actualiza,
+    host_captura, host_valida, host_actualiza,
+    comentarios, activo
+    FROM Analisis
+    WHERE activo = 1 AND id_analisis = :analysisId";
+  $db = getConnection();
+  $stmt = $db->prepare($sql);
+  $stmt->bindParam("analysisId", $analysisId);
+  $stmt->execute();
+  $analysis = $stmt->fetch(PDO::FETCH_OBJ);
+  $db = null;
+  return $analysis;
 }
 
 /**
  * @return mixed
- */
-function getAnalysisSelections()
+ */function getAnalysisList()
 {
-  $json = '[]';
-  return json_decode($json);
+  $sql = "SELECT id_analisis, id_trabajo, id_usuario_analiza,
+    CONVERT(NVARCHAR, fecha_analiza, 126) AS fecha_analiza,
+    CONVERT(NVARCHAR, fecha_aprueba, 126) AS fecha_aprueba,
+    CONVERT(NVARCHAR, fecha_captura, 126) AS fecha_captura,
+    CONVERT(NVARCHAR, fecha_valida, 126) AS fecha_valida,
+    CONVERT(NVARCHAR, fecha_actualiza, 126) AS fecha_actualiza,
+    CONVERT(NVARCHAR, fecha_rechaza, 126) AS fecha_rechaza,
+    ip_captura, ip_valida, ip_actualiza,
+    host_captura, host_valida, host_actualiza,
+    comentarios, activo
+    FROM Analisis
+    WHERE activo = 1";
+  $db = getConnection();
+  $stmt = $db->prepare($sql);
+  $stmt->execute();
+  $analysisList = $stmt->fetchAll(PDO::FETCH_ASSOC);
+  $db = null;
+  return $analysisList;
 }
 
 /**

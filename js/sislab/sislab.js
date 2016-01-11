@@ -5610,17 +5610,41 @@
   /**
    * @name AnalysisService
    * @constructor
-   * @desc Proveedor de datos, selección de formato de captura de Análisis
+   * @desc Proveedor de datos, Análisis
    * @param {Object} $resource - Acceso a recursos HTTP
    * @param {Object} TokenService - Proveedor de métodos para token
    * @return {Object} $resource - Acceso a recursos HTTP
    */
   function AnalysisService($resource, TokenService) {
-    return $resource(API_BASE_URL + 'analysis/selections', {}, {
+    return $resource(API_BASE_URL + 'analysis/:analysisId', {}, {
+      query: {
+        method: 'GET',
+        params: {analysisId: 'id_analisis'},
+        isArray: false,
+        headers: {
+          'Auth-Token': TokenService.getToken()
+        }
+      },
       get: {
         method: 'GET',
         params: {},
         isArray: true,
+        headers: {
+          'Auth-Token': TokenService.getToken()
+        }
+      },
+      update: {
+        method: 'POST',
+        params: {},
+        isArray: false,
+        headers: {
+          'Auth-Token': TokenService.getToken()
+        }
+      },
+      save: {
+        method: 'POST',
+        params: {},
+        isArray: false,
         headers: {
           'Auth-Token': TokenService.getToken()
         }

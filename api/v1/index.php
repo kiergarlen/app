@@ -308,7 +308,7 @@ $app->post("/custodies", function () use ($app) {
 
 $app->get("/jobs(/)(:jobId)", function ($jobId = -1) use ($app) {
   try {
-    $userId = decodeUserToken($app->request())->uid;
+    //$userId = decodeUserToken($app->request())->uid;
     if ($jobId > -1) {
       $result = json_encode(getJob($jobId));
     } else {
@@ -746,20 +746,14 @@ $app->get("/containers", function () use ($app) {
   }
 });
 
-$app->get("/analysis", function () use ($app) {
+$app->get("/analysis(/)(:analysisId)", function ($analysisId = -1) use ($app) {
   try {
     $userId = decodeUserToken($app->request())->uid;
-    $result = json_encode(getAnalysis());
-    sendSuccessResponse($app, $result);
-  } catch (Exception $e) {
-    sendErrorResponse($app, $e);
-  }
-});
-
-$app->get("/analysis/selections", function () use ($app) {
-  try {
-    $userId = decodeUserToken($app->request())->uid;
-    $result = json_encode(getAnalysisSelections());
+    if ($analysisId > -1) {
+      $result = json_encode(getAnalysis($analysisId));
+    } else {
+      $result = json_encode(getAnalysisList());
+    }
     sendSuccessResponse($app, $result);
   } catch (Exception $e) {
     sendErrorResponse($app, $e);

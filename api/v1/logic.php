@@ -1820,19 +1820,43 @@ function processJobUpdate($request)
 /**
  * processJobAnalysisInsert
  * @param mixed $jobUpdateData
+ * @param mixed $jobId
  * @return array $analysisIds
  */
-function processJobAnalysisInsert($jobUpdateData)
+function processJobAnalysisInsert($jobUpdateData, $jobId)
 {
-  /*
-    (:id_trabajo, :id_usuario_analiza,
-    :fecha_analiza, :fecha_aprueba, SYSDATETIMEOFFSET(), :fecha_valida,
-    :fecha_rechaza, :ip_captura, :ip_valida, :host_captura, :host_valida,
-    :comentarios, :activo)
-  */
+  $analysisList = (array) $jobUpdateData["analysisList"];
+  $samples = (array) $jobUpdateData["samples"];
+  $parameters = (array) $jobUpdateData["parameters"];
+
+  // $i = 0;
+  // $j = 0;
+  // $l = count($samples);
+  // $m = count($parameters);
+
+  // for ($i = 0; $i < $l; $i++) {
+  //   $sampleId = $samples[$i]["id_muestra"];
+  //   for ($j = 0; $j < ; $j++) {
+  //     $parameter = (array) $parameters[$j];
+  //     $analysisData = array(
+  //       "id_trabajo" => $jobId,
+  //       "id_usuario_analiza" => ,
+  //       "fecha_analiza" => $,
+  //       "fecha_aprueba" => $,
+  //       "fecha_valida" => $,
+  //       "fecha_rechaza" => $,
+  //       "ip_captura" => $,
+  //       "ip_valida" => $,
+  //       "host_captura" => $,
+  //       "host_valida" => $,
+  //       "comentarios" => $,
+  //       "activo" => $
+  //     );
+  //   }
+  // }
+
   $job = (array) $jobUpdateData["job"];
   return $job;
-  // $analysisList = (array) $jobUpdateData["analysisList"];
   // $jobId = $job["id_trabajo"];
   // $storedanalysisList = getJobanalysisList($jobId);
   // $i = 0;

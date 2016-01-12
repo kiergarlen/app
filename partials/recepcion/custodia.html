@@ -334,11 +334,11 @@
       <select class="form-control"
         id="analystSelectId{{logEntry.id_historial_recipiente}}"
         name="analystSelectId{{logEntry.id_historial_recipiente}}"
-        data-ng-model="logEntry.id_analista"
+        data-ng-model="logEntry.id_usuario_analiza"
         >
         <option data-ng-repeat="analyst in custody.analysts"
-          value="{{analyst.id_analista}}"
-          data-ng-selected="logEntry.id_analista == analyst.id_analista"
+          value="{{analyst.id_usuario}}"
+          data-ng-selected="logEntry.id_usuario_analiza == analyst.id_usuario"
           >
           {{::analyst.nombres}}
           {{::analyst.apellido_paterno}}

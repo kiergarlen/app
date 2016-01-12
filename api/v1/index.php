@@ -306,10 +306,9 @@ $app->post("/custodies", function () use ($app) {
   }
 });
 
-
 $app->get("/jobs(/)(:jobId)", function ($jobId = -1) use ($app) {
   try {
-    //$userId = decodeUserToken($app->request())->uid;
+    $userId = decodeUserToken($app->request())->uid;
     if ($jobId > -1) {
       $result = json_encode(getJob($jobId));
     } else {
@@ -335,13 +334,12 @@ $app->post("/jobs", function () use ($app) {
   try {
     $userId = decodeUserToken($app->request())->uid;
     $request = $app->request();
-    // $jobId = extractDataFromRequest($request)->id_trabajo;
-    // if ($jobId > 0) {
-    //   $jobUpdateData = processJobUpdate($request);
-    //   $jobId = updateJob($jobUpdateData["job"]);
-    // }
-    $result = json_encode(processJobUpdate($request));
-    // $result = "{\"id_orden_trabajo\":" . $jobId . "}";
+    $jobId = extractDataFromRequest($request)->id_trabajo;
+    if ($jobId > 0) {
+      $jobUpdateData = processJobUpdate($request);
+      $jobId = updateJob($jobUpdateData["job"]);
+    }
+    $result = "{\"id_trabajo\":" . $jobId . "}";
     sendSuccessResponse($app, $result);
   } catch (Exception $e) {
     sendErrorResponse($app, $e);

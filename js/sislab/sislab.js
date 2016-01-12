@@ -2478,7 +2478,7 @@
       logs = ArrayUtilsService.setItemsFromReference(
         logs,
         vm.analysts,
-        'id_analista',
+        'id_usuario',
         [
           'nombres',
           'apellido_paterno',
@@ -2502,7 +2502,7 @@
         id_muestra: 0,
         id_recipiente: 0,
         id_parametro: 0,
-        id_analista: 0,
+        id_usuario_analiza: 0,
         id_usuario_captura: 0,
         id_usuario_actualiza: 0,
         volumen: 0,
@@ -2533,7 +2533,7 @@
       if (isNaN(log.volumen) || log.volumen === 0) {
         return false;
       }
-      if (log.id_analista < 1) {
+      if (log.id_usuario_analiza < 1) {
         return false;
       }
       if (!DateUtilsService.isValidDate(new Date(log.fecha))) {
@@ -2566,7 +2566,7 @@
             id_muestra: log.id_muestra,
             id_recipiente: log.id_recipiente,
             id_parametro: log.id_parametro,
-            id_analista: log.id_analista,
+            id_usuario_analiza: log.id_usuario_analiza,
             id_usuario_captura: log.id_usuario_captura,
             id_usuario_actualiza: log.id_usuario_actualiza,
             volumen: log.volumen,

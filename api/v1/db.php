@@ -1939,24 +1939,22 @@ function getJobsByUser($userId)
  */
 function insertJob($jobData)
 {
-  $sql = "INSERT INTO Trabajo (id_plan, id_recepcion,
-    id_custodia, id_area, id_muestra_duplicada,
-    id_usuario_entrega, id_usuario_recibe, id_usuario_aprueba,
-    id_usuario_captura, id_usuario_valida,
-    id_status, positivo, negativo, fecha_entrega, fecha_recibe,
-    fecha_aprueba, fecha_captura, fecha_valida, fecha_rechaza,
-    ip_captura, ip_aprueba, ip_valida,
-    host_captura, host_aprueba, host_valida,
-    comentarios, comentarios_calidad, activo)
-    VALUES(:id_plan, :id_recepcion,
-    :id_custodia, :id_area, :id_muestra_duplicada,
-    :id_usuario_entrega, :id_usuario_recibe, :id_usuario_aprueba,
-    :id_usuario_captura, :id_usuario_valida,
-    :id_status, :positivo, :negativo, :fecha_entrega, :fecha_recibe,
-    :fecha_aprueba,  SYSDATETIMEOFFSET(), :fecha_valida, :fecha_rechaza,
-    :ip_captura, :ip_aprueba, :ip_valida,
-    :host_captura, :host_aprueba, :host_valida,
-    :comentarios, :comentarios_calidad, :activo)";
+  $sql = "INSERT INTO Trabajo (id_plan, id_recepcion, id_custodia,
+    id_area, id_muestra_duplicada, id_usuario_entrega,
+    id_usuario_recibe, id_usuario_aprueba, id_usuario_captura,
+    id_usuario_valida, id_status, positivo, negativo, fecha_entrega,
+    fecha_recibe, fecha_aprueba, fecha_captura, fecha_valida,
+    fecha_rechaza, ip_captura, ip_aprueba, ip_valida, host_captura,
+    host_aprueba, host_valida, comentarios, comentarios_calidad,
+    activo)
+    VALUES(:id_plan, :id_recepcion, :id_custodia,
+    :id_area, :id_muestra_duplicada, :id_usuario_entrega,
+    :id_usuario_recibe, :id_usuario_aprueba, :id_usuario_captura,
+    :id_usuario_valida, :id_status, :positivo, :negativo, :fecha_entrega,
+    :fecha_recibe, :fecha_aprueba, SYSDATETIMEOFFSET(), :fecha_valida,
+    :fecha_rechaza, :ip_captura, :ip_aprueba, :ip_valida, :host_captura,
+    :host_aprueba, :host_valida, :comentarios, :comentarios_calidad,
+    :activo)";
   $db = getConnection();
   $stmt = $db->prepare($sql);
   $stmt->execute($jobData);
@@ -1971,7 +1969,7 @@ function insertJob($jobData)
  */
 function updateJob($updateData)
 {
-  $sql = "UPDATE Trabajo  SET id_plan = :id_plan,
+  $sql = "UPDATE Trabajo SET id_plan = :id_plan,
     id_recepcion = :id_recepcion, id_custodia = :id_custodia,
     id_area = :id_area, id_muestra_duplicada = :id_muestra_duplicada,
     id_usuario_entrega = :id_usuario_entrega,
@@ -1982,11 +1980,13 @@ function updateJob($updateData)
     id_status = :id_status, positivo = :positivo, negativo = :negativo,
     fecha_entrega = :fecha_entrega, fecha_recibe = :fecha_recibe,
     fecha_aprueba = :fecha_aprueba, fecha_valida = :fecha_valida,
-    fecha_rechaza = :fecha_rechaza, fecha_actualiza = :SYSDATETIMEOFFSET(),
+    fecha_actualiza = SYSDATETIMEOFFSET(), fecha_rechaza = :fecha_rechaza,
     ip_aprueba = :ip_aprueba, ip_valida = :ip_valida,
+    ip_actualiza = :ip_actualiza,
     host_aprueba = :host_aprueba, host_valida = :host_valida,
+    host_actualiza = :host_actualiza,
     comentarios = :comentarios, comentarios_calidad = :comentarios_calidad,
-    activo = :activo,
+    activo = :activo
     WHERE id_trabajo = :id_trabajo";
   $db = getConnection();
   $stmt = $db->prepare($sql);
@@ -3532,7 +3532,6 @@ function disablePlanContainers($planId)
   return $planId;
 }
 
-
 /**
  * @param $containerId
  * @return mixed
@@ -3540,7 +3539,7 @@ function disablePlanContainers($planId)
 function getContainerLogs($containerId)
 {
   $sql = "SELECT id_historial_recipiente, id_custodia, id_muestra,
-    id_recipiente, id_parametro, id_analista, id_usuario_captura,
+    id_recipiente, id_parametro, id_usuario_analiza, id_usuario_captura,
     id_usuario_actualiza, volumen,
     CONVERT(NVARCHAR, fecha, 126) AS fecha,
     CONVERT(NVARCHAR, fecha_captura, 126) AS fecha_captura,
@@ -3564,10 +3563,10 @@ function getContainerLogs($containerId)
 function insertContainerLog($insertData)
 {
   $sql = "INSERT INTO HistorialRecipiente (id_custodia, id_muestra,
-    id_recipiente, id_parametro, id_analista, id_usuario_captura,
+    id_recipiente, id_parametro, id_usuario_analiza, id_usuario_captura,
     volumen, fecha, fecha_captura, ip_captura, host_captura)
     VALUES (:id_custodia, :id_muestra,
-    :id_recipiente, :id_parametro, :id_analista, :id_usuario_captura,
+    :id_recipiente, :id_parametro, :id_usuario_analiza, :id_usuario_captura,
     :volumen, :fecha, SYSDATETIMEOFFSET(), :ip_captura, :host_captura)";
   $db = getConnection();
   $stmt = $db->prepare($sql);
@@ -3585,7 +3584,7 @@ function updateContainerLog($updateData)
 {
   $sql = "UPDATE HistorialRecipiente SET id_custodia = :id_custodia,
     id_muestra = :id_muestra, id_recipiente = :id_recipiente,
-    id_parametro = :id_parametro, id_analista = :id_analista,
+    id_parametro = :id_parametro, id_usuario_analiza = :id_usuario_analiza,
     id_usuario_actualiza = :id_usuario_actualiza,
     volumen = :volumen, fecha = :fecha,
     fecha_actualiza = SYSDATETIMEOFFSET(),
@@ -3597,6 +3596,22 @@ function updateContainerLog($updateData)
   $stmt->execute($updateData);
   $db = null;
   return $updateData["id_historial_recipiente"];
+}
+
+/**
+ * @return array
+ */
+function getBlankAnalysis()
+{
+  return array(
+    "id_analisis" => 0, "id_trabajo" => 1, "id_usuario_analiza" => 1,
+    "fecha_analiza" => null, "fecha_aprueba" => null,
+    "fecha_captura" => null, "fecha_valida" => null,
+    "fecha_actualiza" => null, "fecha_rechaza" => null,
+    "ip_captura" => "", "ip_valida" => "", "ip_actualiza" => "",
+    "host_captura" => "", "host_valida" => "", "host_actualiza" => "",
+    "comentarios" => "", "activo" => 1,
+  );
 }
 
 /**
@@ -3647,6 +3662,264 @@ function updateContainerLog($updateData)
   $analysisList = $stmt->fetchAll(PDO::FETCH_ASSOC);
   $db = null;
   return $analysisList;
+}
+
+/**
+ * @param $analysisData
+ * @return mixed
+ */
+function insertAnalysis($analysisData)
+{
+  $sql = "INSERT INTO Analisis (id_trabajo, id_usuario_analiza,
+    fecha_analiza, fecha_aprueba, fecha_captura, fecha_valida,
+    fecha_rechaza, ip_captura, ip_valida, host_captura, host_valida,
+    comentarios, activo)
+    VALUES (:id_trabajo, :id_usuario_analiza,
+    :fecha_analiza, :fecha_aprueba, SYSDATETIMEOFFSET(), :fecha_valida,
+    :fecha_rechaza, :ip_captura, :ip_valida, :host_captura, :host_valida,
+    :comentarios, :activo)";
+  $db = getConnection();
+  $stmt = $db->prepare($sql);
+  $stmt->execute($analysisData);
+  $analysisId = $db->lastInsertId();
+  $db = null;
+  return $analysisId;
+}
+
+/**
+ * @param $updateData
+ * @return mixed
+ */
+function updateAnalysis($updateData)
+{
+  $sql = "UPDATE Analisis SET id_trabajo = :id_trabajo,
+    id_usuario_analiza = :id_usuario_analiza,
+    fecha_analiza = :fecha_analiza, fecha_aprueba = :fecha_aprueba,
+    fecha_valida = :fecha_valida, fecha_actualiza = SYSDATETIMEOFFSET(),
+    fecha_rechaza = :fecha_rechaza, ip_valida = :ip_valida,
+    ip_actualiza = :ip_actualiza, host_valida = :host_valida,
+    host_actualiza = :host_actualiza, comentarios = :comentarios,
+    activo = :activo
+    WHERE id_analisis = :id_analisis";
+  $db = getConnection();
+  $stmt = $db->prepare($sql);
+  $stmt->execute($updateData);
+  $db = null;
+  return $updateData["id_analisis"];
+}
+
+/**
+ * @param $jobId
+ * @return mixed
+ */
+function disableJobAnalysis($jobId)
+{
+  $sql = "UPDATE Analisis SET activo = 0
+    WHERE id_trabajo = :jobId";
+  $db = getConnection();
+  $stmt = $db->prepare($sql);
+  $stmt->bindParam("jobId", $jobId);
+  $stmt->execute();
+  $db = null;
+  return $jobId;
+}
+
+/**
+ * @param $analysisId
+ * @return mixed
+ */
+function getAnalysisSamples($analysisId)
+{
+  $sql = "SELECT id_analisis_muestra, id_analisis, id_muestra, activo
+    FROM AnalisisMuestra
+    WHERE activo = 1  AND id_analisis = :analysisId";
+  $db = getConnection();
+  $stmt = $db->prepare($sql);
+  $stmt->bindParam("analysisId", $analysisId);
+  $stmt->execute();
+  $samples = $stmt->fetchAll(PDO::FETCH_ASSOC);
+  $db = null;
+  return $samples;
+}
+
+/**
+ * @param $sampleData
+ * @return mixed
+ */
+function insertAnalysisSample($sampleData)
+{
+  $sql = "INSERT INTO AnalisisMuestra (id_analisis, id_muestra, activo)
+    VALUES (:id_analisis, :id_muestra, :activo)";
+  $db = getConnection();
+  $stmt = $db->prepare($sql);
+  $stmt->execute($sampleData);
+  $sampleId = $db->lastInsertId();
+  $db = null;
+  return $sampleId;
+}
+
+/**
+ * @param $updateData
+ * @return mixed
+ */
+function updateAnalysisSample($updateData)
+{
+  $sql = "UPDATE AnalisisMuestra SET id_analisis = :id_analisis,
+    id_muestra = :id_muestra, activo = :activo
+    WHERE id_analisis_muestra = :id_analisis_muestra";
+  $db = getConnection();
+  $stmt = $db->prepare($sql);
+  $stmt->execute($updateData);
+  $db = null;
+  return $updateData["id_analisis_muestra"];
+}
+
+/**
+ * @param $analysisId
+ * @return mixed
+ */
+function disableAnalysisSamples($analysisId)
+{
+  $sql = "UPDATE AnalisisMuestra SET activo = 0
+    WHERE id_analisis = :analysisId";
+  $db = getConnection();
+  $stmt = $db->prepare($sql);
+  $stmt->bindParam("analysisId", $analysisId);
+  $stmt->execute();
+  $db = null;
+  return $analysisId;
+}
+
+/**
+ * @param $analysisId
+ * @return mixed
+ */
+function getAnalysisParameters($analysisId)
+{
+  $sql = "SELECT id_analisis_parametro, id_analisis, id_parametro, activo
+    FROM AnalisisParametro
+    WHERE activo = 1  AND id_analisis = :analysisId";
+  $db = getConnection();
+  $stmt = $db->prepare($sql);
+  $stmt->bindParam("analysisId", $analysisId);
+  $stmt->execute();
+  $parameters = $stmt->fetchAll(PDO::FETCH_ASSOC);
+  $db = null;
+  return $parameters;
+}
+
+/**
+ * @param $parameterData
+ * @return mixed
+ */
+function insertAnalysisParameter($parameterData)
+{
+  $sql = "INSERT INTO AnalisisParametro (id_analisis, id_parametro, activo)
+    VALUES (:id_analisis, :id_parametro, :activo)";
+  $db = getConnection();
+  $stmt = $db->prepare($sql);
+  $stmt->execute($parameterData);
+  $parameterId = $db->lastInsertId();
+  $db = null;
+  return $parameterId;
+}
+
+/**
+ * @param $updateData
+ * @return mixed
+ */
+function updateAnalysisParameter($updateData)
+{
+  $sql = "UPDATE AnalisisParametro SET id_analisis = :id_analisis,
+    id_parametro = :id_parametro, activo = :activo
+    WHERE id_analisis_parametro = :id_analisis_parametro";
+  $db = getConnection();
+  $stmt = $db->prepare($sql);
+  $stmt->execute($updateData);
+  $db = null;
+  return $updateData["id_analisis_parametro"];
+}
+
+/**
+ * @param $analysisId
+ * @return mixed
+ */
+function disableAnalysisParameters($analysisId)
+{
+  $sql = "UPDATE AnalisisParametro SET activo = 0
+    WHERE id_analisis = :analysisId";
+  $db = getConnection();
+  $stmt = $db->prepare($sql);
+  $stmt->bindParam("analysisId", $analysisId);
+  $stmt->execute();
+  $db = null;
+  return $analysisId;
+}
+
+/**
+ * @param $analysisId
+ * @return mixed
+ */
+function getAnalysisReferences($analysisId)
+{
+  $sql = "SELECT id_analisis_referencia, id_analisis, id_referencia, activo
+    FROM AnalisisReferencia
+    WHERE activo = 1  AND id_analisis = :analysisId";
+  $db = getConnection();
+  $stmt = $db->prepare($sql);
+  $stmt->bindParam("analysisId", $analysisId);
+  $stmt->execute();
+  $references = $stmt->fetchAll(PDO::FETCH_ASSOC);
+  $db = null;
+  return $references;
+}
+
+/**
+ * @param $referenceData
+ * @return mixed
+ */
+function insertAnalysisReference($referenceData)
+{
+  $sql = "INSERT INTO AnalisisReferencia (id_analisis, id_referencia, activo)
+    VALUES (:id_analisis, :id_referencia, :activo)";
+  $db = getConnection();
+  $stmt = $db->prepare($sql);
+  $stmt->execute($referenceData);
+  $referenceId = $db->lastInsertId();
+  $db = null;
+  return $referenceId;
+}
+
+/**
+ * @param $updateData
+ * @return mixed
+ */
+function updateAnalysisReference($updateData)
+{
+  $sql = "UPDATE AnalisisReferencia SET id_analisis = :id_analisis,
+    id_referencia = :id_referencia, activo = :activo
+    WHERE id_analisis_referencia = :id_analisis_referencia";
+  $db = getConnection();
+  $stmt = $db->prepare($sql);
+  $stmt->execute($updateData);
+  $db = null;
+  return $updateData["id_analisis_referencia"];
+}
+
+/**
+ * @param $analysisId
+ * @return mixed
+ */
+function disableAnalysisReferences($analysisId)
+{
+  $sql = "UPDATE AnalisisReferencia SET activo = 0
+    WHERE id_analisis = :analysisId";
+  $db = getConnection();
+  $stmt = $db->prepare($sql);
+  $stmt->bindParam("analysisId", $analysisId);
+  $stmt->execute();
+  $db = null;
+  return $analysisId;
 }
 
 /**

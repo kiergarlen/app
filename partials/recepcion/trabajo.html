@@ -298,11 +298,11 @@
                       <select class="form-control"
                         id="analystSelectId{{analysis.id_parametro}}"
                         name="analystSelectId{{analysis.id_parametro}}"
-                        data-ng-model="analysis.id_analista"
+                        data-ng-model="analysis.id_usuario_analiza"
                         >
                         <option data-ng-repeat="analyst in job.analysts"
-                          value="{{analyst.id_analista}}"
-                          data-ng-selected="analysis.id_analista == analyst.id_analista"
+                          value="{{analyst.id_usuario_analiza}}"
+                          data-ng-selected="analysis.id_usuario_analiza == analyst.id_usuario_analiza"
                           >
                           {{::analyst.nombres}}
                           {{::analyst.apellido_paterno}}

@@ -337,9 +337,12 @@ $app->post("/jobs", function () use ($app) {
     $jobId = extractDataFromRequest($request)->id_trabajo;
     if ($jobId > 0) {
       $jobUpdateData = processJobUpdate($request);
-      $jobId = updateJob($jobUpdateData["job"]);
+      // $jobId = updateJob($jobUpdateData["job"]);
+      // processJobAnalysisInsert($jobUpdateData, $jobId);
     }
-    $result = "{\"id_trabajo\":" . $jobId . "}";
+    // $result = "{\"id_trabajo\":" . $jobId . "}";
+    $result = processJobAnalysisInsert($jobUpdateData, 32);
+    $result = json_encode($result);
     sendSuccessResponse($app, $result);
   } catch (Exception $e) {
     sendErrorResponse($app, $e);

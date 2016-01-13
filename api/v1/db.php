@@ -1742,7 +1742,7 @@ function getBlankJob()
     "host_captura" => "", "host_aprueba" => "",
     "host_valida" => "", "host_actualiza" => "",
     "comentarios" => "", "comentarios_calidad" => "",
-    "activo" => 1,
+    "motivo_rechaza" => "", "activo" => 1,
   );
 }
 
@@ -1766,7 +1766,7 @@ function getPlainJob($jobId)
     CONVERT(NVARCHAR, fecha_rechaza, 126) AS fecha_rechaza,
     ip_captura, ip_aprueba, ip_valida, ip_actualiza,
     host_captura, host_aprueba, host_valida, host_actualiza,
-    comentarios, comentarios_calidad, activo
+    comentarios, comentarios_calidad, motivo_rechaza, activo
     FROM Trabajo
     WHERE activo = 1 AND id_trabajo = :jobId";
   $db = getConnection();
@@ -1842,7 +1842,7 @@ function getJobs()
     CONVERT(NVARCHAR, fecha_rechaza, 126) AS fecha_rechaza,
     ip_captura, ip_aprueba, ip_valida, ip_actualiza,
     host_captura, host_aprueba, host_valida, host_actualiza,
-    comentarios, comentarios_calidad, activo
+    comentarios, comentarios_calidad, motivo_rechaza, activo
     FROM Trabajo
     WHERE activo = 1";
   $db = getConnection();
@@ -1873,7 +1873,7 @@ function getJobsByReception($receptionId)
     CONVERT(NVARCHAR, fecha_rechaza, 126) AS fecha_rechaza,
     ip_captura, ip_aprueba, ip_valida, ip_actualiza,
     host_captura, host_aprueba, host_valida, host_actualiza,
-    comentarios, comentarios_calidad, activo
+    comentarios, comentarios_calidad, motivo_rechaza, activo
     FROM Trabajo
     WHERE activo = 1 AND id_recepcion = :receptionId";
   $db = getConnection();
@@ -1909,7 +1909,7 @@ function getJobsByArea($areaId)
     CONVERT(NVARCHAR, fecha_rechaza, 126) AS fecha_rechaza,
     ip_captura, ip_aprueba, ip_valida, ip_actualiza,
     host_captura, host_aprueba, host_valida, host_actualiza,
-    comentarios, comentarios_calidad, activo
+    comentarios, comentarios_calidad, motivo_rechaza, activo
     FROM Trabajo
     WHERE activo = 1 AND id_area = :areaId";
   $db = getConnection();
@@ -1946,7 +1946,7 @@ function insertJob($jobData)
     fecha_recibe, fecha_aprueba, fecha_captura, fecha_valida,
     fecha_rechaza, ip_captura, ip_aprueba, ip_valida, host_captura,
     host_aprueba, host_valida, comentarios, comentarios_calidad,
-    activo)
+    motivo_rechaza, activo)
     VALUES(:id_plan, :id_recepcion, :id_custodia,
     :id_area, :id_muestra_duplicada, :id_usuario_entrega,
     :id_usuario_recibe, :id_usuario_aprueba, :id_usuario_captura,
@@ -1954,7 +1954,7 @@ function insertJob($jobData)
     :fecha_recibe, :fecha_aprueba, SYSDATETIMEOFFSET(), :fecha_valida,
     :fecha_rechaza, :ip_captura, :ip_aprueba, :ip_valida, :host_captura,
     :host_aprueba, :host_valida, :comentarios, :comentarios_calidad,
-    :activo)";
+    :motivo_rechaza, :activo)";
   $db = getConnection();
   $stmt = $db->prepare($sql);
   $stmt->execute($jobData);
@@ -1986,7 +1986,7 @@ function updateJob($updateData)
     host_aprueba = :host_aprueba, host_valida = :host_valida,
     host_actualiza = :host_actualiza,
     comentarios = :comentarios, comentarios_calidad = :comentarios_calidad,
-    activo = :activo
+    motivo_rechaza = :motivo_rechaza, activo = :activo
     WHERE id_trabajo = :id_trabajo";
   $db = getConnection();
   $stmt = $db->prepare($sql);

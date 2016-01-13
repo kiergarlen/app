@@ -1782,9 +1782,9 @@ function processJobUpdate($request)
   unset($update["referencias"]);
   unset($update["parametros"]);
   unset($update["fecha_captura"]);
+  unset($update["id_usuario_captura"]);
   unset($update["ip_captura"]);
   unset($update["host_captura"]);
-  unset($update["id_usuario_captura"]);
   unset($update["fecha_actualiza"]);
 
   if(!is_numeric($update["id_muestra_duplicada"])) {
@@ -1814,6 +1814,7 @@ function processJobUpdate($request)
     "references" => $references,
     "parameters" => $parameters,
   );
+
   return $jobUpdateData;
 }
 
@@ -1825,41 +1826,49 @@ function processJobUpdate($request)
  */
 function processJobAnalysisInsert($jobUpdateData, $jobId)
 {
-  $job = (array)$jobUpdateData["job"];
+  $job = (array) $jobUpdateData["job"];
   $analysisList = (array) $jobUpdateData["analysisList"];
   $samples = (array) $jobUpdateData["samples"];
   $parameters = (array) $jobUpdateData["parameters"];
 
-  $i = 0;
-  $j = 0;
-  $l = count($samples);
-  $m = count($parameters);
+  if (count($analysisList) > 0) {
+    return $analysisList;
+  } else {
+    $i = 0;
+    $j = 0;
+    $l = count($samples);
+    $m = count($parameters);
 
-  for ($i = 0; $i < $l; $i++) {
-    $sampleId = $samples[$i]["id_muestra"];
-    for ($j = 0; $j < ; $j++) {
-      $parameter = (array) $parameters[$j];
-      $analysisData = array(
-        "id_trabajo" => $jobId,
-        "id_usuario_analiza" => $parameter["id_usuario_analiza"],
-        "fecha_analiza" => null,
-        "fecha_aprueba" => null,
-        "fecha_valida" => null,
-        "fecha_rechaza" => null,
-        "ip_captura" => $job["ip_actualiza"],
-        "ip_valida" => "",
-        "host_captura" => $job["host_actualiza"],
-        "host_valida" => "",
-        "comentarios" => "",
-        "activo" => 1
-      );
-      $analysisList[] = $analysisData;
+    for ($i = 0; $i < $l; $i++) {
+      $sampleId = $samples[$i]->id_muestra;
+      for ($j = 0; $j < $m; $j++) {
+        $parameter = (array) $parameters[$j];
+        $analysisData = array(
+          "id_trabajo" => $jobId,
+          "id_muestra" => $sampleId,
+          "id_parametro" => $parameter["id_parametro"],
+          "id_usuario_analiza" => $parameter["id_usuario_analiza"],
+          "fecha_analiza" => null,
+          "fecha_aprueba" => null,
+          "fecha_valida" => null,
+          "fecha_rechaza" => null,
+          "ip_captura" => $job["ip_actualiza"],
+          "ip_valida" => "",
+          "host_captura" => $job["host_actualiza"],
+          "host_valida" => "",
+          "comentarios" => "",
+          "activo" => 1,
+        );
+        $analysisInsertArray[] = $analysisData;
+      }
     }
+    return $analysisInsertArray;
   }
-  return $analysisList;
+  //SORT by AnalystID
+  //GROUP by AnalystID
+  //INSERT only ONE Analysis for each AnalystId
+  //INSERT one to many relationships to Analysis: AnalysisSamples. AnalysisParameters, etc.
 
-  // $job = (array) $jobUpdateData["job"];
-  // return $job;
 
   // $jobId = $job["id_trabajo"];
   // $storedanalysisList = getJobanalysisList($jobId);

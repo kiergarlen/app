@@ -2166,187 +2166,6 @@
       ]
     );
 
-  //JobListController.js
-  /**
-   * @name JobListController
-   * @constructor
-   * @desc Controla la vista para el listado de Órdenes de Trabajo
-   * @this {Object} $scope - Contenedor para el modelo
-   * @param {Object} $location - Manejo de URL
-   * @param {Object} TokenService - Proveedor para manejo del token
-   * @param {Object} ReceivingAreaService - Proveedor de datos, Áreas receptoras
-   * @param {Object} ArrayUtilsService - Proveedor para manejo de arreglos
-   * @param {Object} UserJobsService - Proveedor de datos, Órdenes de Trabajo (Usuario)
-   */
-  function JobListController($location, TokenService, ReceivingAreaService,
-    ArrayUtilsService, UserJobsService) {
-    var vm = this;
-    vm.jobs = [];
-    vm.areas = [];
-    vm.user = TokenService.getUserFromToken();
-    vm.viewJob = viewJob;
-
-    UserJobsService
-      .query({userId: 0})
-      .$promise
-      .then(function success(response) {
-        vm.jobs = response;
-        ReceivingAreaService
-          .get()
-          .$promise
-          .then(function success(response) {
-            var i = 0;
-            var l = 0;
-            vm.areas = response;
-            l = vm.jobs.length;
-            for (i = 0; i < l; i += 1) {
-              vm.jobs[i].area = '';
-            }
-            ArrayUtilsService.setItemsFromReference(
-              vm.jobs,
-              vm.areas,
-              'id_area',
-              [
-                'area'
-              ]
-            );
-          });
-      });
-
-    function viewJob(id) {
-      $location.path('/recepcion/trabajo/' + parseInt(id, 10));
-    }
-  }
-  angular
-    .module('sislabApp')
-    .controller('JobListController',
-      [
-        '$location', 'TokenService', 'ReceivingAreaService',
-        'ArrayUtilsService', 'UserJobsService',
-        JobListController
-      ]
-    );
-
-  //JobController.js
-  /**
-   * @name JobController
-   * @constructor
-   * @desc Controla la vista para capturar las Órdenes de Trabajo
-   * @this {Object} $scope - Contenedor para el modelo
-   * @param {Object} $routeParams - Proveedor de parámetros de ruta
-   * @param {Object} TokenService - Proveedor para manejo del token
-   * @param {Object} ValidationService - Proveedor para manejo de validación
-   * @param {Object} RestUtilsService - Proveedor para manejo de servicios REST
-   * @param {Object} ArrayUtilsService - Proveedor para manejo de arreglos
-   * @param {Object} DateUtilsService - Proveedor para manejo de fechas
-   * @param {Object} AnalystService - Proveedor de datos, Analistas
-   * @param {Object} JobService - Proveedor de datos, Órdenes de Trabajo
-   */
-  function JobController($scope, $routeParams, TokenService,
-    ValidationService, RestUtilsService, ArrayUtilsService,
-    DateUtilsService, AnalystService, JobService) {
-    var vm = this;
-    vm.user = TokenService.getUserFromToken();
-    vm.job = {};
-    vm.analysts = [];
-    vm.supervisor = {};
-    vm.isParameterListAsigned = false;
-    vm.isDataSubmitted = false;
-    vm.approveResults = approveResults;
-    vm.rejectResults = rejectResults;
-    vm.approveItem = approveItem;
-    vm.rejectItem = rejectItem;
-    vm.submitForm = submitForm;
-
-    JobService
-      .query({jobId: $routeParams.jobId})
-      .$promise
-      .then(function success(response) {
-        vm.job = response;
-        if (vm.job.anlysisList) {
-          vm.isParameterListAsigned = vm.job.lista_analisis.length > 0;
-        }
-        AnalystService
-          .get()
-          .$promise
-          .then(function success(response) {
-            var i = 0;
-            var l = 0;
-            vm.analysts = ArrayUtilsService.selectItemsFromCollection(
-              response,
-              'id_area',
-              vm.job.id_area
-            );
-            vm.supervisor = ArrayUtilsService.selectItemFromCollection(
-              vm.analysts,
-              'supervisa',
-              1
-            );
-            l = vm.job.parametros.length;
-            for (i = 0; i < l; i += 1) {
-              vm.job.parametros[i].id_usuario_analiza = vm.supervisor.id_usuario;
-            };
-          });
-      });
-
-    function approveResults() {
-      vm.job.id_usuario_aprueba = vm.user.id;
-      vm.job.fecha_aprueba = DateUtilsService.dateToIso(new Date());
-    }
-
-    function rejectResults() {
-      vm.job.comentarios = ' [Resultados Rechazados] ' + vm.job.comentarios;
-      vm.job.id_usuario_aprueba = null;
-      vm.job.fecha_aprueba = null;
-    }
-
-    function approveItem() {
-      ValidationService.approveItem(vm.job, vm.user);
-    }
-
-    function rejectItem() {
-      ValidationService.rejectItem(vm.job, vm.user);
-    }
-
-    function isFormValid() {
-      return true;
-    }
-
-    function submitForm() {
-      if (isFormValid() && !vm.isDataSubmitted) {
-        vm.isDataSubmitted = true;
-        if (vm.job.id_trabajo < 1) {
-          RestUtilsService
-            .saveData(
-              JobService,
-              vm.job,
-              'recepcion/trabajo'
-            );
-        } else {
-          if (vm.user.level < 3 || vm.job.id_status !== 2) {
-            RestUtilsService
-              .updateData(
-                JobService,
-                vm.job,
-                'recepcion/trabajo',
-                'id_trabajo'
-              );
-          }
-        }
-      }
-    }
-  }
-  angular
-    .module('sislabApp')
-    .controller('JobController',
-      [
-        '$scope', '$routeParams', 'TokenService',
-        'ValidationService', 'RestUtilsService', 'ArrayUtilsService',
-        'DateUtilsService', 'AnalystService', 'JobService',
-        JobController
-      ]
-    );
-
   //CustodyListController.js
   /**
    * @name CustodyListController
@@ -2453,7 +2272,6 @@
       vm.message = '';
       if (!container.historial || container.historial.length < 1) {
         container.historial = [];
-        //load logs from database, add to logs array
         ContainerLogService
           .query({containerId: containerId})
           .$promise
@@ -2647,6 +2465,263 @@
         CustodyController
       ]
     );
+
+  //JobListController.js
+  /**
+   * @name JobListController
+   * @constructor
+   * @desc Controla la vista para el listado de Órdenes de Trabajo
+   * @this {Object} $scope - Contenedor para el modelo
+   * @param {Object} $location - Manejo de URL
+   * @param {Object} TokenService - Proveedor para manejo del token
+   * @param {Object} ReceivingAreaService - Proveedor de datos, Áreas receptoras
+   * @param {Object} ArrayUtilsService - Proveedor para manejo de arreglos
+   * @param {Object} UserJobsService - Proveedor de datos, Órdenes de Trabajo (Usuario)
+   */
+  function JobListController($location, TokenService, ReceivingAreaService,
+    ArrayUtilsService, UserJobsService) {
+    var vm = this;
+    vm.jobs = [];
+    vm.areas = [];
+    vm.user = TokenService.getUserFromToken();
+    vm.viewJob = viewJob;
+
+    UserJobsService
+      .query({userId: 0})
+      .$promise
+      .then(function success(response) {
+        vm.jobs = response;
+        ReceivingAreaService
+          .get()
+          .$promise
+          .then(function success(response) {
+            var i = 0;
+            var l = 0;
+            vm.areas = response;
+            l = vm.jobs.length;
+            for (i = 0; i < l; i += 1) {
+              vm.jobs[i].area = '';
+            }
+            ArrayUtilsService.setItemsFromReference(
+              vm.jobs,
+              vm.areas,
+              'id_area',
+              [
+                'area'
+              ]
+            );
+          });
+      });
+
+    function viewJob(id) {
+      $location.path('/recepcion/trabajo/' + parseInt(id, 10));
+    }
+  }
+  angular
+    .module('sislabApp')
+    .controller('JobListController',
+      [
+        '$location', 'TokenService', 'ReceivingAreaService',
+        'ArrayUtilsService', 'UserJobsService',
+        JobListController
+      ]
+    );
+
+  //JobController.js
+  /**
+   * @name JobController
+   * @constructor
+   * @desc Controla la vista para capturar las Órdenes de Trabajo
+   * @this {Object} $scope - Contenedor para el modelo
+   * @param {Object} $routeParams - Proveedor de parámetros de ruta
+   * @param {Object} TokenService - Proveedor para manejo del token
+   * @param {Object} ValidationService - Proveedor para manejo de validación
+   * @param {Object} RestUtilsService - Proveedor para manejo de servicios REST
+   * @param {Object} ArrayUtilsService - Proveedor para manejo de arreglos
+   * @param {Object} DateUtilsService - Proveedor para manejo de fechas
+   * @param {Object} AnalystService - Proveedor de datos, Analistas
+   * @param {Object} JobService - Proveedor de datos, Órdenes de Trabajo
+   */
+  function JobController($scope, $routeParams, TokenService,
+    ValidationService, RestUtilsService, ArrayUtilsService,
+    DateUtilsService, AnalystService, JobService) {
+    var vm = this;
+    vm.user = TokenService.getUserFromToken();
+    vm.job = {};
+    vm.analysts = [];
+    vm.supervisor = {};
+    vm.isParameterListAsigned = false;
+    vm.isDataSubmitted = false;
+    vm.approveResults = approveResults;
+    vm.rejectResults = rejectResults;
+    vm.approveItem = approveItem;
+    vm.rejectItem = rejectItem;
+    vm.submitForm = submitForm;
+
+    JobService
+      .query({jobId: $routeParams.jobId})
+      .$promise
+      .then(function success(response) {
+        vm.job = response;
+        if (vm.job.anlysisList) {
+          vm.isParameterListAsigned = vm.job.lista_analisis.length > 0;
+        }
+        AnalystService
+          .get()
+          .$promise
+          .then(function success(response) {
+            var i = 0;
+            var l = 0;
+            vm.analysts = ArrayUtilsService.selectItemsFromCollection(
+              response,
+              'id_area',
+              vm.job.id_area
+            );
+            vm.supervisor = ArrayUtilsService.selectItemFromCollection(
+              vm.analysts,
+              'supervisa',
+              1
+            );
+            l = vm.job.parametros.length;
+            for (i = 0; i < l; i += 1) {
+              vm.job.parametros[i].id_usuario_analiza = vm.supervisor.id_usuario;
+            };
+          });
+      });
+
+    function approveResults() {
+      vm.job.id_usuario_aprueba = vm.user.id;
+      vm.job.fecha_aprueba = DateUtilsService.dateToIso(new Date());
+    }
+
+    function rejectResults() {
+      vm.job.comentarios = ' [Resultados Rechazados] ' + vm.job.comentarios;
+      vm.job.id_usuario_aprueba = null;
+      vm.job.fecha_aprueba = null;
+    }
+
+    function approveItem() {
+      ValidationService.approveItem(vm.job, vm.user);
+    }
+
+    function rejectItem() {
+      ValidationService.rejectItem(vm.job, vm.user);
+    }
+
+    function isFormValid() {
+      return true;
+    }
+
+    function submitForm() {
+      if (isFormValid() && !vm.isDataSubmitted) {
+        vm.isDataSubmitted = true;
+        if (vm.job.id_trabajo < 1) {
+          RestUtilsService
+            .saveData(
+              JobService,
+              vm.job,
+              'recepcion/trabajo'
+            );
+        } else {
+          if (vm.user.level < 3 || vm.job.id_status !== 2) {
+            RestUtilsService
+              .updateData(
+                JobService,
+                vm.job,
+                'recepcion/trabajo',
+                'id_trabajo'
+              );
+          }
+        }
+      }
+    }
+  }
+  angular
+    .module('sislabApp')
+    .controller('JobController',
+      [
+        '$scope', '$routeParams', 'TokenService',
+        'ValidationService', 'RestUtilsService', 'ArrayUtilsService',
+        'DateUtilsService', 'AnalystService', 'JobService',
+        JobController
+      ]
+    );
+
+  //AnalysisListController.js
+  /**
+   * @name AnalysisListController
+   * @constructor
+   * @desc Controla la vista para la búsqueda de Análisis
+   * @this {Object} $scope - Contenedor para el modelo
+   * @param {Object} AnalysisService - Proveedor de datos, Análisis
+   */
+  function AnalysisListController(AnalysisService) {
+    var vm = this;
+    vm.analysisList = AnalysisService.get();
+
+    vm.selectRow = selectRow;
+    function selectRow() {
+      //TODO send to details view
+    }
+  }
+  angular
+    .module('sislabApp')
+    .controller('AnalysisListController',
+      [
+        'AnalysisService',
+        AnalysisListController
+      ]
+    );
+
+  //AnalysisController.js
+  /**
+   * @name AnalysisController
+   * @constructor
+   * @desc Controla la vista para seleccionar captura de Análisis
+   * @this {Object} $scope - Contenedor para el modelo
+   * @param {Object} AreaService - Proveedor de datos, Áreas
+   * @param {Object} ParameterService - Proveedor de datos, Parámetros
+   * @param {Object} AnalysisService - Proveedor de datos, Análisis
+   */
+  function AnalysisController(AreaService, ParameterService,
+    AnalysisService) {
+    var vm = this;
+    vm.areas = AreaService.get();
+    vm.parameters = ParameterService.get();
+    vm.analysis = AnalysisService.get();
+
+    vm.selectArea = selectArea;
+    vm.selectParameter = selectParameter;
+
+    vm.validateAnalysisForm = validateAnalysisForm;
+    vm.submitForm = submitForm;
+
+    function selectArea() {
+
+    }
+
+    function selectParameter() {
+
+    }
+
+    function validateAnalysisForm() {
+
+    }
+
+    function submitForm() {
+
+    }
+  }
+  angular
+    .module('sislabApp')
+    .controller('AnalysisController',
+      [
+        'AreaService', 'ParameterService',
+        'AnalysisService',
+        AnalysisController
+      ]
+    );
+
 
   /**
    * @name PhysAnalysisListController
@@ -2856,81 +2931,6 @@
       [
         'ContainerService',
         ContainerListController
-      ]
-    );
-
-  //AnalysisListController.js
-  /**
-   * @name AnalysisListController
-   * @constructor
-   * @desc Controla la vista para la búsqueda de Análisis
-   * @this {Object} $scope - Contenedor para el modelo
-   * @param {Object} AnalysisService - Proveedor de datos, Análisis
-   */
-  function AnalysisListController(AnalysisService) {
-    var vm = this;
-    vm.analysisList = AnalysisService.get();
-
-    vm.selectRow = selectRow;
-    function selectRow() {
-      //TODO send to details view
-    }
-  }
-  angular
-    .module('sislabApp')
-    .controller('AnalysisListController',
-      [
-        'AnalysisService',
-        AnalysisListController
-      ]
-    );
-
-  //AnalysisController.js
-  /**
-   * @name AnalysisController
-   * @constructor
-   * @desc Controla la vista para seleccionar captura de Análisis
-   * @this {Object} $scope - Contenedor para el modelo
-   * @param {Object} AreaService - Proveedor de datos, Áreas
-   * @param {Object} ParameterService - Proveedor de datos, Parámetros
-   * @param {Object} AnalysisService - Proveedor de datos, Análisis
-   */
-  function AnalysisController(AreaService, ParameterService,
-    AnalysisService) {
-    var vm = this;
-    vm.areas = AreaService.get();
-    vm.parameters = ParameterService.get();
-    vm.analysis = AnalysisService.get();
-
-    vm.selectArea = selectArea;
-    vm.selectParameter = selectParameter;
-
-    vm.validateAnalysisForm = validateAnalysisForm;
-    vm.submitAnalysisForm = submitAnalysisForm;
-
-    function selectArea() {
-
-    }
-
-    function selectParameter() {
-
-    }
-
-    function validateAnalysisForm() {
-
-    }
-
-    function submitAnalysisForm() {
-
-    }
-  }
-  angular
-    .module('sislabApp')
-    .controller('AnalysisController',
-      [
-        'AreaService', 'ParameterService',
-        'AnalysisService',
-        AnalysisController
       ]
     );
 

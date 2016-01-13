@@ -1825,38 +1825,42 @@ function processJobUpdate($request)
  */
 function processJobAnalysisInsert($jobUpdateData, $jobId)
 {
+  $job = (array)$jobUpdateData["job"];
   $analysisList = (array) $jobUpdateData["analysisList"];
   $samples = (array) $jobUpdateData["samples"];
   $parameters = (array) $jobUpdateData["parameters"];
 
-  // $i = 0;
-  // $j = 0;
-  // $l = count($samples);
-  // $m = count($parameters);
+  $i = 0;
+  $j = 0;
+  $l = count($samples);
+  $m = count($parameters);
 
-  // for ($i = 0; $i < $l; $i++) {
-  //   $sampleId = $samples[$i]["id_muestra"];
-  //   for ($j = 0; $j < ; $j++) {
-  //     $parameter = (array) $parameters[$j];
-  //     $analysisData = array(
-  //       "id_trabajo" => $jobId,
-  //       "id_usuario_analiza" => ,
-  //       "fecha_analiza" => $,
-  //       "fecha_aprueba" => $,
-  //       "fecha_valida" => $,
-  //       "fecha_rechaza" => $,
-  //       "ip_captura" => $,
-  //       "ip_valida" => $,
-  //       "host_captura" => $,
-  //       "host_valida" => $,
-  //       "comentarios" => $,
-  //       "activo" => $
-  //     );
-  //   }
-  // }
+  for ($i = 0; $i < $l; $i++) {
+    $sampleId = $samples[$i]["id_muestra"];
+    for ($j = 0; $j < ; $j++) {
+      $parameter = (array) $parameters[$j];
+      $analysisData = array(
+        "id_trabajo" => $jobId,
+        "id_usuario_analiza" => $parameter["id_usuario_analiza"],
+        "fecha_analiza" => null,
+        "fecha_aprueba" => null,
+        "fecha_valida" => null,
+        "fecha_rechaza" => null,
+        "ip_captura" => $job["ip_actualiza"],
+        "ip_valida" => "",
+        "host_captura" => $job["host_actualiza"],
+        "host_valida" => "",
+        "comentarios" => "",
+        "activo" => 1
+      );
+      $analysisList[] = $analysisData;
+    }
+  }
+  return $analysisList;
 
-  $job = (array) $jobUpdateData["job"];
-  return $job;
+  // $job = (array) $jobUpdateData["job"];
+  // return $job;
+
   // $jobId = $job["id_trabajo"];
   // $storedanalysisList = getJobanalysisList($jobId);
   // $i = 0;

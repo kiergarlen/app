@@ -3871,23 +3871,13 @@ function disableAnalysisParameters($analysisId)
 function getBlankAnalysisReference()
 {
   return array(
-    "id_analisis_referencia" => 0,
-    "id_analisis" => 0,
-    "id_muestra" => 0,
-    "id_parametro" => 0,
-    "id_usuario_analiza" => 0,
-    "id_usuario_captura" => 0,
-    "id_usuario_actualiza" => 0,
-    "duplicado" => "",
-    "muestra_duplicada" => "",
-    "estandar" => "",
-    "coeficiente_variacion" => "",
-    "tiempo_incubacion" => "",
-    "temperatura_incubacion" => "",
-    "fecha_analiza" => null,
-    "fecha_captura" => null,
-    "fecha_actualiza" => null,
-    "activo" => 1,
+    "id_analisis_referencia" => 0, "id_analisis" => 0, "id_muestra" => 0,
+    "id_parametro" => 0, "id_usuario_analiza" => 0,
+    "id_usuario_captura" => 0, "id_usuario_actualiza" => 0,
+    "duplicado" => "", "muestra_duplicada" => "", "estandar" => "",
+    "coeficiente_variacion" => "", "tiempo_incubacion" => "",
+    "temperatura_incubacion" => "", "fecha_analiza" => null,
+    "fecha_captura" => null, "fecha_actualiza" => null, "activo" => 1,
   );
 }
 

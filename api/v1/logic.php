@@ -1838,165 +1838,64 @@ function processJobAnalysisInsert($jobUpdateData, $jobId)
 {
   $job = (array) $jobUpdateData["job"];
   $analysisList = (array) $jobUpdateData["analysisList"];
-  $samples = (array) $jobUpdateData["samples"];
   $parameters = (array) $jobUpdateData["parameters"];
-  $jobId = $job["id_trabajo"];
-  $updateUserId = $job["id_usuario_actualiza"];
-  $analystId = $job["id_usuario_actualiza"];
-  $updateIp = $job["ip_actualiza"];
-  $updateHost = $job["host_actualiza"];
-
-  // return $parameters;
 
   if (count($analysisList) > 0) {
     return $analysisList;
   } else {
     $i = 0;
-    $j = 0;
-    $l = count($samples);
-    $m = count($parameters);
-    // SORT by AnalystID
+    $l = count($parameters);
     usort($parameters, "customSort");
-
-    // //GROUP by AnalystID
     $currentAnalystId = 0;
-    $currentAnalyst = array();
 
-    for ($i = 0; $i < $m; $i++) {
-      if ($parameters[$i]->id_usuario_analiza != $currentAnalystId) {
-        $currentAnalystId = $parameters[$i]->id_usuario_analiza;
-        // //ADD new element array
-        $analystIds[] = $parameters[$i]->id_usuario_analiza;
-        // $currentAnalyst = array(
-        //   "id_usuario_analiza" => $parameters[$i]->id_usuario_analiza,
-        //   "parametros" => array()
-        // );
-        // array_push($currentAnalyst["parametros"], $parameters[$i]->id_parametro);
-        // $currentAnalyst["parametros"][] = $parameters[$i]->id_parametro;
-        // $analysts[] = $currentAnalyst;
-      } else {
-        //return 0;
-        // array_push($currentAnalyst["parametros"], $parameters[$i]->id_parametro * 100);
-      }
-    }
-
-    //return $analystIds;
-    //INSERT only ONE Analysis for each AnalystId
     $blankAnalysis = getBlankAnalysis();
     unset($blankAnalysis["id_analisis"]);
     unset($blankAnalysis["fecha_captura"]);
     unset($blankAnalysis["fecha_actualiza"]);
     unset($blankAnalysis["host_actualiza"]);
     unset($blankAnalysis["ip_actualiza"]);
-
     $blankAnalysis["id_trabajo"] = $jobId;
-    $blankAnalysis["id_usuario_captura"] = $updateUserId;
-    $blankAnalysis["ip_captura"] = $updateIp;
-    $blankAnalysis["host_captura"] = $updateHost;
+    $blankAnalysis["id_usuario_captura"] = $job["id_usuario_actualiza"];;
+    $blankAnalysis["ip_captura"] = $job["ip_actualiza"];
+    $blankAnalysis["host_captura"] = $job["host_actualiza"];
 
-    //this value changes in for loop
-    $i = 0;
-    $l = count($analystIds);
     for ($i = 0; $i < $l; $i++) {
-      $blankAnalysis["id_usuario_analiza"] = $analystId;
-      $newAnalysisList[] = $blankAnalysis;
+      if ($parameters[$i]->id_usuario_analiza != $currentAnalystId) {
+        $currentAnalystId = $parameters[$i]->id_usuario_analiza;
+        $blankAnalysis["id_usuario_analiza"] = $currentAnalystId;
+        $newAnalysisList[] = $blankAnalysis;
+        // $analysisId = insertAnalysis($blankAnalysis);
+        // $analysisIds[] = $analysisId;
+        // processAnalysisSamplesInsert($samples, $analysisId);
+        // processAnalysisParametersInsert($parameters, $analysisId);
+        // processAnalysisReferencesInsert($jobUpdateData, $analysisId);
+      }
     }
     return $newAnalysisList;
-    // //INSERT one to many relationships to Analysis: AnalysisSamples. AnalysisParameters, etc.
-    // //AnalisisMuestra
-    // [id_analisis_muestra] id_analisis, id_muestra, activo
-    // $analysisSample =  array(
-    //   "id_analisis" => $analysisId,
-    //   "id_muestra" => $sampleId,
-    //   "activo" => 1,
-    // );
-    // //AnalisisParametro
-    // [id_analisis_parametro] id_analisis, id_parametro, activo
-    // $analysisParameter = aray(
-    //  "id_analysis" => $analysisId,
-    //  "id_parametro" => $parameterId,
-    //  "activo" => 1,
-    // );
-    // //AnalisisReferencia
-    // [id_analisis_referencia] id_analisis, id_referencia, activo
-    // $analysisReference = getBlankAnalysis();
-    // unset($analysisReference["id_analisis_referencia"]);
-    // unset($analysisReference["id_usuario_actualiza"]);
-    // unset($analysisReference["fecha_captura"]);
-    // unset($analysisReference["fecha_actualiza"]);
-    // $analysisReference["id_analisis"] = $analysisId;
-    // $analysisReference["id_muestra"] = $sampleId;
-    // $analysisReference["id_parametro"] = $parameterId;
-    // $analysisReference["id_usuario_analiza"] = $analystId;
-    // $analysisReference["id_usuario_captura"] = $updateUserId;
-
-    // for ($i = 0; $i < $l; $i++) {
-    //   $sampleId = $samples[$i]->id_muestra;
-    //   for ($j = 0; $j < $m; $j++) {
-    //     $parameter = (array) $parameters[$j];
-    //     $analysisData = array(
-    //       "id_trabajo" => $jobId,
-    //       "id_muestra" => $sampleId,
-    //       "id_parametro" => $parameter["id_parametro"],
-    //       "id_usuario_analiza" => $parameter["id_usuario_analiza"],
-    //       "fecha_analiza" => null,
-    //       "fecha_aprueba" => null,
-    //       "fecha_valida" => null,
-    //       "fecha_rechaza" => null,
-    //       "ip_captura" => $job["ip_actualiza"],
-    //       "ip_valida" => "",
-    //       "host_captura" => $job["host_actualiza"],
-    //       "host_valida" => "",
-    //       "comentarios" => "",
-    //       "activo" => 1,
-    //     );
-    //     $analysisInsertArray[] = $analysisData;
-    //   }
-    // }
-    // return $analysisInsertArray;
+    // return $analysisIds;
   }
+}
 
-  // $jobId = $job["id_trabajo"];
-  // $storedanalysisList = getJobanalysisList($jobId);
-  // $i = 0;
-  // $j = 0;
-  // $l = count($analysisList);
-  // $m = count($storedanalysisList);
-
-  // $jobData = getBlankAnalysis();
-
-  // "id_analisis" => 0, "id_trabajo" => 1, "id_usuario_analiza" => 1,
-  // "fecha_analiza" => null, "fecha_aprueba" => null,
-  // "fecha_captura" => null, "fecha_valida" => null,
-  // "fecha_actualiza" => null, "fecha_rechaza" => null,
-  // "ip_captura" => "", "ip_valida" => "", "ip_actualiza" => "",
-  // "host_captura" => "", "host_valida" => "", "host_actualiza" => "",
-  // "comentarios" => "", "activo" => 1,
-
-  // $jobData["id_trabajo"] = $job["id_trabajo"];
-  // $jobData["id_plan"] = $job["id_plan"];
-  // $jobData["id_usuario_captura"] = $job["id_usuario_actualiza"];
-  // $jobData["ip_captura"] = $job["ip_actualiza"];
-  // $jobData["host_captura"] = $job["host_actualiza"];
-  // unset($jobData["id_trabajo"]);
-  // unset($jobData["fecha_captura"]);
-  // unset($jobData["id_usuario_actualiza"]);
-  // unset($jobData["fecha_actualiza"]);
-  // unset($jobData["ip_actualiza"]);
-  // unset($jobData["host_actualiza"]);
-
-  // for ($i = 0; $i < $l; $i++) {
-  //   $areaId = $analysisList[$i]->id_muestra;
-  //   $jobData["id_muestra"] = $areaId;
-  //   for ($j = 0; $j < $m; $j++) {
-  //     if ($storedanalysisList[$j]->id_muestra == $areaId) {
-  //       $jobData["id_parametro"] = $storedanalysisList[$j]->id_parametro;
-  //       break;
-  //     }
-  //   }
-  //   $analysisIds[] = insertAnalysis($jobData);
-  // }
-  // return $analysisIds;
+/**
+ * processAnalysisSamplesInsert
+ * @param  mixed $jobUpdateData
+ * @param  mixed $analysisId
+ * @return mixed
+ */
+function processAnalysisSamplesInsert($samples, $analysisId) {
+  $i = 0;
+  $l = count($samples);
+  for ($i = 0; $i < $l; $i++) {
+    $analysisSample =  array(
+      "id_analisis" => $analysisId,
+      "id_muestra" => $samples[$i]->id_muestra,
+      "activo" => 1,
+    );
+    $analysisSamples[] = $analysisSample;
+    // $analysisSampleIds[] = insertAnalysisSample($analysisSample);
+  }
+  return $analysisSamples;
+  // return $analysisSampleIds;
 }
 
 /**
@@ -2042,6 +1941,28 @@ function processAnalysisSamplesUpdate($analysisUpdateData)
 }
 
 /**
+ * processAnalysisParametersInsert
+ * @param mixed $parameters
+ * @return mixed
+ */
+function processAnalysisParametersInsert($parameters, $analysisId)
+{
+  $i = 0;
+  $l = count($parameters);
+  for ($i = 0; $i < $l; $i++) {
+    $analysisParameter =  array(
+      "id_analisis" => $analysisId,
+      "id_parametro" => $parameters[$i]->id_parametro,
+      "activo" => 1,
+    );
+    $analysisParameters[] = $analysisParameter;
+    // $analysisParameterIds[] = insertAnalysisParameter($analysisParameter);
+  }
+  return $analysisParameters;
+  // return $analysisParameterIds;
+}
+
+/**
  * processAnalysisParametersUpdate
  * @param mixed $analysisUpdateData
  * @return mixed
@@ -2081,6 +2002,44 @@ function processAnalysisParametersUpdate($analysisUpdateData)
     // updateParameterAnalysisId($sampleData);
   }
   return $analysisId;
+}
+
+/**
+ * processAnalysisReferencesInsert
+ * @param mixed $jobUpdateData
+ * @param mixed $analysisId
+ * @return mixed
+ */
+function processAnalysisReferencesInsert($jobUpdateData, $analysisId)
+{
+  $job = (array) $jobUpdateData["job"];
+  $analysisList = (array) $jobUpdateData["analysisList"];
+  $samples = (array) $jobUpdateData["samples"];
+  $parameters = (array) $jobUpdateData["parameters"];
+  $jobId = $job["id_trabajo"];
+
+  $analysisReference = getBlankAnalysisReference();
+  unset($analysisReference["id_analisis_referencia"]);
+  unset($analysisReference["id_usuario_actualiza"]);
+  unset($analysisReference["fecha_captura"]);
+  unset($analysisReference["fecha_actualiza"]);
+  $analysisReference["id_analisis"] = $analysisId;
+  $analysisReference["id_usuario_captura"] = $job["id_usuario_actualiza"];
+
+  for ($i = 0; $i < $l; $i++) {
+    $sampleId = $samples[$i]->id_muestra;
+    $analysisReference["id_muestra"] = $sampleId;
+    for ($j = 0; $j < $m; $j++) {
+      $parameterId = $parameters[$j]->id_parametro;
+      $analystId = $parameters[$j]->id_usuario_analiza;
+      $analysisReference["id_parametro"] = $parameterId;
+      $analysisReference["id_usuario_analiza"] = $analystId;
+      // $analysisReferenceIds[] = insertAnalysisReference($analysisReference);
+      $analysisReferences[] = $analysisReference;
+    }
+  }
+  return $analysisReferences;
+  // return $analysisReferenceIds;
 }
 
 /**

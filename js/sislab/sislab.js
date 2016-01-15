@@ -2284,7 +2284,7 @@
               container.historial = [];
               vm.logEntries = container.historial.slice();
             }
-        });
+          });
       } else {
         vm.logEntries = container.historial.slice();
       }
@@ -2721,7 +2721,6 @@
         AnalysisController
       ]
     );
-
 
   /**
    * @name PhysAnalysisListController
@@ -3505,7 +3504,7 @@
      * @function padNumber
      * @desc Agrega ceros a un número, devuelve una cadena de la longitud dada
      * @param {Number} number - Número a procesar
-     * @param {Number} plces - longitud mínima de la cadena
+     * @param {Number} places - longitud mínima de la cadena
      * @return {Object} paddedNumber - cadena de la longitud dada
      */
     function padNumber(number, places) {

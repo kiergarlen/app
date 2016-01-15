@@ -3325,8 +3325,8 @@ function getBlankContainer()
     "id_usuario_actualiza" => 0,
     "volumen" => 0,
     "volumen_inicial" => 0,
-    "fecha_captura" => NULL,
-    "fecha_actualiza" => NULL,
+    "fecha_captura" => null,
+    "fecha_actualiza" => null,
     "ip_captura" => "",
     "ip_actualiza" => "",
     "host_captura" => "",
@@ -3473,7 +3473,7 @@ function updateContainerStorage($updateData)
  * @param $updateData
  * @return mixed
  */
-function  updateContainerReceptionId($updateData)
+function updateContainerReceptionId($updateData)
 {
   $sql = "UPDATE Recipiente SET id_recepcion = :id_recepcion
     WHERE id_recipiente = :id_recipiente";
@@ -3605,12 +3605,14 @@ function getBlankAnalysis()
 {
   return array(
     "id_analisis" => 0, "id_trabajo" => 1, "id_usuario_analiza" => 1,
+    "id_usuario_captura" => 0, "id_usuario_valida" => 0,
+    "id_usuario_actualiza" => 0,
     "fecha_analiza" => null, "fecha_aprueba" => null,
     "fecha_captura" => null, "fecha_valida" => null,
     "fecha_actualiza" => null, "fecha_rechaza" => null,
     "ip_captura" => "", "ip_valida" => "", "ip_actualiza" => "",
     "host_captura" => "", "host_valida" => "", "host_actualiza" => "",
-    "comentarios" => "", "activo" => 1,
+    "comentarios" => "", "motivo_rechaza" => "", "activo" => 1,
   );
 }
 
@@ -3620,6 +3622,7 @@ function getBlankAnalysis()
  */function getAnalysis($analysisId)
 {
   $sql = "SELECT id_analisis, id_trabajo, id_usuario_analiza,
+    id_usuario_captura, id_usuario_valida, id_usuario_actualiza,
     CONVERT(NVARCHAR, fecha_analiza, 126) AS fecha_analiza,
     CONVERT(NVARCHAR, fecha_aprueba, 126) AS fecha_aprueba,
     CONVERT(NVARCHAR, fecha_captura, 126) AS fecha_captura,
@@ -3628,7 +3631,7 @@ function getBlankAnalysis()
     CONVERT(NVARCHAR, fecha_rechaza, 126) AS fecha_rechaza,
     ip_captura, ip_valida, ip_actualiza,
     host_captura, host_valida, host_actualiza,
-    comentarios, activo
+    comentarios, motivo_rechaza, activo
     FROM Analisis
     WHERE activo = 1 AND id_analisis = :analysisId";
   $db = getConnection();
@@ -3645,6 +3648,7 @@ function getBlankAnalysis()
  */function getAnalysisList()
 {
   $sql = "SELECT id_analisis, id_trabajo, id_usuario_analiza,
+    id_usuario_captura, id_usuario_valida, id_usuario_actualiza,
     CONVERT(NVARCHAR, fecha_analiza, 126) AS fecha_analiza,
     CONVERT(NVARCHAR, fecha_aprueba, 126) AS fecha_aprueba,
     CONVERT(NVARCHAR, fecha_captura, 126) AS fecha_captura,
@@ -3653,7 +3657,7 @@ function getBlankAnalysis()
     CONVERT(NVARCHAR, fecha_rechaza, 126) AS fecha_rechaza,
     ip_captura, ip_valida, ip_actualiza,
     host_captura, host_valida, host_actualiza,
-    comentarios, activo
+    comentarios, motivo_rechaza, activo
     FROM Analisis
     WHERE activo = 1";
   $db = getConnection();
@@ -3671,13 +3675,15 @@ function getBlankAnalysis()
 function insertAnalysis($analysisData)
 {
   $sql = "INSERT INTO Analisis (id_trabajo, id_usuario_analiza,
+    id_usuario_captura, id_usuario_valida, id_usuario_actualiza,
     fecha_analiza, fecha_aprueba, fecha_captura, fecha_valida,
     fecha_rechaza, ip_captura, ip_valida, host_captura, host_valida,
-    comentarios, activo)
+    comentarios, motivo_rechaza, activo)
     VALUES (:id_trabajo, :id_usuario_analiza,
+    :id_usuario_captura, :id_usuario_valida, :id_usuario_actualiza,
     :fecha_analiza, :fecha_aprueba, SYSDATETIMEOFFSET(), :fecha_valida,
     :fecha_rechaza, :ip_captura, :ip_valida, :host_captura, :host_valida,
-    :comentarios, :activo)";
+    :comentarios, :motivo_rechaza, :activo)";
   $db = getConnection();
   $stmt = $db->prepare($sql);
   $stmt->execute($analysisData);
@@ -3694,12 +3700,15 @@ function updateAnalysis($updateData)
 {
   $sql = "UPDATE Analisis SET id_trabajo = :id_trabajo,
     id_usuario_analiza = :id_usuario_analiza,
+    id_usuario_captura = :id_usuario_captura,
+    id_usuario_valida = :id_usuario_valida,
+    id_usuario_actualiza = :id_usuario_actualiza,
     fecha_analiza = :fecha_analiza, fecha_aprueba = :fecha_aprueba,
     fecha_valida = :fecha_valida, fecha_actualiza = SYSDATETIMEOFFSET(),
     fecha_rechaza = :fecha_rechaza, ip_valida = :ip_valida,
     ip_actualiza = :ip_actualiza, host_valida = :host_valida,
     host_actualiza = :host_actualiza, comentarios = :comentarios,
-    activo = :activo
+    motivo_rechaza = :motivo_rechaza, activo = :activo
     WHERE id_analisis = :id_analisis";
   $db = getConnection();
   $stmt = $db->prepare($sql);
@@ -3857,12 +3866,62 @@ function disableAnalysisParameters($analysisId)
 }
 
 /**
+ * @return mixed
+ */
+function getBlankAnalysisReference()
+{
+  return array(
+    "id_analisis_referencia" => 0,
+    "id_analisis" => 0,
+    "id_muestra" => 0,
+    "id_parametro" => 0,
+    "id_usuario_analiza" => 0,
+    "id_usuario_captura" => 0,
+    "id_usuario_actualiza" => 0,
+    "duplicado" => "",
+    "muestra_duplicada" => "",
+    "estandar" => "",
+    "coeficiente_variacion" => "",
+    "tiempo_incubacion" => "",
+    "temperatura_incubacion" => "",
+    "fecha_analiza" => null,
+    "fecha_captura" => null,
+    "fecha_actualiza" => null,
+    "activo" => 1,
+  );
+}
+
+/**
+ * @return mixed
+ */
+function getAnalysisReference()
+{
+  $sql = "SELECT id_analisis_referencia, id_analisis, id_muestra,
+    id_parametro, id_usuario_analiza, id_usuario_captura,
+    id_usuario_actualiza, duplicado, muestra_duplicada, estandar,
+    coeficiente_variacion, tiempo_incubacion, temperatura_incubacion,
+    fecha_analiza, fecha_captura, fecha_actualiza, activo
+    FROM AnalisisReferencia
+    WHERE activo = 1";
+  $db = getConnection();
+  $stmt = $db->prepare($sql);
+  $stmt->execute();
+  $reference = $stmt->fetch(PDO::FETCH_OBJ);
+  $db = null;
+  return $reference;
+}
+
+/**
  * @param $analysisId
  * @return mixed
  */
 function getAnalysisReferences($analysisId)
 {
-  $sql = "SELECT id_analisis_referencia, id_analisis, id_referencia, activo
+  $sql = "SELECT id_analisis_referencia, id_analisis, id_muestra,
+    id_parametro, id_usuario_analiza, id_usuario_captura,
+    id_usuario_actualiza, duplicado, muestra_duplicada, estandar,
+    coeficiente_variacion, tiempo_incubacion, temperatura_incubacion,
+    fecha_analiza, fecha_captura, fecha_actualiza, activo
     FROM AnalisisReferencia
     WHERE activo = 1  AND id_analisis = :analysisId";
   $db = getConnection();
@@ -3880,8 +3939,16 @@ function getAnalysisReferences($analysisId)
  */
 function insertAnalysisReference($referenceData)
 {
-  $sql = "INSERT INTO AnalisisReferencia (id_analisis, id_referencia, activo)
-    VALUES (:id_analisis, :id_referencia, :activo)";
+  $sql = "INSERT INTO AnalisisReferencia (id_analisis, id_muestra,
+    id_parametro, id_usuario_analiza, id_usuario_captura,
+    duplicado, muestra_duplicada, estandar, coeficiente_variacion,
+    tiempo_incubacion, temperatura_incubacion, fecha_analiza,
+    fecha_captura, activo)
+    VALUES (:id_analisis, :id_muestra,
+    :id_parametro, :id_usuario_analiza, :id_usuario_captura,
+    :duplicado, :muestra_duplicada, :estandar, :coeficiente_variacion,
+    :tiempo_incubacion, :temperatura_incubacion, :fecha_analiza,
+    SYSDATETIMEOFFSET(), :activo)";
   $db = getConnection();
   $stmt = $db->prepare($sql);
   $stmt->execute($referenceData);

@@ -7,7 +7,8 @@ require "./db.php";
 \Slim\Slim::registerAutoloader();
 $app = new \Slim\Slim();
 
-function sendSuccessResponse($app, $result) {
+function sendSuccessResponse($app, $result)
+{
   $app->response()->status(200);
   $app->response()->header("Content-Type", "application/json");
   //JSONP enable
@@ -19,7 +20,8 @@ function sendSuccessResponse($app, $result) {
   print_r($result);
 }
 
-function sendErrorResponse ($app, $e) {
+function sendErrorResponse($app, $e)
+{
   $app->response()->status(400);
   $app->response()->header("X-Status-Reason", $e->getMessage());
 }
@@ -370,9 +372,9 @@ $app->post("/analysis", function () use ($app) {
     $analysisId = 0;
     // $analysisId = extractDataFromRequest($request)->id_analisis;
     // if ($analysisId > 0) {
-      // $analysisUpdateData = processAnalysisUpdate($request);
-      // $analysisId = updateAnalysis($analysisUpdateData["analysis"]);
-      // processAnalysisContainers($analysisUpdateData);
+    // $analysisUpdateData = processAnalysisUpdate($request);
+    // $analysisId = updateAnalysis($analysisUpdateData["analysis"]);
+    // processAnalysisContainers($analysisUpdateData);
     // }
     $result = "{\"id_analisis\":" . $analysisId . "}";
     sendSuccessResponse($app, $result);
@@ -607,22 +609,22 @@ $app->get("/containers/logs/:containerId", function ($containerId) use ($app) {
 });
 /*
 $app->post("/containers/logs", function () use ($app) {
-  try {
-    $userId = decodeUserToken($app->request())->uid;
-    $request = $app->request();
-    $containerLogId = extractDataFromRequest($request)->id_historial_recipiente;
-    if ($containerLogId < 1) {
-      $containerLogId = processContainerLogInsert($request);
-    } else {
-      $containerLogId = processContainerLogUpdate($request);
-    }
-    $result = "{\"id_historial_recipiente\":" . $containerLogId . "}";
-    sendSuccessResponse($app, $result);
-  } catch (Exception $e) {
-    sendErrorResponse($app, $e);
-  }
+try {
+$userId = decodeUserToken($app->request())->uid;
+$request = $app->request();
+$containerLogId = extractDataFromRequest($request)->id_historial_recipiente;
+if ($containerLogId < 1) {
+$containerLogId = processContainerLogInsert($request);
+} else {
+$containerLogId = processContainerLogUpdate($request);
+}
+$result = "{\"id_historial_recipiente\":" . $containerLogId . "}";
+sendSuccessResponse($app, $result);
+} catch (Exception $e) {
+sendErrorResponse($app, $e);
+}
 });
-*/
+ */
 $app->get("/reactives", function () use ($app) {
   try {
     $userId = decodeUserToken($app->request())->uid;

@@ -2754,7 +2754,7 @@
               .updateData(
                 JobService,
                 vm.analysis,
-                'analisis/analisis'
+                'analisis/analisis',
                 'id_analisis'
               );
           }

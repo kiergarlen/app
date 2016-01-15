@@ -58,7 +58,7 @@
           </thead>
           <tbody>
             <tr
-              data-ng-repeat="item in analysisList.lista_analisis
+              data-ng-repeat="item in analysisList.analysisList
               | filter:analysisList.filter.$"
               id="analysisId{{item.id_analisis}}">
               <td>
@@ -78,7 +78,7 @@
               <td>
                 <button class="btn btn-default"
                   value="Consultar" title="Consultar"
-                  data-ng-click="analysisList.viewJob(item.id_analisis)"
+                  data-ng-click="analysisList.viewAnalysis(item.id_analisis)"
                   >
                   <i class="glyphicon glyphicon-eye-open" aria-hidden="true"></i>
                 </button>

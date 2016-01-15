@@ -127,7 +127,7 @@
         controllerAs: 'analysisList'
       }).
       when('/analisis/analisis/:analysisId', {
-        templateUrl: 'partials/analisis/fisico.html',
+        templateUrl: 'partials/analisis/analisis.html',
         controller: 'AnalysisController',
         controllerAs: 'analysis'
       }).
@@ -4206,17 +4206,17 @@
       ]
     );
 
-  //PhysAnalysisService.js
+  //AnalysisService.js
   /**
-   * @name PhysAnalysisService
+   * @name AnalysisService
    * @constructor
-   * @desc Proveedor de datos, Análisis Fisicoquímicos
+   * @desc Proveedor de datos, Análisis
    * @param {Object} $resource - Acceso a recursos HTTP
    * @param {Object} TokenService - Proveedor de métodos para token
    * @return {Object} $resource - Acceso a recursos HTTP
    */
-  function PhysAnalysisService($resource, TokenService) {
-    return $resource(API_BASE_URL + 'analysis/physical/:analysisId', {}, {
+  function AnalysisService($resource, TokenService) {
+    return $resource(API_BASE_URL + 'analysis/:analysisId', {}, {
       query: {
         method: 'GET',
         params: {analysisId: 'id_analisis'},
@@ -4253,118 +4253,10 @@
   }
   angular
     .module('sislabApp')
-    .factory('PhysAnalysisService',
+    .factory('AnalysisService',
       [
         '$resource', 'TokenService',
-        PhysAnalysisService
-      ]
-    );
-
-  //MetalAnalysisService.js
-  /**
-   * @name MetalAnalysisService
-   * @constructor
-   * @desc Proveedor de datos, Análisis de Metales Pesados
-   * @param {Object} $resource - Acceso a recursos HTTP
-   * @param {Object} TokenService - Proveedor de métodos para token
-   * @return {Object} $resource - Acceso a recursos HTTP
-   */
-  function MetalAnalysisService($resource, TokenService) {
-    return $resource(API_BASE_URL + 'analysis/metal/:analysisId', {}, {
-      query: {
-        method: 'GET',
-        params: {analysisId: 'id_analisis'},
-        isArray: false,
-        headers: {
-          'Auth-Token': TokenService.getToken()
-        }
-      },
-      get: {
-        method: 'GET',
-        params: {},
-        isArray: true,
-        headers: {
-          'Auth-Token': TokenService.getToken()
-        }
-      },
-      update: {
-        method: 'POST',
-        params: {},
-        isArray: false,
-        headers: {
-          'Auth-Token': TokenService.getToken()
-        }
-      },
-      save: {
-        method: 'POST',
-        params: {},
-        isArray: false,
-        headers: {
-          'Auth-Token': TokenService.getToken()
-        }
-      }
-    });
-  }
-  angular
-    .module('sislabApp')
-    .factory('MetalAnalysisService',
-      [
-        '$resource', 'TokenService',
-        MetalAnalysisService
-      ]
-    );
-
-  //BioAnalysisService.js
-  /**
-   * @name BioAnalysisService
-   * @constructor
-   * @desc Proveedor de datos, Análisis Microbiológicos
-   * @param {Object} $resource - Acceso a recursos HTTP
-   * @param {Object} TokenService - Proveedor de métodos para token
-   * @return {Object} $resource - Acceso a recursos HTTP
-   */
-  function BioAnalysisService($resource, TokenService) {
-    return $resource(API_BASE_URL + 'analysis/biological/:analysisId', {}, {
-      query: {
-        method: 'GET',
-        params: {analysisId: 'id_analisis'},
-        isArray: false,
-        headers: {
-          'Auth-Token': TokenService.getToken()
-        }
-      },
-      get: {
-        method: 'GET',
-        params: {},
-        isArray: true,
-        headers: {
-          'Auth-Token': TokenService.getToken()
-        }
-      },
-      update: {
-        method: 'POST',
-        params: {},
-        isArray: false,
-        headers: {
-          'Auth-Token': TokenService.getToken()
-        }
-      },
-      save: {
-        method: 'POST',
-        params: {},
-        isArray: false,
-        headers: {
-          'Auth-Token': TokenService.getToken()
-        }
-      }
-    });
-  }
-  angular
-    .module('sislabApp')
-    .factory('BioAnalysisService',
-      [
-        '$resource', 'TokenService',
-        BioAnalysisService
+        AnalysisService
       ]
     );
 
@@ -5519,60 +5411,6 @@
       [
         '$resource', 'TokenService',
         DepartmentService
-      ]
-    );
-
-  //AnalysisService.js
-  /**
-   * @name AnalysisService
-   * @constructor
-   * @desc Proveedor de datos, Análisis
-   * @param {Object} $resource - Acceso a recursos HTTP
-   * @param {Object} TokenService - Proveedor de métodos para token
-   * @return {Object} $resource - Acceso a recursos HTTP
-   */
-  function AnalysisService($resource, TokenService) {
-    return $resource(API_BASE_URL + 'analysis/:analysisId', {}, {
-      query: {
-        method: 'GET',
-        params: {analysisId: 'id_analisis'},
-        isArray: false,
-        headers: {
-          'Auth-Token': TokenService.getToken()
-        }
-      },
-      get: {
-        method: 'GET',
-        params: {},
-        isArray: true,
-        headers: {
-          'Auth-Token': TokenService.getToken()
-        }
-      },
-      update: {
-        method: 'POST',
-        params: {},
-        isArray: false,
-        headers: {
-          'Auth-Token': TokenService.getToken()
-        }
-      },
-      save: {
-        method: 'POST',
-        params: {},
-        isArray: false,
-        headers: {
-          'Auth-Token': TokenService.getToken()
-        }
-      }
-    });
-  }
-  angular
-    .module('sislabApp')
-    .factory('AnalysisService',
-      [
-        '$resource', 'TokenService',
-        AnalysisService
       ]
     );
 

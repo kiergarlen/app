@@ -362,7 +362,7 @@ $app->get("/analysis(/)(:analysisId)", function ($analysisId = -1) use ($app) {
     sendErrorResponse($app, $e);
   }
 });
-
+/*
 $app->get("/analysis/area/:areaId", function ($areaId) use ($app) {
   try {
     $userId = decodeUserToken($app->request())->uid;
@@ -372,7 +372,7 @@ $app->get("/analysis/area/:areaId", function ($areaId) use ($app) {
     sendErrorResponse($app, $e);
   }
 });
-
+*/)
 $app->post("/analysis", function () use ($app) {
   try {
     $userId = decodeUserToken($app->request())->uid;

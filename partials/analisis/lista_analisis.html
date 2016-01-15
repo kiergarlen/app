@@ -7,11 +7,11 @@
 
 <div class="row">
   <div class="col-xs-12">
-    <h2 class="page-header">Análisis Fisicoquímicos</h2>
+    <h2 class="page-header">Análisis</h2>
   </div>
 </div>
 <form class="form" role="form"
-  name="physicalsForm"
+  name="analysisListForm"
   novalidate
   >
   <div class="row">
@@ -21,7 +21,7 @@
   </div>
   <div class="row">
     <div class="col-xs-12 col-sm-8">
-      <label for="physicalSearch" class="sr-only">
+      <label for="analysisSearch" class="sr-only">
         Ingrese una búsqueda
       </label>
       <div class="input-group">
@@ -31,9 +31,9 @@
         <input type="text"
           class="form-control"
           placeholder="Ingrese una búsqueda"
-          id="physicalSearch"
-          name="physicalSearch"
-          data-ng-model="physicals.filter.$">
+          id="analysisSearch"
+          name="analysisSearch"
+          data-ng-model="analysisList.filter.$">
       </div>
       <br>
     </div>
@@ -47,7 +47,7 @@
       </div>
       <div class="table-responsive">
         <table class="table table-hover table-condensed"
-          id="physicalsList">
+          id="analysisList">
           <thead>
             <tr>
               <th>Id Análisis</th>
@@ -58,9 +58,9 @@
           </thead>
           <tbody>
             <tr
-              data-ng-repeat="item in physicals.physicals
-              | filter:physicals.filter.$"
-              id="physicalId{{item.id_analisis}}">
+              data-ng-repeat="item in analysisList.lista_analisis
+              | filter:analysisList.filter.$"
+              id="analysisId{{item.id_analisis}}">
               <td>
                 {{item.id_analisis}}
               </td>
@@ -78,7 +78,7 @@
               <td>
                 <button class="btn btn-default"
                   value="Consultar" title="Consultar"
-                  data-ng-click="physicals.viewJob(item.id_analisis)"
+                  data-ng-click="analysisList.viewJob(item.id_analisis)"
                   >
                   <i class="glyphicon glyphicon-eye-open" aria-hidden="true"></i>
                 </button>

@@ -3619,7 +3619,7 @@ function getBlankAnalysis()
 /**
  * @param $analysisId
  * @return mixed
- */function getAnalysis($analysisId)
+ */function getPlainAnalysis($analysisId)
 {
   $sql = "SELECT id_analisis, id_trabajo, id_usuario_analiza,
     id_usuario_captura, id_usuario_valida, id_usuario_actualiza,
@@ -3640,6 +3640,15 @@ function getBlankAnalysis()
   $stmt->execute();
   $analysis = $stmt->fetch(PDO::FETCH_OBJ);
   $db = null;
+  return $analysis;
+}
+
+/**
+ * @param $analysisId
+ * @return mixed
+ */function getAnalysis($analysisId)
+{
+  $analysis = getPlainAnalysis($analysisId);
   return $analysis;
 }
 

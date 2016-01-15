@@ -121,35 +121,15 @@
         controller: 'CustodyController',
         controllerAs: 'custody'
       }).
-      when('/analisis/fisico', {
-        templateUrl: 'partials/analisis/fisicos.html',
-        controller: 'PhysAnalysisListController',
-        controllerAs: 'physAnalysisList'
+      when('/analisis/analisis', {
+        templateUrl: 'partials/analisis/lista_analisis.html',
+        controller: 'AnalysisListController',
+        controllerAs: 'analysisList'
       }).
-      when('/analisis/metal', {
-        templateUrl: 'partials/analisis/metales.html',
-        controller: 'MetalAnalysisListController',
-        controllerAs: 'metalAnalysisList'
-      }).
-      when('/analisis/biologico', {
-        templateUrl: 'partials/analisis/biologicos.html',
-        controller: 'BioAnalysisListController',
-        controllerAs: 'bioAnalysisList'
-      }).
-      when('/analisis/fisico/:analysisId', {
+      when('/analisis/analisis/:analysisId', {
         templateUrl: 'partials/analisis/fisico.html',
-        controller: 'physAnalysisController',
-        controllerAs: 'physAnalysis'
-      }).
-      when('/analisis/metal/:analysisId', {
-        templateUrl: 'partials/analisis/metal.html',
-        controller: 'metalAnalysisController',
-        controllerAs: 'metalAnalysis'
-      }).
-      when('/analisis/biologico/:analysisId', {
-        templateUrl: 'partials/analisis/biologico.html',
-        controller: 'bioAnalysisController',
-        controllerAs: 'bioAnalysis'
+        controller: 'AnalysisController',
+        controllerAs: 'analysis'
       }).
       when('/reporte/reporte', {
         templateUrl: 'partials/reporte/reportes.html',
@@ -2719,84 +2699,6 @@
         'AreaService', 'ParameterService',
         'AnalysisService',
         AnalysisController
-      ]
-    );
-
-  /**
-   * @name PhysAnalysisListController
-   * @constructor
-   * @desc Controla la vista para el listado de Análisis Fisicoquímicos
-   * @this {Object} $scope - Contenedor para el modelo
-   * @param {Object} $location - Manejo de URL
-   * @param {Object} PhysAnalysisService - Proveedor de datos, Análisis Fisicoquímicos
-   */
-  function PhysAnalysisListController($location, PhysAnalysisService) {
-    var vm = this;
-    vm.analysisList = PhysAnalysisService.get();
-    vm.viewAnalysis = viewAnalysis;
-
-    function viewAnalysis(id) {
-      $location.path('/analisis/fisico/' + parseInt(id, 10));
-    }
-  }
-  angular
-    .module('sislabApp')
-    .controller('PhysAnalysisListController',
-      [
-        '$location', 'PhysAnalysisService',
-        PhysAnalysisListController
-      ]
-    );
-
-  /**
-   * @name MetalAnalysisListController
-   * @constructor
-   * @desc Controla la vista para el listado de Análisis de Metales Pesados
-   * @this {Object} $scope - Contenedor para el modelo
-   * @param {Object} $location - Manejo de URL
-   * @param {Object} MetalAnalysisService - Proveedor de datos, Análisis de Metales Pesados
-   */
-  function MetalAnalysisListController($location, MetalAnalysisService) {
-    var vm = this;
-    vm.analysisList = MetalAnalysisService.get();
-    vm.viewAnalysis = viewAnalysis;
-
-    function viewAnalysis(id) {
-      $location.path('/analisis/metal/' + parseInt(id, 10));
-    }
-  }
-  angular
-    .module('sislabApp')
-    .controller('MetalAnalysisListController',
-      [
-        '$location', 'MetalAnalysisService',
-        MetalAnalysisListController
-      ]
-    );
-
-  /**
-   * @name BioAnalysisListController
-   * @constructor
-   * @desc Controla la vista para el listado de Análisis de Microbiológicos
-   * @this {Object} $scope - Contenedor para el modelo
-   * @param {Object} $location - Manejo de URL
-   * @param {Object} BioAnalysisService - Proveedor de datos, Análisis Microbiológicos
-   */
-  function BioAnalysisListController($location, BioAnalysisService) {
-    var vm = this;
-    vm.analysisList = BioAnalysisService.get();
-    vm.viewAnalysis = viewAnalysis;
-
-    function viewAnalysis(id) {
-      $location.path('/analisis/metal/' + parseInt(id, 10));
-    }
-  }
-  angular
-    .module('sislabApp')
-    .controller('BioAnalysisListController',
-      [
-        '$location', 'BioAnalysisService',
-        BioAnalysisListController
       ]
     );
 

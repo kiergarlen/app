@@ -3669,6 +3669,32 @@ function getBlankAnalysis()
 }
 
 /**
+ * @return mixed
+ */function getAreaAnalysisList($areaId)
+{
+  $sql = "SELECT id_analisis, id_trabajo, id_usuario_analiza,
+    id_usuario_captura, id_usuario_valida, id_usuario_actualiza,
+    CONVERT(NVARCHAR, fecha_analiza, 126) AS fecha_analiza,
+    CONVERT(NVARCHAR, fecha_aprueba, 126) AS fecha_aprueba,
+    CONVERT(NVARCHAR, fecha_captura, 126) AS fecha_captura,
+    CONVERT(NVARCHAR, fecha_valida, 126) AS fecha_valida,
+    CONVERT(NVARCHAR, fecha_actualiza, 126) AS fecha_actualiza,
+    CONVERT(NVARCHAR, fecha_rechaza, 126) AS fecha_rechaza,
+    ip_captura, ip_valida, ip_actualiza,
+    host_captura, host_valida, host_actualiza,
+    comentarios, motivo_rechaza, activo, id_area, area, siglas
+    FROM viewAnalisisArea
+    WHERE activo = 1 AND id_area = :areaId";
+  $db = getConnection();
+  $stmt = $db->prepare($sql);
+  $stmt->bindParam("areaId", $areaId);
+  $stmt->execute();
+  $analysisList = $stmt->fetchAll(PDO::FETCH_ASSOC);
+  $db = null;
+  return $analysisList;
+}
+
+/**
  * @param $analysisData
  * @return mixed
  */

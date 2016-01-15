@@ -2563,7 +2563,7 @@
       .$promise
       .then(function success(response) {
         vm.job = response;
-        if (vm.job.anlysisList) {
+        if (vm.job.lista_analisis) {
           vm.isParameterListAsigned = vm.job.lista_analisis.length > 0;
         }
         AnalystService

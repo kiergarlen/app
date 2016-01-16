@@ -4686,6 +4686,81 @@ function deleteSheetPreservations($sheetId)
 }
 
 /**
+ * @param mixed $resultId
+ * @return mixed
+ */
+function getBlankResult()
+{
+  return array(
+    "id_resultado" => 0, "id_muestra" => 0, "id_parametro" => 0,
+    "id_tipo_resultado" => 1, "id_tipo_valor" => 1,
+    "id_usuario_captura" => 1, "id_usuario_actualiza" => 0,
+    "valor" => "", "fecha_captura" => null,
+    "fecha_actualiza" => null, "activo" => 1,
+  );
+}
+
+/**
+ * @param mixed $resultId
+ * @return mixed
+ */
+function getResult($resultId)
+{
+  $sql = "SELECT id_resultado, id_muestra, id_parametro,
+    id_tipo_resultado, id_tipo_valor, id_usuario_captura,
+    id_usuario_actualiza, valor, fecha_captura, fecha_actualiza,
+    activo
+    FROM Resultado
+    WHERE activo = 1 AND id_resultado = :resultId";
+  $db = getConnection();
+  $stmt = $db->prepare($sql);
+  $stmt->bindParam("resultId", $resultId);
+  $stmt->execute();
+  $result = $stmt->fetch(PDO::FETCH_OBJ);
+  $db = null;
+  return $result;
+}
+
+/**
+ * @return mixed
+ */
+function getResults()
+{
+  $sql = "SELECT id_resultado, id_muestra, id_parametro,
+    id_tipo_resultado, id_tipo_valor, id_usuario_captura,
+    id_usuario_actualiza, valor, fecha_captura, fecha_actualiza,
+    activo
+    FROM Resultado
+    WHERE activo = 1";
+  $db = getConnection();
+  $stmt = $db->prepare($sql);
+  $stmt->execute();
+  $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+  $db = null;
+  return $results;
+}
+
+/**
+ * @param $sampleId
+ * @return mixed
+ */
+function getSampleResults($sampleId)
+{
+  $sql = "SELECT id_muestra, id_parametro, id_tipo_resultado,
+    id_tipo_valor, id_usuario_actualiza, valor, fecha_actualiza,
+    activo
+    FROM Resultado
+    WHERE id_muestra = :sampleId";
+  $db = getConnection();
+  $stmt = $db->prepare($sql);
+  $stmt->bindParam("sampleId", $sampleId);
+  $stmt->execute();
+  $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+  $db = null;
+  return $results;
+}
+
+/**
  * @param $resultData
  * @return mixed
  */
@@ -4693,16 +4768,16 @@ function insertResult($resultData)
 {
   $sql = "INSERT INTO Resultado (id_muestra, id_parametro,
     id_tipo_resultado, id_tipo_valor, id_usuario_captura,
-    valor, fecha_captura, fecha_actualiza, activo)
+    valor, fecha_captura, activo)
     VALUES (:id_muestra, :id_parametro,
     :id_tipo_resultado, :id_tipo_valor, :id_usuario_captura,
-    :valor, SYSDATETIMEOFFSET(), NULL, :activo)";
+    :valor, SYSDATETIMEOFFSET(), :activo)";
   $db = getConnection();
   $stmt = $db->prepare($sql);
   $stmt->execute($resultData);
-  $preservationId = $db->lastInsertId();
+  $resultId = $db->lastInsertId();
   $db = null;
-  return $preservationId;
+  return $resultId;
 }
 
 /**
@@ -4724,26 +4799,6 @@ function updateResult($updateData)
   $stmt->execute($updateData);
   $db = null;
   return $updateData["id_resultado"];
-}
-
-/**
- * @param $resultId
- * @return mixed
- */
-function getResultsForUpdate($resultId)
-{
-  $sql = "SELECT id_muestra, id_parametro, id_tipo_resultado,
-    id_tipo_valor, id_usuario_actualiza, valor, fecha_actualiza,
-    activo
-    FROM Resultado
-    WHERE id_resultado = :resultId";
-  $db = getConnection();
-  $stmt = $db->prepare($sql);
-  $stmt->bindParam("resultId", $resultId);
-  $stmt->execute();
-  $result = $stmt->fetchAll(PDO::FETCH_OBJ);
-  $db = null;
-  return $result;
 }
 
 /**

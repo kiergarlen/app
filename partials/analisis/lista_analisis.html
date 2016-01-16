@@ -31,7 +31,6 @@
         <input type="text"
           class="form-control"
           placeholder="Ingrese una búsqueda"
-          id="analysisSearch"
           name="analysisSearch"
           data-ng-model="analysisList.filter.$">
       </div>
@@ -46,34 +45,31 @@
         <h3 class="panel-title">Análisis</h3>
       </div>
       <div class="table-responsive">
-        <table class="table table-hover table-condensed"
-          id="analysisList">
+        <table class="table table-hover table-condensed">
           <thead>
             <tr>
               <th>Id Análisis</th>
-              <th>Status</th>
-              <th>Área</th>
+              <th>Id Trabajo</th>
+              <th>Fecha asignado</th>
+              <th>Fecha análisis</th>
               <th>Acciones</th>
             </tr>
           </thead>
           <tbody>
             <tr
               data-ng-repeat="item in analysisList.analysisList
-              | filter:analysisList.filter.$"
-              id="analysisId{{item.id_analisis}}">
+              | filter:analysisList.filter.$">
               <td>
                 {{item.id_analisis}}
               </td>
               <td>
-                <span class="label label-default"
-                  data-ng-show="item.id_status == 1">Sin Validar</span>
-                <span class="label label-success"
-                  data-ng-show="item.id_status == 2">Validado</span>
-                <span class="label label-danger"
-                  data-ng-show="item.id_status == 3">Rechazado</span>
+                {{item.id_trabajo}}
               </td>
               <td>
-                {{item.area}}
+                {{item.fecha_captura | date: 'yyyy-MM-dd'}}
+              </td>
+              <td>
+                {{item.fecha_analiza | date: 'yyyy-MM-dd'}}
               </td>
               <td>
                 <button class="btn btn-default"

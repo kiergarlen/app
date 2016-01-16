@@ -2636,13 +2636,14 @@
    * @param {Object} $location - Manejo de URL
    * @param {Object} TokenService - Proveedor para manejo del token
    * @param {Object} ArrayUtilsService - Proveedor para manejo de arreglos
-   * @param {Object} ReceivingAreaService - Proveedor de datos, Áreas receptoras
+   * @param {Object} AnalystService - Proveedor de datos, Analistas
    * @param {Object} AnalysisService - Proveedor de datos, Análisis
    */
   function AnalysisListController($location, TokenService, ArrayUtilsService,
-    ReceivingAreaService, AnalysisService) {
+    AnalystService, AnalysisService) {
     var vm = this;
     vm.analysisList = [];
+    vm.analysts = [];
     vm.user = TokenService.getUserFromToken();
     vm.viewAnalysis = viewAnalysis;
 
@@ -2650,30 +2651,10 @@
       .get()
       .$promise.then(function success(response) {
         vm.analysisList = response;
-        ReceivingAreaService
-          .get()
-          .$promise
-          .then(function success(response) {
-            var i = 0;
-            var l = 0;
-            vm.areas = response;
-            l = vm.analysisList.length;
-            for (i = 0; i < l; i += 1) {
-              vm.analysisList[i].area = '';
-            }
-            ArrayUtilsService.setItemsFromReference(
-              vm.analysisList,
-              vm.areas,
-              'id_area',
-              [
-                'area'
-              ]
-            );
-          });
       });
 
     function viewAnalysis(id) {
-      $location.path('/analisis/analisis' + parseInt(id, 10));
+      $location.path('/analisis/analisis/' + parseInt(id, 10));
     }
   }
   angular
@@ -2681,7 +2662,7 @@
     .controller('AnalysisListController',
       [
         '$location', 'TokenService', 'ArrayUtilsService',
-        'ReceivingAreaService', 'AnalysisService',
+        'AnalystService', 'AnalysisService',
         AnalysisListController
       ]
     );

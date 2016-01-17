@@ -339,7 +339,8 @@ $app->post("/jobs", function () use ($app) {
     $jobId = extractDataFromRequest($request)->id_trabajo;
     if ($jobId > 0) {
       $jobUpdateData = processJobUpdate($request);
-      $jobId = updateJob($jobUpdateData["job"]);
+      // $jobId = updateJob($jobUpdateData["job"]);
+      $jobId = 32;
       processJobAnalysisInsert($jobUpdateData, $jobId);
     }
     $result = "{\"id_trabajo\":" . $jobId . "}";
@@ -378,11 +379,11 @@ $app->post("/analysis", function () use ($app) {
     $userId = decodeUserToken($app->request())->uid;
     $request = $app->request();
     $analysisId = 0;
-    // $analysisId = extractDataFromRequest($request)->id_analisis;
+    $analysisId = extractDataFromRequest($request)->id_analisis;
     // if ($analysisId > 0) {
-    // $analysisUpdateData = processAnalysisUpdate($request);
-    // $analysisId = updateAnalysis($analysisUpdateData["analysis"]);
-    // processAnalysisContainers($analysisUpdateData);
+    //   $analysisUpdateData = processAnalysisUpdate($request);
+    //   $analysisId = updateAnalysis($analysisUpdateData["analysis"]);
+    //   processAnalysisContainers($analysisUpdateData);
     // }
     $result = "{\"id_analisis\":" . $analysisId . "}";
     sendSuccessResponse($app, $result);

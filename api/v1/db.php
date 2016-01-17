@@ -2099,6 +2099,72 @@ function getJobReferenceResults($jobId)
 }
 
 /**
+ * @param $jobId
+ * @return mixed
+ */
+function getJobResults($jobId)
+{
+  $sql = "SELECT id_trabajo_resultado, id_trabajo, id_resultado, activo
+    FROM TrabajoResultado
+    WHERE activo = 1 AND id_trabajo = :jobId";
+  $db = getConnection();
+  $stmt = $db->prepare($sql);
+  $stmt->bindParam("jobId", $jobId);
+  $stmt->execute();
+  $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+  $db = null;
+  return $results;
+}
+
+/**
+ * @param $jobData
+ * @return mixed
+ */
+function insertJobResult($jobData)
+{
+  $sql = "INSERT INTO TrabajoResultado (id_trabajo, id_resultado, activo)
+    VALUES(:id_trabajo, :id_resultado, :activo)";
+  $db = getConnection();
+  $stmt = $db->prepare($sql);
+  $stmt->execute($jobData);
+  $jobResultId = $db->lastInsertId();
+  $db = null;
+  return $jobResultId;
+}
+
+/**
+ * @param $updateData
+ * @return mixed
+ */
+function updateJobResult($updateData)
+{
+  $sql = "UPDATE TrabajoResultado SET id_trabajo = :id_trabajo,
+    id_resultado = :id_resultado, activo = :activo
+    WHERE id_trabajo_resultado = :id_trabajo_resultado";
+  $db = getConnection();
+  $stmt = $db->prepare($sql);
+  $stmt->execute($updateData);
+  $db = null;
+  return $updateData["id_trabajo_resultado"];
+}
+
+/**
+ * @param $jobId
+ * @return mixed
+ */
+function disableJobResultsByjob($jobId)
+{
+  $sql = "UPDATE TrabajoResultado SET activo = 0
+    WHERE id_trabajo = :jobId";
+  $db = getConnection();
+  $stmt = $db->prepare($sql);
+  $stmt->bindParam("jobId", $jobId);
+  $stmt->execute();
+  $db = null;
+  return $jobId;
+}
+
+/**
  * @param $receptionId
  * @return mixed
  */

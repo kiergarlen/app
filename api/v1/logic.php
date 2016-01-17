@@ -34,7 +34,7 @@ function processUserJwt($request)
   $token["aud"] = "sislab.ceajalisco.gob.mx";
   $token["iat"] = time();
   //// Token expires 24 hours from now
-  $token["exp"] = time() + (24 * 60 * 60);
+  $token["exp"] = time() + (48 * 60 * 60);
   $jwt = JWT::encode($token, KEY);
   return $jwt;
 }
@@ -1864,7 +1864,6 @@ function processJobAnalysisInsert($jobUpdateData, $jobId)
       if ($parameters[$i]->id_usuario_analiza != $currentAnalystId) {
         $currentAnalystId = $parameters[$i]->id_usuario_analiza;
         $blankAnalysis["id_usuario_analiza"] = $currentAnalystId;
-        $newAnalysisList[] = $blankAnalysis;
         $analysisId = insertAnalysis($blankAnalysis);
         $analysisIds[] = $analysisId;
         processAnalysisSamplesInsert($samples, $analysisId);
@@ -2071,12 +2070,12 @@ function processAnalysisResultsInsert($jobUpdateData, $analysisId)
   $samples = (array) $jobUpdateData["samples"];
   $parameters = (array) $jobUpdateData["parameters"];
 
-  $analysisResult = getBlankResult();
-  unset($analysisResult["id_resultado"]);
-  unset($analysisResult["fecha_captura"]);
-  unset($analysisResult["id_usuario_actualiza"]);
-  unset($analysisResult["fecha_actualiza"]);
-  $analysisResult["id_usuario_captura"] = $job["id_usuario_actualiza"];
+  $result = getBlankResult();
+  unset($result["id_resultado"]);
+  unset($result["fecha_captura"]);
+  unset($result["id_usuario_actualiza"]);
+  unset($result["fecha_actualiza"]);
+  $result["id_usuario_captura"] = $job["id_usuario_actualiza"];
 
   $i = 0;
   $j = 0;
@@ -2084,13 +2083,19 @@ function processAnalysisResultsInsert($jobUpdateData, $analysisId)
   $m = count($parameters);
   for ($i = 0; $i < $l; $i++) {
     $sampleId = $samples[$i]->id_muestra;
-    $analysisReference["id_muestra"] = $sampleId;
     for ($j = 0; $j < $m; $j++) {
-      $parameterId = $parameters[$J]->id_parametro;
-      $analysisResult["id_muestra"] = $sampleId;
-      $analysisResult["id_parametro"] = $parameterId;
-      $analysisResultIds[] = insertResult($analysisResult);
+      $parameterId = $parameters[$j]->id_parametro;
+      $result["id_muestra"] = $sampleId;
+      $result["id_parametro"] = $parameterId;
+      $resultId = insertResult($result);
+      $jobResult = array(
+        "id_trabajo" => $job["id_trabajo"],
+        "id_resultado" => $resultId,
+        "activo" => 1,
+      );
+      insertJobResult($jobResult);
+      $resultIds[] = $resultId;
     }
   }
-  return $analysisReferenceIds;
+  return $resultIds;
 }

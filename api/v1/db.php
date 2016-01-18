@@ -3764,6 +3764,7 @@ function getBlankAnalysis()
   $parameters = getAnalysisParameters($analysisId);
   $references = getAnalysisReferences($analysisId);
   $results = getAnalysisResults($analysisId);
+  return $results;
   $i = 0;
   $j = 0;
   $k = 0;

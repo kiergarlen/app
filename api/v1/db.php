@@ -490,8 +490,8 @@ function getOrders()
     CONVERT(NVARCHAR, fecha_valida, 126) AS fecha_valida,
     CONVERT(NVARCHAR, fecha_actualiza, 126) AS fecha_actualiza,
     CONVERT(NVARCHAR, fecha_rechaza, 126) AS fecha_rechaza,
-    ip_captura, ip_valida,
-    ip_actualiza, host_captura, host_valida, host_actualiza,
+    ip_captura, ip_valida, ip_actualiza,
+    host_captura, host_valida, host_actualiza,
     motivo_rechaza, comentarios, activo
     FROM Orden
     WHERE activo = 1";
@@ -527,8 +527,8 @@ function getOrdersByStudy($studyId)
     CONVERT(NVARCHAR, fecha_valida, 126) AS fecha_valida,
     CONVERT(NVARCHAR, fecha_actualiza, 126) AS fecha_actualiza,
     CONVERT(NVARCHAR, fecha_rechaza, 126) AS fecha_rechaza,
-    ip_captura, ip_valida,
-    ip_actualiza, host_captura, host_valida, host_actualiza,
+    ip_captura, ip_valida, ip_actualiza,
+    host_captura, host_valida, host_actualiza,
     motivo_rechaza, comentarios, activo
     FROM Orden
     WHERE activo = 1 AND id_estudio = :studyId";
@@ -563,8 +563,8 @@ function getPlainOrder($orderId)
     CONVERT(NVARCHAR, fecha_valida, 126) AS fecha_valida,
     CONVERT(NVARCHAR, fecha_actualiza, 126) AS fecha_actualiza,
     CONVERT(NVARCHAR, fecha_rechaza, 126) AS fecha_rechaza,
-    ip_captura, ip_valida,
-    ip_actualiza, host_captura, host_valida, host_actualiza,
+    ip_captura, ip_valida, ip_actualiza,
+    host_captura, host_valida, host_actualiza,
     motivo_rechaza, comentarios, activo
     FROM Orden
     WHERE activo = 1 AND id_orden = :orderId";
@@ -757,8 +757,7 @@ function getPlans()
     CONVERT(NVARCHAR, fecha_valida, 126) AS fecha_valida,
     CONVERT(NVARCHAR, fecha_actualiza, 126) AS fecha_actualiza,
     CONVERT(NVARCHAR, fecha_rechaza, 126) AS fecha_rechaza,
-    ip_captura,
-    ip_valida, ip_actualiza, host_captura, host_valida,
+    ip_captura, ip_valida, ip_actualiza, host_captura, host_valida,
     host_actualiza, calle, numero, colonia, codigo_postal,
     telefono, contacto, email, comentarios_ubicacion,
     cantidad_puntos, cantidad_equipos, cantidad_recipientes,
@@ -771,19 +770,6 @@ function getPlans()
   $stmt->execute();
   $plans = $stmt->fetchAll(PDO::FETCH_ASSOC);
   $db = null;
-  //$i = 0;
-  //$l = count($plans);
-  //for ($i = 0; $i < $l; $i++) {
-  //  $plans[$i]["cliente"] = getClient($clientId);
-  //  $plans[$i]["orden"] = getPlainOrder($orderId);
-  //  $plans[$i]["supervisor_muestreo"] = getSamplingSupervisor($supervisorId);
-  //  $plans[$i]["puntos"] = getPointsByPackage($packageId);
-  //  $plans[$i]["equipos"] = getEquipmentByPlan($planId);
-  //  $plans[$i]["recipientes"] = getContainersByPlan($planId);
-  //  $plans[$i]["reactivos"] = getReactivesByPlan($planId);
-  //  $plans[$i]["materiales"] = getMaterialsByPlan($planId);
-  //  $plans[$i]["hieleras"] = getCoolersByPlan($planId);
-  //}
   return $plans;
 }
 
@@ -850,8 +836,7 @@ function getPlansByOrder($orderId)
     CONVERT(NVARCHAR, fecha_valida, 126) AS fecha_valida,
     CONVERT(NVARCHAR, fecha_actualiza, 126) AS fecha_actualiza,
     CONVERT(NVARCHAR, fecha_rechaza, 126) AS fecha_rechaza,
-    ip_captura,
-    ip_valida, ip_actualiza, host_captura, host_valida,
+    ip_captura, ip_valida, ip_actualiza, host_captura, host_valida,
     host_actualiza, calle, numero, colonia, codigo_postal,
     telefono, contacto, email, comentarios_ubicacion,
     cantidad_puntos, cantidad_equipos, cantidad_recipientes,
@@ -891,8 +876,7 @@ function getPlainPlan($planId)
     CONVERT(NVARCHAR, fecha_valida, 126) AS fecha_valida,
     CONVERT(NVARCHAR, fecha_actualiza, 126) AS fecha_actualiza,
     CONVERT(NVARCHAR, fecha_rechaza, 126) AS fecha_rechaza,
-    ip_captura,
-    ip_valida, ip_actualiza, host_captura, host_valida,
+    ip_captura, ip_valida, ip_actualiza, host_captura, host_valida,
     host_actualiza, calle, numero, colonia, codigo_postal,
     telefono, contacto, email, comentarios_ubicacion,
     cantidad_puntos, cantidad_equipos, cantidad_recipientes,
@@ -2017,9 +2001,6 @@ function disableJobsByReception($receptionId)
  */
 function getJobSamples($jobId)
 {
-  // $sql = "SELECT id_trabajo_muestra, id_trabajo, id_muestra, activo
-  //   FROM TrabajoMuestra
-  //   WHERE activo = 1 AND id_trabajo = :jobId";
   $sql = "SELECT id_trabajo, id_muestra, id_estudio, id_cliente,
     id_orden, id_plan, id_hoja, id_recepcion, id_custodia,
     id_tipo_muestreo, fecha_muestreo, fecha_recibe, activo, matriz,
@@ -2041,7 +2022,7 @@ function getJobSamples($jobId)
  */
 function getJobReferenceResults($jobId)
 {
-  $sql = "SELECT id_trabajo, id_resultado, id_muestra, valor, param,
+  $sql = "SELECT id_trabajo, id_resultado, id_muestra, valor, [param],
     unidad, activo
     FROM viewResultadoReferenciaTrabajo
     WHERE activo = 1 AND id_trabajo = :jobId";
@@ -2192,8 +2173,9 @@ function getReceptionCustodies($receptionId)
  */
 function getReceptionCustodiesByReception($receptionId)
 {
-  $sql = "SELECT id_recepcion_custodia, id_recepcion, id_custodia, id_area,
-    activo, area, fecha_entrega
+  $sql = "SELECT id_recepcion_custodia, id_recepcion, id_custodia,
+    id_area, activo, area,
+    CONVERT(NVARCHAR, fecha_entrega, 126) AS fecha_entrega
     FROM viewCustodiaRecepcion
     WHERE activo = 1 AND id_recepcion = :receptionId";
   $db = getConnection();
@@ -2646,7 +2628,7 @@ function getPointsByPackage($packageId)
     lat_gra, lat_min, lat_seg, lng_gra, lng_min, lng_seg,
     CONVERT(NVARCHAR, fecha_captura, 126) AS fecha_captura,
     CONVERT(NVARCHAR, fecha_actualiza, 126) AS fecha_actualiza,
-     ip_captura, ip_actualiza,
+    ip_captura, ip_actualiza,
     host_captura, host_actualiza, comentarios, activo
     FROM viewPuntoPaquete
     WHERE id_paquete = :packageId";
@@ -3715,6 +3697,13 @@ function getBlankAnalysis()
  */function getAnalysis($analysisId)
 {
   $analysis = getPlainAnalysis($analysisId);
+  $jobId = $analysis->id_trabajo;
+  $analysis->referencias_muestreo = getJobSamples($jobId);
+  $analysis->resultados_referencia = getJobReferenceResults($jobId);
+  $analysis->muestras = getAnalysisSamples($analysisId);
+  $analysis->parametros = getAnalysisParameters($analysisId);
+  $analysis->resultados = getAnalysisResults($analysisId);
+
   return $analysis;
 }
 
@@ -3998,7 +3987,7 @@ function disableAnalysisParameters($analysisId)
 function getBlankAnalysisReference()
 {
   return array(
-    "id_analisis_referencia" => 0, "id_analisis" => 0, "id_muestra" => 0,
+    "id_analisis_referencia" => 0, "id_analisis" => 0,
     "id_parametro" => 0, "id_usuario_analiza" => 0,
     "id_usuario_captura" => 0, "id_usuario_actualiza" => 0,
     "duplicado" => "", "muestra_duplicada" => "", "estandar" => "",
@@ -4011,13 +4000,16 @@ function getBlankAnalysisReference()
 /**
  * @return mixed
  */
-function getAnalysisReference()
+function getAnalysisReferenceList()
 {
-  $sql = "SELECT id_analisis_referencia, id_analisis, id_muestra,
+  $sql = "SELECT id_analisis_referencia, id_analisis,
     id_parametro, id_usuario_analiza, id_usuario_captura,
     id_usuario_actualiza, duplicado, muestra_duplicada, estandar,
     coeficiente_variacion, tiempo_incubacion, temperatura_incubacion,
-    fecha_analiza, fecha_captura, fecha_actualiza, activo
+    CONVERT(NVARCHAR, fecha_analiza, 126) AS fecha_analiza,
+    CONVERT(NVARCHAR, fecha_captura, 126) AS fecha_captura,
+    CONVERT(NVARCHAR, fecha_actualiza, 126) AS fecha_actualiza,
+    activo
     FROM AnalisisReferencia
     WHERE activo = 1";
   $db = getConnection();
@@ -4034,13 +4026,16 @@ function getAnalysisReference()
  */
 function getAnalysisReferences($analysisId)
 {
-  $sql = "SELECT id_analisis_referencia, id_analisis, id_muestra,
+  $sql = "SELECT id_analisis_referencia, id_analisis,
     id_parametro, id_usuario_analiza, id_usuario_captura,
     id_usuario_actualiza, duplicado, muestra_duplicada, estandar,
     coeficiente_variacion, tiempo_incubacion, temperatura_incubacion,
-    fecha_analiza, fecha_captura, fecha_actualiza, activo
+    CONVERT(NVARCHAR, fecha_analiza, 126) AS fecha_analiza,
+    CONVERT(NVARCHAR, fecha_captura, 126) AS fecha_captura,
+    CONVERT(NVARCHAR, fecha_actualiza, 126) AS fecha_actualiza,
+    activo
     FROM AnalisisReferencia
-    WHERE activo = 1  AND id_analisis = :analysisId";
+    WHERE activo = 1 AND id_analisis = :analysisId";
   $db = getConnection();
   $stmt = $db->prepare($sql);
   $stmt->bindParam("analysisId", $analysisId);
@@ -4056,7 +4051,7 @@ function getAnalysisReferences($analysisId)
  */
 function insertAnalysisReference($referenceData)
 {
-  $sql = "INSERT INTO AnalisisReferencia (id_analisis, id_muestra,
+  $sql = "INSERT INTO AnalisisReferencia (id_analisis,
     id_parametro, id_usuario_analiza, id_usuario_captura,
     duplicado, muestra_duplicada, estandar, coeficiente_variacion,
     tiempo_incubacion, temperatura_incubacion, fecha_analiza,
@@ -4104,6 +4099,29 @@ function disableAnalysisReferences($analysisId)
   $stmt->execute();
   $db = null;
   return $analysisId;
+}
+
+/**
+ * @param $analysisId
+ * @return mixed
+ */
+function getAnalysisResults($analysisId)
+{
+  $sql = "SELECT id_resultado, id_trabajo, id_analisis, id_muestra,
+    id_parametro, id_tipo_resultado, id_tipo_valor,
+    id_usuario_captura, id_usuario_actualiza, valor,
+    CONVERT(NVARCHAR, fecha_captura, 126) AS fecha_captura,
+    CONVERT(NVARCHAR, fecha_actualiza, 126) AS fecha_actualiza,
+    activo
+    FROM viewAnalisisResultado
+    WHERE activo = 1 AND id_analisis = :analysisId";
+  $db = getConnection();
+  $stmt = $db->prepare($sql);
+  $stmt->bindParam("analysisId", $analysisId);
+  $stmt->execute();
+  $references = $stmt->fetchAll(PDO::FETCH_ASSOC);
+  $db = null;
+  return $references;
 }
 
 /**
@@ -4774,7 +4792,9 @@ function getResult($resultId)
 {
   $sql = "SELECT id_resultado, id_muestra, id_parametro,
     id_tipo_resultado, id_tipo_valor, id_usuario_captura,
-    id_usuario_actualiza, valor, fecha_captura, fecha_actualiza,
+    id_usuario_actualiza, valor,
+    CONVERT(NVARCHAR, fecha_captura, 126) AS fecha_captura,
+    CONVERT(NVARCHAR, fecha_actualiza, 126) AS fecha_actualiza,
     activo
     FROM Resultado
     WHERE activo = 1 AND id_resultado = :resultId";
@@ -4794,7 +4814,9 @@ function getResults()
 {
   $sql = "SELECT id_resultado, id_muestra, id_parametro,
     id_tipo_resultado, id_tipo_valor, id_usuario_captura,
-    id_usuario_actualiza, valor, fecha_captura, fecha_actualiza,
+    id_usuario_actualiza, valor,
+    CONVERT(NVARCHAR, fecha_captura, 126) AS fecha_captura,
+    CONVERT(NVARCHAR, fecha_actualiza, 126) AS fecha_actualiza,
     activo
     FROM Resultado
     WHERE activo = 1";
@@ -4813,7 +4835,8 @@ function getResults()
 function getSampleResults($sampleId)
 {
   $sql = "SELECT id_muestra, id_parametro, id_tipo_resultado,
-    id_tipo_valor, id_usuario_actualiza, valor, fecha_actualiza,
+    id_tipo_valor, id_usuario_actualiza, valor,
+    CONVERT(NVARCHAR, fecha_actualiza, 126) AS fecha_actualiza,
     activo
     FROM Resultado
     WHERE id_muestra = :sampleId";

@@ -45,8 +45,6 @@
     <div class="col-xs-12">
       <h4>Fecha / hora de muestreo</h4>
     </div>
-  </div>
-  <div class="row">
     <div class="col-xs-6 col-sm-4">
       <label for="startDate">
         <i class="glyphicon glyphicon-calendar"></i>
@@ -89,216 +87,58 @@
         >
     </div>
   </div>
-  <!-- PUNTOS Y RESULTADOS -->
-  <div class="row">
-    <div class="col-xs-12">
-      <h4>Resultados</h4>
-    </div>
-  </div>
+  <!-- MUESTRA, DATOS REFERENCIA y RESULTADO MUESTRA -->
   <div class="row">
     <div class="col-xs-12"
-      data-ng-repeat="row in analysis.analysis.muestras">
-      <h5>Muestra en: {{::row.punto.punto}}</h5>
-      <p>
-        <span class="label label-info"
-          data-ng-show="row.id_tipo_muestreo == 2">Compuesta</span>
-        <br>
-        DATOS REFERENCIA
-        <small>
-          {{::row.punto.descripcion}}
-        </small>
-        <br>
-        Latitud: {{::row.punto.lat}}
-        |
-        Longitud: {{::row.punto.lng}}
-      </p>
-      <div class="row">
-        <div class="col-xs-6 col-sm-4">
-          <label for="sampleDate{{::row.id_muestra}}">
-            <i class="glyphicon glyphicon-calendar"></i>
-            Fecha muestreo
-          </label>
-          <input type="text"
-            class="form-control"
-            id="sampleDate{{::row.id_muestra}}"
-            name="sampleDate{{::row.id_muestra}}"
-            placeholder="aaaa-mm-dd"
-            required
-            data-ng-model="row.fecha_analiza"
-            data-date-format="yyyy-MM-dd"
-            data-date-type="date"
-            data-autoclose="1"
-            date-use-native="true"
-            data-bs-datepicker
-            >
+      data-ng-repeat="row in analysis.parameters"
+      >
+      <div class="panel">
+        <div class="panel-heading">
+          <h4 class="panel-title">{{row.param} <small>{{row.unidad}}</small></h4>
         </div>
-        <div class="col-xs-6 col-sm-3">
-          <label for="sampleTime{{::row.id_muestra}}">
-            <i class="glyphicon glyphicon-time"></i>
-            Hora muestreo
-          </label>
-          <input type="text"
-            class="form-control"
-            id="sampleTime{{::row.id_muestra}}"
-            name="sampleTime{{::row.id_muestra}}"
-            placeholder="HH:mm"
-            required
-            data-ng-model="row.fecha_analiza"
-            data-time-format="HH:mm"
-            data-length="1"
-            data-hour-step="1"
-            data-minute-step="1"
-            data-arrow-behavior="picker"
-            data-auto-close="1"
-            data-bs-timepicker
-            >
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-xs-6 col-sm-4"
-          data-ng-repeat="result in row.resultados"
-          >
-          <label
-            data-ng-if="result.id_tipo_valor < 3"
-            >
-            {{::result.param}}
-          </label>
-          <input type="text"
-            class="form-control"
-            placeholder="0"
-            data-ng-model="result.valor"
-            data-ng-if="result.id_tipo_valor == 1"
-            >
-          <input type="text"
-            class="form-control"
-            placeholder="Valor"
-            data-ng-model="result.valor"
-            data-ng-if="result.id_tipo_valor == 2"
-            >
-          <label
-            data-ng-if="result.id_tipo_valor == 3"
-            >
-            {{::result.param}}
-            <br>
-            <label>
-              <input type="radio"
-                value="1"
-                data-ng-model="result.valor"
+        <h2>Hello</h2>
+    </div>
+  </div>
+      <div class="item-z1">
+        <h4>{row.param} <small>{row.unidad}</small></h4>
+        <div class="row">
+          <div class="col-xs-12">
+            <div class="item-z1">
+              <h5>Datos de referencia</h5>
+              +++++++++++++++++inputs+++++++++++++++++
+              +++++++++++++++++inputs+++++++++++++++++
+              +++++++++++++++++inputs+++++++++++++++++
+              +++++++++++++++++inputs+++++++++++++++++
+              +++++++++++++++++inputs+++++++++++++++++
+              +++++++++++++++++inputs+++++++++++++++++
+              +++++++++++++++++inputs+++++++++++++++++
+            </div>
+          </div>
+          <div class="col-xs-8">
+            <div class="item-z1">
+              Fecha/hora muestreo: {fecha_muestreo}<br>
+              Fecha/hora recepción: {fecha_recepcion}<br>
+              pH: {ph}<br>
+              Gasto: {gasto}<br>
+              Matriz: {matriz}<br>
+            </div>
+          </div>
+          <div class="col-xs-4">
+            <div class="item-z1">
+              <input type="text"
+                class="form-control"
+                placeholder="Valor"
+                value="RESULTADO"
                 >
-                Presente
-            </label>
-            <label>
-              <input type="radio"
-                value="0"
                 data-ng-model="result.valor"
-                >
-                Ausente
-            </label>
-            <br><br>
-          </label>
+            </div>
+          </div>
         </div>
       </div>
-      <div class="row">
-        <div class="col-xs-12">
-          <label for="sampleComments{{::row.id_muestra}}">
-            Comentarios
-          </label>
-          <br>
-          <textarea rows="2" class="form-control well well-sm"
-            id="analysisComments{{::row.id_muestra}}"
-            name="analysisComments{{::row.id_muestra}}"
-            data-ng-model="row.comentarios"
-            >
-          </textarea>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-xs-12">
-      <h4>Condiciones ambientales</h4>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-xs-12 col-sm-6">
-      <label for="cloudCoverSelect">
-        Cobertura de nubes
-      </label>
-      <select class="form-control"
-        id="cloudCoverSelect"
-        name="cloudCoverSelect"
-        required
-        data-ng-model="analysis.analysis.id_nube"
-        >
-        <option
-          data-ng-repeat="cloudCover in analysis.cloudCovers"
-          value="{{cloudCover.id_nube}}">
-          {{::cloudCover.nube}}
-        </option>
-      </select>
-    </div>
-    <div class="col-xs-12 col-sm-6">
-      <label for="windDirectionSelect">
-        Dirección de la corriente
-      </label>
-      <select class="form-control"
-        id="windDirectionSelect"
-        name="windDirectionSelect"
-        required
-        data-ng-model="analysis.analysis.id_direccion_corriente"
-        >
-        <option
-          data-ng-repeat="windDirection in analysis.windDirections"
-          value="{{windDirection.id_direccion_corriente}}">
-          {{::windDirection.direccion_corriente}}
-        </option>
-      </select>
-    </div>
-    <div class="col-xs-12 col-sm-6">
-      <label for="waveIntensitySelect">
-        Intensidad del oleaje
-      </label>
-      <select class="form-control"
-        id="waveIntensitySelect"
-        name="waveIntensitySelect"
-        required
-        data-ng-model="analysis.analysis.id_oleaje"
-        >
-        <option
-          data-ng-repeat="waveIntensity in analysis.waveIntensities"
-          value="{{waveIntensity.id_oleaje}}">
-          {{::waveIntensity.oleaje}}
-        </option>
-      </select>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-xs-12">
-      <h4>Preservaciones {{analysis.selectPreservations()}}</h4>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-xs-12 col-sm-6"
-      data-ng-repeat="preservation in analysis.preservations">
-      <label>
-        <input type="checkbox"
-          value="{{preservation.selected}}"
-          data-ng-model="preservation.selected"
-          >
-          {{preservation.preservacion}}
-      </label>
-      <br>
-      <small class="text-muted">
-        {{preservation.descripcion}}
-      </small>
-    </div>
-  </div>
   <div class="row">
     <div class="col-xs-12">
       <h4>Comentarios</h4>
     </div>
-  </div>
-  <div class="row">
     <div class="col-xs-12">
       <textarea rows="3" class="form-control well well-sm"
         id="analysisCommentsText"

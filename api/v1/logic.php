@@ -2087,6 +2087,7 @@ function processAnalysisResultsInsert($jobUpdateData, $analysisId)
       $parameterId = $parameters[$j]->id_parametro;
       $result["id_muestra"] = $sampleId;
       $result["id_parametro"] = $parameterId;
+      $result["id_tipo_valor"] = $parameters[$j]->id_tipo_valor;
       $resultId = insertResult($result);
       $jobResult = array(
         "id_trabajo" => $job["id_trabajo"],

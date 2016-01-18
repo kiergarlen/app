@@ -41,64 +41,133 @@
   name="analysisForm"
   novalidate
   >
-  <div class="row">
-    <div class="col-xs-12">
-      <h4>Fecha / hora de muestreo</h4>
-    </div>
-    <div class="col-xs-6 col-sm-4">
-      <label for="startDate">
-        <i class="glyphicon glyphicon-calendar"></i>
-        Fecha
-      </label>
-      <input type="text"
-        class="form-control"
-        id="startDate"
-        name="startDate"
-        placeholder="aaaa-mm-dd"
-        required
-        data-ng-model="analysis.analysis.fecha_analiza"
-        data-date-format="yyyy-MM-dd"
-        data-date-type="date"
-        data-autoclose="1"
-        date-use-native="true"
-        data-bs-datepicker
-        >
-    </div>
-    <div class="col-xs-6 col-sm-3">
-      <label for="startTime">
-        <i class="glyphicon glyphicon-time"></i>
-        Hora
-      </label>
-      <input type="text"
-        class="form-control"
-        id="startTime"
-        name="startTime"
-        placeholder="HH:mm"
-        required
-        data-ng-model="analysis.analysis.fecha_analiza"
-        data-time-format="HH:mm"
-        data-date-type="date"
-        data-length="1"
-        data-hour-step="1"
-        data-minute-step="1"
-        data-arrow-behavior="picker"
-        data-auto-close="1"
-        data-bs-timepicker
-        >
-    </div>
-  </div>
   <!-- MUESTRA, DATOS REFERENCIA y RESULTADO MUESTRA -->
   <div class="row">
-    <div class="col-xs-12"
-      data-ng-repeat="row in analysis.parameters"
+    <div class="col-xs-12 panel"
+      data-ng-repeat="parameter in analysis.analysis.parametros"
       >
-      <div class="panel">
-        <div class="panel-heading">
-          <h4 class="panel-title">{{row.param} <small>{{row.unidad}}</small></h4>
+      <div class="row">
+        <div class="col-xs-12">
+          <h4>
+            {{parameter.param}} <small>[{{parameter.unidad}}]</small>
+          </h4>
         </div>
-        <h2>Hello</h2>
+        <div class="col-xs-4">
+          <label for="resultadoFechaAnaliza">
+            <i class="glyphicon glyphicon-calendar"></i>
+            Fecha Análisis
+          </label>
+          <input type="text"
+            class="form-control"
+            name="resultadoFechaAnaliza"
+            placeholder="aaaa-MM-dd"
+            data-ng-model="parameter.referencias.fecha_analiza"
+            data-date-format="yyyy-MM-dd"
+            data-date-type="date"
+            data-autoclose="1"
+            date-use-native="true"
+            data-bs-datepicker
+            >
+          <br>
+          <div class="table-responsive">
+            <table class="table table-hover table-condensed">
+              <thead>
+                <tr>
+                  <th>Muestra</th>
+                  <th>Resultado</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr
+                  data-ng-repeat="result in parameter.resultados">
+                  <td>
+                    {{result.id_muestra}}
+                    <!--
+                      <div class="panel">
+                        Fecha/hora muestreo: {fecha_muestreo}<br>
+                        Fecha/hora recepción: {fecha_recepcion}<br>
+                        pH: {ph}<br>
+                        Gasto: {gasto}<br>
+                        Matriz: {matriz}<br>
+                      </div>
+                    -->
+                  </td>
+                  <td>
+                    <input type="text" class="form-control"
+                      name="resultado{{parameter.id_parametro}}"
+                      placeholder="Resultado"
+                      data-ng-model="result.valor"
+                      >
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="col-xs-4">
+          <label for="resultadoDuplicado">
+            Duplicado
+          </label>
+          <input type="text" class="form-control"
+            name="resultadoDuplicado"
+            placeholder="Resultado"
+            data-ng-model="parameter.referencias.duplicado"
+            >
+        </div>
+        <div class="col-xs-4">
+          <label for="resultadoMuestraDuplicada">
+            Muestra Duplicada
+          </label>
+          <input type="text" class="form-control"
+            name="resultadoMuestraDuplicada"
+            placeholder="Resultado"
+            data-ng-model="parameter.referencias.muestra_duplicada"
+            >
+        </div>
+        <div class="col-xs-4">
+          <label for="resultadoEstandar">
+            Estandar (%R)
+          </label>
+          <input type="text" class="form-control"
+            name="resultadoEstandar"
+            placeholder="Resultado"
+            data-ng-model="parameter.referencias.estandar"
+            >
+        </div>
+        <div class="col-xs-4">
+          <label for="resultadoCoeficienteVariacion">
+            Coeficiente Variacion
+          </label>
+          <input type="text" class="form-control"
+            name="resultadoCoeficienteVariacion"
+            placeholder="Resultado"
+            data-ng-model="parameter.referencias.coeficiente_variacion"
+            >
+        </div>
+        <div class="col-xs-4">
+          <label for="resultadoTiempoIncubacion">
+            Tiempo de Incubación (horas)
+          </label>
+          <input type="text" class="form-control"
+            name="resultadoTiempoIncubacion"
+            placeholder="Resultado"
+            data-ng-model="parameter.referencias.tiempo_incubacion"
+            >
+        </div>
+        <div class="col-xs-4">
+          <label for="resultadoTemperaturaIncubacion">
+            Temperatura de Incubación (&deg;C)
+          </label>
+          <input type="text" class="form-control"
+            name="resultadoTemperaturaIncubacion"
+            placeholder="Resultado"
+            data-ng-model="parameter.referencias.temperatura_incubacion"
+            >
+        </div>
+      </div>
     </div>
   </div>
+  <!--
       <div class="item-z1">
         <h4>{row.param} <small>{row.unidad}</small></h4>
         <div class="row">
@@ -116,11 +185,7 @@
           </div>
           <div class="col-xs-8">
             <div class="item-z1">
-              Fecha/hora muestreo: {fecha_muestreo}<br>
-              Fecha/hora recepción: {fecha_recepcion}<br>
-              pH: {ph}<br>
-              Gasto: {gasto}<br>
-              Matriz: {matriz}<br>
+
             </div>
           </div>
           <div class="col-xs-4">
@@ -135,6 +200,7 @@
           </div>
         </div>
       </div>
+      -->
   <div class="row">
     <div class="col-xs-12">
       <h4>Comentarios</h4>

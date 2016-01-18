@@ -3698,12 +3698,32 @@ function getBlankAnalysis()
 {
   $analysis = getPlainAnalysis($analysisId);
   $jobId = $analysis->id_trabajo;
-  $analysis->referencias_muestreo = getJobSamples($jobId);
-  $analysis->resultados_referencia = getJobReferenceResults($jobId);
   $analysis->muestras = getAnalysisSamples($analysisId);
-  $analysis->parametros = getAnalysisParameters($analysisId);
-  $analysis->resultados = getAnalysisResults($analysisId);
-
+  $parameters = getAnalysisParameters($analysisId);
+  $references = getAnalysisReferences($analysisId);
+  $results = getAnalysisResults($analysisId);
+  $i = 0;
+  $j = 0;
+  $k = 0;
+  $l = count($parameters);
+  $m = count($references);
+  $n = count($results);
+  if (count($parameters) > 1) {
+    for ($i = 0; $i < $l; $i++) {
+      for ($j = 0; $j < $m; $j++) {
+        if ($parameters[$i]["id_parametro"] == $references[$j]["id_parametro"]) {
+          $parameters[$i]["referencias"] = $references[$j];
+          // fecha_analiza
+        }
+      }
+      for ($k = 0; $k < $n; $k++) {
+        if ($parameters[$i]["id_parametro"] == $results[$k]["id_parametro"]) {
+          $parameters[$i]["resultados"][] = $results[$k];
+        }
+      }
+    }
+  }
+  $analysis->parametros = $parameters;
   return $analysis;
 }
 
@@ -3793,13 +3813,13 @@ function insertAnalysis($analysisData)
   $sql = "INSERT INTO Analisis (id_trabajo, id_usuario_analiza,
     id_usuario_captura, id_usuario_valida, id_usuario_actualiza,
     fecha_analiza, fecha_aprueba, fecha_captura, fecha_valida,
-    fecha_rechaza, ip_captura, ip_valida, host_captura, host_valida,
-    comentarios, motivo_rechaza, activo)
+    fecha_actualiza, fecha_rechaza, ip_captura, ip_valida,
+    host_captura, host_valida, comentarios, motivo_rechaza, activo)
     VALUES (:id_trabajo, :id_usuario_analiza,
     :id_usuario_captura, :id_usuario_valida, :id_usuario_actualiza,
     :fecha_analiza, :fecha_aprueba, SYSDATETIMEOFFSET(), :fecha_valida,
-    :fecha_rechaza, :ip_captura, :ip_valida, :host_captura, :host_valida,
-    :comentarios, :motivo_rechaza, :activo)";
+    NULL, :fecha_rechaza, :ip_captura, :ip_valida,
+    :host_captura, :host_valida, :comentarios, :motivo_rechaza, :activo)";
   $db = getConnection();
   $stmt = $db->prepare($sql);
   $stmt->execute($analysisData);
@@ -3921,8 +3941,9 @@ function disableAnalysisSamples($analysisId)
  */
 function getAnalysisParameters($analysisId)
 {
-  $sql = "SELECT id_analisis_parametro, id_analisis, id_parametro, activo
-    FROM AnalisisParametro
+  $sql = "SELECT id_analisis_parametro, id_analisis, id_parametro,
+    activo, parametro, [param], unidad
+    FROM viewAnalisisParametroUnidad
     WHERE activo = 1  AND id_analisis = :analysisId";
   $db = getConnection();
   $stmt = $db->prepare($sql);

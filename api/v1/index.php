@@ -352,7 +352,7 @@ $app->post("/jobs", function () use ($app) {
 
 $app->get("/analysis(/)(:analysisId)", function ($analysisId = -1) use ($app) {
   try {
-    $userId = decodeUserToken($app->request())->uid;
+    // $userId = decodeUserToken($app->request())->uid;
     if ($analysisId > -1) {
       $result = json_encode(getAnalysis($analysisId));
     } else {

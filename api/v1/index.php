@@ -339,8 +339,7 @@ $app->post("/jobs", function () use ($app) {
     $jobId = extractDataFromRequest($request)->id_trabajo;
     if ($jobId > 0) {
       $jobUpdateData = processJobUpdate($request);
-      // $jobId = updateJob($jobUpdateData["job"]);
-      $jobId = 32;
+      $jobId = updateJob($jobUpdateData["job"]);
       processJobAnalysisInsert($jobUpdateData, $jobId);
     }
     $result = "{\"id_trabajo\":" . $jobId . "}";

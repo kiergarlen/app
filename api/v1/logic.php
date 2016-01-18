@@ -76,11 +76,11 @@ function decodeUserToken($request)
     // $requestUrl = $request->getUrl();
     // if ($tokenIp === $request->getIp())
     // {
-    //   return array("success" => "Ip match");
+    //  return array("success" => "Ip match");
     // }
     // else
     // {
-    //   return array("error" => "Ip mismatch");
+    //  return array("error" => "Ip mismatch");
     // }
     return $decoded;
   } catch (Exception $e) {
@@ -143,18 +143,18 @@ function isoDateToMsSql($dateString)
   //$format = "Y-m-d";
   //if (strlen($dateString) > 10)
   //{
-  //  $parsedDate = substr($dateString, 0, 19);
-  //  $parsedDate = str_replace("T", " ", $parsedDate);
-  //  if (DateTime::createFromFormat($format .  " H:i:s", $parsedDate))
-  //  {
-  //  $date = DateTime::createFromFormat($format, $parsedDate);
-  //  return $date->format($format);
-  //  }
+  // $parsedDate = substr($dateString, 0, 19);
+  // $parsedDate = str_replace("T", " ", $parsedDate);
+  // if (DateTime::createFromFormat($format . " H:i:s", $parsedDate))
+  // {
+  // $date = DateTime::createFromFormat($format, $parsedDate);
+  // return $date->format($format);
+  // }
   //}
   //if (strlen($dateString) == 10)
   //{
-  //  $date = DateTime::createFromFormat('Y-m-d', $dateString);
-  //  return $date->format($format);
+  // $date = DateTime::createFromFormat('Y-m-d', $dateString);
+  // return $date->format($format);
   //}
   if (strlen($dateString) > 9) {
     return $dateString;
@@ -845,15 +845,15 @@ function processPlanContainersUpdate($planUpdateData)
     // disablePlanContainers($planId);
 
     // for ($j = 0; $j < $m; $j++) {
-    //   $container = (array) $containers[$j];
-    //   // if ($container["id_plan_recipiente"] < 1) {
-    //   //   unset($container["id_plan_recipiente"]);
-    //   //   insertPlanContainer($container);
-    //   // }
-    //   if ($container["id_plan_recipiente"] > 0) {
-    //     $container["activo"] = 1;
-    //     updatePlanContainer($container);
-    //   }
+    //  $container = (array) $containers[$j];
+    //  // if ($container["id_plan_recipiente"] < 1) {
+    //  //  unset($container["id_plan_recipiente"]);
+    //  //  insertPlanContainer($container);
+    //  // }
+    //  if ($container["id_plan_recipiente"] > 0) {
+    //   $container["activo"] = 1;
+    //   updatePlanContainer($container);
+    //  }
     // }
   }
   return $planId;
@@ -989,9 +989,8 @@ function processSheetReceptionUpdate($sheetUpdateData)
   // $i = 0;
   // $l = count($storedReceptions);
   // if ($l > 0) {
-  //   for ($i = 0; $i < $l; $i++) {
-
-  //   }
+  //  for ($i = 0; $i < $l; $i++) {
+  //  }
   // }
   return $storedReceptions;
   //return $sheetId;
@@ -1394,8 +1393,8 @@ function processReceptionCustodiesUpdate($receptionUpdateData)
       );
       if ($custody["id_recepcion_custodia"] < 1) {
         // if ($custody["id_custodia"] < 1) {
-        //   $areaId = $custodies[$i]->id_area;
-        //   $custodyId = processReceptionCustodyInsert($receptionUpdateData, $areaId);
+        //  $areaId = $custodies[$i]->id_area;
+        //  $custodyId = processReceptionCustodyInsert($receptionUpdateData, $areaId);
         // }
         // $custody["id_custodia"] = $custodyId;
         // unset($custody["id_recepcion_custodia"]);
@@ -1836,14 +1835,13 @@ function processJobUpdate($request)
     "references" => $references,
     "parameters" => $parameters,
   );
-
   return $jobUpdateData;
 }
 
 /**
  * Función de ordenado para usort por id_usuario_analiza
- * @param  mixed $a valor de ítem
- * @param  mixed $b valor de ítem
+ * @param mixed $a valor de ítem
+ * @param mixed $b valor de ítem
  * @return bool Comparación de valores
  */
 function customSort($a, $b)
@@ -1863,11 +1861,12 @@ function processJobAnalysisInsert($jobUpdateData, $jobId)
   $analysisList = (array) $jobUpdateData["analysisList"];
   $samples = (array) $jobUpdateData["samples"];
   $parameters = (array) $jobUpdateData["parameters"];
-return $parameters;
+
   if (count($analysisList) > 0) {
     return $analysisList;
   } else {
     $i = 0;
+    $j = 0;
     $l = count($parameters);
     usort($parameters, "customSort");
     $currentAnalystId = 0;
@@ -1879,7 +1878,7 @@ return $parameters;
     unset($blankAnalysis["host_actualiza"]);
     unset($blankAnalysis["ip_actualiza"]);
     $blankAnalysis["id_trabajo"] = $jobId;
-    $blankAnalysis["id_usuario_captura"] = $job["id_usuario_actualiza"];;
+    $blankAnalysis["id_usuario_captura"] = $job["id_usuario_actualiza"];
     $blankAnalysis["ip_captura"] = $job["ip_actualiza"];
     $blankAnalysis["host_captura"] = $job["host_actualiza"];
 
@@ -1887,28 +1886,31 @@ return $parameters;
       if ($parameters[$i]->id_usuario_analiza != $currentAnalystId) {
         $currentAnalystId = $parameters[$i]->id_usuario_analiza;
         $blankAnalysis["id_usuario_analiza"] = $currentAnalystId;
-        // $analysisId = insertAnalysis($blankAnalysis);
-        // $analysisIds[] = $analysisId;
-        // processAnalysisSamplesInsert($samples, $analysisId);
-        // processAnalysisReferencesInsert($jobUpdateData, $analysisId);
-        // processAnalysisResultsInsert($jobUpdateData, $analysisId);
+        $analystIds[] = $currentAnalystId;
+        $analysisId = insertAnalysis($blankAnalysis);
+        $analysisIds[] = $analysisId;
+        processAnalysisSamplesInsert($samples, $analysisId);
+        processAnalysisParametersInsert($parameters, $currentAnalystId, $analysisId);
+        processAnalysisReferencesInsert($jobUpdateData, $currentAnalystId, $analysisId);
+        processAnalysisResultsInsert($jobUpdateData, $analysisId);
       }
     }
-    return $analysisIds;
+    return $analystIds;
   }
 }
 
 /**
  * processAnalysisSamplesInsert
- * @param  mixed $jobUpdateData
- * @param  mixed $analysisId
+ * @param mixed $jobUpdateData
+ * @param mixed $analysisId
  * @return mixed
  */
-function processAnalysisSamplesInsert($samples, $analysisId) {
+function processAnalysisSamplesInsert($samples, $analysisId)
+{
   $i = 0;
   $l = count($samples);
   for ($i = 0; $i < $l; $i++) {
-    $analysisSample =  array(
+    $analysisSample = array(
       "id_analisis" => $analysisId,
       "id_muestra" => $samples[$i]->id_muestra,
       "activo" => 1,
@@ -1951,11 +1953,6 @@ function processAnalysisSamplesUpdate($analysisUpdateData)
       $analysisSample["activo"] = 1;
       updateAnalysisSample($analysisSample);
     }
-    // $sampleData = array(
-    //   "id_muestra" => $samples[$i]->id_muestra,
-    //   "id_analisis" => $samples[$i]->id_analisis,
-    // );
-    // updateSampleAnalysisId($sampleData);
   }
   return $analysisId;
 }
@@ -1965,7 +1962,7 @@ function processAnalysisSamplesUpdate($analysisUpdateData)
  * @param mixed $jobUpdateData
  * @return mixed
  */
-function processAnalysisReferencesInsert($jobUpdateData, $analysisId)
+function processAnalysisReferencesInsert($jobUpdateData, $currentAnalystId, $analysisId)
 {
   $job = (array) $jobUpdateData["job"];
   $parameters = (array) $jobUpdateData["parameters"];
@@ -1982,15 +1979,8 @@ function processAnalysisReferencesInsert($jobUpdateData, $analysisId)
   $l = count($parameters);
   for ($i = 0; $i < $l; $i++) {
     $parameterId = $parameters[$i]->id_parametro;
-    $analystId = $parameters[$i]->id_usuario_analiza;
-    $analysisParameter =  array(
-      "id_analisis" => $analysisId,
-      "id_parametro" => $parameterId,
-      "activo" => 1,
-    );
-    $analysisParameterIds[] = insertAnalysisParameter($analysisParameter);
     $analysisReference["id_parametro"] = $parameterId;
-    $analysisReference["id_usuario_analiza"] = $analystId;
+    $analysisReference["id_usuario_analiza"] = $currentAnalystId;
     $analysisReferenceIds[] = insertAnalysisReference($analysisReference);
   }
   return $analysisReferenceIds;
@@ -2029,11 +2019,6 @@ function processAnalysisParametersUpdate($analysisUpdateData)
       $analysisParameter["activo"] = 1;
       updateAnalysisParameter($analysisParameter);
     }
-    // $sampleData = array(
-    //   "id_parametro" => $parameters[$i]->id_parametro,
-    //   "id_analisis" => $parameters[$i]->id_analisis,
-    // );
-    // updateParameterAnalysisId($sampleData);
   }
   return $analysisId;
 }
@@ -2071,11 +2056,6 @@ function processAnalysisReferencesUpdate($analysisUpdateData)
       $analysisReference["activo"] = 1;
       updateAnalysisReference($analysisReference);
     }
-    // $sampleData = array(
-    //   "id_referencia" => $references[$i]->id_referencia,
-    //   "id_analisis" => $references[$i]->id_analisis,
-    // );
-    // updateReferenceAnalysisId($sampleData);
   }
   return $analysisId;
 }
@@ -2122,4 +2102,27 @@ function processAnalysisResultsInsert($jobUpdateData, $analysisId)
     }
   }
   return $resultIds;
+}
+
+/**
+ * processAnalysisParametersInsert
+ * @param mixed $jobUpdateData
+ * @return mixed
+ */
+function processAnalysisParametersInsert($parameters, $analystId, $analysisId)
+{
+  $i = 0;
+  $l = count($parameters);
+  for ($i = 0; $i < $l; $i++) {
+    if ($parameters[$i]->id_usuario_analiza == $analystId) {
+      $parameterId = $parameters[$i]->id_parametro;
+      $analysisParameter = array(
+        "id_analisis" => $analysisId,
+        "id_parametro" => $parameterId,
+        "activo" => 1,
+      );
+      $analysisParameterIds[] = insertAnalysisParameter($analysisParameter);
+    }
+  }
+  return $analysisParameterIds;
 }

@@ -1417,13 +1417,16 @@ function processReceptionCustodiesUpdate($receptionUpdateData)
 function processReceptionJobsInsert($receptionUpdateData)
 {
   $reception = (array) $receptionUpdateData["reception"];
+  $samples = (array) $receptionUpdateData["samples"];
   $jobs = (array) $receptionUpdateData["jobs"];
   $receptionId = $reception["id_recepcion"];
   $storedCustodies = getReceptionCustodies($receptionId);
   $i = 0;
   $j = 0;
+  $k = 0;
   $l = count($jobs);
   $m = count($storedCustodies);
+  $n = count($samples);
 
   $jobData = getBlankJob();
   $jobData["id_recepcion"] = $reception["id_recepcion"];
@@ -1447,7 +1450,16 @@ function processReceptionJobsInsert($receptionUpdateData)
         break;
       }
     }
-    $jobIds[] = insertJob($jobData);
+    $jobId = insertJob($jobData);
+    for ($k = 0; $k < $n; $n++) {
+      $jobSample = array(
+        "id_trabajo" => $jobId,
+        "id_muestra" => $samples[$n]->id_muestra,
+        "activo" => 1,
+      );
+      $jobSampleId = insertJobSample($jobSample);
+    }
+    $jobIds[] = $jobId;
   }
   return $jobIds;
 }
@@ -1490,14 +1502,17 @@ function processReceptionJobInsert($receptionUpdateData, $areaId)
 function processReceptionJobsUpdate($receptionUpdateData)
 {
   $jobs = (array) $receptionUpdateData["jobs"];
+  $samples = (array) $receptionUpdateData["samples"];
   $reception = (array) $receptionUpdateData["reception"];
   $receptionId = $reception["id_recepcion"];
   $storedJobs = getReceptionJobs($receptionId);
   $jobsByReception = getJobsByReception($receptionId);
   $i = 0;
+  $j = 0;
   $l = count($storedJobs);
   $m = count($jobs);
   $n = count($jobsByReception);
+  $o = count($samples);
 
   if ($l < 1 && $n < 1) {
     $jobIds = (array) processReceptionJobsInsert($receptionUpdateData);
@@ -1521,6 +1536,14 @@ function processReceptionJobsUpdate($receptionUpdateData)
         if ($job["id_trabajo"] < 1) {
           $areaId = $jobs[$i]->id_area;
           $jobId = processReceptionJobInsert($receptionUpdateData, $areaId);
+          for ($j = 0; $j < $o; $o++) {
+            $jobSample = array(
+              "id_trabajo" => $jobId,
+              "id_muestra" => $samples[$o]->id_muestra,
+              "activo" => 1,
+            );
+            $jobSampleId = insertJobSample($jobSample);
+          }
         }
         $job["id_trabajo"] = $jobId;
         unset($job["id_recepcion_trabajo"]);

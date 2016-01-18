@@ -2078,6 +2078,71 @@ function getJobReferenceResults($jobId)
   $db = null;
   return $analysisList;
 }
+/**
+ * @param $jobId
+ * @return mixed
+ */
+function getJobSamples($jobId)
+{
+  $sql = "SELECT id_trabajo_muestra, id_trabajo, id_muestra, activo
+    FROM TrabajoMuestra
+    WHERE activo = 1 AND id_trabajo = :jobId";
+  $db = getConnection();
+  $stmt = $db->prepare($sql);
+  $stmt->bindParam("jobId", $jobId);
+  $stmt->execute();
+  $samples = $stmt->fetchAll(PDO::FETCH_ASSOC);
+  $db = null;
+  return $samples;
+}
+
+/**
+ * @param $jobSampleData
+ * @return mixed
+ */
+function insertJobSample($jobSampleData)
+{
+  $sql = "INSERT INTO TrabajoMuestra (id_trabajo, id_muestra, activo)
+    VALUES(:id_trabajo, :id_muestra, :activo)";
+  $db = getConnection();
+  $stmt = $db->prepare($sql);
+  $stmt->execute($jobSampleData);
+  $jobSampleId = $db->lastInsertId();
+  $db = null;
+  return $jobSampleId;
+}
+
+/**
+ * @param $updateData
+ * @return mixed
+ */
+function updateJobSample($updateData)
+{
+  $sql = "UPDATE TrabajoMuestra SET id_trabajo = :id_trabajo,
+    id_muestra = :id_muestra, activo = :activo
+    WHERE id_trabajo_muestra = :id_trabajo_muestra";
+  $db = getConnection();
+  $stmt = $db->prepare($sql);
+  $stmt->execute($updateData);
+  $db = null;
+  return $updateData["id_trabajo_muestra"];
+}
+
+/**
+ * @param $jobId
+ * @return mixed
+ */
+function disableJobSamplesByjob($jobId)
+{
+  $sql = "UPDATE TrabajoMuestra SET activo = 0
+    WHERE id_trabajo = :jobId";
+  $db = getConnection();
+  $stmt = $db->prepare($sql);
+  $stmt->bindParam("jobId", $jobId);
+  $stmt->execute();
+  $db = null;
+  return $jobId;
+}
 
 /**
  * @param $jobId

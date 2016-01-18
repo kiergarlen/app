@@ -1889,10 +1889,11 @@ function processJobAnalysisInsert($jobUpdateData, $jobId)
         $analystIds[] = $currentAnalystId;
         $analysisId = insertAnalysis($blankAnalysis);
         $analysisIds[] = $analysisId;
-        processAnalysisSamplesInsert($samples, $analysisId);
-        processAnalysisParametersInsert($parameters, $currentAnalystId, $analysisId);
-        processAnalysisReferencesInsert($jobUpdateData, $currentAnalystId, $analysisId);
-        processAnalysisResultsInsert($jobUpdateData, $analysisId);
+        // processAnalysisSamplesInsert($samples, $analysisId);
+        // processAnalysisParametersInsert($parameters, $currentAnalystId, $analysisId);
+        // processAnalysisReferencesInsert($jobUpdateData, $currentAnalystId, $analysisId);
+        // processAnalysisResultsInsert($jobUpdateData, $analysisId);
+        return processAnalysisReferencesInsert($jobUpdateData, $currentAnalystId, $analysisId);
       }
     }
     return $analystIds;
@@ -1901,9 +1902,9 @@ function processJobAnalysisInsert($jobUpdateData, $jobId)
 
 /**
  * processAnalysisSamplesInsert
- * @param mixed $jobUpdateData
+ * @param mixed $samples
  * @param mixed $analysisId
- * @return mixed
+ * @return array $analysisSampleIds
  */
 function processAnalysisSamplesInsert($samples, $analysisId)
 {
@@ -1923,7 +1924,7 @@ function processAnalysisSamplesInsert($samples, $analysisId)
 /**
  * processAnalysisSamplesUpdate
  * @param mixed $analysisUpdateData
- * @return mixed
+ * @return mixed $analysisId
  */
 function processAnalysisSamplesUpdate($analysisUpdateData)
 {
@@ -1960,7 +1961,9 @@ function processAnalysisSamplesUpdate($analysisUpdateData)
 /**
  * processAnalysisReferencesInsert
  * @param mixed $jobUpdateData
- * @return mixed
+ * @param mixed $currentAnalystId
+ * @param mixed $analysisId
+ * @return array $analysisReferenceIds
  */
 function processAnalysisReferencesInsert($jobUpdateData, $currentAnalystId, $analysisId)
 {
@@ -1981,6 +1984,8 @@ function processAnalysisReferencesInsert($jobUpdateData, $currentAnalystId, $ana
     $parameterId = $parameters[$i]->id_parametro;
     $analysisReference["id_parametro"] = $parameterId;
     $analysisReference["id_usuario_analiza"] = $currentAnalystId;
+    return $analysisReference;
+    $analysisReferenceIds[] = ($analysisReference);
     $analysisReferenceIds[] = insertAnalysisReference($analysisReference);
   }
   return $analysisReferenceIds;
@@ -1989,7 +1994,7 @@ function processAnalysisReferencesInsert($jobUpdateData, $currentAnalystId, $ana
 /**
  * processAnalysisParametersUpdate
  * @param mixed $analysisUpdateData
- * @return mixed
+ * @return mixed $analysisId
  */
 function processAnalysisParametersUpdate($analysisUpdateData)
 {
@@ -2026,7 +2031,7 @@ function processAnalysisParametersUpdate($analysisUpdateData)
 /**
  * processAnalysisReferencesUpdate
  * @param mixed $analysisUpdateData
- * @return mixed
+ * @return mixed $analysisId
  */
 function processAnalysisReferencesUpdate($analysisUpdateData)
 {
@@ -2064,7 +2069,7 @@ function processAnalysisReferencesUpdate($analysisUpdateData)
  * processAnalysisResultsInsert
  * @param mixed $jobUpdateData
  * @param mixed $analysisId
- * @return mixed
+ * @return array $resultIds
  */
 function processAnalysisResultsInsert($jobUpdateData, $analysisId)
 {
@@ -2106,15 +2111,17 @@ function processAnalysisResultsInsert($jobUpdateData, $analysisId)
 
 /**
  * processAnalysisParametersInsert
- * @param mixed $jobUpdateData
- * @return mixed
+ * @param mixed $parameters
+ * @param mixed $currentAnalystId
+ * @param mixed $analysisId
+ * @return array $analysisParameterIds
  */
-function processAnalysisParametersInsert($parameters, $analystId, $analysisId)
+function processAnalysisParametersInsert($parameters, $currentAnalystId, $analysisId)
 {
   $i = 0;
   $l = count($parameters);
   for ($i = 0; $i < $l; $i++) {
-    if ($parameters[$i]->id_usuario_analiza == $analystId) {
+    if ($parameters[$i]->id_usuario_analiza == $currentAnalystId) {
       $parameterId = $parameters[$i]->id_parametro;
       $analysisParameter = array(
         "id_analisis" => $analysisId,

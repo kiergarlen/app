@@ -2040,8 +2040,8 @@ function getJobReferenceResults($jobId)
  * @return mixed
  */function getJobParameters($jobId)
 {
-  $sql = "SELECT id_trabajo, id_matriz, id_tipo_muestreo,
-    id_norma, id_parametro, id_metodo, id_unidad, [param]
+  $sql = "SELECT id_trabajo, id_matriz, id_tipo_muestreo, id_norma,
+    id_parametro, id_metodo, id_unidad, [param], id_tipo_valor, parametro
     FROM viewParametroTrabajo
     WHERE id_trabajo = :jobId";
   $db = getConnection();

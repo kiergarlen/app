@@ -1889,11 +1889,10 @@ function processJobAnalysisInsert($jobUpdateData, $jobId)
         $analystIds[] = $currentAnalystId;
         $analysisId = insertAnalysis($blankAnalysis);
         $analysisIds[] = $analysisId;
-        // processAnalysisSamplesInsert($samples, $analysisId);
-        // processAnalysisParametersInsert($parameters, $currentAnalystId, $analysisId);
-        // processAnalysisReferencesInsert($jobUpdateData, $currentAnalystId, $analysisId);
-        // processAnalysisResultsInsert($jobUpdateData, $analysisId);
-        return processAnalysisReferencesInsert($jobUpdateData, $currentAnalystId, $analysisId);
+        processAnalysisSamplesInsert($samples, $analysisId);
+        processAnalysisParametersInsert($parameters, $currentAnalystId, $analysisId);
+        processAnalysisReferencesInsert($jobUpdateData, $currentAnalystId, $analysisId);
+        processAnalysisResultsInsert($jobUpdateData, $analysisId);
       }
     }
     return $analystIds;

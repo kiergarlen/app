@@ -2078,23 +2078,20 @@ function getJobReferenceResults($jobId)
   $db = null;
   return $analysisList;
 }
-/**
- * @param $jobId
- * @return mixed
- */
-function getJobSamples($jobId)
-{
-  $sql = "SELECT id_trabajo_muestra, id_trabajo, id_muestra, activo
-    FROM TrabajoMuestra
-    WHERE activo = 1 AND id_trabajo = :jobId";
-  $db = getConnection();
-  $stmt = $db->prepare($sql);
-  $stmt->bindParam("jobId", $jobId);
-  $stmt->execute();
-  $samples = $stmt->fetchAll(PDO::FETCH_ASSOC);
-  $db = null;
-  return $samples;
-}
+
+// function getJobSamples($jobId)
+// {
+//   $sql = "SELECT id_trabajo_muestra, id_trabajo, id_muestra, activo
+//     FROM TrabajoMuestra
+//     WHERE activo = 1 AND id_trabajo = :jobId";
+//   $db = getConnection();
+//   $stmt = $db->prepare($sql);
+//   $stmt->bindParam("jobId", $jobId);
+//   $stmt->execute();
+//   $samples = $stmt->fetchAll(PDO::FETCH_ASSOC);
+//   $db = null;
+//   return $samples;
+// }
 
 /**
  * @param $jobSampleData

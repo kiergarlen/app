@@ -1863,7 +1863,7 @@ function processJobAnalysisInsert($jobUpdateData, $jobId)
   $analysisList = (array) $jobUpdateData["analysisList"];
   $samples = (array) $jobUpdateData["samples"];
   $parameters = (array) $jobUpdateData["parameters"];
-
+return $parameters;
   if (count($analysisList) > 0) {
     return $analysisList;
   } else {
@@ -1887,11 +1887,11 @@ function processJobAnalysisInsert($jobUpdateData, $jobId)
       if ($parameters[$i]->id_usuario_analiza != $currentAnalystId) {
         $currentAnalystId = $parameters[$i]->id_usuario_analiza;
         $blankAnalysis["id_usuario_analiza"] = $currentAnalystId;
-        $analysisId = insertAnalysis($blankAnalysis);
-        $analysisIds[] = $analysisId;
-        processAnalysisSamplesInsert($samples, $analysisId);
-        processAnalysisReferencesInsert($jobUpdateData, $analysisId);
-        processAnalysisResultsInsert($jobUpdateData, $analysisId);
+        // $analysisId = insertAnalysis($blankAnalysis);
+        // $analysisIds[] = $analysisId;
+        // processAnalysisSamplesInsert($samples, $analysisId);
+        // processAnalysisReferencesInsert($jobUpdateData, $analysisId);
+        // processAnalysisResultsInsert($jobUpdateData, $analysisId);
       }
     }
     return $analysisIds;

@@ -343,6 +343,10 @@ $app->post("/jobs", function () use ($app) {
       processJobAnalysisInsert($jobUpdateData, $jobId);
     }
     $result = "{\"id_trabajo\":" . $jobId . "}";
+
+    // $jobUpdateData = processJobUpdate($request);
+    // $result = processJobAnalysisInsert($jobUpdateData, $jobId);
+
     sendSuccessResponse($app, $result);
   } catch (Exception $e) {
     sendErrorResponse($app, $e);

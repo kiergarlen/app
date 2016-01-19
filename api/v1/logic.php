@@ -1869,7 +1869,7 @@ function processJobAnalysisInsert($jobUpdateData, $jobId)
     $j = 0;
     $l = count($parameters);
     usort($parameters, "customSort");
-    $currentAnalystId = 0;
+    $analystId = 0;
 
     $blankAnalysis = getBlankAnalysis();
     unset($blankAnalysis["id_analisis"]);
@@ -1883,16 +1883,16 @@ function processJobAnalysisInsert($jobUpdateData, $jobId)
     $blankAnalysis["host_captura"] = $job["host_actualiza"];
 
     for ($i = 0; $i < $l; $i++) {
-      if ($parameters[$i]->id_usuario_analiza != $currentAnalystId) {
-        $currentAnalystId = $parameters[$i]->id_usuario_analiza;
-        $blankAnalysis["id_usuario_analiza"] = $currentAnalystId;
-        $analystIds[] = $currentAnalystId;
+      if ($parameters[$i]->id_usuario_analiza != $analystId) {
+        $analystId = $parameters[$i]->id_usuario_analiza;
+        $blankAnalysis["id_usuario_analiza"] = $analystId;
+        $analystIds[] = $analystId;
         $analysisId = insertAnalysis($blankAnalysis);
         $analysisIds[] = $analysisId;
         processAnalysisSamplesInsert($samples, $analysisId);
-        processAnalysisParametersInsert($parameters, $currentAnalystId, $analysisId);
-        processAnalysisReferencesInsert($jobUpdateData, $currentAnalystId, $analysisId);
-        processAnalysisResultsInsert($jobUpdateData, $analysisId);
+        processAnalysisParametersInsert($parameters, $analystId, $analysisId);
+        processAnalysisReferencesInsert($jobUpdateData, $parameters, $analystId, $analysisId);
+        processAnalysisResultsInsert($jobUpdateData, $analystId, $analysisId);
       }
     }
     return $analystIds;
@@ -1960,32 +1960,36 @@ function processAnalysisSamplesUpdate($analysisUpdateData)
 /**
  * processAnalysisReferencesInsert
  * @param mixed $jobUpdateData
- * @param mixed $currentAnalystId
+ * @param mixed $parameters
+ * @param mixed $analystId
  * @param mixed $analysisId
  * @return array $analysisReferenceIds
  */
-function processAnalysisReferencesInsert($jobUpdateData, $currentAnalystId, $analysisId)
+function processAnalysisReferencesInsert($jobUpdateData, $parameters, $analystId, $analysisId)
 {
   $job = (array) $jobUpdateData["job"];
-  $parameters = (array) $jobUpdateData["parameters"];
-
-  $analysisReference = getBlankAnalysisReference();
-  unset($analysisReference["id_analisis_referencia"]);
-  unset($analysisReference["id_usuario_actualiza"]);
-  unset($analysisReference["fecha_captura"]);
-  unset($analysisReference["fecha_actualiza"]);
-  $analysisReference["id_analisis"] = $analysisId;
-  $analysisReference["id_usuario_captura"] = $job["id_usuario_actualiza"];
-
+  $userId = $job["id_usuario_actualiza"];
   $i = 0;
   $l = count($parameters);
   for ($i = 0; $i < $l; $i++) {
-    $parameterId = $parameters[$i]->id_parametro;
-    $analysisReference["id_parametro"] = $parameterId;
-    $analysisReference["id_usuario_analiza"] = $currentAnalystId;
-    return $analysisReference;
-    $analysisReferenceIds[] = ($analysisReference);
-    $analysisReferenceIds[] = insertAnalysisReference($analysisReference);
+    if ($parameters[$i]->id_usuario_analiza == $analystId) {
+      $parameterId = $parameters[$i]->id_parametro;
+      $analysisReference = array(
+        "id_analisis" => $analysisId,
+        "id_parametro" => $parameterId,
+        "id_usuario_analiza" => $analystId,
+        "id_usuario_captura" => $userId,
+        "duplicado" => "",
+        "muestra_duplicada" => "",
+        "estandar" => "",
+        "coeficiente_variacion" => "",
+        "tiempo_incubacion" => "",
+        "temperatura_incubacion" => "",
+        "fecha_analiza" => NULL,
+        "activo" => 1,
+      );
+      $analysisReferenceIds[] = insertAnalysisReference($analysisReference);
+    }
   }
   return $analysisReferenceIds;
 }
@@ -2070,7 +2074,8 @@ function processAnalysisReferencesUpdate($analysisUpdateData)
  * @param mixed $analysisId
  * @return array $resultIds
  */
-function processAnalysisResultsInsert($jobUpdateData, $analysisId)
+//function processAnalysisResultsInsert($jobUpdateData, $analysisId)
+function processAnalysisResultsInsert($jobUpdateData, $analystId, $analysisId)
 {
   $job = (array) $jobUpdateData["job"];
   $analysisList = (array) $jobUpdateData["analysisList"];
@@ -2082,27 +2087,38 @@ function processAnalysisResultsInsert($jobUpdateData, $analysisId)
   unset($result["fecha_captura"]);
   unset($result["id_usuario_actualiza"]);
   unset($result["fecha_actualiza"]);
-  $result["id_usuario_captura"] = $job["id_usuario_actualiza"];
+  $result["id_usuario_captura"] = $job["id_trabajo"];
 
   $i = 0;
   $j = 0;
-  $l = count($samples);
-  $m = count($parameters);
+  $l = count($parameters);
+  $m = count($samples);
+  usort($parameters, "customSort");
+
   for ($i = 0; $i < $l; $i++) {
-    $sampleId = $samples[$i]->id_muestra;
-    for ($j = 0; $j < $m; $j++) {
-      $parameterId = $parameters[$j]->id_parametro;
-      $result["id_muestra"] = $sampleId;
-      $result["id_parametro"] = $parameterId;
-      $result["id_tipo_valor"] = $parameters[$j]->id_tipo_valor;
-      $resultId = insertResult($result);
-      $jobResult = array(
-        "id_trabajo" => $job["id_trabajo"],
-        "id_resultado" => $resultId,
-        "activo" => 1,
-      );
-      insertJobResult($jobResult);
-      $resultIds[] = $resultId;
+    if ($parameters[$i]->id_usuario_analiza == $analystId) {
+      $parameterId = $parameters[$i]->id_parametro;
+      $parameterValueType = $parameters[$i]->id_tipo_valor;
+      for ($j = 0; $j < $m; $j++) {
+        $sampleId = $samples[$j]->id_muestra;
+        $result["id_muestra"] = $sampleId;
+        $result["id_parametro"] = $parameterId;
+        $result["id_tipo_valor"] = $parameterValueType;
+        $resultId = insertResult($result);
+        $resultIds[] = $resultId;
+        $jobResult = array(
+          "id_trabajo" => $job["id_trabajo"],
+          "id_resultado" => $resultId,
+          "activo" => 1,
+        );
+        $jobResultIds[] = insertJobResult($jobResult);
+        $analysisResult = array(
+          "id_analisis" => $analysisId,
+          "id_resultado" => $resultId,
+          "activo" => 1,
+        );
+        $analysisResultIds[] = insertAnalysisResult($analysisResult);
+      }
     }
   }
   return $resultIds;
@@ -2111,16 +2127,16 @@ function processAnalysisResultsInsert($jobUpdateData, $analysisId)
 /**
  * processAnalysisParametersInsert
  * @param mixed $parameters
- * @param mixed $currentAnalystId
+ * @param mixed $analystId
  * @param mixed $analysisId
  * @return array $analysisParameterIds
  */
-function processAnalysisParametersInsert($parameters, $currentAnalystId, $analysisId)
+function processAnalysisParametersInsert($parameters, $analystId, $analysisId)
 {
   $i = 0;
   $l = count($parameters);
   for ($i = 0; $i < $l; $i++) {
-    if ($parameters[$i]->id_usuario_analiza == $currentAnalystId) {
+    if ($parameters[$i]->id_usuario_analiza == $analystId) {
       $parameterId = $parameters[$i]->id_parametro;
       $analysisParameter = array(
         "id_analisis" => $analysisId,
@@ -2131,52 +2147,4 @@ function processAnalysisParametersInsert($parameters, $currentAnalystId, $analys
     }
   }
   return $analysisParameterIds;
-}
-
-
-
-function processAnalysisResultsInsert1($jobUpdateData, $parameters, $samples, $currentAnalystId, $analysisId)
-{
-  $job = (array) $jobUpdateData["job"];
-  //$analysisList = (array) $jobUpdateData["analysisList"];
-  //$samples = (array) $jobUpdateData["samples"];
-  // $parameters = (array) $jobUpdateData["parameters"];
-
-  $result = getBlankResult();
-  unset($result["id_resultado"]);
-  unset($result["fecha_captura"]);
-  unset($result["id_usuario_actualiza"]);
-  unset($result["fecha_actualiza"]);
-  $result["id_usuario_captura"] = $job["id_usuario_actualiza"];
-
-  $i = 0;
-  $j = 0;
-  $l = count($parameters);
-  $m = count($samples);
-  for ($i = 0; $i < $l; $i++) {
-    if ($parameters[$i]->id_usuario_analiza == $currentAnalystId) {
-      $parameterId = $parameters[$i]->id_parametro;
-      for ($j = 0; $j < $m; $j++) {
-        $sampleId = $samples[$j]->id_muestra;
-        $result["id_muestra"] = $sampleId;
-        $result["id_parametro"] = $parameterId;
-        $result["id_tipo_valor"] = $parameters[$i]->id_tipo_valor;
-        $resultId = insertResult($result);
-        $jobResult = array(
-          "id_trabajo" => $job["id_trabajo"],
-          "id_resultado" => $resultId,
-          "activo" => 1,
-        );
-        insertJobResult($jobResult);
-        $analysisResult = array(
-          "id_analisis" => $analysisId,
-          "id_resultado" => $resultId,
-          "activo" => 1,
-        );
-        insertAnalisisResult($analysisResult);
-        $resultIds[] = $resultId;
-      }
-    }
-  }
-  return $resultIds;
 }

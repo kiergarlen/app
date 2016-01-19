@@ -3763,8 +3763,8 @@ function getBlankAnalysis()
   $analysis->muestras = getAnalysisSamples($analysisId);
   $parameters = getAnalysisParameters($analysisId);
   $references = getAnalysisReferences($analysisId);
-  $results = getAnalysisResults($analysisId);
-  return $results;
+  $results = getResultsByAnalysis($analysisId);
+
   $i = 0;
   $j = 0;
   $k = 0;
@@ -4135,16 +4135,16 @@ function getAnalysisReferences($analysisId)
  */
 function insertAnalysisReference($referenceData)
 {
-  $sql = "INSERT INTO AnalisisReferencia (id_analisis,
-    id_parametro, id_usuario_analiza, id_usuario_captura,
+  $sql = "INSERT INTO AnalisisReferencia (id_analisis, id_parametro,
+    id_usuario_analiza, id_usuario_captura,
     duplicado, muestra_duplicada, estandar, coeficiente_variacion,
-    tiempo_incubacion, temperatura_incubacion, fecha_analiza,
-    fecha_captura, activo)
-    VALUES (:id_analisis, :id_muestra,
-    :id_parametro, :id_usuario_analiza, :id_usuario_captura,
+    tiempo_incubacion, temperatura_incubacion,
+    fecha_analiza, fecha_captura, activo)
+    VALUES(:id_analisis, :id_parametro,
+    :id_usuario_analiza, :id_usuario_captura,
     :duplicado, :muestra_duplicada, :estandar, :coeficiente_variacion,
-    :tiempo_incubacion, :temperatura_incubacion, :fecha_analiza,
-    SYSDATETIMEOFFSET(), :activo)";
+    :tiempo_incubacion, :temperatura_incubacion,
+    :fecha_analiza, SYSDATETIMEOFFSET(), :activo)";
   $db = getConnection();
   $stmt = $db->prepare($sql);
   $stmt->execute($referenceData);
@@ -4189,6 +4189,27 @@ function disableAnalysisReferences($analysisId)
  * @param $analysisId
  * @return mixed
  */
+function getResultsByAnalysis($analysisId)
+{
+  $sql = "SELECT  id_resultado, id_trabajo, id_analisis, id_muestra, id_parametro, id_tipo_resultado, id_tipo_valor, id_usuario_captura, id_usuario_actualiza, valor,
+    CONVERT(NVARCHAR, fecha_captura, 126) AS fecha_captura,
+    CONVERT(NVARCHAR, fecha_actualiza, 126) AS  fecha_actualiza,
+    activo, param
+    FROM viewAnalisisResultado
+    WHERE activo = 1 AND id_analisis = :analysisId";
+  $db = getConnection();
+  $stmt = $db->prepare($sql);
+  $stmt->bindParam("analysisId", $analysisId);
+  $stmt->execute();
+  $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+  $db = null;
+  return $results;
+}
+
+/**
+ * @param $analysisId
+ * @return mixed
+ */
 function getAnalysisJobResults($analysisId)
 {
   $sql = "SELECT id_resultado, id_trabajo, id_analisis, id_muestra,
@@ -4213,7 +4234,7 @@ function getAnalysisJobResults($analysisId)
  * @param $analysisId
  * @return mixed
  */
-function getPlainAnalysisResults($analysisId)
+function getAnalysisResults($analysisId)
 {
   $sql = "SELECT id_analisis_resultado, id_analisis, id_resultado, activo
     FROM AnalisisResultado

@@ -4189,7 +4189,7 @@ function disableAnalysisReferences($analysisId)
  * @param $analysisId
  * @return mixed
  */
-function getAnalysisResults($analysisId)
+function getAnalysisJobResults($analysisId)
 {
   $sql = "SELECT id_resultado, id_trabajo, id_analisis, id_muestra,
     id_parametro, id_tipo_resultado, id_tipo_valor,
@@ -4206,6 +4206,73 @@ function getAnalysisResults($analysisId)
   $references = $stmt->fetchAll(PDO::FETCH_ASSOC);
   $db = null;
   return $references;
+}
+
+
+/**
+ * @param $analysisId
+ * @return mixed
+ */
+function getPlainAnalysisResults($analysisId)
+{
+  $sql = "SELECT id_analisis_resultado, id_analisis, id_resultado, activo
+    FROM AnalisisResultado
+    WHERE activo = 1 AND id_analisis = :analysisId";
+  $db = getConnection();
+  $stmt = $db->prepare($sql);
+  $stmt->bindParam("analysisId", $analysisId);
+  $stmt->execute();
+  $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+  $db = null;
+  return $results;
+}
+
+/**
+ * @param $jobData
+ * @return mixed
+ */
+function insertAnalysisResult($jobData)
+{
+  $sql = "INSERT INTO AnalisisResultado (id_analisis, id_resultado, activo)
+    VALUES(:id_analisis, :id_resultado, :activo)";
+  $db = getConnection();
+  $stmt = $db->prepare($sql);
+  $stmt->execute($jobData);
+  $jobResultId = $db->lastInsertId();
+  $db = null;
+  return $jobResultId;
+}
+
+/**
+ * @param $updateData
+ * @return mixed
+ */
+function updateAnalysisResult($updateData)
+{
+  $sql = "UPDATE AnalisisResultado SET id_analisis = :id_analisis,
+    id_resultado = :id_resultado, activo = :activo
+    WHERE id_analisis_resultado = :id_analisis_resultado";
+  $db = getConnection();
+  $stmt = $db->prepare($sql);
+  $stmt->execute($updateData);
+  $db = null;
+  return $updateData["id_analisis_resultado"];
+}
+
+/**
+ * @param $analysisId
+ * @return mixed
+ */
+function disableAnalysisResultsByjob($analysisId)
+{
+  $sql = "UPDATE AnalisisResultado SET activo = 0
+    WHERE id_analisis = :analysisId";
+  $db = getConnection();
+  $stmt = $db->prepare($sql);
+  $stmt->bindParam("analysisId", $analysisId);
+  $stmt->execute();
+  $db = null;
+  return $analysisId;
 }
 
 /**

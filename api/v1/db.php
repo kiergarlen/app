@@ -4229,7 +4229,6 @@ function getAnalysisJobResults($analysisId)
   return $references;
 }
 
-
 /**
  * @param $analysisId
  * @return mixed
@@ -4698,7 +4697,8 @@ function getDistricts()
 {
   $sql = "SELECT id_municipio, municipio
     FROM Municipio
-    WHERE id_estado = 14";
+    WHERE id_estado = 14
+    ORDER BY municipio";
   $db = getConnection();
   $stmt = $db->prepare($sql);
   $stmt->execute();
@@ -4715,7 +4715,8 @@ function getDistrict($districtId)
 {
   $sql = "SELECT id_municipio, municipio
     FROM Municipio
-    WHERE id_municipio = :districtId";
+    WHERE id_municipio = :districtId
+    ORDER BY municipio";
   $db = getConnection();
   $stmt = $db->prepare($sql);
   $stmt->bindParam("districtId", $districtId);
@@ -4733,7 +4734,8 @@ function getCitiesByDistrictId($districtId)
 {
   $sql = "SELECT id_municipio, id_localidad, localidad
     FROM Localidad
-    WHERE id_municipio = :districtId";
+    WHERE id_municipio = :districtId
+    ORDER BY localidad";
   $db = getConnection();
   $stmt = $db->prepare($sql);
   $stmt->bindParam("districtId", $districtId);

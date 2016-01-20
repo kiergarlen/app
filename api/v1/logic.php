@@ -2200,30 +2200,30 @@ function processAnalysisUpdate($request)
  */
 function processAnalysisReferences($analysisUpdateData)
 {
-  $analysis = (array) $analysisUpdateData["job"];
-  $samples = (array) $analysisUpdateData["samples"];
-  $parameters = (array) $analysisUpdateData["parameters"];
+  // $analysis = (array) $analysisUpdateData["job"];
+  // $samples = (array) $analysisUpdateData["samples"];
+  // $parameters = (array) $analysisUpdateData["parameters"];
 
-  // if (count($analysisList) > 0) {
-  //   return $analysisList;
-  // } else {
-  //   $i = 0;
-  //   $j = 0;
-  //   $l = count($parameters);
-  //   usort($parameters, "customSort");
-  //   $analystId = 0;
+  // // if (count($analysisList) > 0) {
+  // //   return $analysisList;
+  // // } else {
+  // //   $i = 0;
+  // //   $j = 0;
+  // //   $l = count($parameters);
+  // //   usort($parameters, "customSort");
+  // //   $analystId = 0;
 
-  //   for ($i = 0; $i < $l; $i++) {
-  //     if ($parameters[$i]->id_usuario_analiza != $analystId) {
-  //       $analystId = $parameters[$i]->id_usuario_analiza;
-  //       $blankAnalysis["id_usuario_analiza"] = $analystId;
-  //       $analystIds[] = $analystId;
-  //       $analysisId = insertAnalysisReference($blankAnalysis);
-  //       $analysisReferenceIds[] = $analysisId;
-  //     }
-  //   }
-    return $analysisUpdateData;
-  }
+  // //   for ($i = 0; $i < $l; $i++) {
+  // //     if ($parameters[$i]->id_usuario_analiza != $analystId) {
+  // //       $analystId = $parameters[$i]->id_usuario_analiza;
+  // //       $blankAnalysis["id_usuario_analiza"] = $analystId;
+  // //       $analystIds[] = $analystId;
+  // //       $analysisId = insertAnalysisReference($blankAnalysis);
+  // //       $analysisReferenceIds[] = $analysisId;
+  // //     }
+  // //   }
+  //   return $analysisUpdateData;
+  // }
 }
 
 
@@ -2234,28 +2234,28 @@ function processAnalysisReferences($analysisUpdateData)
  */
 function processAnalysisResults($analysisUpdateData)
 {
-  $analysis = (array) $analysisUpdateData["job"];
-  $samples = (array) $analysisUpdateData["samples"];
-  $parameters = (array) $analysisUpdateData["parameters"];
+  // $analysis = (array) $analysisUpdateData["job"];
+  // $samples = (array) $analysisUpdateData["samples"];
+  // $parameters = (array) $analysisUpdateData["parameters"];
 
-  // if (count($analysisList) > 0) {
-  //   return $analysisList;
-  // } else {
-  //   $i = 0;
-  //   $j = 0;
-  //   $l = count($parameters);
-  //   usort($parameters, "customSort");
-  //   $analystId = 0;
+  // // if (count($analysisList) > 0) {
+  // //   return $analysisList;
+  // // } else {
+  // //   $i = 0;
+  // //   $j = 0;
+  // //   $l = count($parameters);
+  // //   usort($parameters, "customSort");
+  // //   $analystId = 0;
 
-  //   for ($i = 0; $i < $l; $i++) {
-  //     if ($parameters[$i]->id_usuario_analiza != $analystId) {
-  //       $analystId = $parameters[$i]->id_usuario_analiza;
-  //       $blankAnalysis["id_usuario_analiza"] = $analystId;
-  //       $analystIds[] = $analystId;
-  //       $analysisId = insertAnalysisReference($blankAnalysis);
-  //       $analysisResultIds[] = $analysisId;
-  //     }
-  //   }
-    return $analysisUpdateData;
-  }
+  // //   for ($i = 0; $i < $l; $i++) {
+  // //     if ($parameters[$i]->id_usuario_analiza != $analystId) {
+  // //       $analystId = $parameters[$i]->id_usuario_analiza;
+  // //       $blankAnalysis["id_usuario_analiza"] = $analystId;
+  // //       $analystIds[] = $analystId;
+  // //       $analysisId = insertAnalysisReference($blankAnalysis);
+  // //       $analysisResultIds[] = $analysisId;
+  // //     }
+  // //   }
+  //   return $analysisUpdateData;
+  // }
 }

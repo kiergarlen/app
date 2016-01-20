@@ -3771,7 +3771,7 @@ function getBlankAnalysis()
   $l = count($parameters);
   $m = count($references);
   $n = count($results);
-  if (count($parameters) > 1) {
+  if (count($parameters) > 0) {
     for ($i = 0; $i < $l; $i++) {
       for ($j = 0; $j < $m; $j++) {
         if ($parameters[$i]["id_parametro"] == $references[$j]["id_parametro"]) {

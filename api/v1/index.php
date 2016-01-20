@@ -343,10 +343,6 @@ $app->post("/jobs", function () use ($app) {
       processJobAnalysisInsert($jobUpdateData, $jobId);
     }
     $result = "{\"id_trabajo\":" . $jobId . "}";
-
-    // $jobUpdateData = processJobUpdate($request);
-    // $result = processJobAnalysisInsert($jobUpdateData, $jobId);
-
     sendSuccessResponse($app, $result);
   } catch (Exception $e) {
     sendErrorResponse($app, $e);
@@ -355,7 +351,7 @@ $app->post("/jobs", function () use ($app) {
 
 $app->get("/analysis(/)(:analysisId)", function ($analysisId = -1) use ($app) {
   try {
-    // $userId = decodeUserToken($app->request())->uid;
+    $userId = decodeUserToken($app->request())->uid;
     if ($analysisId > -1) {
       $result = json_encode(getAnalysis($analysisId));
     } else {
@@ -366,17 +362,7 @@ $app->get("/analysis(/)(:analysisId)", function ($analysisId = -1) use ($app) {
     sendErrorResponse($app, $e);
   }
 });
-/*
-$app->get("/analysis/area/:areaId", function ($areaId) use ($app) {
-  try {
-    $userId = decodeUserToken($app->request())->uid;
-    $result = json_encode(getAreaAnalysisList($areaId));
-    sendSuccessResponse($app, $result);
-  } catch (Exception $e) {
-    sendErrorResponse($app, $e);
-  }
-});
-*/
+
 $app->post("/analysis", function () use ($app) {
   try {
     $userId = decodeUserToken($app->request())->uid;
@@ -388,7 +374,9 @@ $app->post("/analysis", function () use ($app) {
     //   $analysisId = updateAnalysis($analysisUpdateData["analysis"]);
     //   processAnalysisContainers($analysisUpdateData);
     // }
-    $result = "{\"id_analisis\":" . $analysisId . "}";
+    // $result = "{\"id_analisis\":" . $analysisId . "}";
+    $result = extractDataFromRequest($request);
+    $result = json_encode($result);
     sendSuccessResponse($app, $result);
   } catch (Exception $e) {
     sendErrorResponse($app, $e);

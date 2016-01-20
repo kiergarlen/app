@@ -41,7 +41,6 @@
   name="analysisForm"
   novalidate
   >
-  <!-- MUESTRA, DATOS REFERENCIA y RESULTADO MUESTRA -->
   <div class="row">
     <div class="col-xs-12 panel"
       data-ng-repeat="parameter in analysis.analysis.parametros"
@@ -49,7 +48,7 @@
       <div class="row">
         <div class="col-xs-12">
           <h4>
-            {{parameter.param}} <small>[{{parameter.unidad}}]</small>
+            {{::parameter.param}} <small>[{{::parameter.unidad}}]</small>
           </h4>
         </div>
         <div class="col-xs-4">
@@ -81,7 +80,7 @@
                 <tr
                   data-ng-repeat="result in parameter.resultados">
                   <td>
-                    {{result.id_muestra}}
+                    {{::result.id_muestra}}
                     <!--
                       <div class="panel">
                         Fecha/hora muestreo: {fecha_muestreo}<br>
@@ -94,7 +93,7 @@
                   </td>
                   <td>
                     <input type="text" class="form-control"
-                      name="resultado{{parameter.id_parametro}}"
+                      name="resultado{{::parameter.id_parametro}}"
                       placeholder="Resultado"
                       data-ng-model="result.valor"
                       >
@@ -167,40 +166,6 @@
       </div>
     </div>
   </div>
-  <!--
-      <div class="item-z1">
-        <h4>{row.param} <small>{row.unidad}</small></h4>
-        <div class="row">
-          <div class="col-xs-12">
-            <div class="item-z1">
-              <h5>Datos de referencia</h5>
-              +++++++++++++++++inputs+++++++++++++++++
-              +++++++++++++++++inputs+++++++++++++++++
-              +++++++++++++++++inputs+++++++++++++++++
-              +++++++++++++++++inputs+++++++++++++++++
-              +++++++++++++++++inputs+++++++++++++++++
-              +++++++++++++++++inputs+++++++++++++++++
-              +++++++++++++++++inputs+++++++++++++++++
-            </div>
-          </div>
-          <div class="col-xs-8">
-            <div class="item-z1">
-
-            </div>
-          </div>
-          <div class="col-xs-4">
-            <div class="item-z1">
-              <input type="text"
-                class="form-control"
-                placeholder="Valor"
-                value="RESULTADO"
-                >
-                data-ng-model="result.valor"
-            </div>
-          </div>
-        </div>
-      </div>
-      -->
   <div class="row">
     <div class="col-xs-12">
       <h4>Comentarios</h4>

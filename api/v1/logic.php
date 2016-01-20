@@ -1853,7 +1853,7 @@ function customSort($a, $b)
  * processJobAnalysisInsert
  * @param mixed $jobUpdateData
  * @param mixed $jobId
- * @return array $analysisIds
+ * @return array $analysisReferenceIds
  */
 function processJobAnalysisInsert($jobUpdateData, $jobId)
 {
@@ -2074,7 +2074,6 @@ function processAnalysisReferencesUpdate($analysisUpdateData)
  * @param mixed $analysisId
  * @return array $resultIds
  */
-//function processAnalysisResultsInsert($jobUpdateData, $analysisId)
 function processAnalysisResultsInsert($jobUpdateData, $analystId, $analysisId)
 {
   $job = (array) $jobUpdateData["job"];
@@ -2147,4 +2146,116 @@ function processAnalysisParametersInsert($parameters, $analystId, $analysisId)
     }
   }
   return $analysisParameterIds;
+}
+
+/**
+ * processAnalysisUpdate
+ * @param array $request
+ * @param mixed $areaId
+ */
+function processAnalysisUpdate($request)
+{
+  $token = decodeUserToken($request);
+  $update = (array) json_decode($request->getBody());
+  $samples = $update["muestras"];
+  $parameters = $update["parametros"];
+
+  unset($update["muestras"]);
+  unset($update["parametros"]);
+  unset($update["fecha_captura"]);
+  unset($update["id_usuario_captura"]);
+  unset($update["ip_captura"]);
+  unset($update["host_captura"]);
+  unset($update["fecha_actualiza"]);
+
+  $update["id_usuario_actualiza"] = $token->uid;
+  $update["ip_actualiza"] = $request->getIp();
+  $update["host_actualiza"] = $request->getUrl();
+  $update["id_usuario_recibe"] = $token->uid;
+
+  $update["fecha_analiza"] = isoDateToMsSql($update["fecha_analiza"]);
+  $update["fecha_aprueba"] = isoDateToMsSql($update["fecha_aprueba"]);
+  $update["fecha_valida"] = isoDateToMsSql($update["fecha_valida"]);
+  $update["fecha_actualiza"] = isoDateToMsSql($update["fecha_actualiza"]);
+  $update["fecha_rechaza"] = isoDateToMsSql($update["fecha_rechaza"]);
+
+  if ($update["id_status"] == 2 && strlen($update["ip_valida"]) < 1) {
+    $update["ip_valida"] = $request->getIp();
+    $update["host_valida"] = $request->getUrl();
+    $update["fecha_valida"] = isoDateToMsSql($update["fecha_valida"]);
+  }
+
+  $analysisUpdateData = array(
+    "analysis" => $update,
+    "samples" => $samples,
+    "parameters" => $parameters,
+  );
+  return $analysisUpdateData;
+}
+
+/**
+ * processAnalysisReferences
+ * @param mixed $analysisUpdateData
+ * @return array $analysisReferenceIds
+ */
+function processAnalysisReferences($analysisUpdateData)
+{
+  $analysis = (array) $analysisUpdateData["job"];
+  $samples = (array) $analysisUpdateData["samples"];
+  $parameters = (array) $analysisUpdateData["parameters"];
+
+  // if (count($analysisList) > 0) {
+  //   return $analysisList;
+  // } else {
+  //   $i = 0;
+  //   $j = 0;
+  //   $l = count($parameters);
+  //   usort($parameters, "customSort");
+  //   $analystId = 0;
+
+  //   for ($i = 0; $i < $l; $i++) {
+  //     if ($parameters[$i]->id_usuario_analiza != $analystId) {
+  //       $analystId = $parameters[$i]->id_usuario_analiza;
+  //       $blankAnalysis["id_usuario_analiza"] = $analystId;
+  //       $analystIds[] = $analystId;
+  //       $analysisId = insertAnalysisReference($blankAnalysis);
+  //       $analysisReferenceIds[] = $analysisId;
+  //     }
+  //   }
+    return $analysisUpdateData;
+  }
+}
+
+
+/**
+ * processAnalysisResults
+ * @param mixed $analysisUpdateData
+ * @return array $analysisResultIds
+ */
+function processAnalysisResults($analysisUpdateData)
+{
+  $analysis = (array) $analysisUpdateData["job"];
+  $samples = (array) $analysisUpdateData["samples"];
+  $parameters = (array) $analysisUpdateData["parameters"];
+
+  // if (count($analysisList) > 0) {
+  //   return $analysisList;
+  // } else {
+  //   $i = 0;
+  //   $j = 0;
+  //   $l = count($parameters);
+  //   usort($parameters, "customSort");
+  //   $analystId = 0;
+
+  //   for ($i = 0; $i < $l; $i++) {
+  //     if ($parameters[$i]->id_usuario_analiza != $analystId) {
+  //       $analystId = $parameters[$i]->id_usuario_analiza;
+  //       $blankAnalysis["id_usuario_analiza"] = $analystId;
+  //       $analystIds[] = $analystId;
+  //       $analysisId = insertAnalysisReference($blankAnalysis);
+  //       $analysisResultIds[] = $analysisId;
+  //     }
+  //   }
+    return $analysisUpdateData;
+  }
 }

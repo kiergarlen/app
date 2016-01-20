@@ -3899,7 +3899,6 @@ function updateAnalysis($updateData)
 {
   $sql = "UPDATE Analisis SET id_trabajo = :id_trabajo,
     id_usuario_analiza = :id_usuario_analiza,
-    id_usuario_captura = :id_usuario_captura,
     id_usuario_valida = :id_usuario_valida,
     id_usuario_actualiza = :id_usuario_actualiza,
     fecha_analiza = :fecha_analiza, fecha_aprueba = :fecha_aprueba,

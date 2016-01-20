@@ -372,10 +372,11 @@ $app->post("/analysis", function () use ($app) {
     // if ($analysisId > 0) {
     //   $analysisUpdateData = processAnalysisUpdate($request);
     //   $analysisId = updateAnalysis($analysisUpdateData["analysis"]);
-    //   processAnalysisContainers($analysisUpdateData);
+    //   processAnalysisReferences($analysisUpdateData);
+    //   processAnalysisResults($analysisUpdateData);
     // }
     // $result = "{\"id_analisis\":" . $analysisId . "}";
-    $result = extractDataFromRequest($request);
+    $result = processAnalysisUpdate($request);
     $result = json_encode($result);
     sendSuccessResponse($app, $result);
   } catch (Exception $e) {

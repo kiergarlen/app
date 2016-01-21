@@ -698,40 +698,26 @@ function processPlanInstrumentsUpdate($planUpdateData)
   $instruments = (array) $planUpdateData["instruments"];
   $planId = $planUpdateData["plan"]["id_plan"];
   $storedInstruments = getPlanInstruments($planId);
-
   $i = 0;
-  $l = count($storedInstruments);
-  $m = count($instruments);
+  $l = count($instruments);
 
-  if ($l < 1) {
-    for ($i = 0; $i < $m; $i++) {
-      $instrument = (array) $instruments[$i];
-      unset($instrument["id_plan_instrumento"]);
-      unset($instrument["instrumento"]);
-      unset($instrument["muestreo"]);
-      unset($instrument["descripcion"]);
-      unset($instrument["inventario"]);
-      unset($instrument["selected"]);
-      insertPlanInstrument($instrument);
-    }
-    return $planId;
-  } else {
+  if (count($storedInstruments) < 1) {
     disablePlanInstruments($planId);
-    for ($i = 0; $i < $m; $i++) {
-      $instrument = array(
-        "id_plan_instrumento" => $instruments[$i]->id_plan_instrumento,
-        "id_plan" => $planId,
-        "id_instrumento" => $instruments[$i]->id_instrumento,
-        "bitacora" => $instruments[$i]->bitacora,
-        "folio" => $instruments[$i]->folio,
-        "activo" => $instruments[$i]->activo,
-      );
-      if ($instrument["id_plan_instrumento"] < 1) {
-        unset($instrument["id_plan_instrumento"]);
-        insertPlanInstrument($instrument);
-      } else {
-        updatePlanInstrument($instrument);
-      }
+  }
+  for ($i = 0; $i < $l; $i++) {
+    $instrument = array(
+      "id_plan_instrumento" => $instruments[$i]->id_plan_instrumento,
+      "id_plan" => $planId,
+      "id_instrumento" => $instruments[$i]->id_instrumento,
+      "bitacora" => $instruments[$i]->bitacora,
+      "folio" => $instruments[$i]->folio,
+      "activo" => $instruments[$i]->activo,
+    );
+    if ($instrument["id_plan_instrumento"] < 1) {
+      unset($instrument["id_plan_instrumento"]);
+      insertPlanInstrument($instrument);
+    } else {
+      updatePlanInstrument($instrument);
     }
   }
   return $planId;
@@ -878,17 +864,19 @@ function processPlanReactivesUpdate($planUpdateData)
         "id_plan_reactivo" => $reactiveData["id_plan_reactivo"],
         "id_plan" => $reactiveData["id_plan"],
         "id_reactivo" => $reactiveData["id_reactivo"],
-        "activo" => 1],
-      )
+        "activo" => 1,
+      );
+      $updatedReactives[] = $reactive;
       updatePlanReactive($reactive);
     } else {
       $reactive = array(
         "id_plan" => $reactiveData["id_plan"],
         "id_reactivo" => $reactiveData["id_reactivo"],
-      )
+      );
       insertPlanReactive($reactive);
     }
   }
+  return $updatedReactives;
   return $planId;
 }
 
@@ -2013,14 +2001,12 @@ function processAnalysisParametersUpdate($analysisUpdateData)
   $analysisId = $analysisUpdateData["analysis"]["id_analisis"];
   $storedParameters = getAnalysisParameters($analysisId);
   $i = 0;
-  $j = 0;
   $l = count($storedParameters);
   $m = count($parameters);
 
   if ($l > 0) {
     disableAnalysisParameters($analysisId);
   }
-
   for ($i = 0; $i < $m; $i++) {
     $analysisParameter = array(
       "id_analisis_parametro" => $parameters[$i]->id_analisis_parametro,
@@ -2032,7 +2018,6 @@ function processAnalysisParametersUpdate($analysisUpdateData)
       $analysisParametersArray[] = $analysisParameter;
       insertAnalysisParameter($analysisParameter);
     } else {
-      $analysisParameter["activo"] = 1;
       updateAnalysisParameter($analysisParameter);
     }
   }

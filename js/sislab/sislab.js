@@ -1252,7 +1252,7 @@
           vm.isMaterialListLoaded = true;
         } else {
           vm.plan.materiales = [];
-          vm.plan.materiales = ArrayUtilsService.selectItemsFromCollection(
+          vm.plan.materiales = ArrayUtilsService.selectItems(
             vm.materials,
             'selected',
             true
@@ -1277,7 +1277,7 @@
           vm.isCoolerListLoaded = true;
         } else {
           vm.plan.hieleras = [];
-          vm.plan.hieleras = ArrayUtilsService.selectItemsFromCollection(
+          vm.plan.hieleras = ArrayUtilsService.selectItems(
             vm.coolers,
             'selected',
             true
@@ -1287,27 +1287,39 @@
     }
 
     function selectAllPreservations() {
-      vm.isAllPreservationsListSelected = ArrayUtilsService.
-        toggleAllItemsSelection(
-          vm.preservations,
-          vm.isAllPreservationsListSelected
-        );
+      var i = 0;
+      var l = 0;
+      if (vm.preservations && vm.preservations.length > 0) {
+        l = vm.preservations.length;
+        vm.isAllPreservationsListSelected = !vm.isAllPreservationsListSelected;
+        for (i = 0; i < l; i += 1) {
+          vm.preservations[i].selected = vm.isAllPreservationsListSelected;
+        }
+      }
     }
 
     function selectAllReactives() {
-      vm.isAllReactivesListSelected = ArrayUtilsService.
-        toggleAllItemsSelection(
-          vm.reactives,
-          vm.isAllReactivesListSelected
-        );
+      var i = 0;
+      var l = 0;
+      if (vm.reactives && vm.reactives.length > 0) {
+        l = vm.reactives.length;
+        vm.isAllReactivesListSelected = !vm.isAllReactivesListSelected;
+        for (i = 0; i < l; i += 1) {
+          vm.reactives[i].selected = vm.isAllReactivesListSelected;
+        }
+      }
     }
 
     function selectAllMaterials() {
-      vm.isAllMaterialsListSelected = ArrayUtilsService.
-        toggleAllItemsSelection(
-          vm.materials,
-          vm.isAllMaterialsListSelected
-        );
+      var i = 0;
+      var l = 0;
+      if (vm.materials && vm.materials.length > 0) {
+        l = vm.materials.length;
+        vm.isAllMaterialsListSelected = !vm.isAllMaterialsListSelected;
+        for (i = 0; i < l; i += 1) {
+          vm.materials[i].selected = vm.isAllMaterialsListSelected;
+        }
+      }
     }
 
     function approveItem() {
@@ -3303,7 +3315,6 @@
 
     ArrayUtils.selectItem = selectItem;
     ArrayUtils.selectItems = selectItems;
-    ArrayUtils.toggleAllItemsSelection = toggleAllItemsSelection;
     ArrayUtils.extractItem = extractItem;
     ArrayUtils.setItemsFromReference = setItemsFromReference;
     ArrayUtils.countSelectedItems = countSelectedItems;
@@ -3348,26 +3359,6 @@
         }
       }
       return items;
-    }
-
-    /**
-     * @function toggleAllItemsSelection
-     * @desc Selecciona o deselecciona de todos los ítems de un Array
-     * @param {Boolean} selectedFlag - Bandera de ítems seleccionados
-     * @param {Array} collection - Array de ítems a seleccionar
-     * @return {Boolean} selectedFlag - Bandera de ítems seleccionados
-     */
-    function toggleAllItemsSelection(selectedFlag, collection) {
-      var i = 0;
-      var l = 0;
-      if (collection && collection.length > 0) {
-        l = collection.length;
-        selectedFlag = !selectedFlag;
-        for (i = 0; i < l; i += 1) {
-          collection[i].selected = selectedFlag;
-        }
-      }
-      return selectedFlag;
     }
 
     /**

@@ -169,18 +169,19 @@ $app->post("/plans", function () use ($app) {
     $planId = extractDataFromRequest($request)->id_plan;
     if ($planId > 0) {
       $planUpdateData = processPlanUpdate($request);
-      $planId = updatePlan($planUpdateData["plan"]);
-      processPlanSheetInsert($planUpdateData);
-      processPlanReceptionInsert($planUpdateData);
-      processPlanSheetSampleInsert($planUpdateData);
-      processPlanInstrumentsUpdate($planUpdateData);
-      processPlanPreservationsUpdate($planUpdateData);
-      processPlanContainersUpdate($planUpdateData);
-      processPlanReactivesUpdate($planUpdateData);
-      processPlanMaterialsUpdate($planUpdateData);
-      processPlanCoolersUpdate($planUpdateData);
+      // $planId = updatePlan($planUpdateData["plan"]);
+      // processPlanSheetInsert($planUpdateData);
+      // processPlanReceptionInsert($planUpdateData);
+      // processPlanSheetSampleInsert($planUpdateData);
+      // processPlanInstrumentsUpdate($planUpdateData);
+      // processPlanPreservationsUpdate($planUpdateData);
+      // processPlanContainersUpdate($planUpdateData);
+      // processPlanReactivesUpdate($planUpdateData);
+      // processPlanMaterialsUpdate($planUpdateData);
+      // processPlanCoolersUpdate($planUpdateData);
     }
-    $result = "{\"id_plan\":" . $planId . "}";
+    $result = json_encode(processPlanInstrumentsUpdate($planUpdateData));
+    // $result = "{\"id_plan\":" . $planId . "}";
     sendSuccessResponse($app, $result);
   } catch (Exception $e) {
     sendErrorResponse($app, $e);
@@ -608,24 +609,7 @@ $app->get("/containers/logs/:containerId", function ($containerId) use ($app) {
     sendErrorResponse($app, $e);
   }
 });
-/*
-$app->post("/containers/logs", function () use ($app) {
-try {
-$userId = decodeUserToken($app->request())->uid;
-$request = $app->request();
-$containerLogId = extractDataFromRequest($request)->id_historial_recipiente;
-if ($containerLogId < 1) {
-$containerLogId = processContainerLogInsert($request);
-} else {
-$containerLogId = processContainerLogUpdate($request);
-}
-$result = "{\"id_historial_recipiente\":" . $containerLogId . "}";
-sendSuccessResponse($app, $result);
-} catch (Exception $e) {
-sendErrorResponse($app, $e);
-}
-});
- */
+
 $app->get("/reactives", function () use ($app) {
   try {
     $userId = decodeUserToken($app->request())->uid;

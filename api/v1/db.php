@@ -4487,7 +4487,7 @@ function updatePlanReactive($updateData)
     WHERE id_plan_reactivo = :id_plan_reactivo";
   $db = getConnection();
   $stmt = $db->prepare($sql);
-  $stmt->bindParam("id_plan_reactivo", $id_plan_reactivo);
+  $stmt->execute($updateData);
   $stmt->execute();
   $db = null;
   return $updateData["id_plan_reactivo"];

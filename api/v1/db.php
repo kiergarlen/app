@@ -4429,7 +4429,7 @@ function getReactivesByPlan($planId)
 {
   $sql = "SELECT id_plan_reactivo, id_plan, id_reactivo, valor,
     lote, folio
-    FROM PlanReactivo
+    FROM viewPlanReactivo
     WHERE id_plan = :planId";
   $db = getConnection();
   $stmt = $db->prepare($sql);
@@ -4450,9 +4450,8 @@ function getReactivesByPlan($planId)
  */
 function insertPlanReactive($reactiveData)
 {
-  $sql = "INSERT INTO PlanReactivo (id_plan, id_reactivo, valor, lote,
-    folio)
-    VALUES (:id_plan, :id_reactivo, :valor, :lote, :folio)";
+  $sql = "INSERT INTO PlanReactivo (id_plan, id_reactivo)
+    VALUES (:id_plan, :id_reactivo)";
   $db = getConnection();
   $stmt = $db->prepare($sql);
   $stmt->execute($reactiveData);
@@ -4465,10 +4464,9 @@ function insertPlanReactive($reactiveData)
  * @param $planId
  * @return mixed
  */
-function deletePlanReactives($planId)
+function disablePlanReactives($planId)
 {
-  $sql = "DELETE
-    FROM PlanReactivo
+  $sql = "UPDATE PlanReactivo SET activo = 0
     WHERE id_plan = :planId";
   $db = getConnection();
   $stmt = $db->prepare($sql);
@@ -4476,6 +4474,23 @@ function deletePlanReactives($planId)
   $stmt->execute();
   $db = null;
   return $planId;
+}
+
+/**
+ * @param $planId
+ * @return mixed
+ */
+function updatePlanReactive($updateData)
+{
+  $sql = "UPDATE PlanReactivo SET id_plan = :id_plan,
+    id_reactivo = :id_reactivo, activo = :activo
+    WHERE id_plan_reactivo = :id_plan_reactivo";
+  $db = getConnection();
+  $stmt = $db->prepare($sql);
+  $stmt->bindParam("id_plan_reactivo", $id_plan_reactivo);
+  $stmt->execute();
+  $db = null;
+  return $updateData["id_plan_reactivo"];
 }
 
 /**
@@ -5086,7 +5101,7 @@ function getSamplingInstruments()
 function getReactives()
 {
   $sql = "SELECT id_reactivo, id_tipo_reactivo, reactivo,
-    registra_valor, lote, folio, activo, '0' AS valor
+    registra_valor, lote, folio, valor, activo
     FROM Reactivo
     WHERE activo = 1";
   $db = getConnection();
@@ -5096,6 +5111,7 @@ function getReactives()
   $db = null;
   $l = count($reactives);
   for ($i = 0; $i < $l; $i++) {
+    $reactives[$i]["registra_valor"] = ($reactives[$i]["registra_valor"] > 0);
     $reactives[$i]["selected"] = false;
   }
   return $reactives;

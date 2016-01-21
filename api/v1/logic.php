@@ -868,18 +868,26 @@ function processPlanReactivesUpdate($planUpdateData)
 {
   $reactives = (array) $planUpdateData["reactives"];
   $planId = $planUpdateData["plan"]["id_plan"];
-  deletePlanReactives($planId);
+  disablePlanReactives($planId);
   $i = 0;
   $l = count($reactives);
   for ($i = 0; $i < $l; $i++) {
-    $newReactive = (array) $reactives[$i];
-    unset($newReactive["id_plan_reactivo"]);
-    unset($newReactive["id_tipo_reactivo"]);
-    unset($newReactive["reactivo"]);
-    unset($newReactive["registra_valor"]);
-    unset($newReactive["activo"]);
-    unset($newReactive["selected"]);
-    insertPlanReactive($newReactive);
+    $reactiveData = (array) $reactives[$i];
+    if ($reactiveData["id_plan_reactivo"] > 0) {
+      $reactive = array(
+        "id_plan_reactivo" => $reactiveData["id_plan_reactivo"],
+        "id_plan" => $reactiveData["id_plan"],
+        "id_reactivo" => $reactiveData["id_reactivo"],
+        "activo" => 1],
+      )
+      updatePlanReactive($reactive);
+    } else {
+      $reactive = array(
+        "id_plan" => $reactiveData["id_plan"],
+        "id_reactivo" => $reactiveData["id_reactivo"],
+      )
+      insertPlanReactive($reactive);
+    }
   }
   return $planId;
 }

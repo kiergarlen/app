@@ -496,7 +496,7 @@
     vm.submitForm = submitForm;
 
     function selectClient() {
-      vm.study.cliente = ArrayUtilsService.selectItemFromCollection(
+      vm.study.cliente = ArrayUtilsService.selectItem(
         vm.clients,
         'id_cliente',
         vm.study.id_cliente
@@ -530,7 +530,7 @@
 
     function removeOrder(event) {
       var field = '$$hashKey';
-      ArrayUtilsService.extractItemFromCollection(
+      ArrayUtilsService.extractItem(
         vm.study.ordenes,
         field,
         event[field]
@@ -805,7 +805,7 @@
 
     function removePlan(event) {
       var field = '$$hashKey';
-      return ArrayUtilsService.extractItemFromCollection(
+      return ArrayUtilsService.extractItem(
         vm.order.planes,
         field,
         event[field]
@@ -987,6 +987,8 @@
     vm.isReactiveListLoaded = false;
     vm.isMaterialListLoaded = false;
     vm.isCoolerListLoaded = false;
+    vm.isAllPreservationsListSelected = false;
+    vm.isAllReactivesListSelected = false;
     vm.isAllMaterialsListSelected = false;
     vm.selectDistrict = selectDistrict;
     vm.selectInstruments = selectInstruments;
@@ -994,6 +996,8 @@
     vm.selectReactives = selectReactives;
     vm.selectMaterials = selectMaterials;
     vm.selectCoolers = selectCoolers;
+    vm.selectAllPreservations = selectAllPreservations;
+    vm.selectAllReactives = selectAllReactives;
     vm.selectAllMaterials = selectAllMaterials;
     vm.approveItem = approveItem;
     vm.rejectItem = rejectItem;
@@ -1028,7 +1032,7 @@
           .then(function success(response) {
             vm.districts = response;
             if (vm.plan.id_municipio && vm.plan.id_municipio > 0) {
-              ArrayUtilsService.selectItemFromCollection(
+              ArrayUtilsService.selectItem(
                 vm.districts,
                 'id_municipio',
                 parseInt(vm.plan.id_municipio, 10)
@@ -1040,7 +1044,7 @@
               .then(function success(response) {
                 vm.cities = response;
                 if (vm.plan.id_localidad && vm.plan.id_localidad > 0) {
-                  ArrayUtilsService.selectItemFromCollection(
+                  ArrayUtilsService.selectItem(
                     vm.cities,
                     'id_localidad',
                     parseInt(vm.plan.id_localidad, 10)
@@ -1185,7 +1189,7 @@
     function selectInstruments() {
       if (vm.isInstrumentListLoaded) {
         vm.plan.instrumentos = [];
-        vm.plan.instrumentos = ArrayUtilsService.selectItemsFromCollection(
+        vm.plan.instrumentos = ArrayUtilsService.selectItems(
           vm.instruments,
           'selected',
           true
@@ -1196,7 +1200,7 @@
     function selectPreservations() {
       if (vm.isPreservationListLoaded) {
         vm.plan.preservaciones = [];
-        vm.plan.preservaciones = ArrayUtilsService.selectItemsFromCollection(
+        vm.plan.preservaciones = ArrayUtilsService.selectItems(
           vm.preservations,
           'selected',
           true
@@ -1223,7 +1227,7 @@
           vm.isReactiveListLoaded = true;
         } else {
           vm.plan.reactivos = [];
-          vm.plan.reactivos = ArrayUtilsService.selectItemsFromCollection(
+          vm.plan.reactivos = ArrayUtilsService.selectItems(
             vm.reactives,
             'selected',
             true
@@ -1282,16 +1286,28 @@
       }
     }
 
+    function selectAllPreservations() {
+      vm.isAllPreservationsListSelected = ArrayUtilsService.
+        toggleAllItemsSelection(
+          vm.preservations,
+          vm.isAllPreservationsListSelected
+        );
+    }
+
+    function selectAllReactives() {
+      vm.isAllReactivesListSelected = ArrayUtilsService.
+        toggleAllItemsSelection(
+          vm.reactives,
+          vm.isAllReactivesListSelected
+        );
+    }
+
     function selectAllMaterials() {
-      var i = 0;
-      var l = 0;
-      if (vm.materials && vm.materials.length > 0) {
-        l = vm.materials.length;
-        vm.isAllMaterialsListSelected = !vm.isAllMaterialsListSelected;
-        for (i = 0; i < l; i += 1) {
-          vm.materials[i].selected = vm.isAllMaterialsListSelected;
-        }
-      }
+      vm.isAllMaterialsListSelected = ArrayUtilsService.
+        toggleAllItemsSelection(
+          vm.materials,
+          vm.isAllMaterialsListSelected
+        );
     }
 
     function approveItem() {
@@ -1655,7 +1671,7 @@
         } else {
           vm.sheet.preservaciones = [];
           vm.sheet.preservaciones = ArrayUtilsService
-            .selectItemsFromCollection(
+            .selectItems(
               vm.preservations,
               'selected',
               true
@@ -2064,7 +2080,7 @@
     function selectPreservations() {
       vm.reception.preservaciones = [];
       vm.reception.preservaciones = ArrayUtilsService
-      .selectItemsFromCollection(
+      .selectItems(
         vm.preservations,
         'selected',
         true
@@ -2088,7 +2104,7 @@
     function selectJobs() {
       vm.reception.trabajos = [];
       vm.reception.trabajos = ArrayUtilsService
-      .selectItemsFromCollection(
+      .selectItems(
         vm.jobs,
         'selected',
         true
@@ -2098,7 +2114,7 @@
     function selectCustodies() {
       vm.reception.custodias = [];
       vm.reception.custodias = ArrayUtilsService
-      .selectItemsFromCollection(
+      .selectItems(
         vm.custodies,
         'selected',
         true
@@ -2231,7 +2247,7 @@
           .get()
           .$promise
           .then(function success(response) {
-            vm.analysts = ArrayUtilsService.selectItemsFromCollection(
+            vm.analysts = ArrayUtilsService.selectItems(
                 response,
                 'id_area',
                 vm.custody.id_area
@@ -2552,12 +2568,12 @@
           .then(function success(response) {
             var i = 0;
             var l = 0;
-            vm.analysts = ArrayUtilsService.selectItemsFromCollection(
+            vm.analysts = ArrayUtilsService.selectItems(
               response,
               'id_area',
               vm.job.id_area
             );
-            vm.supervisor = ArrayUtilsService.selectItemFromCollection(
+            vm.supervisor = ArrayUtilsService.selectItem(
               vm.analysts,
               'supervisa',
               1
@@ -3285,22 +3301,23 @@
   function ArrayUtilsService() {
     var ArrayUtils = {};
 
-    ArrayUtils.selectItemFromCollection = selectItemFromCollection;
-    ArrayUtils.selectItemsFromCollection = selectItemsFromCollection;
-    ArrayUtils.extractItemFromCollection = extractItemFromCollection;
+    ArrayUtils.selectItem = selectItem;
+    ArrayUtils.selectItems = selectItems;
+    ArrayUtils.toggleAllItemsSelection = toggleAllItemsSelection;
+    ArrayUtils.extractItem = extractItem;
     ArrayUtils.setItemsFromReference = setItemsFromReference;
     ArrayUtils.countSelectedItems = countSelectedItems;
     ArrayUtils.averageFromValues = averageFromValues;
 
     /**
-     * @function selectItemFromCollection
+     * @function selectItem
      * @desc Obtiene un ítem de un Array, coincidiendo una propiedad y su valor
      * @param {Array} collection - Array de ítems a seleccionar
      * @param {String} field - Nombre de la propiedad a coincidir
      * @param {Object} value - Valor de la propiedad a coincidir
      * @return {Object} item - Ítem seleccionado
      */
-    function selectItemFromCollection(collection, field, value) {
+    function selectItem(collection, field, value) {
       var i = 0;
       var l = collection.length;
       var item = {};
@@ -3314,14 +3331,14 @@
     }
 
     /**
-     * @function selectItemsFromCollection
+     * @function selectItems
      * @desc Obtiene los ítems de un Array, coincidiendo una propiedad y su valor
      * @param {Array} collection - Array de ítems a seleccionar
      * @param {String} field - Nombre de la propiedad a coincidir
      * @param {Object} value - Valor de la propiedad a coincidir
      * @return {Array} items - Array de ítems seleccionados
      */
-    function selectItemsFromCollection(collection, field, value) {
+    function selectItems(collection, field, value) {
       var i = 0;
       var l = collection.length;
       var items = [];
@@ -3334,14 +3351,34 @@
     }
 
     /**
-     * @function extractItemFromCollection
+     * @function toggleAllItemsSelection
+     * @desc Selecciona o deselecciona de todos los ítems de un Array
+     * @param {Boolean} selectedFlag - Bandera de ítems seleccionados
+     * @param {Array} collection - Array de ítems a seleccionar
+     * @return {Boolean} selectedFlag - Bandera de ítems seleccionados
+     */
+    function toggleAllItemsSelection(selectedFlag, collection) {
+      var i = 0;
+      var l = 0;
+      if (collection && collection.length > 0) {
+        l = collection.length;
+        selectedFlag = !selectedFlag;
+        for (i = 0; i < l; i += 1) {
+          collection[i].selected = selectedFlag;
+        }
+      }
+      return selectedFlag;
+    }
+
+    /**
+     * @function extractItem
      * @desc Extrae un ítem de un Array, coincidiendo el valor de una propiedad
      * @param {Array} collection - Array de origen
      * @param {String} field - Propiedad a coincidir
      * @param {Object} value - Valor de la propiedad
      * @return {Object} item - Ítem extraído
      */
-    function extractItemFromCollection(collection, field, value) {
+    function extractItem(collection, field, value) {
       var i = 0;
       var l = collection.length;
       var item = {};

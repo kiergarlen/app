@@ -2023,43 +2023,6 @@ function processAnalysisParametersUpdate($analysisUpdateData)
 }
 
 /**
- * processAnalysisReferencesUpdate
- * @param mixed $analysisUpdateData
- * @return mixed $analysisId
- */
-function processAnalysisReferencesUpdate($analysisUpdateData)
-{
-  // $references = (array) $analysisUpdateData["references"];
-  // $analysisId = $analysisUpdateData["analysis"]["id_analisis"];
-  // $storedReferences = getAnalysisReferences($analysisId);
-  // $i = 0;
-  // $j = 0;
-  // $l = count($storedReferences);
-  // $m = count($references);
-
-  // if ($l > 0) {
-  //   disableAnalysisReferences($analysisId);
-  // }
-
-  // for ($i = 0; $i < $m; $i++) {
-  //   $analysisReference = array(
-  //     "id_analisis_referencia" => $references[$i]->id_analisis_referencia,
-  //     "id_analisis" => $references[$i]->id_analisis,
-  //     "id_referencia" => $references[$i]->id_referencia,
-  //   );
-  //   if ($analysisReference["id_analisis_referencia"] < 1 || $l < 1) {
-  //     unset($analysisReference["id_analisis_referencia"]);
-  //     $analysisReferencesArray[] = $analysisReference;
-  //     insertAnalysisReference($analysisReference);
-  //   } else {
-  //     $analysisReference["activo"] = 1;
-  //     updateAnalysisReference($analysisReference);
-  //   }
-  // }
-  // return $analysisId;
-}
-
-/**
  * processAnalysisResultsInsert
  * @param mixed $jobUpdateData
  * @param mixed $analysisId
@@ -2202,7 +2165,7 @@ function processAnalysisUpdate($request)
  * @param mixed $analysisUpdateData
  * @return array $analysisReferenceIds
  */
-function processAnalysisReferences($analysisUpdateData)
+function processAnalysisReferencesUpdate($analysisUpdateData)
 {
   $analysis = (array) $analysisUpdateData["analysis"];
   $parameters = (array) $analysisUpdateData["parameters"];
@@ -2226,7 +2189,7 @@ function processAnalysisReferences($analysisUpdateData)
  * @param mixed $analysisUpdateData
  * @return array $analysisResultIds
  */
-function processAnalysisResults($analysisUpdateData)
+function processAnalysisResultsUpdate($analysisUpdateData)
 {
   $analysis = (array) $analysisUpdateData["analysis"];
   $parameters = (array) $analysisUpdateData["parameters"];

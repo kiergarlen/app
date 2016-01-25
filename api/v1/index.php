@@ -370,16 +370,13 @@ $app->post("/analysis", function () use ($app) {
     $request = $app->request();
     $analysisId = 0;
     $analysisId = extractDataFromRequest($request)->id_analisis;
-    // if ($analysisId > 0) {
-    //   $analysisUpdateData = processAnalysisUpdate($request);
-    //   $analysisId = updateAnalysis($analysisUpdateData["analysis"]);
-    //   processAnalysisReferences($analysisUpdateData);
-    //   processAnalysisResults($analysisUpdateData);
-    // }
-    $analysisUpdateData = processAnalysisUpdate($request);
-    $result = json_encode(processAnalysisResults($analysisUpdateData));
-    // $analysisId = updateAnalysis($analysisUpdateData["analysis"]);
-    // $result = "{\"id_analisis\":" . $analysisId . "}";
+    if ($analysisId > 0) {
+      $analysisUpdateData = processAnalysisUpdate($request);
+      $analysisId = updateAnalysis($analysisUpdateData["analysis"]);
+      processAnalysisReferencesUpdate($analysisUpdateData);
+      processAnalysisResultsUpdate($analysisUpdateData);
+    }
+    $result = "{\"id_analisis\":" . $analysisId . "}";
     sendSuccessResponse($app, $result);
   } catch (Exception $e) {
     sendErrorResponse($app, $e);

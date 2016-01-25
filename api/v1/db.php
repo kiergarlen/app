@@ -492,23 +492,14 @@ function getOrders()
     CONVERT(NVARCHAR, fecha_rechaza, 126) AS fecha_rechaza,
     ip_captura, ip_valida, ip_actualiza,
     host_captura, host_valida, host_actualiza,
-    motivo_rechaza, comentarios, activo
-    FROM Orden
+    motivo_rechaza, comentarios, ubicacion, activo
+    FROM viewOrdenUbicacion
     WHERE activo = 1";
   $db = getConnection();
   $stmt = $db->prepare($sql);
   $stmt->execute();
   $orders = $stmt->fetchAll(PDO::FETCH_ASSOC);
   $db = null;
-  $i = 0;
-  $l = count($orders);
-  if ($l > 0) {
-    for ($i = 0; $i < $l; $i++) {
-      $orders[$i]["cliente"] = getClient($orders[$i]['id_cliente']);
-      $orders[$i]["estudio"] = getPlainStudy($orders[$i]['id_estudio']);
-      $orders[$i]["planes"] = getPlansByOrder($orders[$i]['id_orden']);
-    }
-  }
   return $orders;
 }
 

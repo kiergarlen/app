@@ -1732,7 +1732,7 @@
         samples = vm.sheet.muestras;
         l = samples.length;
         for (i = 0; i < l; i += 1) {
-          if (!DateUtilsService.isValidDate(samples[i].fecha_muestreo)) {
+          if (!DateUtilsService.isValidDate(new Date(samples[i].fecha_muestreo))) {
             vm.message += ' Ingrese una fecha/hora válida para la muestra en ';
             vm.message += samples[i].punto.punto + ' ';
             vm.message += ' (Ver fila ' + (i + 1) + ')';
@@ -1752,14 +1752,14 @@
 
     function isFormValid() {
       vm.message = '';
-      if (!DateUtilsService.isValidDate(vm.sheet.fecha_muestreo)) {
+      if (!DateUtilsService.isValidDate(new Date(vm.sheet.fecha_muestreo))) {
         vm.message += ' Ingrese una fecha/hora de muestreo válida ';
         return false;
       }
       vm.sheet.fecha_muestreo = DateUtilsService.dateToIso(
         new Date(vm.sheet.fecha_muestreo)
       );
-      if (!DateUtilsService.isValidDate(vm.sheet.fecha_entrega)) {
+      if (!DateUtilsService.isValidDate(new Date(vm.sheet.fecha_entrega))) {
         vm.message += ' Ingrese una fecha/hora de entrega válida ';
         return false;
       }
@@ -2753,7 +2753,7 @@
         if (vm.analysis.id_analisis < 1) {
           RestUtilsService
             .saveData(
-              JobService,
+              AnalysisService,
               vm.analysis,
               'analisis/analisis'
             );
@@ -2761,7 +2761,7 @@
           if (vm.user.level < 3 || vm.analysis.id_status !== 2) {
             RestUtilsService
               .updateData(
-                JobService,
+                AnalysisService,
                 vm.analysis,
                 'analisis/analisis',
                 'id_analisis'

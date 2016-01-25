@@ -169,19 +169,19 @@ $app->post("/plans", function () use ($app) {
     $planId = extractDataFromRequest($request)->id_plan;
     if ($planId > 0) {
       $planUpdateData = processPlanUpdate($request);
-      // $planId = updatePlan($planUpdateData["plan"]);
-      // processPlanSheetInsert($planUpdateData);
-      // processPlanReceptionInsert($planUpdateData);
-      // processPlanSheetSampleInsert($planUpdateData);
-      // processPlanInstrumentsUpdate($planUpdateData);
-      // processPlanPreservationsUpdate($planUpdateData);
-      // processPlanContainersUpdate($planUpdateData);
-      // processPlanReactivesUpdate($planUpdateData);
-      // processPlanMaterialsUpdate($planUpdateData);
-      // processPlanCoolersUpdate($planUpdateData);
+      $planId = updatePlan($planUpdateData["plan"]);
+      processPlanSheetInsert($planUpdateData);
+      processPlanReceptionInsert($planUpdateData);
+      processPlanSheetSampleInsert($planUpdateData);
+      processPlanInstrumentsUpdate($planUpdateData);
+      processPlanPreservationsUpdate($planUpdateData);
+      processPlanContainersUpdate($planUpdateData);
+      processPlanReactivesUpdate($planUpdateData);
+      processPlanMaterialsUpdate($planUpdateData);
+      processPlanCoolersUpdate($planUpdateData);
     }
-    $result = json_encode(processPlanInstrumentsUpdate($planUpdateData));
-    // $result = "{\"id_plan\":" . $planId . "}";
+    // $result = json_encode(processPlanInstrumentsUpdate($planUpdateData));
+    $result = "{\"id_plan\":" . $planId . "}";
     sendSuccessResponse($app, $result);
   } catch (Exception $e) {
     sendErrorResponse($app, $e);
@@ -377,7 +377,10 @@ $app->post("/analysis", function () use ($app) {
     //   processAnalysisResults($analysisUpdateData);
     // }
     // $result = "{\"id_analisis\":" . $analysisId . "}";
-    $result = processAnalysisUpdate($request);
+    // $result = processAnalysisUpdate($request);
+    $analysisUpdateData = processAnalysisUpdate($request);
+    //$result = updateAnalysis($analysisUpdateData["analysis"]);
+    $result = ($analysisUpdateData);
     $result = json_encode($result);
     sendSuccessResponse($app, $result);
   } catch (Exception $e) {

@@ -866,7 +866,6 @@ function processPlanReactivesUpdate($planUpdateData)
         "id_reactivo" => $reactiveData["id_reactivo"],
         "activo" => 1,
       );
-      $updatedReactives[] = $reactive;
       updatePlanReactive($reactive);
     } else {
       $reactive = array(
@@ -876,7 +875,6 @@ function processPlanReactivesUpdate($planUpdateData)
       insertPlanReactive($reactive);
     }
   }
-  return $updatedReactives;
   return $planId;
 }
 
@@ -2169,14 +2167,7 @@ function processAnalysisUpdate($request)
   $update["fecha_analiza"] = isoDateToMsSql($update["fecha_analiza"]);
   $update["fecha_aprueba"] = isoDateToMsSql($update["fecha_aprueba"]);
   $update["fecha_valida"] = isoDateToMsSql($update["fecha_valida"]);
-  $update["fecha_actualiza"] = isoDateToMsSql($update["fecha_actualiza"]);
   $update["fecha_rechaza"] = isoDateToMsSql($update["fecha_rechaza"]);
-
-  if ($update["id_status"] == 2 && strlen($update["ip_valida"]) < 1) {
-    $update["ip_valida"] = $request->getIp();
-    $update["host_valida"] = $request->getUrl();
-    $update["fecha_valida"] = isoDateToMsSql($update["fecha_valida"]);
-  }
 
   $analysisUpdateData = array(
     "analysis" => $update,

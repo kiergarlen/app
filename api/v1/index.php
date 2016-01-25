@@ -376,12 +376,10 @@ $app->post("/analysis", function () use ($app) {
     //   processAnalysisReferences($analysisUpdateData);
     //   processAnalysisResults($analysisUpdateData);
     // }
-    // $result = "{\"id_analisis\":" . $analysisId . "}";
-    // $result = processAnalysisUpdate($request);
     $analysisUpdateData = processAnalysisUpdate($request);
-    //$result = updateAnalysis($analysisUpdateData["analysis"]);
-    $result = ($analysisUpdateData);
-    $result = json_encode($result);
+    $result = json_encode(processAnalysisResults($analysisUpdateData));
+    // $analysisId = updateAnalysis($analysisUpdateData["analysis"]);
+    // $result = "{\"id_analisis\":" . $analysisId . "}";
     sendSuccessResponse($app, $result);
   } catch (Exception $e) {
     sendErrorResponse($app, $e);

@@ -4150,7 +4150,16 @@ function insertAnalysisReference($referenceData)
 function updateAnalysisReference($updateData)
 {
   $sql = "UPDATE AnalisisReferencia SET id_analisis = :id_analisis,
-    id_referencia = :id_referencia, activo = :activo
+    id_parametro = :id_parametro,
+    id_usuario_analiza = :id_usuario_analiza,
+    id_usuario_actualiza = :id_usuario_actualiza,
+    duplicado = :duplicado, muestra_duplicada = :muestra_duplicada,
+    estandar = :estandar, coeficiente_variacion = :coeficiente_variacion,
+    tiempo_incubacion = :tiempo_incubacion,
+    temperatura_incubacion = :temperatura_incubacion,
+    fecha_analiza = :fecha_analiza,
+    fecha_actualiza = SYSDATETIMEOFFSET(),
+    activo = :activo
     WHERE id_analisis_referencia = :id_analisis_referencia";
   $db = getConnection();
   $stmt = $db->prepare($sql);

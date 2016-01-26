@@ -1791,9 +1791,11 @@ function getJob($jobId)
   if (count(getJobAnalysis($jobId)) > 0) {
     $job->referencias = getJobReferenceResults($jobId);
     $job->lista_analisis = getJobAnalysis($jobId);
+    $job->resultados = getJobAnalysisResults($jobId);
   } else {
     $job->lista_analisis = array();
     $job->referencias = array();
+    $job->resultados = array();
   }
   return $job;
 }
@@ -4095,6 +4097,31 @@ function getAnalysisReferenceList()
 }
 
 /**
+ * @param $jobId
+ * @return mixed
+ */
+function getJobAnalysisReferences($jobId)
+{
+  $sql = "SELECT id_analisis_referencia, id_trabajo, id_analisis,
+    id_parametro, id_usuario_analiza, id_usuario_captura,
+    id_usuario_actualiza, duplicado, muestra_duplicada, estandar,
+    coeficiente_variacion, tiempo_incubacion, temperatura_incubacion,
+    CONVERT(NVARCHAR, fecha_analiza, 126) AS fecha_analiza,
+    CONVERT(NVARCHAR, fecha_captura, 126) AS fecha_captura,
+    CONVERT(NVARCHAR, fecha_actualiza, 126) AS fecha_actualiza,
+    activo
+    FROM viewTrabajoAnalisisReferencia
+    WHERE activo = 1 AND id_trabajo = :jobId";
+  $db = getConnection();
+  $stmt = $db->prepare($sql);
+  $stmt->bindParam("jobId", $jobId);
+  $stmt->execute();
+  $references = $stmt->fetchAll(PDO::FETCH_ASSOC);
+  $db = null;
+  return $references;
+}
+
+/**
  * @param $analysisId
  * @return mixed
  */
@@ -4190,7 +4217,9 @@ function disableAnalysisReferences($analysisId)
  */
 function getResultsByAnalysis($analysisId)
 {
-  $sql = "SELECT  id_resultado, id_trabajo, id_analisis, id_muestra, id_parametro, id_tipo_resultado, id_tipo_valor, id_usuario_captura, id_usuario_actualiza, valor,
+  $sql = "SELECT  id_resultado, id_trabajo, id_analisis, id_muestra,
+    id_parametro, id_tipo_resultado, id_tipo_valor,
+    id_usuario_captura, id_usuario_actualiza, valor,
     CONVERT(NVARCHAR, fecha_captura, 126) AS fecha_captura,
     CONVERT(NVARCHAR, fecha_actualiza, 126) AS  fecha_actualiza,
     activo, param
@@ -4206,22 +4235,25 @@ function getResultsByAnalysis($analysisId)
 }
 
 /**
- * @param $analysisId
+ * @param $jobId
  * @return mixed
  */
-function getAnalysisJobResults($analysisId)
+function getJobAnalysisResults($jobId)
 {
   $sql = "SELECT id_resultado, id_trabajo, id_analisis, id_muestra,
-    id_parametro, id_tipo_resultado, id_tipo_valor,
-    id_usuario_captura, id_usuario_actualiza, valor,
+    id_parametro, id_tipo_resultado, id_tipo_valor, id_usuario_captura,
+    id_usuario_actualiza, id_usuario_analiza, parametro, [param],
     CONVERT(NVARCHAR, fecha_captura, 126) AS fecha_captura,
     CONVERT(NVARCHAR, fecha_actualiza, 126) AS fecha_actualiza,
-    activo
-    FROM viewAnalisisResultado
-    WHERE activo = 1 AND id_analisis = :analysisId";
+    CONVERT(NVARCHAR, fecha_analiza, 126) AS fecha_analiza,
+    valor, duplicado, muestra_duplicada, estandar, coeficiente_variacion,
+    tiempo_incubacion, temperatura_incubacion, unidad, acreditado,
+    nombres, apellido_paterno, apellido_materno, activo
+    FROM viewTrabajoAnalisisResultado
+    WHERE activo = 1 AND id_trabajo = :jobId";
   $db = getConnection();
   $stmt = $db->prepare($sql);
-  $stmt->bindParam("analysisId", $analysisId);
+  $stmt->bindParam("jobId", $jobId);
   $stmt->execute();
   $references = $stmt->fetchAll(PDO::FETCH_ASSOC);
   $db = null;

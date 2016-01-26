@@ -42,8 +42,8 @@
   data-ng-submit="job.submitForm()"
   novalidate
   >
-  <!--
-  <div class="row">
+  <div class="row"
+    data-ng-if="job.user.area == 4">
     <div class="col-xs-12">
       <h4>Entrega Orden</h4>
     </div>
@@ -107,7 +107,8 @@
       </select>
     </div>
   </div>
-  <div class="row">
+  <div class="row"
+    data-ng-if="job.isParameterListAsigned && job.user.level < 5">
     <div class="col-xs-12">
       <h4>Recibe Orden</h4>
     </div>
@@ -171,8 +172,6 @@
       </select>
     </div>
   </div>
-  -->
-  <!-- ASIGNACION WIP -->
   <div class="row"
     data-ng-if="!job.isParameterListAsigned">
     <div class="col-xs-12">
@@ -229,7 +228,7 @@
   <div class="row"
     data-ng-if="job.isParameterListAsigned">
     <div class="col-xs-12">
-      <h4>{{job.job.id_area}} Análisis - Resultados Preliminares</h4>
+      <h4>Análisis - Resultados Preliminares</h4>
     </div>
     <div class="col-xs-12">
       <div class="row">
@@ -240,150 +239,67 @@
             </div>
             <div class="table-responsive">
               <table class="table table-hover table-condensed"
-                id="analysisList">
-                 <thead>
-                    <th>
-                      id_analisis
-                    </th>
-                    <th>
-                      id_muestra
-                    </th>
-                    <th>
-                      id_parametro
-                    </th>
-                    <th>
-                      id_usuario_analiza
-                    </th>
-                    <th>
-                      valor
-                    </th>
-                    <th>
-                      duplicado
-                    </th>
-                    <th>
-                      muestra_duplicada
-                    </th>
-                    <th>
-                      estandar
-                    </th>
-                    <th>
-                      coeficiente_variacion
-                    </th>
-                    <th>
-                      temperatura_incubacion
-                    </th>
-                    <th>
-                      tiempo_incubacion
-                    </th>
-                    <th>
-                      fecha_analiza
-                    </th>
-                <!--
+                id="resultsList">
+                <thead>
                   <tr>
-                    <th>Análisis</th>
-                    <th>Muestra</th>
                     <th>Parámetro</th>
-                    <th>Unidad</th>
+                    <th>Id Análisis</th>
                     <th>Resultado</th>
-                    <th>
-                      <span title="Muestra para duplicado">
-                        Duplicado
-                      </span>
-                    </th>
-                    <th>
-                      <span title="Muestra Duplicada">
-                        M-DUP
-                      </span>
-                    </th>
+                    <th>Duplicado</th>
+                    <th>M. Duplicada</th>
                     <th
                       data-ng-if="job.job.id_area != 3">
                       Estándar (%R)
                     </th>
                     <th
                       data-ng-if="job.job.id_area != 3">
-                      Duplicado CV
+                      Coeficiente Variacion
                     </th>
                     <th
                       data-ng-if="job.job.id_area == 3">
-                      Incubación (Horas)
+                      Tiempo Incubacion
                     </th>
                     <th
                       data-ng-if="job.job.id_area == 3">
-                      Temp. Inc. (&deg;C)
+                      Temperatura Incubacion
                     </th>
-                    <th>Fecha</th>
+                    <th>Fecha Análisis</th>
                     <th>Analista</th>
                   </tr>
-                -->
                 </thead>
                 <tbody>
                   <tr
-                    data-ng-repeat="analysis in job.job.lista_analisis">
+                    data-ng-repeat="result in job.job.resultados">
                     <td>
-                      {{analysis.id_analisis}}
-                    </td>
-                    <td>
-                      <select class="form-control"
-                        data-ng-model="analysis.id_usuario_analiza"
-                        >
-                        <option data-ng-repeat="analyst in job.analysts"
-                          value="{{analyst.id_usuario_analiza}}"
-                          data-ng-selected="analysis.id_usuario_analiza == analyst.id_usuario"
-                          >
-                          {{::analyst.nombres}}
-                          {{::analyst.apellido_paterno}}
-                        </option>
-                      </select>
-                    </td>
-                    <td>
-                      {{analysis.fecha_analiza}}
-                    </td>
-                    <td>
-                      {{analysis.comentarios}}
-                    </td>
-                  <!--
-                    <td>id_analisis</td>
-                    <td>id_muestra</td>
-                    <td>id_parametro</td>
-                    <td>id_unidad</td>
-                    <td>id_resultado</td>
-                    <td>
-                      id_analisis_referencia
-                      <br>
-                      <span>
-                        AnalisisReferencia.duplicado
+                      {{result.param}}
+                      <small>[{{result.unidad}}]</small>
+                      <span class="label label-success"
+                        data-ng-show="result.acreditado">
+                        Acreditado
                       </span>
                     </td>
-                    <td>
-                      id_analisis_referencia
-                      <br>
-                      <span>
-                        AnalisisReferencia.muestra_duplicada
-                      </span>
-                    </td>
-                    <th
+                    <td>{{result.id_analisis}}</td>
+                    <td>{{result.valor}}</td>
+                    <td>{{result.duplicado}}</td>
+                    <td>{{result.muestra_duplicada}}</td>
+                    <td
                       data-ng-if="job.job.id_area != 3">
-                      AnalisisReferencia.estandar
+                      {{result.estandar}}
                     </td>
-                    <th
+                    <td
                       data-ng-if="job.job.id_area != 3">
-                      AnalisisReferencia.coeficiente_variacion
+                      {{result.coeficiente_variacion}}
                     </td>
-                    <th
+                    <td
                       data-ng-if="job.job.id_area == 3">
-                      AnalisisReferencia.tiempo_incubacion
+                      {{result.tiempo_incubacion}}
                     </td>
-                    <th
+                    <td
                       data-ng-if="job.job.id_area == 3">
-                      AnalisisReferencia.temperatura_incubacion
+                      {{result.temperatura_incubacion}}
                     </td>
-                    <td>
-                      AnalisisReferencia.fecha_analiza
-                    </td>
-                    <td>
-                      AnalisisReferencia.id_usuario_analiza
-                    </td>
-                  -->
+                    <td>{{result.fecha_analiza | date: 'yyyy-MM-dd'}}</td>
+                    <td>{{result.nombres}} {{result.apellido_paterno}}</td>
                   </tr>
                 </tbody>
               </table>
@@ -393,118 +309,52 @@
       </div>
     </div>
   </div>
-<!-- PRELIMINARES WIP
-                <tbody>
-                  <tr
-                    data-ng-repeat="analysis in job.job.lista_analisis"
-                    id="analysisId{{analysis.id_parametro}}">
-                    <td>
-                      {{analysis.id_muestra}}<br>
-                      Fecha/Hora: {{analysis.fecha_muestreo | date: 'yyyy-MM-dd'}}
-                      {{analysis.fecha_muestreo | time: 'HH:mm'}}<br>
-                      pH: {{analysis.ph}}<br>
-                      <span
-                        data-ng-if="!isNaN(analysis.gasto)">
-                        Gasto:
-                        {{analysis.gasto}} l/s
-                      </span><br>
-                      Matriz: {{analysis.matriz}}
-                    </td>
-
-                  </tr>
-                </tbody>
-
-
-
-  <div class="row"
-    data-ng-if="job.isParameterListAsigned">
+  <div class="row">
     <div class="col-xs-12">
-      <h4>Aprueba preliminares</h4>
+      <h4>Referencias por Muestra</h4>
     </div>
-    <div class="col-xs-6 col-sm-4">
-      <label for="jobVerifyDate">
-        <i class="glyphicon glyphicon-calendar"></i>
-        Fecha aprueba
-      </label>
-      <input type="text"
-        class="form-control"
-        id="jobVerifyDate"
-        name="jobVerifyDate"
-        placeholder="aaaa-mm-dd"
-        required
-        data-ng-model="job.job.fecha_aprueba"
-        data-date-format="yyyy-MM-dd"
-        data-date-type="date"
-        data-autoclose="1"
-        date-use-native="true"
-        data-bs-datepicker
-        >
-    </div>
-    <div class="col-xs-6 col-sm-3">
-      <label for="jobVerifyTime">
-        <i class="glyphicon glyphicon-time"></i>
-        Hora aprueba
-      </label>
-      <input type="text"
-        class="form-control"
-        id="jobVerifyTime"
-        name="jobVerifyTime"
-        placeholder="HH:mm"
-        required
-        data-ng-model="job.job.fecha_aprueba"
-        data-time-format="HH:mm"
-        data-date-type="date"
-        data-length="1"
-        data-hour-step="1"
-        data-minute-step="1"
-        data-arrow-behavior="picker"
-        data-auto-close="1"
-        data-bs-timepicker
-        >
-    </div>
-    <div class="col-xs-12 col-sm-6">
-      <label for="verifierSelect">
-        Aprueba Orden
-      </label>
-      <select class="form-control"
-        id="verifierSelect"
-        name="verifierSelect"
-        data-ng-model="job.job.id_usuario_aprueba"
-        >
-        <option
-          data-ng-repeat="verifier in job.verifiers"
-          value="{{verifier.id_usuario}}">
-          {{::verifier.nombres}}
-          {{::verifier.apellido_paterno}}
-          {{::verifier.apellido_materno}}
-        </option>
-      </select>
-    </div>
+    <table class="table table-hover table-condensed"
+      id="referenceResultList">
+      <thead>
+        <tr>
+          <th>Muestra</th>
+          <th>Parámetro</th>
+          <th>Resultado</th>
+          <th>Unidad</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>{{reference.id_muestra}}</td>
+          <td>{{reference.param}}</td>
+          <td>{{reference.valor}}</td>
+          <td>{{reference.unidad}}</td>
+        </tr>
+      </tbody>
+    </table>
   </div>
   <div class="row"
-    data-ng-if="job.isParameterListAsigned"
-    data-ng-show="job.user.level < 5 && job.user.level > 2">
+    data-ng-if="job.isParameterListAsigned && job.user.level < 5">
     <div class="col-xs-12">
-      <h4>Aprobación</h4>
+      <h4>Aprueba preliminares</h4>
     </div>
     <div class="col-xs-12 col-sm-5 well wel-sm ">
       <button class="btn btn-success"
         value="Aprobar" title="Aprobar"
-        data-ng-click="job.signItem()"
+        data-ng-click="job.approveResults()"
         >
         <i class="glyphicon glyphicon-ok" aria-hidden="true"></i>
         Aprobar
       </button>
       <button class="btn btn-danger"
         value="Rechazar" title="Rechazar"
-        data-ng-click="job.unsignItem()"
+        data-ng-click="job.rejectResults()"
         >
         <i class="glyphicon glyphicon-remove" aria-hidden="true"></i>
         Rechazar
       </button>
     </div>
   </div>
-<!-- END PRELIMINARES WIP-->
   <div class="row"
     data-ng-show="job.user.level < 3">
     <div class="col-xs-12">

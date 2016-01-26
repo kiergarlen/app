@@ -538,11 +538,11 @@
     }
 
     function approveItem() {
-      ValidationService.approveItem(vm.study, vm.user);
+      ValidationService.approveItem(vm.job, vm.user);
     }
 
     function rejectItem() {
-      ValidationService.rejectItem(vm.study, vm.user);
+      ValidationService.rejectItem(vm.job, vm.user);
     }
 
     function isOrderListValid() {
@@ -2590,9 +2590,10 @@
               'supervisa',
               1
             );
+            vm.id_usuario_recibe = vm.supervisor.id_usuario;
             l = vm.job.parametros.length;
             for (i = 0; i < l; i += 1) {
-              vm.job.parametros[i].id_usuario_analiza = vm.supervisor.id_usuario;
+              vm.job.parametros[i].id_usuario_analiza = vm.id_usuario_recibe;
             };
           });
       });
@@ -2604,6 +2605,7 @@
 
     function rejectResults() {
       vm.job.comentarios = ' [Resultados Rechazados] ' + vm.job.comentarios;
+      vm.message = ' [Resultados Rechazados] ';
       vm.job.id_usuario_aprueba = 0;
       vm.job.fecha_aprueba = null;
     }

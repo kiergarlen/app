@@ -1,95 +1,5 @@
 <?php
 //PROCESSING FUNCTIONS
-define("KEY", "m0oxUT7L8Unn93hXMUGHpwq_jTSKVBjQfEVCUe8jZ38KUU4VSAfmsNk4JJYcJl7CukrY6QMlixxwat7AZSpDcSQ");
-
-/**
- * processUserJwt
- * @param mixed $request
- * @return mixed
- */
-function processUserJwt($request)
-{
-  $input = json_decode($request->getbody());
-  $usr = $input->username;
-  $pwd = $input->password;
-
-  $userInfo = getUserByCredentials($usr, $pwd);
-  $userId = $userInfo->id_usuario;
-  $userLv = $userInfo->id_nivel;
-  $name = $userInfo->nombres . " ";
-  $name .= $userInfo->apellido_paterno . " ";
-  $name .= $userInfo->apellido_materno . "";
-
-  $userPass = $usr . "." . $pwd . "." . "." . $userLv;
-  $userPass = bin2hex($userPass);
-  $token = array();
-  $token["nam"] = $name;
-  $token["upt"] = $userPass;
-  $token["uid"] = $userId;
-  $token["ulv"] = $userLv;
-  $token["uro"] = $userInfo->id_rol;
-  $token["uar"] = $userInfo->id_area;
-  $token["cip"] = $request->getIp() . "";
-  $token["iss"] = $request->getUrl();
-  $token["aud"] = "sislab.ceajalisco.gob.mx";
-  $token["iat"] = time();
-  //// Token expires 24 hours from now
-  $token["exp"] = time() + (48 * 60 * 60);
-  $jwt = JWT::encode($token, KEY);
-  return $jwt;
-}
-
-/**
- * decodeJwt
- * @param mixed $jwt
- * @return array
- */
-function decodeJwt($jwt)
-{
-  return (array) JWT::decode($jwt, KEY);
-}
-
-/**
- * extractDataFromRequest
- * @param mixed $request
- */
-function extractDataFromRequest($request)
-{
-  return json_decode($request->getBody());
-}
-
-/**
- * decodeUserToken
- * @param mixed $request
- * @return mixed
- */
-function decodeUserToken($request)
-{
-  try {
-    $headers = $request->headers();
-    $jwt = $headers["Auth-Token"];
-    $decoded = JWT::decode($jwt, KEY);
-
-    $tokenUserId = $jwt->uid;
-    $tokenIp = $jwt->cip;
-    $tokenUrl = $jwt->iss;
-    $requestIp = $request->getIp();
-    $requestUrl = $request->getUrl();
-    if ($tokenIp === $request->getIp())
-    {
-      return $decoded;
-    }
-    else
-    {
-      $app->response()->status(404);
-      $app->response()->header('X-Status-Reason', 'Not found');
-    }
-  } catch (Exception $e) {
-    $app->response()->status(401);
-    $app->response()->header('X-Status-Reason', $e->getMessage());
-  }
-}
-
 /**
  * processMenuToJson
  * @param mixed $items
@@ -1960,7 +1870,7 @@ function processAnalysisReferencesInsert($jobUpdateData, $parameters, $analystId
         "coeficiente_variacion" => "",
         "tiempo_incubacion" => "",
         "temperatura_incubacion" => "",
-        "fecha_analiza" => NULL,
+        "fecha_analiza" => null,
         "activo" => 1,
       );
       $analysisReferenceIds[] = insertAnalysisReference($analysisReference);
@@ -2163,7 +2073,6 @@ function processAnalysisReferencesUpdate($analysisUpdateData)
   }
   return $referenceIds;
 }
-
 
 /**
  * processAnalysisResults

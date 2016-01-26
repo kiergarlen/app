@@ -6,7 +6,95 @@ require "./db.php";
 
 \Slim\Slim::registerAutoloader();
 $app = new \Slim\Slim();
+define("KEY", "m0oxUT7L8Unn93hXMUGHpwq_jTSKVBjQfEVCUe8jZ38KUU4VSAfmsNk4JJYcJl7CukrY6QMlixxwat7AZSpDcSQ");
 
+/**
+ * processUserJwt
+ * @param mixed $request
+ * @return mixed
+ */
+function processUserJwt($request)
+{
+  $input = json_decode($request->getbody());
+  $usr = $input->username;
+  $pwd = $input->password;
+
+  $userInfo = getUserByCredentials($usr, $pwd);
+  $userId = $userInfo->id_usuario;
+  $userLv = $userInfo->id_nivel;
+  $name = $userInfo->nombres . " ";
+  $name .= $userInfo->apellido_paterno . " ";
+  $name .= $userInfo->apellido_materno . "";
+
+  $userPass = $usr . "." . $pwd . "." . "." . $userLv;
+  $userPass = bin2hex($userPass);
+  $token = array();
+  $token["nam"] = $name;
+  $token["upt"] = $userPass;
+  $token["uid"] = $userId;
+  $token["ulv"] = $userLv;
+  $token["uro"] = $userInfo->id_rol;
+  $token["uar"] = $userInfo->id_area;
+  $token["cip"] = $request->getIp() . "";
+  $token["iss"] = $request->getUrl();
+  $token["aud"] = "sislab.ceajalisco.gob.mx";
+  $token["iat"] = time();
+  //// Token expires 24 hours from now
+  $token["exp"] = time() + (48 * 60 * 60);
+  $jwt = JWT::encode($token, KEY);
+  return $jwt;
+}
+
+/**
+ * decodeJwt
+ * @param mixed $jwt
+ * @return array
+ */
+function decodeJwt($jwt)
+{
+  return (array) JWT::decode($jwt, KEY);
+}
+
+/**
+ * extractDataFromRequest
+ * @param mixed $request
+ */
+function extractDataFromRequest($request)
+{
+  return json_decode($request->getBody());
+}
+
+/**
+ * decodeUserToken
+ * @param mixed $request
+ * @return mixed
+ */
+function decodeUserToken($request)
+{
+  try {
+    $headers = $request->headers();
+    $jwt = $headers["Auth-Token"];
+    $decoded = JWT::decode($jwt, KEY);
+    $tokenUserId = $decoded->uid;
+    $tokenIp = $decoded->cip;
+    $tokenUrl = $decoded->iss;
+    $requestIp = $request->getIp();
+    $requestUrl = $request->getUrl();
+    if ($tokenIp === $request->getIp()) {
+      return $decoded;
+    } else {
+      sendNotFoundResponse($app);
+    }
+  } catch (Exception $e) {
+    sendErrorResponse($app, $e);
+  }
+}
+
+/**
+ * sendSuccessResponse
+ * @param  mixed $app
+ * @param  mixed $result
+ */
 function sendSuccessResponse($app, $result)
 {
   $app->response()->status(200);
@@ -20,10 +108,26 @@ function sendSuccessResponse($app, $result)
   print_r($result);
 }
 
+/**
+ * sendErrorResponse
+ * @param  mixed $app
+ * @param  mixed $e
+ */
 function sendErrorResponse($app, $e)
 {
   $app->response()->status(400);
   $app->response()->header("X-Status-Reason", $e->getMessage());
+}
+
+/**
+ * sendNotFoundResponse
+ * @param  mixed $app
+ * @param  mixed $e
+ */
+function sendNotFoundResponse($app)
+{
+  $app->response()->status(404);
+  $app->response()->header('X-Status-Reason', 'Not found');
 }
 
 $app->post("/login", function () use ($app) {

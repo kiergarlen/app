@@ -42,6 +42,26 @@
   novalidate
   >
   <div class="row">
+    <div class="col-xs-12">
+      <label for="analysisDate">
+        <i class="glyphicon glyphicon-calendar"></i>
+        Fecha entrega Análisis
+      </label>
+      <input type="text"
+        class="form-control"
+        name="analysisDate"
+        placeholder="aaaa-MM-dd"
+        data-ng-model="analysis.analysis.fecha_analiza"
+        data-date-format="yyyy-MM-dd"
+        data-date-type="date"
+        data-autoclose="1"
+        date-use-native="true"
+        data-bs-datepicker
+        >
+      <br>
+    </div>
+  </div>
+  <div class="row">
     <div class="col-xs-12 panel"
       data-ng-repeat="parameter in analysis.analysis.parametros"
       >
@@ -52,13 +72,13 @@
           </h4>
         </div>
         <div class="col-xs-4">
-          <label for="resultadoFechaAnaliza">
+          <label for="resultAnalysisDate">
             <i class="glyphicon glyphicon-calendar"></i>
             Fecha Análisis
           </label>
           <input type="text"
             class="form-control"
-            name="resultadoFechaAnaliza"
+            name="resultAnalysisDate"
             placeholder="aaaa-MM-dd"
             data-ng-model="parameter.referencias.fecha_analiza"
             data-date-format="yyyy-MM-dd"
@@ -93,7 +113,7 @@
                   </td>
                   <td>
                     <input type="text" class="form-control"
-                      name="resultado{{::parameter.id_parametro}}"
+                      name="result{{::parameter.id_parametro}}"
                       placeholder="Resultado"
                       data-ng-model="result.valor"
                       >
@@ -104,61 +124,61 @@
           </div>
         </div>
         <div class="col-xs-4">
-          <label for="resultadoDuplicado">
+          <label for="resultDuplicate">
             Duplicado
           </label>
           <input type="text" class="form-control"
-            name="resultadoDuplicado"
+            name="resultDuplicate"
             placeholder="Resultado"
             data-ng-model="parameter.referencias.duplicado"
             >
         </div>
         <div class="col-xs-4">
-          <label for="resultadoMuestraDuplicada">
+          <label for="resultDuplicateSample">
             Muestra Duplicada
           </label>
           <input type="text" class="form-control"
-            name="resultadoMuestraDuplicada"
+            name="resultDuplicateSample"
             placeholder="Resultado"
             data-ng-model="parameter.referencias.muestra_duplicada"
             >
         </div>
         <div class="col-xs-4">
-          <label for="resultadoEstandar">
+          <label for="resultStandard">
             Estandar (%R)
           </label>
           <input type="text" class="form-control"
-            name="resultadoEstandar"
+            name="resultStandard"
             placeholder="Resultado"
             data-ng-model="parameter.referencias.estandar"
             >
         </div>
         <div class="col-xs-4">
-          <label for="resultadoCoeficienteVariacion">
+          <label for="resultCoefficient">
             Coeficiente Variacion
           </label>
           <input type="text" class="form-control"
-            name="resultadoCoeficienteVariacion"
+            name="resultCoefficient"
             placeholder="Resultado"
             data-ng-model="parameter.referencias.coeficiente_variacion"
             >
         </div>
         <div class="col-xs-4">
-          <label for="resultadoTiempoIncubacion">
+          <label for="resultIncubationTime">
             Tiempo de Incubación (horas)
           </label>
           <input type="text" class="form-control"
-            name="resultadoTiempoIncubacion"
+            name="resultIncubationTime"
             placeholder="Resultado"
             data-ng-model="parameter.referencias.tiempo_incubacion"
             >
         </div>
         <div class="col-xs-4">
-          <label for="resultadoTemperaturaIncubacion">
+          <label for="resultIncubationTemp">
             Temperatura de Incubación (&deg;C)
           </label>
           <input type="text" class="form-control"
-            name="resultadoTemperaturaIncubacion"
+            name="resultIncubationTemp"
             placeholder="Resultado"
             data-ng-model="parameter.referencias.temperatura_incubacion"
             >

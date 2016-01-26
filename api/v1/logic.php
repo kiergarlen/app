@@ -69,20 +69,21 @@ function decodeUserToken($request)
     $headers = $request->headers();
     $jwt = $headers["Auth-Token"];
     $decoded = JWT::decode($jwt, KEY);
-    // $tokenUserId = $jwt->uid;
-    // $tokenIp = $jwt->cip;
-    // $tokenUrl = $jwt->iss;
-    // $requestIp = $request->getIp();
-    // $requestUrl = $request->getUrl();
-    // if ($tokenIp === $request->getIp())
-    // {
-    //  return array("success" => "Ip match");
-    // }
-    // else
-    // {
-    //  return array("error" => "Ip mismatch");
-    // }
-    return $decoded;
+
+    $tokenUserId = $jwt->uid;
+    $tokenIp = $jwt->cip;
+    $tokenUrl = $jwt->iss;
+    $requestIp = $request->getIp();
+    $requestUrl = $request->getUrl();
+    if ($tokenIp === $request->getIp())
+    {
+      return $decoded;
+    }
+    else
+    {
+      $app->response()->status(404);
+      $app->response()->header('X-Status-Reason', 'Not found');
+    }
   } catch (Exception $e) {
     $app->response()->status(401);
     $app->response()->header('X-Status-Reason', $e->getMessage());
@@ -968,26 +969,6 @@ function processSheetUpdate($request)
     "samples" => $samples,
   );
   return $sheetUpdateData;
-}
-
-/**
- * processSheetReceptionUpdate
- * @param array $sheetUpdateData
- * @return mixed
- */
-function processSheetReceptionUpdate($sheetUpdateData)
-{
-  $sheet = $sheetUpdateData["sheet"];
-  $sheetId = $sheet["id_hoja"];
-  $storedReceptions = getReceptionsBySheet($sheetId);
-  // $i = 0;
-  // $l = count($storedReceptions);
-  // if ($l > 0) {
-  //  for ($i = 0; $i < $l; $i++) {
-  //  }
-  // }
-  return $storedReceptions;
-  //return $sheetId;
 }
 
 /**

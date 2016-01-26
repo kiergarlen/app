@@ -191,7 +191,6 @@ $app->post("/plans", function () use ($app) {
 $app->get("/plans/containers/:planId", function ($planId) use ($app) {
   try {
     $userId = decodeUserToken($app->request())->uid;
-    // $result = json_encode(getContainersByPlan($planId));
     $result = json_encode(getPlanContainers($planId));
     sendSuccessResponse($app, $result);
   } catch (Exception $e) {
@@ -221,7 +220,6 @@ $app->post("/sheets", function () use ($app) {
     if ($sheetId > 0) {
       $sheetUpdateData = processSheetUpdate($request);
       $sheetId = updateSheet($sheetUpdateData["sheet"]);
-      //processSheetReceptionUpdate($sheetUpdateData);
       processSheetResultsUpdate($sheetUpdateData);
       processSheetPreservationsUpdate($sheetUpdateData);
     }

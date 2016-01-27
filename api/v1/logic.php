@@ -1682,11 +1682,14 @@ function processJobUpdate($request)
   $analysisList = $update["lista_analisis"];
   $references = $update["referencias"];
   $parameters = $update["parametros"];
+  $results = $update["resultados"];
+
 
   unset($update["muestras"]);
   unset($update["lista_analisis"]);
   unset($update["referencias"]);
   unset($update["parametros"]);
+  unset($update["resultados"]);
   unset($update["fecha_captura"]);
   unset($update["id_usuario_captura"]);
   unset($update["ip_captura"]);
@@ -1719,6 +1722,7 @@ function processJobUpdate($request)
     "analysisList" => $analysisList,
     "references" => $references,
     "parameters" => $parameters,
+    "results" => $results,
   );
   return $jobUpdateData;
 }

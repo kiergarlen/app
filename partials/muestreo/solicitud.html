@@ -291,6 +291,7 @@
   <button type="submit" class="btn btn-primary"
     value="Guardar" title="Guardar"
     data-ng-click="quote.submitForm()"
+    data-ng-if="quote.quote.id_status != 2 || quote.user.level < 3"
     >
     <i class="glyphicon glyphicon-cloud-upload" aria-hidden="true"></i>
     Guardar

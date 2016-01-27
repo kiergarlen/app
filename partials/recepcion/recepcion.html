@@ -411,6 +411,7 @@
   <button type="submit" class="btn btn-primary"
     value="Guardar" title="Guardar"
     data-ng-click="reception.submitForm()"
+    data-ng-if="reception.reception.id_status != 2 || reception.user.level < 3"
     >
     <i class="glyphicon glyphicon-cloud-upload" aria-hidden="true"></i>
     Guardar

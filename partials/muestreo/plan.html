@@ -863,6 +863,7 @@
   <button type="submit" class="btn btn-primary"
     value="Guardar" title="Guardar"
     data-ng-click="plan.submitForm()"
+    data-ng-if="plan.plan.id_status != 2 || plan.user.level < 3"
     >
     <i class="glyphicon glyphicon-cloud-upload" aria-hidden="true"></i>
     Guardar

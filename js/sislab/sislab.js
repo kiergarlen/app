@@ -2604,8 +2604,7 @@
     }
 
     function rejectResults() {
-      vm.job.comentarios = ' [Resultados Rechazados] ' + vm.job.comentarios;
-      vm.message = ' [Resultados Rechazados] ';
+      vm.message = ' Resultados no aprobados ';
       vm.job.id_usuario_aprueba = 0;
       vm.job.fecha_aprueba = null;
     }

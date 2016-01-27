@@ -244,6 +244,7 @@
   <button type="submit" class="btn btn-primary"
     value="Guardar" title="Guardar"
     data-ng-click="analysis.submitForm()"
+    data-ng-if="analysis.analysis.id_status != 2 || analysis.user.level < 3"
     >
     <i class="glyphicon glyphicon-cloud-upload" aria-hidden="true"></i>
     Guardar

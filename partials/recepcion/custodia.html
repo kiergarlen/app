@@ -478,6 +478,7 @@
   <button type="submit" class="btn btn-primary"
     value="Guardar" title="Guardar"
     data-ng-click="custody.submitForm()"
+    data-ng-if="custody.custody.id_status != 2 || custody.user.level < 3"
     >
     <i class="glyphicon glyphicon-cloud-upload" aria-hidden="true"></i>
     Guardar

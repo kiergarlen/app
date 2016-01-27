@@ -579,6 +579,7 @@ function processPlanSheetSampleInsert($planUpdateData)
     $sampleData["id_paquete"] = $plan["id_paquete"];
     $sampleData["id_ubicacion"] = $plan["id_ubicacion"];
     $sampleData["id_tipo_muestreo"] = $order->id_tipo_muestreo;
+    $sampleData["id_tipo_muestra"] = 1;
     $sampleData["fecha_muestreo"] = isoDateToMsSql($plan["fecha"]);
 
     for ($i = 0; $i < $l; $i++) {
@@ -589,9 +590,15 @@ function processPlanSheetSampleInsert($planUpdateData)
       }
       if ($freq < 24) {
         $sampleData["id_tipo_muestreo"] = 2;
-      }
-      $m = 24 / $freq;
-      for ($j = 0; $j < $m; $j++) {
+        $m = intval(24 / $freq);
+        for ($j = 0; $j < $m; $j++) {
+          // add single sample for each period
+          $samplesArray[] = insertSample($sampleData);
+        }
+        // add compound sample, flag it as such
+        $sampleData["id_tipo_muestra"] = 2;
+        $samplesArray[] = insertSample($sampleData);
+      } else {
         $samplesArray[] = insertSample($sampleData);
       }
     }

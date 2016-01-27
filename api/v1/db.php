@@ -1202,11 +1202,13 @@ function getSheet($sheetId)
       $m = count($parameters);
       for ($j = 0; $j < $m; $j++) {
         $params = (array) $parameters[$j];
-        $blankSamplingResult["id_muestra"] = $sampleId;
-        $blankSamplingResult["id_parametro"] = $params["id_parametro"];
-        $blankSamplingResult["id_tipo_valor"] = $params["id_tipo_valor"];
-        $blankSamplingResult["param"] = $params["param"];
-        $samplingResults[] = $blankSamplingResult;
+
+          $blankSamplingResult["id_muestra"] = $sampleId;
+          $blankSamplingResult["id_parametro"] = $params["id_parametro"];
+          $blankSamplingResult["id_tipo_valor"] = $params["id_tipo_valor"];
+          $blankSamplingResult["param"] = $params["param"];
+          $samplingResults[] = $blankSamplingResult;
+
       }
     }
     $sheet->muestras[$i]["resultados"] = $samplingResults;
@@ -1996,8 +1998,8 @@ function getJobSamples($jobId)
 {
   $sql = "SELECT id_trabajo, id_muestra, id_estudio, id_cliente,
     id_orden, id_plan, id_hoja, id_recepcion, id_custodia,
-    id_tipo_muestreo, fecha_muestreo, fecha_recibe, activo, matriz,
-    tipo_muestreo
+    id_tipo_muestreo, id_tipo_muestra, fecha_muestreo, fecha_recibe,
+    activo, matriz, tipo_muestreo, tipo_muestra
     FROM viewMuestraTrabajo
     WHERE activo = 1 AND id_trabajo = :jobId";
   $db = getConnection();
@@ -2033,7 +2035,7 @@ function getJobReferenceResults($jobId)
  * @return mixed
  */function getJobParameters($jobId)
 {
-  $sql = "SELECT id_trabajo, id_matriz, id_tipo_muestreo, id_norma,
+  $sql = "SELECT id_trabajo, id_matriz, id_tipo_muestreo, id_area, id_norma,
     id_parametro, id_metodo, id_unidad, [param], id_tipo_valor, parametro
     FROM viewParametroTrabajo
     WHERE id_trabajo = :jobId";
@@ -2859,7 +2861,7 @@ function getSamples()
 {
   $sql = "SELECT id_muestra, id_estudio, id_cliente, id_orden,
     id_plan, id_hoja, id_recepcion, id_custodia, id_paquete,
-    id_ubicacion, id_punto, id_tipo_muestreo,
+    id_ubicacion, id_punto, id_tipo_muestreo, id_tipo_muestra,
     CONVERT(NVARCHAR, fecha_muestreo, 126) AS fecha_muestreo,
     CONVERT(NVARCHAR, fecha_recibe, 126) AS fecha_recibe,
     comentarios, activo, ubicacion
@@ -2881,7 +2883,7 @@ function getSample($sampleId)
 {
   $sql = "SELECT id_muestra, id_estudio, id_cliente, id_orden,
     id_plan, id_hoja, id_recepcion, id_custodia, id_paquete,
-    id_ubicacion, id_punto, id_tipo_muestreo,
+    id_ubicacion, id_punto, id_tipo_muestreo, id_tipo_muestra,
     CONVERT(NVARCHAR, fecha_muestreo, 126) AS fecha_muestreo,
     CONVERT(NVARCHAR, fecha_recibe, 126) AS fecha_recibe,
     comentarios, activo
@@ -2904,7 +2906,8 @@ function getBlankSample()
     "id_plan" => 0, "id_hoja" => 0,
     "id_recepcion" => 0, "id_custodia" => 0,
     "id_paquete" => 0, "id_ubicacion" => 0,
-    "id_punto" => 0, "fecha_muestreo" => null,
+    "id_punto" => 0, "id_tipo_muestreo" => 1,
+    "id_tipo_muestra" => 1, "fecha_muestreo" => null,
     "fecha_recibe" => null, "comentarios" => "",
     "activo" => 1,
   );
@@ -2918,7 +2921,7 @@ function getSamplesBySheet($sheetId)
 {
   $sql = "SELECT id_muestra, id_estudio, id_cliente, id_orden,
     id_plan, id_hoja, id_recepcion, id_custodia, id_paquete,
-    id_ubicacion, id_punto, id_tipo_muestreo,
+    id_ubicacion, id_punto, id_tipo_muestreo, id_tipo_muestra,
     CONVERT(NVARCHAR, fecha_muestreo, 126) AS fecha_muestreo,
     CONVERT(NVARCHAR, fecha_recibe, 126) AS fecha_recibe,
     comentarios, activo
@@ -2941,7 +2944,7 @@ function getSamplesByReception($receptionId)
 {
   $sql = "SELECT id_muestra, id_estudio, id_cliente, id_orden,
     id_plan, id_hoja, id_recepcion, id_custodia, id_paquete,
-    id_ubicacion, id_punto, id_tipo_muestreo,
+    id_ubicacion, id_punto, id_tipo_muestreo, id_tipo_muestra,
     CONVERT(NVARCHAR,fecha_muestreo, 126) AS fecha_muestreo,
     CONVERT(NVARCHAR, fecha_recibe, 126) AS fecha_recibe,
     comentarios, activo
@@ -2972,11 +2975,13 @@ function insertSample($sampleData)
   $sql = "INSERT INTO Muestra (id_estudio, id_cliente, id_orden,
     id_plan, id_hoja, id_recepcion, id_custodia,
     id_paquete, id_ubicacion, id_punto, id_tipo_muestreo,
-    fecha_muestreo, fecha_recibe, comentarios, activo)
+    id_tipo_muestra, fecha_muestreo, fecha_recibe, comentarios,
+    activo)
     VALUES (:id_estudio, :id_cliente, :id_orden,
     :id_plan, :id_hoja, :id_recepcion, :id_custodia,
     :id_paquete, :id_ubicacion, :id_punto, :id_tipo_muestreo,
-    :fecha_muestreo, :fecha_recibe, :comentarios, :activo)";
+    :id_tipo_muestra, :fecha_muestreo, :fecha_recibe, :comentarios,
+    :activo)";
   $db = getConnection();
   $stmt = $db->prepare($sql);
   $stmt->execute($sampleData);
@@ -2997,6 +3002,7 @@ function updateSample($updateData)
     id_recepcion = :id_recepcion, id_custodia = :id_custodia,
     id_paquete = :id_paquete, id_ubicacion = :id_ubicacion,
     id_punto = :id_punto, id_tipo_muestreo = :id_tipo_muestreo,
+    id_tipo_muestra = :id_tipo_muestra,
     fecha_muestreo = :fecha_muestreo, fecha_recibe = :fecha_recibe,
     comentarios = :comentarios, activo = :activo";
   $db = getConnection();
@@ -4368,7 +4374,7 @@ function getPlanSamples($planId)
 {
   $sql = "SELECT id_muestra, id_estudio, id_cliente, id_orden,
     id_plan, id_hoja, id_recepcion, id_custodia, id_paquete,
-    id_ubicacion, id_punto, id_tipo_muestreo,
+    id_ubicacion, id_punto, id_tipo_muestreo, id_tipo_muestra,
     CONVERT(NVARCHAR, fecha_muestreo, 126) AS fecha_muestreo,
     CONVERT(NVARCHAR, fecha_recibe, 126) AS fecha_recibe,
     comentarios, activo

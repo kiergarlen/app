@@ -229,15 +229,15 @@
       <h5>Muestra en: {{::row.punto.punto}}</h5>
       <p>
         <span class="label label-info"
-          data-ng-show="row.id_tipo_muestreo == 2">Compuesta</span>
+          data-ng-if="row.id_tipo_muestreo == 2">Muestreo Compuesto</span>
+        <span class="label label-success"
+          data-ng-if="row.id_tipo_muestra == 2">Muestra Compuesta</span>
         <br>
         <small>
           {{::row.punto.descripcion}}
         </small>
         <br>
-        Latitud: {{::row.punto.lat}}
-        |
-        Longitud: {{::row.punto.lng}}
+        Latitud: {{::row.punto.lat}} | Longitud: {{::row.punto.lng}}
       </p>
       <div class="row">
         <div class="col-xs-6 col-sm-4">
@@ -286,7 +286,7 @@
           data-ng-repeat="result in row.resultados"
           >
           <label
-            data-ng-if="result.id_tipo_valor < 3"
+            data-ng-if="result.id_tipo_valor < 3 && row.id_tipo_muestra != 2"
             >
             {{::result.param}}
           </label>
@@ -294,16 +294,16 @@
             class="form-control"
             placeholder="0"
             data-ng-model="result.valor"
-            data-ng-if="result.id_tipo_valor == 1"
+            data-ng-if="result.id_tipo_valor == 1 && row.id_tipo_muestra != 2"
             >
           <input type="text"
             class="form-control"
             placeholder="Valor"
             data-ng-model="result.valor"
-            data-ng-if="result.id_tipo_valor == 2"
+            data-ng-if="result.id_tipo_valor == 2 && row.id_tipo_muestra != 2"
             >
           <label
-            data-ng-if="result.id_tipo_valor == 3"
+            data-ng-if="result.id_tipo_valor == 3 && row.id_tipo_muestra != 2"
             >
             {{::result.param}}
             <br>

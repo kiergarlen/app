@@ -579,10 +579,10 @@ function processPlanSheetSampleInsert($planUpdateData)
     $sampleData["id_paquete"] = $plan["id_paquete"];
     $sampleData["id_ubicacion"] = $plan["id_ubicacion"];
     $sampleData["id_tipo_muestreo"] = $order->id_tipo_muestreo;
-    $sampleData["id_tipo_muestra"] = 1;
     $sampleData["fecha_muestreo"] = isoDateToMsSql($plan["fecha"]);
 
     for ($i = 0; $i < $l; $i++) {
+      $sampleData["id_tipo_muestra"] = 1;
       $sampleData["id_punto"] = $points[$i]["id_punto"];
       $freq = 24;
       if ($plan["frecuencia"] > 0) {
@@ -911,11 +911,14 @@ function processSheetResultsUpdate($sheetUpdateData)
     $sample = (array) $samples[$j];
     $sampleResults = (array) $sample["resultados"];
     $n = count($sampleResults);
-    for ($k = 0; $k < $n; $k++) {
-      $result = (array) $sampleResults[$k];
-      unset($result["param"]);
-      unset($result['$$hashKey']);
-      $results[] = $result;
+    if ($sample["id_tipo_muestra"] != 2) {
+      // insert field results if no compound sample
+      for ($k = 0; $k < $n; $k++) {
+        $result = (array) $sampleResults[$k];
+        unset($result["param"]);
+        unset($result['$$hashKey']);
+        $results[] = $result;
+      }
     }
   }
 
@@ -1955,10 +1958,14 @@ function processAnalysisResultsInsert($jobUpdateData, $analystId, $analysisId)
       $parameterId = $parameters[$i]->id_parametro;
       $parameterValueType = $parameters[$i]->id_tipo_valor;
       for ($j = 0; $j < $m; $j++) {
-        $sampleId = $samples[$j]->id_muestra;
+        $sample = (object) $samples[$j];
+        $sampleId = $sample->id_muestra;
         $result["id_muestra"] = $sampleId;
         $result["id_parametro"] = $parameterId;
         $result["id_tipo_valor"] = $parameterValueType;
+
+
+
         $resultId = insertResult($result);
         $resultIds[] = $resultId;
         $jobResult = array(

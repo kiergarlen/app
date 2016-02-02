@@ -1202,13 +1202,37 @@ function getSheet($sheetId)
       $m = count($parameters);
       for ($j = 0; $j < $m; $j++) {
         $params = (array) $parameters[$j];
-
-          $blankSamplingResult["id_muestra"] = $sampleId;
-          $blankSamplingResult["id_parametro"] = $params["id_parametro"];
-          $blankSamplingResult["id_tipo_valor"] = $params["id_tipo_valor"];
-          $blankSamplingResult["param"] = $params["param"];
+        $blankSamplingResult["id_muestra"] = $sampleId;
+        $blankSamplingResult["id_parametro"] = $params["id_parametro"];
+        $blankSamplingResult["id_tipo_valor"] = $params["id_tipo_valor"];
+        $blankSamplingResult["param"] = $params["param"];
+        // $samplingResults[] = $blankSamplingResult;
+        if ($samples[$i]["id_tipo_muestreo"] == 1) {
+          // single sampling mode
           $samplingResults[] = $blankSamplingResult;
-
+        } else if ($samples[$i]["id_tipo_muestreo"] == 2) {
+          // compound sampling mode, check sample type
+          if ($samples[$i]["id_tipo_muestra"] == 1) {
+            // this sample is single
+            // insert field and biological results
+            if ($param["id_area"] == 3 || $param["id_area"] == 4) {
+              // insert result for field and biological parameter
+              $samplingResults[] = $blankSamplingResult;
+            }
+            if ($param["id_parametro"] == 14) {
+              // insert result for parameter grease
+              $samplingResults[] = $blankSamplingResult;
+            }
+          } else if ($samples[$i]["id_tipo_muestra"] == 2) {
+            if ($param["id_area"] != 3 && $param["id_area"] != 4) {
+              // insert result for any parameter but field and biological
+              if ($param["id_parametro"] != 14) {
+                // any parameter but grease
+                $samplingResults[] = $blankSamplingResult;
+              }
+            }
+          }
+        }
       }
     }
     $sheet->muestras[$i]["resultados"] = $samplingResults;
@@ -3147,6 +3171,7 @@ function getResultsBySample($sampleId)
     activo, param
     FROM viewResultadoParametro
     WHERE activo = 1 AND id_muestra = :sampleId";
+  //--, id_tipo_muestreo, id_tipo_muestra
   $db = getConnection();
   $stmt = $db->prepare($sql);
   $stmt->bindParam("sampleId", $sampleId);

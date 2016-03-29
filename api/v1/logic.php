@@ -1959,38 +1959,38 @@ function processAnalysisResultsInsert($jobUpdateData, $analystId, $analysisId)
       $parameterId = $param->id_parametro;
       $parameterValueType = $param->id_tipo_valor;
       for ($j = 0; $j < $m; $j++) {
-        $sample = (array) $samples[$j];
+        $sample = (object) $samples[$j];
         $sampleId = $sample->id_muestra;
         $result["id_muestra"] = $sampleId;
         $result["id_parametro"] = $parameterId;
         $result["id_tipo_valor"] = $parameterValueType;
 
-        if ($sample["id_tipo_muestreo"] == 1) {
-          // single sampling mode
-          $samplingResults[] = $result;
-        } else if ($sample["id_tipo_muestreo"] == 2) {
-          // compound sampling mode, check sample type
-          if ($sample["id_tipo_muestra"] == 1) {
-            // this sample is single
-            // insert field and biological results
-            if ($param->id_area == 3 || $param->id_area == 4) {
-              // insert result for field and biological parameter
-              $samplingResults[] = $result;
-            }
-            if ($param->id_parametro == 14) {
-              // insert result for parameter grease
-              $samplingResults[] = $result;
-            }
-          } else if ($sample["id_tipo_muestra"] == 2) {
-            if ($param->id_area != 3 && $param->id_area != 4) {
-              // insert result for any parameter but field and biological
-              if ($param->id_parametro != 14) {
-                // any parameter but grease
-                $samplingResults[] = $result;
-              }
-            }
-          }
-        }
+        // if ($sample["id_tipo_muestreo"] == 1) {
+        //   // single sampling mode
+        //   $newResults[] = $result;
+        // } else if ($sample["id_tipo_muestreo"] == 2) {
+        //   // compound sampling mode, check sample type
+        //   if ($sample["id_tipo_muestra"] == 1) {
+        //     // this sample is single
+        //     // insert field and biological results
+        //     if ($param->id_area == 3 || $param->id_area == 4) {
+        //       // insert result for field and biological parameter
+        //       $newResults[] = $result;
+        //     }
+        //     if ($param->id_parametro == 14) {
+        //       // insert result for parameter grease
+        //       $newResults[] = $result;
+        //     }
+        //   } else if ($sample["id_tipo_muestra"] == 2) {
+        //     if ($param->id_area != 3 && $param->id_area != 4) {
+        //       // insert result for any lab parameter except biological
+        //       if ($param->id_parametro != 14) {
+        //         // any parameter but grease
+        //         $newResults[] = $result;
+        //       }
+        //     }
+        //   }
+        // }
 
         $resultId = insertResult($result);
         $resultIds[] = $resultId;

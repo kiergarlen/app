@@ -1965,12 +1965,12 @@ function processAnalysisResultsInsert($jobUpdateData, $analystId, $analysisId)
         $result["id_parametro"] = $parameterId;
         $result["id_tipo_valor"] = $parameterValueType;
 
-        // if ($sample["id_tipo_muestreo"] == 1) {
+        // if ($sample->id_tipo_muestreo == 1) {
         //   // single sampling mode
         //   $newResults[] = $result;
-        // } else if ($sample["id_tipo_muestreo"] == 2) {
+        // } else if ($sample->id_tipo_muestreo == 2) {
         //   // compound sampling mode, check sample type
-        //   if ($sample["id_tipo_muestra"] == 1) {
+        //   if ($sample->id_tipo_muestra == 1) {
         //     // this sample is single
         //     // insert field and biological results
         //     if ($param->id_area == 3 || $param->id_area == 4) {
@@ -1981,7 +1981,7 @@ function processAnalysisResultsInsert($jobUpdateData, $analystId, $analysisId)
         //       // insert result for parameter grease
         //       $newResults[] = $result;
         //     }
-        //   } else if ($sample["id_tipo_muestra"] == 2) {
+        //   } else if ($sample->id_tipo_muestra == 2) {
         //     if ($param->id_area != 3 && $param->id_area != 4) {
         //       // insert result for any lab parameter except biological
         //       if ($param->id_parametro != 14) {

@@ -1973,8 +1973,8 @@ function processAnalysisResultsInsert($jobUpdateData, $analystId, $analysisId)
         //   if ($sample->id_tipo_muestra == 1) {
         //     // this sample is single
         //     // insert field and biological results
-        //     if ($param->id_area == 3 || $param->id_area == 4) {
-        //       // insert result for field and biological parameter
+        //     if ($param->id_area !== 3 || $param->id_area !== 4) {
+        //       // insert result for any parameter but field and biological
         //       $newResults[] = $result;
         //     }
         //     if ($param->id_parametro == 14) {
@@ -1982,10 +1982,10 @@ function processAnalysisResultsInsert($jobUpdateData, $analystId, $analysisId)
         //       $newResults[] = $result;
         //     }
         //   } else if ($sample->id_tipo_muestra == 2) {
-        //     if ($param->id_area != 3 && $param->id_area != 4) {
-        //       // insert result for any lab parameter except biological
-        //       if ($param->id_parametro != 14) {
-        //         // any parameter but grease
+        //     if ($param->id_area == 2) {
+        //       // insert result for biological
+        //       if ($param->id_parametro == 14) {
+        //         // insert for grease
         //         $newResults[] = $result;
         //       }
         //     }

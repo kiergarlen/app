@@ -434,3 +434,10 @@ Firefox Fix For Freaky Fieldset
   height: auto;
   z-index: 2000;
 }
+
+/* User's name on nav */
+.navbar-name {
+  color:#fff;
+  padding:0 0 0 60px;
+  position:absolute;
+}

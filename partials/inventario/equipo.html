@@ -1,0 +1,123 @@
+    <sislab-menu></sislab-menu>
+    <sislab-banner></sislab-banner>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-xs-12 col-lg-8 col-lg-offset-2 main item-themed-z2">
+          <div class="view-container">
+
+<div class="row">
+  <div class="col-xs-12">
+    <h2 class="page-header">Equipo</h2>
+  </div>
+</div>
+<div class="toast-warning">
+  <div class="alert alert-warning alert-dismissible item-z1" role="alert"
+    data-ng-show="instrument.message.length > 0">
+    <button type="button" class="close" aria-label="Cerrar"
+      data-ng-click="instrument.message = ''">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    <i class="glyphicon glyphicon-warning-sign"></i>
+    <strong>
+      {{instrument.message}}
+    </strong>
+  </div>
+</div>
+
+<form class="form" role="form"
+  name="instrumentForm"
+  novalidate
+  >
+  <div class="row">
+    <div class="col-xs-12">
+      <h5>Equipo</h5>
+    </div>
+    <div class="col-xs-12 col-sm-6"
+      data-ng-repeat="equipment in instrument.instruments">
+      <div class="row">
+        <div class="col-xs-12 col-sm-4">
+          <label>
+           <input type="checkbox"
+             value="{{equipment.selected}}"
+             data-ng-model="equipment.selected"
+             >
+             {{equipment.inventario}}
+          </label>
+        </div>
+        <div class="col-xs-12 col-sm-4">
+          <label
+            for="equipmentLog{{::equipment.id_instrumento}}"
+            >
+            Bitácora
+          </label>
+          <input type="text"
+            class="form-control"
+            name="equipmentLog{{::equipment.id_instrumento}}"
+            placeholder="Bitácora"
+            data-ng-model="equipment.bitacora"
+            >
+        </div>
+        <div class="col-xs-12 col-sm-4">
+          <label
+            for="equipmentNumber{{::equipment.id_instrumento}}"
+            >
+            Folio
+          </label>
+          <input type="text"
+            class="form-control"
+            name="equipmentNumber{{::equipment.id_instrumento}}"
+            placeholder="Folio"
+            data-ng-model="equipment.folio"
+            >
+        </div>
+          <label
+            for="equipmentName{{::equipment.id_instrumento}}"
+            >
+            Equipo
+          </label>
+          <input type="text"
+            class="form-control"
+            name="equipmentName{{::equipment.id_instrumento}}"
+            placeholder="Equipo"
+            data-ng-model="equipment.instrumento"
+            >
+          <label
+            for="equipmentDescription{{::equipment.id_instrumento}}"
+            >
+            Descripción
+          </label>
+          <textarea rows="3" class="form-control well well-sm"
+            name="equipmentDescription{{::equipment.id_instrumento}}"
+            data-ng-model="equipment.descripcion"
+            >
+          </textarea>
+          <label
+            for="equipmentComment{{::equipment.id_instrumento}}"
+            >
+            Comentarios
+          </label>
+          <textarea rows="3" class="form-control well well-sm"
+            name="equipmentComment{{::equipment.id_instrumento}}"
+            data-ng-model="equipment.comentarios"
+            >
+          </textarea>
+      </div>
+    </div>
+  </div>
+  <br>
+  <button type="submit" class="btn btn-primary"
+    value="Guardar" title="Guardar"
+    data-ng-click="plan.submitForm()"
+    data-ng-if="plan.plan.id_status != 2 || plan.user.level < 3"
+    >
+    <i class="glyphicon glyphicon-cloud-upload" aria-hidden="true"></i>
+    Guardar
+  </button>
+</form>
+
+          </div>
+          <sislab-footer></sislab-footer>
+        </div><!-- view-container -->
+      </div><!-- row -->
+    </div><!-- container -->
+    <sislab-banner-bottom></sislab-banner-bottom>

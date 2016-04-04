@@ -11,7 +11,7 @@
   </div>
 </div>
 <form class="form" role="form"
-  name="instrumentsListForm"
+  name="instrumentsForm"
   novalidate
   >
   <div class="row">
@@ -21,16 +21,20 @@
   </div>
   <div class="row">
     <div class="col-xs-12 col-sm-8">
-      <label for="instrumentName" class="sr-only">
-        Ingrese una búsqueda (Modelo, Número, etc.)
+      <label for="instrumentSearch" class="sr-only">
+        Ingrese una búsqueda
       </label>
-      <input type="text"
-        class="form-control"
-        placeholder="Ingrese una búsqueda (Modelo, Número, etc.)"
-        id="instrumentName"
-        name="instrumentName"
-        data-ng-model="instrumentsList.filter.$"
-        >
+      <div class="input-group">
+        <div class="input-group-addon">
+          <i class="glyphicon glyphicon-search"></i>
+        </div>
+        <input type="text"
+          class="form-control"
+          placeholder="Ingrese una búsqueda"
+          id="instrumentSearch"
+          name="instrumentSearch"
+          data-ng-model="instruments.filter.$">
+      </div>
       <br>
     </div>
   </div>
@@ -42,30 +46,41 @@
         <h3 class="panel-title">Equipos</h3>
       </div>
       <div class="table-responsive">
-        <table class="table table-hover table-striped"
+        <table class="table table-hover table-condensed"
           id="instrumentsList">
           <thead>
             <tr>
-              <th>Modelo</th>
-              <th>Numero</th>
-              <th>Decripción</th>
+              <th>Inventario</th>
+              <th>Bitácora</th>
+              <th>Folio</th>
+              <th>Equipo</th>
+              <th>Acciones</th>
             </tr>
           </thead>
           <tbody>
             <tr
-              data-ng-repeat="item in instrumentsList.instruments |
-              filter:instrumentsList.filter.$"
-              id="instrumentId{{item.id_equipo}}"
-              data-ng-click="instrumentsList.selectRow()"
-              >
+              data-ng-repeat="item in instruments.instruments
+              | filter:instruments.filter.$"
+              id="instrumentId{{item.id_instrumento}}">
               <td>
-               {{item.modelo}}
+                {{item.inventario}}
               </td>
               <td>
-                {{item.numero}}
+                {{item.bitacora}}
               </td>
               <td>
-                {{item.descripcion}}
+                {{item.folio}}
+              </td>
+              <td>
+                {{item.equipo}}
+              </td>
+              <td>
+                <button class="btn btn-default"
+                  value="Consultar" title="Consultar"
+                  data-ng-click="instruments.viewInstrument(item.id_instrumento)"
+                  >
+                  <i class="glyphicon glyphicon-eye-open" aria-hidden="true"></i>
+                </button>
               </td>
             </tr>
           </tbody>

@@ -2798,11 +2798,11 @@
     var vm = this;
     vm.samples = SampleService.get();
     vm.user = TokenService.getUserFromToken();
-    vm.viewSample = viewSample;
+    // vm.viewSample = viewSample;
 
-    function viewSample(id) {
-      $location.path('/inventario/muestra/' + parseInt(id, 10));
-    }
+    // function viewSample(id) {
+    //   $location.path('/inventario/muestra/' + parseInt(id, 10));
+    // }
   }
   angular
     .module('sislabApp')

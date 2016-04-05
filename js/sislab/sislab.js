@@ -154,7 +154,12 @@
       when('/inventario/equipo', {
         templateUrl: 'partials/inventario/equipos.html',
         controller: 'InstrumentListController',
-        controllerAs: 'instrumentsList'
+        controllerAs: 'instrumentList'
+      }).
+      when('/inventario/equipo/:instrumentId', {
+        templateUrl: 'partials/inventario/equipo.html',
+        controller: 'InstrumentController',
+        controllerAs: 'instrument'
       }).
       when('/inventario/reactivo', {
         templateUrl: 'partials/inventario/reactivos.html',
@@ -2879,7 +2884,7 @@
   function InstrumentController($scope, $routeParams, TokenService,
     RestUtilsService, InstrumentService) {
     var vm = this;
-    vm.instrument = InstrumentService.get();
+    vm.instrument = InstrumentService.query({instrumentId: $routeParams.instrumentId});
     vm.message = '';
     vm.isDataSubmitted = false;
     vm.isFormValid = isFormValid;
@@ -2901,7 +2906,7 @@
               'inventario/equipo'
             );
         } else {
-          if (vm.user.level < 3 || vm.instrument.id_status !== 2) {
+          if (vm.instrument.activo !== 0) {
             RestUtilsService
               .updateData(
                 InstrumentService,
@@ -2916,11 +2921,11 @@
   }
   angular
     .module('sislabApp')
-    .controller('PlanController',
+    .controller('InstrumentController',
       [
         '$scope', '$routeParams', 'TokenService',
         'RestUtilsService', 'InstrumentService',
-        PlanController
+        InstrumentController
       ]
     );
 

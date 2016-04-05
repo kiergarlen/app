@@ -1536,7 +1536,7 @@
     function submitForm() {
       if (isFormValid() && !vm.isDataSubmitted) {
         vm.isDataSubmitted = true;
-        if (vm.plan.id_estudio > 0) {
+        if (vm.plan.id_plan < 1) {
           RestUtilsService
             .saveData(
               PlanService,
@@ -2847,21 +2847,80 @@
    * @this {Object} $scope - Contenedor para el modelo
    * @param {Object} InstrumentService - Proveedor de datos, Equipos
    */
-  function InstrumentListController(InstrumentService) {
+  function InstrumentListController($location, InstrumentService) {
     var vm = this;
-    vm.clients = InstrumentService.get();
-    vm.selectRow = selectRow;
+    vm.instruments = InstrumentService.get();
+    vm.viewInstrument = viewInstrument;
 
-    function selectRow() {
-
+    function viewInstrument(id) {
+      $location.path('/inventario/equipo/' + parseInt(id, 10));
     }
   }
   angular
     .module('sislabApp')
     .controller('InstrumentListController',
       [
-        'InstrumentService',
+        '$location', 'InstrumentService',
         InstrumentListController
+      ]
+    );
+
+  //InstrumentController.js
+  /**
+   * @name InstrumentController
+   * @constructor
+   * @desc Controla la vista para Equipo
+   * @this {Object} $scope - Contenedor para el modelo
+   * @param {Object} $routeParams - Proveedor de parámetros de ruta
+   * @param {Object} TokenService - Proveedor para manejo del token
+   * @param {Object} RestUtilsService - Proveedor para manejo de servicios REST
+   * @param {Object} InstrumentService - Proveedor de datos, Instrument de muestreo
+   */
+  function InstrumentController($scope, $routeParams, TokenService,
+    RestUtilsService, InstrumentService) {
+    var vm = this;
+    vm.instrument = InstrumentService.get();
+    vm.message = '';
+    vm.isDataSubmitted = false;
+    vm.isFormValid = isFormValid;
+    vm.submitForm = submitForm;
+
+    function isFormValid() {
+      vm.message = '';
+      return true;
+    }
+
+    function submitForm() {
+      if (isFormValid() && !vm.isDataSubmitted) {
+        vm.isDataSubmitted = true;
+        if (vm.instrument.id_instrumento < 1) {
+          RestUtilsService
+            .saveData(
+              InstrumentService,
+              vm.instrument,
+              'inventario/equipo'
+            );
+        } else {
+          if (vm.user.level < 3 || vm.instrument.id_status !== 2) {
+            RestUtilsService
+              .updateData(
+                InstrumentService,
+                vm.instrument,
+                'inventario/equipo',
+                'id_instrumento'
+              );
+          }
+        }
+      }
+    }
+  }
+  angular
+    .module('sislabApp')
+    .controller('PlanController',
+      [
+        '$scope', '$routeParams', 'TokenService',
+        'RestUtilsService', 'InstrumentService',
+        PlanController
       ]
     );
 
@@ -5125,6 +5184,60 @@
       [
         '$resource', 'TokenService',
         CoolerService
+      ]
+    );
+
+  //InstrumentService.js
+  /**
+   * @name InstrumentService
+   * @constructor
+   * @desc Proveedor de datos, Equipos
+   * @param {Object} $resource - Acceso a recursos HTTP
+   * @param {Object} TokenService - Proveedor de métodos para token
+   * @return {Object} $resource - Acceso a recursos HTTP
+   */
+  function InstrumentService($resource, TokenService) {
+    return $resource(API_BASE_URL + 'instruments/:instrumentId', {}, {
+      query: {
+        method: 'GET',
+        params: {instrumentId: 'id_instrumento'},
+        isArray: false,
+        headers: {
+          'Auth-Token': TokenService.getToken()
+        }
+      },
+      get: {
+        method: 'GET',
+        params: {},
+        isArray: true,
+        headers: {
+          'Auth-Token': TokenService.getToken()
+        }
+      },
+      update: {
+        method: 'POST',
+        params: {},
+        isArray: false,
+        headers: {
+          'Auth-Token': TokenService.getToken()
+        }
+      },
+      save: {
+        method: 'POST',
+        params: {},
+        isArray: false,
+        headers: {
+          'Auth-Token': TokenService.getToken()
+        }
+      }
+    });
+  }
+  angular
+    .module('sislabApp')
+    .factory('InstrumentService',
+      [
+        '$resource', 'TokenService',
+        InstrumentService
       ]
     );
 

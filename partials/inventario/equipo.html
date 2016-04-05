@@ -32,83 +32,91 @@
     <div class="col-xs-12">
       <h5>Equipo</h5>
     </div>
-    <div class="col-xs-12 col-sm-6"
-      data-ng-repeat="equipment in instrument.instruments">
+    <div class="col-xs-12 col-sm-6">
       <div class="row">
         <div class="col-xs-12 col-sm-4">
-          <label>
-           <input type="checkbox"
-             value="{{equipment.selected}}"
-             data-ng-model="equipment.selected"
-             >
-             {{equipment.inventario}}
+          <label
+            for="instrumentNumber"
+            >
           </label>
+          <input type="text"
+            class="form-control"
+            name="instrumentNumber"
+            placeholder="Inventario"
+            data-ng-model="instrument.instrument.inventario"
+            >
         </div>
         <div class="col-xs-12 col-sm-4">
           <label
-            for="equipmentLog{{::equipment.id_instrumento}}"
+            for="instrumentLog"
             >
             Bitácora
           </label>
           <input type="text"
             class="form-control"
-            name="equipmentLog{{::equipment.id_instrumento}}"
+            name="equipmentLog"
             placeholder="Bitácora"
-            data-ng-model="equipment.bitacora"
+            data-ng-model="instrument.instrument.bitacora"
             >
         </div>
         <div class="col-xs-12 col-sm-4">
           <label
-            for="equipmentNumber{{::equipment.id_instrumento}}"
+            for="instrumentNumber"
             >
             Folio
           </label>
           <input type="text"
             class="form-control"
-            name="equipmentNumber{{::equipment.id_instrumento}}"
+            name="equipmentNumber"
             placeholder="Folio"
-            data-ng-model="equipment.folio"
+            data-ng-model="instrument.instrument.folio"
             >
         </div>
+        <div class="col-xs-12 col-sm-4">
           <label
-            for="equipmentName{{::equipment.id_instrumento}}"
+            for="instrumentName"
             >
             Equipo
           </label>
           <input type="text"
             class="form-control"
-            name="equipmentName{{::equipment.id_instrumento}}"
+            name="equipmentName"
             placeholder="Equipo"
-            data-ng-model="equipment.instrumento"
+            data-ng-model="instrument.instrument.instrumento"
             >
+        </div>
+        <div class="col-xs-12 col-sm-4">
           <label
-            for="equipmentDescription{{::equipment.id_instrumento}}"
+            for="instrumentDescription"
             >
             Descripción
           </label>
           <textarea rows="3" class="form-control well well-sm"
-            name="equipmentDescription{{::equipment.id_instrumento}}"
-            data-ng-model="equipment.descripcion"
+            name="equipmentDescription"
+            data-ng-model="instrument.instrument.descripcion"
             >
           </textarea>
+        </div>
+        <div class="col-xs-12 col-sm-4">
           <label
-            for="equipmentComment{{::equipment.id_instrumento}}"
+            for="instrumentComment"
             >
             Comentarios
           </label>
           <textarea rows="3" class="form-control well well-sm"
-            name="equipmentComment{{::equipment.id_instrumento}}"
-            data-ng-model="equipment.comentarios"
+            name="equipmentComment"
+            data-ng-model="instrument.instrument.comentarios"
             >
           </textarea>
+        </div>
       </div>
     </div>
   </div>
   <br>
   <button type="submit" class="btn btn-primary"
     value="Guardar" title="Guardar"
-    data-ng-click="plan.submitForm()"
-    data-ng-if="plan.plan.id_status != 2 || plan.user.level < 3"
+    data-ng-click="instrument.submitForm()"
+    data-ng-if="instrument.instrument.id_status != 2 || instrument.user.level < 3"
     >
     <i class="glyphicon glyphicon-cloud-upload" aria-hidden="true"></i>
     Guardar

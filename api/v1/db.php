@@ -3241,6 +3241,30 @@ function getInstruments()
 }
 
 /**
+ * @param $instrumentId
+ * @return mixed
+ */
+function getInstrument($instrumentId)
+{
+  $sql = "SELECT id_instrumento, id_usuario_captura,
+    id_usuario_actualiza, instrumento, descripcion, muestreo,
+    laboratorio, inventario, bitacora, folio,
+    CONVERT(NVARCHAR, fecha_captura, 126) AS fecha_captura,
+    CONVERT(NVARCHAR, fecha_actualiza, 126) AS  fecha_actualiza,
+    ip_captura, ip_actualiza, host_captura, host_actualiza,
+    comentarios, activo
+    FROM Instrumento
+    WHERE activo = 1 AND id_instrumento = :instrumentId";
+  $db = getConnection();
+  $stmt = $db->prepare($sql);
+  $stmt->bindParam("instrumentId", $instrumentId);
+  $stmt->execute();
+  $instrument = $stmt->fetch(PDO::FETCH_OBJ);
+  $db = null;
+  return $instrument;
+}
+
+/**
  * @param $planId
  * @return mixed
  */

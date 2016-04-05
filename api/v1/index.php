@@ -730,6 +730,20 @@ $app->get("/materials", function () use ($app) {
   }
 });
 
+$app->get("/instruments(/)(:instrumentId)", function ($instrumentId = -1) use ($app) {
+  try {
+    $userId = decodeUserToken($app->request())->uid;
+    if ($instrumentId > -1) {
+      $result = json_encode(getInstrument($instrumentId));
+    } else {
+      $result = json_encode(getInstruments());
+    }
+    sendSuccessResponse($app, $result);
+  } catch (Exception $e) {
+    sendErrorResponse($app, $e);
+  }
+});
+
 $app->get("/instruments/sampling", function () use ($app) {
   try {
     $userId = decodeUserToken($app->request())->uid;
@@ -842,16 +856,6 @@ $app->get("/sheet/samples/:sheetId", function ($sheetId) use ($app) {
   try {
     $userId = decodeUserToken($app->request())->uid;
     $result = json_encode(getSamplesBySheet($sheetId));
-    sendSuccessResponse($app, $result);
-  } catch (Exception $e) {
-    sendErrorResponse($app, $e);
-  }
-});
-
-$app->get("/instruments", function () use ($app) {
-  try {
-    $userId = decodeUserToken($app->request())->uid;
-    $result = json_encode(getInstruments());
     sendSuccessResponse($app, $result);
   } catch (Exception $e) {
     sendErrorResponse($app, $e);

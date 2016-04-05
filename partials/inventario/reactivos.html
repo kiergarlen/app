@@ -11,7 +11,7 @@
   </div>
 </div>
 <form class="form" role="form"
-  name="reactivesListForm"
+  name="reactivesForm"
   novalidate
   >
   <div class="row">
@@ -21,16 +21,20 @@
   </div>
   <div class="row">
     <div class="col-xs-12 col-sm-8">
-      <label for="reactiveName" class="sr-only">
-        Ingrese una búsqueda (Modelo, Número, etc.)
+      <label for="reactiveSearch" class="sr-only">
+        Ingrese una búsqueda
       </label>
-      <input type="text"
-        class="form-control"
-        placeholder="Ingrese una búsqueda (Modelo, Número, Contacto, etc.)"
-        id="reactiveName"
-        name="reactiveName"
-        data-ng-model="reactivesList.filter.$"
-        >
+      <div class="input-group">
+        <div class="input-group-addon">
+          <i class="glyphicon glyphicon-search"></i>
+        </div>
+        <input type="text"
+          class="form-control"
+          placeholder="Ingrese una búsqueda"
+          id="reactiveSearch"
+          name="reactiveSearch"
+          data-ng-model="reactives.filter.$">
+      </div>
       <br>
     </div>
   </div>
@@ -46,26 +50,37 @@
           id="reactivesList">
           <thead>
             <tr>
-              <th>Modelo</th>
-              <th>Numero</th>
-              <th>Caducidad</th>
+              <th>Reactivo</th>
+              <th>Lote</th>
+              <th>Folio</th>
+              <th>Valor</th>
+              <th>Acciones</th>
             </tr>
           </thead>
           <tbody>
             <tr
-              data-ng-repeat="item in reactivesList.reactives |
-              filter:reactivesList.filter.$"
-              id="reactiveId{{item.id_equipo}}"
-              data-ng-click="reactivesList.selectRow()"
-              >
+              data-ng-repeat="item in reactiveList.reactives
+              | filter:reactiveList.filter.$"
+              id="reactiveId{{item.id_reactivo}}">
               <td>
-               {{item.modelo}}
+                {{item.reactivo}}
               </td>
               <td>
-                {{item.numero}}
+                {{item.lote}}
               </td>
               <td>
-                {{item.caducidad}}
+                {{item.folio}}
+              </td>
+              <td>
+                {{item.valor}}
+              </td>
+              <td>
+                <button class="btn btn-default"
+                  value="Consultar" title="Consultar"
+                  data-ng-click="reactiveList.viewReactive(item.id_reactivo)"
+                  >
+                  <i class="glyphicon glyphicon-eye-open" aria-hidden="true"></i>
+                </button>
               </td>
             </tr>
           </tbody>

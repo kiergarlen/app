@@ -710,10 +710,36 @@ $app->get("/containers/logs/:containerId", function ($containerId) use ($app) {
   }
 });
 
+//TODO: check if POST for containers is missing
+
 $app->get("/reactives", function () use ($app) {
   try {
     $userId = decodeUserToken($app->request())->uid;
     $result = json_encode(getReactives());
+    sendSuccessResponse($app, $result);
+  } catch (Exception $e) {
+    sendErrorResponse($app, $e);
+  }
+});
+
+$app->get("/reactives/loggable(/)(:reactiveId)", function ($reactiveId = -1) use ($app) {
+  try {
+    $userId = decodeUserToken($app->request())->uid;
+    if ($reactiveId > 0) {
+      $result = json_encode(getLoggableReactive($reactiveId));
+    } else {
+      $result = json_encode(getLoggableReactives());
+    }
+    sendSuccessResponse($app, $result);
+  } catch (Exception $e) {
+    sendErrorResponse($app, $e);
+  }
+});
+
+$app->get("/materials", function () use ($app) {
+  try {
+    $userId = decodeUserToken($app->request())->uid;
+    $result = json_encode(getMaterials());
     sendSuccessResponse($app, $result);
   } catch (Exception $e) {
     sendErrorResponse($app, $e);
@@ -743,6 +769,8 @@ $app->get("/instruments(/)(:instrumentId)", function ($instrumentId = -1) use ($
     sendErrorResponse($app, $e);
   }
 });
+
+//TODO: check if POST for instruments is missing
 
 $app->get("/instruments/sampling", function () use ($app) {
   try {

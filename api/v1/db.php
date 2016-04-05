@@ -3144,7 +3144,7 @@ function getResultsBySheet($sheetId)
     id_tipo_resultado, id_tipo_valor, id_usuario_captura,
     id_usuario_actualiza, valor,
     CONVERT(NVARCHAR, fecha_captura, 126) AS fecha_captura,
-    CONVERT(NVARCHAR, fecha_actualiza, 126) AS  fecha_actualiza,
+    CONVERT(NVARCHAR, fecha_actualiza, 126) AS fecha_actualiza,
     activo, param
     FROM viewResultadoHoja
     WHERE activo = 1 AND id_hoja = :sheetId";
@@ -3167,7 +3167,7 @@ function getResultsBySample($sampleId)
     id_tipo_resultado, id_tipo_valor, id_usuario_captura,
     id_usuario_actualiza, valor,
     CONVERT(NVARCHAR, fecha_captura, 126) AS fecha_captura,
-    CONVERT(NVARCHAR, fecha_actualiza, 126) AS  fecha_actualiza,
+    CONVERT(NVARCHAR, fecha_actualiza, 126) AS fecha_actualiza,
     activo, param
     FROM viewResultadoParametro
     WHERE activo = 1 AND id_muestra = :sampleId";
@@ -3205,7 +3205,7 @@ function getSamplingResultsBySample($sampleId)
     id_tipo_resultado, id_tipo_valor, id_usuario_captura,
     id_usuario_actualiza, valor,
     CONVERT(NVARCHAR, fecha_captura, 126) AS fecha_captura,
-    CONVERT(NVARCHAR, fecha_actualiza, 126) AS  fecha_actualiza,
+    CONVERT(NVARCHAR, fecha_actualiza, 126) AS fecha_actualiza,
     activo, param
     FROM viewResultadoMuestreoMuestra
     WHERE activo = 1 AND id_muestra = :sampleId";
@@ -3227,7 +3227,7 @@ function getInstruments()
     id_usuario_actualiza, instrumento, descripcion, muestreo,
     laboratorio, inventario, bitacora, folio,
     CONVERT(NVARCHAR, fecha_captura, 126) AS fecha_captura,
-    CONVERT(NVARCHAR, fecha_actualiza, 126) AS  fecha_actualiza,
+    CONVERT(NVARCHAR, fecha_actualiza, 126) AS fecha_actualiza,
     ip_captura, ip_actualiza, host_captura, host_actualiza,
     comentarios, activo
     FROM Instrumento
@@ -3250,7 +3250,7 @@ function getInstrument($instrumentId)
     id_usuario_actualiza, instrumento, descripcion, muestreo,
     laboratorio, inventario, bitacora, folio,
     CONVERT(NVARCHAR, fecha_captura, 126) AS fecha_captura,
-    CONVERT(NVARCHAR, fecha_actualiza, 126) AS  fecha_actualiza,
+    CONVERT(NVARCHAR, fecha_actualiza, 126) AS fecha_actualiza,
     ip_captura, ip_actualiza, host_captura, host_actualiza,
     comentarios, activo
     FROM Instrumento
@@ -3262,6 +3262,50 @@ function getInstrument($instrumentId)
   $instrument = $stmt->fetch(PDO::FETCH_OBJ);
   $db = null;
   return $instrument;
+}
+
+/**
+ * @param $instrumentData
+ * @return mixed
+ */
+function insertInstrument($instrumentData)
+{
+  $sql = "INSERT INTO Instrumento (id_usuario_captura,
+    id_usuario_actualiza, instrumento, descripcion, muestreo,
+    laboratorio, inventario, bitacora, folio, fecha_captura,
+    ip_captura, host_captura, comentarios, activo)
+    VALUES (:id_usuario_captura,
+    :id_usuario_actualiza, :instrumento, :descripcion, :muestreo,
+    :laboratorio, :inventario, :bitacora, :folio, SYSDATETIMEOFFSET(),
+    :ip_captura, :host_captura, :comentarios, :activo)";
+  $db = getConnection();
+  $stmt = $db->prepare($sql);
+  $stmt->execute($instrumentData);
+  $instrumentId = $db->lastInsertId();
+  $db = null;
+  return $instrumentId;
+}
+
+/**
+ * @param $updateData
+ * @return mixed
+ */
+function updateInstrument($updateData)
+{
+  $sql = "UPDATE Instrumento SET id_usuario_captura = :id_usuario_captura,
+    id_usuario_actualiza = :id_usuario_actualiza,
+    instrumento = :instrumento, descripcion = :descripcion,
+    muestreo = :muestreo, laboratorio = :laboratorio,
+    inventario = :inventario, bitacora = :bitacora, folio = :folio,
+    fecha_actualiza = SYSDATETIMEOFFSET(),
+    ip_actualiza = :ip_actualiza, host_actualiza = :host_actualiza,
+    comentarios = :comentarios, activo = :activo,
+    WHERE id_instrumento = :id_instrumento";
+  $db = getConnection();
+  $stmt = $db->prepare($sql);
+  $stmt->execute($updateData);
+  $db = null;
+  return $updateData["id_instrumento"];
 }
 
 /**
@@ -4276,7 +4320,7 @@ function getResultsByAnalysis($analysisId)
     id_parametro, id_tipo_resultado, id_tipo_valor,
     id_usuario_captura, id_usuario_actualiza, valor,
     CONVERT(NVARCHAR, fecha_captura, 126) AS fecha_captura,
-    CONVERT(NVARCHAR, fecha_actualiza, 126) AS  fecha_actualiza,
+    CONVERT(NVARCHAR, fecha_actualiza, 126) AS fecha_actualiza,
     activo, param
     FROM viewAnalisisResultado
     WHERE activo = 1 AND id_analisis = :analysisId";
@@ -5202,6 +5246,77 @@ function getReactives()
     $reactives[$i]["selected"] = false;
   }
   return $reactives;
+}
+
+/**
+ * @return mixed
+ */
+function getLoggableReactives()
+{
+  $sql = "SELECT id_reactivo, id_tipo_reactivo, reactivo,
+    registra_valor, lote, folio, valor, captura, consulta, activo
+    FROM Reactivo
+    WHERE activo = 1 AND registra_valor = 0 AND consulta <> 0";
+  $db = getConnection();
+  $stmt = $db->prepare($sql);
+  $stmt->execute();
+  $reactives = $stmt->fetchAll(PDO::FETCH_ASSOC);
+  $db = null;
+  return $reactives;
+}
+
+/**
+ * @return mixed
+ */
+function getLoggableReactive($reactiveId)
+{
+  $sql = "SELECT id_reactivo, id_tipo_reactivo, reactivo,
+    registra_valor, lote, folio, valor, captura, consulta, activo
+    FROM Reactivo
+    WHERE activo = 1 AND registra_valor = 0 AND consulta <> 0
+    AND id_reactivo = :reactiveId";
+  $db = getConnection();
+  $stmt = $db->prepare($sql);
+  $stmt->bindParam("reactiveId", $reactiveId);
+  $stmt->execute();
+  $reactive = $stmt->fetch(PDO::FETCH_OBJ);
+  $db = null;
+  return $reactive;
+}
+
+/**
+ * @param $reactiveData
+ * @return mixed
+ */
+function insertReactive($reactiveData)
+{
+  $sql = "INSERT INTO Reactivo (id_tipo_reactivo, reactivo,
+    registra_valor, lote, folio, valor, activo)
+    VALUES (:id_tipo_reactivo, :reactivo,
+    :registra_valor, :lote, :folio, :valor, :activo)";
+  $db = getConnection();
+  $stmt = $db->prepare($sql);
+  $stmt->execute($reactiveData);
+  $reactiveId = $db->lastInsertId();
+  $db = null;
+  return $reactiveId;
+}
+
+/**
+ * @param $updateData
+ * @return mixed
+ */
+function updateReactive($updateData)
+{
+  $sql = "UPDATE Reactivo SET id_tipo_reactivo = :id_tipo_reactivo,
+    reactivo = :reactivo, registra_valor = :registra_valor,
+    lote = :lote, folio = :folio,
+    valor = :valor, activo = :activo";
+  $db = getConnection();
+  $stmt = $db->prepare($sql);
+  $stmt->execute($updateData);
+  $db = null;
+  return $updateData["id_reactivo"];
 }
 
 /**

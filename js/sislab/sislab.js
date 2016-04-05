@@ -164,7 +164,12 @@
       when('/inventario/reactivo', {
         templateUrl: 'partials/inventario/reactivos.html',
         controller: 'ReactiveListController',
-        controllerAs: 'reactivesList'
+        controllerAs: 'reactiveList'
+      }).
+      when('/inventario/reactivo/:reactiveId', {
+        templateUrl: 'partials/inventario/reactivo.html',
+        controller: 'ReactiveController',
+        controllerAs: 'reactive'
       }).
       when('/inventario/recipiente', {
         templateUrl: 'partials/inventario/recipientes.html',
@@ -2935,23 +2940,90 @@
    * @constructor
    * @desc Controla la vista para el listado de Reactivos
    * @this {Object} $scope - Contenedor para el modelo
-   * @param {Object} ReactiveService - Proveedor de datos, Reactivos
+   * @param {Object} LoggableReactiveService - Proveedor de datos, Reactivos registrables
    */
-  function ReactiveListController(ReactiveService) {
+  function ReactiveListController($location, LoggableReactiveService) {
     var vm = this;
-    vm.pricesList = ReactiveService.get();
-    vm.selectRow = selectRow;
+    vm.reactives = LoggableReactiveService.get();
+    vm.viewReactive = viewReactive;
 
-    function selectRow() {
-
+    function viewReactive(id) {
+      $location.path('/inventario/reactivo/' + parseInt(id, 10));
     }
   }
   angular
     .module('sislabApp')
     .controller('ReactiveListController',
       [
-        'ReactiveService',
+        '$location', 'LoggableReactiveService',
         ReactiveListController
+      ]
+    );
+
+  //ReactiveController.js
+  /**
+   * @name ReactiveController
+   * @constructor
+   * @desc Controla la vista para Reactivo
+   * @this {Object} $scope - Contenedor para el modelo
+   * @param {Object} $routeParams - Proveedor de parámetros de ruta
+   * @param {Object} TokenService - Proveedor para manejo del token
+   * @param {Object} RestUtilsService - Proveedor para manejo de servicios REST
+   * @param {Object} LoggableReactiveService - Proveedor de datos, Reactivos registrables
+   */
+  function ReactiveController($scope, $routeParams, TokenService,
+    RestUtilsService, LoggableReactiveService) {
+    var vm = this;
+    vm.reactive = {};
+    vm.message = '';
+    vm.isDataSubmitted = false;
+    vm.isFormValid = isFormValid;
+    vm.submitForm = submitForm;
+
+    LoggableReactiveService
+      .query({reactiveId: $routeParams.reactiveId})
+      .$promise
+      .then(function success(response) {
+        console.log(response);
+        vm.reactive = response;
+      });
+
+    function isFormValid() {
+      vm.message = '';
+      return true;
+    }
+
+    function submitForm() {
+      if (isFormValid() && !vm.isDataSubmitted) {
+        vm.isDataSubmitted = true;
+        if (vm.reactive.id_reactivo < 1) {
+          RestUtilsService
+            .saveData(
+              LoggableReactiveService,
+              vm.reactive,
+              'inventario/reactivo'
+            );
+        } else {
+          if (vm.reactive.activo !== 0) {
+            RestUtilsService
+              .updateData(
+                LoggableReactiveService,
+                vm.reactive,
+                'inventario/reactivo',
+                'id_reactivo'
+              );
+          }
+        }
+      }
+    }
+  }
+  angular
+    .module('sislabApp')
+    .controller('ReactiveController',
+      [
+        '$scope', '$routeParams', 'TokenService',
+        'RestUtilsService', 'LoggableReactiveService',
+        ReactiveController
       ]
     );
 
@@ -5129,6 +5201,60 @@
       [
         '$resource', 'TokenService',
         ReactiveService
+      ]
+    );
+
+  //LoggableReactiveService.js
+  /**
+   * @name LoggableReactiveService
+   * @constructor
+   * @description Proveedor de datos, Reactivos registrables
+   * @param {Object} $resource - Acceso a recursos HTTP
+   * @param {Object} TokenService - Proveedor de métodos para token
+   * @return {Object} $resource - Acceso a recursos HTTP
+   */
+  function LoggableReactiveService($resource, TokenService) {
+    return $resource(API_BASE_URL + 'reactives/loggable/:reactiveId', {}, {
+      query: {
+        method: 'GET',
+        params: {reactiveId: 'id_reactivo'},
+        isArray: false,
+        headers: {
+          'Auth-Token': TokenService.getToken()
+        }
+      },
+      get: {
+        method: 'GET',
+        params: {},
+        isArray: true,
+        headers: {
+          'Auth-Token': TokenService.getToken()
+        }
+      },
+      update: {
+        method: 'POST',
+        params: {},
+        isArray: false,
+        headers: {
+          'Auth-Token': TokenService.getToken()
+        }
+      },
+      save: {
+        method: 'POST',
+        params: {},
+        isArray: false,
+        headers: {
+          'Auth-Token': TokenService.getToken()
+        }
+      }
+    });
+  }
+  angular
+    .module('sislabApp')
+    .factory('LoggableReactiveService',
+      [
+        '$resource', 'TokenService',
+        LoggableReactiveService
       ]
     );
 

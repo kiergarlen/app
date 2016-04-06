@@ -11,72 +11,76 @@
   </div>
 </div>
 <div class="row">
-  <div class="col-xs-12 col-sm-3">
+  <div class="col-xs-12 col-sm-2">
     <div class="thumbnail item-z1">
       <img
-        data-ng-src="img/emp/{{profile.profile.id_trabajad}}.JPG"
-        alt="{{profile.profile.nombres}}"
+        data-ng-src="img/emp/{{::profile.profile.id_trabajad}}.JPG"
+        alt="{{::profile.profile.nombres}}"
         >
     </div>
   </div>
-  <div class"=coll-xs-12 col-sm-9">
+  <div class"=coll-xs-12 col-sm-10">
     <h4>
-      {{profile.profile.nombres}}
+      {{::profile.profile.nombres}}
       <strong>
-      {{profile.profile.apellido_paterno}}
-      {{profile.profile.apellido_materno}}
+      {{::profile.profile.apellido_paterno}}
+      {{::profile.profile.apellido_materno}}
       </strong><br>
-      <small>{{profile.profile.puesto}}</small>
+      <small>{{::profile.profile.puesto}}</small>
     </h4>
     <ul class="list-unstyled">
       <li>
-        Rol: <strong>{{profile.profile.rol}}</strong>
+        Rol: <strong>{{::profile.profile.rol}}</strong>
       </li>
       <li>
-        Usuario: <strong>{{profile.profile.usr}}</strong>
+        Usuario: <strong>{{::profile.profile.usr}}</strong>
       </li>
     </ul>
   </div>
 </div>
-<form class="form" role="form"
-  name="profileForm"
-  data-ng-submit="profile.submitProfileForm()"
-  novalidate
-  >
-  <div class="row">
-    <div class="col-xs-12">
-      <h4>Cambiar contraseña</h4>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-xs-12 col-sm-6 col-md-3">
-      <label for="oldPassword">Contraseña Actual</label>
-      <input type="text"
-        class="form-control"
-        id="oldPassword"
-        name="oldPassword"
-        data-ng-model="profile.profile.password_actual"
+<div class="row">
+  <div class="col-xs-12 panel">
+    <form class="form" role="form"
+      name="profileForm"
+      novalidate
+      >
+      <div class="row">
+        <div class="col-xs-12">
+          <h4>Cambiar contraseña</h4>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12 col-sm-6 col-md-3">
+          <label for="oldPassword">Contraseña actual</label>
+          <input type="text"
+            class="form-control"
+            name="oldPassword"
+            data-ng-model="profile.profile.password_actual"
+            >
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12 col-sm-6 col-md-3">
+          <label for="newPassword">Contraseña nueva</label>
+          <input type="text"
+            class="form-control"
+            name="newPassword"
+            data-ng-model="profile.profile.password_nueva"
+            >
+        </div>
+      </div>
+      <br>
+      <button type="submit" class="btn btn-primary"
+        value="Guardar" title="Guardar"
+        data-ng-click="profile.submitForm()"
         >
-    </div>
+        <i class="glyphicon glyphicon-cloud-upload" aria-hidden="true"></i>
+        Guardar
+      </button>
+    </form>
   </div>
-  <div class="row">
-    <div class="col-xs-12 col-sm-6 col-md-3">
-      <label for="newPassword">Nueva contraseña</label>
-      <input type="text"
-        class="form-control"
-        id="newPassword"
-        name="newPassword"
-        data-ng-model="profile.profile.password_nueva"
-        >
-    </div>
-  </div>
-  <br>
-  <button type="submit" class="btn btn-primary"
-    value="Guardar" title="Guardar"
-    data-ng-click="profile.submitProfileForm()"
-    >
-    Guardar</button>
-</form>
+</div>
+
 
           </div>
           <sislab-footer></sislab-footer>

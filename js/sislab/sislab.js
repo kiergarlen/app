@@ -3344,40 +3344,52 @@
   function ProfileController($scope, $routeParams, TokenService,
     ProfileService) {
     var vm = this;
-    vm.plan = {};
     vm.user = TokenService.getUserFromToken();
-    vm.profile = ProfileService.query({userId: $routeParams.userId});
+    vm.profile = {};
     vm.message = '';
     vm.isDataSubmitted = false;
     vm.submitForm = submitForm;
 
+    ProfileService
+      .query({userId: $routeParams.userId})
+      .$promise
+      .then(function success(response) {
+        vm.profile = response;
+        vm.profile.password_actual = '';
+        vm.profile.password_nueva = '';
+      });
+
     function isFormValid() {
       vm.message = '';
+      if (vm.profile.password_actual.length < 1) {
+        vm.message = ' Debe ingresar su contraseña actual ';
+        return false;
+      }
+      if (vm.profile.password_nueva.length < 1) {
+        vm.message = ' Debe ingresar su contraseña nueva ';
+        return false;
+      }
+      if (vm.profile.password_nueva == vm.profile.password_actual) {
+        vm.message = ' La contraseña nueva debe ser diferente a la actual ';
+        return false;
+      }
       return true;
     }
 
     function submitForm() {
-      if (isFormValid() && !vm.isDataSubmitted) {
-        vm.isDataSubmitted = true;
-        if (vm.profile.id_usuario > 0 && vm.user.level < 3) {
-          RestUtilsService
-            .saveData(
-              PlanService,
-              vm.profile,
-              'sistema/perfil'
-            );
-        } else {
-          if (vm.user.level < 3) {
-            RestUtilsService
-              .updateData(
-                PlanService,
-                vm.profile,
-                'sistema/perfil',
-                'id_usuario'
-              );
-          }
-        }
-      }
+      // if (isFormValid() && !vm.isDataSubmitted) {
+      //   vm.isDataSubmitted = true;
+      //   vm.message = ' Su contraseña ha cambiado. Deberá volver a ingresar al sistema ';
+      //   $timeout(function() {
+      //     TokenService.clearToken();
+      //     RestUtilsService
+      //       .updateData(
+      //         PasswordService,
+      //         vm.profile,
+      //         'sistema/login'
+      //       );
+      //   }, 5000);
+      // }
     }
   }
   angular

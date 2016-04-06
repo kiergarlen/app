@@ -3271,13 +3271,13 @@ function getInstrument($instrumentId)
 function insertInstrument($instrumentData)
 {
   $sql = "INSERT INTO Instrumento (id_usuario_captura,
-    id_usuario_actualiza, instrumento, descripcion, muestreo,
-    laboratorio, inventario, bitacora, folio, fecha_captura,
-    ip_captura, host_captura, comentarios, activo)
+    instrumento, descripcion, muestreo, laboratorio, inventario,
+    bitacora, folio, fecha_captura, ip_captura, host_captura,
+    comentarios, activo)
     VALUES (:id_usuario_captura,
-    :id_usuario_actualiza, :instrumento, :descripcion, :muestreo,
-    :laboratorio, :inventario, :bitacora, :folio, SYSDATETIMEOFFSET(),
-    :ip_captura, :host_captura, :comentarios, :activo)";
+    :instrumento, :descripcion, :muestreo, :laboratorio, :inventario,
+    :bitacora, :folio, SYSDATETIMEOFFSET(), :ip_captura, :host_captura,
+    :comentarios, :activo)";
   $db = getConnection();
   $stmt = $db->prepare($sql);
   $stmt->execute($instrumentData);
@@ -3292,8 +3292,7 @@ function insertInstrument($instrumentData)
  */
 function updateInstrument($updateData)
 {
-  $sql = "UPDATE Instrumento SET id_usuario_captura = :id_usuario_captura,
-    id_usuario_actualiza = :id_usuario_actualiza,
+  $sql = "UPDATE Instrumento SET id_usuario_actualiza = :id_usuario_actualiza,
     instrumento = :instrumento, descripcion = :descripcion,
     muestreo = :muestreo, laboratorio = :laboratorio,
     inventario = :inventario, bitacora = :bitacora, folio = :folio,
@@ -5291,9 +5290,11 @@ function getLoggableReactive($reactiveId)
 function insertReactive($reactiveData)
 {
   $sql = "INSERT INTO Reactivo (id_tipo_reactivo, reactivo,
-    registra_valor, lote, folio, valor, activo)
+    registra_valor, lote, folio, valor, captura, consulta,
+    activo)
     VALUES (:id_tipo_reactivo, :reactivo,
-    :registra_valor, :lote, :folio, :valor, :activo)";
+    :registra_valor, :lote, :folio, :valor, :captura, :consulta,
+    :activo)";
   $db = getConnection();
   $stmt = $db->prepare($sql);
   $stmt->execute($reactiveData);
@@ -5310,8 +5311,9 @@ function updateReactive($updateData)
 {
   $sql = "UPDATE Reactivo SET id_tipo_reactivo = :id_tipo_reactivo,
     reactivo = :reactivo, registra_valor = :registra_valor,
-    lote = :lote, folio = :folio,
-    valor = :valor, activo = :activo";
+    lote = :lote, folio = :folio, valor = :valor,
+    captura = :captura, consulta = :consulta, activo = :activo
+    WHERE id_reactivo = :id_reactivo";
   $db = getConnection();
   $stmt = $db->prepare($sql);
   $stmt->execute($updateData);

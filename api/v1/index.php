@@ -710,8 +710,6 @@ $app->get("/containers/logs/:containerId", function ($containerId) use ($app) {
   }
 });
 
-//TODO: check if POST for containers is missing
-
 $app->get("/reactives", function () use ($app) {
   try {
     $userId = decodeUserToken($app->request())->uid;
@@ -730,6 +728,22 @@ $app->get("/reactives/loggable(/)(:reactiveId)", function ($reactiveId = -1) use
     } else {
       $result = json_encode(getLoggableReactives());
     }
+    sendSuccessResponse($app, $result);
+  } catch (Exception $e) {
+    sendErrorResponse($app, $e);
+  }
+});
+
+$app->post("/reactives/loggable", function () use ($app) {
+  try {
+    $userId = decodeUserToken($app->request())->uid;
+    $request = $app->request();
+    $reactiveId = extractDataFromRequest($request)->id_reactivo;
+    if ($reactiveId > 0) {
+      $reactiveUpdateData = processReactiveUpdate($request);
+      $reactiveId = updateReactive($reactiveUpdateData);
+    }
+    $result = "{\"id_reactivo\":" . $reactiveId . "}";
     sendSuccessResponse($app, $result);
   } catch (Exception $e) {
     sendErrorResponse($app, $e);
@@ -770,12 +784,29 @@ $app->get("/instruments(/)(:instrumentId)", function ($instrumentId = -1) use ($
   }
 });
 
-//TODO: check if POST for instruments is missing
-
 $app->get("/instruments/sampling", function () use ($app) {
   try {
     $userId = decodeUserToken($app->request())->uid;
     $result = json_encode(getSamplingInstruments());
+    sendSuccessResponse($app, $result);
+  } catch (Exception $e) {
+    sendErrorResponse($app, $e);
+  }
+});
+
+$app->post("/instruments", function () use ($app) {
+  try {
+    $userId = decodeUserToken($app->request())->uid;
+    $request = $app->request();
+    $instrumentId = extractDataFromRequest($request)->id_instrumento;
+    if ($instrumentId < 1) {
+      $instrumentInsertData = processInstrumentInsert($request);
+      $instrumentId = insertInstrument($instrumentInsertData);
+    } else {
+      $instrumentUpdateData = processInstrumentUpdate($request);
+      $instrumentId = updateInstrument($instrumentUpdateData);
+    }
+    $result = "{\"id_instrumento\":" . $instrumentId . "}";
     sendSuccessResponse($app, $result);
   } catch (Exception $e) {
     sendErrorResponse($app, $e);
@@ -884,16 +915,6 @@ $app->get("/sheet/samples/:sheetId", function ($sheetId) use ($app) {
   try {
     $userId = decodeUserToken($app->request())->uid;
     $result = json_encode(getSamplesBySheet($sheetId));
-    sendSuccessResponse($app, $result);
-  } catch (Exception $e) {
-    sendErrorResponse($app, $e);
-  }
-});
-
-$app->get("/containers", function () use ($app) {
-  try {
-    $userId = decodeUserToken($app->request())->uid;
-    $result = json_encode(getContainers());
     sendSuccessResponse($app, $result);
   } catch (Exception $e) {
     sendErrorResponse($app, $e);

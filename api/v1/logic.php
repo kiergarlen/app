@@ -2153,3 +2153,57 @@ function processAnalysisResultsUpdate($analysisUpdateData)
   }
   return $resultIds;
 }
+
+/**
+ * processReactiveUpdate
+ * @param mixed $request
+ * @return mixed
+ */
+function processReactiveUpdate($request)
+{
+  $token = decodeUserToken($request);
+  $update = (array) json_decode($request->getBody());
+  return $update;
+}
+
+/**
+ * processInstrumentInsert
+ * @param mixed $request
+ * @return mixed
+ */
+function processInstrumentInsert($request)
+{
+  $token = decodeUserToken($request);
+  $instrument = (array) json_decode($request->getBody());
+
+  unset($instrument["fecha_captura"]);
+  unset($instrument["ip_actualiza"]);
+  unset($instrument["host_actualiza"]);
+  unset($instrument["fecha_actualiza"]);
+
+  $instrument["id_usuario_captura"] = $token->uid;
+  $instrument["ip_captura"] = $request->getIp();
+  $instrument["host_captura"] = $request->getUrl();
+  return $instrument;
+}
+
+/**
+ * processInstrumentUpdate
+ * @param mixed $request
+ * @return mixed
+ */
+function processInstrumentUpdate($request)
+{
+  $token = decodeUserToken($request);
+  $instrument = (array) json_decode($request->getBody());
+
+  unset($instrument["ip_captura"]);
+  unset($instrument["host_captura"]);
+  unset($instrument["fecha_captura"]);
+  unset($instrument["fecha_actualiza"]);
+
+  $instrument["id_usuario_actualiza"] = $token->uid;
+  $instrument["ip_actualiza"] = $request->getIp();
+  $instrument["host_actualiza"] = $request->getUrl();
+  return $instrument;
+}

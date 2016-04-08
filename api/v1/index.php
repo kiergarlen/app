@@ -26,7 +26,7 @@ function processUserJwt($request)
   $name .= $userInfo->apellido_paterno . " ";
   $name .= $userInfo->apellido_materno . "";
 
-  $userPass = $usr . "." . $pwd . "." . "." . $userLv;
+  $userPass = $usr . "." . $pwd . "." . $userLv;
   $userPass = bin2hex($userPass);
   $token = array();
   $token["nam"] = $name;
@@ -1026,5 +1026,50 @@ $app->get("/users(/)(:userId)", function ($userId = -1) use ($app) {
     sendErrorResponse($app, $e);
   }
 });
+
+/*
+$app->post("/users/passwords", function () use ($app) {
+  try {
+    $userId = decodeUserToken($app->request())->uid;
+    $request = $app->request();
+    $data = extractDataFromRequest($request)->id_estudio;
+    $userToken = decodeUserToken($request);
+    $userId = $userToken->uid;
+    $userPassArray = explode(".", hex2bin($userToken->upt));
+    $profile = (object) extractDataFromRequest($request);
+    $storedUser = getUser($userId);
+
+
+    // // $isIdValid = $storedUser->id_usuario === $userId;
+    // // $isNameValid = $storedUser->usr === $userPassArray[0];
+    // // $isActualPassValid = $storedUser->pwd === $profile->pwd;
+    // // $isNewPassValid = $storedUser->pwd !== $profile->newPwd;
+
+    // //if ($isIdValid && $isNameValid && $isActualPassValid && $isNewPassValid) {
+    // if ($storedUser->id_usuario === $userId && $storedUser->usr === $userPassArray[0] && $storedUser->pwd === $profile->pwd && $storedUser->pwd !== $profile->newPwd) {
+    //   $updateData = array(
+    //     "id_usuario" =>  $userid,
+    //     "usr" =>  $userPassArray[0],
+    //     "pwd" =>  $profile->pwd,
+    //     "newPwd" =>  $profile->newPwd,
+    //     "ip_actualiza" =>  $userid,
+    //     "ip_actualiza" => $request->getIp();
+    //     "host_actualiza" => $request->getUrl();
+    //   );
+    //   $updateduserId = updateUserPasword($updateData);
+    //   $result = "{\"id_usuario\":" . $updateduserId . "}";
+    //   sendSuccessResponse($app, $result);
+    // }
+    // sendNotFoundResponse($app);
+    $result = "{\"id_usuario\":" . $userId . "}";
+    sendSuccessResponse($app, $result);
+
+    $result = "{\"id_usuario\":" . $userId . "}";
+    sendSuccessResponse($app, $result);
+  } catch (Exception $e) {
+    sendErrorResponse($app, $e);
+  }
+});
+*/
 
 $app->run();

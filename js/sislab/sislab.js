@@ -3337,12 +3337,14 @@
    * @constructor
    * @desc Controla la vista para Perfil
    * @this {Object} $scope - Contenedor para el modelo
+   * @param {Object} $timeout - Proveedor para timeout
    * @param {Object} $routeParams - Proveedor de parámetros de ruta
    * @param {Object} TokenService - Proveedor para manejo del token
+   * @param {Object} PasswordService - Proveedor de datos, actualización de contraseña
    * @param {Object} ProfileService - Proveedor de datos, Perfil de usuario
    */
-  function ProfileController($scope, $routeParams, TokenService,
-    ProfileService) {
+  function ProfileController($scope, $timeout, $routeParams,
+    TokenService, PasswordService, ProfileService) {
     var vm = this;
     vm.user = TokenService.getUserFromToken();
     vm.profile = {};
@@ -3362,11 +3364,11 @@
     function isFormValid() {
       vm.message = '';
       if (vm.profile.password_actual.length < 1) {
-        vm.message = ' Debe ingresar su contraseña actual ';
+        vm.message = ' Debe ingresar la contraseña actual ';
         return false;
       }
       if (vm.profile.password_nueva.length < 1) {
-        vm.message = ' Debe ingresar su contraseña nueva ';
+        vm.message = ' Debe ingresar una contraseña nueva ';
         return false;
       }
       if (vm.profile.password_nueva == vm.profile.password_actual) {
@@ -3377,27 +3379,29 @@
     }
 
     function submitForm() {
-      // if (isFormValid() && !vm.isDataSubmitted) {
-      //   vm.isDataSubmitted = true;
-      //   vm.message = ' Su contraseña ha cambiado. Deberá volver a ingresar al sistema ';
-      //   $timeout(function() {
-      //     TokenService.clearToken();
-      //     RestUtilsService
-      //       .updateData(
-      //         PasswordService,
-      //         vm.profile,
-      //         'sistema/login'
-      //       );
-      //   }, 5000);
-      // }
+      if (isFormValid() && !vm.isDataSubmitted) {
+        vm.isDataSubmitted = true;
+        vm.message = ' Su contraseña ha cambiado. Saliendo del sistema ';
+
+        vm.profile.pwd = String(TokenService.hashMessage(vm.profile.password_actual));
+        vm.profile.newPwd = String(TokenService.hashMessage(vm.profile.password_nueva));
+
+        RestUtilsService
+          .updateData(
+            PasswordService,
+            vm.profile,
+            'sistema/login',
+            'id_usuario'
+          );
+      }
     }
   }
   angular
     .module('sislabApp')
     .controller('ProfileController',
       [
-        '$scope', '$routeParams', 'TokenService',
-        'ProfileService',
+        '$scope', '$timeout', '$routeParams',
+        'TokenService', 'PasswordService', 'ProfileService',
         ProfileController
       ]
     );
@@ -6325,6 +6329,36 @@
       [
         '$resource', 'TokenService',
         StorageService
+      ]
+    );
+
+  //PasswordService.js
+  /**
+   * @name PasswordService
+   * @constructor
+   * @desc Proveedor de datos, Contraseñas
+   * @param {Object} $resource - Acceso a recursos HTTP
+   * @param {Object} TokenService - Proveedor de métodos para token
+   * @return {Object} $resource - Acceso a recursos HTTP
+   */
+  function PasswordService($resource, TokenService) {
+    return $resource(API_BASE_URL + 'users/passwords', {}, {
+      update: {
+        method: 'POST',
+        params: {},
+        isArray: false,
+        headers: {
+          'Auth-Token': TokenService.getToken()
+        }
+      }
+    });
+  }
+  angular
+    .module('sislabApp')
+    .factory('PasswordService',
+      [
+        '$resource', 'TokenService',
+        PasswordService
       ]
     );
 })();

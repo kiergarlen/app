@@ -149,6 +149,27 @@ function updateUser($updateData)
 }
 
 /**
+ * Actualiza un la contraseña de un Usuario
+ * @param  array $updateData Array con los datos del Usuario a actualizar
+ * @return int $userId Id del Usuario actualizado
+ */
+function updateUserPasword($updateData)
+{
+  $sql = "UPDATE Usuario SET pwd = :newPwd,
+    fecha_actualiza = SYSDATETIMEOFFSET(),
+    ip_actualiza = :ip_actualiza,
+    host_actualiza = :host_actualiza
+    WHERE id_usuario = :id_usuario AND usr = :usr
+    AND pwd = :pwd";
+  $db = getConnection();
+  $stmt = $db->prepare($sql);
+  $stmt->execute($updateData);
+  $db = null;
+  $userId = $updateData["id_usuario"];
+  return $userId;
+}
+
+/**
  * Obtiene los elementos del Menu/Submenu asignados al usuario $userId
  * @param  int $userId Id del Usuario
  * @return array $result Elementos del menu de $userId

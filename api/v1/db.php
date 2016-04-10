@@ -159,8 +159,7 @@ function updateUserPasword($updateData)
     fecha_actualiza = SYSDATETIMEOFFSET(),
     ip_actualiza = :ip_actualiza,
     host_actualiza = :host_actualiza
-    WHERE id_usuario = :id_usuario AND usr = :usr
-    AND pwd = :pwd";
+    WHERE id_usuario = :id_usuario AND usr = :usr AND pwd = :pwd";
   $db = getConnection();
   $stmt = $db->prepare($sql);
   $stmt->execute($updateData);

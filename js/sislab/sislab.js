@@ -3340,11 +3340,12 @@
    * @param {Object} $timeout - Proveedor para timeout
    * @param {Object} $routeParams - Proveedor de parámetros de ruta
    * @param {Object} TokenService - Proveedor para manejo del token
+   * @param {Object} RestUtilsService - Proveedor para manejo de servicios REST
    * @param {Object} PasswordService - Proveedor de datos, actualización de contraseña
    * @param {Object} ProfileService - Proveedor de datos, Perfil de usuario
    */
   function ProfileController($scope, $timeout, $routeParams,
-    TokenService, PasswordService, ProfileService) {
+    TokenService, RestUtilsService, PasswordService, ProfileService) {
     var vm = this;
     vm.user = TokenService.getUserFromToken();
     vm.profile = {};
@@ -3371,7 +3372,7 @@
         vm.message = ' Debe ingresar una contraseña nueva ';
         return false;
       }
-      if (vm.profile.password_nueva == vm.profile.password_actual) {
+      if (vm.profile.password_nueva === vm.profile.password_actual) {
         vm.message = ' La contraseña nueva debe ser diferente a la actual ';
         return false;
       }
@@ -3401,7 +3402,8 @@
     .controller('ProfileController',
       [
         '$scope', '$timeout', '$routeParams',
-        'TokenService', 'PasswordService', 'ProfileService',
+        'TokenService', 'RestUtilsService', 'PasswordService',
+        'ProfileService',
         ProfileController
       ]
     );

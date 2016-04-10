@@ -154,7 +154,6 @@
       when('/inventario/equipo', {
         templateUrl: 'partials/inventario/equipos.html',
         controller: 'InstrumentListController',
-        controllerAs: 'instrumentList'
         controllerAs: 'instruments'
       }).
       when('/inventario/equipo/:instrumentId', {
@@ -175,12 +174,12 @@
       when('/inventario/recipiente', {
         templateUrl: 'partials/inventario/recipientes.html',
         controller: 'ContainerListController',
-        controllerAs: 'containersList'
+        controllerAs: 'containers'
       }).
       when('/catalogo/punto', {
         templateUrl: 'partials/catalogo/puntos.html',
         controller: 'PointListController',
-        controllerAs: 'pointsList'
+        controllerAs: 'points'
       }).
       when('/catalogo/cliente', {
         templateUrl: 'partials/catalogo/clientes.html',
@@ -189,8 +188,8 @@
       }).
       when('/catalogo/cliente/:clientId', {
         templateUrl: 'partials/catalogo/cliente.html',
-        controller: 'ClientDetailController',
-        controllerAs: 'clientDetail'
+        controller: 'ClientController',
+        controllerAs: 'client'
       }).
       when('/catalogo/area', {
         templateUrl: 'partials/catalogo/areas.html',
@@ -200,27 +199,27 @@
       when('/catalogo/empleado', {
         templateUrl: 'partials/catalogo/empleados.html',
         controller: 'EmployeeListController',
-        controllerAs: 'employeesList'
+        controllerAs: 'employees'
       }).
       when('/catalogo/norma', {
         templateUrl: 'partials/catalogo/normas.html',
         controller: 'NormListController',
-        controllerAs: 'normsList'
+        controllerAs: 'norms'
       }).
       when('/catalogo/referencia', {
         templateUrl: 'partials/catalogo/referencia.html',
         controller: 'ReferenceListController',
-        controllerAs: 'referencesList'
+        controllerAs: 'references'
       }).
       when('/catalogo/metodo', {
         templateUrl: 'partials/catalogo/metodos.html',
         controller: 'MethodListController',
-        controllerAs: 'methodsList'
+        controllerAs: 'methods'
       }).
       when('/catalogo/precio', {
         templateUrl: 'partials/catalogo/precios.html',
         controller: 'PriceListController',
-        controllerAs: 'pricesList'
+        controllerAs: 'prices'
       }).
       when('/sistema/usuario', {
         templateUrl: 'partials/sistema/usuarios.html',
@@ -3064,7 +3063,7 @@
    */
   function ReportListController(ReportService) {
     var vm = this;
-    vm.pricesList = ReportService.get();
+    vm.reports = ReportService.get();
     vm.selectRow = selectRow;
 
     function selectRow() {
@@ -3243,7 +3242,7 @@
    */
   function ReferenceListController(ReferenceService) {
     var vm = this;
-    vm.ReferencesList = ReferenceService.get();
+    vm.references = ReferenceService.get();
     vm.selectRow = selectRow;
 
     function selectRow() {
@@ -3269,9 +3268,9 @@
    */
   function MethodListController(MethodService) {
     var vm = this;
-    vm.methodsList = MethodService.get();
-
+    vm.methods = MethodService.get();
     vm.selectRow = selectRow;
+
     function selectRow() {
 
     }
@@ -3295,7 +3294,7 @@
    */
   function PriceListController(PriceService) {
     var vm = this;
-    vm.pricesList = PriceService.get();
+    vm.prices = PriceService.get();
     vm.selectRow = selectRow;
 
     function selectRow() {
@@ -3436,21 +3435,21 @@
       ]
     );
 
-  //ClientDetailController.js
+  //ClientController.js
   /**
-   * @name ClientDetailController
+   * @name ClientController
    * @constructor
-   * @desc Controla la vista para con el detalle de un Cliente
+   * @desc Controla la vista para captural los Clientes
    * @this {Object} $scope - Contenedor para el modelo
    * @param {Object} ClientService - Proveedor de datos, Clientes
    */
-  function ClientDetailController($scope, ClientService) {
+  function ClientController($scope, ClientService) {
     var vm = this;
-    vm.clientDetail = ClientService.get();
+    vm.client = ClientService.get();
   }
   angular
     .module('sislabApp')
-    .controller('ClientDetailController',
+    .controller('ClientController',
       [
         '$scope',
         'ClientService',

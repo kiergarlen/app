@@ -32,7 +32,7 @@
           class="form-control"
           placeholder="Ingrese una búsqueda"
           name="instrumentSearch"
-          data-ng-model="instrumentList.filter.$">
+          data-ng-model="instruments.filter.$">
       </div>
       <br>
     </div>
@@ -57,8 +57,8 @@
           </thead>
           <tbody>
             <tr
-              data-ng-repeat="item in instrumentList.instruments
-              | filter:instrumentList.filter.$">
+              data-ng-repeat="item in instruments.instruments
+              | filter:instruments.filter.$">
               <td>
                 {{::item.inventario}}
               </td>
@@ -74,7 +74,7 @@
               <td>
                 <button class="btn btn-default"
                   value="Consultar" title="Consultar"
-                  data-ng-click="instrumentList.viewInstrument(item.id_instrumento)"
+                  data-ng-click="instruments.viewInstrument(item.id_instrumento)"
                   >
                   <i class="glyphicon glyphicon-eye-open" aria-hidden="true"></i>
                 </button>

@@ -31,7 +31,6 @@
         <input type="text"
           class="form-control"
           placeholder="Ingrese una búsqueda"
-          id="reactiveSearch"
           name="reactiveSearch"
           data-ng-model="reactives.filter.$">
       </div>
@@ -46,8 +45,7 @@
         <h3 class="panel-title">Reactivos</h3>
       </div>
       <div class="table-responsive">
-        <table class="table table-hover table-striped"
-          id="reactivesList">
+        <table class="table table-hover table-condensed">
           <thead>
             <tr>
               <th>Reactivo</th>
@@ -59,25 +57,24 @@
           </thead>
           <tbody>
             <tr
-              data-ng-repeat="item in reactiveList.reactives
-              | filter:reactiveList.filter.$"
-              id="reactiveId{{item.id_reactivo}}">
+              data-ng-repeat="item in reactives.reactives
+              | filter:reactives.filter.$">
               <td>
-                {{item.reactivo}}
+                {{::item.reactivo}}
               </td>
               <td>
-                {{item.lote}}
+                {{::item.lote}}
               </td>
               <td>
-                {{item.folio}}
+                {{::item.folio}}
               </td>
               <td>
-                {{item.valor}}
+                {{::item.valor}}
               </td>
               <td>
                 <button class="btn btn-default"
                   value="Consultar" title="Consultar"
-                  data-ng-click="reactiveList.viewReactive(item.id_reactivo)"
+                  data-ng-click="reactives.viewReactive(item.id_reactivo)"
                   >
                   <i class="glyphicon glyphicon-eye-open" aria-hidden="true"></i>
                 </button>

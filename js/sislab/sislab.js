@@ -155,6 +155,7 @@
         templateUrl: 'partials/inventario/equipos.html',
         controller: 'InstrumentListController',
         controllerAs: 'instrumentList'
+        controllerAs: 'instruments'
       }).
       when('/inventario/equipo/:instrumentId', {
         templateUrl: 'partials/inventario/equipo.html',
@@ -164,7 +165,7 @@
       when('/inventario/reactivo', {
         templateUrl: 'partials/inventario/reactivos.html',
         controller: 'ReactiveListController',
-        controllerAs: 'reactiveList'
+        controllerAs: 'reactives'
       }).
       when('/inventario/reactivo/:reactiveId', {
         templateUrl: 'partials/inventario/reactivo.html',

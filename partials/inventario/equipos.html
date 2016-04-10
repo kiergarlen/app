@@ -31,7 +31,6 @@
         <input type="text"
           class="form-control"
           placeholder="Ingrese una búsqueda"
-          id="instrumentSearch"
           name="instrumentSearch"
           data-ng-model="instrumentList.filter.$">
       </div>
@@ -46,8 +45,7 @@
         <h3 class="panel-title">Equipos</h3>
       </div>
       <div class="table-responsive">
-        <table class="table table-hover table-condensed"
-          id="instrumentsList">
+        <table class="table table-hover table-condensed">
           <thead>
             <tr>
               <th>Inventario</th>
@@ -60,19 +58,18 @@
           <tbody>
             <tr
               data-ng-repeat="item in instrumentList.instruments
-              | filter:instrumentList.filter.$"
-              id="instrumentId{{item.id_instrumento}}">
+              | filter:instrumentList.filter.$">
               <td>
-                {{item.inventario}}
+                {{::item.inventario}}
               </td>
               <td>
-                {{item.bitacora}}
+                {{::item.bitacora}}
               </td>
               <td>
-                {{item.folio}}
+                {{::item.folio}}
               </td>
               <td>
-                {{item.instrumento}}
+                {{::item.instrumento}}
               </td>
               <td>
                 <button class="btn btn-default"

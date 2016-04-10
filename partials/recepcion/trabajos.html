@@ -31,7 +31,6 @@
         <input type="text"
           class="form-control"
           placeholder="Ingrese una búsqueda"
-          id="jobSearch"
           name="jobSearch"
           data-ng-model="jobs.filter.$">
       </div>
@@ -46,8 +45,7 @@
         <h3 class="panel-title">Órdenes de Trabajo</h3>
       </div>
       <div class="table-responsive">
-        <table class="table table-hover table-condensed"
-          id="jobsList">
+        <table class="table table-hover table-condensed">
           <thead>
             <tr>
               <th>Id Orden Trabajo</th>
@@ -60,13 +58,12 @@
           <tbody>
             <tr
               data-ng-repeat="item in jobs.jobs
-              | filter:jobs.filter.$"
-              id="jobId{{item.id_trabajo}}">
+              | filter:jobs.filter.$">
               <td>
-                {{item.id_trabajo}}
+                {{::item.id_trabajo}}
               </td>
               <td>
-                {{item.id_recepcion}}
+                {{::item.id_recepcion}}
               </td>
               <td>
                 <span class="label label-default"
@@ -77,7 +74,7 @@
                   data-ng-show="item.id_status == 3">Rechazado</span>
               </td>
               <td>
-                {{item.area}}
+                {{::item.area}}
               </td>
               <td>
                 <button class="btn btn-default"

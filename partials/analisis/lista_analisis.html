@@ -60,16 +60,16 @@
               data-ng-repeat="item in analysisList.analysisList
               | filter:analysisList.filter.$">
               <td>
-                {{item.id_analisis}}
+                {{::item.id_analisis}}
               </td>
               <td>
-                {{item.id_trabajo}}
+                {{::item.id_trabajo}}
               </td>
               <td>
-                {{item.fecha_captura | date: 'yyyy-MM-dd'}}
+                {{::item.fecha_captura | date: 'yyyy-MM-dd'}}
               </td>
               <td>
-                {{item.fecha_analiza | date: 'yyyy-MM-dd'}}
+                {{::item.fecha_analiza | date: 'yyyy-MM-dd'}}
               </td>
               <td>
                 <button class="btn btn-default"

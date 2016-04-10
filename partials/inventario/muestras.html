@@ -31,7 +31,6 @@
         <input type="text"
           class="form-control"
           placeholder="Ingrese una búsqueda"
-          id="sampleSearch"
           name="sampleSearch"
           data-ng-model="samples.filter.$">
       </div>
@@ -46,8 +45,7 @@
         <h3 class="panel-title">Muestras</h3>
       </div>
       <div class="table-responsive">
-        <table class="table table-hover table-striped"
-          id="samplesList">
+        <table class="table table-hover table-striped">
           <thead>
             <tr>
               <th>Id Muestra</th>
@@ -65,24 +63,22 @@
           </thead>
           <tbody>
             <tr
-              data-ng-repeat="item in samples.samples |
-              filter:samples.filter.$"
-              id="sampleId{{item.id_muestra}}"
-              >
+              data-ng-repeat="item in samples.samples
+              | filter:samples.filter.$">
               <td>
-                {{item.id_muestra}}
+                {{::item.id_muestra}}
               </td>
               <td>
-               {{item.id_estudio}}
+               {{::item.id_estudio}}
               </td>
               <td>
-                {{item.id_orden}}
+                {{::item.id_orden}}
               </td>
               <td>
-               {{item.id_plan}}
+               {{::item.id_plan}}
               </td>
               <td>
-                {{item.id_hoja}}
+                {{::item.id_hoja}}
               </td>
               <td>
                 <span class="label label-info"
@@ -92,10 +88,10 @@
               </td>
               <td
                 data-ng-show="samples.user.level < 3">
-                {{item.ubicacion}}
+                {{::item.ubicacion}}
               </td>
               <td>
-                {{item.fecha_muestreo | date: 'yyyy-MM-dd'}}
+                {{::item.fecha_muestreo | date: 'yyyy-MM-dd'}}
               </td>
             </tr>
           </tbody>

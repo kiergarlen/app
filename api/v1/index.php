@@ -784,7 +784,7 @@ $app->get("/instruments(/)(:instrumentId)", function ($instrumentId = -1) use ($
   }
 });
 
-$app->get("/instruments/sampling", function () use ($app) {
+$app->get("/sampling/instruments", function () use ($app) {
   try {
     $tokenUserId = decodeUserToken($app->request())->uid;
     $result = json_encode(getSamplingInstruments());
@@ -1044,10 +1044,10 @@ $app->post("/users/passwords", function () use ($app) {
 
     if ($isIdValid && $isNameValid && $isActualPassValid && $isNewPassValid) {
       $updateData = array(
-        "id_usuario" =>  $tokenUserId,
-        "usr" =>  $userPassArray[0],
-        "pwd" =>  $profile->pwd,
-        "newPwd" =>  $profile->newPwd,
+        "id_usuario" => $tokenUserId,
+        "usr" => $userPassArray[0],
+        "pwd" => $profile->pwd,
+        "newPwd" => $profile->newPwd,
         "ip_actualiza" => $request->getIp(),
         "host_actualiza" => $request->getUrl(),
       );

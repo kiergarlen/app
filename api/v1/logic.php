@@ -1694,7 +1694,6 @@ function processJobUpdate($request)
   $parameters = $update["parametros"];
   $results = $update["resultados"];
 
-
   unset($update["muestras"]);
   unset($update["lista_analisis"]);
   unset($update["referencias"]);

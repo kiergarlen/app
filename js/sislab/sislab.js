@@ -329,7 +329,7 @@
    * @this {Object} $scope - Contenedor para el modelo
    * @param {Object} TokenService - Proveedor para manejo del token
    */
-  function LoginController(TokenService) {
+  function LoginController($scope, TokenService) {
     var vm = this;
     vm.message = '';
     vm.user = {username: '', password: ''};
@@ -351,7 +351,7 @@
     .module('sislabApp')
     .controller('LoginController',
       [
-        'TokenService',
+        '$scope', 'TokenService',
         LoginController
       ]
     );
@@ -2969,19 +2969,11 @@
   function ReactiveController($routeParams, TokenService, RestUtilsService,
     LoggableReactiveService) {
     var vm = this;
-    vm.reactive = {};
+    vm.reactive = LoggableReactiveService.query({reactiveId: $routeParams.reactiveId});
     vm.message = '';
     vm.isDataSubmitted = false;
     vm.isFormValid = isFormValid;
     vm.submitForm = submitForm;
-
-    LoggableReactiveService
-      .query({reactiveId: $routeParams.reactiveId})
-      .$promise
-      .then(function success(response) {
-        console.log(response);
-        vm.reactive = response;
-      });
 
     function isFormValid() {
       vm.message = '';
@@ -5415,7 +5407,7 @@
    * @return {Object} $resource - Acceso a recursos HTTP
    */
   function SamplingInstrumentService($resource, TokenService) {
-    return $resource(API_BASE_URL + 'instruments/sampling', {}, {
+    return $resource(API_BASE_URL + 'sampling/instruments', {}, {
       get: {
         method: 'GET',
         params: {},

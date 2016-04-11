@@ -20,7 +20,7 @@ function processUserJwt($request)
   $pwd = $input->password;
 
   $userInfo = getUserByCredentials($usr, $pwd);
-  $userId = $userInfo->id_usuario;
+  $tokenUserId = $userInfo->id_usuario;
   $userLv = $userInfo->id_nivel;
   $name = $userInfo->nombres . " ";
   $name .= $userInfo->apellido_paterno . " ";
@@ -31,7 +31,7 @@ function processUserJwt($request)
   $token = array();
   $token["nam"] = $name;
   $token["upt"] = $userPass;
-  $token["uid"] = $userId;
+  $token["uid"] = $tokenUserId;
   $token["ulv"] = $userLv;
   $token["uro"] = $userInfo->id_rol;
   $token["uar"] = $userInfo->id_area;
@@ -142,8 +142,8 @@ $app->post("/login", function () use ($app) {
 
 $app->get("/menu", function () use ($app) {
   try {
-    $userId = decodeUserToken($app->request())->uid;
-    $result = processMenuToJson(getMenu($userId));
+    $tokenUserId = decodeUserToken($app->request())->uid;
+    $result = processMenuToJson(getMenu($tokenUserId));
     sendSuccessResponse($app, $result);
   } catch (Exception $e) {
     sendErrorResponse($app, $e);
@@ -152,8 +152,8 @@ $app->get("/menu", function () use ($app) {
 
 $app->get("/tasks", function () use ($app) {
   try {
-    $userId = decodeUserToken($app->request())->uid;
-    $result = json_encode(getTasks($userId));
+    $tokenUserId = decodeUserToken($app->request())->uid;
+    $result = json_encode(getTasks($tokenUserId));
     sendSuccessResponse($app, $result);
   } catch (Exception $e) {
     sendErrorResponse($app, $e);
@@ -162,7 +162,7 @@ $app->get("/tasks", function () use ($app) {
 
 $app->get("/studies(/)(:studyId)", function ($studyId = -1) use ($app) {
   try {
-    $userId = decodeUserToken($app->request())->uid;
+    $tokenUserId = decodeUserToken($app->request())->uid;
     if ($studyId > 0) {
       $result = json_encode(getStudy($studyId));
     } else if ($studyId == 0) {
@@ -178,7 +178,7 @@ $app->get("/studies(/)(:studyId)", function ($studyId = -1) use ($app) {
 
 $app->post("/studies", function () use ($app) {
   try {
-    $userId = decodeUserToken($app->request())->uid;
+    $tokenUserId = decodeUserToken($app->request())->uid;
     $request = $app->request();
     $studyId = extractDataFromRequest($request)->id_estudio;
     if ($studyId < 1) {
@@ -199,7 +199,7 @@ $app->post("/studies", function () use ($app) {
 
 $app->get("/orders(/)(:orderId)", function ($orderId = -1) use ($app) {
   try {
-    $userId = decodeUserToken($app->request())->uid;
+    $tokenUserId = decodeUserToken($app->request())->uid;
     if ($orderId > -1) {
       $result = json_encode(getOrder($orderId));
     } else {
@@ -213,7 +213,7 @@ $app->get("/orders(/)(:orderId)", function ($orderId = -1) use ($app) {
 
 $app->get("/orders/study/(:studyId)", function ($studyId) use ($app) {
   try {
-    $userId = decodeUserToken($app->request())->uid;
+    $tokenUserId = decodeUserToken($app->request())->uid;
     $result = json_encode(getOrdersByStudy($studyId));
     sendSuccessResponse($app, $result);
   } catch (Exception $e) {
@@ -223,7 +223,7 @@ $app->get("/orders/study/(:studyId)", function ($studyId) use ($app) {
 
 $app->post("/orders", function () use ($app) {
   try {
-    $userId = decodeUserToken($app->request())->uid;
+    $tokenUserId = decodeUserToken($app->request())->uid;
     $request = $app->request();
     $orderId = extractDataFromRequest($request)->id_orden;
     if ($orderId > 0) {
@@ -240,7 +240,7 @@ $app->post("/orders", function () use ($app) {
 
 $app->get("/order/sources(/)(:sourceId)", function ($sourceId = -1) use ($app) {
   try {
-    $userId = decodeUserToken($app->request())->uid;
+    $tokenUserId = decodeUserToken($app->request())->uid;
     if ($sourceId > -1) {
       $result = json_encode(getOrderSource($sourceId));
     } else {
@@ -254,7 +254,7 @@ $app->get("/order/sources(/)(:sourceId)", function ($sourceId = -1) use ($app) {
 
 $app->get("/plans(/)(:planId)", function ($planId = -1) use ($app) {
   try {
-    $userId = decodeUserToken($app->request())->uid;
+    $tokenUserId = decodeUserToken($app->request())->uid;
     if ($planId > -1) {
       $result = json_encode(getPlan($planId));
     } else {
@@ -268,7 +268,7 @@ $app->get("/plans(/)(:planId)", function ($planId = -1) use ($app) {
 
 $app->post("/plans", function () use ($app) {
   try {
-    $userId = decodeUserToken($app->request())->uid;
+    $tokenUserId = decodeUserToken($app->request())->uid;
     $request = $app->request();
     $planId = extractDataFromRequest($request)->id_plan;
     if ($planId > 0) {
@@ -294,7 +294,7 @@ $app->post("/plans", function () use ($app) {
 
 $app->get("/plans/containers/:planId", function ($planId) use ($app) {
   try {
-    $userId = decodeUserToken($app->request())->uid;
+    $tokenUserId = decodeUserToken($app->request())->uid;
     $result = json_encode(getPlanContainers($planId));
     sendSuccessResponse($app, $result);
   } catch (Exception $e) {
@@ -304,7 +304,7 @@ $app->get("/plans/containers/:planId", function ($planId) use ($app) {
 
 $app->get("/sheets(/)(:sheetId)", function ($sheetId = -1) use ($app) {
   try {
-    $userId = decodeUserToken($app->request())->uid;
+    $tokenUserId = decodeUserToken($app->request())->uid;
     if ($sheetId > -1) {
       $result = json_encode(getSheet($sheetId));
     } else {
@@ -318,7 +318,7 @@ $app->get("/sheets(/)(:sheetId)", function ($sheetId = -1) use ($app) {
 
 $app->post("/sheets", function () use ($app) {
   try {
-    $userId = decodeUserToken($app->request())->uid;
+    $tokenUserId = decodeUserToken($app->request())->uid;
     $request = $app->request();
     $sheetId = extractDataFromRequest($request)->id_hoja;
     if ($sheetId > 0) {
@@ -336,7 +336,7 @@ $app->post("/sheets", function () use ($app) {
 
 $app->get("/receptions(/)(:receptionId)", function ($receptionId = -1) use ($app) {
   try {
-    $userId = decodeUserToken($app->request())->uid;
+    $tokenUserId = decodeUserToken($app->request())->uid;
     if ($receptionId > -1) {
       $result = json_encode(getReception($receptionId));
     } else {
@@ -350,7 +350,7 @@ $app->get("/receptions(/)(:receptionId)", function ($receptionId = -1) use ($app
 
 $app->get("/areas/reception", function () use ($app) {
   try {
-    $userId = decodeUserToken($app->request())->uid;
+    $tokenUserId = decodeUserToken($app->request())->uid;
     $result = json_encode(getReceivingAreas());
     sendSuccessResponse($app, $result);
   } catch (Exception $e) {
@@ -360,7 +360,7 @@ $app->get("/areas/reception", function () use ($app) {
 
 $app->post("/receptions", function () use ($app) {
   try {
-    $userId = decodeUserToken($app->request())->uid;
+    $tokenUserId = decodeUserToken($app->request())->uid;
     $request = $app->request();
     $receptionId = extractDataFromRequest($request)->id_recepcion;
     if ($receptionId > 0) {
@@ -382,7 +382,7 @@ $app->post("/receptions", function () use ($app) {
 
 $app->get("/custodies(/)(:custodyId)", function ($custodyId = -1) use ($app) {
   try {
-    $userId = decodeUserToken($app->request())->uid;
+    $tokenUserId = decodeUserToken($app->request())->uid;
     if ($custodyId > -1) {
       $result = json_encode(getCustody($custodyId));
     } else {
@@ -396,7 +396,7 @@ $app->get("/custodies(/)(:custodyId)", function ($custodyId = -1) use ($app) {
 
 $app->post("/custodies", function () use ($app) {
   try {
-    $userId = decodeUserToken($app->request())->uid;
+    $tokenUserId = decodeUserToken($app->request())->uid;
     $request = $app->request();
     $custodyId = extractDataFromRequest($request)->id_custodia;
     if ($custodyId > 0) {
@@ -413,7 +413,7 @@ $app->post("/custodies", function () use ($app) {
 
 $app->get("/jobs(/)(:jobId)", function ($jobId = -1) use ($app) {
   try {
-    $userId = decodeUserToken($app->request())->uid;
+    $tokenUserId = decodeUserToken($app->request())->uid;
     if ($jobId > -1) {
       $result = json_encode(getJob($jobId));
     } else {
@@ -425,10 +425,10 @@ $app->get("/jobs(/)(:jobId)", function ($jobId = -1) use ($app) {
   }
 });
 
-$app->get("/jobs/user/:userId", function ($userId) use ($app) {
+$app->get("/jobs/user/:userId", function ($tokenUserId) use ($app) {
   try {
-    $userId = decodeUserToken($app->request())->uid;
-    $result = json_encode(getJobsByUser($userId * 1));
+    $tokenUserId = decodeUserToken($app->request())->uid;
+    $result = json_encode(getJobsByUser($tokenUserId * 1));
     sendSuccessResponse($app, $result);
   } catch (Exception $e) {
     sendErrorResponse($app, $e);
@@ -437,7 +437,7 @@ $app->get("/jobs/user/:userId", function ($userId) use ($app) {
 
 $app->post("/jobs", function () use ($app) {
   try {
-    $userId = decodeUserToken($app->request())->uid;
+    $tokenUserId = decodeUserToken($app->request())->uid;
     $request = $app->request();
     $jobId = extractDataFromRequest($request)->id_trabajo;
     if ($jobId > 0) {
@@ -454,7 +454,7 @@ $app->post("/jobs", function () use ($app) {
 
 $app->get("/analysis(/)(:analysisId)", function ($analysisId = -1) use ($app) {
   try {
-    $userId = decodeUserToken($app->request())->uid;
+    $tokenUserId = decodeUserToken($app->request())->uid;
     if ($analysisId > -1) {
       $result = json_encode(getAnalysis($analysisId));
     } else {
@@ -468,7 +468,7 @@ $app->get("/analysis(/)(:analysisId)", function ($analysisId = -1) use ($app) {
 
 $app->post("/analysis", function () use ($app) {
   try {
-    $userId = decodeUserToken($app->request())->uid;
+    $tokenUserId = decodeUserToken($app->request())->uid;
     $request = $app->request();
     $analysisId = 0;
     $analysisId = extractDataFromRequest($request)->id_analisis;
@@ -488,7 +488,7 @@ $app->post("/analysis", function () use ($app) {
 //CATALOGS
 $app->get("/clients(/)(:clientId)", function ($clientId = -1) use ($app) {
   try {
-    $userId = decodeUserToken($app->request())->uid;
+    $tokenUserId = decodeUserToken($app->request())->uid;
     if ($clientId > -1) {
       $result = json_encode(getClient($clientId));
     } else {
@@ -502,7 +502,7 @@ $app->get("/clients(/)(:clientId)", function ($clientId = -1) use ($app) {
 
 $app->get("/parameters", function () use ($app) {
   try {
-    $userId = decodeUserToken($app->request())->uid;
+    $tokenUserId = decodeUserToken($app->request())->uid;
     $result = json_encode(getParameters());
     sendSuccessResponse($app, $result);
   } catch (Exception $e) {
@@ -512,7 +512,7 @@ $app->get("/parameters", function () use ($app) {
 
 $app->get("/parameters/field", function () use ($app) {
   try {
-    $userId = decodeUserToken($app->request())->uid;
+    $tokenUserId = decodeUserToken($app->request())->uid;
     $result = json_encode(getParametersField());
     sendSuccessResponse($app, $result);
   } catch (Exception $e) {
@@ -522,7 +522,7 @@ $app->get("/parameters/field", function () use ($app) {
 
 $app->get("/parameters/custodies/:custodyId", function ($custodyId) use ($app) {
   try {
-    $userId = decodeUserToken($app->request())->uid;
+    $tokenUserId = decodeUserToken($app->request())->uid;
     // $result = json_encode(getParametersByCustody($custodyId));
     $result = json_encode(getParametersLab());
     sendSuccessResponse($app, $result);
@@ -533,7 +533,7 @@ $app->get("/parameters/custodies/:custodyId", function ($custodyId) use ($app) {
 
 $app->get("/norms(/)(:normId)", function ($normId = -1) use ($app) {
   try {
-    $userId = decodeUserToken($app->request())->uid;
+    $tokenUserId = decodeUserToken($app->request())->uid;
     if ($normId > -1) {
       $result = json_encode(getNorm($normId));
     } else {
@@ -547,7 +547,7 @@ $app->get("/norms(/)(:normId)", function ($normId = -1) use ($app) {
 
 $app->get("/sampling/types", function () use ($app) {
   try {
-    $userId = decodeUserToken($app->request())->uid;
+    $tokenUserId = decodeUserToken($app->request())->uid;
     $result = json_encode(getSamplingTypes());
     sendSuccessResponse($app, $result);
   } catch (Exception $e) {
@@ -557,7 +557,7 @@ $app->get("/sampling/types", function () use ($app) {
 
 $app->get("/matrices", function () use ($app) {
   try {
-    $userId = decodeUserToken($app->request())->uid;
+    $tokenUserId = decodeUserToken($app->request())->uid;
     $result = json_encode(getMatrices());
     sendSuccessResponse($app, $result);
   } catch (Exception $e) {
@@ -567,7 +567,7 @@ $app->get("/matrices", function () use ($app) {
 
 $app->get("/packages/points/:packageId", function ($packageId) use ($app) {
   try {
-    $userId = decodeUserToken($app->request())->uid;
+    $tokenUserId = decodeUserToken($app->request())->uid;
     $result = json_encode(getPointsByPackage($packageId));
     //$result = json_encode(getPackages());
     sendSuccessResponse($app, $result);
@@ -578,7 +578,7 @@ $app->get("/packages/points/:packageId", function ($packageId) use ($app) {
 
 $app->get("/packages/location(/)(:locationId)", function ($locationId = -1) use ($app) {
   try {
-    $userId = decodeUserToken($app->request())->uid;
+    $tokenUserId = decodeUserToken($app->request())->uid;
     if ($locationId > -1) {
       $result = json_encode(getPackagesByLocation($locationId));
     } else {
@@ -592,7 +592,7 @@ $app->get("/packages/location(/)(:locationId)", function ($locationId = -1) use 
 
 $app->get("/bodies(/)(:bodyId)", function ($bodyId = -1) use ($app) {
   try {
-    $userId = decodeUserToken($app->request())->uid;
+    $tokenUserId = decodeUserToken($app->request())->uid;
     if ($bodyId > -1) {
       $result = json_encode(getWaterBody($bodyId));
     } else {
@@ -606,7 +606,7 @@ $app->get("/bodies(/)(:bodyId)", function ($bodyId = -1) use ($app) {
 
 $app->get("/sampling/supervisors(/)(:empId)", function ($empId = -1) use ($app) {
   try {
-    $userId = decodeUserToken($app->request())->uid;
+    $tokenUserId = decodeUserToken($app->request())->uid;
     if ($empId > 0) {
       $result = json_encode(getSamplingEmployee($empId));
     } else {
@@ -620,7 +620,7 @@ $app->get("/sampling/supervisors(/)(:empId)", function ($empId = -1) use ($app) 
 
 $app->get("/sampling/employees(/)(:empId)", function ($empId = -1) use ($app) {
   try {
-    $userId = decodeUserToken($app->request())->uid;
+    $tokenUserId = decodeUserToken($app->request())->uid;
     if ($empId > 0) {
       $result = json_encode(getSamplingEmployee($empId));
     } else {
@@ -634,7 +634,7 @@ $app->get("/sampling/employees(/)(:empId)", function ($empId = -1) use ($app) {
 
 $app->get("/plan/objectives", function () use ($app) {
   try {
-    $userId = decodeUserToken($app->request())->uid;
+    $tokenUserId = decodeUserToken($app->request())->uid;
     $result = json_encode(getPlanObjectives());
     sendSuccessResponse($app, $result);
   } catch (Exception $e) {
@@ -644,7 +644,7 @@ $app->get("/plan/objectives", function () use ($app) {
 
 $app->get("/point/kinds", function () use ($app) {
   try {
-    $userId = decodeUserToken($app->request())->uid;
+    $tokenUserId = decodeUserToken($app->request())->uid;
     $result = json_encode(getPointKinds());
     sendSuccessResponse($app, $result);
   } catch (Exception $e) {
@@ -654,7 +654,7 @@ $app->get("/point/kinds", function () use ($app) {
 
 $app->get("/districts(/)(:districtId)", function ($districtId = -1) use ($app) {
   try {
-    $userId = decodeUserToken($app->request())->uid;
+    $tokenUserId = decodeUserToken($app->request())->uid;
     if ($districtId > 0) {
       $result = json_encode(getDistrict($districtId));
     } else {
@@ -668,7 +668,7 @@ $app->get("/districts(/)(:districtId)", function ($districtId = -1) use ($app) {
 
 $app->get("/districts/cities/:districtId", function ($districtId) use ($app) {
   try {
-    $userId = decodeUserToken($app->request())->uid;
+    $tokenUserId = decodeUserToken($app->request())->uid;
     $result = json_encode(getCitiesByDistrictId($districtId));
     sendSuccessResponse($app, $result);
   } catch (Exception $e) {
@@ -678,7 +678,7 @@ $app->get("/districts/cities/:districtId", function ($districtId) use ($app) {
 
 $app->get("/preservations", function () use ($app) {
   try {
-    $userId = decodeUserToken($app->request())->uid;
+    $tokenUserId = decodeUserToken($app->request())->uid;
     $result = json_encode(getPreservations());
     sendSuccessResponse($app, $result);
   } catch (Exception $e) {
@@ -688,7 +688,7 @@ $app->get("/preservations", function () use ($app) {
 
 $app->get("/containers(/)(:containerId)", function ($containerId = -1) use ($app) {
   try {
-    $userId = decodeUserToken($app->request())->uid;
+    $tokenUserId = decodeUserToken($app->request())->uid;
     if ($containerId > 0) {
       $result = json_encode(getContainer($containerId));
     } else {
@@ -702,7 +702,7 @@ $app->get("/containers(/)(:containerId)", function ($containerId = -1) use ($app
 
 $app->get("/containers/logs/:containerId", function ($containerId) use ($app) {
   try {
-    $userId = decodeUserToken($app->request())->uid;
+    $tokenUserId = decodeUserToken($app->request())->uid;
     $result = json_encode(getContainerLogs($containerId));
     sendSuccessResponse($app, $result);
   } catch (Exception $e) {
@@ -712,7 +712,7 @@ $app->get("/containers/logs/:containerId", function ($containerId) use ($app) {
 
 $app->get("/reactives", function () use ($app) {
   try {
-    $userId = decodeUserToken($app->request())->uid;
+    $tokenUserId = decodeUserToken($app->request())->uid;
     $result = json_encode(getReactives());
     sendSuccessResponse($app, $result);
   } catch (Exception $e) {
@@ -722,7 +722,7 @@ $app->get("/reactives", function () use ($app) {
 
 $app->get("/reactives/loggable(/)(:reactiveId)", function ($reactiveId = -1) use ($app) {
   try {
-    $userId = decodeUserToken($app->request())->uid;
+    $tokenUserId = decodeUserToken($app->request())->uid;
     if ($reactiveId > 0) {
       $result = json_encode(getLoggableReactive($reactiveId));
     } else {
@@ -736,7 +736,7 @@ $app->get("/reactives/loggable(/)(:reactiveId)", function ($reactiveId = -1) use
 
 $app->post("/reactives/loggable", function () use ($app) {
   try {
-    $userId = decodeUserToken($app->request())->uid;
+    $tokenUserId = decodeUserToken($app->request())->uid;
     $request = $app->request();
     $reactiveId = extractDataFromRequest($request)->id_reactivo;
     if ($reactiveId > 0) {
@@ -752,7 +752,7 @@ $app->post("/reactives/loggable", function () use ($app) {
 
 $app->get("/materials", function () use ($app) {
   try {
-    $userId = decodeUserToken($app->request())->uid;
+    $tokenUserId = decodeUserToken($app->request())->uid;
     $result = json_encode(getMaterials());
     sendSuccessResponse($app, $result);
   } catch (Exception $e) {
@@ -762,7 +762,7 @@ $app->get("/materials", function () use ($app) {
 
 $app->get("/materials", function () use ($app) {
   try {
-    $userId = decodeUserToken($app->request())->uid;
+    $tokenUserId = decodeUserToken($app->request())->uid;
     $result = json_encode(getMaterials());
     sendSuccessResponse($app, $result);
   } catch (Exception $e) {
@@ -772,7 +772,7 @@ $app->get("/materials", function () use ($app) {
 
 $app->get("/instruments(/)(:instrumentId)", function ($instrumentId = -1) use ($app) {
   try {
-    $userId = decodeUserToken($app->request())->uid;
+    $tokenUserId = decodeUserToken($app->request())->uid;
     if ($instrumentId > -1) {
       $result = json_encode(getInstrument($instrumentId));
     } else {
@@ -786,7 +786,7 @@ $app->get("/instruments(/)(:instrumentId)", function ($instrumentId = -1) use ($
 
 $app->get("/instruments/sampling", function () use ($app) {
   try {
-    $userId = decodeUserToken($app->request())->uid;
+    $tokenUserId = decodeUserToken($app->request())->uid;
     $result = json_encode(getSamplingInstruments());
     sendSuccessResponse($app, $result);
   } catch (Exception $e) {
@@ -796,7 +796,7 @@ $app->get("/instruments/sampling", function () use ($app) {
 
 $app->post("/instruments", function () use ($app) {
   try {
-    $userId = decodeUserToken($app->request())->uid;
+    $tokenUserId = decodeUserToken($app->request())->uid;
     $request = $app->request();
     $instrumentId = extractDataFromRequest($request)->id_instrumento;
     if ($instrumentId < 1) {
@@ -815,7 +815,7 @@ $app->post("/instruments", function () use ($app) {
 
 $app->get("/coolers", function () use ($app) {
   try {
-    $userId = decodeUserToken($app->request())->uid;
+    $tokenUserId = decodeUserToken($app->request())->uid;
     $result = json_encode(getCoolers());
     sendSuccessResponse($app, $result);
   } catch (Exception $e) {
@@ -825,7 +825,7 @@ $app->get("/coolers", function () use ($app) {
 
 $app->get("/clouds", function () use ($app) {
   try {
-    $userId = decodeUserToken($app->request())->uid;
+    $tokenUserId = decodeUserToken($app->request())->uid;
     $result = json_encode(getClouds());
     sendSuccessResponse($app, $result);
   } catch (Exception $e) {
@@ -835,7 +835,7 @@ $app->get("/clouds", function () use ($app) {
 
 $app->get("/winds", function () use ($app) {
   try {
-    $userId = decodeUserToken($app->request())->uid;
+    $tokenUserId = decodeUserToken($app->request())->uid;
     $result = json_encode(getCurrentDirections());
     sendSuccessResponse($app, $result);
   } catch (Exception $e) {
@@ -845,7 +845,7 @@ $app->get("/winds", function () use ($app) {
 
 $app->get("/waves", function () use ($app) {
   try {
-    $userId = decodeUserToken($app->request())->uid;
+    $tokenUserId = decodeUserToken($app->request())->uid;
     $result = json_encode(getWaves());
     sendSuccessResponse($app, $result);
   } catch (Exception $e) {
@@ -855,7 +855,7 @@ $app->get("/waves", function () use ($app) {
 
 $app->get("/sampling/norms", function () use ($app) {
   try {
-    $userId = decodeUserToken($app->request())->uid;
+    $tokenUserId = decodeUserToken($app->request())->uid;
     $result = json_encode(getSamplingNorms());
     sendSuccessResponse($app, $result);
   } catch (Exception $e) {
@@ -865,7 +865,7 @@ $app->get("/sampling/norms", function () use ($app) {
 
 $app->get("/points(/)(:pointId)", function ($pointId = -1) use ($app) {
   try {
-    $userId = decodeUserToken($app->request())->uid;
+    $tokenUserId = decodeUserToken($app->request())->uid;
     if ($pointId > -1) {
       $result = json_encode(getPoint($pointId));
     } else {
@@ -879,7 +879,7 @@ $app->get("/points(/)(:pointId)", function ($pointId = -1) use ($app) {
 
 $app->get("/receptionists", function () use ($app) {
   try {
-    $userId = decodeUserToken($app->request())->uid;
+    $tokenUserId = decodeUserToken($app->request())->uid;
     $result = json_encode(getReceptionists());
     sendSuccessResponse($app, $result);
   } catch (Exception $e) {
@@ -889,7 +889,7 @@ $app->get("/receptionists", function () use ($app) {
 
 $app->get("/analysts", function () use ($app) {
   try {
-    $userId = decodeUserToken($app->request())->uid;
+    $tokenUserId = decodeUserToken($app->request())->uid;
     $result = json_encode(getAnalysts());
     sendSuccessResponse($app, $result);
   } catch (Exception $e) {
@@ -899,7 +899,7 @@ $app->get("/analysts", function () use ($app) {
 
 $app->get("/samples(/)(:sampleId)", function ($sampleId = -1) use ($app) {
   try {
-    $userId = decodeUserToken($app->request())->uid;
+    $tokenUserId = decodeUserToken($app->request())->uid;
     if ($sampleId > -1) {
       $result = json_encode(getSample($sampleId));
     } else {
@@ -913,7 +913,7 @@ $app->get("/samples(/)(:sampleId)", function ($sampleId = -1) use ($app) {
 
 $app->get("/sheet/samples/:sheetId", function ($sheetId) use ($app) {
   try {
-    $userId = decodeUserToken($app->request())->uid;
+    $tokenUserId = decodeUserToken($app->request())->uid;
     $result = json_encode(getSamplesBySheet($sheetId));
     sendSuccessResponse($app, $result);
   } catch (Exception $e) {
@@ -923,7 +923,7 @@ $app->get("/sheet/samples/:sheetId", function ($sheetId) use ($app) {
 
 $app->get("/areas", function () use ($app) {
   try {
-    $userId = decodeUserToken($app->request())->uid;
+    $tokenUserId = decodeUserToken($app->request())->uid;
     $result = json_encode(getAreas());
     sendSuccessResponse($app, $result);
   } catch (Exception $e) {
@@ -933,7 +933,7 @@ $app->get("/areas", function () use ($app) {
 
 $app->get("/reports", function () use ($app) {
   try {
-    $userId = decodeUserToken($app->request())->uid;
+    $tokenUserId = decodeUserToken($app->request())->uid;
     $result = json_encode(getReports());
     sendSuccessResponse($app, $result);
   } catch (Exception $e) {
@@ -943,7 +943,7 @@ $app->get("/reports", function () use ($app) {
 
 $app->get("/employees", function () use ($app) {
   try {
-    $userId = decodeUserToken($app->request())->uid;
+    $tokenUserId = decodeUserToken($app->request())->uid;
     $result = json_encode(getEmployees());
     sendSuccessResponse($app, $result);
   } catch (Exception $e) {
@@ -953,7 +953,7 @@ $app->get("/employees", function () use ($app) {
 
 $app->get("/references", function () use ($app) {
   try {
-    $userId = decodeUserToken($app->request())->uid;
+    $tokenUserId = decodeUserToken($app->request())->uid;
     $result = json_encode(getReferences());
     sendSuccessResponse($app, $result);
   } catch (Exception $e) {
@@ -963,7 +963,7 @@ $app->get("/references", function () use ($app) {
 
 $app->get("/methods(/)(:methodId)", function () use ($app) {
   try {
-    $userId = decodeUserToken($app->request())->uid;
+    $tokenUserId = decodeUserToken($app->request())->uid;
     if ($methodId > -1) {
       $result = json_encode(getMethod($methodId));
     } else {
@@ -977,7 +977,7 @@ $app->get("/methods(/)(:methodId)", function () use ($app) {
 
 $app->get("/storages(/)(:storageId)", function ($storageId = -1) use ($app) {
   try {
-    $userId = decodeUserToken($app->request())->uid;
+    $tokenUserId = decodeUserToken($app->request())->uid;
     if ($storageId > -1) {
       $result = json_encode(getStorage($storageId));
     } else {
@@ -991,7 +991,7 @@ $app->get("/storages(/)(:storageId)", function ($storageId = -1) use ($app) {
 
 $app->get("/prices", function () use ($app) {
   try {
-    $userId = decodeUserToken($app->request())->uid;
+    $tokenUserId = decodeUserToken($app->request())->uid;
     $result = json_encode(getPrices());
     sendSuccessResponse($app, $result);
   } catch (Exception $e) {
@@ -1001,7 +1001,7 @@ $app->get("/prices", function () use ($app) {
 
 $app->get("/locations(/)(:locationId)", function ($locationId = -1) use ($app) {
   try {
-    $userId = decodeUserToken($app->request())->uid;
+    $tokenUserId = decodeUserToken($app->request())->uid;
     if ($locationId > -1) {
       $result = json_encode(getLocation($locationId));
     } else {
@@ -1015,7 +1015,7 @@ $app->get("/locations(/)(:locationId)", function ($locationId = -1) use ($app) {
 
 $app->get("/users(/)(:userId)", function ($userId = -1) use ($app) {
   try {
-    $userId = decodeUserToken($app->request())->uid;
+    $tokenUserId = decodeUserToken($app->request())->uid;
     if ($userId > -1) {
       $result = json_encode(getUser($userId));
     } else {
@@ -1029,23 +1029,22 @@ $app->get("/users(/)(:userId)", function ($userId = -1) use ($app) {
 
 $app->post("/users/passwords", function () use ($app) {
   try {
-    $userId = decodeUserToken($app->request())->uid;
+    $tokenUserId = decodeUserToken($app->request())->uid;
     $request = $app->request();
     $data = extractDataFromRequest($request);
     $userToken = decodeUserToken($request);
-    $userId = $userToken->uid;
     $userPassArray = explode(".", hex2bin($userToken->upt));
     $profile = (object) extractDataFromRequest($request);
-    $storedUser = getUser($userId);
+    $storedUser = getUser($tokenUserId);
 
-    $isIdValid = $storedUser->id_usuario === $userId;
+    $isIdValid = $storedUser->id_usuario === $tokenUserId;
     $isNameValid = $storedUser->usr === $userPassArray[0];
     $isActualPassValid = $storedUser->pwd === $profile->pwd;
     $isNewPassValid = $storedUser->pwd !== $profile->newPwd;
 
     if ($isIdValid && $isNameValid && $isActualPassValid && $isNewPassValid) {
       $updateData = array(
-        "id_usuario" =>  $userId,
+        "id_usuario" =>  $tokenUserId,
         "usr" =>  $userPassArray[0],
         "pwd" =>  $profile->pwd,
         "newPwd" =>  $profile->newPwd,

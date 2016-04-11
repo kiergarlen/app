@@ -224,7 +224,12 @@
       when('/sistema/usuario', {
         templateUrl: 'partials/sistema/usuarios.html',
         controller: 'UserListController',
-        controllerAs: 'usersList'
+        controllerAs: 'users'
+      }).
+      when('/sistema/usuario/:userId', {
+        templateUrl: 'partials/sistema/usuario.html',
+        controller: 'UserController',
+        controllerAs: 'user'
       }).
       when('/sistema/perfil', {
         templateUrl: 'partials/sistema/perfil.html',
@@ -322,11 +327,9 @@
    * @constructor
    * @desc Controla la vista para Login
    * @this {Object} $scope - Contenedor para el modelo
-   * @param {Object} $http - Manejo de peticiones HTTP
-   * @param {Object} $location - Manejo de URL
    * @param {Object} TokenService - Proveedor para manejo del token
    */
-  function LoginController($scope, TokenService) {
+  function LoginController(TokenService) {
     var vm = this;
     vm.message = '';
     vm.user = {username: '', password: ''};
@@ -348,7 +351,7 @@
     .module('sislabApp')
     .controller('LoginController',
       [
-        '$scope', 'TokenService',
+        'TokenService',
         LoginController
       ]
     );
@@ -480,11 +483,11 @@
    * @param {Object} LocationService -  Proveedor de datos, Ubicación
    * @param {Object} StudyService - Proveedor de datos, Estudios
    */
-  function StudyController($scope, $routeParams, TokenService,
-    ValidationService, RestUtilsService, ArrayUtilsService,
-    DateUtilsService, ClientService, MatrixService,
-    SamplingTypeService, NormService, OrderSourceService,
-    LocationService, StudyService) {
+  function StudyController($routeParams, TokenService, ValidationService,
+    RestUtilsService, ArrayUtilsService, DateUtilsService,
+    ClientService, MatrixService, SamplingTypeService,
+    NormService, OrderSourceService, LocationService,
+    StudyService) {
     var vm = this;
     vm.study = StudyService.query({studyId: $routeParams.studyId});
     vm.user = TokenService.getUserFromToken();
@@ -657,11 +660,11 @@
     .module('sislabApp')
     .controller('StudyController',
       [
-        '$scope', '$routeParams', 'TokenService',
-        'ValidationService', 'RestUtilsService', 'ArrayUtilsService',
-        'DateUtilsService', 'ClientService', 'MatrixService',
-        'SamplingTypeService', 'NormService', 'OrderSourceService',
-        'LocationService', 'StudyService',
+        '$routeParams', 'TokenService', 'ValidationService',
+        'RestUtilsService', 'ArrayUtilsService', 'DateUtilsService',
+        'ClientService', 'MatrixService', 'SamplingTypeService',
+        'NormService', 'OrderSourceService', 'LocationService',
+        'StudyService',
         StudyController
       ]
     );
@@ -713,11 +716,11 @@
    * @param {Object} SamplingSupervisorService - Proveedor de datos, Supervisores de muestreo
    * @param {Object} OrderService - Proveedor de datos, Órdenes de muestreo
    */
-  function OrderController($scope, $routeParams, TokenService,
-    ValidationService, RestUtilsService, ArrayUtilsService,
-    DateUtilsService, StudyService, WaterBodyService,
-    LocationService, OrderSourceService, LocationPackagesService,
-    SamplingSupervisorService, OrderService) {
+  function OrderController($routeParams, TokenService, ValidationService,
+    RestUtilsService, ArrayUtilsService, DateUtilsService,
+    StudyService, WaterBodyService, LocationService,
+    OrderSourceService, LocationPackagesService, SamplingSupervisorService,
+    OrderService) {
     var vm = this;
     vm.order = {};
     vm.study = {};
@@ -906,11 +909,10 @@
     .module('sislabApp')
     .controller('OrderController',
       [
-        '$scope', '$routeParams', 'TokenService',
-        'ValidationService', 'RestUtilsService', 'ArrayUtilsService',
-        'DateUtilsService', 'StudyService', 'WaterBodyService',
-        'LocationService', 'OrderSourceService',
-        'LocationPackagesService', 'SamplingSupervisorService',
+        '$routeParams', 'TokenService', 'ValidationService',
+        'RestUtilsService', 'ArrayUtilsService', 'DateUtilsService',
+        'StudyService', 'WaterBodyService', 'LocationService',
+        'OrderSourceService', 'LocationPackagesService', 'SamplingSupervisorService',
         'OrderService',
         OrderController
       ]
@@ -969,13 +971,13 @@
    * @param {Object} SamplingInstrumentService - Proveedor de datos, Equipos muestreo
    * @param {Object} PlanService - Proveedor de datos, Plan de muestreo
    */
-  function PlanController($scope, $routeParams, TokenService,
-    ValidationService, RestUtilsService, ArrayUtilsService,
-    DateUtilsService, StudyService, LocationService,
-    OrderSourceService, PlanObjectiveService, DistrictService,
-    CityService, SamplingEmployeeService, PreservationService,
-    ReactiveService, MaterialService, CoolerService,
-    SamplingInstrumentService, PlanService) {
+  function PlanController($routeParams, TokenService, ValidationService,
+    RestUtilsService, ArrayUtilsService, DateUtilsService,
+    StudyService, LocationService, OrderSourceService,
+    PlanObjectiveService, DistrictService, CityService,
+    SamplingEmployeeService, PreservationService, ReactiveService,
+    MaterialService, CoolerService, SamplingInstrumentService,
+    PlanService) {
     var vm = this;
     vm.plan = {};
     vm.study = {};
@@ -1571,13 +1573,13 @@
     .module('sislabApp')
     .controller('PlanController',
       [
-        '$scope', '$routeParams', 'TokenService',
-        'ValidationService', 'RestUtilsService', 'ArrayUtilsService',
-        'DateUtilsService', 'StudyService', 'LocationService',
-        'OrderSourceService', 'PlanObjectiveService', 'DistrictService',
-        'CityService', 'SamplingEmployeeService', 'PreservationService',
-        'ReactiveService', 'MaterialService', 'CoolerService',
-        'SamplingInstrumentService', 'PlanService',
+        '$routeParams', 'TokenService', 'ValidationService',
+        'RestUtilsService', 'ArrayUtilsService', 'DateUtilsService',
+        'StudyService', 'LocationService', 'OrderSourceService',
+        'PlanObjectiveService', 'DistrictService', 'CityService',
+        'SamplingEmployeeService', 'PreservationService', 'ReactiveService',
+        'MaterialService', 'CoolerService', 'SamplingInstrumentService',
+        'PlanService',
         PlanController
       ]
     );
@@ -1628,11 +1630,10 @@
    * @param {Object} PreservationService - Proveedor de datos, Preservaciones
    * @param {Object} SheetService - Proveedor de datos, Hojas de campo
    */
-  function SheetController($scope, $routeParams, TokenService,
-    ValidationService, RestUtilsService, ArrayUtilsService,
-    DateUtilsService, CloudService, WindService,
-    WaveService, SamplingNormService, PreservationService,
-    SheetService) {
+  function SheetController($routeParams, TokenService, ValidationService,
+    RestUtilsService, ArrayUtilsService, DateUtilsService,
+    CloudService, WindService, WaveService,
+    SamplingNormService, PreservationService, SheetService) {
     var vm = this;
     vm.user = TokenService.getUserFromToken();
     vm.sheet = {};
@@ -1832,11 +1833,10 @@
     .module('sislabApp')
     .controller('SheetController',
       [
-        '$scope', '$routeParams', 'TokenService',
-        'ValidationService', 'RestUtilsService', 'ArrayUtilsService',
-        'DateUtilsService', 'CloudService', 'WindService',
-        'WaveService', 'SamplingNormService', 'PreservationService',
-        'SheetService',
+        '$routeParams', 'TokenService', 'ValidationService',
+        'RestUtilsService', 'ArrayUtilsService', 'DateUtilsService',
+        'CloudService', 'WindService', 'WaveService',
+        'SamplingNormService', 'PreservationService', 'SheetService',
         SheetController
       ]
     );
@@ -1886,10 +1886,10 @@
    * @param {Object} ReceivingAreaService - Proveedor de datos, Áreas receptoras
    * @param {Object} ReceptionService - Proveedor de datos, Recepción muestras
    */
-  function ReceptionController($scope, $routeParams, TokenService,
-    ValidationService, RestUtilsService, ArrayUtilsService,
-    DateUtilsService, SamplingEmployeeService, SheetSampleService,
-    PreservationService, ReceivingAreaService, ReceptionService) {
+  function ReceptionController($routeParams, TokenService, ValidationService,
+    RestUtilsService, ArrayUtilsService, DateUtilsService,
+    SamplingEmployeeService, SheetSampleService, PreservationService,
+    ReceivingAreaService, ReceptionService) {
     var vm = this;
     vm.user = TokenService.getUserFromToken();
     vm.reception = {};
@@ -2176,10 +2176,10 @@
     .module('sislabApp')
     .controller('ReceptionController',
       [
-        '$scope', '$routeParams', 'TokenService',
-        'ValidationService', 'RestUtilsService', 'ArrayUtilsService',
-        'DateUtilsService', 'SamplingEmployeeService', 'SheetSampleService',
-        'PreservationService', 'ReceivingAreaService', 'ReceptionService',
+        '$routeParams', 'TokenService', 'ValidationService',
+        'RestUtilsService', 'ArrayUtilsService', 'DateUtilsService',
+        'SamplingEmployeeService', 'SheetSampleService', 'PreservationService',
+        'ReceivingAreaService', 'ReceptionService',
         ReceptionController
       ]
     );
@@ -2222,6 +2222,7 @@
    * @param {Object} ValidationService - Proveedor para manejo de validación
    * @param {Object} RestUtilsService - Proveedor para manejo de servicios REST
    * @param {Object} ArrayUtilsService - Proveedor para manejo de arreglos
+   * @param {Object} DateUtilsService - Proveedor para manejo de fechas
    * @param {Object} StorageService - Proveedor de datos, Almacenamientos
    * @param {Object} SamplingEmployeeService - Proveedor de datos, Empleados muestreo
    * @param {Object} AnalystService - Proveedor de datos, Analistas
@@ -2230,11 +2231,11 @@
    * @param {Object} CustodyParameterService - Proveedor de datos, Parámetros por Custodia
    * @param {Object} CustodyService - Proveedor de datos, Cadenas de custodia
    */
-  function CustodyController($scope, $routeParams, TokenService,
-    ValidationService, RestUtilsService, ArrayUtilsService,
-    DateUtilsService, StorageService, SamplingEmployeeService,
-    AnalystService, ContainerService, ContainerLogService,
-    CustodyParameterService, CustodyService) {
+  function CustodyController($routeParams, TokenService, ValidationService,
+    RestUtilsService, ArrayUtilsService, DateUtilsService,
+    StorageService, SamplingEmployeeService, AnalystService,
+    ContainerService, ContainerLogService, CustodyParameterService,
+    CustodyService) {
     var vm = this;
     vm.user = TokenService.getUserFromToken();
     vm.custody = {};
@@ -2475,11 +2476,11 @@
     .module('sislabApp')
     .controller('CustodyController',
       [
-        '$scope', '$routeParams', 'TokenService',
-        'ValidationService', 'RestUtilsService', 'ArrayUtilsService',
-        'DateUtilsService', 'StorageService', 'SamplingEmployeeService',
-        'AnalystService', 'ContainerService', 'ContainerLogService',
-        'CustodyParameterService', 'CustodyService',
+        '$routeParams', 'TokenService', 'ValidationService',
+        'RestUtilsService', 'ArrayUtilsService', 'DateUtilsService',
+        'StorageService', 'SamplingEmployeeService', 'AnalystService',
+        'ContainerService', 'ContainerLogService', 'CustodyParameterService',
+        'CustodyService',
         CustodyController
       ]
     );
@@ -2808,11 +2809,6 @@
     var vm = this;
     vm.samples = SampleService.get();
     vm.user = TokenService.getUserFromToken();
-    // vm.viewSample = viewSample;
-
-    // function viewSample(id) {
-    //   $location.path('/inventario/muestra/' + parseInt(id, 10));
-    // }
   }
   angular
     .module('sislabApp')
@@ -2833,8 +2829,7 @@
    * @param {Object} TokenService - Proveedor para manejo del token
    * @param {Object} SampleService - Proveedor de datos, Muestras
    */
-  function SampleController($scope, $routeParams, TokenService,
-    SampleService) {
+  function SampleController($routeParams, TokenService, SampleService) {
     var vm = this;
     vm.user = TokenService.getUserFromToken();
     vm.sample = SampleService.query({sampleId: $routeParams.sampleId});
@@ -2843,8 +2838,7 @@
     .module('sislabApp')
     .controller('SampleController',
       [
-        '$scope', '$routeParams', 'TokenService',
-        'SampleService',
+        '$routeParams', 'TokenService', 'SampleService',
         SampleController
       ]
     );
@@ -2886,8 +2880,8 @@
    * @param {Object} RestUtilsService - Proveedor para manejo de servicios REST
    * @param {Object} InstrumentService - Proveedor de datos, Instrument de muestreo
    */
-  function InstrumentController($scope, $routeParams, TokenService,
-    RestUtilsService, InstrumentService) {
+  function InstrumentController($routeParams, TokenService, RestUtilsService,
+    InstrumentService) {
     var vm = this;
     vm.instrument = InstrumentService.query({instrumentId: $routeParams.instrumentId});
     vm.message = '';
@@ -2928,8 +2922,8 @@
     .module('sislabApp')
     .controller('InstrumentController',
       [
-        '$scope', '$routeParams', 'TokenService',
-        'RestUtilsService', 'InstrumentService',
+        '$routeParams', 'TokenService', 'RestUtilsService',
+        'InstrumentService',
         InstrumentController
       ]
     );
@@ -2940,6 +2934,7 @@
    * @constructor
    * @desc Controla la vista para el listado de Reactivos
    * @this {Object} $scope - Contenedor para el modelo
+   * @param {Object} $location - Manejo de URL
    * @param {Object} LoggableReactiveService - Proveedor de datos, Reactivos registrables
    */
   function ReactiveListController($location, LoggableReactiveService) {
@@ -2971,8 +2966,8 @@
    * @param {Object} RestUtilsService - Proveedor para manejo de servicios REST
    * @param {Object} LoggableReactiveService - Proveedor de datos, Reactivos registrables
    */
-  function ReactiveController($scope, $routeParams, TokenService,
-    RestUtilsService, LoggableReactiveService) {
+  function ReactiveController($routeParams, TokenService, RestUtilsService,
+    LoggableReactiveService) {
     var vm = this;
     vm.reactive = {};
     vm.message = '';
@@ -3021,8 +3016,8 @@
     .module('sislabApp')
     .controller('ReactiveController',
       [
-        '$scope', '$routeParams', 'TokenService',
-        'RestUtilsService', 'LoggableReactiveService',
+        '$routeParams', 'TokenService', 'RestUtilsService',
+        'LoggableReactiveService',
         ReactiveController
       ]
     );
@@ -3059,22 +3054,23 @@
    * @constructor
    * @desc Controla la vista para el listado de Reportes
    * @this {Object} $scope - Contenedor para el modelo
+   * @param {Object} $location - Manejo de URL
    * @param {Object} ReportService - Proveedor de datos, Reportes
    */
-  function ReportListController(ReportService) {
+  function ReportListController($location, ReportService) {
     var vm = this;
     vm.reports = ReportService.get();
-    vm.selectRow = selectRow;
+    vm.viewReport = viewReport;
 
-    function selectRow() {
-
+    function viewReport(id) {
+      $location.path('/reporte/reporte/' + parseInt(id, 10));
     }
   }
   angular
     .module('sislabApp')
     .controller('ReportListController',
       [
-        'ReportService',
+        '$location', 'ReportService',
         ReportListController
       ]
     );
@@ -3091,15 +3087,9 @@
   function ReportController($routeParams, ReportService) {
     var vm = this;
     vm.report = ReportService.get();
+    vm.submitForm = submitForm;
 
-    vm.validateReportForm = validateReportForm;
-    vm.submitReportForm = submitReportForm;
-
-    function validateReportForm() {
-
-    }
-
-    function submitReportForm() {
+    function submitForm() {
 
     }
   }
@@ -3107,7 +3097,7 @@
     .module('sislabApp')
     .controller('ReportController',
       [
-        'ReportService',
+        '$routeParams', 'ReportService',
         ReportController
       ]
     );
@@ -3316,18 +3306,47 @@
    * @constructor
    * @desc Controla la vista para el listado de Usuarios
    * @this {Object} $scope - Contenedor para el modelo
+   * @param {Object} $location - Manejo de URL
+   * @param {Object} TokenService - Proveedor para manejo del token
    * @param {Object} UserService - Proveedor de datos, Usuarios
    */
-  function UserListController (UserService) {
+  function UserListController ($location, TokenService, UserService) {
     var vm = this;
+    vm.user = TokenService.getUserFromToken();
     vm.users = UserService.get();
+    vm.viewUser = viewUser;
+
+    function viewUser(id) {
+      $location.path('sistema/usuario/' + parseInt(id, 10));
+    }
   }
   angular
     .module('sislabApp')
     .controller('UserListController',
       [
-        'UserService',
+        '$location', 'TokenService', 'UserService',
         UserListController
+      ]
+    );
+
+  //UserController.js
+  /**
+   * @name UserController
+   * @constructor
+   * @desc Controla la vista para Usuario
+   * @this {Object} $scope - Contenedor para el modelo
+   * @param {Object} UserService - Proveedor de datos, Usuario
+   */
+  function UserController($routeParams, UserService) {
+    var vm = this;
+    vm.user = UserService.query({userId: $routeParams.userId});
+  }
+  angular
+    .module('sislabApp')
+    .controller('UserController',
+      [
+        '$routeParams', 'UserService',
+        UserController
       ]
     );
 
@@ -3337,15 +3356,13 @@
    * @constructor
    * @desc Controla la vista para Perfil
    * @this {Object} $scope - Contenedor para el modelo
-   * @param {Object} $timeout - Proveedor para timeout
-   * @param {Object} $routeParams - Proveedor de parámetros de ruta
    * @param {Object} TokenService - Proveedor para manejo del token
    * @param {Object} RestUtilsService - Proveedor para manejo de servicios REST
    * @param {Object} PasswordService - Proveedor de datos, actualización de contraseña
    * @param {Object} ProfileService - Proveedor de datos, Perfil de usuario
    */
-  function ProfileController($scope, $timeout, $routeParams,
-    TokenService, RestUtilsService, PasswordService, ProfileService) {
+  function ProfileController(TokenService, RestUtilsService, PasswordService,
+    ProfileService) {
     var vm = this;
     vm.user = TokenService.getUserFromToken();
     vm.profile = {};
@@ -3354,7 +3371,7 @@
     vm.submitForm = submitForm;
 
     ProfileService
-      .query({userId: $routeParams.userId})
+      .query({userId: vm.user.id})
       .$promise
       .then(function success(response) {
         vm.profile = response;
@@ -3401,7 +3418,6 @@
     .module('sislabApp')
     .controller('ProfileController',
       [
-        '$scope', '$timeout', '$routeParams',
         'TokenService', 'RestUtilsService', 'PasswordService',
         'ProfileService',
         ProfileController
@@ -3443,7 +3459,7 @@
    * @this {Object} $scope - Contenedor para el modelo
    * @param {Object} ClientService - Proveedor de datos, Clientes
    */
-  function ClientController($scope, ClientService) {
+  function ClientController(ClientService) {
     var vm = this;
     vm.client = ClientService.get();
   }
@@ -3451,7 +3467,6 @@
     .module('sislabApp')
     .controller('ClientController',
       [
-        '$scope',
         'ClientService',
         ClientListController
       ]
@@ -6361,6 +6376,60 @@
       [
         '$resource', 'TokenService',
         PasswordService
+      ]
+    );
+
+  //UserService.js
+  /**
+   * @name UserService
+   * @constructor
+   * @desc Proveedor de datos, Usuarios
+   * @param {Object} $resource - Acceso a recursos HTTP
+   * @param {Object} TokenService - Proveedor de métodos para token
+   * @return {Object} $resource - Acceso a recursos HTTP
+   */
+  function UserService($resource, TokenService) {
+    return $resource(API_BASE_URL + 'users/:userId', {}, {
+      query: {
+        method: 'GET',
+        params: {userId: 'id_usuario'},
+        isArray: false,
+        headers: {
+          'Auth-Token': TokenService.getToken()
+        }
+      },
+      get: {
+        method: 'GET',
+        params: {},
+        isArray: true,
+        headers: {
+          'Auth-Token': TokenService.getToken()
+        }
+      },
+      update: {
+        method: 'POST',
+        params: {},
+        isArray: false,
+        headers: {
+          'Auth-Token': TokenService.getToken()
+        }
+      },
+      save: {
+        method: 'POST',
+        params: {},
+        isArray: false,
+        headers: {
+          'Auth-Token': TokenService.getToken()
+        }
+      }
+    });
+  }
+  angular
+    .module('sislabApp')
+    .factory('UserService',
+      [
+        '$resource', 'TokenService',
+        UserService
       ]
     );
 })();

@@ -33,14 +33,12 @@ function getConnection()
  */
 function getUsers()
 {
-  $sql = "SELECT id_usuario, id_nivel, id_rol, id_area, id_puesto,
-    interno, cea, laboratorio, supervisa, analiza, muestrea,
-    nombres, apellido_paterno, apellido_materno, usr, pwd,
-    CONVERT(NVARCHAR, fecha_captura, 126) AS fecha_captura,
-    CONVERT(NVARCHAR, fecha_actualiza, 126) AS fecha_actualiza,
-    ip_captura, ip_actualiza,
-    host_captura, host_actualiza, activo
-    FROM Usuario
+  $sql = "SELECT id_usuario, id_nivel, id_rol, id_empleado,
+    id_trabajad, id_area, id_puesto, interno, cea, laboratorio,
+    calidad, supervisa, recibe, analiza, muestrea, nombres,
+    apellido_paterno, apellido_materno, activo,
+    puesto, rol
+    FROM viewUsuarioEmpleado
     WHERE activo = 1";
   $db = getConnection();
   $stmt = $db->prepare($sql);
@@ -60,8 +58,8 @@ function getUser($userId)
   $sql = "SELECT id_usuario, id_nivel, id_rol, id_empleado,
     id_trabajad, id_area, id_puesto, interno, cea, laboratorio,
     calidad, supervisa, recibe, analiza, muestrea, nombres,
-    apellido_paterno, apellido_materno, puesto, rol,
-    usr, pwd, activo
+    apellido_paterno, apellido_materno, activo,
+    puesto, rol
     FROM viewUsuarioEmpleado
     WHERE activo = 1 AND id_usuario = :userId";
   $db = getConnection();
@@ -84,10 +82,10 @@ function getUserByCredentials($userName, $userPassword)
   $sql = "SELECT id_usuario, id_nivel, id_rol, id_empleado,
     id_trabajad, id_area, id_puesto, interno, cea, laboratorio,
     calidad, supervisa, recibe, analiza, muestrea, nombres,
-    apellido_paterno, apellido_materno, puesto, rol,
-    usr, pwd, activo
+    apellido_paterno, apellido_materno, usr, pwd, activo,
+    puesto, rol
     FROM viewUsuarioEmpleado
-    WHERE activo = 1 AND pwd = :userPassword AND usr = :userName";
+    WHERE activo = 1 AND usr = :userName AND pwd = :userPassword";
   $db = getConnection();
   $stmt = $db->prepare($sql);
   $stmt->bindParam("userName", $userName);

@@ -150,16 +150,6 @@ $app->get("/menu", function () use ($app) {
   }
 });
 
-$app->get("/tasks", function () use ($app) {
-  try {
-    $tokenUserId = decodeUserToken($app->request())->uid;
-    $result = json_encode(getTasks($tokenUserId));
-    sendSuccessResponse($app, $result);
-  } catch (Exception $e) {
-    sendErrorResponse($app, $e);
-  }
-});
-
 $app->get("/studies(/)(:studyId)", function ($studyId = -1) use ($app) {
   try {
     $tokenUserId = decodeUserToken($app->request())->uid;

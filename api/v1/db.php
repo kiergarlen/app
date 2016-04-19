@@ -1,13 +1,15 @@
 <?php
-//DB FUNCTIONS
+/**
+ * Funciones de acceso a Base de datos.
+ */
 define("DB_HOST", "localhost");
 define("DB_USER", "sislab");
 define("DB_PASSWORD", "sislab");
 define("DB_DATA_BASE", "Sislab");
 
 /**
- * Conecta a la base de datos, regresa una instancia de PDO
- * @return mixed $dbConnection
+ * Conecta a la base de datos, regresa un objeto PDO.
+ * @return mixed $dbConnection Objeto PDO.
  */
 function getConnection()
 {
@@ -18,8 +20,8 @@ function getConnection()
     $dbConnection = new PDO($dsn, DB_USER, DB_PASSWORD);
     $dbConnection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
   } catch (PDOException $e) {
-    ////Error logging, for development
-    //error_log($e->getMessage(), 3, '/var/tmp/php.log');
+    // //Error logging, for development
+    // error_log($e->getMessage(), 3, '/var/tmp/php.log');
     $output = '{"error":"' . $e->getMessage() . ', ';
     $output .= '"statement": "' . $dbConnection . '"}';
     //print_r($output);
@@ -28,8 +30,8 @@ function getConnection()
 }
 
 /**
- * Obtiene los Usuarios activos
- * @return array $result Usuarios activos
+ * Obtiene los Usuarios activos.
+ * @return array $result Usuarios activos.
  */
 function getUsers()
 {
@@ -49,9 +51,9 @@ function getUsers()
 }
 
 /**
- * Obtiene un Usuario
- * @param  int $userId Id del Usuario
- * @return stdClass $user
+ * Obtiene un Usuario.
+ * @param  int $userId Id del Usuario.
+ * @return stdClass $user Usuario.
  */
 function getUser($userId)
 {
@@ -72,10 +74,10 @@ function getUser($userId)
 }
 
 /**
- * Obtiene las credenciales de un Usuario
+ * Obtiene las credenciales de un Usuario.
  * @param  string $userName Nombre de Usuario
  * @param  string $userPassword Password del Usuario
- * @return stdClass $user
+ * @return stdClass $user Usuario.
  */
 function getUserByCredentials($userName, $userPassword)
 {
@@ -97,9 +99,9 @@ function getUserByCredentials($userName, $userPassword)
 }
 
 /**
- * Inserta un nuevo Usuario
- * @param  array $userData Datos del Usuario
- * @return int $userId Id del Usuario insertado
+ * Inserta un nuevo Usuario.
+ * @param  array $userData Datos del Usuario.
+ * @return int $userId Id del Usuario insertado.
  */
 function insertUser($userData)
 {
@@ -120,9 +122,9 @@ function insertUser($userData)
 }
 
 /**
- * Actualiza un Usuario
- * @param  array $updateData Array con los datos del Usuario a actualizar
- * @return int $userId Id del Usuario actualizado
+ * Actualiza un Usuario.
+ * @param  array $updateData Datos del Usuario a actualizar.
+ * @return int $userId Id del Usuario.
  */
 function updateUser($updateData)
 {
@@ -147,9 +149,9 @@ function updateUser($updateData)
 }
 
 /**
- * Actualiza un la contraseña de un Usuario
- * @param  array $updateData Array con los datos del Usuario a actualizar
- * @return int $userId Id del Usuario actualizado
+ * Actualiza la contraseña de un Usuario.
+ * @param  array $updateData Datos del Usuario a actualizar.
+ * @return int $userId Id del Usuario.
  */
 function updateUserPasword($updateData)
 {
@@ -167,9 +169,9 @@ function updateUserPasword($updateData)
 }
 
 /**
- * Obtiene los elementos del Menu/Submenu asignados al usuario $userId
- * @param  int $userId Id del Usuario
- * @return array $result Elementos del menu de $userId
+ * Obtiene los elementos del Menu asignados a un Usuario.
+ * @param  int $userId Id del Usuario.
+ * @return array $result Elementos del Menu.
  */
 function getMenu($userId)
 {
@@ -189,23 +191,8 @@ function getMenu($userId)
 }
 
 /**
- * @param $userId
- * @return mixed
- */
-function getTasks($userId)
-{
-  $result = array();
-  // $sql = "SELECT * FROM Tarea WHERE activo = 1";
-  // $db = getConnection();
-  // $stmt = $db->prepare($sql);
-  // $stmt->bindParam("userId", $userId);
-  // $stmt->execute();
-  // $result = json_encode($stmt->fetchAll(PDO::FETCH_ASSOC));
-  return $result;
-}
-
-/**
- * @return array
+ * Genera un Cliente genérico.
+ * @return array Cliente.
  */
 function getBlankClient()
 {
@@ -227,7 +214,8 @@ function getBlankClient()
 }
 
 /**
- * @return mixed
+ * Obtiene una lista de Clientes.
+ * @return mixed Clientes.
  */
 function getClients()
 {
@@ -250,8 +238,9 @@ function getClients()
 }
 
 /**
- * @param $clientId
- * @return mixed
+ * Obtiene los datos de un cliente.
+ * @param $clientId Id del Cliente.
+ * @return mixed Cliente.
  */
 function getClient($clientId)
 {
@@ -275,7 +264,8 @@ function getClient($clientId)
 }
 
 /**
- * @return mixed
+ * Obitiene una lista de estudios.
+ * @return mixed Estudios.
  */
 function getStudies()
 {
@@ -310,7 +300,8 @@ function getStudies()
 }
 
 /**
- * @return mixed
+ * Genera un estudio genérico, con dependientes.
+ * @return mixed Estudios, con dependientes.
  */
 function getBlankStudy()
 {
@@ -338,8 +329,9 @@ function getBlankStudy()
 }
 
 /**
- * @param $studyId
- * @return mixed
+ * Genera un estudio genérico.
+ * @param $studyId Id del Estudio.
+ * @return mixed Estudio.
  */
 function getPlainStudy($studyId)
 {
@@ -369,8 +361,9 @@ function getPlainStudy($studyId)
 }
 
 /**
- * @param $studyId
- * @return mixed
+ * Obtiene los datos de un Estudio, con dependientes.
+ * @param $studyId ID de Usuario.
+ * @return mixed Estudio, con dependientes.
  */
 function getStudy($studyId)
 {
@@ -381,8 +374,9 @@ function getStudy($studyId)
 }
 
 /**
- * @param $yearId
- * @return mixed
+ * Obtiene el último Estudio de un ejercicio.
+ * @param $yearId Ejercicio.
+ * @return mixed Estudio.
  */
 function getLastStudyByYear($yearId)
 {
@@ -413,8 +407,9 @@ function getLastStudyByYear($yearId)
 }
 
 /**
- * @param $insertData
- * @return mixed
+ * Inserta un Estudio.
+ * @param $insertData Datos del Estudio a insertar.
+ * @return mixed Id del Estudio.
  */
 function insertStudy($insertData)
 {
@@ -443,8 +438,9 @@ function insertStudy($insertData)
 }
 
 /**
- * @param $updateData
- * @return mixed
+ * Actualiza un Estudio.
+ * @param $updateData Datos del Estudio a actualizar.
+ * @return mixed Id del Estudio.
  */
 function updateStudy($updateData)
 {
@@ -471,7 +467,8 @@ function updateStudy($updateData)
 }
 
 /**
- * @return array
+ * Genera una Orden genérica.
+ * @return array Orden.
  */
 function getBlankOrder()
 {
@@ -495,7 +492,8 @@ function getBlankOrder()
 }
 
 /**
- * @return mixed
+ * Obtiene una lista de Órdenes.
+ * @return mixed Órdenes.
  */
 function getOrders()
 {
@@ -522,8 +520,9 @@ function getOrders()
 }
 
 /**
- * @param $studyId
- * @return mixed
+ * Obtiene una lista de Órdenes de un Estudio.
+ * @param $studyId Id del Estudio.
+ * @return mixed Órdenes.
  */
 function getOrdersByStudy($studyId)
 {
@@ -558,8 +557,9 @@ function getOrdersByStudy($studyId)
 }
 
 /**
- * @param $orderId
- * @return mixed
+ * Obtiene una Orden.
+ * @param $orderId Id de Orden.
+ * @return mixed Orden.
  */
 function getPlainOrder($orderId)
 {
@@ -587,8 +587,9 @@ function getPlainOrder($orderId)
 }
 
 /**
- * @param $orderId
- * @return mixed
+ * Obtiene una Orden, con dependientes.
+ * @param $orderId Id de Orden.
+ * @return mixed Orden, con dependientes.
  */
 function getOrder($orderId)
 {
@@ -604,8 +605,9 @@ function getOrder($orderId)
 }
 
 /**
- * @param $studyId
- * @return mixed
+ * Obtiene las Órdenes de un Estudio.
+ * @param $studyId Id del Estudio.
+ * @return mixed Órdenes.
  */
 function getStudyOrders($studyId)
 {
@@ -633,8 +635,9 @@ function getStudyOrders($studyId)
 }
 
 /**
- * @param $orderData
- * @return mixed
+ * Inserta una Orden.
+ * @param $orderData Datos de la Orden a insertar.
+ * @return mixed Id de Orden.
  */
 function insertOrder($orderData)
 {
@@ -663,8 +666,9 @@ function insertOrder($orderData)
 }
 
 /**
- * @param $updateData
- * @return mixed
+ * Actualiza una Orden.
+ * @param $updateData Datos de la Orden a actualizar.
+ * @return mixed Id de Orden.
  */
 function updateOrder($updateData)
 {
@@ -694,8 +698,9 @@ function updateOrder($updateData)
 }
 
 /**
- * @param $studyId
- * @return mixed
+ * Desactiva las Órdenes de un Estudio.
+ * @param $studyId Id del Estudio.
+ * @return mixed Id del Estudio.
  */
 function disableStudyOrders($studyId)
 {
@@ -710,7 +715,8 @@ function disableStudyOrders($studyId)
 }
 
 /**
- * @return mixed
+ * Obtiene una lista de los Orígenes de Orden.
+ * @return mixed Orígenes de Orden.
  */
 function getOrderSources()
 {
@@ -726,8 +732,9 @@ function getOrderSources()
 }
 
 /**
- * @param $sourceId
- * @return mixed
+ * Obtiene un Origen de Orden.
+ * @param $sourceId Id de Origen de Orden.
+ * @return mixed Origen de Orden.
  */
 function getOrderSource($sourceId)
 {
@@ -744,7 +751,8 @@ function getOrderSource($sourceId)
 }
 
 /**
- * @return mixed
+ * Obtiene una lists de Planes.
+ * @return mixed Planes.
  */
 function getPlans()
 {
@@ -783,7 +791,8 @@ function getPlans()
 }
 
 /**
- * @return array
+ * Generaun Plan genérico.
+ * @return array Plan genérico.
  */
 function getBlankPlan()
 {
@@ -822,8 +831,9 @@ function getBlankPlan()
 }
 
 /**
- * @param $orderId
- * @return mixed
+ * Obtiene una lista de Planes de una Orden.
+ * @param $orderId Id de Orden.
+ * @return mixed Planes.
  */
 function getPlansByOrder($orderId)
 {
@@ -862,8 +872,9 @@ function getPlansByOrder($orderId)
 }
 
 /**
- * @param $planId
- * @return mixed
+ * Obtiene un Plan.
+ * @param $planId Id de Plan.
+ * @return mixed Plan.
  */
 function getPlainPlan($planId)
 {
@@ -903,8 +914,9 @@ function getPlainPlan($planId)
 }
 
 /**
- * @param $planId
- * @return mixed
+ * Obtiene un Plan, con dependientes.
+ * @param $planId Id de Plan.
+ * @return mixed Plan, con dependientes.
  */
 function getPlan($planId)
 {
@@ -927,7 +939,8 @@ function getPlan($planId)
 }
 
 /**
- * @return mixed
+ * Obtiene una lista de Objetivos de Plan.
+ * @return mixed Objetivos.
  */
 function getPlanObjectives()
 {
@@ -943,8 +956,9 @@ function getPlanObjectives()
 }
 
 /**
- * @param $planId
- * @return mixed
+ * Obtiene una lista de Recipientes de un Plan.
+ * @param $planId Id de Plan.
+ * @return mixed Recipientes.
  */
 function getContainersByPlan($planId)
 {
@@ -961,8 +975,9 @@ function getContainersByPlan($planId)
 }
 
 /**
- * @param $planData
- * @return mixed
+ * Inserta un Plan.
+ * @param $planData Datos del Plan a insertar.
+ * @return mixed Id de Plan.
  */
 function insertPlan($planData)
 {

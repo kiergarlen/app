@@ -282,7 +282,7 @@ function processNewOrderInsert($newOrder, $study)
 
   $newOrder["id_estudio"] = $studyId;
   $newOrder["id_cliente"] = $clientId;
-  //TODO: Get from catalog
+
   $newOrder["id_cuerpo"] = 8;
   // $order["id_status"] = 1;
   // $order["costo_total"] = 0;
@@ -454,7 +454,7 @@ function processPlanUpdate($request)
     $plan["ip_valida"] = $request->getIp();
     $plan["host_valida"] = $request->getUrl();
     $plan["fecha_valida"] = isoDateToMsSql($plan["fecha_valida"]);
-    //TODO: advance Study stage
+
   }
 
   $plan["fecha"] = isoDateToMsSql($plan["fecha"]);
